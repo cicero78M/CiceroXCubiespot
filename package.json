@@ -1,0 +1,34 @@
+{
+  "name": "cicerohq",
+  "version": "1.0.0",
+  "description": "Cicero Social Media Management",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cicero78M/CiceroHQ.git"
+  },
+  "keywords": [
+    "Social",
+    "Media",
+    "Manajemen",
+    "Official"
+  ],
+  "author": "Riezqo Cicero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cicero78M/CiceroHQ/issues"
+  },
+  "homepage": "https://github.com/cicero78M/CiceroHQ#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "figlet": "^1.8.0",
+    "google-auth-library": "^9.15.0",
+    "google-spreadsheet": "^4.1.4",
+    "qrcode-terminal": "^0.12.0",
+    "simple-banner": "^1.1.3",
+    "whatsapp-web.js": "^1.26.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cicero-441500",
+  "private_key_id": "735f774873957115e5fe8897ad94234ea1c17819",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC2dYymOBuuJEso\nD1NOSYuNUmZLW54Tle6q4991QQMKTCluLFSvVvNTlqtIl6RLsWwSyobVX+XpUHB6\nY+0/znQMyl3ip5JGT60jUxA3VihWymhMgBF2op2ndCV/T/7JJjhlAJR05WH6cLX8\nbOtb1vt+bs70NqrRyOGRTetncy4Lm+2aPAUDYePLY7OdpwzqV8RrhpIPu7aeAZlA\nSt5lLfvlfmy/Bt7iXfA/JCscFTCe0LGpdz+NzlFz6my5zHJU8vMMZAhVse1DOmD3\nuque/3/r8cKaJ/DUR7Zq3sT8//q4GTJWIz2lrY+jzQ1eYxFjFVY9cOonLOdnLt8h\ntNv2M42bAgMBAAECggEAAfylC8j/9tUrAwRVCjzfdH+ENlKIwHqD1H/nbAse3FrY\nofwrmT6KJyE0kPV4cuE7Zbeni4/1cfqlRD/tp8yOE6GUhNEBqnBYWKfL575cHBiC\nKusYxZZJvza9kyBXjEXf8Vb18ZFEkDSarBAHlBgdjv09QF2Os1AhB122MDSJ433K\nHWafUle4D5ZTsyatokN9XvVwnM0nPfwfnzjwNUFCVB4z4SaKbQRVQ9fdmMkSdsWR\n6BYXVSY3QGKmU3VYMuBZJVTw2Ivv5bdvy3lWaONjKgaJtfJevXZr6klMw4QKlbPx\nDzP2eyJCdJBH2rO5v/80VqmbmirntoCvvo37yknlIQKBgQD3pTDEI92Duj+oRNzi\n+Fd6agy9E6fhx3yNcLlPuJ7GCbOJMU6z1kNTZKD3XAiiYRdIE8M5h1Lrs55DfDFp\nN+QQ+NFLNfUA8PPaYNFHkK5SFD4RwMat4i0XVfFCA9N5KCxnlzg7Qb1TzKPJ3snI\n+RTVXKc5UwSpdwHNRZiydnUOCwKBgQC8nV+mZp3wKK01Q5wWPLAwQcDFeTtkwESe\nhOAUhgKBh+cbvpetawJ6WqUfMJBaKhpCm81XfGu1pcnQPdfmenxIL0hNY9nwZDX2\nD6FU6LmqKspiW1Ln5Kd1k3m/5pc/DaTGv4IFObQeIYJQLdgDwr1N3okHHpZKG45u\nUhqag82IsQKBgBK+DdLKZBl0Hx09GPqUkQpSvGQS+MG9t099GIlQD7QtR8k6UhqK\nPM4y73vJG14uuvRZiozwEPaFwZSZ8aNk933RVwW6L7DCi7IbYbto18ief5QYYvEG\nDSOW/Ythfr/Mqo+sgjT55LpS4pKEqgDr2QfM21sbTV8GArzmZ4gaLwHBAoGAds8i\n6yyEnDzjLkQSVCeSTDN+/GUrNoGuN7Q3enYXqgQzXdSmsoRPoUbr8EOlCkavF/oQ\nVOV464ktINFz6CiLlOTDxIv7QmO9YevikhuuqDQgG+iuxofPvE5TSMA10XAEtXT4\nr9XzUW+GKH9YLLZEjIJ7ClMIFFJbW764J1CS7WECgYEA28jZkcWZZBecMlquzqzy\n4990PFSwMMPy6s4SZdr8dEEeGkpZEXWJEWIkMTzUR5y5RIVazNhTBHWCTE2K5QAc\nY5/e+TM456ogWRMernR/1SnlHJbFkzEJvYkq5c3126Bu9B4rQqJtmPa+sZppGgBA\nu6ikPJBAB4TKhjv1mQfwqek=\n-----END PRIVATE KEY-----\n",
+  "client_email": "cicero@cicero-441500.iam.gserviceaccount.com",
+  "client_id": "101523547310909386999",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cicero%40cicero-441500.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
