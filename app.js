@@ -82,7 +82,7 @@ client.on('message', async (msg) => {
 
                 console.log(msg.from);                    
 
-                if (splittedMsg[1].toLowerCase() === "newsheet"){
+                if (splittedMsg[1].toLowerCase() === "newclient"){
 
                     if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
             

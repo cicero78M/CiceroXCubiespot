@@ -27,7 +27,9 @@ module.exports = {
      
       const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth);
       await sourceDoc.loadInfo(); // loads document properties and worksheets
-      console.log(sourceDoc.title);
 
+      const sheet = sourceDoc.sheetsByIndex[sheetName];
+      console.log(sheet.title);
+      console.log(sheet.rowCount);
     }       
   };
