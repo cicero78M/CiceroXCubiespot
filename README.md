@@ -12,7 +12,7 @@ Admin Request Order:
 - Adding New User to Database : ClientName#addnew#ID_Key#UserName#UserDivision#UserJabatan.
 - Rename User Name : ClientName#renameuser#ID_Key#ReName.
 - Change Division : ClientName#division#ID_Key#newDivision.
-- Chaange Jabatan : ClientName#jabatan#ID_Key#newJabatan.
+- Change Jabatan : ClientName#jabatan#ID_Key#newJabatan.
 
 User Request Order :
 
