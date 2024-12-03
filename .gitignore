@@ -68,6 +68,10 @@ web_modules/
 .wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
 .wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/
 .wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
+.wwebjs_auth/session-Client_Name/Default/Session Storage/
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/
+.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
+.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/
 
 # Optional REPL history
 .node_repl_history
