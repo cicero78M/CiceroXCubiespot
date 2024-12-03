@@ -154,3 +154,9 @@ dist
 .wwebjs_auth/session-Client_Name/Default/Code Cache/js/index-dir/the-real-index
 .wwebjs_auth/session-Client_Name/Default/Cookies
 .wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG.old
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG
+.wwebjs_auth/session-Client_Name/Default/Session Storage/LOG
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
