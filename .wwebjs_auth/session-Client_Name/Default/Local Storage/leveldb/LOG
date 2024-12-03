@@ -1,5 +1,6 @@
-2024/12/03-21:07:31.628 9540 Reusing MANIFEST D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/MANIFEST-000001
-2024/12/03-21:07:31.629 9540 Recovering log #6
-2024/12/03-21:07:31.629 9540 Level-0 table #9: started
-2024/12/03-21:07:31.641 9540 Level-0 table #9: 17282 bytes OK
-2024/12/03-21:07:31.642 9540 Delete type=0 #6
+2024/12/03-22:44:09.777 10830 Reusing MANIFEST D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/MANIFEST-000001
+2024/12/03-22:44:09.778 10830 Recovering log #19
+2024/12/03-22:44:09.778 10830 Reusing old log D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/000019.log 
+2024/12/03-22:45:10.457 529c Level-0 table #23: started
+2024/12/03-22:45:10.469 529c Level-0 table #23: 17990 bytes OK
+2024/12/03-22:45:10.470 529c Delete type=0 #19

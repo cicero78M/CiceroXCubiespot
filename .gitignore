@@ -162,3 +162,4 @@ dist
 .wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG.old
 .wwebjs_auth/session-Client_Name/Default/GPUCache/data_1
 .wwebjs_auth/session-Client_Name/Default/Cookies
+.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/LOG.old

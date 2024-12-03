@@ -80,23 +80,26 @@ client.on('message', async (msg) => {
 
             if(splittedMsg.length > 1){
 
-                console.log(msg.from);                    
+                console.log(msg.from);           
+                
+                if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
-                if (splittedMsg[1].toLowerCase() === "newclient"){
-
-                    if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
-            
+                    if (splittedMsg[1].toLowerCase() === "newclientorg"){
                         try {
-
-                            dataBase.newClient(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
-                        
+                            dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                         } catch (error) {
                             console.log(error);
-                        }
-                    } else {
-                        console.log('Bukan Spreadsheet Links');
+                        }                    
+                    }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
+                        try {
+                            dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                        } catch (error) {
+                            console.log(error);
+                        }             
                     }
-                }
+                } else {
+                    console.log('Bukan Spreadsheet Links');
+                }        
             } else {
                 console.log('Reqular Messages');
             }

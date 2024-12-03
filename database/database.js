@@ -18,18 +18,87 @@ const googleAuth = new JWT({
 
 module.exports = {
 
-    newClient: async function newClient(sheetName, sourceID, filesID){
+    newClientOrg: async function newClientOrg(sheetName, sourceID, filesID){
 
       const sourceX = sourceID.split('/').pop();
       
       const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);
-      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
-     
+
+      try {
+        const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
+        console.log(targetSheet.title);
+
+      } catch (error) {
+        console.log('Sheet Exist');
+      }
+
       const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth);
       await sourceDoc.loadInfo(); // loads document properties and worksheets
 
-      const sheet = sourceDoc.sheetsByIndex[sheetName];
-      console.log(sheet.title);
-      console.log(sheet.rowCount);
-    }       
+      const sheetSource = sourceDoc.sheetsByTitle[sheetName];
+      const rowsSource = await sheetSource.getRows();
+      
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+
+      var i = 0;  //  set your counter to 1
+
+      function pushDataOrg() { //  create a loop function
+        setTimeout(function() { //  call a 3s setTimeout when the loop is called
+          sheetTarget.addRow({ID_KEY: rowsSource[i].get('NRP'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), DIVISI: rowsSource[i].get('SATFUNG'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('IG1'), TIKTOK: rowsSource[i].get('TIKTOK')});
+          //  post data
+          i++;  //  increment the counter
+          if (i < rowsSource.length) {  //  if the counter < 10, call the loop function
+            pushDataOrg(); //  again which will trigger another 
+          } else {
+            console.log("All Data Transfered");
+          };
+        }, 3000)
+      }
+
+      pushDataOrg();
+    },
+    
+    newClientCom: async function newClientCom(sheetName, sourceID, filesID){
+
+      const sourceX = sourceID.split('/').pop();      
+      const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);
+
+      try {
+        const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
+        console.log(targetSheet.title);
+
+      } catch (error) {
+        console.log('Sheet Exist');
+      }
+
+      const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth);
+      await sourceDoc.loadInfo(); // loads document properties and worksheets
+
+      const sheetSource = sourceDoc.sheetsByTitle[sheetName];
+      const rowsSource = await sheetSource.getRows();
+      
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+
+      var i = 0;  //  set your counter to 1
+
+      function pushDataCom() { //  create a loop function
+        setTimeout(function() { //  call a 3s setTimeout when the loop is called
+          sheetTarget.addRow({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: null, DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
+          //  post data
+          i++;  //  increment the counter
+          if (i < rowsSource.length) {  //  if the counter < 10, call the loop function
+            pushDataCom();  //again which will trigger another 
+          } else {
+            console.log("All Data Transfered");
+          };
+        }, 3000)
+      }
+
+      pushDataCom();
+    },
+           
   };
