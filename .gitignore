@@ -65,6 +65,7 @@ web_modules/
 .rts2_cache_umd/
 .wwebjs_auth/
 .wwebjs_cache
+.wwebjs_auth/session-Client_Name
 .wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
 .wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/
 .wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
