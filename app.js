@@ -88,13 +88,12 @@ client.on('message', async (msg) => {
             
                         try {
 
-                            dataBase.newSheet(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                            dataBase.newClient(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                         
                         } catch (error) {
                             console.log(error);
                         }
                     } else {
-
                         console.log('Bukan Spreadsheet Links');
                     }
                 }
@@ -105,6 +104,4 @@ client.on('message', async (msg) => {
     } catch (error) {
         console.log(error);
     }
-
-
 });

@@ -18,7 +18,7 @@ const googleAuth = new JWT({
 
 module.exports = {
 
-    newSheet: async function newSheet(sheetName, sourceID, filesID){
+    newClient: async function newClient(sheetName, sourceID, filesID){
 
       const sourceX = sourceID.split('/').pop();
       
@@ -28,5 +28,6 @@ module.exports = {
       const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth);
       await sourceDoc.loadInfo(); // loads document properties and worksheets
       console.log(sourceDoc.title);
+
     }       
   };
