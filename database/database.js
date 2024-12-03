@@ -3,6 +3,7 @@ const fs = require('fs');
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
+const { title } = require('process');
 
 const googleCreds = JSON.parse(fs.readFileSync('./database/ciceroKey.json'));
 
@@ -17,11 +18,15 @@ const googleAuth = new JWT({
 
 module.exports = {
 
-    newSheet: async function newSheet(sheetName, filesID, sourceID){
+    newSheet: async function newSheet(sheetName, sourceID, filesID){
 
-        const doc = new GoogleSpreadsheet(filesID, googleAuth);
-        const newSheet = await doc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });    
-    
-    },
-        
+      const sourceX = sourceID.split('/').pop();
+      
+      const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);
+      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
+     
+      const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth);
+      await sourceDoc.loadInfo(); // loads document properties and worksheets
+      console.log(sourceDoc.title);
+    }       
   };

@@ -15,6 +15,7 @@ const qrcode = require('qrcode-terminal');
 //const dataList = JSON.parse(rawdata);
 
 const port = 3007;
+const databaseID = '1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8';
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -78,30 +79,31 @@ client.on('message', async (msg) => {
             const splittedMsg = msg.body.split("#");
 
             if(splittedMsg.length > 1){
-                
+
                 console.log(msg.from);                    
 
                 if (splittedMsg[1].toLowerCase() === "newsheet"){
-        
-                    try {
 
-                        dataBase.newSheet(splittedMsg[0].toUpperCase(), "1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8");
+                    if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+            
+                        try {
 
-                    } catch (error) {
-                        console.log(error);
+                            dataBase.newSheet(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                        
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    } else {
+
+                        console.log('Bukan Spreadsheet Links');
                     }
-        
                 }
             } else {
-
                 console.log('Reqular Messages');
-            
             }
         }
     } catch (error) {
-
         console.log(error);
-    
     }
 
 
