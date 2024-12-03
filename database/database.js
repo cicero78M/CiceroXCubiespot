@@ -17,81 +17,85 @@ const googleAuth = new JWT({
 
 
 module.exports = {
+  
+  //New Client Database by Organizations Source Functions
+  newClientOrg: async function newClientOrg(sheetName, sourceID, filesID){
 
-    newClientOrg: async function newClientOrg(sheetName, sourceID, filesID){
-
-      const sourceX = sourceID.split('/').pop();
-      
-      const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);
-
-      try {
-        const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
-        console.log(targetSheet.title);
-
-        const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth);
-        await sourceDoc.loadInfo(); // loads document properties and worksheets
-
-        const sheetSource = sourceDoc.sheetsByTitle[sheetName];
-        const rowsSource = await sheetSource.getRows();
-        
-        await targetDoc.loadInfo(); // loads document properties and worksheets
-        const sheetTarget = targetDoc.sheetsByTitle[sheetName];
-
-        var i = 0;  //  set your counter to 0
-
-        function pushDataOrg() { //  create a loop function
-          setTimeout(function() { //  call a 2s setTimeout when the loop is called
-            sheetTarget.addRow({ID_KEY: rowsSource[i].get('NRP'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), DIVISI: rowsSource[i].get('SATFUNG'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('IG1'), TIKTOK: rowsSource[i].get('TIKTOK')});
-            //  post data
-            i++;  //  increment the counter
-            if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
-              pushDataOrg(); //  again which will trigger another 
-            } else {
-              console.log("All Data Transfered");
-            };
-          }, 2000)
-        }
-        pushDataOrg();
-      } catch (error) {
-        console.log('Sheet Exist');
-      }
-    },
+    const sourceX = sourceID.split('/').pop(); //Get Last Segment of Links
     
-    newClientCom: async function newClientCom(sheetName, sourceID, filesID){
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth); //Google Auth
 
-      const sourceX = sourceID.split('/').pop();      
-      const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);
+    try {
+      //Insert New Sheet
+      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
+      console.log(targetSheet.title);
 
-      try {
-        const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
-        console.log(targetSheet.title);
+      const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth); //Google Auth
+      await sourceDoc.loadInfo(); // loads document properties and worksheets
 
-        const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth);
-        await sourceDoc.loadInfo(); // loads document properties and worksheets
+      const sheetSource = sourceDoc.sheetsByTitle[sheetName]; //Get Source Sheet Documents by Title
+      const rowsSource = await sheetSource.getRows(); //Get Sheet data By Rows
+      
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName]; //Get Target Sheet Documents by Title
 
-        const sheetSource = sourceDoc.sheetsByTitle[sheetName];
-        const rowsSource = await sheetSource.getRows();
-        
-        await targetDoc.loadInfo(); // loads document properties and worksheets
-        const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+      var i = 0;  //  set your counter to 0
 
-        var i = 0;  //  set your counter to 0
-
-        function pushDataCom() { //  create a loop function
-          setTimeout(function() { //  call a 2s setTimeout when the loop is called
-            sheetTarget.addRow({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: null, DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
-            //  post data
-            i++;  //  increment the counter
-            if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
-              pushDataCom();  //again which will trigger another 
-            } else {
-              console.log("All Data Transfered");
-            };
-          }, 2000)
-        }
-        pushDataCom();
-      } catch (error) {
-        console.log('Sheet Exist');
+      function pushDataOrg() { //  create a loop function
+        setTimeout(function() { //  call a 2s setTimeout when the loop is called
+          sheetTarget.addRow({ID_KEY: rowsSource[i].get('NRP'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), DIVISI: rowsSource[i].get('SATFUNG'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('IG1'), TIKTOK: rowsSource[i].get('TIKTOK')});
+          //  post data
+          i++;  //  increment the counter
+          if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
+            pushDataOrg(); //  again which will trigger another 
+          } else {
+            console.log("All Data Transfered");
+          };
+        }, 2000)
       }
-    },    
-  };
+      pushDataOrg();
+    } catch (error) {
+      console.log('Sheet Exist');
+    }
+  },
+
+  //New Client Database by Company Source Functions  
+  newClientCom: async function newClientCom(sheetName, sourceID, filesID){
+
+    const sourceX = sourceID.split('/').pop();      //Get Last Segment of Links
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+
+    try {
+      //Insert New Sheet
+      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
+      console.log(targetSheet.title);
+
+      const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth); //Google Auth
+      await sourceDoc.loadInfo(); // loads document properties and worksheets
+
+      const sheetSource = sourceDoc.sheetsByTitle[sheetName]; //Get Source Sheet Documents by Title
+      const rowsSource = await sheetSource.getRows(); // loads document properties and worksheets
+      
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];//Get Target Sheet Documents by Title
+
+      var i = 0;  //  set your counter to 0
+
+      function pushDataCom() { //  create a loop function
+        setTimeout(function() { //  call a 2s setTimeout when the loop is called
+          sheetTarget.addRow({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: null, DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
+          //  post data
+          i++;  //  increment the counter
+          if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
+            pushDataCom();  //again which will trigger another 
+          } else {
+            console.log("All Data Transfered");
+          };
+        }, 2000)
+      }
+      pushDataCom();
+    } catch (error) {
+      console.log('Sheet Exist');
+    }
+  },    
+};

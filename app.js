@@ -70,27 +70,27 @@ client.on('qr', qr => {
 client.on('message', async (msg) => {
 
     try {
+
         if (msg.isStatus){
-
+            //If Msg is WA Story
             console.log(msg.body);
-        
         } else {
-
+            //Splitted Msg
             const splittedMsg = msg.body.split("#");
-
             if(splittedMsg.length > 1){
-
-                console.log(msg.from);           
-                
+                console.log(msg.from);
+                //If Contains Links
                 if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
-
                     if (splittedMsg[1].toLowerCase() === "newclientorg"){
+                        //If Request for New Client by Organizations
+
                         try {
                             dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                         } catch (error) {
                             console.log(error);
                         }                    
                     }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
+                        //If Request for New Client by Company
                         try {
                             dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                         } catch (error) {
