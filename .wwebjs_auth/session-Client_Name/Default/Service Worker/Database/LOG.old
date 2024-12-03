@@ -1,2 +1,3 @@
-2024/12/03-14:32:45.472 98fc Creating DB D:\CiceroHQ\.wwebjs_auth\session-Client_Name\Default\Service Worker\Database since it was missing.
-2024/12/03-14:32:45.475 98fc Reusing MANIFEST D:\CiceroHQ\.wwebjs_auth\session-Client_Name\Default\Service Worker\Database/MANIFEST-000001
+2024/12/03-19:19:31.655 75f0 Reusing MANIFEST D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Service Worker\Database/MANIFEST-000001
+2024/12/03-19:19:31.656 75f0 Recovering log #3
+2024/12/03-19:19:31.656 75f0 Reusing old log D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Service Worker\Database/000003.log 

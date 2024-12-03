@@ -1,2 +1,3 @@
-2024/12/03-14:32:43.909 98fc Creating DB D:\CiceroHQ\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb since it was missing.
-2024/12/03-14:32:43.928 98fc Reusing MANIFEST D:\CiceroHQ\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/MANIFEST-000001
+2024/12/03-19:19:31.650 a408 Reusing MANIFEST D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/MANIFEST-000001
+2024/12/03-19:19:31.650 a408 Recovering log #4
+2024/12/03-19:19:31.651 a408 Reusing old log D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/000004.log 

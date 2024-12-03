@@ -71,23 +71,37 @@ client.on('message', async (msg) => {
     try {
         if (msg.isStatus){
 
-            logsFile(d.toLocaleString(), msg.from, msg.body);
+            console.log(msg.body);
         
         } else {
-    
-            var d = new Date();
+
             const splittedMsg = msg.body.split("#");
-    
-            if (splittedMsg[1].toLowerCase === "newsheet"){
-    
-                console.log(msg.from);
-    
-                dataBase.newSheet(splittedMsg[1], "1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8");
-    
+
+            if(splittedMsg.length > 1){
+                
+                console.log(msg.from);                    
+
+                if (splittedMsg[1].toLowerCase() === "newsheet"){
+        
+                    try {
+
+                        dataBase.newSheet(splittedMsg[0].toUpperCase(), "1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8");
+
+                    } catch (error) {
+                        console.log(error);
+                    }
+        
+                }
+            } else {
+
+                console.log('Reqular Messages');
+            
             }
         }
     } catch (error) {
+
         console.log(error);
+    
     }
 
 

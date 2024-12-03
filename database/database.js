@@ -20,7 +20,7 @@ module.exports = {
     newSheet: async function newSheet(sheetName, filesID, sourceID){
 
         const doc = new GoogleSpreadsheet(filesID, googleAuth);
-        const newSheet = await doc.addSheet({ title: sheetName });
+        const newSheet = await doc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });    
     
     },
         
