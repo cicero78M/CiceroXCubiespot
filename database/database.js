@@ -17,19 +17,11 @@ const googleAuth = new JWT({
 
 module.exports = {
 
-    newSheet: async function newSheet(sheetName, filesID){
+    newSheet: async function newSheet(sheetName, filesID, sourceID){
 
         const doc = new GoogleSpreadsheet(filesID, googleAuth);
         const newSheet = await doc.addSheet({ title: sheetName });
     
     },
-
-    postData: async function postData(data, sheetName, filesID){
-      const doc = new GoogleSpreadsheet(filesID, googleAuth);
-    },
-
-    loadData: async function loadData(sheetName, filesID){
-      const doc = new GoogleSpreadsheet(filesID, googleAuth);
-    }
         
   };
