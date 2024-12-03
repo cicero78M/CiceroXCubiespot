@@ -66,16 +66,7 @@ web_modules/
 .wwebjs_auth/
 .wwebjs_cache
 .wwebjs_auth/session-Client_Name/
-.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
-.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/
-.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
-.wwebjs_auth/session-Client_Name/Default/Session Storage/
-.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/
-.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
-.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/
-.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/
-.wwebjs_auth/session-Client_Name/DevToolsActivePort
-.wwebjs_auth/session-Client_Name/Default/DawnCache/data_1
+
 
 
 # Optional REPL history
@@ -149,7 +140,7 @@ dist
 .wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/LOG.old
 .wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG
 .wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
-.wwebjs_auth/session-Client_Name/DevToolsActivePort
+.wwebjs_auth/session-Client_Name/
 .wwebjs_auth/session-Client_Name/Default/DawnCache/data_1
 .wwebjs_auth/session-Client_Name/Default/Code Cache/js/index-dir/the-real-index
 .wwebjs_auth/session-Client_Name/Default/Cookies
@@ -160,3 +151,14 @@ dist
 .wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
 .wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
 .wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
+.wwebjs_auth/session-Client_Name/DevToolsActivePort
+.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
+.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
+.wwebjs_auth/session-Client_Name/Default/Session Storage/
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/
+.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
+.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/
+.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG.old
+.wwebjs_auth/session-Client_Name/Default/GPUCache/data_1
+.wwebjs_auth/session-Client_Name/Default/Cookies
