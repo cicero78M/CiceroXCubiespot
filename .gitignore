@@ -72,6 +72,7 @@ web_modules/
 .wwebjs_auth/session-Client_Name/Default/Service Worker/Database/
 .wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
 .wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/
+.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/
 
 # Optional REPL history
 .node_repl_history
