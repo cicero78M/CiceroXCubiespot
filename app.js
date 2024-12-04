@@ -123,8 +123,8 @@ client.on('message', async (msg) => {
                         let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'updateinsta') {
-                        if (splittedMsg[3].indexOf('instagram.com')){
-                            if (!splittedMsg[3].indexOf('/p/') || !splittedMsg[3].indexOf('/reels/') || !splittedMsg[3].indexOf('/video/') ){
+                        if (splittedMsg[3].includes('instagram.com')){
+                            if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
                                 let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], msg.from.replace('@c.us', ''), databaseID);
                                 client.sendMessage(msg.from, response);
                             } else {
@@ -134,7 +134,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'updatetiktok') {
-                        if (splittedMsg[3].indexOf('tiktok.com')){                    
+                        if (splittedMsg[3].includes('tiktok.com')){                    
                             let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],msg.from.replace('@c.us', ''), databaseID);
                             client.sendMessage(msg.from, response);
                         } else {
