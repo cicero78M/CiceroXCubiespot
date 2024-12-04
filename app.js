@@ -61,7 +61,7 @@ client.on('qr', qr => {
 client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientorg', 'newclientcom'];
-    const updateUserData = ['adduser', 'renameuser', 'division', 'jabatan', 'updateinsta', 'updatetiktok'];
+    const updateUserData = ['adduser', 'renameuser', 'editdivisi', 'jabatan', 'updateinsta', 'updatetiktok'];
 
     try {
         if (msg.isStatus){
@@ -104,7 +104,10 @@ client.on('message', async (msg) => {
                         } else {
                             dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, databaseID);
                         }
-                    } 
+                    } else if(splittedMsg[1].toLowerCase() === 'editdivisi') {
+                        
+                        dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), databaseID);
+                    }
                 }   
             } else {
                 console.log('Reqular Messages');

@@ -108,22 +108,70 @@ module.exports = {
       //Insert New Sheet
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
-          
-      //Get Target Sheet Documents by Title
-      sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});    
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const rowsData = await sheetTarget.getRows();
+      
+      let divisiList = [];
+
+      //Collect Divisi List String
+      for (let i = 0; i < rowsData.length; i++){
+        if(!divisiList.includes(rowsData[i].get('DIVISI'))){
+          divisiList.push(rowsData[i].get('DIVISI'));
+        }
+      }
+      if(divisiList.includes(userDiv)){
+        //Get Target Sheet Documents by Title
+        sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});
+
+        console.log('Success Input Data');
+      } else {
+        console.log('Divisi Tidak Terdaftar');
+      }
     } catch (error) {
       //if sheet name is exist
-      console.log('Sheet Exist');
+      console.log(error);
     }
   },
-  //Edit User jabatan to Client Data Base Functions  
-  addUser: async function editJabatan(sheetName, idKey, userJab, filesID){
+  //Edit User Divisi to Client Data Base Functions  
+  editDivisi: async function editDivisi(sheetName, idKey, userDiv, filesID){
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
       //Insert New Sheet
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
-      
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const rowsData = await sheetTarget.getRows();
+
+      let divisiList = [];
+
+      //Collect Divisi List String
+      for (let i = 0; i < rowsData.length; i++){
+        if(!divisiList.includes(rowsData[i].get('DIVISI'))){
+          divisiList.push(rowsData[i].get('DIVISI'));
+        }
+      }
+
+      let isDataExist = false;
+
+      if (divisiList.includes(userDiv)){
+        for (let ii = 0; ii < rowsData.length; ii++){
+          if (rowsData[ii].get('ID_KEY') === idKey){
+            console.log(rowsData[ii].get('ID_KEY'));
+
+            isDataExist = true;
+            rowsData[ii].set('DIVISI', userDiv); // Update Divisi Value
+            await rowsData[ii].save(); //save update
+          }
+        }
+
+        if(!isDataExist){
+          console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+        }
+      } else {
+        console.log('Divisi Unregsitered');
+      }
     } catch (error) {
       //if sheet name is exist
       console.log('Sheet Exist');
