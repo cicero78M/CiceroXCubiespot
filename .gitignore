@@ -179,3 +179,4 @@ dist
 .wwebjs_auth/session-Client_Name/Default/GPUCache/data_1
 .wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/CURRENT
 .wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG
+.wwebjs_auth/*
