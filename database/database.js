@@ -149,7 +149,7 @@ module.exports = {
     }
   },
   //Edit User Divisi to Client Data Base Functions  
-  editDivisi: async function editDivisi(sheetName, idKey, userDiv, filesID){
+  editDivisi: async function editDivisi(sheetName, idKey, userDiv, phone, filesID){
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
       //Insert New Sheet
@@ -194,7 +194,7 @@ module.exports = {
   },
 
   //Edit User Jabatan to Client Data Base Functions  
-  editJabatan: async function editJabatan(sheetName, idKey, userJab, filesID){
+  editJabatan: async function editJabatan(sheetName, idKey, userJab, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -229,7 +229,7 @@ module.exports = {
   },
 
   //Edit User Jabatan to Client Data Base Functions  
-  editNama: async function editNama(sheetName, idKey, userNama, filesID){
+  editNama: async function editNama(sheetName, idKey, userNama, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -264,7 +264,7 @@ module.exports = {
   },
 
   //Edit User Jabatan to Client Data Base Functions  
-  updateInsta: async function updateInsta(sheetName, idKey, insta, filesID){
+  updateInsta: async function updateInsta(sheetName, idKey, insta, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -291,13 +291,14 @@ module.exports = {
           if (rowsData[i].get('ID_KEY') === idKey){
 
             isDataExist = true;
-            rowsData[i].assign({INSTA: insta, WHATSAPP: phone});; // Update Insta Value
+            rowsData[i].assign({INSTA: insta, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
             console.log('Data Updated');
           }
         }
       } else {
+        isDataExist = true;
         console.log('Username Instagram is Used by another User');
       }
 
@@ -346,6 +347,7 @@ module.exports = {
           }
         }
       } else {
+        isDataExist = true;
         console.log('Username Tiktok is Used by another User');
       }
 
