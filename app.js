@@ -109,37 +109,37 @@ client.on('message', async (msg) => {
                         if(splittedMsg.length > 6){                   
                             let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), databaseID);
                             client.sendMessage(msg.from, response);
-
                         } else {
                             let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, databaseID);
                             client.sendMessage(msg.from, response);
-
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'editdivisi') {
-
                         let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
                         client.sendMessage(msg.from, response);
- 
                     } else if(splittedMsg[1].toLowerCase() === 'editjabatan') {
-                    
                         let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
                         client.sendMessage(msg.from, response);
-
                     } else if(splittedMsg[1].toLowerCase() === 'editnama') {
-                    
                         let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
                         client.sendMessage(msg.from, response);
-
                     } else if(splittedMsg[1].toLowerCase() === 'updateinsta') {
-                    
-                        let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], msg.from.replace('@c.us', ''), databaseID);
-                        client.sendMessage(msg.from, response);
-
+                        if (splittedMsg[3].indexOf('instagram.com')){
+                            if (!splittedMsg[3].indexOf('/p/') || !splittedMsg[3].indexOf('/reels/') || !splittedMsg[3].indexOf('/video/') ){
+                                let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], msg.from.replace('@c.us', ''), databaseID);
+                                client.sendMessage(msg.from, response);
+                            } else {
+                                client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                            }
+                        } else {
+                            client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                        }
                     } else if(splittedMsg[1].toLowerCase() === 'updatetiktok') {
-                    
-                        let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],msg.from.replace('@c.us', ''), databaseID);
-                        client.sendMessage(msg.from, response);
-                    
+                        if (splittedMsg[3].indexOf('tiktok.com')){                    
+                            let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],msg.from.replace('@c.us', ''), databaseID);
+                            client.sendMessage(msg.from, response);
+                        } else {
+                            client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
+                        }
                     }
                 }   
             } else {

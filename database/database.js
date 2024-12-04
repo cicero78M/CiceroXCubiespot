@@ -265,6 +265,7 @@ module.exports = {
 
   //Edit User Jabatan to Client Data Base Functions  
   updateInsta: async function updateInsta(sheetName, idKey, insta, phone, filesID){
+    const userLink = insta.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -286,12 +287,12 @@ module.exports = {
         }
       }
 
-      if(!instaList.includes(insta)){
+      if(!instaList.includes(userLink)){
         for (let i = 0; i < rowsData.length; i++){
           if (rowsData[i].get('ID_KEY') === idKey){
 
             isDataExist = true;
-            rowsData[i].assign({INSTA: insta, WHATSAPP: phone}); // Update Insta Value
+            rowsData[i].assign({INSTA: userLink, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
             return 'Data Updated';
@@ -314,6 +315,7 @@ module.exports = {
 
   //Edit User Jabatan to Client Data Base Functions  
   updateTiktok: async function updateTiktok(sheetName, idKey, tiktok, phone, filesID){
+    const userLink = tiktok.split('/').pop();      //Get Last Segment of Links
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -335,12 +337,12 @@ module.exports = {
         }
       }
 
-      if(!tiktokList.includes(tiktok)){
+      if(!tiktokList.includes(userLink)){
         for (let i = 0; i < rowsData.length; i++){
           if (rowsData[i].get('ID_KEY') === idKey){
 
             isDataExist = true;
-            rowsData[i].assign({TIKTOK: tiktok, WHATSAPP: phone}); // Update Insta Value
+            rowsData[i].assign({TIKTOK: userLink, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
             return 'Data Tiktok Updated';
