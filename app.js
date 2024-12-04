@@ -59,6 +59,10 @@ client.on('qr', qr => {
 });
 
 client.on('message', async (msg) => {
+
+    const newClientOrder = ['newclientorg', 'newclientcom'];
+    const updateUserData = ['addnew', 'renameuser', 'division', 'jabatan', 'updateinsta', 'updatetiktok'];
+
     try {
         if (msg.isStatus){
             //If Msg is WA Story
@@ -68,26 +72,33 @@ client.on('message', async (msg) => {
             const splittedMsg = msg.body.split("#");
             if(splittedMsg.length > 1){
                 console.log(msg.from);
-                //If Contains Links
-                if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
-                    if (splittedMsg[1].toLowerCase() === "newclientorg"){
-                        //If Request for New Client by Organizations
-                        try {
-                            dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
-                        } catch (error) {
-                            console.log(error);
-                        }                    
-                    }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
-                        //If Request for New Client by Company
-                        try {
-                            dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
-                        } catch (error) {
-                            console.log(error);
-                        }             
-                    }
-                } else {
-                    console.log('Bukan Spreadsheet Links');
-                }        
+                if(newClientOrder.includes(splittedMsg[1].toLowerCase())){
+                //Admin Order
+                    if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+                        //Is contains Links
+                        if (splittedMsg[1].toLowerCase() === "newclientorg"){
+                            //If Request for New Client by Organizations
+                            try {
+                            //Organizations Request
+                                dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                            } catch (error) {
+                                console.log(error);
+                            }                    
+                        }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
+                            //If Request for New Client by Company
+                            try {
+                            //Company Request
+                                dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                            } catch (error) {
+                                console.log(error);
+                            }                                         
+                        }
+                    } else {
+                        console.log('Bukan Spreadsheet Links');
+                    }                
+                } else if(updateUserData.includes(splittedMsg[1].toLowerCase())){
+                    //User Update Data
+                }    
             } else {
                 console.log('Reqular Messages');
             }

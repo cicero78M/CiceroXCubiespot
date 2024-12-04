@@ -3,7 +3,6 @@ const fs = require('fs');
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
-const { title } = require('process');
 
 const googleCreds = JSON.parse(fs.readFileSync('./database/ciceroKey.json'));
 
@@ -14,7 +13,6 @@ const googleAuth = new JWT({
   key: googleCreds.private_key,
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
-
 
 module.exports = {
   
@@ -53,8 +51,10 @@ module.exports = {
           };
         }, 2000)
       }
+      //initiate
       pushDataOrg();
     } catch (error) {
+      //if sheet name is exist
       console.log('Sheet Exist');
     }
   },
@@ -93,8 +93,10 @@ module.exports = {
           };
         }, 2000)
       }
+      //initiate
       pushDataCom();
     } catch (error) {
+      //if sheet name is exist
       console.log('Sheet Exist');
     }
   },    
