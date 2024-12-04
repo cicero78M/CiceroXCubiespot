@@ -174,7 +174,7 @@ module.exports = {
         for (let ii = 0; ii < rowsData.length; ii++){
           if (rowsData[ii].get('ID_KEY') === idKey){
             isDataExist = true;
-            rowsData[ii].set('DIVISI', userDiv); // Update Divisi Value
+            rowsData[ii].assign({DIVISI: userDiv, WHATSAPP: phone});; // Update Divisi Value
             await rowsData[ii].save(); //save update
 
             console.log('Data Updated');
@@ -211,7 +211,7 @@ module.exports = {
         if (rowsData[i].get('ID_KEY') === idKey){
           isDataExist = true;
 
-          rowsData[i].set('JABATAN', userJab); // Update Divisi Value
+          rowsData[i].assign({JABATAN: userJab, WHATSAPP: phone});; // Jabatan Divisi Value
           await rowsData[i].save(); //save update
 
           console.log('Data Updated');
@@ -246,7 +246,7 @@ module.exports = {
         if (rowsData[i].get('ID_KEY') === idKey){
 
           isDataExist = true;
-          rowsData[i].set('NAMA', userNama); // Update Divisi Value
+          rowsData[i].assign({NAMA: userNama, WHATSAPP: phone});; // Update Divisi Value
           await rowsData[i].save(); //save update
 
           console.log('Data Updated');
@@ -291,7 +291,7 @@ module.exports = {
           if (rowsData[i].get('ID_KEY') === idKey){
 
             isDataExist = true;
-            rowsData[i].set('INSTA', insta); // Update Insta Value
+            rowsData[i].assign({INSTA: insta, WHATSAPP: phone});; // Update Insta Value
             await rowsData[i].save(); //save update
 
             console.log('Data Updated');
@@ -312,7 +312,7 @@ module.exports = {
   },
 
   //Edit User Jabatan to Client Data Base Functions  
-  updateTiktok: async function updateTiktok(sheetName, idKey, tiktok, filesID){
+  updateTiktok: async function updateTiktok(sheetName, idKey, tiktok, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -339,7 +339,7 @@ module.exports = {
           if (rowsData[i].get('ID_KEY') === idKey){
 
             isDataExist = true;
-            rowsData[i].set('TIKTOK', tiktok); // Update Insta Value
+            rowsData[i].assign({TIKTOK: tiktok, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
             console.log('Data Tiktok Updated');
