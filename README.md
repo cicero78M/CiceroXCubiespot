@@ -10,9 +10,9 @@ Admin Request Order:
 - Source File Format ID_KEY(Number)/NAMA(String)/TITLE(String)- Optional/DIVISI(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String).
 
 - Adding New User to Database : ClientName#addnew#ID_Key#UserName#UserDivision#UserJabatan#UserTitle.
-- Rename User Name : ClientName#renameuser#ID_Key#ReName.
-- Change Division : ClientName#division#ID_Key#newDivision.
-- Change Jabatan : ClientName#jabatan#ID_Key#newJabatan.
+- Rename User Name : ClientName#editname#ID_Key#new name.
+- Change Division : ClientName#editdivisi#ID_Key#new divisi.
+- Change Jabatan : ClientName#editjabatan#ID_Key#new jabatan.
 
 User Request Order :
 
