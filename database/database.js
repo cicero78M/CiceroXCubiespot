@@ -107,8 +107,23 @@ module.exports = {
     try {
       //Insert New Sheet
       await targetDoc.loadInfo(); // loads document properties and worksheets
-      const sheetTarget = targetDoc.sheetsByTitle[sheetName];//Get Target Sheet Documents by Title
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+          
+      //Get Target Sheet Documents by Title
       sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});    
+    } catch (error) {
+      //if sheet name is exist
+      console.log('Sheet Exist');
+    }
+  },
+  //Edit User jabatan to Client Data Base Functions  
+  addUser: async function editJabatan(sheetName, idKey, userJab, filesID){
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    try {
+      //Insert New Sheet
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+      
     } catch (error) {
       //if sheet name is exist
       console.log('Sheet Exist');
