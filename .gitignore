@@ -135,48 +135,40 @@ dist
 .yarn/install-state.gz
 .pnp.*
 *.old
-.wwebjs_auth/session-Client_Name/Default/GPUCache/data_1
-.wwebjs_auth/session-Client_Name/Default/Code Cache/js/index-dir/the-real-index
 .wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/LOG.old
-.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG
-.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
-.wwebjs_auth/session-Client_Name/
-.wwebjs_auth/session-Client_Name/Default/DawnCache/data_1
-.wwebjs_auth/session-Client_Name/Default/Code Cache/js/index-dir/the-real-index
-.wwebjs_auth/session-Client_Name/Default/Cookies
-.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG/*
+.wwebjs_auth/session-Client_Name/*
+.wwebjs_auth/session-Client_Name/Default/DawnCache/data_1/*
+.wwebjs_auth/session-Client_Name/Default/Code Cache/js/index-dir/the-real-index/*
+.wwebjs_auth/session-Client_Name/Default/Cookies/*
+.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG/*
 .wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG.old
-.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG
-.wwebjs_auth/session-Client_Name/Default/Session Storage/LOG
-.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
-.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
-.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
-.wwebjs_auth/session-Client_Name/DevToolsActivePort
-.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
-.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/
-.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal
-.wwebjs_auth/session-Client_Name/Default/Session Storage/
-.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/
-.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/
-.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG/*
+.wwebjs_auth/session-Client_Name/Default/Session Storage/LOG/*
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager/*
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal/*
+.wwebjs_auth/session-Client_Name/DevToolsActivePort/*
+.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/*
+.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/*
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager-journal/*
+.wwebjs_auth/session-Client_Name/Default/Session Storage/*
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/*
+.wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/*
+.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/*
 .wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG.old
-.wwebjs_auth/session-Client_Name/Default/GPUCache/data_1
-.wwebjs_auth/session-Client_Name/Default/Cookies
 .wwebjs_auth/session-Client_Name/Default/Local Storage/leveldb/LOG.old
-.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager
+.wwebjs_auth/session-Client_Name/Default/WebStorage/QuotaManager/*
 .wwebjs_auth/session-Client_Name/Default/Session Storage/LOG.old
-.wwebjs_auth/session-Client_Name/Default/Session Storage/LOG
-.wwebjs_auth/session-Client_Name/Default/Service Worker/ScriptCache/index-dir/the-real-index
+.wwebjs_auth/session-Client_Name/Default/Session Storage/LOG/*
+.wwebjs_auth/session-Client_Name/Default/Service Worker/ScriptCache/index-dir/the-real-index/*
 .wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG.old
-.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG
-.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/95a5349a-17d3-4d1d-b0b3-edb75511dd8a/index-dir/the-real-index
-.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/43c7433c-472c-445d-a428-83d40188376d/index-dir/the-real-index
-.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/43c7433c-472c-445d-a428-83d40188376d/cf77c0464d26bb0b_0
-.wwebjs_auth/session-Client_Name/DevToolsActivePort
-.wwebjs_auth/session-Client_Name/Default/Cookies
-.wwebjs_auth/session-Client_Name/Default/Code Cache/js/index-dir/the-real-index
-.wwebjs_auth/session-Client_Name/Default/DawnCache/data_1
-.wwebjs_auth/session-Client_Name/Default/GPUCache/data_1
-.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/CURRENT
-.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG
+.wwebjs_auth/session-Client_Name/Default/Service Worker/Database/LOG/*
+.wwebjs_auth/session-Client_Name/Default/Service Worker/CacheStorage/*
+.wwebjs_auth/session-Client_Name/DevToolsActivePort/*
+.wwebjs_auth/session-Client_Name/Default/Cookies/*
+.wwebjs_auth/session-Client_Name/Default/Code Cache/js/index-dir/the-real-index/*
+.wwebjs_auth/session-Client_Name/Default/DawnCache/data_1/*
+.wwebjs_auth/session-Client_Name/Default/GPUCache/data_1/*
+.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/CURRENT/*
+.wwebjs_auth/session-Client_Name/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG/*
 .wwebjs_auth/*
