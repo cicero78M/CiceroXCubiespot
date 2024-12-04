@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-//const axios = require('axios');
-//const fs = require('fs');
 
 var dataBase = require('./database/database');
 
@@ -9,10 +7,6 @@ const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
 const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
-//const cron = require('node-cron');
-
-//const rawdata = fs.readFileSync('./filedata.json');
-//const dataList = JSON.parse(rawdata);
 
 const port = 3007;
 const databaseID = '1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8';
@@ -36,13 +30,11 @@ client.on('authenthicated', (session)=>{
 });
 
 client.on('auth_failure', msg => {
-
     // Fired if session restore was unsuccessful
     console.error('AUTHENTICATION FAILURE', msg);
 });
 
 client.on('ready', () => {
-
     console.log(figlet.textSync("CICERO -X- CUBIES", {
         font: "Ghost",
         horizontalLayout: "fitted",
@@ -61,16 +53,13 @@ client.on('ready', () => {
     console.log('===============================');
 });
 
-//Pairing WA Center
 client.on('qr', qr => {
-
+    //Pairing WA Center
     qrcode.generate(qr, {small: true});
 });
 
 client.on('message', async (msg) => {
-
     try {
-
         if (msg.isStatus){
             //If Msg is WA Story
             console.log(msg.body);
@@ -83,7 +72,6 @@ client.on('message', async (msg) => {
                 if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                     if (splittedMsg[1].toLowerCase() === "newclientorg"){
                         //If Request for New Client by Organizations
-
                         try {
                             dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                         } catch (error) {
