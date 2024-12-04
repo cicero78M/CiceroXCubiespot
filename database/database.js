@@ -354,11 +354,10 @@ module.exports = {
       if(!isDataExist){
         console.log('User Data with delegated ID_KEY Doesn\'t Exist');
       }
-      
+    
     } catch (error) {
       //if sheet name is exist
       console.log(error);
     }
   },
-
 };
