@@ -47,7 +47,7 @@ module.exports = {
           if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
             pushDataOrg(); //  again which will trigger another 
           } else {
-            console.log("All Data Transfered");
+            return "All  Data Transfered";
           };
         }, 2000)
       }
@@ -55,7 +55,7 @@ module.exports = {
       pushDataOrg();
     } catch (error) {
       //if sheet name is exist
-      console.log('Sheet Exist');
+      return "Sheet Name Existed";
     }
   },
 
@@ -89,7 +89,7 @@ module.exports = {
           if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
             pushDataCom();  //again which will trigger another 
           } else {
-            console.log("All Data Transfered");
+            return "All  Data Transfered";
           };
         }, 2000)
       }
@@ -97,7 +97,7 @@ module.exports = {
       pushDataCom();
     } catch (error) {
       //if sheet name is exist
-      console.log('Sheet Exist');
+      return "Sheet Name Existed";
     }
   },
 
@@ -135,13 +135,13 @@ module.exports = {
           //Get Target Sheet Documents by Title
           sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});
 
-          console.log('Success Input Data');
+          return 'Success Input Data';
         } else {
-          console.log('ID_Key is Exist, Try Another ID_Key');
+          return 'ID_Key is Exist, Try Another ID_Key';
         }
 
       } else {
-        console.log('Divisi Tidak Terdaftar');
+        return 'Divisi Tidak Terdaftar';
       }
     } catch (error) {
       //if sheet name is exist
@@ -177,19 +177,19 @@ module.exports = {
             rowsData[ii].assign({DIVISI: userDiv, WHATSAPP: phone});; // Update Divisi Value
             await rowsData[ii].save(); //save update
 
-            console.log('Data Updated');
+            return 'Data Updated';
           }
         }
 
         if(!isDataExist){
-          console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+          return 'User Data with delegated ID_KEY Doesn\'t Exist';
         }
       } else {
-        console.log('Divisi Unregsitered');
+        return 'Divisi Unregsitered';
       }
     } catch (error) {
       //if sheet name is exist
-      console.log('Sheet Exist');
+      return 'Sheet Exist';
     }
   },
 
@@ -214,12 +214,12 @@ module.exports = {
           rowsData[i].assign({JABATAN: userJab, WHATSAPP: phone});; // Jabatan Divisi Value
           await rowsData[i].save(); //save update
 
-          console.log('Data Updated');
+          return 'Data Updated';
         }
       }
 
       if(!isDataExist){
-        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+        return 'User Data with delegated ID_KEY Doesn\'t Exist';
       }
       
     } catch (error) {
@@ -249,12 +249,12 @@ module.exports = {
           rowsData[i].assign({NAMA: userNama, WHATSAPP: phone});; // Update Divisi Value
           await rowsData[i].save(); //save update
 
-          console.log('Data Updated');
+          return 'Data Updated';
         }
       }
 
       if(!isDataExist){
-        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+        return 'User Data with delegated ID_KEY Doesn\'t Exist';
       }
       
     } catch (error) {
@@ -294,16 +294,16 @@ module.exports = {
             rowsData[i].assign({INSTA: insta, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
-            console.log('Data Updated');
+            return 'Data Updated';
           }
         }
       } else {
         isDataExist = true;
-        console.log('Username Instagram is Used by another User');
+        return 'Username Instagram is Used by another User';
       }
 
       if(!isDataExist){
-        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+        return 'User Data with delegated ID_KEY Doesn\'t Exist';
       }
       
     } catch (error) {
@@ -343,16 +343,16 @@ module.exports = {
             rowsData[i].assign({TIKTOK: tiktok, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
-            console.log('Data Tiktok Updated');
+            return 'Data Tiktok Updated';
           }
         }
       } else {
         isDataExist = true;
-        console.log('Username Tiktok is Used by another User');
+        return 'Username Tiktok is Used by another User';
       }
 
       if(!isDataExist){
-        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+        return 'User Data with delegated ID_KEY Doesn\'t Exist';
       }
     
     } catch (error) {

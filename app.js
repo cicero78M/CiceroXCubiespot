@@ -62,6 +62,8 @@ client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientorg', 'newclientcom'];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
+    const reloadOrder = ['instareload', 'tiktokreload', 'storyreload'];
+    const reportOrder = ['instareport', 'tiktokreport', 'storyreport'];
 
     try {
         if (msg.isStatus){
@@ -80,7 +82,9 @@ client.on('message', async (msg) => {
                             //If Request for New Client by Organizations
                             try {
                             //Organizations Request
-                                dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                                let response = await dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                                client.sendMessage(msg.from, response);
+
                             } catch (error) {
                                 console.log(error);
                             }                    
@@ -88,7 +92,9 @@ client.on('message', async (msg) => {
                             //If Request for New Client by Company
                             try {
                             //Company Request
-                                dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                                let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                                client.sendMessage(msg.from, response);
+
                             } catch (error) {
                                 console.log(error);
                             }                                         
@@ -99,30 +105,40 @@ client.on('message', async (msg) => {
                 } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){
                     //User Update Data
                     if (splittedMsg[1].toLowerCase() === 'adduser'){ 
+                        //Check Between Corporate And Organizations
                         if(splittedMsg.length > 6){                   
-                            dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), databaseID);
+                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), databaseID);
+                            client.sendMessage(msg.from, response);
+
                         } else {
-                            dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, databaseID);
+                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, databaseID);
+                            client.sendMessage(msg.from, response);
+
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'editdivisi') {
 
-                        dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
-                    
+                        let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
+                        client.sendMessage(msg.from, response);
+ 
                     } else if(splittedMsg[1].toLowerCase() === 'editjabatan') {
                     
-                        dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
-                    
+                        let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
+                        client.sendMessage(msg.from, response);
+
                     } else if(splittedMsg[1].toLowerCase() === 'editnama') {
                     
-                        dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
-                    
+                        let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
+                        client.sendMessage(msg.from, response);
+
                     } else if(splittedMsg[1].toLowerCase() === 'updateinsta') {
                     
-                        dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], msg.from.replace('@c.us', ''), databaseID);
-                    
+                        let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], msg.from.replace('@c.us', ''), databaseID);
+                        client.sendMessage(msg.from, response);
+
                     } else if(splittedMsg[1].toLowerCase() === 'updatetiktok') {
                     
-                        dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],msg.from.replace('@c.us', ''), databaseID);
+                        let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],msg.from.replace('@c.us', ''), databaseID);
+                        client.sendMessage(msg.from, response);
                     
                     }
                 }   
