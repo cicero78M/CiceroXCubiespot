@@ -61,7 +61,7 @@ client.on('qr', qr => {
 client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientorg', 'newclientcom'];
-    const updateUserData = ['adduser', 'renameuser', 'editdivisi', 'jabatan', 'updateinsta', 'updatetiktok'];
+    const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
 
     try {
         if (msg.isStatus){
@@ -105,8 +105,25 @@ client.on('message', async (msg) => {
                             dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, databaseID);
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'editdivisi') {
-                        
+
                         dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), databaseID);
+                    
+                    } else if(splittedMsg[1].toLowerCase() === 'editjabatan') {
+                    
+                        dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), databaseID);
+                    
+                    } else if(splittedMsg[1].toLowerCase() === 'editnama') {
+                    
+                        dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), databaseID);
+                    
+                    } else if(splittedMsg[1].toLowerCase() === 'updateinsta') {
+                    
+                        dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], databaseID);
+                    
+                    } else if(splittedMsg[1].toLowerCase() === 'updatetiktok') {
+                    
+                        dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], databaseID);
+                    
                     }
                 }   
             } else {

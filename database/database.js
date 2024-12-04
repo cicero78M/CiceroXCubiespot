@@ -111,6 +111,15 @@ module.exports = {
 
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const rowsData = await sheetTarget.getRows();
+
+      let idKeyList = [];
+
+      //Collect ID_KEY List String
+      for (let ix = 0; ix < rowsData.length; ix++){
+        if(!idKeyList.includes(rowsData[ix].get('ID_KEY'))){
+          idKeyList.push(rowsData[ix].get('ID_KEY'));
+        }
+      }
       
       let divisiList = [];
 
@@ -121,10 +130,16 @@ module.exports = {
         }
       }
       if(divisiList.includes(userDiv)){
-        //Get Target Sheet Documents by Title
-        sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});
+        if (!idKeyList.includes(idKey)){
 
-        console.log('Success Input Data');
+          //Get Target Sheet Documents by Title
+          sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});
+
+          console.log('Success Input Data');
+        } else {
+          console.log('ID_Key is Exist, Try Another ID_Key');
+        }
+
       } else {
         console.log('Divisi Tidak Terdaftar');
       }
@@ -144,8 +159,10 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const rowsData = await sheetTarget.getRows();
 
-      let divisiList = [];
+      let isDataExist = false;
 
+      let divisiList = [];
+  
       //Collect Divisi List String
       for (let i = 0; i < rowsData.length; i++){
         if(!divisiList.includes(rowsData[i].get('DIVISI'))){
@@ -153,16 +170,14 @@ module.exports = {
         }
       }
 
-      let isDataExist = false;
-
       if (divisiList.includes(userDiv)){
         for (let ii = 0; ii < rowsData.length; ii++){
           if (rowsData[ii].get('ID_KEY') === idKey){
-            console.log(rowsData[ii].get('ID_KEY'));
-
             isDataExist = true;
             rowsData[ii].set('DIVISI', userDiv); // Update Divisi Value
             await rowsData[ii].save(); //save update
+
+            console.log('Data Updated');
           }
         }
 
@@ -177,4 +192,171 @@ module.exports = {
       console.log('Sheet Exist');
     }
   },
+
+  //Edit User Jabatan to Client Data Base Functions  
+  editJabatan: async function editJabatan(sheetName, idKey, userJab, filesID){
+
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    try {
+      //Insert New Sheet
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const rowsData = await sheetTarget.getRows();
+
+      let isDataExist = false;
+
+      for (let i = 0; i < rowsData.length; i++){
+        if (rowsData[i].get('ID_KEY') === idKey){
+          isDataExist = true;
+
+          rowsData[i].set('JABATAN', userJab); // Update Divisi Value
+          await rowsData[i].save(); //save update
+
+          console.log('Data Updated');
+        }
+      }
+
+      if(!isDataExist){
+        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+      }
+      
+    } catch (error) {
+      //if sheet name is exist
+      console.log(error);
+    }
+  },
+
+  //Edit User Jabatan to Client Data Base Functions  
+  editNama: async function editNama(sheetName, idKey, userNama, filesID){
+
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    try {
+      //Insert New Sheet
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const rowsData = await sheetTarget.getRows();
+
+      let isDataExist = false;
+
+      for (let i = 0; i < rowsData.length; i++){
+        if (rowsData[i].get('ID_KEY') === idKey){
+
+          isDataExist = true;
+          rowsData[i].set('NAMA', userNama); // Update Divisi Value
+          await rowsData[i].save(); //save update
+
+          console.log('Data Updated');
+        }
+      }
+
+      if(!isDataExist){
+        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+      }
+      
+    } catch (error) {
+      //if sheet name is exist
+      console.log(error);
+    }
+  },
+
+  //Edit User Jabatan to Client Data Base Functions  
+  updateInsta: async function updateInsta(sheetName, idKey, insta, filesID){
+
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    try {
+      //Insert New Sheet
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const rowsData = await sheetTarget.getRows();
+
+      let isDataExist = false;
+
+      let instaList = [];
+  
+      //Collect Divisi List String
+      for (let i = 0; i < rowsData.length; i++){
+        if(!instaList.includes(rowsData[i].get('INSTA'))){
+          instaList.push(rowsData[i].get('INSTA'));
+        }
+      }
+
+      if(!instaList.includes(insta)){
+        for (let i = 0; i < rowsData.length; i++){
+          if (rowsData[i].get('ID_KEY') === idKey){
+
+            isDataExist = true;
+            rowsData[i].set('INSTA', insta); // Update Insta Value
+            await rowsData[i].save(); //save update
+
+            console.log('Data Updated');
+          }
+        }
+      } else {
+        console.log('Username Instagram is Used by another User');
+      }
+
+      if(!isDataExist){
+        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+      }
+      
+    } catch (error) {
+      //if sheet name is exist
+      console.log(error);
+    }
+  },
+
+  //Edit User Jabatan to Client Data Base Functions  
+  updateTiktok: async function updateTiktok(sheetName, idKey, tiktok, filesID){
+
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    try {
+      //Insert New Sheet
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const rowsData = await sheetTarget.getRows();
+
+      let isDataExist = false;
+
+      let tiktokList = [];
+  
+      //Collect Divisi List String
+      for (let i = 0; i < rowsData.length; i++){
+        if(!tiktokList.includes(rowsData[i].get('TIKTOK'))){
+          tiktokList.push(rowsData[i].get('TIKTOK'));
+        }
+      }
+
+      if(!tiktokList.includes(tiktok)){
+        for (let i = 0; i < rowsData.length; i++){
+          if (rowsData[i].get('ID_KEY') === idKey){
+
+            isDataExist = true;
+            rowsData[i].set('TIKTOK', tiktok); // Update Insta Value
+            await rowsData[i].save(); //save update
+
+            console.log('Data Tiktok Updated');
+          }
+        }
+      } else {
+        console.log('Username Tiktok is Used by another User');
+      }
+
+      if(!isDataExist){
+        console.log('User Data with delegated ID_KEY Doesn\'t Exist');
+      }
+      
+    } catch (error) {
+      //if sheet name is exist
+      console.log(error);
+    }
+  },
+
 };
