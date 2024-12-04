@@ -99,5 +99,19 @@ module.exports = {
       //if sheet name is exist
       console.log('Sheet Exist');
     }
-  },    
+  },
+
+  //Add New User to Client Data Base Functions  
+  addUser: async function addUser(sheetName, idKey, userName, userDiv, userJab, userTitle, filesID){
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    try {
+      //Insert New Sheet
+      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];//Get Target Sheet Documents by Title
+      sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});    
+    } catch (error) {
+      //if sheet name is exist
+      console.log('Sheet Exist');
+    }
+  },
 };

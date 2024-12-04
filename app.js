@@ -61,7 +61,7 @@ client.on('qr', qr => {
 client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientorg', 'newclientcom'];
-    const updateUserData = ['addnew', 'renameuser', 'division', 'jabatan', 'updateinsta', 'updatetiktok'];
+    const updateUserData = ['adduser', 'renameuser', 'division', 'jabatan', 'updateinsta', 'updatetiktok'];
 
     try {
         if (msg.isStatus){
@@ -96,9 +96,16 @@ client.on('message', async (msg) => {
                     } else {
                         console.log('Bukan Spreadsheet Links');
                     }                
-                } else if(updateUserData.includes(splittedMsg[1].toLowerCase())){
+                } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){
                     //User Update Data
-                }    
+                    if (splittedMsg[1].toLowerCase() === 'adduser'){ 
+                        if(splittedMsg.length > 5){                   
+                            dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), databaseID);
+                        } else {
+                            dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, databaseID);
+                        }
+                    } 
+                }   
             } else {
                 console.log('Reqular Messages');
             }
