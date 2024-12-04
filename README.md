@@ -18,3 +18,9 @@ User Request Order :
 
 - Update Insta Username : ClientName#updateinsta#InstagramProfileLink.
 - Update Tiktok Username : ClientName#updateinsta#TiktokProfileLink.
+
+System Rekap Data :
+
+- System Rekap Insta
+- System Rekap Tiktok
+- System Rekap Story
