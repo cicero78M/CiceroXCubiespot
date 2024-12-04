@@ -1,3 +1,15 @@
-2024/12/03-23:41:34.964 85f4 Reusing MANIFEST D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/MANIFEST-000001
-2024/12/03-23:41:34.965 85f4 Recovering log #22
-2024/12/03-23:41:34.965 85f4 Reusing old log D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/000022.log 
+2024/12/03-23:43:13.295 64dc Reusing MANIFEST D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/MANIFEST-000001
+2024/12/03-23:43:13.295 64dc Recovering log #22
+2024/12/03-23:43:13.295 64dc Reusing old log D:\CiceroXCubispot\.wwebjs_auth\session-Client_Name\Default\Local Storage\leveldb/000022.log 
+2024/12/04-04:53:48.702 12038 Level-0 table #26: started
+2024/12/04-04:53:48.722 12038 Level-0 table #26: 17239 bytes OK
+2024/12/04-04:53:48.724 12038 Delete type=0 #22
+2024/12/04-04:53:48.724 12038 Compacting 4@0 + 1@1 files
+2024/12/04-04:53:48.730 12038 Generated table #27@0: 69 keys, 7054 bytes
+2024/12/04-04:53:48.730 12038 Compacted 4@0 + 1@1 files => 7054 bytes
+2024/12/04-04:53:48.731 12038 compacted to: files[ 0 1 0 0 0 0 0 ]
+2024/12/04-04:53:48.732 12038 Delete type=2 #14
+2024/12/04-04:53:48.732 12038 Delete type=2 #16
+2024/12/04-04:53:48.732 12038 Delete type=2 #20
+2024/12/04-04:53:48.732 12038 Delete type=2 #23
+2024/12/04-04:53:48.732 12038 Delete type=2 #26
