@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 
-var dataBase = require('./database/database');
-var query = require('./database/myData');
-var checkData = require('./database/checkData');
+var dataBase = require('./src/database/database');
+var query = require('./src/database/myData');
+var checkData = require('./src/database/checkData');
 
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
