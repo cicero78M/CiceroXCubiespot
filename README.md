@@ -33,6 +33,6 @@ System Reloads data :
   
 System Rekap Data :
 
-- System Rekap Insta
-- System Rekap Tiktok
-- System Rekap Story
+- Rekap Insta
+- Rekap Tiktok
+- Rekap Story
