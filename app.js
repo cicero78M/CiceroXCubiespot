@@ -88,7 +88,6 @@ client.on('message', async (msg) => {
                             //Organizations Request
                                 let response = await dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                                 client.sendMessage(msg.from, response);
-
                             } catch (error) {
                                 console.log(error);
                             }                    
@@ -98,7 +97,6 @@ client.on('message', async (msg) => {
                             //Company Request
                                 let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                                 client.sendMessage(msg.from, response);
-
                             } catch (error) {
                                 console.log(error);
                             }                                         
@@ -183,19 +181,16 @@ client.on('message', async (msg) => {
                 } else if(splittedMsg[1].toLowerCase() === 'addclient'){
                     //User Checking myData
                     if (!splittedMsg[2].includes('/p/') || !splittedMsg[2].includes('/reels/') || !splittedMsg[2].includes('/video/') && splittedMsg[2].includes('instagram.com') && !splittedMsg[4].includes('twitter.com')){
-
                         let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], clientDataID);
                         client.sendMessage(msg.from, response);
                     }
                 } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
                     //User Checking myData
-
-                        let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataID);
-                        client.sendMessage(msg.from, response);
-                    
-                }
-                
+                    let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataID);
+                    client.sendMessage(msg.from, response);
+                }             
             } else {
+                //Regular Messages
                 console.log('Reqular Messages');
             }
         }
