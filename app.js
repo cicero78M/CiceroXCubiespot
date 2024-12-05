@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 var dataBase = require('./database/database');
+var query = require('./database/query');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -141,7 +142,13 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
                         }
                     }
-                }   
+                } else if(splittedMsg[1].toLowerCase() === 'mydata'){
+                
+                    let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2] ,msg.from.replace('@c.us', ''), databaseID);
+                    client.sendMessage(msg.from, response);
+                }
+
+
             } else {
                 console.log('Reqular Messages');
             }
