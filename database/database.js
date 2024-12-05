@@ -336,7 +336,7 @@ module.exports = {
           tiktokList.push(rowsData[i].get('TIKTOK'));
         }
       }
-
+    
       if(!tiktokList.includes(userLink)){
         for (let i = 0; i < rowsData.length; i++){
           if (rowsData[i].get('ID_KEY') === idKey){
