@@ -21,8 +21,5 @@ module.exports = {
         const clientDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Authentication with JWT
         await clientDoc.loadInfo(); // loads document properties and worksheets
 
-        
-    
-
     },
 }
