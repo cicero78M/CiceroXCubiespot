@@ -46,23 +46,16 @@ module.exports = {
         let userByDivisi = '';
 
         for (let ii = 0; ii < rowsData.length; ii++){
-          
           if(divisiList[i] === rowsData[ii].get('DIVISI')){
-
             if (rowsData[ii].get('INSTA') === null || rowsData[ii].get('INSTA') === undefined ){
-
-
               userByDivisi = userByDivisi.concat('\n'+rowsData[ii].get('TITLE') +' '+rowsData[ii].get('NAMA'));
               divisiCounter++;
               userCounter++;
-
             }
-
           }  
         }
 
         dataInsta = dataInsta.concat('\n\n'+divisiList[i]+' : '+divisiCounter+' User\n'+userByDivisi);
-      
       }
 
       let instaSudah = rowsData.length-userCounter;
@@ -71,10 +64,8 @@ module.exports = {
       return response;
 
     } catch (error) {
-
       console.log(error);
       return 'error'; 
-    
     }
   },
 
@@ -106,35 +97,24 @@ module.exports = {
         let userByDivisi = '';
 
         for (let ii = 0; ii < rowsData.length; ii++){
-          
           if(divisiList[i] === rowsData[ii].get('DIVISI')){
-
             if (rowsData[ii].get('TIKTOK') === null || rowsData[ii].get('TIKTOK') === undefined ){
-
-
               userByDivisi = userByDivisi.concat('\n'+rowsData[ii].get('TITLE') +' '+rowsData[ii].get('NAMA'));
               divisiCounter++;
               userCounter++;
-
             }
-
           }  
         }
-
         dataInsta = dataInsta.concat('\n\n'+divisiList[i]+' : '+divisiCounter+' User\n'+userByDivisi);
-      
       }
 
       let instaSudah = rowsData.length-userCounter;
-
       let response = "*"+sheetName+"*\n\nInformasi Rekap Data username profile akun Tiktok sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+rowsData.length+" \nJumlah User Sudah melengkapi: "+instaSudah+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_"
       return response;
 
     } catch (error) {
-
       console.log(error);
       return 'error'; 
-    
     }
   },
 }

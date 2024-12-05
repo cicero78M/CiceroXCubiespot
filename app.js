@@ -118,15 +118,19 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response);
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'editdivisi') {
+                        //update Divisi Name
                         let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'editjabatan') {
+                        //Update Jabatan
                         let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'editnama') {
+                        //Update Nama
                         let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'updateinsta') {
+                        //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
                             if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
                                 let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], msg.from.replace('@c.us', ''), databaseID);
@@ -138,6 +142,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'updatetiktok') {
+                        //Update Tiktok profile
                         if (splittedMsg[3].includes('tiktok.com')){                    
                             let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],msg.from.replace('@c.us', ''), databaseID);
                             client.sendMessage(msg.from, response);
@@ -145,26 +150,21 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
                         }
                     }
-
                 } else if(dataOrder.includes(splittedMsg[1].toLowerCase())){
+                    //Checking If User hasn't update Insta Profile
                     if(splittedMsg[1].toLowerCase() === 'instacheck') {
-
                         let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), databaseID);
                         client.sendMessage(msg.from, response);
-                    
                     } else if(splittedMsg[1].toLowerCase() === 'tiktokcheck') {
-
+                    //Checking If User hasn't update Tiktok Profile
                         let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), databaseID);
                         client.sendMessage(msg.from, response);
-                    
                     }
                 } else if(splittedMsg[1].toLowerCase() === 'mydata'){
-                
+                    //User Checking myData
                     let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                     client.sendMessage(msg.from, response);
                 }
-
-
             } else {
                 console.log('Reqular Messages');
             }

@@ -17,23 +17,24 @@ const googleAuth = new JWT({
 module.exports = {
 
   myData: async function myData(sheetName, idKey, filesID){
-
+    //Auth Request to Files
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     await targetDoc.loadInfo(); // loads document properties and worksheets
 
     try {
-
+      //Data by Sheet Name
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
       const rowsData = await sheetTarget.getRows();
       
       let response= [];
-
+      //Check if idKey Exist
       for (let i = 0; i < rowsData.length; i++){
         if (rowsData[i].get('ID_KEY') === idKey){
           response = rowsData[i];
         }
       }
-
+      
+      //Reporting
       let myDataReport = `*Profile Anda*\n\nUser :`+response.get('NAMA')+`\nID Key : `+response.get('ID_KEY')+`\nDivisi / Jabatan : `+response.get('DIVISI')+` / `+response.get('JABATAN')+`\nInsta : `+response.get('INSTA')+`\nTikTok : `+response.get('TIKTOK')+`\nStatus : `+response.get('STATUS');
 
       return myDataReport;
