@@ -4,7 +4,6 @@ let date = new Date();
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
-const { response } = require('express');
 
 const googleCreds = JSON.parse (fs.readFileSync('./database/ciceroKey.json'));
 
