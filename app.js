@@ -182,18 +182,17 @@ client.on('message', async (msg) => {
                     client.sendMessage(msg.from, response);
                 } else if(splittedMsg[1].toLowerCase() === 'addclient'){
                     //User Checking myData
-                    if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('twitter.com')){
+                    if (!splittedMsg[2].includes('/p/') || !splittedMsg[2].includes('/reels/') || !splittedMsg[2].includes('/video/') && splittedMsg[2].includes('instagram.com') && !splittedMsg[4].includes('twitter.com')){
 
                         let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], clientDataID);
                         client.sendMessage(msg.from, response);
                     }
                 } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
                     //User Checking myData
-                    if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('twitter.com')){
 
                         let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataID);
                         client.sendMessage(msg.from, response);
-                    }
+                    
                 }
                 
             } else {
