@@ -5,7 +5,6 @@ var dataBase = require('./src/database/database');
 var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
 
-
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
 const banner = require('simple-banner');
@@ -13,6 +12,7 @@ const qrcode = require('qrcode-terminal');
 
 const port = 3007;
 const databaseID = '1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8';
+const clientDataID = '1TMj77bl9jPBD8BsgMxjuXTk4DbWK5eguj10HQoeFVNQ';
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -151,14 +151,22 @@ client.on('message', async (msg) => {
                         }
                     }
                 } else if(dataOrder.includes(splittedMsg[1].toLowerCase())){
-                    //Checking If User hasn't update Insta Profile
                     if(splittedMsg[1].toLowerCase() === 'instacheck') {
+                        //Checking If User hasn't update Insta Profile
                         let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), databaseID);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'tiktokcheck') {
-                    //Checking If User hasn't update Tiktok Profile
+                        //Checking If User hasn't update Tiktok Profile
                         let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), databaseID);
                         client.sendMessage(msg.from, response);
+                    }
+                } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
+                    if(splittedMsg[1].toLowerCase() === 'reloadinsta') {
+                        //Reload Likes from Insta Official
+                        
+                    } else if(splittedMsg[1].toLowerCase() === 'reloadtiktok') {
+                        //Reload Likes from Insta Official
+                    
                     }
                 } else if(splittedMsg[1].toLowerCase() === 'mydata'){
                     //User Checking myData
