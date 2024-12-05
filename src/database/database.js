@@ -69,7 +69,7 @@ module.exports = {
           isDataExist = true;
           clientData[i].assign({STATUS: state});; // Updae State Value
           await clientData[i].save(); //save update
-          return 'New Client Registred with Client_ID : '+sheetName;
+          return 'Client State with Client_ID : '+sheetName+' set status to : '+state;
         }
       }
       if(!isDataExist){
