@@ -13,14 +13,17 @@ Admin Request Order:
 - Rename : ClientName#editname#ID_Key#new name
 - Change Division : ClientName#editdivisi#ID_Key#new divisi
 - Change Jabatan : ClientName#editjabatan#ID_Key#new jabatan
-- Report All Client User Data
+
+Report User Data :
+
 - Report Insta Update : ClientName#instacheck
-- Report Tiktok Update
+- Report Tiktok Update : ClientName#tiktokcheck
 
-User Request Order :
+User Order :
 
-- Update Insta Username : ClientName#updateinsta#InstagramProfileLink
-- Update Tiktok Username : ClientName#updateinsta#TiktokProfileLink
+- Request Checking My Data : ClientName#mydata
+- Request Update Insta Username : ClientName#updateinsta#InstagramProfileLink
+- Request Update Tiktok Username : ClientName#updateinsta#TiktokProfileLink
 
 System Rekap Data :
 
