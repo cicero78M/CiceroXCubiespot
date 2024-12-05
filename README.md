@@ -14,7 +14,7 @@ Admin Request Order:
 - Change Division : ClientName#editdivisi#ID_Key#new divisi
 - Change Jabatan : ClientName#editjabatan#ID_Key#new jabatan
 - Report All Client User Data
-- Report Insta Update
+- Report Insta Update : ClientName#instacheck
 - Report Tiktok Update
 
 User Request Order :
