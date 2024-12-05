@@ -17,7 +17,7 @@ const googleAuth = new JWT({
 
 module.exports = {
 
-  myData: async function updateTiktok(sheetName, idKey, phone, filesID){
+  myData: async function myData(sheetName, idKey, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     await targetDoc.loadInfo(); // loads document properties and worksheets
