@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 var dataBase = require('./database/database');
-var query = require('./database/query');
+var query = require('./database/myData');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');

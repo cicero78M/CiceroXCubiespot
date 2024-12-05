@@ -16,6 +16,7 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
+
   myData: async function updateTiktok(sheetName, idKey, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
@@ -44,5 +45,6 @@ module.exports = {
       return 'error'; 
     
     }
-  }   
+  },
+
 }
