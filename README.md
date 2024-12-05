@@ -3,6 +3,9 @@ Cicero Colaboration
 
 Admin Request Order:
 
+- Add New Client : ClientName#addclient#InstaLink#tiktokLink
+- Change Status Client : ClientName#clientstate#boolean
+
 - Transfer Data by Organizations : ClientName#newclientorg#LinkSourceSheet
 - Source File Format NRP(Number)/NAMA(String)/PANGKAT(String)/SATFUNG(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
 
