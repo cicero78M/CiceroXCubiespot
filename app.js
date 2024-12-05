@@ -3,6 +3,8 @@ const app = express();
 
 var dataBase = require('./database/database');
 var query = require('./database/myData');
+var checkData = require('./database/checkData');
+
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -63,6 +65,7 @@ client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientorg', 'newclientcom'];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
+    const dataOrder = ['instacheck', 'tiktokcheck'];
     const reloadOrder = ['instareload', 'tiktokreload', 'storyreload'];
     const reportOrder = ['instareport', 'tiktokreport', 'storyreport'];
 
@@ -142,9 +145,22 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
                         }
                     }
+
+                } else if(dataOrder.includes(splittedMsg[1].toLowerCase())){
+                    if(splittedMsg[1].toLowerCase() === 'instacheck') {
+
+                        let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), databaseID);
+                        client.sendMessage(msg.from, response);
+                    
+                    } else if(splittedMsg[1].toLowerCase() === 'tiktokcheck') {
+
+                        let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), databaseID);
+                        client.sendMessage(msg.from, response);
+                    
+                    }
                 } else if(splittedMsg[1].toLowerCase() === 'mydata'){
                 
-                    let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2] ,msg.from.replace('@c.us', ''), databaseID);
+                    let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                     client.sendMessage(msg.from, response);
                 }
 

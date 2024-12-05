@@ -1,4 +1,5 @@
 const fs = require('fs');
+let date = new Date();
 
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
@@ -17,7 +18,7 @@ const googleAuth = new JWT({
 
 module.exports = {
 
-  myData: async function updateTiktok(sheetName, idKey, phone, filesID){
+  instaCheck: async function instaCheck(sheetName, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     await targetDoc.loadInfo(); // loads document properties and worksheets
@@ -27,6 +28,48 @@ module.exports = {
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
       const rowsData = await sheetTarget.getRows();
 
+      let divisiList= [];
+
+      for (let i = 0; i < rowsData.length; i++){
+        if (rowsData[i].get('INSTA') === null || rowsData[i].get('INSTA') === undefined ){
+          if(!divisiList.includes(rowsData[i].get('DIVISI'))){
+            divisiList.push(rowsData[i].get('DIVISI')); 
+         }
+        }
+      }
+ 
+      let dataInsta = '';
+      let userCounter = 0;
+
+      for (let i = 0; i < divisiList.length; i++){
+        let divisiCounter = 0 ;
+        let userByDivisi = '';
+
+        for (let ii = 0; ii < rowsData.length; ii++){
+          
+          if(divisiList[i] === rowsData[ii].get('DIVISI')){
+
+            if (rowsData[ii].get('INSTA') === null || rowsData[ii].get('INSTA') === undefined ){
+
+
+              userByDivisi = userByDivisi.concat('\n'+rowsData[ii].get('TITLE') +' '+rowsData[ii].get('NAMA'));
+              divisiCounter++;
+              userCounter++;
+
+            }
+
+          }  
+        }
+
+        dataInsta = dataInsta.concat('\n\n'+divisiList[i]+' : '+divisiCounter+' User\n'+userByDivisi);
+      
+      }
+
+      let instaSudah = rowsData.length-userCounter;
+
+      let response = "*"+sheetName+"*\n\nInformasi Rekap Data username profile akun Instagram sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+rowsData.length+" \nJumlah User Sudah melengkapi: "+instaSudah+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_"
+      return response;
+
     } catch (error) {
 
       console.log(error);
@@ -35,4 +78,63 @@ module.exports = {
     }
   },
 
+  tiktokCheck: async function tiktokCheck(sheetName, filesID){
+
+    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    await targetDoc.loadInfo(); // loads document properties and worksheets
+
+    try {
+
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
+      const rowsData = await sheetTarget.getRows();
+
+      let divisiList= [];
+
+      for (let i = 0; i < rowsData.length; i++){
+        if (rowsData[i].get('TIKTOK') === null || rowsData[i].get('TIKTOK') === undefined ){
+          if(!divisiList.includes(rowsData[i].get('DIVISI'))){
+            divisiList.push(rowsData[i].get('DIVISI')); 
+         }
+        }
+      }
+ 
+      let dataInsta = '';
+      let userCounter = 0;
+
+      for (let i = 0; i < divisiList.length; i++){
+        let divisiCounter = 0 ;
+        let userByDivisi = '';
+
+        for (let ii = 0; ii < rowsData.length; ii++){
+          
+          if(divisiList[i] === rowsData[ii].get('DIVISI')){
+
+            if (rowsData[ii].get('TIKTOK') === null || rowsData[ii].get('TIKTOK') === undefined ){
+
+
+              userByDivisi = userByDivisi.concat('\n'+rowsData[ii].get('TITLE') +' '+rowsData[ii].get('NAMA'));
+              divisiCounter++;
+              userCounter++;
+
+            }
+
+          }  
+        }
+
+        dataInsta = dataInsta.concat('\n\n'+divisiList[i]+' : '+divisiCounter+' User\n'+userByDivisi);
+      
+      }
+
+      let instaSudah = rowsData.length-userCounter;
+
+      let response = "*"+sheetName+"*\n\nInformasi Rekap Data username profile akun Tiktok sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+rowsData.length+" \nJumlah User Sudah melengkapi: "+instaSudah+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_"
+      return response;
+
+    } catch (error) {
+
+      console.log(error);
+      return 'error'; 
+    
+    }
+  },
 }

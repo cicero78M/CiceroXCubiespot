@@ -3,7 +3,6 @@ const fs = require('fs');
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
-const { response } = require('express');
 
 const googleCreds = JSON.parse (fs.readFileSync('./database/ciceroKey.json'));
 
@@ -17,7 +16,7 @@ const googleAuth = new JWT({
 
 module.exports = {
 
-  myData: async function myData(sheetName, idKey, phone, filesID){
+  myData: async function myData(sheetName, idKey, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     await targetDoc.loadInfo(); // loads document properties and worksheets
