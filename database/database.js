@@ -47,7 +47,7 @@ module.exports = {
           if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
             pushDataOrg(); //  again which will trigger another 
           } else {
-            return "All  Data Transfered";
+            return "All  Data Transfered, untuk melihat data user kirim pesan dengan: Client#myData#ID_Ke";
           };
         }, 2000)
       }
@@ -89,7 +89,7 @@ module.exports = {
           if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
             pushDataCom();  //again which will trigger another 
           } else {
-            return "All  Data Transfered";
+            return "All  Data Transfered, untuk melihat data user kirim pesan dengan: Client#myData#ID_Key";
           };
         }, 2000)
       }
@@ -135,7 +135,7 @@ module.exports = {
           //Get Target Sheet Documents by Title
           sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});
 
-          return 'Success Input Data';
+          return 'Success Input Data, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
         } else {
           return 'ID_Key is Exist, Try Another ID_Key';
         }
@@ -177,7 +177,7 @@ module.exports = {
             rowsData[ii].assign({DIVISI: userDiv, WHATSAPP: phone});; // Update Divisi Value
             await rowsData[ii].save(); //save update
 
-            return 'Data Updated';
+            return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
           }
         }
 
@@ -214,7 +214,7 @@ module.exports = {
           rowsData[i].assign({JABATAN: userJab, WHATSAPP: phone});; // Jabatan Divisi Value
           await rowsData[i].save(); //save update
 
-          return 'Data Updated';
+          return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
         }
       }
 
@@ -249,7 +249,7 @@ module.exports = {
           rowsData[i].assign({NAMA: userNama, WHATSAPP: phone});; // Update Divisi Value
           await rowsData[i].save(); //save update
 
-          return 'Data Updated';
+          return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
         }
       }
 
@@ -295,7 +295,7 @@ module.exports = {
             rowsData[i].assign({INSTA: userLink, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
-            return 'Data Updated';
+            return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
           }
         }
       } else {
@@ -345,7 +345,7 @@ module.exports = {
             rowsData[i].assign({TIKTOK: userLink, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
-            return 'Data Tiktok Updated';
+            return 'Data Tiktok Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key ';
           }
         }
       } else {
