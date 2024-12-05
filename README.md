@@ -26,7 +26,7 @@ User Order :
 
 - Request Checking My Data : ClientName#mydata
 - Request Update Insta Username : ClientName#updateinsta#InstagramProfileLink
-- Request Update Tiktok Username : ClientName#updateinsta#TiktokProfileLink
+- Request Update Tiktok Username : ClientName#updatetiktok#TiktokProfileLink
 
 System Reloads data :
 
