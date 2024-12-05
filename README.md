@@ -25,6 +25,12 @@ User Order :
 - Request Update Insta Username : ClientName#updateinsta#InstagramProfileLink
 - Request Update Tiktok Username : ClientName#updateinsta#TiktokProfileLink
 
+System Reloads data :
+
+- Reload Insta
+- Reload Tiktok
+- Reload Whatsapp Story
+  
 System Rekap Data :
 
 - System Rekap Insta
