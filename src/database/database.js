@@ -15,6 +15,41 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
+
+    //Add New Client to Database Client ID  
+    addClient: async function addClient(sheetName, insta, tiktok, filesID){
+
+      let instaLink = insta.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
+      let tiktokLink = tiktok.replaceAll.split('/').pop();      //Get Last Segment of Links
+
+      const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+      try {
+        //Insert New Sheet
+        await targetDoc.loadInfo(); // loads document properties and worksheets
+        const sheetTarget = targetDoc.sheetsByTitle['ClientData'];
+        const clientData = await sheetTarget.getRows();
+
+        let isClient = false;
+        let clientState;
+
+        for (let i = 0; i < clientData.length; i++){
+          if(clientData[i].get('CLIENT_ID') === sheetName){
+            isClient = true;
+            clientState = clientData[i].get('STATUS')
+          }
+        }
+        if (!isClient){
+          sheetTarget.addRow({CLIENT_ID: sheetName, STATUS: true, INSTA: instaLink, TIKTOK: tiktokLink});
+          return 'Client ID : '+sheetName+' Registred Success.';
+        } else {
+          return 'Client is exist with status : '+clientState;
+        }
+  
+      } catch (error) {
+        //if sheet name is exist
+        console.log(error);
+      }
+    },  
   
   //New Client Database by Organizations Source Functions
   newClientOrg: async function newClientOrg(sheetName, sourceID, filesID){

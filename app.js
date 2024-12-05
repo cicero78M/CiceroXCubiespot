@@ -165,14 +165,30 @@ client.on('message', async (msg) => {
                         //Reload Likes from Insta Official
                         
                     } else if(splittedMsg[1].toLowerCase() === 'reloadtiktok') {
-                        //Reload Likes from Insta Official
+                        //Reload Likes from Tiktok Official
+                    
+                    }
+                } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){
+                    if(splittedMsg[1].toLowerCase() === 'reportinsta') {
+                        //Report Likes from Insta Official
+                        
+                    } else if(splittedMsg[1].toLowerCase() === 'reporttiktok') {
+                        //Report Likes from Tiktok Official
                     
                     }
                 } else if(splittedMsg[1].toLowerCase() === 'mydata'){
                     //User Checking myData
                     let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
                     client.sendMessage(msg.from, response);
+                } else if(splittedMsg[1].toLowerCase() === 'addClient'){
+                    //User Checking myData
+                    if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('twitter.com')){
+
+                        let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], databaseID);
+                        client.sendMessage(msg.from, response);
+                    }
                 }
+                
             } else {
                 console.log('Reqular Messages');
             }

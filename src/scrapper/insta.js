@@ -16,5 +16,13 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
+    reloadInsta: async function reloadInsta(sheetName, filesID){
+
+        const clientDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Authentication with JWT
+        await clientDoc.loadInfo(); // loads document properties and worksheets
+
+        
     
+
+    },
 }
