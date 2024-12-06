@@ -19,7 +19,7 @@ module.exports = {
   reloadInsta: async function reloadInsta(sheetName, userClientID, clientID, instaOfficialID){
 
     const d = new Date();
-    const localDate = d.toLocaleString('id');
+    const localDate = d.toLocaleDateString('id');
 
     const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
     await userClientDoc.loadInfo(); // loads document properties and worksheets
@@ -30,7 +30,6 @@ module.exports = {
     const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for instaLikes DB
     await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
 
-
     //Check Client_ID. then get async data
     let isClientID = false;
     let instaOfficial;
@@ -39,10 +38,9 @@ module.exports = {
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
     console.log(rowsClientData);
-    for (let i = 0; i < rowsClientData.length; i++){
-      
-      if (rowsClientData[i].get('CLIENT_ID') === sheetName){
 
+    for (let i = 0; i < rowsClientData.length; i++){
+      if (rowsClientData[i].get('CLIENT_ID') === sheetName){
         isClientID = true;
         instaOfficial = rowsClientData[i].get('INSTAGRAM');
         isStatus = rowsClientData[i].get('STATUS');
@@ -50,8 +48,7 @@ module.exports = {
     }
 
     // If Client_ID exist. then get official content
-    if (isClientID && isStatus){
-        
+    if (isClientID && isStatus){    
       const options = {
         method: 'GET',
         url: 'https://instagram-scraper-api2.p.rapidapi.com/v1.2/posts',
@@ -66,14 +63,28 @@ module.exports = {
       
       try {
         const response = await axios.request(options);
-        console.log(response.data);
+        const items = response.data.data.items;
+        let itemByDay = [];
+
+        for (let i = 0; i < items.length; i++){
+
+          let itemDate = new Date(items[i].taken_at*1000);
+          if(itemDate.toLocaleDateString('id') === localDate){
+            itemByDay.push(items[i]);
+          }
+        }
+
+        const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
+        const officialInstaData = await officialInstaSheet.getRows();
+
+        officialInstaSheet.addRow({});
+        
       } catch (error) {
         console.error(error);
       }
 
-    } else {
-
-      console.log ("Not Exist");
+    }  else {
+      console.log('Contact Developers for Activate your Client ID');
     }
   },
 }
