@@ -76,13 +76,12 @@ module.exports = {
 
         const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
         const officialInstaData = await officialInstaSheet.getRows();
-
+        //Add data to DB
         for (let i = 0; i < itemByDay.length; i++){
 
           officialInstaSheet.addRow({});
 
         }
-
         
       } catch (error) {
         console.error(error);
