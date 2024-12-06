@@ -16,10 +16,64 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-    reloadInsta: async function reloadInsta(sheetName, filesID){
+    reloadInsta: async function reloadInsta(sheetName, userClientID, clientID, instaOfficialID){
 
-        const clientDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Authentication with JWT
-        await clientDoc.loadInfo(); // loads document properties and worksheets
+      const d = new Date();
+      const localDate = d.toLocaleString('id');
 
+      const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
+      await userClientDoc.loadInfo(); // loads document properties and worksheets
+
+      const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
+      await clientDoc.loadInfo(); // loads document properties and worksheets
+
+      const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for instaLikes DB
+      await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+
+
+      //Check Client_ID. then get async data
+      let isClientID = false;
+      let instaOfficial;
+      LET isStatus;
+      
+      const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
+      const rowsClientData = await clientDataSheet.getRows();
+      console.log(rowsClientData);
+      for (let i = 0; i < rowsClientData.length; i++){
+        
+        if (rowsClientData[i].get('CLIENT_ID') === sheetName){
+
+          isClientID = true;
+          instaOfficial = rowsClientData[i].get('INSTAGRAM');
+          isStatus = rowsClientData[i].get('STATUS');
+        }
+      }
+
+      // If Client_ID exist. then get official content
+      if (isClientID && isStatus){
+          
+        const options = {
+          method: 'GET',
+          url: 'https://instagram-scraper-api2.p.rapidapi.com/v1.2/posts',
+          params: {
+            username_or_id_or_url: instaOfficial
+          },
+          headers: {
+            'x-rapidapi-key': 'f667627969msh3bfa806fa07f0c1p15c406jsn47bc847d28d2',
+            'x-rapidapi-host': 'instagram-scraper-api2.p.rapidapi.com'
+          }
+        };
+        
+        try {
+          const response = await axios.request(options);
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+
+      } else {
+
+        console.log ("Not Exist");
+      }
     },
 }

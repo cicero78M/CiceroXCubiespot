@@ -4,6 +4,7 @@ const app = express();
 var dataBase = require('./src/database/database');
 var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
+var instaReload = require('./src/scrapper/insta');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -13,6 +14,7 @@ const qrcode = require('qrcode-terminal');
 const port = 3007;
 const databaseID = '1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8';
 const clientDataID = '1TMj77bl9jPBD8BsgMxjuXTk4DbWK5eguj10HQoeFVNQ';
+const instaOfficialID = '1tOIM23YZK1ts7t0EeVCseWXSGobp56-hAV8L0sRvV2g';
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -38,6 +40,7 @@ client.on('auth_failure', msg => {
 });
 
 client.on('ready', () => {
+
     console.log(figlet.textSync("CICERO -X- CUBIES", {
         font: "Ghost",
         horizontalLayout: "fitted",
@@ -159,10 +162,12 @@ client.on('message', async (msg) => {
                         client.sendMessage(msg.from, response);
                     }
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
-                    if(splittedMsg[1].toLowerCase() === 'reloadinsta') {
+                    if(splittedMsg[1].toLowerCase() === 'instareload') {
                         //Reload Likes from Insta Official
+                        await instaReload.reloadInsta(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID);
                         
-                    } else if(splittedMsg[1].toLowerCase() === 'reloadtiktok') {
+
+                    } else if(splittedMsg[1].toLowerCase() === 'tiktokreload') {
                         //Reload Likes from Tiktok Official
                     
                     }
