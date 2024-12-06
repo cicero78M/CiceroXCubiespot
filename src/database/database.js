@@ -15,8 +15,7 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-
-
+  
   //Add New Client to Database Client ID  
   addClient: async function addClient(sheetName, insta, tiktok, filesID){
 
