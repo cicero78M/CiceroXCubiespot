@@ -197,6 +197,12 @@ module.exports = {
     const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
     await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
 
+    try {
+      await instaLikesUsernameDoc.addSheet({ title : sheetName, headerValues: ['SHORTCODE'] });
+    } catch (error) {
+      console.log('Data Name Exist');
+    }
+    
     //Check Client_ID. then get async data
     let isClientID = false;
     let instaOfficial;
@@ -281,11 +287,50 @@ module.exports = {
           }
         }
 
-        const instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[sheetName];
-        const instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
-        let responseLikes = await instaLikesAPI(hostLikes, shortcodeList[0]);
-        console.log(responseLikes)
+        for (let i = 0; i < shortcodeList.length; i++){
+
+          let hasShortcode = false;
+          const instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
+
+          await instaLikesUsernameSheet.resize({ rowCount: 1000, columnCount: 2000 });
+          await instaLikesUsernameSheet.loadCells();
+
+          let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
+          
+          let cellCounter = 1;
+          for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
+            if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
+
+              hasShortcode = true;
+
+              let responseLikes = await instaLikesAPI(hostLikes, shortcodeList[i]);
+              let likesItems = responseLikes.data.items;
+              let userNameList = [shortcodeList[i]];
+
+              for (let iii = 0; iii < likesItems.length; iii++){
+                userNameList.push(likesItems[iii].username);
+                
+              }              
+              await instaLikesUsernameSheet.addRow(userNameList);
+
+            }
+          }
+
+          if(!hasShortcode){
+
+            let responseLikes = await instaLikesAPI(hostLikes, shortcodeList[i]);
+            let likesItems = responseLikes.data.items;
+            let userNameList = [shortcodeList[i]];
+
+            for (let iii = 0; iii < likesItems.length; iii++){
+              userNameList.push(likesItems[iii].username);
+              
+            }              
+            await instaLikesUsernameSheet.addRow(userNameList);
+
+          }
+        }
              
       } catch (error) {
         console.error(error);
@@ -294,6 +339,6 @@ module.exports = {
     }  else {
       console.log('Contact Developers for Activate your Client ID');
       return 'Your Client ID has Expired, Contacts Developers for more Informations';
-    }
+    }     
   },
 }
