@@ -30,9 +30,9 @@ User Order :
 
 System Reloads data :
 
-- Reload Insta
-- Reload Tiktok
-- Reload Whatsapp Story
+- Reload Insta : ClientName#instaReload
+- Reload Tiktok : ClientName#TiktokReload
+- Reload Whatsapp Story : ClientName#broadcastReload
   
 System Rekap Data :
 
