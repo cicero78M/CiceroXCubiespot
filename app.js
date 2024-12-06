@@ -164,8 +164,8 @@ client.on('message', async (msg) => {
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'instareload') {
                         //Reload Likes from Insta Official
-                        await instaReload.reloadInsta(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID);
-                        
+                        let response = await instaReload.reloadInsta(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID);
+                        client.sendMessage(msg.from, response);                      
 
                     } else if(splittedMsg[1].toLowerCase() === 'tiktokreload') {
                         //Reload Likes from Tiktok Official
