@@ -24,7 +24,7 @@ const googleAuth = new JWT({
 });
 
 async function instaPostAPI(host, key){
-  
+  //Insta Post API
   let options = {
     method: 'GET',
     url: host,
@@ -35,17 +35,15 @@ async function instaPostAPI(host, key){
   };
 
   try {
-
     let response = await axios.request(options);
     return response.data;
-
   } catch (error) {
     console.error(error);
   }
 }
 
 async function instaLikesAPI(host, key){
-  
+  //Insta Likes API
   let options = {
     method: 'GET',
     url: host,
@@ -56,10 +54,8 @@ async function instaLikesAPI(host, key){
   };
 
   try {
-
     let response = await axios.request(options);
     return response.data;
-
   } catch (error) {
     console.error(error);
   }
@@ -97,25 +93,21 @@ module.exports = {
     }
 
     // If Client_ID exist. then get official content
-    if (isClientID && isStatus){    
-      
-      let response = await instaAPI(hostContent, instaOfficial);
-     
+    if (isClientID && isStatus){
+      //Get Insta Post From Official Account    
+      let response = await instaPostAPI(hostContent, instaOfficial);
       try {
-        
-        const items = response.data.data.items;
+        //Collect Content Shortcode from Official Account
+        const items = response.data.items;
         let itemByDay = [];
-
         for (let i = 0; i < items.length; i++){
-
           let itemDate = new Date(items[i].taken_at*1000);
           if(itemDate.toLocaleDateString('id') === localDate){
             itemByDay.push(items[i]);
           }
         }
-        
+        //Collect Shortcode from Database
         let shortcodeList = [];
-
         const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
         const officialInstaData = await officialInstaSheet.getRows();
         for (let i = 0; i < officialInstaData.length; i++){
@@ -123,54 +115,51 @@ module.exports = {
             shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
           }
         }
-        
-        let isShortcode = false;
-        //Add data to DB
+        //Check if Database Contains Shortcode Items
+        let hasShortcode = false;
         for (let i = 0; i < itemByDay.length; i++){
           if(shortcodeList.includes(itemByDay[i].code)){
-            isShortcode = true;          
+            hasShortcode = true;          
           }
         }
 
         let shortcodeUpdateCounter = 0;
         let shortcodeNewCounter = 0;
         
-        //If Shortcode Exist
-        if(isShortcode){
+        //If Database Contains Shortcode 
+        if(hasShortcode){
           for (let i = 0; i < itemByDay.length; i++){
             for (let ii = 0; ii < officialInstaData.length; ii++){
               if(officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code){
+                //Update Existing Content Database
                 officialInstaData[ii].assign({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, 
                   TYPE:itemByDay[i].media_name, CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	
                   PLAY_COUNT:itemByDay[i].play_count, THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url	}); // Jabatan Divisi Value
                   await officialInstaData[ii].save(); //save update
-
                 shortcodeUpdateCounter++;
                 console.log('Existing Content Updated');
               } else if(!shortcodeList.includes(itemByDay[i].code)){
+                //Push New Content to Database 
                 shortcodeList.push(itemByDay[i].code);
                 officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
                   CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
                   THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
-    
                 shortcodeNewCounter++;
                 console.log('New Content Added');    
               }
             }            
           }
         } else {
-          //if Shortcode Doesn't exist
+          //Push New Shortcode Content to Database
           for (let i = 0; i < itemByDay.length; i++){
-
             officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
               CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
               THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
-
             shortcodeNewCounter++;
             console.log('New Content Added');
           }
         }
-
+        //Messages Return
         if(shortcodeNewCounter === 0 && shortcodeUpdateCounter === 0 ){
           return 'Reload Insta return with No Content to Update'
         } else if (shortcodeNewCounter != 0 && shortcodeUpdateCounter != 0 ){
@@ -183,9 +172,11 @@ module.exports = {
 
       } catch (error) {
         console.error(error);
+        return 'Error, Contacts Developers'
       }
     }  else {
       console.log('Contact Developers for Activate your Client ID');
+      return 'Your Client ID has Expired, Contacts Developers for more Informations';
     }
   },
   
@@ -210,10 +201,7 @@ module.exports = {
     let isClientID = false;
     let instaOfficial;
     let isStatus;
-    
-    let shortcodeUpdateCounter = 0;
-    let shortcodeNewCounter = 0;
-
+  
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
 
@@ -227,25 +215,19 @@ module.exports = {
 
     // If Client_ID exist. then get official content
     if (isClientID && isStatus){    
-
- 
       try {
-
+        //Collect Content Shortcode from Official Account
         let response = await instaPostAPI(hostContent, instaOfficial);
-
         const items = response.data.items;
         let itemByDay = [];
-
         for (let i = 0; i < items.length; i++){
-
           let itemDate = new Date(items[i].taken_at*1000);
           if(itemDate.toLocaleDateString('id') === localDate){
             itemByDay.push(items[i]);
           }
         }
-        
+        //Collect Shortcode from Database        
         let shortcodeList = [];
-
         const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
         const officialInstaData = await officialInstaSheet.getRows();
         for (let i = 0; i < officialInstaData.length; i++){
@@ -253,42 +235,43 @@ module.exports = {
             shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
           }
         }
-        
-        let isShortcode = false;
-        //Add data to DB
+        //Check if Database Contains Shortcode Items        
+        let hasShortcode = false;
         for (let i = 0; i < itemByDay.length; i++){
           if(shortcodeList.includes(itemByDay[i].code)){
-            isShortcode = true;          
+            hasShortcode = true;          
           }
         }
 
-        //If Shortcode Exist
-        if(isShortcode){
+        let shortcodeUpdateCounter = 0;
+        let shortcodeNewCounter = 0;
+
+        //If Database Contains Shortcode 
+        if(hasShortcode){
           for (let i = 0; i < itemByDay.length; i++){
             for (let ii = 0; ii < officialInstaData.length; ii++){
               if(officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code){
+                //Update Existing Content Database                
                 officialInstaData[ii].assign({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, 
                   TYPE:itemByDay[i].media_name, CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	
                   PLAY_COUNT:itemByDay[i].play_count, THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url	}); // Jabatan Divisi Value
                   await officialInstaData[ii].save(); //save update
-
                 shortcodeUpdateCounter++;
                 console.log('Existing Content Updated');
               } else if(!shortcodeList.includes(itemByDay[i].code)){
+                //Push New Content to Database  
                 shortcodeList.push(itemByDay[i].code);
                 officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
                   CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
-                  THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
-    
+                  THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});  
                 shortcodeNewCounter++;
                 console.log('New Content Added');    
               }
             }            
           }
         } else {
-          //if Shortcode Doesn't exist
+          //Push New Shortcode Content to Database
           for (let i = 0; i < itemByDay.length; i++){
-
             officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
               CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
               THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
@@ -306,11 +289,11 @@ module.exports = {
              
       } catch (error) {
         console.error(error);
+        return 'Error, Contacts Developers'
       }
-
     }  else {
       console.log('Contact Developers for Activate your Client ID');
+      return 'Your Client ID has Expired, Contacts Developers for more Informations';
     }
-      
   },
 }
