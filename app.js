@@ -15,6 +15,7 @@ const port = 3007;
 const databaseID = '1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8';
 const clientDataID = '1TMj77bl9jPBD8BsgMxjuXTk4DbWK5eguj10HQoeFVNQ';
 const instaOfficialID = '1tOIM23YZK1ts7t0EeVCseWXSGobp56-hAV8L0sRvV2g';
+const instaLikesUsernameID = '1OAZ3ZPfY8sYtyT0n-5WJP-O3cIJHShBU-KuWJVDBDR8';
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -164,7 +165,7 @@ client.on('message', async (msg) => {
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'instareload') {
                         //Reload Likes from Insta Official
-                        let response = await instaReload.reloadInsta(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID);
+                        let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
                         client.sendMessage(msg.from, response);                      
 
                     } else if(splittedMsg[1].toLowerCase() === 'tiktokreload') {
