@@ -96,8 +96,9 @@ module.exports = {
     // If Client_ID exist. then get official content
     if (isClientID && isStatus){
       //Get Insta Post From Official Account    
-      let response = await instaPostAPI(hostContent, instaOfficial);
       try {
+        let response = await instaPostAPI(hostContent, instaOfficial);
+
         //Collect Content Shortcode from Official Account
         const items = response.data.items;
         let itemByDay = [];
