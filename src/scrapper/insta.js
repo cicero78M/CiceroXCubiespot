@@ -325,7 +325,6 @@ module.exports = {
 
             }
           }
-
           //Final Code
           if(!hasShortcode){
             //If Shortcode doesn't exist push new data
