@@ -39,7 +39,7 @@ async function instaPostAPI(host, key){
     let response = await axios.request(options);
     return response.data;
   } catch (error) {
-    console.error(error);
+    return 'error';
   }
 }
 
@@ -58,129 +58,11 @@ async function instaLikesAPI(host, key){
     let response = await axios.request(options);
     return response.data;
   } catch (error) {
-    console.error(error);
+    return 'error';
   }
 }
 
 module.exports = {
-  reloadInsta: async function reloadInsta(sheetName, userClientID, clientID, instaOfficialID){
-
-    const d = new Date();
-    const localDate = d.toLocaleDateString('id');
-
-    const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
-    await userClientDoc.loadInfo(); // loads document properties and worksheets
-
-    const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
-    await clientDoc.loadInfo(); // loads document properties and worksheets
-
-    const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for instaLikes DB
-    await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-
-    //Check Client_ID. then get async data
-    let isClientID = false;
-    let instaOfficial;
-    let isStatus;
-
-    const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
-    const rowsClientData = await clientDataSheet.getRows();
-
-    for (let i = 0; i < rowsClientData.length; i++){
-      if (rowsClientData[i].get('CLIENT_ID') === sheetName){
-        isClientID = true;
-        instaOfficial = rowsClientData[i].get('INSTAGRAM');
-        isStatus = rowsClientData[i].get('STATUS');
-      }
-    }
-
-    // If Client_ID exist. then get official content
-    if (isClientID && isStatus){
-      //Get Insta Post From Official Account    
-      try {
-        let response = await instaPostAPI(hostContent, instaOfficial);
-
-        //Collect Content Shortcode from Official Account
-        const items = response.data.items;
-        let itemByDay = [];
-        for (let i = 0; i < items.length; i++){
-          let itemDate = new Date(items[i].taken_at*1000);
-          if(itemDate.toLocaleDateString('id') === localDate){
-            itemByDay.push(items[i]);
-          }
-        }
-        //Collect Shortcode from Database
-        let shortcodeList = [];
-        const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
-        const officialInstaData = await officialInstaSheet.getRows();
-        for (let i = 0; i < officialInstaData.length; i++){
-          if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))){
-            shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
-          }
-        }
-        //Check if Database Contains Shortcode Items
-        let hasShortcode = false;
-        for (let i = 0; i < itemByDay.length; i++){
-          if(shortcodeList.includes(itemByDay[i].code)){
-            hasShortcode = true;          
-          }
-        }
-
-        let shortcodeUpdateCounter = 0;
-        let shortcodeNewCounter = 0;
-        
-        //If Database Contains Shortcode 
-        if(hasShortcode){
-          for (let i = 0; i < itemByDay.length; i++){
-            for (let ii = 0; ii < officialInstaData.length; ii++){
-              if(officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code){
-                //Update Existing Content Database
-                officialInstaData[ii].assign({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, 
-                  TYPE:itemByDay[i].media_name, CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	
-                  PLAY_COUNT:itemByDay[i].play_count, THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url	}); // Jabatan Divisi Value
-                  await officialInstaData[ii].save(); //save update
-                shortcodeUpdateCounter++;
-                console.log('Existing Content Updated');
-              } else if(!shortcodeList.includes(itemByDay[i].code)){
-                //Push New Content to Database 
-                shortcodeList.push(itemByDay[i].code);
-                officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
-                  CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
-                  THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
-                shortcodeNewCounter++;
-                console.log('New Content Added');    
-              }
-            }            
-          }
-        } else {
-          //Push New Shortcode Content to Database
-          for (let i = 0; i < itemByDay.length; i++){
-            officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
-              CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
-              THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
-            shortcodeNewCounter++;
-            console.log('New Content Added');
-          }
-        }
-        //Messages Return
-        if(shortcodeNewCounter === 0 && shortcodeUpdateCounter === 0 ){
-          return 'Reload Insta return with No Content to Update'
-        } else if (shortcodeNewCounter != 0 && shortcodeUpdateCounter != 0 ){
-          return 'Reload Insta return With '+shortcodeNewCounter+' New Content Added and '+shortcodeUpdateCounter+' Content Updated';
-        } else if(shortcodeUpdateCounter != 0  ){
-          return 'Reload Insta return With '+shortcodeUpdateCounter+' Content Updated';
-        } else if(shortcodeNewCounter != 0 ){
-          return 'Reload Insta return With '+shortcodeNewCounter+' New Content Added';
-        }
-
-      } catch (error) {
-        console.error(error);
-        return 'Error, Contacts Developers'
-      }
-    }  else {
-      console.log('Contact Developers for Activate your Client ID');
-      return 'Your Client ID has Expired, Contacts Developers for more Informations';
-    }
-  },
   
   reloadInstaLikes: async function reloadInstaLikes(sheetName, userClientID, clientID, instaOfficialID, instaLikesUsernameID){
 
@@ -280,7 +162,6 @@ module.exports = {
               CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
               THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
             shortcodeNewCounter++;
-            console.log('New Content Added');
           }
         }
 
