@@ -197,7 +197,6 @@ module.exports = {
     await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
 
     const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
-    await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
 
     //Check Client_ID. then get async data
     let isClientID = false;
@@ -222,10 +221,14 @@ module.exports = {
         let response = await instaPostAPI(hostContent, instaOfficial);
         const items = response.data.items;
         let itemByDay = [];
+        let todayItems = [];
+
         for (let i = 0; i < items.length; i++){
           let itemDate = new Date(items[i].taken_at*1000);
           if(itemDate.toLocaleDateString('id') === localDate){
             itemByDay.push(items[i]);
+            todayItems.push(itemByDay[i].code);     
+
           }
         }
         //Collect Shortcode from Database        
@@ -237,11 +240,12 @@ module.exports = {
             shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
           }
         }
+
         //Check if Database Contains Shortcode Items        
         let hasShortcode = false;
         for (let i = 0; i < itemByDay.length; i++){
           if(shortcodeList.includes(itemByDay[i].code)){
-            hasShortcode = true;          
+            hasShortcode = true;  
           }
         }
 
@@ -259,7 +263,6 @@ module.exports = {
                   PLAY_COUNT:itemByDay[i].play_count, THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url	}); // Jabatan Divisi Value
                   await officialInstaData[ii].save(); //save update
                 shortcodeUpdateCounter++;
-                console.log('Existing Content Updated');
               } else if(!shortcodeList.includes(itemByDay[i].code)){
                 //Push New Content to Database  
                 shortcodeList.push(itemByDay[i].code);
@@ -267,7 +270,6 @@ module.exports = {
                   CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
                   THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});  
                 shortcodeNewCounter++;
-                console.log('New Content Added');    
               }
             }            
           }
@@ -281,43 +283,71 @@ module.exports = {
             console.log('New Content Added');
           }
         }
+
+        await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
         let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
         let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
-        console.log(instaLikesUsernameData);
 
-        for (let i = 0; i < shortcodeList.length; i++){
+        var newData = 0;
+        var updateData = 0;
+        
+        for (let i = 0; i < todayItems.length; i++){
           let hasShortcode = false;
           //code on the go
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
-            if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
+            if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]){
               hasShortcode = true;
-              console.log(instaLikesUsernameData[ii]);
+              updateData++;
+              const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+              const responseLikes = await instaLikesAPI(hostLikes, todayItems[i]);
+              const likesItems = responseLikes.data.items;
+
+              let newDataUsers = [];
+             
+              for (let iii = 0; iii < fromRows.length; iii++){
+                if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+                  if(!newDataUsers.includes(fromRows[iii])){
+                    newDataUsers.push(fromRows[iii]);
+                  }
+                }
+              }
+
+              for (let iii = 0; iii < likesItems.length; iii++){
+                if(likesItems[iii].username != undefined || likesItems[iii].username != null || likesItems[iii].username != ""){
+                  if(!newDataUsers.includes(likesItems[iii].username)){
+                    newDataUsers.push(likesItems[iii].username);
+                  }
+                }
+              }
+
+              await instaLikesUsernameData[ii].delete();
+              await instaLikesUsernameSheet.addRow(newDataUsers);
+
             }
           }
 
           //Final Code
           if(!hasShortcode){
             //If Shortcode doesn't exist push new data
-            let responseLikes = await instaLikesAPI(hostLikes, shortcodeList[i]);
+            let responseLikes = await instaLikesAPI(hostLikes, todayItems[i]);
+
             let likesItems = responseLikes.data.items;
-            let userNameList = [shortcodeList[i]];
+            let userNameList = [todayItems[i]];
 
             for (let iii = 0; iii < likesItems.length; iii++){
               userNameList.push(likesItems[iii].username);             
             }
-
             //Add new Row
             await instaLikesUsernameSheet.addRow(userNameList);
-            console.log('Added : '+shortcodeList[i]);
-            return 'OK';
+            newData++;
           }
         }
+        return 'Succes Reload Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
+
       } catch (error) {
-        console.error(error);
-        return 'Error, Contacts Developers'
+        return 'Error, Contacts Developers';
       }
     }  else {
-      console.log('Contact Developers for Activate your Client ID');
       return 'Your Client ID has Expired, Contacts Developers for more Informations';
     }     
   },

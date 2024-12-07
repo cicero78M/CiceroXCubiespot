@@ -167,12 +167,10 @@ client.on('message', async (msg) => {
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'instareload') {
                         //Reload Likes from Insta Official
-                        let response = await instaReload.reloadInsta(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
-                        client.sendMessage(msg.from, response);                      
-
+                        let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
+                        client.sendMessage(msg.from, response);  
                     } else if(splittedMsg[1].toLowerCase() === 'tiktokreload') {
-                        //Reload Likes from Tiktok Official
-                    
+                        //Reload Likes from Tiktok Official                    
                     }
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'reportinsta') {
@@ -199,8 +197,14 @@ client.on('message', async (msg) => {
 
                 } else if(splittedMsg[1].toLowerCase() === 'instalikesdb'){
                     //User Checking myData
+                    console.log('instalikesdb')
                     let response = await sheetProps.instaLikesDataBase(splittedMsg[0].toUpperCase(), instaLikesUsernameID);
-                    client.sendMessage(msg.from, response);
+
+                    if (response === undefined){
+                        client.sendMessage(msg.from, 'Creating Header For Database');
+                    } else {
+                        client.sendMessage(msg.from, response);
+                    }
                 }             
             } else {
                 //Regular Messages

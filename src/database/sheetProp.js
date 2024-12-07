@@ -5,6 +5,7 @@ const axios = require('axios');
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
 const { console } = require('inspector');
+const { Console } = require('console');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -17,41 +18,44 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-
     instaLikesDataBase: async function instaLikesDataBase(sheetName, instaLikesUsernameID){
-        try {
-     
+            
+        try {   
+
             const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
             await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
             await instaLikesUsernameDoc.addSheet({title : sheetName, headerValues: ['SHORTCODE']});
             let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
-            instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1500});
-
+            instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
+            
             await instaLikesUsernameSheet.loadCells();
             let header = instaLikesUsernameSheet.getCell(0,0);
             header.value = 'SHORTCODE';
             header.textFormat = { bold: true, fontSize: 13};
             await instaLikesUsernameSheet.saveUpdatedCells();
-        
-            var i = 1;  //  set your counter to 0
 
-            function pushDataOrg() { //  create a loop function
-                setTimeout(async function() { //  call a 2s setTimeout when the loop is called
+            let i = 1;
+
+            async function pushHeaders() { //  create a loop function
+                setTimeout(async function() { //  call a 2s setTimeout when the loop is called                           
+                    let header = await instaLikesUsernameSheet.getCell(0,i);
+                    header.value = 'USER_'+i;
+                    header.textFormat = { bold: true, fontSize: 13};
+                    await instaLikesUsernameSheet.saveUpdatedCells(); // save all updates in one call
+                    i++;  //  increment the counter
                     
-                let header = instaLikesUsernameSheet.getCell(0,i);
-                header.value = 'USER_'+i;
-                header.textFormat = { bold: true, fontSize: 13};
-                await instaLikesUsernameSheet.saveUpdatedCells(); // save all updates in one call
-                i++;  //  increment the counter
-                if (i < 1500) {  //  if the counter < rowsSource.length, call the loop function
-                    pushDataOrg(); //  again which will trigger another 
-                } else {
-                    return 'Headers Created';
-                };
-                }, 1000);
-            }
-            //initiate
-            pushDataOrg();   
+                    if (i < 1500) {  //  if the counter < rowsSource.length, call the loop function
+                        pushHeaders(); //  again which will trigger another 
+                    } else {
+                        return 'succes update header';
+                    }
+                }, 700);
+            }   
+
+            let response = await pushHeaders();
+            console.log(response);
+            return response;
+
         } catch (error) {
             return 'Error, Sheet Name exist';
         }
