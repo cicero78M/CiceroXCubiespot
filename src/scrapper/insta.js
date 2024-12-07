@@ -198,11 +198,17 @@ module.exports = {
     await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
 
     try {
+      await instaOfficialDoc.addSheet({ title : sheetName, headerValues: ['TIMESTAMP',	'USER_ACCOUNT',	'SHORTCODE',	'ID',	'TYPE',	'CAPTION',	'COMMENT_COUNT',	'LIKE_COUNT',	'PLAY_COUNT',	'THUMBNAIL',	'VIDEO_URL'] });
+    } catch (error) {
+      console.log('Data Insta Official Exist');
+    }
+
+    try {
       await instaLikesUsernameDoc.addSheet({ title : sheetName, headerValues: ['SHORTCODE'] });
     } catch (error) {
       console.log('Data Name Exist');
     }
-    
+
     //Check Client_ID. then get async data
     let isClientID = false;
     let instaOfficial;
@@ -281,12 +287,10 @@ module.exports = {
             officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].owner.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
               CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
               THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});
-
             shortcodeNewCounter++;
             console.log('New Content Added');
           }
         }
-
 
         for (let i = 0; i < shortcodeList.length; i++){
 
@@ -297,41 +301,27 @@ module.exports = {
           await instaLikesUsernameSheet.loadCells();
 
           let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
-          
-          let cellCounter = 1;
+                    
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
             if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
-
               hasShortcode = true;
-
-              let responseLikes = await instaLikesAPI(hostLikes, shortcodeList[i]);
-              let likesItems = responseLikes.data.items;
-              let userNameList = [shortcodeList[i]];
-
-              for (let iii = 0; iii < likesItems.length; iii++){
-                userNameList.push(likesItems[iii].username);
-                
-              }              
-              await instaLikesUsernameSheet.addRow(userNameList);
-
+              await instaLikesUsernameSheet.loadCells();
             }
           }
 
           if(!hasShortcode){
-
+            //If Shortcode doesn't exist push new data
             let responseLikes = await instaLikesAPI(hostLikes, shortcodeList[i]);
             let likesItems = responseLikes.data.items;
             let userNameList = [shortcodeList[i]];
 
             for (let iii = 0; iii < likesItems.length; iii++){
-              userNameList.push(likesItems[iii].username);
-              
-            }              
+              userNameList.push(likesItems[iii].username);             
+            }
+            //Add new Row
             await instaLikesUsernameSheet.addRow(userNameList);
-
           }
         }
-             
       } catch (error) {
         console.error(error);
         return 'Error, Contacts Developers'
