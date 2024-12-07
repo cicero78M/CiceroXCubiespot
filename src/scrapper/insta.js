@@ -4,6 +4,7 @@ const axios = require('axios');
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
+const { console } = require('inspector');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -197,18 +198,6 @@ module.exports = {
     const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
     await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
 
-    try {
-      await instaOfficialDoc.addSheet({ title : sheetName, headerValues: ['TIMESTAMP',	'USER_ACCOUNT',	'SHORTCODE',	'ID',	'TYPE',	'CAPTION',	'COMMENT_COUNT',	'LIKE_COUNT',	'PLAY_COUNT',	'THUMBNAIL',	'VIDEO_URL'] });
-    } catch (error) {
-      console.log('Data Insta Official Exist');
-    }
-
-    try {
-      await instaLikesUsernameDoc.addSheet({ title : sheetName, headerValues: ['SHORTCODE'] });
-    } catch (error) {
-      console.log('Data Name Exist');
-    }
-
     //Check Client_ID. then get async data
     let isClientID = false;
     let instaOfficial;
@@ -291,24 +280,21 @@ module.exports = {
             console.log('New Content Added');
           }
         }
+        let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
+        let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
+        console.log(instaLikesUsernameData);
 
         for (let i = 0; i < shortcodeList.length; i++){
-
           let hasShortcode = false;
-          const instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
-
-          await instaLikesUsernameSheet.resize({ rowCount: 1000, columnCount: 2000 });
-          await instaLikesUsernameSheet.loadCells();
-
-          let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
-                    
+          //code on the go
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
             if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
               hasShortcode = true;
-              await instaLikesUsernameSheet.loadCells();
+              console.log(instaLikesUsernameData[ii]);
             }
           }
 
+          //Final Code
           if(!hasShortcode){
             //If Shortcode doesn't exist push new data
             let responseLikes = await instaLikesAPI(hostLikes, shortcodeList[i]);
@@ -318,8 +304,11 @@ module.exports = {
             for (let iii = 0; iii < likesItems.length; iii++){
               userNameList.push(likesItems[iii].username);             
             }
+
             //Add new Row
             await instaLikesUsernameSheet.addRow(userNameList);
+            console.log('Added : '+shortcodeList[i]);
+            return 'OK';
           }
         }
       } catch (error) {
