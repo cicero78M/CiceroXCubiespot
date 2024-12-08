@@ -2,12 +2,15 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const dbKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+const dbKey = JSON.parse (fs.readFileSync('dbKey.json'));
+
 
 var dataBase = require('./src/database/database');
 var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
-var instaReload = require('./src/scrapper/instalikes');
+var instaReload = require('./src/scrapper/instalikesreload');
+var instaReport = require('./src/reporting/instalikesreport');
+
 var sheetProps = require('./src/database/sheetProperties');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
@@ -73,8 +76,8 @@ client.on('message', async (msg) => {
     const newClientOrder = ['newclientorg', 'newclientcom'];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
     const dataOrder = ['instacheck', 'tiktokcheck'];
-    const reloadOrder = ['instareload', 'tiktokreload', 'storyreload'];
-    const reportOrder = ['instareport', 'tiktokreport', 'storyreport'];
+    const reloadOrder = ['reloadinstalikes', 'reloadtiktoklikes', 'reloadstorysharing'];
+    const reportOrder = ['reportinstalikes', 'reporttiktoklikes', 'reportstorysharing'];
 
     try {
         if (msg.isStatus){
@@ -166,18 +169,21 @@ client.on('message', async (msg) => {
                         client.sendMessage(msg.from, response);
                     }
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
-                    if(splittedMsg[1].toLowerCase() === 'instareload') {
+                    if(splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
                         //Reload Likes from Insta Official
                         let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
                         client.sendMessage(msg.from, response);  
-                    } else if(splittedMsg[1].toLowerCase() === 'tiktokreload') {
+                    } else if(splittedMsg[1].toLowerCase() === 'reloadtiktoklikes') {
                         //Reload Likes from Tiktok Official                    
                     }
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){
-                    if(splittedMsg[1].toLowerCase() === 'reportinsta') {
+                    if(splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
-                        
-                    } else if(splittedMsg[1].toLowerCase() === 'reporttiktok') {
+                        console.log('reportinstalikes');
+                        let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
+                        client.sendMessage(msg.from, response);  
+
+                    } else if(splittedMsg[1].toLowerCase() === 'reporttiktoklikes') {
                         //Report Likes from Tiktok Official
                     
                     }
