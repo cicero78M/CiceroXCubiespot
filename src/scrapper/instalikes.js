@@ -4,7 +4,6 @@ const axios = require('axios');
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
-const { console } = require('inspector');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -200,7 +199,8 @@ module.exports = {
                   }
                 }
               }
-
+              
+              console.log('update data');
               await instaLikesUsernameData[ii].delete();
               await instaLikesUsernameSheet.addRow(newDataUsers);
 
@@ -218,6 +218,8 @@ module.exports = {
               userNameList.push(likesItems[iii].username);             
             }
             //Add new Row
+            console.log('Insert new data');
+
             await instaLikesUsernameSheet.addRow(userNameList);
             newData++;
           }

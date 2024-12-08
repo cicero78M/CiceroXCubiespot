@@ -4,14 +4,13 @@ const app = express();
 var dataBase = require('./src/database/database');
 var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
-var instaReload = require('./src/scrapper/insta');
-var sheetProps = require('./src/database/sheetProp');
+var instaReload = require('./src/scrapper/instalikes');
+var sheetProps = require('./src/database/sheetProperties');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
 const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
-const sheetProp = require('./src/database/sheetProp');
 
 const port = 3007;
 const databaseID = '1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8';
