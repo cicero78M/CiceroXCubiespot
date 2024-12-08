@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 
@@ -44,7 +45,7 @@ client.on('auth_failure', msg => {
 
 client.on('ready', () => {
 
-    console.log(figlet.textSync("CICERO -X- CUBIESPOT", {
+    console.log(figlet.textSync("CICERO -X- CUBIE", {
         font: "Ghost",
         horizontalLayout: "fitted",
         verticalLayout: "default",

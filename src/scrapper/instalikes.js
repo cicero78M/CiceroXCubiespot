@@ -40,7 +40,7 @@ async function instaPostAPI(key){
   }
 }
 
-async function instaLikesAPI( key){
+async function instaLikesAPI(key){
   //Insta Likes API
   let options = {
     method: 'GET',
@@ -109,6 +109,7 @@ module.exports = {
 
           }
         }
+
         //Collect Shortcode from Database        
         let shortcodeList = [];
         const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
