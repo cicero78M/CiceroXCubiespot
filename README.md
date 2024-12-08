@@ -41,3 +41,8 @@ System Rekap Data :
 - Rekap Insta likes : ClientName#rekapInstaLikes || OK
 - Rekap Tiktok likes :ClientName#rekaptiktokLikes
 - Rekap Whatsapp Story :ClientName#rekapTiktokLikes
+
+
+WEB-APP DASHBOARD
+
+- On The Go
