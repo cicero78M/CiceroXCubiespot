@@ -39,7 +39,7 @@ module.exports = {
   
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
-
+    
     for (let i = 0; i < rowsClientData.length; i++){
       if (rowsClientData[i].get('CLIENT_ID') === sheetName){
         isClientID = true;
@@ -87,14 +87,10 @@ module.exports = {
                         }
                     }
                 }
-
                 console.log(userLikesData);
-
             }
           }
-
         }
-
       } catch (error) {
         return 'Error, Contacts Developers';
       }

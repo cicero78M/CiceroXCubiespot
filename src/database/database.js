@@ -107,22 +107,18 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName]; //Get Target Sheet Documents by Title
 
-      var i = 0;  //  set your counter to 0
+      var userData = [];
 
-      function pushDataOrg() { //  create a loop function
-        setTimeout(function() { //  call a 2s setTimeout when the loop is called
-          sheetTarget.addRow({ID_KEY: rowsSource[i].get('NRP'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), DIVISI: rowsSource[i].get('SATFUNG'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('IG1'), TIKTOK: rowsSource[i].get('TIKTOK')});
-          //  post data
-          i++;  //  increment the counter
-          if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
-            pushDataOrg(); //  again which will trigger another 
-          } else {
-            return "All  Data Transfered, untuk melihat data user kirim pesan dengan: Client#myData#ID_Ke";
-          };
-        }, 2000)
+      for (let i = 0; i < rowsSource.length; i++){
+
+        userData.push({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
+
       }
-      //initiate
-      pushDataOrg();
+
+      await sheetTarget.addRows(userData);
+
+      return 'Adding '+sheetName+ ' as Client, and post user data to DB Client';
+
     } catch (error) {
       //if sheet name is exist
       return "Sheet Name Existed";
@@ -149,22 +145,19 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];//Get Target Sheet Documents by Title
 
-      var i = 0;  //  set your counter to 0
+  //    var i = 0;  //  set your counter to 0
+      var userData = [];
 
-      function pushDataCom() { //  create a loop function
-        setTimeout(function() { //  call a 2s setTimeout when the loop is called
-          sheetTarget.addRow({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: null, DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
-          //  post data
-          i++;  //  increment the counter
-          if (i < rowsSource.length) {  //  if the counter < rowsSource.length, call the loop function
-            pushDataCom();  //again which will trigger another 
-          } else {
-            return "All  Data Transfered, untuk melihat data user kirim pesan dengan: Client#myData#ID_Key";
-          };
-        }, 2000)
+      for (let i = 0; i < rowsSource.length; i++){
+
+        userData.push({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: null, DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
+
       }
-      //initiate
-      pushDataCom();
+
+      await sheetTarget.addRows(userData);
+
+      return 'Adding '+sheetName+ ' as Client, and post user data to DB Client';
+
     } catch (error) {
       //if sheet name is exist
       return "Sheet Name Existed";
