@@ -51,7 +51,6 @@ module.exports = {
     // If Client_ID exist. then get official content
     if (isClientID && isStatus){    
       try {
-    
         await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
         let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
@@ -84,8 +83,8 @@ module.exports = {
                     }
                 }
             }
-
         }
+
         await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
         let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
         let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
@@ -95,17 +94,17 @@ module.exports = {
         for (let i = 0; i < shortcodeList.length; i++){
           //code on the go
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
-            if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
-                const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-                for (let iii = 1; iii < fromRows.length; iii++){
-                    if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
-                        if(!userLikesData.includes(fromRows[iii])){
-                            userLikesData.push(fromRows[iii]);
+                if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
+                    const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+                    for (let iii = 1; iii < fromRows.length; iii++){
+                        if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+                            if(!userLikesData.includes(fromRows[iii])){
+                                userLikesData.push(fromRows[iii]);
+                            }
                         }
-                    }
-                }        
+                    }        
+                }
             }
-          }
         }
 
         let UserNotLikes = [];
@@ -113,11 +112,9 @@ module.exports = {
 
         for (let iii = 1; iii < userClientData.length; iii++){
             if(!userLikesData.includes(userClientData[iii].get('INSTA'))){
-                if(!UserNotLikes.includes(userClientData[iii].get('ID_KEY'))){
-                
+                if(!UserNotLikes.includes(userClientData[iii].get('ID_KEY'))){    
                     UserNotLikes.push(userClientData[iii].get('ID_KEY'));
                     notLikesList.push(userClientData[iii]);
-
                 }
             }
         }
@@ -139,7 +136,7 @@ module.exports = {
             }
             
             if ( divisiCounter != 0){
-            dataInsta = dataInsta.concat('\n\n'+divisiList[iii]+' : '+divisiCounter+' User\n'+userByDivisi);
+                dataInsta = dataInsta.concat('\n\n'+divisiList[iii]+' : '+divisiCounter+' User\n'+userByDivisi);
             }
         }
   

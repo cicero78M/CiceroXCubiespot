@@ -98,22 +98,26 @@ module.exports = {
         //Collect Content Shortcode from Official Account
         let response = await instaPostAPI(instaOfficial);
         const items = response.data.items;
+
         let itemByDay = [];
         let todayItems = [];
 
         for (let i = 0; i < items.length; i++){
+
           let itemDate = new Date(items[i].taken_at*1000);
+          
           if(itemDate.toLocaleDateString('id') === localDate){
             itemByDay.push(items[i]);
             todayItems.push(itemByDay[i].code);     
-
           }
         }
 
         //Collect Shortcode from Database        
-        let shortcodeList = [];
         const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
         const officialInstaData = await officialInstaSheet.getRows();
+        
+        let shortcodeList = [];
+
         for (let i = 0; i < officialInstaData.length; i++){
           if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))){
             shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
