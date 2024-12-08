@@ -73,9 +73,9 @@ client.on('qr', qr => {
 
 client.on('message', async (msg) => {
 
-    const newClientOrder = ['newclientorg', 'newclientcom'];
+    const newClientOrder = ['newclientorg', 'newclientcom' ];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
-    const dataOrder = ['instacheck', 'tiktokcheck'];
+    const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate', 'addclient', 'addheader' ];
     const reloadOrder = ['reloadinstalikes', 'reloadtiktoklikes', 'reloadstorysharing'];
     const reportOrder = ['reportinstalikes', 'reporttiktoklikes', 'reportstorysharing'];
 
@@ -87,7 +87,7 @@ client.on('message', async (msg) => {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
             if(splittedMsg.length > 1){
-                console.log(msg.from);
+                console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
                 if(newClientOrder.includes(splittedMsg[1].toLowerCase())){
                 //Admin Order
                     if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
@@ -113,7 +113,8 @@ client.on('message', async (msg) => {
                         }
                     } else {
                         console.log('Bukan Spreadsheet Links');
-                    }                
+                    }       
+                //Update Data         
                 } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){
                     //User Update Data
                     if (splittedMsg[1].toLowerCase() === 'adduser'){ 
@@ -158,6 +159,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
                         }
                     }
+                //Data Order
                 } else if(dataOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
@@ -167,7 +169,27 @@ client.on('message', async (msg) => {
                         //Checking If User hasn't update Tiktok Profile
                         let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), databaseID);
                         client.sendMessage(msg.from, response);
-                    }
+                    } else if(splittedMsg[1].toLowerCase() === 'mydata'){
+                        //User Checking myData
+                        let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                        client.sendMessage(msg.from, response);
+
+                    } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
+                        //User Checking myData
+                        let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataID);
+                        client.sendMessage(msg.from, response);
+    
+                    } else if(splittedMsg[1].toLowerCase() === 'addheader'){
+                        //User Checking myData
+                        let response = await sheetProps.instaLikesDataBase(splittedMsg[0].toUpperCase(), instaLikesUsernameID);
+    
+                        if (response === undefined){
+                            client.sendMessage(msg.from, 'Creating Header For Database');
+                        } else {
+                            client.sendMessage(msg.from, response);
+                        }
+                    }      
+                //Reload Data       
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
                         //Reload Likes from Insta Official
@@ -176,10 +198,10 @@ client.on('message', async (msg) => {
                     } else if(splittedMsg[1].toLowerCase() === 'reloadtiktoklikes') {
                         //Reload Likes from Tiktok Official                    
                     }
+                //Reporting
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
-                        console.log('reportinstalikes');
                         let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
                         client.sendMessage(msg.from, response);  
 
@@ -187,32 +209,14 @@ client.on('message', async (msg) => {
                         //Report Likes from Tiktok Official
                     
                     }
-                } else if(splittedMsg[1].toLowerCase() === 'mydata'){
-                    //User Checking myData
-                    let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
-                    client.sendMessage(msg.from, response);
+                //Add Official Client Data
                 } else if(splittedMsg[1].toLowerCase() === 'addclient'){
                     //User Checking myData
                     if (!splittedMsg[2].includes('/p/') || !splittedMsg[2].includes('/reels/') || !splittedMsg[2].includes('/video/') && splittedMsg[2].includes('instagram.com') && !splittedMsg[4].includes('twitter.com')){
                         let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], clientDataID);
                         client.sendMessage(msg.from, response);
                     }
-                } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
-                    //User Checking myData
-                    let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataID);
-                    client.sendMessage(msg.from, response);
-
-                } else if(splittedMsg[1].toLowerCase() === 'instalikesdb'){
-                    //User Checking myData
-                    console.log('instalikesdb')
-                    let response = await sheetProps.instaLikesDataBase(splittedMsg[0].toUpperCase(), instaLikesUsernameID);
-
-                    if (response === undefined){
-                        client.sendMessage(msg.from, 'Creating Header For Database');
-                    } else {
-                        client.sendMessage(msg.from, response);
-                    }
-                }             
+                } 
             } else {
                 //Regular Messages
                 console.log('Reqular Messages');
