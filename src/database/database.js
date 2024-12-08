@@ -95,7 +95,8 @@ module.exports = {
 
     try {
       //Insert New Sheet
-      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
+      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 
+        'WHATSAPP', 'INSTA', 'TIKTOK'] });
       console.log(targetSheet.title);
 
       const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth); //Google Auth
@@ -111,7 +112,9 @@ module.exports = {
 
       for (let i = 0; i < rowsSource.length; i++){
 
-        userData.push({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
+        userData.push({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), 
+          DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), 
+          INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
 
       }
 
@@ -133,7 +136,8 @@ module.exports = {
 
     try {
       //Insert New Sheet
-      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK'] });
+      const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 
+        'WHATSAPP', 'INSTA', 'TIKTOK'] });
       console.log(targetSheet.title);
 
       const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth); //Google Auth
@@ -145,12 +149,13 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];//Get Target Sheet Documents by Title
 
-  //    var i = 0;  //  set your counter to 0
       var userData = [];
 
       for (let i = 0; i < rowsSource.length; i++){
 
-        userData.push({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: null, DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
+        userData.push({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: null, DIVISI: rowsSource[i].get('DIVISI'), 
+          JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), INSTA: rowsSource[i].get('INSTA'), 
+          TIKTOK: rowsSource[i].get('TIKTOK')});
 
       }
 

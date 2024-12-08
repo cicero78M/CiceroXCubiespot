@@ -39,7 +39,7 @@ module.exports = {
   
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
-    
+
     for (let i = 0; i < rowsClientData.length; i++){
       if (rowsClientData[i].get('CLIENT_ID') === sheetName){
         isClientID = true;
@@ -52,45 +52,105 @@ module.exports = {
     if (isClientID && isStatus){    
       try {
     
+        await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
+        let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
+        let userClientData = await userClientSheet.getRows();
+        
+        let divisiList = [];
+
+        for (let i = 0; i < userClientData.length; i++){
+            if(!divisiList.includes(userClientData[i].get('DIVISI'))){
+                divisiList.push(userClientData[i].get('DIVISI')); 
+            }
+        }
+
         //Collect Shortcode from Database        
         let shortcodeList = [];
         const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
         const officialInstaData = await officialInstaSheet.getRows();
+
+        let shortcodeListString = '';
 
         for (let i = 0; i < officialInstaData.length; i++){
             let itemDate = new Date(officialInstaData[i].get('TIMESTAMP')*1000);
             if(itemDate.toLocaleDateString('id') === localDate){
                 if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))){
                     shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
-                  }
+
+                    if (officialInstaData[i].get('TYPE') === 'post'){
+                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+officialInstaData[i].get('SHORTCODE'));
+                    } else {
+                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/'+officialInstaData[i].get('TYPE')+'/'+officialInstaData[i].get('SHORTCODE'));
+                    }
+                }
             }
+
         }
-        console.log(shortcodeList);
-        
         await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
         let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
         let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
+
+        let userLikesData = [];
         
         for (let i = 0; i < shortcodeList.length; i++){
           //code on the go
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
             if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
-
                 const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-
-                let userLikesData = [];
-                
                 for (let iii = 1; iii < fromRows.length; iii++){
                     if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
                         if(!userLikesData.includes(fromRows[iii])){
                             userLikesData.push(fromRows[iii]);
                         }
                     }
-                }
-                console.log(userLikesData);
+                }        
             }
           }
         }
+
+        let UserNotLikes = [];
+        let notLikesList = [];
+
+        for (let iii = 1; iii < userClientData.length; iii++){
+            if(!userLikesData.includes(userClientData[iii].get('INSTA'))){
+                if(!UserNotLikes.includes(userClientData[iii].get('ID_KEY'))){
+                
+                    UserNotLikes.push(userClientData[iii].get('ID_KEY'));
+                    notLikesList.push(userClientData[iii]);
+
+                }
+            }
+        }
+
+        let dataInsta = '';
+        let userCounter = 0;
+  
+        for (let iii = 0; iii < divisiList.length; iii++){
+        
+            let divisiCounter = 0 ;
+            let userByDivisi = '';
+  
+            for (let iv = 0; iv < notLikesList.length; iv++){
+                if(divisiList[iii] === notLikesList[iv].get('DIVISI')){
+                    userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA'));
+                    divisiCounter++;
+                    userCounter++;
+                }  
+            }
+            
+            if ( divisiCounter != 0){
+            dataInsta = dataInsta.concat('\n\n'+divisiList[iii]+' : '+divisiCounter+' User\n'+userByDivisi);
+            }
+        }
+  
+        let instaSudah = userClientData.length-notLikesList.length;
+  
+        let response = "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksnakan likes pada konten\n"+shortcodeListString+"\n\nsampai dengan Waktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
+        +userClientData.length+" \nJumlah User Sudah melaksanakan: "+instaSudah+"\nJumlah User Belum melaksanakan : "
+        +userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_";
+        
+        return response;
+
       } catch (error) {
         return 'Error, Contacts Developers';
       }
