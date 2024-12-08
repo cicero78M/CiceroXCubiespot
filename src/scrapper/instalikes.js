@@ -8,9 +8,6 @@ const { JWT } = require ('google-auth-library');
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 const instaKey = JSON.parse (fs.readFileSync('instaKey.json'));
 
-
-
-
 const headers = {
   'x-cache-control': 'no-cache',
   'x-rapidapi-key': instaKey.keyAPI,

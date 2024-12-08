@@ -3,7 +3,6 @@ const app = express();
 
 const dbKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
-
 var dataBase = require('./src/database/database');
 var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
@@ -33,9 +32,8 @@ const client = new Client({
 
 //initialize 
 client.initialize();
-
+//Check if autenticated
 client.on('authenthicated', (session)=>{
-
     console.log(session);
 });
 
@@ -46,7 +44,7 @@ client.on('auth_failure', msg => {
 
 client.on('ready', () => {
 
-    console.log(figlet.textSync("CICERO -X- CUBIES", {
+    console.log(figlet.textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
         horizontalLayout: "fitted",
         verticalLayout: "default",
