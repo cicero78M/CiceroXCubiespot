@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+const dbKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+
+
 var dataBase = require('./src/database/database');
 var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
@@ -13,10 +16,10 @@ const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
 
 const port = 3007;
-const databaseID = '1gwXv8rHNgX16qbDqht_OPh0pbQI5jl1WjWZz3yrcSf8';
-const clientDataID = '1TMj77bl9jPBD8BsgMxjuXTk4DbWK5eguj10HQoeFVNQ';
-const instaOfficialID = '1tOIM23YZK1ts7t0EeVCseWXSGobp56-hAV8L0sRvV2g';
-const instaLikesUsernameID = '1OAZ3ZPfY8sYtyT0n-5WJP-O3cIJHShBU-KuWJVDBDR8';
+const databaseID = dbKey.databaseID;;
+const clientDataID = dbKey.clientDataID;
+const instaOfficialID = dbKey.instaOfficialID;
+const instaLikesUsernameID = dbKey.instaLikesUsernameID;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)

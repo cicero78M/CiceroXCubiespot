@@ -17,7 +17,7 @@ const googleAuth = new JWT({
 module.exports = {
   
   //Add New Client to Database Client ID  
-  addClient: async function addClient(sheetName, insta, tiktok, filesID){
+  addClient: async function addClient(sheetName, type, insta, tiktok, filesID){
 
     let instaLink = insta.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
     let tiktokLink = tiktok.split('/').pop();      //Get Last Segment of Links
@@ -39,8 +39,12 @@ module.exports = {
         }
       }
       if (!isClient){
-        sheetTarget.addRow({CLIENT_ID: sheetName, STATUS: true, INSTAGRAM: instaLink, TIKTOK: tiktokLink});
-        return 'Client ID : '+sheetName+' Registred Success.';
+        if (['company', 'organizations'].includes(type)){
+          sheetTarget.addRow({CLIENT_ID: sheetName, TYPE: type, STATUS: true, INSTAGRAM: instaLink, TIKTOK: tiktokLink});
+          return 'Client ID : '+sheetName+' Registred Success.';
+        } else {
+          return 'Client type does\'nt Match requirements';
+        }
       } else {
         return 'Client is exist with status : '+clientState;
       }
