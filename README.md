@@ -32,12 +32,12 @@ User Order :
 
 System Reloads data :
 
-- Reload Insta : ClientName#instaReload
-- Reload Tiktok : ClientName#TiktokReload
-- Reload Whatsapp Story : ClientName#broadcastReload
+- Reload Insta likes : ClientName#reloadInstaLikes
+- Reload Tiktok likes: ClientName#reloadtiktoklikes
+- Reload Whatsapp Story : ClientName#reloadstorysharing
   
 System Rekap Data :
 
-- Rekap Insta
-- Rekap Tiktok
-- Rekap Story
+- Rekap Insta likes : ClientName#rekapInstaLikes
+- Rekap Tiktok likes :ClientName#rekaptiktokLikes
+- Rekap Whatsapp Story :ClientName#rekapTiktokLikes
