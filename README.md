@@ -35,9 +35,9 @@ System Reloads data :
   
 System Rekap Data :
 
-- Rekap Insta likes : ClientName#rekapInstaLikes || OK
-- Rekap Tiktok likes :ClientName#rekaptiktokLikes
-- Rekap Whatsapp Story :ClientName#rekapTiktokLikes
+- Rekap Insta likes : ClientName#reportInstaLikes || OK
+- Rekap Tiktok likes :ClientName#reporttiktokLikes
+- Rekap Whatsapp Story :ClientName#reportTiktokLikes
 
 Client Mechanism :
 - Client Preparing User Data
