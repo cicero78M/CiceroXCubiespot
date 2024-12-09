@@ -137,6 +137,7 @@ dist
 *.old
 
 # credential
+
 ciceroKey.json
 instaKey.json
 tiktokKey.json
