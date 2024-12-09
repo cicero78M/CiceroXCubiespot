@@ -16,7 +16,7 @@ Admin Request Order:
 - Change Division : ClientName#editdivisi#ID_Key#new_divisi || OK
 - Change Jabatan : ClientName#editjabatan#ID_Key#new_jabatan || OK
 
-Report User Data :
+Report Update User Social Media Profile:
 
 - Report Insta Update : ClientName#instacheck || OK
 - Report Tiktok Update : ClientName#tiktokcheck || OK
@@ -27,19 +27,20 @@ User Order :
 - Request Update Insta Username : ClientName#updateinsta#InstagramProfileLink || OK
 - Request Update Tiktok Username : ClientName#updatetiktok#TiktokProfileLink || OK
 
-System Reloads data :
+Reloads Enggagement Data:
 
 - Reload Insta likes : ClientName#reloadInstaLikes || OK
 - Reload Tiktok likes: ClientName#reloadtiktoklikes
 - Reload Whatsapp Story : ClientName#reloadstorysharing
   
-System Rekap Data :
 
-- Rekap Insta likes : ClientName#rekapInstaLikes || OK
-- Rekap Tiktok likes :ClientName#rekaptiktokLikes
-- Rekap Whatsapp Story :ClientName#rekapTiktokLikes
+Report Engagement Data :
 
-Client Mechanism :
+- Report Insta Likes: ClientName#reportInstaLikes || OK
+- Report Tiktok likes :ClientName#reporttiktokLikes
+- Report Whatsapp Story :ClientName#reportTiktokLikes
+
+Client Activations Mechanism :
 - Client Preparing User Data
 - Admin Push User Data to Server
 - Admin Add Client Properties by Order
