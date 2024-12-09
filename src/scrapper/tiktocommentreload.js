@@ -33,13 +33,13 @@ async function tiktokUserInfoAPI(key){
   
   try {
     const response = await axios.request(options);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error(error);
   }
 }
 
-async function tiktokPostAPI(key){
+async function tiktokPostAPI(key, cursors){
 //Tiktok Post API
   const options = {
     method: 'GET',
@@ -47,14 +47,14 @@ async function tiktokPostAPI(key){
     params: {
       secUid: key,
       count: '50',
-      cursor: '0'
+      cursor: cursors
     },
     headers : headers
   };
 
   try {
     const response = await axios.request(options);
-    console.log(response.data);
+    return response.data; 
   } catch (error) {
     console.error(error);
   }
@@ -75,7 +75,7 @@ async function tiktokCommentAPI(key, cursors){
   
   try {
     const response = await axios.request(options);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error(error);
   }
@@ -83,7 +83,7 @@ async function tiktokCommentAPI(key, cursors){
 
 module.exports = {  
 
-  reloadInstaLikes: async function reloadInstaLikes(sheetName, userClientID, clientID, instaOfficialID, instaLikesUsernameID){
+  reloadTiktokComments: async function reloadTiktokComments(sheetName, userClientID, clientID, tiktokOfficialID, tiktokCommentsUsernameID){
 
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
@@ -94,14 +94,14 @@ module.exports = {
     const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
     await clientDoc.loadInfo(); // loads document properties and worksheets
 
-    const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
+    const instaOfficialDoc = new GoogleSpreadsheet(tiktokOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
     await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
 
-    const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
+    const instaLikesUsernameDoc= new GoogleSpreadsheet(tiktokCommentsUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
 
     //Check Client_ID. then get async data
     let isClientID = false;
-    let instaOfficial;
+    let tiktokOfficial;
     let isStatus;
   
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
@@ -110,7 +110,8 @@ module.exports = {
     for (let i = 0; i < rowsClientData.length; i++){
       if (rowsClientData[i].get('CLIENT_ID') === sheetName){
         isClientID = true;
-        instaOfficial = rowsClientData[i].get('INSTAGRAM');
+        tiktokOfficial = rowsClientData[i].get('TIKTOK');
+        
         isStatus = rowsClientData[i].get('STATUS');
       }
     }
@@ -119,7 +120,7 @@ module.exports = {
     if (isClientID && isStatus){    
       try {
         //Collect Content Shortcode from Official Account
-        let response = await instaPostAPI(instaOfficial);
+        let response = await tiktokPostAPI(tiktokOfficial.replaceAll('@', ));
         const items = response.data.items;
 
         let hasContent = false;
