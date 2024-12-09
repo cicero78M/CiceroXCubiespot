@@ -5,9 +5,6 @@ Admin Request Order:
 
 - Add New Client : ClientName#addclient#InstaLink#tiktokLink || OK
 - Change Status Client : ClientName#clientstate#boolean || OK
-
-- Adding Header to Insta Likes User DB : ClientName#instalikesdb || OK
-
 - Transfer Data by Organizations : ClientName#newclientorg#LinkSourceSheet || OK 
 - Source File Format NRP(Number)/NAMA(String)/PANGKAT(String)/SATFUNG(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
 
@@ -42,7 +39,14 @@ System Rekap Data :
 - Rekap Tiktok likes :ClientName#rekaptiktokLikes
 - Rekap Whatsapp Story :ClientName#rekapTiktokLikes
 
+Client Mechanism :
+- Client Preparing User Data
+- Admin Push User Data to Server
+- Admin Add Client Properties by Order
+- User Update Data by ID_Key
+- System Handle Bussiness Life Cycles
 
-WEB-APP DASHBOARD
+  
+>> WEB-APP DASHBOARD
 
 - On The Go
