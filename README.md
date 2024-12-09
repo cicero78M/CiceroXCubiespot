@@ -39,7 +39,14 @@ System Rekap Data :
 - Rekap Tiktok likes :ClientName#rekaptiktokLikes
 - Rekap Whatsapp Story :ClientName#rekapTiktokLikes
 
+Client Mechanism :
+- Client Preparing User Data
+- Admin Push User Data to Server
+- Admin Add Client Properties by Order
+- User Update Data by ID_Key
+- System Handle Bussiness Life Cycles
 
-WEB-APP DASHBOARD
+  
+<<WEB-APP DASHBOARD>>
 
 - On The Go
