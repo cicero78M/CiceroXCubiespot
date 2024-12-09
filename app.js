@@ -4,14 +4,11 @@ const app = express();
 
 const dbKey = JSON.parse (fs.readFileSync('dbKey.json'));
 
-
 var dataBase = require('./src/database/database');
 var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
 var instaReload = require('./src/scrapper/instalikesreload');
 var instaReport = require('./src/reporting/instalikesreport');
-
-var sheetProps = require('./src/database/sheetProperties');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -196,17 +193,7 @@ client.on('message', async (msg) => {
                         let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataBase);
                         client.sendMessage(msg.from, response);
     
-                    } else if(splittedMsg[1].toLowerCase() === 'addheader'){
-                        //User Checking myData
-                        let response = await sheetProps.headerData(splittedMsg[0].toUpperCase(), userDataBase,instaOfficialDataBase, 
-                        instaLikesUsernameDataBase);
-    
-                        if (response === undefined){
-                            client.sendMessage(msg.from, 'Creating Header For Database');
-                        } else {
-                            client.sendMessage(msg.from, response);
-                        }
-                    }      
+                    }
                 //Reload Data       
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
@@ -224,14 +211,10 @@ client.on('message', async (msg) => {
                         let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         instaOfficialDataBase, instaLikesUsernameDataBase);
                         client.sendMessage(msg.from, response);  
-
                     } else if(splittedMsg[1].toLowerCase() === 'reporttiktoklikes') {
                         //Report Likes from Tiktok Official
-                    
                     }
-                //Add Official Client Data
                 }
-
             } else {
                 //Regular Messages
                 console.log('Reqular Messages');
