@@ -1,7 +1,0 @@
-{
-    "tiktokhostInfo" : "https://tiktok-api23.p.rapidapi.com/api/user/info",
-    "tiktokhostContent" : "https://tiktok-api23.p.rapidapi.com/api/user/posts",
-    "tiktokhostComment" : "https://tiktok-api23.p.rapidapi.com/api/post/comments",
-    "tiktokkeyAPI" : "f667627969msh3bfa806fa07f0c1p15c406jsn47bc847d28d2",
-    "tiktokhostAPI" : "tiktok-api23.p.rapidapi.com"
-}
