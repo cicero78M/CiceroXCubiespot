@@ -47,6 +47,6 @@ Client Mechanism :
 - System Handle Bussiness Life Cycles
 
   
-<<WEB-APP DASHBOARD>>
+>> WEB-APP DASHBOARD
 
 - On The Go
