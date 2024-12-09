@@ -34,7 +34,6 @@ module.exports = {
 
     //Check Client_ID. then get async data
     let isClientID = false;
-    let instaOfficial;
     let isStatus;
   
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
@@ -43,7 +42,6 @@ module.exports = {
     for (let i = 0; i < rowsClientData.length; i++){
       if (rowsClientData[i].get('CLIENT_ID') === sheetName){
         isClientID = true;
-        instaOfficial = rowsClientData[i].get('INSTAGRAM');
         isStatus = rowsClientData[i].get('STATUS');
       }
     }
@@ -129,20 +127,20 @@ module.exports = {
   
             for (let iv = 0; iv < notLikesList.length; iv++){
                 if(divisiList[iii] === notLikesList[iv].get('DIVISI')){
-                    userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA'));
+                    userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
                     divisiCounter++;
                     userCounter++;
                 }  
             }
             
             if ( divisiCounter != 0){
-                dataInsta = dataInsta.concat('\n\n'+divisiList[iii]+' : '+divisiCounter+' User\n'+userByDivisi);
+                dataInsta = dataInsta.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
             }
         }
   
         let instaSudah = userClientData.length-notLikesList.length;
   
-        let response = "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksnakan likes pada konten\n"+shortcodeListString+"\n\nsampai dengan Waktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
+        let response = "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksnakan likes pada konten\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
         +userClientData.length+" \nJumlah User Sudah melaksanakan: "+instaSudah+"\nJumlah User Belum melaksanakan : "
         +userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_";
         
