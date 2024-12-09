@@ -9,6 +9,7 @@ var query = require('./src/database/myData');
 var checkData = require('./src/database/checkData');
 var instaReload = require('./src/scrapper/instalikesreload');
 var instaReport = require('./src/reporting/instalikesreport');
+var tiktokReload = require('./src/scrapper/tiktocommentreload');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -20,6 +21,8 @@ const userDataBase = dbKey.databaseID;;
 const clientDataBase = dbKey.clientDataID;
 const instaOfficialDataBase = dbKey.instaOfficialID;
 const instaLikesUsernameDataBase = dbKey.instaLikesUsernameID;
+const tiktokOfficialDataBase = dbKey.tiktokOfficialID;
+const tiktokCommentUsernameDataBase = dbKey.tiktokCommentUsernameID;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -73,7 +76,7 @@ client.on('message', async (msg) => {
     const newClientOrder = ['newclientorg', 'newclientcom' ];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
     const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate', 'addclient', 'addheader' ];
-    const reloadOrder = ['reloadinstalikes', 'reloadtiktoklikes', 'reloadstorysharing'];
+    const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
     const reportOrder = ['reportinstalikes', 'reporttiktoklikes', 'reportstorysharing'];
 
     try {
@@ -201,8 +204,14 @@ client.on('message', async (msg) => {
                         let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         instaOfficialDataBase, instaLikesUsernameDataBase);
                         client.sendMessage(msg.from, response);  
-                    } else if(splittedMsg[1].toLowerCase() === 'reloadtiktoklikes') {
-                        //Reload Likes from Tiktok Official                    
+                    } else if(splittedMsg[1].toLowerCase() === 'reloadtiktokcomments') {
+                        //Reload Comments from Tiktok Official
+                        let response = await tiktokReload.reloadTiktokComments(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
+                        tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
+
+                        console.log(response);
+//                        client.sendMessage(msg.from, response);  
+                    
                     }
                 //Reporting
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){

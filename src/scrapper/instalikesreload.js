@@ -121,7 +121,6 @@ module.exports = {
 
         if(hasContent){
 
-          console.log(sheetName);
           //Collect Shortcode from Database        
           const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
           const officialInstaData = await officialInstaSheet.getRows();
