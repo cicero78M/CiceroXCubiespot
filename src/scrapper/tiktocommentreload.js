@@ -255,20 +255,15 @@ module.exports = {
               }
               //Add new Row
               console.log('Insert new data');
-
               await instaLikesUsernameSheet.addRow(userNameList);
               newData++;
             }
           }
           return 'Succes Reload Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
 
-        } else {
-          
-          return 'No Content';
-        
+        } else { 
+          return 'No Content';       
         }
-
-
       } catch (error) {
         return 'Error, Contacts Developers';
       }
