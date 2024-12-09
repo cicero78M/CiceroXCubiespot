@@ -15,15 +15,21 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-    instaLikesDataBase: async function instaLikesDataBase(sheetName, instaLikesUsernameID){
+    headerData: async function headerData(sheetName, instaOfficialID, instaLikesUsernameID){
             
         try {   
+
+            //InstaOfficial Header
+            const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
+            await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+            await instaOfficialDoc.addSheet({title : sheetName, headerValues: ['TIMESTAMP',	'USER_ACCOUNT',	'SHORTCODE', 'ID', 'TYPE', 'CAPTION', 
+                'COMMENT_COUNT', 'LIKE_COUNT', 'PLAY_COUNT', 'THUMBNAIL', 'VIDEO_URL']});
 
             const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
             await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
             await instaLikesUsernameDoc.addSheet({title : sheetName, headerValues: ['SHORTCODE']});
             let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
-            instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
+            await instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
             
             await instaLikesUsernameSheet.loadCells();
             let header = instaLikesUsernameSheet.getCell(0,0);
@@ -39,20 +45,25 @@ module.exports = {
                     header.value = 'USER_'+i;
                     header.textFormat = { bold: true, fontSize: 13};
                     await instaLikesUsernameSheet.saveUpdatedCells(); // save all updates in one call
+                    
                     i++;  //  increment the counter
                     
                     if (i < 1500) {  //  if the counter < rowsSource.length, call the loop function
-                        pushHeaders(); //  again which will trigger another 
+                       try {
+                            pushHeaders(); //  again which will trigger another                         
+                        } catch (error) {
+                            console.log(error);
+                        }
                     } else {
-                        return 'succes update header';
+                        console.log('Client DataBase for '+sheetName+' Created, with header properties');
                     }
                 }, 700);
             }   
-
-            let response = await pushHeaders();
-            console.log(response);
-            return response;
-
+            try {
+                pushHeaders();
+            } catch (error) {
+                console.log(error);
+            }
         } catch (error) {
             return 'Error, Sheet Name exist';
         }

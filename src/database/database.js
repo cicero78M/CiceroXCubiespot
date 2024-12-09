@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+const addHeader = require('./sheetProperties');
+
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
@@ -17,17 +19,18 @@ const googleAuth = new JWT({
 module.exports = {
   
   //Add New Client to Database Client ID  
-  addClient: async function addClient(sheetName, type, insta, tiktok, filesID){
+  addClient: async function addClient(sheetName, type, insta, tiktok, clientID, instaOfficialID, instaLikesUsernameID){
 
     let instaLink = insta.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
     let tiktokLink = tiktok.split('/').pop();      //Get Last Segment of Links
-
-    const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    console.log(sheetName+' / '+ type+' / '+instaLink+' / '+tiktokLink);
     try {
+      const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Auth
+
       //Insert New Sheet
-      await targetDoc.loadInfo(); // loads document properties and worksheets
-      const sheetTarget = targetDoc.sheetsByTitle['ClientData'];
-      const clientData = await sheetTarget.getRows();
+      await clientDoc.loadInfo(); // loads document properties and worksheets
+      const clientSheet = clientDoc.sheetsByTitle['ClientData'];
+      const clientData = await clientSheet.getRows();
 
       let isClient = false;
       let clientState;
@@ -39,9 +42,13 @@ module.exports = {
         }
       }
       if (!isClient){
-        if (['company', 'organizations'].includes(type)){
-          sheetTarget.addRow({CLIENT_ID: sheetName, TYPE: type, STATUS: true, INSTAGRAM: instaLink, TIKTOK: tiktokLink});
-          return 'Client ID : '+sheetName+' Registred Success.';
+        if (['COM', 'ORG'].includes(type)){
+          clientSheet.addRow({CLIENT_ID: sheetName, TYPE: type, STATUS: true, INSTAGRAM: instaLink, TIKTOK: tiktokLink});
+
+          await addHeader.headerData(sheetName, instaOfficialID, instaLikesUsernameID);
+          
+          return 'Client DataBase for '+sheetName+' Created, with header properties';
+          
         } else {
           return 'Client type does\'nt Match requirements';
         }

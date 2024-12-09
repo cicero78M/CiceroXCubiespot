@@ -19,10 +19,10 @@ const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
 
 const port = 3007;
-const databaseID = dbKey.databaseID;;
-const clientDataID = dbKey.clientDataID;
-const instaOfficialID = dbKey.instaOfficialID;
-const instaLikesUsernameID = dbKey.instaLikesUsernameID;
+const userDataBase = dbKey.databaseID;;
+const clientDataBase = dbKey.clientDataID;
+const instaOfficialDataBase = dbKey.instaOfficialID;
+const instaLikesUsernameDataBase = dbKey.instaLikesUsernameID;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -88,7 +88,17 @@ client.on('message', async (msg) => {
             const splittedMsg = msg.body.split("#");
             if(splittedMsg.length > 1){
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
-                if(newClientOrder.includes(splittedMsg[1].toLowerCase())){
+
+                if(splittedMsg[1].toLowerCase() === 'addclient'){
+                    //User Checking myData
+                    console.log('exec');
+                    if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('tiktok.com')){
+                        console.log('Trying')
+                        let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase(), splittedMsg[3], splittedMsg[4], 
+                        clientDataBase, instaOfficialDataBase, instaLikesUsernameDataBase);
+                        client.sendMessage(msg.from, response);
+                    }
+                } else if(newClientOrder.includes(splittedMsg[1].toLowerCase())){
                 //Admin Order
                     if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                         //Is contains Links
@@ -96,7 +106,7 @@ client.on('message', async (msg) => {
                             //If Request for New Client by Organizations
                             try {
                             //Organizations Request
-                                let response = await dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                                let response = await dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
                                 client.sendMessage(msg.from, response);
                             } catch (error) {
                                 console.log(error);
@@ -105,7 +115,7 @@ client.on('message', async (msg) => {
                             //If Request for New Client by Company
                             try {
                             //Company Request
-                                let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                                let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
                                 client.sendMessage(msg.from, response);
                             } catch (error) {
                                 console.log(error);
@@ -120,29 +130,35 @@ client.on('message', async (msg) => {
                     if (splittedMsg[1].toLowerCase() === 'adduser'){ 
                         //Check Between Corporate And Organizations
                         if(splittedMsg.length > 6){                   
-                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), databaseID);
+                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                            splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), userDataBase);
                             client.sendMessage(msg.from, response);
                         } else {
-                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, databaseID);
+                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                            splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, userDataBase);
                             client.sendMessage(msg.from, response);
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'editdivisi') {
                         //update Divisi Name
-                        let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
+                        let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                        msg.from.replace('@c.us', ''), userDataBase);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'editjabatan') {
                         //Update Jabatan
-                        let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
+                        let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                        msg.from.replace('@c.us', ''), userDataBase);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'editnama') {
                         //Update Nama
-                        let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), databaseID);
+                        let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                        msg.from.replace('@c.us', ''), userDataBase);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'updateinsta') {
                         //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
                             if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
-                                let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], msg.from.replace('@c.us', ''), databaseID);
+                                let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], 
+                                msg.from.replace('@c.us', ''), userDataBase);
                                 client.sendMessage(msg.from, response);
                             } else {
                                 client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
@@ -153,7 +169,8 @@ client.on('message', async (msg) => {
                     } else if(splittedMsg[1].toLowerCase() === 'updatetiktok') {
                         //Update Tiktok profile
                         if (splittedMsg[3].includes('tiktok.com')){                    
-                            let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],msg.from.replace('@c.us', ''), databaseID);
+                            let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],
+                            msg.from.replace('@c.us', ''), userDataBase);
                             client.sendMessage(msg.from, response);
                         } else {
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
@@ -163,25 +180,26 @@ client.on('message', async (msg) => {
                 } else if(dataOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
-                        let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), databaseID);
+                        let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), userDataBase);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'tiktokcheck') {
                         //Checking If User hasn't update Tiktok Profile
-                        let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), databaseID);
+                        let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), userDataBase);
                         client.sendMessage(msg.from, response);
                     } else if(splittedMsg[1].toLowerCase() === 'mydata'){
                         //User Checking myData
-                        let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], databaseID);
+                        let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
                         client.sendMessage(msg.from, response);
 
                     } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
                         //User Checking myData
-                        let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataID);
+                        let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataBase);
                         client.sendMessage(msg.from, response);
     
                     } else if(splittedMsg[1].toLowerCase() === 'addheader'){
                         //User Checking myData
-                        let response = await sheetProps.instaLikesDataBase(splittedMsg[0].toUpperCase(), instaLikesUsernameID);
+                        let response = await sheetProps.headerData(splittedMsg[0].toUpperCase(), userDataBase,instaOfficialDataBase, 
+                        instaLikesUsernameDataBase);
     
                         if (response === undefined){
                             client.sendMessage(msg.from, 'Creating Header For Database');
@@ -193,7 +211,8 @@ client.on('message', async (msg) => {
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
                         //Reload Likes from Insta Official
-                        let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
+                        let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
+                        instaOfficialDataBase, instaLikesUsernameDataBase);
                         client.sendMessage(msg.from, response);  
                     } else if(splittedMsg[1].toLowerCase() === 'reloadtiktoklikes') {
                         //Reload Likes from Tiktok Official                    
@@ -202,7 +221,8 @@ client.on('message', async (msg) => {
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){
                     if(splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
-                        let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), databaseID, clientDataID, instaOfficialID, instaLikesUsernameID);
+                        let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
+                        instaOfficialDataBase, instaLikesUsernameDataBase);
                         client.sendMessage(msg.from, response);  
 
                     } else if(splittedMsg[1].toLowerCase() === 'reporttiktoklikes') {
@@ -210,13 +230,8 @@ client.on('message', async (msg) => {
                     
                     }
                 //Add Official Client Data
-                } else if(splittedMsg[1].toLowerCase() === 'addclient'){
-                    //User Checking myData
-                    if (!splittedMsg[2].includes('/p/') || !splittedMsg[2].includes('/reels/') || !splittedMsg[2].includes('/video/') && splittedMsg[2].includes('instagram.com') && !splittedMsg[4].includes('twitter.com')){
-                        let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], clientDataID);
-                        client.sendMessage(msg.from, response);
-                    }
-                } 
+                }
+
             } else {
                 //Regular Messages
                 console.log('Reqular Messages');
