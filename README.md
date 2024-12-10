@@ -30,7 +30,7 @@ User Order :
 Reloads Enggagement Data:
 
 - Reload Insta likes : ClientName#reloadInstaLikes || OK
-- Reload Tiktok likes: ClientName#reloadtiktoklikes
+- Reload Tiktok Comments : ClientName#reloadtiktokComments || OK
 - Reload Whatsapp Story : ClientName#reloadstorysharing
   
 
