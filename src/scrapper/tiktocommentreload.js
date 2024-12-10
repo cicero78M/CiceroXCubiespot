@@ -233,7 +233,6 @@ module.exports = {
               }
 
               do  { 
-
                 let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
                 let commentItems = responseComments.comments;       
 
@@ -244,14 +243,22 @@ module.exports = {
                     }
                   }
                 }
-  
                 cursorNumber = responseComments.cursor;
                 checkNext = responseComments.has_number;
-
               } while ( checkNext === 1);
+
+              let dataCleaning = [];
+
+              for(let iv = 0; iv < newDataUsers.length; iv++){
+                if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined){
+                  if (!dataCleaning.includes(newDataUsers[iv])){
+                    dataCleaning.push(newDataUsers[iv]);
+                  }
+                }
+              }
               console.log('update data');
               await tiktokCommentsUsernameData[ii].delete();
-              await tiktokCommentsUsernameSheet.addRow(newDataUsers);
+              await tiktokCommentsUsernameSheet.addRow(dataCleaning);
               updateData++;
             }
           }
@@ -260,29 +267,36 @@ module.exports = {
             //If Shortcode doesn't exist push new data
 
             let cursorNumber = 0;
-            let userNameList = [todayItems[i]];
+            let newDataUsers = [todayItems[i]];
             let checkNext = 0;
             
             do{
-
               let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
               let commentItems = responseComments.comments;
 
               for (let iii = 0; iii < commentItems.length; iii++){
-                userNameList.push(commentItems[iii].user.unique_id);             
+                newDataUsers.push(commentItems[iii].user.unique_id);             
               }
               //Add new Row
               cursorNumber = responseComments.cursor
               checkNext = responseComments.has_more;
             } while (checkNext === 1);
 
+            let dataCleaning = [];
+
+            for(let iv = 0; iv < newDataUsers.length; iv++){
+              if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined){
+                if (!dataCleaning.includes(newDataUsers[iv])){
+                  dataCleaning.push(newDataUsers[iv]);
+                }
+              }
+            }
             console.log('Insert new data');
-            await tiktokCommentsUsernameSheet.addRow(userNameList);3
+            await tiktokCommentsUsernameSheet.addRow(dataCleaning);
             newData++;
           }
         }
         return 'Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
-
       } catch (error) {
         return error;
       }
