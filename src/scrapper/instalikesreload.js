@@ -211,11 +211,9 @@ module.exports = {
                     }
                   }
                 }
-                
                 console.log('update data');
                 await instaLikesUsernameData[ii].delete();
                 await instaLikesUsernameSheet.addRow(newDataUsers);
-
               }
             }
             //Final Code
@@ -237,14 +235,9 @@ module.exports = {
             }
           }
           return 'Succes Reload Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
-
-        } else {
-          
+        } else { 
           return 'No Content';
-        
         }
-
-
       } catch (error) {
         return 'Error, Contacts Developers';
       }

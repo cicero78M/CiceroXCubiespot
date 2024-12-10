@@ -133,6 +133,7 @@ module.exports = {
         } catch (e){
           items = responseContent.itemList;
         }
+
         let hasContent = false;
         let itemByDay = [];
         let todayItems = [];
@@ -143,7 +144,7 @@ module.exports = {
             hasContent = true;
             itemByDay.push(items[i]);
             todayItems.push(items[i].video.id);
-          }    
+          }
         }
 
         if(hasContent){
@@ -158,7 +159,6 @@ module.exports = {
             }
           }
 
-          
           //Check if Database Contains Shortcode Items        
           let hasShortcode = false;
           for (let i = 0; i < itemByDay.length; i++){
@@ -174,7 +174,7 @@ module.exports = {
           if(hasShortcode){
             for (let i = 0; i < itemByDay.length; i++){
               for (let ii = 0; ii < officialTiktokData.length; ii++){
-                if(officialTiktokData[ii].get('SHORTCODE') === itemByDay[i].code){
+                if(officialTiktokData[ii].get('SHORTCODE') === itemByDay[i].video.id){
                   //Update Existing Content Database                
                   officialTiktokData[ii].assign({TIMESTAMP: itemByDay[i].createTime,	USER_ACCOUNT:itemByDay[i].author.uniqueId,	
                     SHORTCODE:itemByDay[i].video.id, ID: itemByDay[i].id, CAPTION:itemByDay[i].desc,	COMMENT_COUNT:itemByDay[i].statsV2.commentCount,	
@@ -182,9 +182,9 @@ module.exports = {
                     SHARE_COUNT: itemByDay[i].statsV2.shareCount, REPOST_COUNT: itemByDay[i].statsV2.repostCount}); // Jabatan Divisi Value
                     await officialTiktokData[ii].save(); //save update
                   shortcodeUpdateCounter++;
-                } else if(!shortcodeList.includes(itemByDay[i].code)){
+                } else if(!shortcodeList.includes(itemByDay[i].video.id)){
                   //Push New Content to Database  
-                  shortcodeList.push(itemByDay[i].code);
+                  shortcodeList.push(itemByDay[i].video.id);
                   officialTiktokSheet.addRow({TIMESTAMP: itemByDay[i].createTime,	USER_ACCOUNT:itemByDay[i].author.uniqueId,	
                     SHORTCODE:itemByDay[i].video.id, ID: itemByDay[i].id, CAPTION:itemByDay[i].desc,	COMMENT_COUNT:itemByDay[i].statsV2.commentCount,	
                     LIKE_COUNT:itemByDay[i].statsV2.diggCount,	PLAY_COUNT:itemByDay[i].statsV2.playCount, COLLECT_COUNT: itemByDay[i].statsV2.collectCount, 
@@ -218,13 +218,12 @@ module.exports = {
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
               hasShortcode = true;
-              updateData++;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
-              const responseComments= await tiktokCommentAPI(todayItems[i], 0);
-              const commentsItems = responseComments.comments;
 
+              let cursorNumber = 0;
               let newDataUsers = [];
-            
+              let checkNext = 0;
+
               for (let iii = 0; iii < fromRows.length; iii++){
                 if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
                   if(!newDataUsers.includes(fromRows[iii])){
@@ -233,43 +232,58 @@ module.exports = {
                 }
               }
 
-              for (let iii = 0; iii < commentsItems.length; iii++){
-                if(commentsItems[iii].user.unique_id != undefined || commentsItems[iii].user.unique_id != null || commentsItems[iii].user.unique_id != ""){
-                  if(!newDataUsers.includes(commentsItems[iii].user.unique_id)){
-                    newDataUsers.push(commentsItems[iii].user.unique_id);
+              do  { 
+
+                let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
+                let commentItems = responseComments.comments;       
+
+                for (let iii = 0; iii < commentItems.length; iii++){
+                  if(commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != ""){
+                    if(!newDataUsers.includes(commentItems[iii].user.unique_id)){
+                      newDataUsers.push(commentItems[iii].user.unique_id);
+                    }
                   }
                 }
-              }
-              
+  
+                cursorNumber = responseComments.cursor;
+                checkNext = responseComments.has_number;
+
+              } while ( checkNext === 1);
               console.log('update data');
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(newDataUsers);
-
+              updateData++;
             }
           }
           //Final Code
           if(!hasShortcode){
             //If Shortcode doesn't exist push new data
-            let responseComments = await tiktokCommentAPI(todayItems[i], 0);
-            console.log(responseComments);
 
-            let commentItems = responseComments.comments;
+            let cursorNumber = 0;
             let userNameList = [todayItems[i]];
+            let checkNext = 0;
+            
+            do{
 
-            for (let iii = 0; iii < commentItems.length; iii++){
-              userNameList.push(commentItems[iii].user.unique_id);             
-            }
-            //Add new Row
+              let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
+              let commentItems = responseComments.comments;
+
+              for (let iii = 0; iii < commentItems.length; iii++){
+                userNameList.push(commentItems[iii].user.unique_id);             
+              }
+              //Add new Row
+              cursorNumber = responseComments.cursor
+              checkNext = responseComments.has_more;
+            } while (checkNext === 1);
+
             console.log('Insert new data');
-
-            await tiktokCommentsUsernameSheet.addRow(userNameList);
+            await tiktokCommentsUsernameSheet.addRow(userNameList);3
             newData++;
           }
         }
         return 'Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
 
       } catch (error) {
-
         return error;
       }
     }  else {
