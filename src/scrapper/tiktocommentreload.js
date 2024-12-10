@@ -84,8 +84,7 @@ async function tiktokCommentAPI(key, cursors){
 module.exports = {  
 
   reloadTiktokComments: async function reloadTiktokComments(sheetName, userClientID, clientID, tiktokOfficialID, tiktokCommentsUsernameID){
-    console.log(tiktokOfficialID);
-    console.log(tiktokCommentsUsernameID);
+
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
 
@@ -142,7 +141,6 @@ module.exports = {
           }    
         }
 
-        console.log(todayItems);
         if(hasContent){
           const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[sheetName];
           const officialTiktokData = await officialTiktokSheet.getRows();
@@ -265,7 +263,7 @@ module.exports = {
         return 'Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
 
       } catch (error) {
-        
+
         return error;
       }
     }  else {
