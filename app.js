@@ -82,7 +82,8 @@ client.on('message', async (msg) => {
     try {
         if (msg.isStatus){
             //If Msg is WA Story
-            console.log(msg.from+" >>> "+msg.body);
+            const contact = await msg.getContact();
+            console.log(contact.pushname+" ===> "+msg.body);            
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
@@ -226,7 +227,8 @@ client.on('message', async (msg) => {
                 }
             } else {
                 //Regular Messages
-                console.log(msg.from+" ===> "+msg.body);
+                const contact = await msg.getContact();
+                console.log(contact.pushname+" ===> "+msg.body);
             }
         }
     } catch (error) {
