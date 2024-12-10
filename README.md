@@ -37,8 +37,16 @@ Reloads Enggagement Data:
 Report Engagement Data :
 
 - Report Insta Likes: ClientName#reportInstaLikes || OK
-- Report Tiktok likes :ClientName#reporttiktokLikes
-- Report Whatsapp Story :ClientName#reportTiktokLikes
+- Report Tiktok likes : ClientName#reporttiktokcomments || OK
+- Report Whatsapp Story : ClientName#reportTiktokLikes
+
+Automate / Cron Job:
+
+- Report Update Data
+- Reload Insta Likes
+- Reload Tiktok Comment
+- Report InstaLikes
+- Report Tiktok Comments
 
 Client Activations Mechanism :
 - Client Preparing User Data
