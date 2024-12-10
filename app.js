@@ -213,8 +213,7 @@ client.on('message', async (msg) => {
                         tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
 
                         console.log(response);
-                        client.sendMessage(msg.from, response);  
-                    
+                        client.sendMessage(msg.from, response);                   
                     }
                 //Reporting
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){
