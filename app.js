@@ -79,7 +79,7 @@ client.on('message', async (msg) => {
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
     const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate', 'addclient', 'addheader' ];
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
-    const reportOrder = ['reportinstalikes', 'reporttiktoklikes', 'reportstorysharing'];
+    const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
 
     try {
         if (msg.isStatus){
@@ -225,7 +225,7 @@ client.on('message', async (msg) => {
                         client.sendMessage(msg.from, response);  
                     } else if(splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
                         //Report Comments from Tiktok Official
-                        let response = await tiktokReport.re(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
+                        let response = await tiktokReport.reportTiktokComments(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
                         client.sendMessage(msg.from, response);  
                     }
