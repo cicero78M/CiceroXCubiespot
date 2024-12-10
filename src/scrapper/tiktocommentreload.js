@@ -64,7 +64,7 @@ async function tiktokCommentAPI(key, cursors){
   //Insta Likes API
   const options = {
     method: 'GET',
-    url: tiktokKey.tiktokhostComment,
+    url: tiktokKey.tiktokhostComments,
     params: {
       videoId: key,
       count: '50',
@@ -126,8 +126,13 @@ module.exports = {
         let cursor = 0;
 
         let responseContent = await tiktokPostAPI(secUid, cursor);
-        let items = responseContent.data.itemList;
-
+        let items =[];
+      
+        try{
+          items = responseContent.data.itemList;
+        } catch (e){
+          items = responseContent.itemList;
+        }
         let hasContent = false;
         let itemByDay = [];
         let todayItems = [];
@@ -215,7 +220,7 @@ module.exports = {
               hasShortcode = true;
               updateData++;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
-              const responseComments= await tiktokCommentsUsernameData(todayItems[i]);
+              const responseComments= await tiktokCommentAPI(todayItems[i], 0);
               const commentsItems = responseComments.comments;
 
               let newDataUsers = [];
@@ -230,8 +235,8 @@ module.exports = {
 
               for (let iii = 0; iii < commentsItems.length; iii++){
                 if(commentsItems[iii].user.unique_id != undefined || commentsItems[iii].user.unique_id != null || commentsItems[iii].user.unique_id != ""){
-                  if(!newDataUsers.includes(likesItems[iii].user.unique_id)){
-                    newDataUsers.push(likesItems[iii].user.unique_id);
+                  if(!newDataUsers.includes(commentsItems[iii].user.unique_id)){
+                    newDataUsers.push(commentsItems[iii].user.unique_id);
                   }
                 }
               }
@@ -245,7 +250,8 @@ module.exports = {
           //Final Code
           if(!hasShortcode){
             //If Shortcode doesn't exist push new data
-            let responseComments = await instaLikesAPI(todayItems[i]);
+            let responseComments = await tiktokCommentAPI(todayItems[i], 0);
+            console.log(responseComments);
 
             let commentItems = responseComments.comments;
             let userNameList = [todayItems[i]];

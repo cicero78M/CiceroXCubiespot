@@ -82,7 +82,7 @@ client.on('message', async (msg) => {
     try {
         if (msg.isStatus){
             //If Msg is WA Story
-            console.log(msg.body);
+            console.log(msg.from+" >>> "+msg.body);
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
@@ -210,7 +210,7 @@ client.on('message', async (msg) => {
                         tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
 
                         console.log(response);
-//                        client.sendMessage(msg.from, response);  
+                        client.sendMessage(msg.from, response);  
                     
                     }
                 //Reporting
@@ -226,7 +226,7 @@ client.on('message', async (msg) => {
                 }
             } else {
                 //Regular Messages
-                console.log('Reqular Messages');
+                console.log(msg.from+" ===> "+msg.body);
             }
         }
     } catch (error) {
