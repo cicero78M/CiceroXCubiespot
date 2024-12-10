@@ -201,7 +201,71 @@ module.exports = {
             }
           }
         }
+
+        await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
+        let tiktokCommentsUsernameSheet = await tiktokCommentsUsernameDoc.sheetsByTitle[sheetName];
+        let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
+
+        var newData = 0;
+        var updateData = 0;
+
+        for (let i = 0; i < todayItems.length; i++){
+          let hasShortcode = false;
+          //code on the go
+          for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
+            if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
+              hasShortcode = true;
+              updateData++;
+              const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
+              const responseComments= await tiktokCommentsUsernameData(todayItems[i]);
+              const commentsItems = responseComments.comments;
+
+              let newDataUsers = [];
+            
+              for (let iii = 0; iii < fromRows.length; iii++){
+                if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+                  if(!newDataUsers.includes(fromRows[iii])){
+                    newDataUsers.push(fromRows[iii]);
+                  }
+                }
+              }
+
+              for (let iii = 0; iii < commentsItems.length; iii++){
+                if(commentsItems[iii].user.unique_id != undefined || commentsItems[iii].user.unique_id != null || commentsItems[iii].user.unique_id != ""){
+                  if(!newDataUsers.includes(likesItems[iii].user.unique_id)){
+                    newDataUsers.push(likesItems[iii].user.unique_id);
+                  }
+                }
+              }
+              
+              console.log('update data');
+              await tiktokCommentsUsernameData[ii].delete();
+              await tiktokCommentsUsernameSheet.addRow(newDataUsers);
+
+            }
+          }
+          //Final Code
+          if(!hasShortcode){
+            //If Shortcode doesn't exist push new data
+            let responseComments = await instaLikesAPI(todayItems[i]);
+
+            let commentItems = responseComments.comments;
+            let userNameList = [todayItems[i]];
+
+            for (let iii = 0; iii < commentItems.length; iii++){
+              userNameList.push(commentItems[iii].user.unique_id);             
+            }
+            //Add new Row
+            console.log('Insert new data');
+
+            await tiktokCommentsUsernameSheet.addRow(userNameList);
+            newData++;
+          }
+        }
+        return 'Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
+
       } catch (error) {
+        
         return error;
       }
     }  else {
