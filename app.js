@@ -10,6 +10,8 @@ var checkData = require('./src/database/checkData');
 var instaReload = require('./src/scrapper/instalikesreload');
 var instaReport = require('./src/reporting/instalikesreport');
 var tiktokReload = require('./src/scrapper/tiktocommentreload');
+var tiktokReport = require('./src/reporting/tiktokcommentsreport');
+
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -221,8 +223,11 @@ client.on('message', async (msg) => {
                         let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         instaOfficialDataBase, instaLikesUsernameDataBase);
                         client.sendMessage(msg.from, response);  
-                    } else if(splittedMsg[1].toLowerCase() === 'reporttiktoklikes') {
-                        //Report Likes from Tiktok Official
+                    } else if(splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
+                        //Report Comments from Tiktok Official
+                        let response = await tiktokReport.re(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
+                        tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
+                        client.sendMessage(msg.from, response);  
                     }
                 }
             } else {

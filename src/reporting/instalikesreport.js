@@ -49,7 +49,7 @@ module.exports = {
     // If Client_ID exist. then get official content
     if (isClientID && isStatus){    
       try {
-        await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
+        await userClientDoc.loadInfo(); // loads document properties and worksheets
         let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
         
@@ -63,21 +63,23 @@ module.exports = {
 
         //Collect Shortcode from Database        
         let shortcodeList = [];
-        const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
-        const officialInstaData = await officialInstaSheet.getRows();
+
+        await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+        const instaOfficialSheet = instaOfficialDoc.sheetsByTitle[sheetName];
+        const instaOfficialData = await instaOfficialSheet.getRows();
 
         let shortcodeListString = '';
 
-        for (let i = 0; i < officialInstaData.length; i++){
-            let itemDate = new Date(officialInstaData[i].get('TIMESTAMP')*1000);
+        for (let i = 0; i < instaOfficialData.length; i++){
+            let itemDate = new Date(instaOfficialData[i].get('TIMESTAMP')*1000);
             if(itemDate.toLocaleDateString('id') === localDate){
-                if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))){
-                    shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
+                if (!shortcodeList.includes(instaOfficialData[i].get('SHORTCODE'))){
+                    shortcodeList.push(instaOfficialData[i].get('SHORTCODE'));
 
-                    if (officialInstaData[i].get('TYPE') === 'post'){
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+officialInstaData[i].get('SHORTCODE'));
+                    if (instaOfficialData[i].get('TYPE') === 'post'){
+                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+instaOfficialData[i].get('SHORTCODE'));
                     } else {
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/'+officialInstaData[i].get('TYPE')+'/'+officialInstaData[i].get('SHORTCODE'));
+                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/'+instaOfficialData[i].get('TYPE')+'/'+instaOfficialData[i].get('SHORTCODE'));
                     }
                 }
             }
@@ -140,13 +142,14 @@ module.exports = {
   
         let instaSudah = userClientData.length-notLikesList.length;
   
-        let response = "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksnakan likes pada konten\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
+        let response = "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksnakan likes pada konten Instagram :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
         +userClientData.length+" \nJumlah User Sudah melaksanakan: "+instaSudah+"\nJumlah User Belum melaksanakan : "
         +userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_";
         
         return response;
 
       } catch (error) {
+        console.log(error);
         return 'Error, Contacts Developers';
       }
     }  else {
