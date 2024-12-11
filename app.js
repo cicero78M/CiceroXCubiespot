@@ -193,12 +193,10 @@ client.on('message', async (msg) => {
                         //User Checking myData
                         let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
                         client.sendMessage(msg.from, response);
-
                     } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
                         //User Checking myData
                         let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataBase);
                         client.sendMessage(msg.from, response);
- 
                     }
                 //Reload Data       
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
