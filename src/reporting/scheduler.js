@@ -14,18 +14,6 @@ const googleAuth = new JWT({
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-
-
-module.exports = {
-
-  waStoryInsta: async function waStoryInsta(whatsapp, instalink, userClientID, clientID){
-    let url = body.match(/\bhttps?:\/\/\S+/gi);
-                if(url.includes('instagram.com')){
-                    let insta = instalink.pop().split('?')[0];
-                    let shortcode = insta.split('/');
-                    console.log(contact.pushname+" ===>c "+shortcode.pop());
-                }
-    
-  }
-    
+module.export = {
+  
 }

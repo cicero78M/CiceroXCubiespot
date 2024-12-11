@@ -66,6 +66,7 @@ client.on('ready', () => {
     console.log('===We\'ll Take Care Everything==');
     console.log('===============================');
     console.log('===============================');
+
 });
 
 client.on('qr', qr => {
@@ -85,13 +86,29 @@ client.on('message', async (msg) => {
         if (msg.isStatus){
             //If Msg is WA Story
             const contact = await msg.getContact();
-            console.log(contact.pushname+" ===> "+msg.body);            
+            if(contact.pushname != undefined){
+                let body = msg.body;
+                let url = body.match(/\bhttps?:\/\/\S+/gi);
+                if(url != null && url.includes('instagram.com')){
+                    let insta = url.pop().split('?')[0];
+                    let shortcode = insta.split('/');
+                    if(shortcode.pop() === null){
+                        console.log(contact.pushname+" ===> "+insta.split('/')[1]);
+                        client.sendMessage('6281235114745@c.us', insta.split('/')[1]);
+                    } else {
+                        console.log(contact.pushname+" ===>c "+shortcode.pop());
+                        client.sendMessage('6281235114745@c.us', shortcode.pop());
+                    }
+                } else {
+                    console.log (contact.pushname+" >>> "+msg.body);
+                }
+            }
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
             if(splittedMsg.length > 1){
-                console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
 
+                console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
                 if(splittedMsg[1].toLowerCase() === 'addclient'){
                     //User Checking myData
                     console.log('exec');
@@ -230,7 +247,8 @@ client.on('message', async (msg) => {
             } else {
                 //Regular Messages
                 const contact = await msg.getContact();
-                console.log(contact.pushname+" ===> "+msg.body);
+              
+                console.log(contact.pushname+" ===>>>> "+msg.body)
             }
         }
     } catch (error) {
