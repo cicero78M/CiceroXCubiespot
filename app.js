@@ -78,7 +78,7 @@ client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientorg', 'newclientcom' ];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
-    const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate', 'addclient', 'addheader' ];
+    const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate'];
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
 
@@ -98,55 +98,42 @@ client.on('message', async (msg) => {
                     } else {
                         console.log(contact.pushname+" ===>c "+shortcode.pop());
                         client.sendMessage('6281235114745@c.us', shortcode.pop());
-                    }
+                    }//if(shortcode.pop....
                 } else {
                     console.log (contact.pushname+" >>> "+msg.body);
-                }
-            }
+                }//if(url != null....
+            }//if(contact.pushname....
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
             if(splittedMsg.length > 1){
-
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
-                if(splittedMsg[1].toLowerCase() === 'addclient'){
-                    //User Checking myData
-                    console.log('exec');
+                if(splittedMsg[1].toLowerCase() === 'addclient'){//AddClient
                     if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('tiktok.com')){
-                        console.log('Trying')
                         let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase(), splittedMsg[3], splittedMsg[4], 
                         clientDataBase, instaOfficialDataBase, instaLikesUsernameDataBase);
                         client.sendMessage(msg.from, response);
                     }
-                } else if(newClientOrder.includes(splittedMsg[1].toLowerCase())){
-                //Admin Order
+                } else if(newClientOrder.includes(splittedMsg[1].toLowerCase())){//const newClientOrder = ['newclientorg', 'newclientcom' ];
                     if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                         //Is contains Links
                         if (splittedMsg[1].toLowerCase() === "newclientorg"){
                             //If Request for New Client by Organizations
-                            try {
                             //Organizations Request
-                                let response = await dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
-                                client.sendMessage(msg.from, response);
-                            } catch (error) {
-                                console.log(error);
-                            }                    
+                            let response = await dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
+                            client.sendMessage(msg.from, response);
+                  
                         }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
                             //If Request for New Client by Company
-                            try {
                             //Company Request
-                                let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
-                                client.sendMessage(msg.from, response);
-                            } catch (error) {
-                                console.log(error);
-                            }                                         
+                            let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
+                            client.sendMessage(msg.from, response);                                     
                         }
                     } else {
                         console.log('Bukan Spreadsheet Links');
                     }       
                 //Update Data         
-                } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){
-                    //User Update Data
+                } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){//const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
                     if (splittedMsg[1].toLowerCase() === 'adduser'){ 
                         //Check Between Corporate And Organizations
                         if(splittedMsg.length > 6){                   
@@ -197,7 +184,7 @@ client.on('message', async (msg) => {
                         }
                     }
                 //Data Order
-                } else if(dataOrder.includes(splittedMsg[1].toLowerCase())){
+                } else if(dataOrder.includes(splittedMsg[1].toLowerCase())){//const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate'];
                     if(splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
                         let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), userDataBase);
@@ -216,7 +203,7 @@ client.on('message', async (msg) => {
                         client.sendMessage(msg.from, response);
                     }
                 //Reload Data       
-                } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){
+                } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){//const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
                     if(splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
                         //Reload Likes from Insta Official
                         let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
@@ -231,7 +218,7 @@ client.on('message', async (msg) => {
                         client.sendMessage(msg.from, response);                   
                     }
                 //Reporting
-                } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){
+                } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){//const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
                     if(splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
                         let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
@@ -243,15 +230,15 @@ client.on('message', async (msg) => {
                         tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
                         client.sendMessage(msg.from, response);  
                     }
-                }
+                }//if(splittedMsg[1].toLowerCase()......
             } else {
                 //Regular Messages
                 const contact = await msg.getContact();
               
                 console.log(contact.pushname+" ===>>>> "+msg.body)
-            }
-        }
+            }// if(splittedMsg.length....
+        } //if(msg.status....
     } catch (error) {
         console.log(error);
-    }
+    }//try catch
 });
