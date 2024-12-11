@@ -4,7 +4,7 @@ Cicero Colaboration
 
 What's Cicero?
 
-Cicero is a social media management system that handles members of groups, organizations and companies for doing likes and Comments on Social Media Accounts. Its main function is to supervise the implementation of likes and comments by members of groups, organizations or companies by providing regular reports based on the results of data proccessing of scrapping data user by theirs likes and comments on official social media accounts. It's use Whatsapp Platform as data transaction Interface.
+Cicero is a social media management system that handles members of groups, organizations and companies for their participations on Social Media Engagements of Official Accounts. It's main function is to supervise the participations on liking and commenting by members of groups, organizations or companies by providing regular reports based on the results of data proccessing from system scrapping data user on official social media accounts engagements. The system itselfs use Whatsapp Platform as data transaction Interface.
 
 Admin Request Order:
 
