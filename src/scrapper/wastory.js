@@ -22,14 +22,14 @@ const headers = {
   'x-rapidapi-host': instaKey.instahostAPI
 }
 
-async function instaPostAPI(key){
+async function instaPostInfoAPI(key){
   //Insta Post API
   let options = {
     method: 'GET',
-    url: instaKey.instahostContent,
+    url: instaKey.instapostInfo,
     params: {
-      username_or_id_or_url: key
-    },
+      code_or_id_or_url: key,
+      include_insights: 'true'    },
     headers: headers
   };
 
@@ -40,7 +40,6 @@ async function instaPostAPI(key){
     return 'error';
   }
 }
-
 
 module.exports = {
 
@@ -59,7 +58,7 @@ module.exports = {
         let insta = instalink.pop().split('?')[0];
         let shortcode = insta.split('/');
 
-        let instaPost = await instaPostAPI(shortcode.pop());
+        let instaPost = await instaPostInfoAPI(shortcode.pop());
 
         let instaOfficial = instaPost.data.user.username;
 
