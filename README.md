@@ -1,6 +1,9 @@
 # CiceroXCubiespot
+
 Cicero Colaboration
+
 What's Cicero?
+
 Cicero is a social media management system that handles members of groups, organizations and companies for doing likes and Comments on Social Media Accounts. Its main function is to supervise the implementation of likes and comments by members of groups, organizations or companies by providing regular reports based on the results of data proccessing of scrapping data user by theirs likes and comments on official social media accounts. It's use Whatsapp Platform as data transaction Interface.
 
 Admin Request Order:
@@ -35,7 +38,6 @@ Reloads Enggagement Data:
 - Reload Tiktok Comments : ClientName#reloadtiktokComments || OK
 - Reload Whatsapp Story : ClientName#reloadstorysharing
   
-
 Report Engagement Data :
 
 - Report Insta Likes: ClientName#reportInstaLikes || OK
@@ -49,15 +51,16 @@ Automate / Cron Job:
 - Reload Tiktok Comment
 - Report InstaLikes
 - Report Tiktok Comments
-
+- Schedulers
+  
 Client Activations Mechanism :
+
 - Client Preparing User Data
 - Admin Push User Data to Server
 - Admin Add Client Properties by Order
 - User Update Data by ID_Key
 - System Handle Bussiness Life Cycles
 
-  
 >> WEB-APP DASHBOARD
 
 - Data Manajemen System.
