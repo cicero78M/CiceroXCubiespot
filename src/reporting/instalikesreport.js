@@ -76,10 +76,10 @@ module.exports = {
                 if (!shortcodeList.includes(instaOfficialData[i].get('SHORTCODE'))){
                     shortcodeList.push(instaOfficialData[i].get('SHORTCODE'));
 
-                    if (instaOfficialData[i].get('TYPE') === 'post'){
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+instaOfficialData[i].get('SHORTCODE'));
+                    if (instaOfficialData[i].get('TYPE') === 'reel'){
+                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/'+instaOfficialData[i].get('SHORTCODE'));
                     } else {
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/'+instaOfficialData[i].get('TYPE')+'/'+instaOfficialData[i].get('SHORTCODE'));
+                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+instaOfficialData[i].get('SHORTCODE'));
                     }
                 }
             }

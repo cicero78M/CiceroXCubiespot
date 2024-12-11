@@ -221,9 +221,7 @@ module.exports = {
               console.log(todayItems[i]);
 
               let responseLikes = await instaLikesAPI(todayItems[i]);
-              
-              console.log(responseLikes);
-              
+                            
               let likesItems = responseLikes.data.items;
               let userNameList = [todayItems[i]];
 
