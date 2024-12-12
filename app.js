@@ -233,16 +233,18 @@ client.on('message', async (msg) => {
                 //Regular Messages
                 const contact = await msg.getContact();
 
-                
-            if(contact.pushname != undefined){
-                let body = msg.body;
-                let url = body.match(/\bhttps?:\/\/\S+/gi);
-                if (url != null){
-                    console.log(contact.pushname+" ===>>>> "+msg.body);
-                //    let response = waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
-                //    client.sendMessage(msg.from, response);
+                if(contact.pushname != undefined){
+                    
+                    let body = msg.body;
+                    let url = body.match(/\bhttps?:\/\/\S+/gi);
+                    if (url != null){
+                        console.log(contact.pushname+" ===>>>> "+msg.body);
+                        
+                        let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
+                        console.log(response);
+                        client.sendMessage(msg.from, response);  
+                    }
                 }
-            }
             }// if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {

@@ -37,63 +37,72 @@ async function instaPostInfoAPI(key){
     let response = await axios.request(options);
     return response.data;
   } catch (error) {
-    return 'error';
+console.log(error);
   }
 }
 
 module.exports = {
 
   waStoryInsta: async function waStoryInsta(whatsapp, instalink, userClientID, clientID, waStoryID){
-    console.log(whatsapp);
-    console.log(instalink);
-    console.log(userClientID);
-    console.log(clientID);
-    console.log(waStoryID);
+
     const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
     await userClientDoc.loadInfo(); // loads document properties and worksheets
 
     const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
     await clientDoc.loadInfo(); // loads document properties and worksheets
 
-    const waStoryDoc = new GoogleSpreadsheet(waStoryID, googleAuth);//Google Authentication for client DB
-    await waStoryDoc.loadInfo(); // loads document properties and worksheets
+//    const waStoryDoc = new GoogleSpreadsheet(waStoryID, googleAuth);//Google Authentication for client DB
+//    await waStoryDoc.loadInfo(); // loads document properties and worksheets
+    
+    let insta = instalink[0];
 
-    if(instalink.includes('instagram.com')){
-      let insta = instalink.pop().split('?')[0];
-      let shortcode = insta.split('/');
 
-      let instaPost = await instaPostInfoAPI(shortcode.pop());
+    if(insta.includes('instagram.com')){
 
+      let instaUrl = insta.split('?')[0];
+
+      let shortcode = instaUrl.split('/');
+      
+      let instaPost = await instaPostInfoAPI(shortcode.at(-2));
+
+      console.log(instaPost);
       let instaOfficial = instaPost.data.user.username;
-      console.log(instaOfficial);
+
       const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
       const rowsClientData = await clientDataSheet.getRows();
+
       let hasSheetName = false;
       let sheetName;
+      
       for (let i = 0; i < rowsClientData.length; i++){
         if (rowsClientData[i].get('INSTAGRAM') === instaOfficial){
           hasSheetName = true;
           sheetName = rowsClientData[i].get('CLIENT_ID');
         }
       }
-
+      
       if(hasSheetName){
-        console.log(sheetName);
+
         let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
         let hasUser = false;
-        let userData = [];
-        for (let i = 0; i < userClientData.length; i++){
-          if(userClientData[i].get('WHATSAPP') === whatsapp){
+
+        for (let ii = 0; ii < userClientData.length; ii++){
+          if(userClientData[ii].get('WHATSAPP') === whatsapp.replaceAll("@c.us", "")){
             hasUser = true;
-            userData.push(userClientData[i]);
           }
         }
+
         if(hasUser){
-          return 'Thank you, your number exist';
+          
+          return 'Terimakasih sudah berpartisipasi meningkatkan Engagement Akun Instagram Kita';
+
         } else {
+
           return 'Number not recorded';
         }
+      } else {
+        console.log('No Client ID Attached to Insta Accounts');
       }
     }//if(url.includes...
   }//waStoryInsta....
