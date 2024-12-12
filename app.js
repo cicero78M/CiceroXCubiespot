@@ -10,8 +10,7 @@ var checkData = require('./src/database/checkData');
 var instaReload = require('./src/scrapper/instalikesreload');
 var instaReport = require('./src/reporting/instalikesreport');
 var tiktokReload = require('./src/scrapper/tiktocommentreload');
-var tiktokReport = require('./src/reporting/tiktokcommentsreport');
-
+var waStory = require('./src/scrapper/wastory');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -25,6 +24,7 @@ const instaOfficialDataBase = dbKey.instaOfficialID;
 const instaLikesUsernameDataBase = dbKey.instaLikesUsernameID;
 const tiktokOfficialDataBase = dbKey.tiktokOfficialID;
 const tiktokCommentUsernameDataBase = dbKey.tiktokCommentUsernameID;
+const waStoryDataBase = dbKey.waStoryID;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -94,10 +94,8 @@ client.on('message', async (msg) => {
                     let shortcode = insta.split('/');
                     if(shortcode.pop() === null){
                         console.log(contact.pushname+" ===> "+insta.split('/')[1]);
-                        client.sendMessage('6281235114745@c.us', insta.split('/')[1]);
                     } else {
                         console.log(contact.pushname+" ===>c "+shortcode.pop());
-                        client.sendMessage('6281235114745@c.us', shortcode.pop());
                     }//if(shortcode.pop....
                 } else {
                     console.log (contact.pushname+" >>> "+msg.body);
@@ -234,8 +232,17 @@ client.on('message', async (msg) => {
             } else {
                 //Regular Messages
                 const contact = await msg.getContact();
-              
-                console.log(contact.pushname+" ===>>>> "+msg.body)
+
+                
+            if(contact.pushname != undefined){
+                let body = msg.body;
+                let url = body.match(/\bhttps?:\/\/\S+/gi);
+                if (url != null){
+                    console.log(contact.pushname+" ===>>>> "+msg.body);
+                //    let response = waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
+                //    client.sendMessage(msg.from, response);
+                }
+            }
             }// if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {
