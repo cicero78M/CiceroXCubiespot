@@ -70,8 +70,10 @@ client.on('ready', () => {
 });
 
 client.on('qr', qr => {
+
     //Pairing WA Center
     qrcode.generate(qr, {small: true});
+
 });
 
 client.on('message', async (msg) => {
@@ -97,6 +99,7 @@ client.on('message', async (msg) => {
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
                 if (url !== null){
                     if (url[0].includes('instagram.com')){
+   
                         console.log(contact.pushname+" ===>>>> "+msg.body);
                     
                         let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
@@ -245,7 +248,6 @@ client.on('message', async (msg) => {
                     let url = body.match(/\bhttps?:\/\/\S+/gi);
                     if (url != null){
                         console.log(contact.number+" ===>>>> "+msg.body);
-
 //                        let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
 //                        console.log(response);
 //                        client.sendMessage(contact.number+"@c.us", response);  

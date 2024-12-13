@@ -42,7 +42,7 @@ module.exports = {
         }
       }
       if (!isClient){
-        if (['COM', 'ORG'].includes(type)){
+        if (['COM', 'RES'].includes(type)){
           clientSheet.addRow({CLIENT_ID: sheetName, TYPE: type, STATUS: true, INSTAGRAM: instaLink, TIKTOK: tiktokLink});
 
           await addHeader.headerData(sheetName, instaOfficialID, instaLikesUsernameID);
