@@ -29,7 +29,7 @@ async function instaPostInfoAPI(key){
     url: instaKey.instapostInfo,
     params: {
       code_or_id_or_url: key,
-      include_insights: 'false'    },
+      include_insights: 'false'},
     headers: headers
   };
 
@@ -37,14 +37,33 @@ async function instaPostInfoAPI(key){
     let response = await axios.request(options);
     return response.data;
   } catch (error) {
-console.log(error);
+    console.log(error);
+  }
+}
+
+async function instaPostAPI(key){
+  //Insta Post API
+  let options = {
+    method: 'GET',
+    url: instaKey.instahostContent,
+    params: {
+      username_or_id_or_url: key
+    },
+    headers: headers
+  };
+
+  try {
+    let response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    return 'error';
   }
 }
 
 module.exports = {
 
   waStoryInsta: async function waStoryInsta(whatsapp, instalink, userClientID, clientID, waStoryID){
-
+    console.log(whatsapp);
     const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
     await userClientDoc.loadInfo(); // loads document properties and worksheets
 
@@ -80,24 +99,77 @@ module.exports = {
         }
       }
       
+      console.log(sheetName);
+
       if(hasSheetName){
+
+        let response = await instaPostAPI(instaOfficial);
+
+        const items = response.data.items;
+        let hasContent = false;
+        let contentItems = [];
+        let shortcodeItems = [];
+
+        for (let ii = 0; ii < items.length; ii++){
+          
+            hasContent = true;
+            contentItems.push(items[ii]);
+            shortcodeItems.push(items[ii].code);
+
+        }
 
         let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
         let hasUser = false;
+        let ID_KEY;
 
-        for (let ii = 0; ii < userClientData.length; ii++){
-          if(userClientData[ii].get('WHATSAPP') === whatsapp.replaceAll("@c.us", "")){
+
+
+        for (let iii = 0; iii < userClientData.length; iii++){
+          if(userClientData[iii].get('WHATSAPP') === whatsapp.replaceAll("@c.us", "")){
+            ID_KEY = userClientData[iii].get('ID_KEY');
             hasUser = true;
           }
         }
 
         if(hasUser){
+
+          const waStorySheet = await waStoryDoc.sheetsByTitle[sheetName];
+          waStorySheet.resize({rowCount:1000 , columnCount : 1501});
+          const waStoryData = await waStorySheet.getRows();
+          let hasShortcode = false;
+
+          for (let iv = 0; iv < waStoryData.length; iv++){
+            if (waStoryData[iv].get('SHORTCODE') === shortcode.at(-2)){
+              hasShortcode = true;
+              await waStorySheet.loadCells();
+              console.log(waStorySheet.getCell(iv+1, 0));
+              let inputCell;
+              for (let v = 1; v < 1500; v++){
+
+                inputCell = waStorySheet.getCell(iv+1, v);
+                
+                if ( inputCell.value === null || inputCell.value === undefined || inputCell.value === ""){
+                  console.log(inputCell.value);
+
+                  inputCell.value = ID_KEY;
+                  await waStorySheet.saveUpdatedCells();
+                  
+                  return 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.';
+                }
+              }
+
+              return 'testing';
+            }
+          }
           
-          return 'Terimakasih sudah berpartisipasi meningkatkan Engagement Akun Instagram Kita.';
+          if(!hasShortcode){
+            let rowData = [shortcode.at(-2), ID_KEY];
 
+            await waStorySheet.addRow(rowData);
+            return 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.';
+          }
         } else {
-
           return 'Number not recorded';
         }
       } else {
