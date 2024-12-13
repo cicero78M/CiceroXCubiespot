@@ -8,7 +8,7 @@ Cicero is a social media management system that handles members of groups, organ
 
 Admin Request Order:
 
-- Add New Client : ClientName#addclient#InstaLink#tiktokLink || OK
+- Add New Client : ClientName#addclient#type['COM','RES']#InstaLink#tiktokLink || OK (COM : COMPANY, RES : POLRES)
 - Change Status Client : ClientName#clientstate#boolean || OK
 - Transfer Data by Organizations : ClientName#newclientorg#LinkSourceSheet || OK 
 - Source File Format NRP(Number)/NAMA(String)/PANGKAT(String)/SATFUNG(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
