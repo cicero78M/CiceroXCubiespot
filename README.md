@@ -14,7 +14,7 @@ Admin Request Order:
 - Source File Format NRP(Number)/NAMA(String)/PANGKAT(String)/SATFUNG(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
 
 - Transfer Data by Company : ClientName#newclientcom#LinkSourceSheet || OK
-- Source File Format ID_KEY(Number)/NAMA(String)/TITLE(String)- Optional/DIVISI(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
+- Source File Format ID_KEY(Number)/NAMA(String)/TITLE(String) - Optional/DIVISI(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
 
 - Adding New User to Database : ClientName#addnew#ID_Key#UserName#UserDivision#UserJabatan#UserTitle(Optional) || OK
 - Rename : ClientName#editname#ID_Key#new_user_profile_name || OK
