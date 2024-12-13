@@ -86,21 +86,22 @@ client.on('message', async (msg) => {
         if (msg.isStatus){
             //If Msg is WA Story
             const contact = await msg.getContact();
+            const chat = await msg.getChat();
             if(contact.pushname != undefined){
+                    
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
-                if(url != null && url.includes('instagram.com')){
-                    let insta = url.pop().split('?')[0];
-                    let shortcode = insta.split('/');
-                    if(shortcode.pop() === null){
-                        console.log(contact.pushname+" ===> "+insta.split('/')[1]);
-                    } else {
-                        console.log(contact.pushname+" ===>c "+shortcode.pop());
-                    }//if(shortcode.pop....
-                } else {
-                    console.log (contact.pushname+" >>> "+msg.body);
-                }//if(url != null....
-            }//if(contact.pushname....
+                if (url !== null){
+                    if (url[0].includes('instagram.com')){
+                        chat.sendSeen();
+                        console.log(contact.pushname+" ===>>>> "+msg.body);
+                    
+                        let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
+                        console.log(response);
+                        client.sendMessage(contact.number+"@c.us", response);  
+                    }
+                }
+            }
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
@@ -232,17 +233,19 @@ client.on('message', async (msg) => {
             } else {
                 //Regular Messages
                 const contact = await msg.getContact();
-
+                const chat = await msg.getChat();
+                chat.sendSeen();
+                chat.sendStateTyping();
                 if(contact.pushname != undefined){
                     
                     let body = msg.body;
                     let url = body.match(/\bhttps?:\/\/\S+/gi);
                     if (url != null){
-                        console.log(contact.pushname+" ===>>>> "+msg.body);
-                        
+                        console.log(contact.number+" ===>>>> "+msg.body);
+
                         let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
                         console.log(response);
-                        client.sendMessage(msg.from, response);  
+                        client.sendMessage(contact.number+"@c.us", response);  
                     }
                 }
             }// if(splittedMsg.length....

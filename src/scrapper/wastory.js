@@ -29,7 +29,7 @@ async function instaPostInfoAPI(key){
     url: instaKey.instapostInfo,
     params: {
       code_or_id_or_url: key,
-      include_insights: 'true'    },
+      include_insights: 'false'    },
     headers: headers
   };
 
@@ -51,22 +51,21 @@ module.exports = {
     const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
     await clientDoc.loadInfo(); // loads document properties and worksheets
 
-//    const waStoryDoc = new GoogleSpreadsheet(waStoryID, googleAuth);//Google Authentication for client DB
-//    await waStoryDoc.loadInfo(); // loads document properties and worksheets
+    const waStoryDoc = new GoogleSpreadsheet(waStoryID, googleAuth);//Google Authentication for client DB
+    await waStoryDoc.loadInfo(); // loads document properties and worksheets
     
     let insta = instalink[0];
-
 
     if(insta.includes('instagram.com')){
 
       let instaUrl = insta.split('?')[0];
 
       let shortcode = instaUrl.split('/');
+
+      let instaOfficial;
       
       let instaPost = await instaPostInfoAPI(shortcode.at(-2));
-
-      console.log(instaPost);
-      let instaOfficial = instaPost.data.user.username;
+      instaOfficial = instaPost.data.user.username;
 
       const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
       const rowsClientData = await clientDataSheet.getRows();
@@ -95,7 +94,7 @@ module.exports = {
 
         if(hasUser){
           
-          return 'Terimakasih sudah berpartisipasi meningkatkan Engagement Akun Instagram Kita';
+          return 'Terimakasih sudah berpartisipasi meningkatkan Engagement Akun Instagram Kita.';
 
         } else {
 
