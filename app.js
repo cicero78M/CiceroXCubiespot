@@ -87,13 +87,16 @@ client.on('message', async (msg) => {
             //If Msg is WA Story
             const contact = await msg.getContact();
             const chat = await msg.getChat();
+            chat.sendSeen();
+
+            console.log(contact.pushname+" ===>>>> "+msg.body);
+
             if(contact.pushname != undefined){
                     
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
                 if (url !== null){
                     if (url[0].includes('instagram.com')){
-                        chat.sendSeen();
                         console.log(contact.pushname+" ===>>>> "+msg.body);
                     
                         let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
@@ -243,9 +246,9 @@ client.on('message', async (msg) => {
                     if (url != null){
                         console.log(contact.number+" ===>>>> "+msg.body);
 
-                        let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
-                        console.log(response);
-                        client.sendMessage(contact.number+"@c.us", response);  
+//                        let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
+//                        console.log(response);
+//                        client.sendMessage(contact.number+"@c.us", response);  
                     }
                 }
             }// if(splittedMsg.length....
