@@ -36,7 +36,7 @@ Reloads Enggagement Data:
 
 - Reload Insta likes : ClientName#reloadInstaLikes || OK
 - Reload Tiktok Comments : ClientName#reloadtiktokComments || OK
-- Reload Whatsapp Story : ClientName#reloadstorysharing
+- Reload Whatsapp Story : Automate by the system every time the members update their whatsapp story.
   
 Report Engagement Data :
 
