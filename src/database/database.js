@@ -137,10 +137,9 @@ module.exports = {
   },  
   
   //New Client Database by Organizations Source Functions
-  newClientOrg: async function newClientOrg(sheetName, sourceID, filesID){
+  newClientRes: async function newClientRes(sheetName, sourceID, filesID){
 
-    const sourceX = sourceID.split('/').pop(); //Get Last Segment of Links
-    
+    const sourceX = sourceID.split('/').pop(); //Get Last Segment of Links    
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth); //Google Auth
 
     try {
@@ -278,8 +277,8 @@ module.exports = {
             state : true,
             code : 1
           }
-          return responseData;
 
+          return responseData;
         } else {
 
           let responseData = {
@@ -287,8 +286,8 @@ module.exports = {
             state : true,
             code : 1
           }
+
           return responseData;
-        
         }
 
       } else {
@@ -298,6 +297,7 @@ module.exports = {
           state : true,
           code : 1
         }
+
         return responseData;
       }
     } catch (error) {
@@ -307,6 +307,7 @@ module.exports = {
         state : false,
         code : 0
       }
+      
       return responseData;
     }
   },
@@ -335,6 +336,7 @@ module.exports = {
       if (divisiList.includes(userDiv)){
         for (let ii = 0; ii < rowsData.length; ii++){
           if (rowsData[ii].get('ID_KEY') === idKey){
+
             isDataExist = true;
             rowsData[ii].assign({DIVISI: userDiv, WHATSAPP: phone});; // Update Divisi Value
             await rowsData[ii].save(); //save update
@@ -345,6 +347,7 @@ module.exports = {
               state : true,
               code : 1
             }
+
             return responseData;
           }
         }
@@ -356,14 +359,17 @@ module.exports = {
             state : true,
             code : 1
           }
+
           return responseData;
         }
       } else {
+
         let responseData = {
           message : 'Divisi Unregsitered',
           state : true,
           code : 1
         }
+
         return responseData;
       }
     } catch (error) {
@@ -373,6 +379,7 @@ module.exports = {
         state : false,
         code : 0
       }
+
       return responseData;
     }
   },
@@ -393,8 +400,8 @@ module.exports = {
 
       for (let i = 0; i < rowsData.length; i++){
         if (rowsData[i].get('ID_KEY') === idKey){
+          
           isDataExist = true;
-
           rowsData[i].assign({JABATAN: userJab, WHATSAPP: phone});; // Jabatan Divisi Value
           await rowsData[i].save(); //save update
 
@@ -403,16 +410,19 @@ module.exports = {
             state : true,
             code : 1
           }
+          
           return responseData;
         }
       }
 
       if(!isDataExist){
+        
         let responseData = {
           message : 'User Data with delegated ID_KEY Doesn\'t Exist',
           state : true,
           code : 1
         }
+        
         return responseData;
       }
       
@@ -423,6 +433,7 @@ module.exports = {
         state : false,
         code : 0
       }
+
       return responseData;
     }
   },
@@ -453,16 +464,19 @@ module.exports = {
             state : true,
             code : 1
           }
+      
           return responseData;
         }
       }
 
       if(!isDataExist){
+      
         let responseData = {
           message : 'User Data with delegated ID_KEY Doesn\'t Exist',
           state : true,
           code : 1
         }
+      
         return responseData;
       }
       
@@ -473,15 +487,17 @@ module.exports = {
         state : false,
         code : 0
       }
+      
       return responseData;
     }
   },
 
   //Edit User Jabatan to Client Data Base Functions  
   updateInsta: async function updateInsta(sheetName, idKey, insta, phone, filesID){
+    
     const userLink = insta.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
-
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    
     try {
       //Insert New Sheet
       await targetDoc.loadInfo(); // loads document properties and worksheets
@@ -491,7 +507,6 @@ module.exports = {
       const rowsData = await sheetTarget.getRows();
 
       let isDataExist = false;
-
       let instaList = [];
   
       //Collect Divisi List String
@@ -509,21 +524,31 @@ module.exports = {
             rowsData[i].assign({INSTA: userLink, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
-            return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
+            let responseData = {
+              message : 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
+              state : true,
+              code : 1
+            }
+            
+            return responseData;
           }
         }
       } else {
 
         isDataExist = true;
+        
         let responseData = {
           message : 'Username Instagram is Used by another User',
           state : true,
           code : 1
         }
+
         return responseData;
+      
       }
 
       if(!isDataExist){
+
         let responseData = {
           message : 'User Data with delegated ID_KEY Doesn\'t Exist',
           state : true,
@@ -540,15 +565,17 @@ module.exports = {
         state : false,
         code : 0
       }
+      
       return responseData;
     }
   },
 
   //Edit User Jabatan to Client Data Base Functions  
   updateTiktok: async function updateTiktok(sheetName, idKey, tiktok, phone, filesID){
+    
     const userLink = tiktok.split('/').pop();      //Get Last Segment of Links
-
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+
     try {
       //Insert New Sheet
       await targetDoc.loadInfo(); // loads document properties and worksheets
@@ -558,7 +585,6 @@ module.exports = {
       const rowsData = await sheetTarget.getRows();
 
       let isDataExist = false;
-
       let tiktokList = [];
   
       //Collect Divisi List String
@@ -576,16 +602,24 @@ module.exports = {
             rowsData[i].assign({TIKTOK: userLink, WHATSAPP: phone}); // Update Insta Value
             await rowsData[i].save(); //save update
 
-            return 'Data Tiktok Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key ';
+            let responseData = {
+              message: 'Data Tiktok Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key ',
+              state : true,
+              code : 1
+            }
+    
+            return responseData;
           }
         }
       } else {
+        
         isDataExist = true;
         let responseData = {
           message: 'Username Tiktok is Used by another User',
           state : true,
           code : 1
         }
+
         return responseData;
       }
 
@@ -596,9 +630,9 @@ module.exports = {
           state : true,
           code : 1
         }
+
         return responseData;
       }
-    
     } catch (error) {
 
       let responseData = {
@@ -606,8 +640,8 @@ module.exports = {
         state : false,
         code : 0
       }
+
       return responseData;
     }
   },
-  
 };

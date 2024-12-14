@@ -76,116 +76,140 @@ module.exports = {
     let insta = instalink[0];
 
     if(insta.includes('instagram.com')){
+      let shortcode;
 
-      let instaUrl = insta.split('?')[0];
+      if (insta.includes('/?')){
+        let instaAsk = insta.replaceAll('/?', '?');
+        let instaUrl = instaAsk.split('?')[0];
+        shortcode = instaUrl.split('/').pop();
+      } else if (insta.includes('?')){
+        let instaUrl = insta.split('?')[0];
+        shortcode = instaUrl.split('/').pop();
+      } else {
+        shortcode = insta.split('/').pop();
+      }
 
-      let shortcode = instaUrl.split('/');
 
       let instaOfficial;
       
-      let instaPost = await instaPostInfoAPI(shortcode.at(-2));
-      instaOfficial = instaPost.data.user.username;
+      if (shortcode !== null){
+        let instaPost = await instaPostInfoAPI(shortcode);
+        instaOfficial = instaPost.data.user.username;
 
-      const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
-      const rowsClientData = await clientDataSheet.getRows();
+        const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
+        const rowsClientData = await clientDataSheet.getRows();
 
-      let hasSheetName = false;
-      let sheetName;
-      
-      for (let i = 0; i < rowsClientData.length; i++){
-        if (rowsClientData[i].get('INSTAGRAM') === instaOfficial){
-          hasSheetName = true;
-          sheetName = rowsClientData[i].get('CLIENT_ID');
-        }
-      }
-      
-      console.log(sheetName);
-
-      if(hasSheetName){
-
-        let response = await instaPostAPI(instaOfficial);
-
-        const items = response.data.items;
-        let hasContent = false;
-        let contentItems = [];
-        let shortcodeItems = [];
-
-        for (let ii = 0; ii < items.length; ii++){
-          
-            hasContent = true;
-            contentItems.push(items[ii]);
-            shortcodeItems.push(items[ii].code);
-
-        }
-
-        let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
-        let userClientData = await userClientSheet.getRows();
-        let hasUser = false;
-        let ID_KEY;
-
-
-
-        for (let iii = 0; iii < userClientData.length; iii++){
-          if(userClientData[iii].get('WHATSAPP') === whatsapp.replaceAll("@c.us", "")){
-            ID_KEY = userClientData[iii].get('ID_KEY');
-            hasUser = true;
+        let hasSheetName = false;
+        let sheetName;
+        
+        for (let i = 0; i < rowsClientData.length; i++){
+          if (rowsClientData[i].get('INSTAGRAM') === instaOfficial){
+            hasSheetName = true;
+            sheetName = rowsClientData[i].get('CLIENT_ID');
           }
         }
+        
+        console.log(sheetName);
 
-        if(hasUser){
+        if(hasSheetName){
 
-          const waStorySheet = await waStoryDoc.sheetsByTitle[sheetName];
-          waStorySheet.resize({rowCount:1000 , columnCount : 1501});
-          const waStoryData = await waStorySheet.getRows();
-          let hasShortcode = false;
+          let response = await instaPostAPI(instaOfficial);
 
-          for (let iv = 0; iv < waStoryData.length; iv++){
-            if (waStoryData[iv].get('SHORTCODE') === shortcode.at(-2)){
-              hasShortcode = true;
-              await waStorySheet.loadCells();
-              console.log(waStorySheet.getCell(iv+1, 0));
-              let inputCell;
-              for (let v = 1; v < 1500; v++){
+          const items = response.data.items;
+          let hasContent = false;
+          let contentItems = [];
+          let shortcodeItems = [];
 
-                inputCell = waStorySheet.getCell(iv+1, v);
-                
-                if ( inputCell.value === null || inputCell.value === undefined || inputCell.value === ""){
-                  console.log(inputCell.value);
+          for (let ii = 0; ii < items.length; ii++){
+            
+              hasContent = true;
+              contentItems.push(items[ii]);
+              shortcodeItems.push(items[ii].code);
 
-                  inputCell.value = ID_KEY;
-                  await waStorySheet.saveUpdatedCells();
+          }
+
+          let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
+          let userClientData = await userClientSheet.getRows();
+          let hasUser = false;
+          let ID_KEY;
+
+          for (let iii = 0; iii < userClientData.length; iii++){
+            if(userClientData[iii].get('WHATSAPP') === whatsapp.replaceAll("@c.us", "")){
+              ID_KEY = userClientData[iii].get('ID_KEY');
+              hasUser = true;
+            }
+          }
+
+          if(hasUser){
+
+            const waStorySheet = await waStoryDoc.sheetsByTitle[sheetName];
+            waStorySheet.resize({rowCount:1000 , columnCount : 1501});
+            const waStoryData = await waStorySheet.getRows();
+            let hasShortcode = false;
+
+            for (let iv = 0; iv < waStoryData.length; iv++){
+              if (waStoryData[iv].get('SHORTCODE') === shortcode){
+                hasShortcode = true;
+                await waStorySheet.loadCells();
+                console.log(waStorySheet.getCell(iv+1, 0));
+                let inputCell;
+                for (let v = 1; v < 1500; v++){
+
+                  inputCell = waStorySheet.getCell(iv+1, v);
                   
-                  return 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.';
+                  if ( inputCell.value === null || inputCell.value === undefined || inputCell.value === ""){
+                    console.log(inputCell.value);
+
+                    inputCell.value = ID_KEY;
+                    await waStorySheet.saveUpdatedCells();
+
+                    let responseData = {
+                      message : 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.',
+                      state : true,
+                      code : 1
+                    }
+                    return responseData;
+                  }
                 }
+
+                    let responseData = {
+                      message : 'Error Response, Database has exixting value',
+                      state : false,
+                      code : 0
+                    }
+                    return responseData;              }
+            }
+            
+            if(!hasShortcode){
+              let rowData = [shortcode, ID_KEY];
+
+              await waStorySheet.addRow(rowData);
+              let responseData = {
+                message : 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.',
+                state : true,
+                code : 1
+
               }
-
-              return 'testing';
+              return responseData;
             }
-          }
-          
-          if(!hasShortcode){
-            let rowData = [shortcode.at(-2), ID_KEY];
-
-            await waStorySheet.addRow(rowData);
+          } else {
             let responseData = {
-              message : 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.',
-              state : true,
-              code : 1
-
+              message : 'Number Not Recorded',
+              state : false,
+              code : 0
             }
-            return responseData;
+            return responseData;        
           }
         } else {
           let responseData = {
-            message : 'Number Not Recorded',
+            message : 'No Current Number in Database.',
             state : false,
             code : 0
+
           }
-          return responseData;        
+          return responseData;
         }
-      } else {
-        console.log('No Client ID Attached to Insta Accounts');
-      }
+      } 
     }//if(url.includes...
   }//waStoryInsta....
 }//module export....

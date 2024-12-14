@@ -296,12 +296,30 @@ module.exports = {
             newData++;
           }
         }
-        return 'Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData;
+      
+        let responseData = {
+          message : 'Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
+          state : true,
+          code : 1
+        }
+  
+        return responseData; 
       } catch (error) {
-        return error;
-      }
+
+        let responseData = {
+          message : error,
+          state : false,
+          code : 0
+        }
+  
+        return responseData;           }
     }  else {
-      return 'Your Client ID has Expired, Contacts Developers for more Informations';
-    }     
+      let responseData = {
+        message : 'Your Client ID has Expired, Contacts Developers for more Informations',
+        state : true,
+        code : 1
+      }
+
+      return responseData;      }     
   },
 }

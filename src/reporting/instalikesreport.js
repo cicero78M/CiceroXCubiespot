@@ -141,19 +141,35 @@ module.exports = {
         }
   
         let instaSudah = userClientData.length-notLikesList.length;
-  
-        let response = "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes pada konten Instagram :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
-        +userClientData.length+" \nJumlah User Sudah melaksanakan: "+instaSudah+"\nJumlah User Belum melaksanakan : "
-        +userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_";
-        
-        return response;
+        let responseData = {
+          message : "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes pada konten Instagram :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
+          +userClientData.length+" \nJumlah User Sudah melaksanakan: "+instaSudah+"\nJumlah User Belum melaksanakan : "
+          +userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_",
+          state : true,
+          code : 1
+        }
+
+        return responseData;
 
       } catch (error) {
-        console.log(error);
-        return 'Error, Contacts Developers';
+        
+        let responseData = {
+          message : error,
+          state : false,
+          code : 0
+        }
+  
+        return responseData; 
       }
     }  else {
-      return 'Your Client ID has Expired, Contacts Developers for more Informations';
+
+      let responseData = {
+        message : 'Your Client ID has Expired, Contacts Developers for more Informations',
+        state : true,
+        code : 1
+      }
+
+      return responseData;
     }     
   },
 }

@@ -137,19 +137,34 @@ module.exports = {
         }
   
         let tiktokSudah = userClientData.length-notCommentList.length;
-  
-        let response = "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes dan komentar pada konten TikTok :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
-        +userClientData.length+" \nJumlah User Sudah melaksanakan: "+tiktokSudah+"\nJumlah User Belum melaksanakan : "
-        +userCounter+"\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_";
-        
-        return response;
+        let responseData = {
+          message : "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes dan komentar pada konten TikTok :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
+          +userClientData.length+" \nJumlah User Sudah melaksanakan: "+tiktokSudah+"\nJumlah User Belum melaksanakan : "
+          +userCounter+"\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
+          state : true,
+          code : 1
+        }
 
+        return responseData;
       } catch (error) {
-        console.log(error);
-        return 'Error, Contacts Developers';
+
+        let responseData = {
+          message : error,
+          state : false,
+          code : 0
+        }
+  
+        return responseData; 
       }
     }  else {
-      return 'Your Client ID has Expired, Contacts Developers for more Informations';
+
+      let responseData = {
+        message : 'Your Client ID has Expired, Contacts Developers for more Informations',
+        state : true,
+        code : 1
+      }
+
+      return responseData;
     }     
   },
 }

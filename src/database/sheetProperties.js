@@ -40,32 +40,65 @@ module.exports = {
             let i = 1;
 
             async function pushHeaders() { //  create a loop function
+                
                 setTimeout(async function() { //  call a 2s setTimeout when the loop is called                           
+                
                     let header = await instaLikesUsernameSheet.getCell(0,i);
                     header.value = 'USER_'+i;
                     header.textFormat = { bold: true, fontSize: 13};
-                    await instaLikesUsernameSheet.saveUpdatedCells(); // save all updates in one call
-                    
+                    await instaLikesUsernameSheet.saveUpdatedCells(); // save all updates in one call    
                     i++;  //  increment the counter
                     
                     if (i < 1500) {  //  if the counter < rowsSource.length, call the loop function
-                       try {
+                       
+                        try {
                             pushHeaders(); //  again which will trigger another                         
                         } catch (error) {
-                            console.log(error);
-                        }
+                            let responseData = {
+                                message : error,
+                                state : false,
+                                code : 0
+                            }
+    
+                            return responseData;                        }
+                        
                     } else {
-                        console.log('Client DataBase for '+sheetName+' Created, with header properties');
+                                                
+                        let responseData = {
+                            message : 'Client DataBase for '+sheetName+' Created, with header properties',
+                            state : true,
+                            code : 1
+                        }
+
+                        return responseData;
                     }
-                }, 700);
+                }, 800);
             }   
+
             try {
+
                 pushHeaders();
+            
             } catch (error) {
-                console.log(error);
+
+                let responseData = {
+                    message : error,
+                    state : false,
+                    code : 0
+                  }
+            
+                return responseData;            
             }
+
         } catch (error) {
-            return 'Error, Sheet Name exist';
+
+            let responseData = {
+                message : error,
+                state : false,
+                code : 0
+              }
+        
+            return responseData;        
         }
     }
 }
