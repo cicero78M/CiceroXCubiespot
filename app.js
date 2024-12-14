@@ -3,19 +3,22 @@ const express = require('express');
 const app = express();
 
 const dbKey = JSON.parse (fs.readFileSync('dbKey.json'));
-
-var dataBase = require('./src/database/database');
-var query = require('./src/database/myData');
-var checkData = require('./src/database/checkData');
-var instaReload = require('./src/scrapper/instalikesreload');
-var instaReport = require('./src/reporting/instalikesreport');
-var tiktokReload = require('./src/scrapper/tiktocommentreload');
-var waStory = require('./src/scrapper/wastory');
+const dataBase = require('./src/database/database');
+const query = require('./src/database/myData');
+const checkData = require('./src/database/checkData');
+const instaReload = require('./src/scrapper/instalikesreload');
+const instaReport = require('./src/reporting/instalikesreport');
+const tiktokReload = require('./src/scrapper/tiktocommentreload');
+const waStory = require('./src/scrapper/wastory');
+const clientLoad = require('./src/database/clientLoad');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
 const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
+const cron = require('node-cron');
+ 
+
 
 const port = 3007;
 const userDataBase = dbKey.databaseID;;
@@ -67,6 +70,16 @@ client.on('ready', () => {
     console.log('===============================');
     console.log('===============================');
 
+    /*
+    
+    // Reload Insta
+    cron.schedule('* * * * *', async () => {
+        let response = await waStory.waStoryInsta(clientDataBase);
+        console.log(response);
+    });
+    
+    */
+
 });
 
 client.on('qr', qr => {
@@ -81,7 +94,7 @@ client.on('message', async (msg) => {
     const newClientOrder = ['newclientres', 'newclientcom' ];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
     const dataOrder = ['menu', 'mydata', 'instacheck', 'tiktokcheck', 'clientstate'];
-    const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing' ];
+    const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta' ];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
 
     try {
@@ -350,6 +363,9 @@ client.on('message', async (msg) => {
                             console.log(response.message);
                         }               
 
+                    } else if (splittedMsg[1].toLowerCase() === 'reloadallinsta'){
+                        let response = await clientLoad.loadClient(clientDataBase);
+                        console.log(response);
                     }
                 //Reporting
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){//const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
