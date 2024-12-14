@@ -34,16 +34,24 @@ module.exports = {
         }
       }
       
-      //Reporting
-      let myDataReport = `*Profile Anda*\n\nUser :`+response.get('NAMA')+`\nID Key : `+response.get('ID_KEY')+`\nDivisi / Jabatan : `
-      +response.get('DIVISI')+` / `+response.get('JABATAN')+`\nInsta : `+response.get('INSTA')+`\nTikTok : `+response.get('TIKTOK')
-      +`\nStatus : `+response.get('STATUS');
+      let responseData = {
+        message : `*Profile Anda*\n\nUser :`+response.get('NAMA')+`\nID Key : `+response.get('ID_KEY')+`\nDivisi / Jabatan : `
+        +response.get('DIVISI')+` / `+response.get('JABATAN')+`\nInsta : `+response.get('INSTA')+`\nTikTok : `+response.get('TIKTOK')
+        +`\nStatus : `+response.get('STATUS'),
+        state : true,
+        code : 1
+      }
+      return responseData;
 
-      return myDataReport;
-    
     } catch (error) {
-      console.log(error);
-      return 'error'; 
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
+    
     }
   },
 }

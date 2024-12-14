@@ -80,8 +80,8 @@ client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientorg', 'newclientcom' ];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
-    const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate'];
-    const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
+    const dataOrder = ['menu', 'mydata', 'instacheck', 'tiktokcheck', 'clientstate'];
+    const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing' ];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
 
     try {
@@ -101,10 +101,15 @@ client.on('message', async (msg) => {
                     if (url[0].includes('instagram.com')){
    
                         console.log(contact.pushname+" ===>>>> "+msg.body);
-                    
                         let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
-                        console.log(response);
-                        client.sendMessage(contact.number+"@c.us", response);  
+                        if(response.code === 1 ){
+                            console.log(response.message);
+
+                            client.sendMessage(contact.number+"@c.us", response.message);
+                        } else {
+                            console.log(response.message);
+                        }
+
                     }
                 }
             }
@@ -117,8 +122,12 @@ client.on('message', async (msg) => {
                     if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('tiktok.com')){
                         let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase(), splittedMsg[3], splittedMsg[4], 
                         clientDataBase, instaOfficialDataBase, instaLikesUsernameDataBase);
-                        client.sendMessage(msg.from, response);
-                    }
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }                   }
                 } else if(newClientOrder.includes(splittedMsg[1].toLowerCase())){//const newClientOrder = ['newclientorg', 'newclientcom' ];
                     if(splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                         //Is contains Links
@@ -126,16 +135,26 @@ client.on('message', async (msg) => {
                             //If Request for New Client by Organizations
                             //Organizations Request
                             let response = await dataBase.newClientOrg(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
-                            client.sendMessage(msg.from, response);
-                  
+                            if(response.code === 1){
+                                console.log(response.message);
+                                client.sendMessage(msg.from, response.message);
+                            } else {
+                                console.log(response.message);
+                            }      
                         }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
                             //If Request for New Client by Company
                             //Company Request
                             let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
-                            client.sendMessage(msg.from, response);                                     
-                        }
+                            if(response.code === 1){
+                                console.log(response.message);
+                                client.sendMessage(msg.from, response.message);
+                            } else {
+                                console.log(response.message);
+                            }                          }
                     } else {
                         console.log('Bukan Spreadsheet Links');
+                        client.sendMessage(contact.number+"@c.us", 'Bukan Spreadsheet Links');
+
                     }       
                 //Update Data         
                 } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){//const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
@@ -144,38 +163,70 @@ client.on('message', async (msg) => {
                         if(splittedMsg.length > 6){                   
                             let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                             splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), userDataBase);
-                            client.sendMessage(msg.from, response);
+                            if(response.code === 1){
+                                console.log(response.message);
+                                client.sendMessage(msg.from, response.message);
+                            } else {
+                                console.log(response.message);
+                            }                          
                         } else {
                             let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                             splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, userDataBase);
-                            client.sendMessage(msg.from, response);
+                            if(response.code === 1){
+                                console.log(response.message);
+                                client.sendMessage(msg.from, response.message);
+                            } else {
+                                console.log(response.message);
+                            }
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'editdivisi') {
                         //update Divisi Name
                         let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         msg.from.replace('@c.us', ''), userDataBase);
-                        client.sendMessage(msg.from, response);
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }   
                     } else if(splittedMsg[1].toLowerCase() === 'editjabatan') {
                         //Update Jabatan
                         let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         msg.from.replace('@c.us', ''), userDataBase);
-                        client.sendMessage(msg.from, response);
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }                           
                     } else if(splittedMsg[1].toLowerCase() === 'editnama') {
                         //Update Nama
                         let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         msg.from.replace('@c.us', ''), userDataBase);
-                        client.sendMessage(msg.from, response);
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }                          
                     } else if(splittedMsg[1].toLowerCase() === 'updateinsta') {
                         //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
                             if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
                                 let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], 
                                 msg.from.replace('@c.us', ''), userDataBase);
-                                client.sendMessage(msg.from, response);
+                                if(response.code === 1){
+                                    console.log(response.message);
+                                    client.sendMessage(msg.from, response.message);
+                                } else {
+                                    console.log(response.message);
+                                }                                   
                             } else {
+                                console.log('Bukan Link Profile Instagram');
                                 client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                             }
                         } else {
+                            console.log('Bukan Link Profile Instagram');
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }
                     } else if(splittedMsg[1].toLowerCase() === 'updatetiktok') {
@@ -183,8 +234,14 @@ client.on('message', async (msg) => {
                         if (splittedMsg[3].includes('tiktok.com')){                    
                             let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],
                             msg.from.replace('@c.us', ''), userDataBase);
-                            client.sendMessage(msg.from, response);
+                            if(response.code === 1){
+                                console.log(response.message);
+                                client.sendMessage(msg.from, response.message);
+                            } else {
+                                console.log(response.message);
+                            }                             
                         } else {
+                            console.log('Bukan Link Profile Tiktok');
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
                         }
                     }
@@ -193,19 +250,39 @@ client.on('message', async (msg) => {
                     if(splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
                         let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), userDataBase);
-                        client.sendMessage(msg.from, response);
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }
                     } else if(splittedMsg[1].toLowerCase() === 'tiktokcheck') {
                         //Checking If User hasn't update Tiktok Profile
                         let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), userDataBase);
-                        client.sendMessage(msg.from, response);
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }                                            
                     } else if(splittedMsg[1].toLowerCase() === 'mydata'){
                         //User Checking myData
                         let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
-                        client.sendMessage(msg.from, response);
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }
                     } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
                         //User Checking myData
                         let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataBase);
-                        client.sendMessage(msg.from, response);
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }                    
                     }
                 //Reload Data       
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){//const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
@@ -213,14 +290,22 @@ client.on('message', async (msg) => {
                         //Reload Likes from Insta Official
                         let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         instaOfficialDataBase, instaLikesUsernameDataBase);
-                        client.sendMessage(msg.from, response);  
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }
                     } else if(splittedMsg[1].toLowerCase() === 'reloadtiktokcomments') {
                         //Reload Comments from Tiktok Official
                         let response = await tiktokReload.reloadTiktokComments(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
-
-                        console.log(response);
-                        client.sendMessage(msg.from, response);                   
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }               
                     }
                 //Reporting
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){//const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
@@ -228,13 +313,21 @@ client.on('message', async (msg) => {
                         //Report Likes from Insta Official
                         let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         instaOfficialDataBase, instaLikesUsernameDataBase);
-                        client.sendMessage(msg.from, response);  
-                    } else if(splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }                      } else if(splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
                         //Report Comments from Tiktok Official
                         let response = await tiktokReport.reportTiktokComments(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
                         tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
-                        client.sendMessage(msg.from, response);  
-                    }
+                        if(response.code === 1){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }                      }
                 }//if(splittedMsg[1].toLowerCase()......
             } else {
                 //Regular Messages

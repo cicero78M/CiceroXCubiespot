@@ -167,10 +167,21 @@ module.exports = {
             let rowData = [shortcode.at(-2), ID_KEY];
 
             await waStorySheet.addRow(rowData);
-            return 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.';
+            let responseData = {
+              message : 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+insta+'\n\nSelalu Semangat ya.',
+              state : true,
+              code : 1
+
+            }
+            return responseData;
           }
         } else {
-          return 'Number not recorded';
+          let responseData = {
+            message : 'Number Not Recorded',
+            state : false,
+            code : 0
+          }
+          return responseData;        
         }
       } else {
         console.log('No Client ID Attached to Insta Accounts');

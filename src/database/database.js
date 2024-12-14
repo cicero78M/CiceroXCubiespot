@@ -41,25 +41,51 @@ module.exports = {
           clientState = clientData[i].get('STATUS')
         }
       }
+
       if (!isClient){
         if (['COM', 'RES'].includes(type)){
           clientSheet.addRow({CLIENT_ID: sheetName, TYPE: type, STATUS: true, INSTAGRAM: instaLink, TIKTOK: tiktokLink});
 
           await addHeader.headerData(sheetName, instaOfficialID, instaLikesUsernameID);
           
-          return 'Client DataBase for '+sheetName+' Created, with header properties';
           
+          let responseData = {
+            message : 'Client DataBase for '+sheetName+' Created, with header properties',
+            state : true,
+            code : 1
+          }
+          return responseData;
+
         } else {
-          return 'Client type does\'nt Match requirements';
+
+          let responseData = {
+            message : 'Client type does\'nt Match requirements',
+            state : true,
+            code : 1
+          }
+          return responseData;
+
         }
       } else {
-        return 'Client is exist with status : '+clientState;
+
+        let responseData = {
+          message : 'Client is exist with status : '+clientState,
+          state : true,
+          code : 1
+        }
+        return responseData;
+
       }
 
     } catch (error) {
       //if sheet name is exist
-      console.log(error);
-    }
+      
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;    }
   },  
 
   //Set Client State to Database Client ID  
@@ -80,16 +106,33 @@ module.exports = {
           isDataExist = true;
           clientData[i].assign({STATUS: state});; // Updae State Value
           await clientData[i].save(); //save update
-          return 'Client State with Client_ID : '+sheetName+' set status to : '+state;
+
+          let responseData = {
+            message : 'Client State with Client_ID : '+sheetName+' set status to : '+state,
+            state : true,
+            code : 1
+          }
+          return responseData;
         }
       }
       if(!isDataExist){
-        return 'No Data with Client_ID : '+sheetName;
-      }
 
+        let responseData = {
+          message : 'No Data with Client_ID : '+sheetName,
+          state : true,
+          code : 1
+        }
+        return responseData;
+      
+      }
     } catch (error) {
-      //if sheet name is exist
-      console.log(error);
+      
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },  
   
@@ -127,11 +170,21 @@ module.exports = {
 
       await sheetTarget.addRows(userData);
 
-      return 'Adding '+sheetName+ ' as Client, and post user data to DB Client';
+      let responseData = {
+        message : 'Adding '+sheetName+ ' as Client, and post user data to DB Client',
+        state : true,
+        code : 1
+      }
+      return responseData;
 
     } catch (error) {
-      //if sheet name is exist
-      return "Sheet Name Existed";
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 
@@ -168,11 +221,21 @@ module.exports = {
 
       await sheetTarget.addRows(userData);
 
-      return 'Adding '+sheetName+ ' as Client, and post user data to DB Client';
+      let responseData = {
+        message : 'Adding '+sheetName+ ' as Client, and post user data to DB Client',
+        state : true,
+        code : 1
+      }
+      return responseData;
 
     } catch (error) {
-      //if sheet name is exist
-      return "Sheet Name Existed";
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 
@@ -210,17 +273,41 @@ module.exports = {
           //Get Target Sheet Documents by Title
           sheetTarget.addRow({ID_KEY: idKey, NAMA: userName, TITLE: userTitle, DIVISI: userDiv, JABATAN: userJab, STATUS: true});
 
-          return 'Success Input Data, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
+          let responseData = {
+            message : 'Success Input Data, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
+            state : true,
+            code : 1
+          }
+          return responseData;
+
         } else {
-          return 'ID_Key is Exist, Try Another ID_Key';
+
+          let responseData = {
+            message : 'ID_Key is Exist, Try Another ID_Key',
+            state : true,
+            code : 1
+          }
+          return responseData;
+        
         }
 
       } else {
-        return 'Divisi Tidak Terdaftar';
+
+        let responseData = {
+          message : 'Divisi Tidak Terdaftar',
+          state : true,
+          code : 1
+        }
+        return responseData;
       }
     } catch (error) {
-      //if sheet name is exist
-      console.log(error);
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
   //Edit User Divisi to Client Data Base Functions  
@@ -252,19 +339,41 @@ module.exports = {
             rowsData[ii].assign({DIVISI: userDiv, WHATSAPP: phone});; // Update Divisi Value
             await rowsData[ii].save(); //save update
 
-            return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
+            
+            let responseData = {
+              message : 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
+              state : true,
+              code : 1
+            }
+            return responseData;
           }
         }
 
         if(!isDataExist){
-          return 'User Data with delegated ID_KEY Doesn\'t Exist';
+                
+          let responseData = {
+            message : 'User Data with delegated ID_KEY Doesn\'t Exist',
+            state : true,
+            code : 1
+          }
+          return responseData;
         }
       } else {
-        return 'Divisi Unregsitered';
+        let responseData = {
+          message : 'Divisi Unregsitered',
+          state : true,
+          code : 1
+        }
+        return responseData;
       }
     } catch (error) {
-      //if sheet name is exist
-      return 'Sheet Exist';
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 
@@ -289,17 +398,32 @@ module.exports = {
           rowsData[i].assign({JABATAN: userJab, WHATSAPP: phone});; // Jabatan Divisi Value
           await rowsData[i].save(); //save update
 
-          return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
+          let responseData = {
+            message : 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
+            state : true,
+            code : 1
+          }
+          return responseData;
         }
       }
 
       if(!isDataExist){
-        return 'User Data with delegated ID_KEY Doesn\'t Exist';
+        let responseData = {
+          message : 'User Data with delegated ID_KEY Doesn\'t Exist',
+          state : true,
+          code : 1
+        }
+        return responseData;
       }
       
     } catch (error) {
-      //if sheet name is exist
-      console.log(error);
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 
@@ -323,18 +447,33 @@ module.exports = {
           isDataExist = true;
           rowsData[i].assign({NAMA: userNama, WHATSAPP: phone});; // Update Divisi Value
           await rowsData[i].save(); //save update
-
-          return 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key';
+          
+          let responseData = {
+            message :  'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
+            state : true,
+            code : 1
+          }
+          return responseData;
         }
       }
 
       if(!isDataExist){
-        return 'User Data with delegated ID_KEY Doesn\'t Exist';
+        let responseData = {
+          message : 'User Data with delegated ID_KEY Doesn\'t Exist',
+          state : true,
+          code : 1
+        }
+        return responseData;
       }
       
     } catch (error) {
-      //if sheet name is exist
-      console.log(error);
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 
@@ -374,17 +513,34 @@ module.exports = {
           }
         }
       } else {
+
         isDataExist = true;
-        return 'Username Instagram is Used by another User';
+        let responseData = {
+          message : 'Username Instagram is Used by another User',
+          state : true,
+          code : 1
+        }
+        return responseData;
       }
 
       if(!isDataExist){
-        return 'User Data with delegated ID_KEY Doesn\'t Exist';
+        let responseData = {
+          message : 'User Data with delegated ID_KEY Doesn\'t Exist',
+          state : true,
+          code : 1
+        }
+        return responseData;
+
       }
       
     } catch (error) {
-      //if sheet name is exist
-      console.log(error);
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 
@@ -425,16 +581,33 @@ module.exports = {
         }
       } else {
         isDataExist = true;
-        return 'Username Tiktok is Used by another User';
+        let responseData = {
+          message: 'Username Tiktok is Used by another User',
+          state : true,
+          code : 1
+        }
+        return responseData;
       }
 
       if(!isDataExist){
-        return 'User Data with delegated ID_KEY Doesn\'t Exist';
+
+        let responseData = {
+          message: 'User Data with delegated ID_KEY Doesn\'t Exist',
+          state : true,
+          code : 1
+        }
+        return responseData;
       }
     
     } catch (error) {
-      //if sheet name is exist
-      console.log(error);
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
+  
 };

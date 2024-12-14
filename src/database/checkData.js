@@ -59,12 +59,21 @@ module.exports = {
 
       let instaSudah = rowsData.length-userCounter;
 
-      let response = "*"+sheetName+"*\n\nInformasi Rekap Data username profile akun Instagram sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+rowsData.length+" \nJumlah User Sudah melengkapi: "+instaSudah+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_"
-      return response;
+      let responseData = {
+        message :"*"+sheetName+"*\n\nInformasi Rekap Data username profile akun Instagram sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+rowsData.length+" \nJumlah User Sudah melengkapi: "+instaSudah+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_",
+        state : true,
+        code : 1
+      }
+      return responseData;
 
     } catch (error) {
-      console.log(error);
-      return 'error'; 
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 
@@ -108,12 +117,21 @@ module.exports = {
       }
 
       let instaSudah = rowsData.length-userCounter;
-      let response = "*"+sheetName+"*\n\nInformasi Rekap Data username profile akun Tiktok sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+rowsData.length+" \nJumlah User Sudah melengkapi: "+instaSudah+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_"
-      return response;
-
+      let responseData = {
+        message :"*"+sheetName+"*\n\nInformasi Rekap Data username profile akun Tiktok sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+rowsData.length+" \nJumlah User Sudah melengkapi: "+instaSudah+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_",
+        state : true,
+        code : 1
+      }
+      return responseData;
+    
     } catch (error) {
-      console.log(error);
-      return 'error'; 
+
+      let responseData = {
+        message : error,
+        state : false,
+        code : 0
+      }
+      return responseData;
     }
   },
 }
