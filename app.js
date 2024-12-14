@@ -271,8 +271,10 @@ client.on('message', async (msg) => {
                             }                             
                         
                         } else {
+                    
                             console.log('Bukan Link Profile Tiktok');
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
+
                         }
                     }
                 //Data Order
@@ -313,12 +315,14 @@ client.on('message', async (msg) => {
                     } else if(splittedMsg[1].toLowerCase() === 'clientstate'){
                         //User Checking myData
                         let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataBase);
+
                         if(response.code === 1){
                             console.log(response.message);
                             client.sendMessage(msg.from, response.message);
                         } else {
                             console.log(response.message);
                         }                    
+
                     }
                 //Reload Data       
                 } else if(reloadOrder.includes(splittedMsg[1].toLowerCase())){//const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
@@ -345,6 +349,7 @@ client.on('message', async (msg) => {
                         } else {
                             console.log(response.message);
                         }               
+
                     }
                 //Reporting
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){//const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
@@ -359,6 +364,7 @@ client.on('message', async (msg) => {
                         } else {
                             console.log(response.message);
                         }                      
+
                     } else if(splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
                         //Report Comments from Tiktok Official
                         let response = await tiktokReport.reportTiktokComments(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
@@ -370,7 +376,7 @@ client.on('message', async (msg) => {
                         } else {
                             console.log(response.message);
                         }
-                                          }
+                    }
                 }//if(splittedMsg[1].toLowerCase()......
             } else {
                 //Regular Messages
@@ -393,6 +399,8 @@ client.on('message', async (msg) => {
             }// if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {
+
         console.log(error);
+    
     }//try catch
 });

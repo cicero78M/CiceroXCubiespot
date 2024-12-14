@@ -173,7 +173,7 @@ module.exports = {
                 }
 
                     let responseData = {
-                      message : 'Error Response, Database has exixting value',
+                      message : 'Error Response, Database has existing value',
                       state : false,
                       code : 0
                     }
