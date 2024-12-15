@@ -92,13 +92,13 @@ client.on('ready', () => {
             }
         }
     });
+
     // Reload every 1 hours after 15 until 21
     cron.schedule('55 15-21 * * *', async () => {
         let response = await instaClientLoad.instaLoadClient(clientDataBase);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
-
                 await client.sendMessage('6281235114745@c.us', response[i].message);
             }
         }

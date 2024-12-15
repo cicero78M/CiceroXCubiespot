@@ -108,9 +108,7 @@ module.exports = {
                 state : false,
                 code : 0
               }
-                
-            await instaOfficialDoc.delete;
-            await instaLikesUsernameDoc.delete;
+            
             return responseData;        
         }
     }
