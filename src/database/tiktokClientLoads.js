@@ -57,7 +57,7 @@ module.exports = {
             }
         }
 
-        await clientDoc.delete;      
+        clientDoc.delete;      
         return responseList;
     }
 }

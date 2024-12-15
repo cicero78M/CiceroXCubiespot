@@ -182,7 +182,7 @@ module.exports = {
   
           await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
           
-          let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
+          let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[sheetName];
           let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
           var newData = 0;
@@ -248,10 +248,10 @@ module.exports = {
             code : 1
           }
     
-          await userClientDoc.delete;
-          await clientDoc.delete;
-          await instaOfficialDoc.delete;
-          await instaLikesUsernameDoc.delete;
+          userClientDoc.delete;
+          clientDoc.delete;
+          instaOfficialDoc.delete;
+          instaLikesUsernameDoc.delete;
           return responseData; 
 
         } else { 
@@ -262,10 +262,10 @@ module.exports = {
             code : 1
           }
     
-          await userClientDoc.delete;
-          await clientDoc.delete;
-          await instaOfficialDoc.delete;
-          await instaLikesUsernameDoc.delete;
+          userClientDoc.delete;
+          clientDoc.delete;
+          instaOfficialDoc.delete;
+          instaLikesUsernameDoc.delete;
           return responseData;         
         }
       }  else {
@@ -276,10 +276,10 @@ module.exports = {
           code : 1
         }
   
-        await userClientDoc.delete;
-        await clientDoc.delete;
-        await instaOfficialDoc.delete;
-        await instaLikesUsernameDoc.delete;
+        userClientDoc.delete;
+        clientDoc.delete;
+        instaOfficialDoc.delete;
+        instaLikesUsernameDoc.delete;
         return responseData;          
       }
     } catch (error) {
@@ -290,10 +290,6 @@ module.exports = {
         code : 0
       }
 
-      await userClientDoc.delete;
-      await clientDoc.delete;
-      await instaOfficialDoc.delete;
-      await instaLikesUsernameDoc.delete;
       return responseData;     
     }     
   },

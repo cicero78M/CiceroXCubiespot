@@ -42,7 +42,7 @@ module.exports = {
         code : 1
       }
 
-      await targetDoc.delete;
+      targetDoc.delete;
       return responseData;
 
     } catch (error) {
@@ -53,7 +53,7 @@ module.exports = {
         code : 0
       }
 
-      await targetDoc.delete;
+      targetDoc.delete;
       return responseData;
     
     }

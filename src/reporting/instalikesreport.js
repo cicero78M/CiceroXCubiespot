@@ -53,7 +53,7 @@ module.exports = {
       try {
 
         await userClientDoc.loadInfo(); // loads document properties and worksheets
-        let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
+        let userClientSheet = userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
         
         let divisiList = [];
@@ -97,7 +97,7 @@ module.exports = {
         if(shortcodeList.length >= 1){
 
           await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-          let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
+          let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[sheetName];
           let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
           let userLikesData = [];
@@ -186,10 +186,10 @@ module.exports = {
             }
 
           }
-          await userClientDoc.delete;
-          await clientDoc.delete;
-          await instaOfficialDoc.delete;
-          await instaLikesUsernameDoc.delete;
+          userClientDoc.delete;
+          clientDoc.delete;
+          instaOfficialDoc.delete;
+          instaLikesUsernameDoc.delete;
           return responseData;
 
         } else {
@@ -198,10 +198,10 @@ module.exports = {
             state : true,
             code : 1
           }
-          await userClientDoc.delete;
-          await clientDoc.delete;
-          await instaOfficialDoc.delete;
-          await instaLikesUsernameDoc.delete;
+          userClientDoc.delete;
+          clientDoc.delete;
+          instaOfficialDoc.delete;
+          instaLikesUsernameDoc.delete;
           return responseData;
 
         }
@@ -212,10 +212,10 @@ module.exports = {
           state : false,
           code : 0
         }
-        await userClientDoc.delete;
-        await clientDoc.delete;
-        await instaOfficialDoc.delete;
-        await instaLikesUsernameDoc.delete;
+        userClientDoc.delete;
+        clientDoc.delete;
+        instaOfficialDoc.delete;
+        instaLikesUsernameDoc.delete;
         return responseData; 
       }
     }  else {
@@ -225,10 +225,10 @@ module.exports = {
         state : true,
         code : 1
       }
-      await userClientDoc.delete;
-      await clientDoc.delete;
-      await instaOfficialDoc.delete;
-      await instaLikesUsernameDoc.delete;
+      userClientDoc.delete;
+      clientDoc.delete;
+      instaOfficialDoc.delete;
+      instaLikesUsernameDoc.delete;
       return responseData;
 
       

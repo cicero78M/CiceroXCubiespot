@@ -58,7 +58,7 @@ module.exports = {
         await userClientDoc.loadInfo(); // loads document properties and worksheets
 
         console.log(sheetName+' User Client Loads');
-        let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
+        let userClientSheet = userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
         
         let divisiList = [];
@@ -93,7 +93,7 @@ module.exports = {
         await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
 
         console.log(sheetName+' User Data Loaded');
-        let tiktokCommentsUsernameSheet = await tiktokCommentsUsernameDoc.sheetsByTitle[sheetName];
+        let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[sheetName];
         let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
 
         let userCommentData = [];
@@ -155,10 +155,10 @@ module.exports = {
           state : true,
           code : 1
         }
-        await userClientDoc.delete;
-        await clientDoc.delete;
-        await tiktokOfficialDoc.delete;
-        await tiktokCommentsUsernameDoc.delete;
+        userClientDoc.delete;
+        clientDoc.delete;
+        tiktokOfficialDoc.delete;
+        tiktokCommentsUsernameDoc.delete;
         return responseData;
 
       } catch (error) {
@@ -168,10 +168,10 @@ module.exports = {
           state : false,
           code : 0
         }
-        await userClientDoc.delete;
-        await clientDoc.delete;
-        await tiktokOfficialDoc.delete;
-        await tiktokCommentsUsernameDoc.delete;
+        userClientDoc.delete;
+        clientDoc.delete;
+        tiktokOfficialDoc.delete;
+        tiktokCommentsUsernameDoc.delete;
         return responseData; 
       }
     }  else {
@@ -181,10 +181,10 @@ module.exports = {
         state : true,
         code : 1
       }
-      await userClientDoc.delete;
-      await clientDoc.delete;
-      await tiktokOfficialDoc.delete;
-      await tiktokCommentsUsernameDoc.delete;
+      userClientDoc.delete;
+      clientDoc.delete;
+      tiktokOfficialDoc.delete;
+      tiktokCommentsUsernameDoc.delete;
       return responseData;
     }     
   },

@@ -209,7 +209,7 @@ module.exports = {
         }
 
         await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
-        let tiktokCommentsUsernameSheet = await tiktokCommentsUsernameDoc.sheetsByTitle[sheetName];
+        let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[sheetName];
         let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
 
         var newData = 0;
@@ -305,10 +305,10 @@ module.exports = {
           state : true,
           code : 1
         }
-        await userClientDoc.delete;
-        await clientDoc.delete;
-        await tiktokOfficialDoc.delete;
-        await tiktokCommentsUsernameDoc.delete;
+        userClientDoc.delete;
+        clientDoc.delete;
+        tiktokOfficialDoc.delete;
+        tiktokCommentsUsernameDoc.delete;
         return responseData; 
       } catch (error) {
 
@@ -317,10 +317,10 @@ module.exports = {
           state : false,
           code : 0
         }
-        await userClientDoc.delete;
-        await clientDoc.delete;
-        await tiktokOfficialDoc.delete;
-        await tiktokCommentsUsernameDoc.delete;
+        userClientDoc.delete;
+        clientDoc.delete;
+        tiktokOfficialDoc.delete;
+        tiktokCommentsUsernameDoc.delete;
         return responseData;           
       }
     }  else {
@@ -329,10 +329,10 @@ module.exports = {
         state : true,
         code : 1
       }
-      await userClientDoc.delete;
-      await clientDoc.delete;
-      await tiktokOfficialDoc.delete;
-      await tiktokCommentsUsernameDoc.delete;
+      userClientDoc.delete;
+      clientDoc.delete;
+      tiktokOfficialDoc.delete;
+      tiktokCommentsUsernameDoc.delete;
       return responseData;      
     }     
   },

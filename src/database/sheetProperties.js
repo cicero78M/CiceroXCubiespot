@@ -31,7 +31,7 @@ module.exports = {
             await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
             await instaLikesUsernameDoc.addSheet({title : sheetName, headerValues: ['SHORTCODE']});
             
-            let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
+            let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[sheetName];
             
             await instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
             await instaLikesUsernameSheet.loadCells();
@@ -48,7 +48,7 @@ module.exports = {
                 
                 setTimeout(async function() { //  call a 2s setTimeout when the loop is called                           
                 
-                    let header = await instaLikesUsernameSheet.getCell(0,i);
+                    let header = instaLikesUsernameSheet.getCell(0, i);
                     header.value = 'USER_'+i;
                     header.textFormat = { bold: true, fontSize: 13};
                     await instaLikesUsernameSheet.saveUpdatedCells(); // save all updates in one call    
@@ -65,8 +65,8 @@ module.exports = {
                                 code : 0
                             }
                 
-                            await instaOfficialDoc.delete;
-                            await instaLikesUsernameDoc.delete;
+                            instaOfficialDoc.delete;
+                            instaLikesUsernameDoc.delete;
                             return responseData;                        }
                         
                     } else {
@@ -77,8 +77,8 @@ module.exports = {
                             code : 1
                         }
             
-                        await instaOfficialDoc.delete;
-                        await instaLikesUsernameDoc.delete;
+                        instaOfficialDoc.delete;
+                        instaLikesUsernameDoc.delete;
                         return responseData;
                     }
                 }, 800);
@@ -96,8 +96,8 @@ module.exports = {
                     code : 0
                 }
                                 
-                await instaOfficialDoc.delete;
-                await instaLikesUsernameDoc.delete;
+                instaOfficialDoc.delete;
+                instaLikesUsernameDoc.delete;
                 return responseData;            
             }
 
