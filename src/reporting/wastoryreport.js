@@ -56,9 +56,9 @@ module.exports = {
         let divisiList = [];
 
         for (let i = 0; i < userClientData.length; i++){
-            if(!divisiList.includes(userClientData[i].get('DIVISI'))){
-                divisiList.push(userClientData[i].get('DIVISI')); 
-            }
+          if(!divisiList.includes(userClientData[i].get('DIVISI'))){
+            divisiList.push(userClientData[i].get('DIVISI')); 
+          }
         }
 
         //Collect Shortcode from Database        
@@ -71,18 +71,21 @@ module.exports = {
         let shortcodeListString = '';
 
         for (let i = 0; i < instaOfficialData.length; i++){
-            let itemDate = new Date(instaOfficialData[i].get('TIMESTAMP')*1000);
-            if(itemDate.toLocaleDateString('id') === localDate){
-                if (!shortcodeList.includes(instaOfficialData[i].get('SHORTCODE'))){
-                    shortcodeList.push(instaOfficialData[i].get('SHORTCODE'));
+          
+          let itemDate = new Date(instaOfficialData[i].get('TIMESTAMP')*1000);
+          
+          if(itemDate.toLocaleDateString('id') === localDate){
+            if (!shortcodeList.includes(instaOfficialData[i].get('SHORTCODE'))){
+          
+              shortcodeList.push(instaOfficialData[i].get('SHORTCODE'));
 
-                    if (instaOfficialData[i].get('TYPE') === 'reel'){
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/'+instaOfficialData[i].get('SHORTCODE'));
-                    } else {
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+instaOfficialData[i].get('SHORTCODE'));
-                    }
-                }
+              if (instaOfficialData[i].get('TYPE') === 'reel'){
+                shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/'+instaOfficialData[i].get('SHORTCODE'));
+              } else {
+                shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+instaOfficialData[i].get('SHORTCODE'));
+              }
             }
+          }
         }
 
         await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
@@ -94,50 +97,52 @@ module.exports = {
         for (let i = 0; i < shortcodeList.length; i++){
           //code on the go
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
-                if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
-                    const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-                    for (let iii = 1; iii < fromRows.length; iii++){
-                        if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
-                            if(!userLikesData.includes(fromRows[iii])){
-                                userLikesData.push(fromRows[iii]);
-                            }
-                        }
-                    }        
+            if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
+        
+              const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+        
+              for (let iii = 1; iii < fromRows.length; iii++){
+                if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+                  if(!userLikesData.includes(fromRows[iii])){
+                    userLikesData.push(fromRows[iii]);
+                  }
                 }
+              }        
             }
+          }
         }
 
         let UserNotLikes = [];
         let notLikesList = [];
 
         for (let iii = 1; iii < userClientData.length; iii++){
-            if(!userLikesData.includes(userClientData[iii].get('INSTA'))){
-                if(!UserNotLikes.includes(userClientData[iii].get('ID_KEY'))){    
-                    UserNotLikes.push(userClientData[iii].get('ID_KEY'));
-                    notLikesList.push(userClientData[iii]);
-                }
+          if(!userLikesData.includes(userClientData[iii].get('INSTA'))){
+            if(!UserNotLikes.includes(userClientData[iii].get('ID_KEY'))){    
+              UserNotLikes.push(userClientData[iii].get('ID_KEY'));
+              notLikesList.push(userClientData[iii]);
             }
+          }
         }
 
         let dataInsta = '';
         let userCounter = 0;
   
         for (let iii = 0; iii < divisiList.length; iii++){
-        
-            let divisiCounter = 0 ;
-            let userByDivisi = '';
-  
-            for (let iv = 0; iv < notLikesList.length; iv++){
-                if(divisiList[iii] === notLikesList[iv].get('DIVISI')){
-                    userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
-                    divisiCounter++;
-                    userCounter++;
-                }  
-            }
-            
-            if ( divisiCounter != 0){
-                dataInsta = dataInsta.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
-            }
+      
+          let divisiCounter = 0 ;
+          let userByDivisi = '';
+
+          for (let iv = 0; iv < notLikesList.length; iv++){
+            if(divisiList[iii] === notLikesList[iv].get('DIVISI')){
+              userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
+              divisiCounter++;
+              userCounter++;
+            }  
+          }
+          
+          if ( divisiCounter != 0){
+            dataInsta = dataInsta.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
+          }
         }
   
         let instaSudah = userClientData.length-notLikesList.length;

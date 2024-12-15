@@ -64,7 +64,9 @@ module.exports = {
 
   reloadInstaLikes: async function reloadInstaLikes(sheetName, userClientID, clientID, instaOfficialID, instaLikesUsernameID){
     try {
-  
+      
+      console.log(sheetName+" Insta Load Function Executed");
+
       const d = new Date();
       const localDate = d.toLocaleDateString('id');
   
@@ -88,9 +90,12 @@ module.exports = {
       for (let i = 0; i < rowsClientData.length; i++){
         
         if (rowsClientData[i].get('CLIENT_ID') === sheetName){
+
+          console.log("Client ID Contains "+sheetName);
           isClientID = true;
           instaOfficial = rowsClientData[i].get('INSTAGRAM');
           isStatus = rowsClientData[i].get('STATUS');
+        
         }
       }
   
@@ -118,6 +123,7 @@ module.exports = {
         }
 
         if(hasContent){
+          console.log(sheetName+" Official Account Has Content");
           const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
           const officialInstaData = await officialInstaSheet.getRows();
           
@@ -142,6 +148,7 @@ module.exports = {
 
           //If Database Contains Shortcode 
           if(hasShortcode){
+
             for (let i = 0; i < itemByDay.length; i++){
               for (let ii = 0; ii < officialInstaData.length; ii++){
                 if(officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code){

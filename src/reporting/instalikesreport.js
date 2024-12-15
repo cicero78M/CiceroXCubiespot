@@ -17,7 +17,8 @@ const googleAuth = new JWT({
 module.exports = {  
   reportInstaLikes: async function reportInstaLikes(sheetName, userClientID, clientID, instaOfficialID, instaLikesUsernameID){
 
-    console.log("Executing Functions");
+    console.log("Report Function Executed");
+
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
     const hours = d.toLocaleTimeString('id');
@@ -59,9 +60,11 @@ module.exports = {
         let divisiList = [];
 
         for (let i = 0; i < userClientData.length; i++){
-            if(!divisiList.includes(userClientData[i].get('DIVISI'))){
-                divisiList.push(userClientData[i].get('DIVISI')); 
-            }
+      
+          if(!divisiList.includes(userClientData[i].get('DIVISI'))){
+            divisiList.push(userClientData[i].get('DIVISI')); 
+          }
+      
         }
 
         //Collect Shortcode from Database        
@@ -74,108 +77,126 @@ module.exports = {
         let shortcodeListString = '';
 
         for (let i = 0; i < instaOfficialData.length; i++){
-            let itemDate = new Date(instaOfficialData[i].get('TIMESTAMP')*1000);
-            if(itemDate.toLocaleDateString('id') === localDate){
-                if (!shortcodeList.includes(instaOfficialData[i].get('SHORTCODE'))){
-                    shortcodeList.push(instaOfficialData[i].get('SHORTCODE'));
 
-                    if (instaOfficialData[i].get('TYPE') === 'reel'){
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/'+instaOfficialData[i].get('SHORTCODE'));
-                    } else {
-                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+instaOfficialData[i].get('SHORTCODE'));
-                    }
-                }
-            }
-        }
+          let itemDate = new Date(instaOfficialData[i].get('TIMESTAMP')*1000);
+          
+          if(itemDate.toLocaleDateString('id') === localDate){
+            if (!shortcodeList.includes(instaOfficialData[i].get('SHORTCODE'))){
+          
+              shortcodeList.push(instaOfficialData[i].get('SHORTCODE'));
 
-        await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-        let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
-        let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
-
-        let userLikesData = [];
+              if (instaOfficialData[i].get('TYPE') === 'reel'){
+                shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/'+instaOfficialData[i].get('SHORTCODE'));
+              } else {
+                shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/'+instaOfficialData[i].get('SHORTCODE'));
+              }
         
-        for (let i = 0; i < shortcodeList.length; i++){
-          //code on the go
-          for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
-                if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
-                    const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-                    for (let iii = 1; iii < fromRows.length; iii++){
-                        if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
-                            if(!userLikesData.includes(fromRows[iii])){
-                                userLikesData.push(fromRows[iii]);
-                            }
-                        }
-                    }        
-                }
             }
+          }
         }
 
-        let UserNotLikes = [];
-        let notLikesList = [];
+        if(shortcodeList.length >= 1){
 
-        for (let iii = 1; iii < userClientData.length; iii++){
+          await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
+          let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
+          let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
+
+          let userLikesData = [];
+          
+          for (let i = 0; i < shortcodeList.length; i++){
+            //code on the go
+            for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
+              if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
+        
+                const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+                
+                for (let iii = 0; iii < fromRows.length; iii++){
+
+                  if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+        
+                    if(!userLikesData.includes(fromRows[iii])){
+                      userLikesData.push(fromRows[iii]);
+                    }
+                  }
+                }        
+              }
+            }
+          }
+
+          let UserNotLikes = [];
+          let notLikesList = [];
+
+          for (let iii = 0; iii < userClientData.length; iii++){
             if(!userLikesData.includes(userClientData[iii].get('INSTA'))){
-                if(!UserNotLikes.includes(userClientData[iii].get('ID_KEY'))){    
-                    UserNotLikes.push(userClientData[iii].get('ID_KEY'));
-                    notLikesList.push(userClientData[iii]);
-                }
+              if(!UserNotLikes.includes(userClientData[iii].get('ID_KEY'))){    
+                UserNotLikes.push(userClientData[iii].get('ID_KEY'));
+                notLikesList.push(userClientData[iii]);
+              }
             }
-        }
+          }
 
-        let dataInsta = '';
-        let userCounter = 0;
-  
-        for (let iii = 0; iii < divisiList.length; iii++){
+          let dataInsta = '';
+          let userCounter = 0;
+    
+          for (let iii = 0; iii < divisiList.length; iii++){
         
             let divisiCounter = 0 ;
             let userByDivisi = '';
-  
+
             for (let iv = 0; iv < notLikesList.length; iv++){
-                if(divisiList[iii] === notLikesList[iv].get('DIVISI')){
-                  if (isType === "RES"){
-                    userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
-                    divisiCounter++;
-                    userCounter++;
-                  } else if(isType === "COM"){
-                    userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
-                    divisiCounter++;
-                    userCounter++;
-                  }
-                }  
+              if(divisiList[iii] === notLikesList[iv].get('DIVISI')){
+                if (isType === "RES"){
+                  userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
+                  divisiCounter++;
+                  userCounter++;
+                } else if(isType === "COM"){
+                  userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
+                  divisiCounter++;
+                  userCounter++;
+                }
+              }  
             }
             
             if ( divisiCounter != 0){
-                dataInsta = dataInsta.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
+              dataInsta = dataInsta.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
             }
-        }
-  
-        let instaSudah = userClientData.length-notLikesList.length;
-        let responseData;
-        if (isType === 'COM'){
+          }
+    
+          let instaSudah = userClientData.length-notLikesList.length;
+          let responseData;
+          if (isType === 'COM'){
 
+            responseData = {
+              message : "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes pada "+shortcodeList.length+" konten Instagram :\n"+shortcodeListString+
+              "\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
+              +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
+              state : true,
+              code : 1
+            }
+
+          } else if(isType === "RES"){
+
+            responseData = {
+              message : "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Instagram *POLRES "+sheetName+
+              "* dengan Link konten sbb : \n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
+              +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
+              state : true,
+              code : 1
+            }
+
+          }
+
+          return responseData;
+
+        } else {
           responseData = {
-            message : "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes pada "+shortcodeList.length+" konten Instagram :\n"+shortcodeListString+
-            "\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-            +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
-            +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
+            message : "Tidak ada konten data untuk di olah",
             state : true,
             code : 1
           }
-
-        } else if(isType === "RES"){
-
-          responseData = {
-            message : "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Instagram *POLRES "+sheetName+
-            "* dengan Link konten sbb : \n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-            +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
-            +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
-            state : true,
-            code : 1
-          }
-
         }
-
-        return responseData;
       } catch (error) {
         
         let responseData = {

@@ -71,8 +71,8 @@ client.on('ready', () => {
     //Server Check Jobs
     cron.schedule('*/10 * * * *', async () =>  {     
 
-        console.log('System Alive');
-        await client.sendMessage('6281235114745@c.us', 'System Alive');
+        console.log('CICERO X CUBIESPOT <<<System Alive>>>');
+        await client.sendMessage('6281235114745@c.us', 'CICERO X CUBIESPOT <<<System Alive>>>');
             
     });
     
@@ -148,6 +148,11 @@ client.on('message', async (msg) => {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
             if (splittedMsg.length > 1){
+
+                let chatMsg = await msg.getChat();
+                chatMsg.sendSeen();
+                chatMsg.sendStateTyping();
+                
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
                 if (splittedMsg[1].toLowerCase() === 'addclient'){//AddClient
                     if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('tiktok.com')){

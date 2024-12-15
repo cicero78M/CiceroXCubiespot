@@ -1,5 +1,4 @@
 const fs = require('fs');
-const axios = require('axios');
 
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
@@ -9,6 +8,8 @@ const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 const dbKey = JSON.parse (fs.readFileSync('dbKey.json'));
 
 const instaReload = require('../scrapper/instalikesreload');
+const instaReport = require('../reporting/instalikesreport');
+
 
 const userDataBase = dbKey.databaseID;;
 const clientDataBase = dbKey.clientDataID;
@@ -25,6 +26,8 @@ const googleAuth = new JWT({
 
 module.exports = { 
     loadClient: async function loadClient(clientID){
+
+        console.log('Load Client Functions');
     
         const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
         await clientDoc.loadInfo(); // loads document properties and worksheets
@@ -37,11 +40,19 @@ module.exports = {
         for (let i = 0; i < rowsClientData.length; i++){
 
             if(rowsClientData[i].get('STATUS')){
+
+                console.log(rowsClientData[i].get('CLIENT_ID')+' Client Loaded');
+
                 let response = await instaReload.reloadInstaLikes(rowsClientData[i].get('CLIENT_ID'), userDataBase, clientDataBase, 
+                instaOfficialDataBase, instaLikesUsernameDataBase);
+
+                let responsereport = await instaReport.reportInstaLikes(rowsClientData[i].get('CLIENT_ID'), userDataBase, clientDataBase, 
                 instaOfficialDataBase, instaLikesUsernameDataBase);
 
                 console.log(response.message);
                 responseList.push(response);
+                responseList.push(responsereport);
+
             }
         }
 
