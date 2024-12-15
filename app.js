@@ -70,16 +70,28 @@ client.on('ready', () => {
     console.log('===============================');
     console.log('===============================');
 
-    /*
     
-    // Reload Insta
-    cron.schedule('* * * * *', async () => {
+    
+    // Reload Insta every 2 hours until 14.55
+    cron.schedule('55 6,8,10,12,14 * * *', async () => {
         let response = await waStory.waStoryInsta(clientDataBase);
-        console.log(response);
-    });
-    
-    */
+        
+        if (response.length >= 1){
+            for (let i = 0; i < response.length; i++){
 
+                console.log(response[i].message);
+                await client.sendMessage(msg.from, response[i].message);
+            }
+        }
+    });
+    // Reload every 1 hours after 15 until 21
+    cron.schedule('55 15-21 * * *', async () => {
+        let response = await waStory.waStoryInsta(clientDataBase);
+        
+        console.log(response[i].message);
+        await client.sendMessage(msg.from, response[i].message);
+    });
+   
 });
 
 client.on('qr', qr => {
@@ -365,7 +377,13 @@ client.on('message', async (msg) => {
 
                     } else if (splittedMsg[1].toLowerCase() === 'reloadallinsta'){
                         let response = await clientLoad.loadClient(clientDataBase);
-                        console.log(response);
+
+                        if (response.length >= 1){
+                            for (let i = 0; i < response.length; i++){
+
+                                await client.sendMessage(msg.from, response[i].message);
+                            }
+                        }
                     }
                 //Reporting
                 } else if(reportOrder.includes(splittedMsg[1].toLowerCase())){//const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
