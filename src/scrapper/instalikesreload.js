@@ -71,19 +71,18 @@ module.exports = {
       const localDate = d.toLocaleDateString('id');
   
       const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
-      await userClientDoc.loadInfo(); // loads document properties and worksheets
   
       const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
-      await clientDoc.loadInfo(); // loads document properties and worksheets
   
       const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
-      await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
   
       const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
       
       let isClientID = false;
       let instaOfficial;
       let isStatus;
+
+      await clientDoc.loadInfo(); // loads document properties and worksheets
       const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
       const rowsClientData = await clientDataSheet.getRows();
 
@@ -124,6 +123,9 @@ module.exports = {
 
         if(hasContent){
           console.log(sheetName+" Official Account Has Content");
+          
+          await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+
           const officialInstaSheet = instaOfficialDoc.sheetsByTitle[sheetName];
           const officialInstaData = await officialInstaSheet.getRows();
           
@@ -179,6 +181,7 @@ module.exports = {
           }
   
           await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
+          
           let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
           let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 

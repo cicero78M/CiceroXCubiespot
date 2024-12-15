@@ -24,13 +24,10 @@ module.exports = {
     const hours = d.toLocaleTimeString('id');
 
     const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
-    await userClientDoc.loadInfo(); // loads document properties and worksheets
 
     const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
-    await clientDoc.loadInfo(); // loads document properties and worksheets
 
     const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
-    await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
 
     const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
 
@@ -38,7 +35,8 @@ module.exports = {
     let isClientID = false;
     let isStatus;
     let isType;
-  
+
+    await clientDoc.loadInfo(); // loads document properties and worksheets
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
 
@@ -53,6 +51,7 @@ module.exports = {
     // If Client_ID exist. then get official content
     if (isClientID && isStatus){    
       try {
+
         await userClientDoc.loadInfo(); // loads document properties and worksheets
         let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
@@ -196,6 +195,9 @@ module.exports = {
             state : true,
             code : 1
           }
+          
+          return responseData;
+
         }
       } catch (error) {
         

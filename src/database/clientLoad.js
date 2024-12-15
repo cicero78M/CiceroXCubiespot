@@ -27,11 +27,11 @@ const googleAuth = new JWT({
 module.exports = { 
     loadClient: async function loadClient(clientID){
 
-        console.log('Load Client Functions');
-    
-        const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
+        const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB        
         await clientDoc.loadInfo(); // loads document properties and worksheets
-  
+
+        console.log('Load Client Functions');
+
         const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
         const rowsClientData = await clientDataSheet.getRows();
 
