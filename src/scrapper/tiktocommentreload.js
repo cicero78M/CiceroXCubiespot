@@ -102,6 +102,7 @@ module.exports = {
     const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(tiktokCommentsUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
     await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
 
+    
     //Check Client_ID. then get async data
     let isClientID = false;
     let tiktokOfficial;
@@ -304,7 +305,10 @@ module.exports = {
           state : true,
           code : 1
         }
-  
+        await userClientDoc.delete;
+        await clientDoc.delete;
+        await tiktokOfficialDoc.delete;
+        await tiktokCommentsUsernameDoc.delete;
         return responseData; 
       } catch (error) {
 
@@ -313,15 +317,23 @@ module.exports = {
           state : false,
           code : 0
         }
-  
-        return responseData;           }
+        await userClientDoc.delete;
+        await clientDoc.delete;
+        await tiktokOfficialDoc.delete;
+        await tiktokCommentsUsernameDoc.delete;
+        return responseData;           
+      }
     }  else {
       let responseData = {
         message : 'Your Client ID has Expired, Contacts Developers for more Informations',
         state : true,
         code : 1
       }
-
-      return responseData;      }     
+      await userClientDoc.delete;
+      await clientDoc.delete;
+      await tiktokOfficialDoc.delete;
+      await tiktokCommentsUsernameDoc.delete;
+      return responseData;      
+    }     
   },
 }

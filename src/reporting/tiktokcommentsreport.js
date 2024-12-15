@@ -30,9 +30,11 @@ module.exports = {
     
     const tiktokCommentsUsernameDoc= new GoogleSpreadsheet(tiktokCommentsUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
 
+
     //Check Client_ID. then get async data
     let isClientID = false;
     let isStatus;
+    let tiktokAccount;
 
     await clientDoc.loadInfo(); // loads document properties and worksheets
 
@@ -44,9 +46,9 @@ module.exports = {
     for (let i = 0; i < rowsClientData.length; i++){
       if (rowsClientData[i].get('CLIENT_ID') === sheetName){
         console.log(sheetName+' Client Exist');
-
         isClientID = true;
         isStatus = rowsClientData[i].get('STATUS');
+        tiktokAccount = rowsClientData[i].get('TIKTOK');
       }
     }
 
@@ -83,7 +85,7 @@ module.exports = {
             if(itemDate.toLocaleDateString('id') === localDate){
                 if (!shortcodeList.includes(tiktokOfficialData[i].get('SHORTCODE'))){
                     shortcodeList.push(tiktokOfficialData[i].get('SHORTCODE'));
-                    shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/video/'+tiktokOfficialData[i].get('SHORTCODE'));  
+                    shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/'+tiktokAccount+'/video/'+tiktokOfficialData[i].get('SHORTCODE'));  
                 }
             }
         }
@@ -153,7 +155,10 @@ module.exports = {
           state : true,
           code : 1
         }
-
+        await userClientDoc.delete;
+        await clientDoc.delete;
+        await tiktokOfficialDoc.delete;
+        await tiktokCommentsUsernameDoc.delete;
         return responseData;
 
       } catch (error) {
@@ -163,7 +168,10 @@ module.exports = {
           state : false,
           code : 0
         }
-  
+        await userClientDoc.delete;
+        await clientDoc.delete;
+        await tiktokOfficialDoc.delete;
+        await tiktokCommentsUsernameDoc.delete;
         return responseData; 
       }
     }  else {
@@ -173,7 +181,10 @@ module.exports = {
         state : true,
         code : 1
       }
-
+      await userClientDoc.delete;
+      await clientDoc.delete;
+      await tiktokOfficialDoc.delete;
+      await tiktokCommentsUsernameDoc.delete;
       return responseData;
     }     
   },

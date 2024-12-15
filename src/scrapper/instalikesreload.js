@@ -248,6 +248,10 @@ module.exports = {
             code : 1
           }
     
+          await userClientDoc.delete;
+          await clientDoc.delete;
+          await instaOfficialDoc.delete;
+          await instaLikesUsernameDoc.delete;
           return responseData; 
 
         } else { 
@@ -258,6 +262,10 @@ module.exports = {
             code : 1
           }
     
+          await userClientDoc.delete;
+          await clientDoc.delete;
+          await instaOfficialDoc.delete;
+          await instaLikesUsernameDoc.delete;
           return responseData;         
         }
       }  else {
@@ -268,6 +276,10 @@ module.exports = {
           code : 1
         }
   
+        await userClientDoc.delete;
+        await clientDoc.delete;
+        await instaOfficialDoc.delete;
+        await instaLikesUsernameDoc.delete;
         return responseData;          
       }
     } catch (error) {
@@ -278,6 +290,10 @@ module.exports = {
         code : 0
       }
 
+      await userClientDoc.delete;
+      await clientDoc.delete;
+      await instaOfficialDoc.delete;
+      await instaLikesUsernameDoc.delete;
       return responseData;     
     }     
   },

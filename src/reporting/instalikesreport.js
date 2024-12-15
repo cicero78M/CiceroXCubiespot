@@ -186,7 +186,10 @@ module.exports = {
             }
 
           }
-
+          await userClientDoc.delete;
+          await clientDoc.delete;
+          await instaOfficialDoc.delete;
+          await instaLikesUsernameDoc.delete;
           return responseData;
 
         } else {
@@ -195,7 +198,10 @@ module.exports = {
             state : true,
             code : 1
           }
-          
+          await userClientDoc.delete;
+          await clientDoc.delete;
+          await instaOfficialDoc.delete;
+          await instaLikesUsernameDoc.delete;
           return responseData;
 
         }
@@ -206,7 +212,10 @@ module.exports = {
           state : false,
           code : 0
         }
-  
+        await userClientDoc.delete;
+        await clientDoc.delete;
+        await instaOfficialDoc.delete;
+        await instaLikesUsernameDoc.delete;
         return responseData; 
       }
     }  else {
@@ -216,8 +225,15 @@ module.exports = {
         state : true,
         code : 1
       }
-
+      await userClientDoc.delete;
+      await clientDoc.delete;
+      await instaOfficialDoc.delete;
+      await instaLikesUsernameDoc.delete;
       return responseData;
-    }     
+
+      
+    } 
+    
+    
   },
 }
