@@ -100,6 +100,18 @@ client.on('ready', () => {
             }
         }
     });
+
+    // Reload Tiktok every 1 hours until 14.55
+    cron.schedule('55 4-21 * * *', async () => {
+        let response = await tiktokClientLoad.tiktokLoadClient(clientDataBase);
+
+        if (response.length >= 1){
+            for (let i = 0; i < response.length; i++){
+
+                await client.sendMessage('6281235114745@c.us', response[i].message);
+            }
+        }
+    });
 });
 
 client.on('qr', qr => {
