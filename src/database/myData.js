@@ -41,6 +41,8 @@ module.exports = {
         state : true,
         code : 1
       }
+
+      await targetDoc.delete;
       return responseData;
 
     } catch (error) {
@@ -50,6 +52,8 @@ module.exports = {
         state : false,
         code : 0
       }
+
+      await targetDoc.delete;
       return responseData;
     
     }

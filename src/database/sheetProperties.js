@@ -21,20 +21,25 @@ module.exports = {
 
             //InstaOfficial Header
             const instaOfficialDoc = new GoogleSpreadsheet(instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
+            
             await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
             await instaOfficialDoc.addSheet({title : sheetName, headerValues: ['TIMESTAMP',	'USER_ACCOUNT',	'SHORTCODE', 'ID', 'TYPE', 'CAPTION', 
                 'COMMENT_COUNT', 'LIKE_COUNT', 'PLAY_COUNT', 'THUMBNAIL', 'VIDEO_URL']});
 
             const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
+            
             await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
             await instaLikesUsernameDoc.addSheet({title : sheetName, headerValues: ['SHORTCODE']});
-            let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
-            await instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
             
+            let instaLikesUsernameSheet = await instaLikesUsernameDoc.sheetsByTitle[sheetName];
+            
+            await instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
             await instaLikesUsernameSheet.loadCells();
+
             let header = instaLikesUsernameSheet.getCell(0,0);
             header.value = 'SHORTCODE';
             header.textFormat = { bold: true, fontSize: 13};
+            
             await instaLikesUsernameSheet.saveUpdatedCells();
 
             let i = 1;
@@ -59,7 +64,9 @@ module.exports = {
                                 state : false,
                                 code : 0
                             }
-    
+                
+                            await instaOfficialDoc.delete;
+                            await instaLikesUsernameDoc.delete;
                             return responseData;                        }
                         
                     } else {
@@ -69,7 +76,9 @@ module.exports = {
                             state : true,
                             code : 1
                         }
-
+            
+                        await instaOfficialDoc.delete;
+                        await instaLikesUsernameDoc.delete;
                         return responseData;
                     }
                 }, 800);
@@ -85,8 +94,10 @@ module.exports = {
                     message : error,
                     state : false,
                     code : 0
-                  }
-            
+                }
+                                
+                await instaOfficialDoc.delete;
+                await instaLikesUsernameDoc.delete;
                 return responseData;            
             }
 
@@ -97,7 +108,9 @@ module.exports = {
                 state : false,
                 code : 0
               }
-        
+                
+            await instaOfficialDoc.delete;
+            await instaLikesUsernameDoc.delete;
             return responseData;        
         }
     }

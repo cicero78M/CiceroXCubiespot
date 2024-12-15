@@ -579,9 +579,8 @@ module.exports = {
     try {
       //Insert New Sheet
       await targetDoc.loadInfo(); // loads document properties and worksheets
-      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
 
-      await targetDoc.loadInfo(); // loads document properties and worksheets
+      const sheetTarget = targetDoc.sheetsByTitle[sheetName];
       const rowsData = await sheetTarget.getRows();
 
       let isDataExist = false;
@@ -620,6 +619,7 @@ module.exports = {
           code : 1
         }
 
+        await targetDoc.delete;
         return responseData;
       }
 
@@ -631,6 +631,7 @@ module.exports = {
           code : 1
         }
 
+        await targetDoc.delete;
         return responseData;
       }
     } catch (error) {
@@ -641,7 +642,9 @@ module.exports = {
         code : 0
       }
 
+      await targetDoc.delete;
       return responseData;
+    
     }
   },
 };

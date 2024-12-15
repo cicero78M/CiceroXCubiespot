@@ -82,6 +82,7 @@ module.exports = {
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     await targetDoc.loadInfo(); // loads document properties and worksheets
 
+
     try {
 
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
@@ -122,6 +123,8 @@ module.exports = {
         state : true,
         code : 1
       }
+
+      await targetDoc.delete;
       return responseData;
     
     } catch (error) {
@@ -131,7 +134,10 @@ module.exports = {
         state : false,
         code : 0
       }
+
+      await targetDoc.delete;
       return responseData;
+    
     }
   },
 }
