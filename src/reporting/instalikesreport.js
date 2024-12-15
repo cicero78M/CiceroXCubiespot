@@ -20,6 +20,7 @@ module.exports = {
     console.log("Executing Functions");
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
+    const hours = d.toLocaleTimeString('id');
 
     const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
     await userClientDoc.loadInfo(); // loads document properties and worksheets
@@ -35,6 +36,7 @@ module.exports = {
     //Check Client_ID. then get async data
     let isClientID = false;
     let isStatus;
+    let isType;
   
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
@@ -43,6 +45,7 @@ module.exports = {
       if (rowsClientData[i].get('CLIENT_ID') === sheetName){
         isClientID = true;
         isStatus = rowsClientData[i].get('STATUS');
+        isType = rowsClientData[i].get('TYPE') 
       }
     }
 
@@ -129,9 +132,15 @@ module.exports = {
   
             for (let iv = 0; iv < notLikesList.length; iv++){
                 if(divisiList[iii] === notLikesList[iv].get('DIVISI')){
+                  if (isType === "RES"){
                     userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('TITLE') +' '+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
                     divisiCounter++;
                     userCounter++;
+                  } else if(isType === "COM"){
+                    userByDivisi = userByDivisi.concat('\n'+notLikesList[iv].get('NAMA')+' - '+notLikesList[iv].get('INSTA'));
+                    divisiCounter++;
+                    userCounter++;
+                  }
                 }  
             }
             
@@ -141,16 +150,32 @@ module.exports = {
         }
   
         let instaSudah = userClientData.length-notLikesList.length;
-        let responseData = {
-          message : "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes pada konten Instagram :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
-          +userClientData.length+" \nJumlah User Sudah melaksanakan: "+instaSudah+"\nJumlah User Belum melaksanakan : "
-          +userCounter+"\n\nRincian Data Username Insta :"+dataInsta+"\n\n_System Administrator Cicero_",
-          state : true,
-          code : 1
+        let responseData;
+        if (isType === 'COM'){
+
+          responseData = {
+            message : "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes pada "+shortcodeList.length+" konten Instagram :\n"+shortcodeListString+
+            "\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+            +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
+            +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
+            state : true,
+            code : 1
+          }
+
+        } else if(isType === "RES"){
+
+          responseData = {
+            message : "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Instagram *POLRES "+sheetName+
+            "* dengan Link konten sbb : \n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+            +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
+            +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
+            state : true,
+            code : 1
+          }
+
         }
 
         return responseData;
-
       } catch (error) {
         
         let responseData = {
