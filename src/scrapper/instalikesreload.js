@@ -98,7 +98,7 @@ module.exports = {
         }
       }
   
-      if (isClientID && isStatus){    
+      if (isClientID && isStatus === "TRUE"){    
         //Collect Content Shortcode from Official Account
         let response = await instaPostAPI(instaOfficial);
 

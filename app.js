@@ -8,9 +8,11 @@ const query = require('./src/database/myData');
 const checkData = require('./src/database/checkData');
 const instaReload = require('./src/scrapper/instalikesreload');
 const instaReport = require('./src/reporting/instalikesreport');
+const tiktokReport = require('./src/reporting/tiktokcommentsreport');
 const tiktokReload = require('./src/scrapper/tiktocommentreload');
 const waStory = require('./src/scrapper/wastory');
-const clientLoad = require('./src/database/clientLoad');
+const instaClientLoad = require('./src/database/instaClientLoads');
+const tiktokClientLoad = require('./src/database/tiktokClientLoads');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 const figlet = require('figlet');
@@ -51,7 +53,7 @@ client.on('auth_failure', msg => {
 
 client.on('ready', () => {
 
-    console.log(figlet.textSync("CICERO -X- CUBIE", {
+    console.log(figlet.textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
         horizontalLayout: "fitted",
         verticalLayout: "default",
@@ -78,7 +80,7 @@ client.on('ready', () => {
     
     // Reload Insta every 2 hours until 14.55
     cron.schedule('55 4-14/2 * * *', async () => {
-        let response = await clientLoad.loadClient(clientDataBase);
+        let response = await instaClientLoad.instaLoadClient(clientDataBase);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -89,7 +91,7 @@ client.on('ready', () => {
     });
     // Reload every 1 hours after 15 until 21
     cron.schedule('55 15-21 * * *', async () => {
-        let response = await clientLoad.loadClient(clientDataBase);
+        let response = await instaClientLoad.instaLoadClient(clientDataBase);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -98,7 +100,6 @@ client.on('ready', () => {
             }
         }
     });
-   
 });
 
 client.on('qr', qr => {
@@ -113,7 +114,7 @@ client.on('message', async (msg) => {
     const newClientOrder = ['newclientres', 'newclientcom' ];
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
     const dataOrder = ['menu', 'mydata', 'instacheck', 'tiktokcheck', 'clientstate'];
-    const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta' ];
+    const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
 
     try {
@@ -152,7 +153,7 @@ client.on('message', async (msg) => {
                 let chatMsg = await msg.getChat();
                 chatMsg.sendSeen();
                 chatMsg.sendStateTyping();
-                
+
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
                 if (splittedMsg[1].toLowerCase() === 'addclient'){//AddClient
                     if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('tiktok.com')){
@@ -388,7 +389,17 @@ client.on('message', async (msg) => {
                         }               
 
                     } else if (splittedMsg[1].toLowerCase() === 'reloadallinsta'){
-                        let response = await clientLoad.loadClient(clientDataBase);
+                        let response = await instaClientLoad.instaLoadClient(clientDataBase);
+
+                        if (response.length >= 1){
+                            for (let i = 0; i < response.length; i++){
+
+                                await client.sendMessage(msg.from, response[i].message);
+                            }
+                        }
+                    } else if (splittedMsg[1].toLowerCase() === 'reloadalltiktok'){
+
+                        let response = await tiktokClientLoad.tiktokLoadClient(clientDataBase);
 
                         if (response.length >= 1){
                             for (let i = 0; i < response.length; i++){

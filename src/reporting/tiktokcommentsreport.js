@@ -17,30 +17,34 @@ const googleAuth = new JWT({
 module.exports = {  
   reportTiktokComments: async function reportTiktokComments(sheetName, userClientID, clientID, tiktokOfficialID, tiktokCommentsUsernameID){
 
-    console.log("Executing Functions");
+    console.log("Executing Report Comments Functions");
+
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
 
     const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
-    await userClientDoc.loadInfo(); // loads document properties and worksheets
 
     const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB
-    await clientDoc.loadInfo(); // loads document properties and worksheets
 
     const tiktokOfficialDoc = new GoogleSpreadsheet(tiktokOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
-    await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
-
+    
     const tiktokCommentsUsernameDoc= new GoogleSpreadsheet(tiktokCommentsUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
 
     //Check Client_ID. then get async data
     let isClientID = false;
     let isStatus;
-  
+
+    await clientDoc.loadInfo(); // loads document properties and worksheets
+
+    console.log('Client Load');
+    
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
 
     for (let i = 0; i < rowsClientData.length; i++){
       if (rowsClientData[i].get('CLIENT_ID') === sheetName){
+        console.log(sheetName+' Client Exist');
+
         isClientID = true;
         isStatus = rowsClientData[i].get('STATUS');
       }
@@ -50,6 +54,8 @@ module.exports = {
     if (isClientID && isStatus){    
       try {
         await userClientDoc.loadInfo(); // loads document properties and worksheets
+
+        console.log(sheetName+' User Client Loads');
         let userClientSheet = await userClientDoc.sheetsByTitle[sheetName];
         let userClientData = await userClientSheet.getRows();
         
@@ -66,6 +72,7 @@ module.exports = {
 
         await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
 
+        console.log(sheetName+' Official Data Loaded');
         const tiktokOfficialSheet = tiktokOfficialDoc.sheetsByTitle[sheetName];
         const tiktokOfficialData= await tiktokOfficialSheet.getRows();
 
@@ -82,6 +89,8 @@ module.exports = {
         }
 
         await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
+
+        console.log(sheetName+' User Data Loaded');
         let tiktokCommentsUsernameSheet = await tiktokCommentsUsernameDoc.sheetsByTitle[sheetName];
         let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
 
@@ -146,6 +155,7 @@ module.exports = {
         }
 
         return responseData;
+
       } catch (error) {
 
         let responseData = {
