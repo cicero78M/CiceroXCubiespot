@@ -6,12 +6,11 @@ const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
-const instaKey = JSON.parse (fs.readFileSync('instaKey.json'));
 
 const headers = {
   'x-cache-control': 'no-cache',
-  'x-rapidapi-key': instaKey.instakeyAPI,
-  'x-rapidapi-host': instaKey.instahostAPI
+  'x-rapidapi-key': googleCreds.instaKey.instakeyAPI,
+  'x-rapidapi-host': googleCreds.instaKey.instahostAPI
 }
 
 const googleAuth = new JWT({
@@ -26,7 +25,7 @@ async function instaPostAPI(key){
   //Insta Post API
   let options = {
     method: 'GET',
-    url: instaKey.instahostContent,
+    url: googleCreds.instaKey.instahostContent,
     params: {
       username_or_id_or_url: key
     },

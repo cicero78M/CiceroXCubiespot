@@ -2,7 +2,8 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const dbKey = JSON.parse (fs.readFileSync('dbKey.json'));
+const dbKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+
 const dataBase = require('./src/database/database');
 const query = require('./src/database/myData');
 const checkData = require('./src/database/checkData');
@@ -15,19 +16,21 @@ const instaClientLoad = require('./src/database/instaClientLoads');
 const tiktokClientLoad = require('./src/database/tiktokClientLoads');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
+
 const figlet = require('figlet');
 const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
 const cron = require('node-cron');
  
 const port = 3007;
-const userDataBase = dbKey.databaseID;;
-const clientDataBase = dbKey.clientDataID;
-const instaOfficialDataBase = dbKey.instaOfficialID;
-const instaLikesUsernameDataBase = dbKey.instaLikesUsernameID;
-const tiktokOfficialDataBase = dbKey.tiktokOfficialID;
-const tiktokCommentUsernameDataBase = dbKey.tiktokCommentUsernameID;
-const waStoryDataBase = dbKey.waStoryID;
+
+const userDataBase = dbKey.dbKey.databaseID;;
+const clientDataBase = dbKey.dbKey.clientDataID;
+const instaOfficialDataBase = dbKey.dbKeyinstaOfficialID;
+const instaLikesUsernameDataBase = dbKey.dbKey.instaLikesUsernameID;
+const tiktokOfficialDataBase = dbKey.dbKey.tiktokOfficialID;
+const tiktokCommentUsernameDataBase = dbKey.dbKey.tiktokCommentUsernameID;
+const waStoryDataBase = dbKey.dbKey.waStoryID;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -107,7 +110,6 @@ client.on('ready', () => {
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
-
                 await client.sendMessage('6281235114745@c.us', response[i].message);
             }
         }
@@ -127,7 +129,7 @@ client.on('message', async (msg) => {
     const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
     const dataOrder = ['menu', 'mydata', 'instacheck', 'tiktokcheck', 'clientstate'];
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
-    const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
+    const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
     try {
         if (msg.isStatus){
@@ -142,11 +144,14 @@ client.on('message', async (msg) => {
                     
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
+             
                 if (url !== null){
                     if (url[0].includes('instagram.com')){
    
                         console.log(contact.pushname+" ===>>>> "+msg.body);
+             
                         let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
+             
                         if (response.code === 1 ){
                             console.log(response.message);
                             client.sendMessage(contact.number+"@c.us", response.message);
@@ -160,6 +165,7 @@ client.on('message', async (msg) => {
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
+            
             if (splittedMsg.length > 1){
 
                 let chatMsg = await msg.getChat();
@@ -167,6 +173,7 @@ client.on('message', async (msg) => {
                 chatMsg.sendStateTyping();
 
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
+            
                 if (splittedMsg[1].toLowerCase() === 'addclient'){//AddClient
                     if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('tiktok.com')){
                         
@@ -186,7 +193,6 @@ client.on('message', async (msg) => {
                     if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                         //Is contains Links
                         if (splittedMsg[1].toLowerCase() === "newclientres"){
-                            //If Request for New Client by Polres
                             //Res Request
                             let response = await dataBase.newClientRes(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
                             
@@ -198,7 +204,6 @@ client.on('message', async (msg) => {
                             }      
                         
                         }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
-                            //If Request for New Client by Company
                             //Company Request
                             let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
                             
@@ -284,6 +289,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'updateinsta') {
                         //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
+
                             if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
                         
                                 let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], 
@@ -450,9 +456,9 @@ client.on('message', async (msg) => {
             } else {
                 //Regular Messages
                 const contact = await msg.getContact();
-                const chat = await msg.getChat();
-                chat.sendSeen();
-                chat.sendStateTyping();
+                //const chat = await msg.getChat();
+                //chat.sendSeen();
+                //chat.sendStateTyping();
                 
                 if (contact.pushname != undefined){
                     
@@ -468,8 +474,6 @@ client.on('message', async (msg) => {
             }// if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {
-
-        console.log(error);
-    
+        console.log(error); 
     }//try catch
 });
