@@ -253,7 +253,7 @@ module.exports = {
                 }
             
                 cursorNumber = responseComments.cursor;
-                checkNext = responseComments.has_number;
+                checkNext = responseComments.has_more;
                 
                 console.log(checkNext);
 
