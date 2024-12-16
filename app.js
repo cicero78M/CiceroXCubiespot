@@ -113,6 +113,7 @@ client.on('ready', () => {
             }
         }
     });
+
 });
 
 client.on('qr', qr => {
@@ -465,12 +466,12 @@ client.on('message', async (msg) => {
                     let url = body.match(/\bhttps?:\/\/\S+/gi);
                     if (url != null){
                         console.log(contact.number+" ===>>>> "+msg.body);
-//                        let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
-//                        console.log(response);
-//                        client.sendMessage(contact.number+"@c.us", response);  
+//                      let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
+//                      console.log(response);
+//                      client.sendMessage(contact.number+"@c.us", response);  
                     }
                 }
-            }// if(splittedMsg.length....
+            } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {
         console.log(error); 
