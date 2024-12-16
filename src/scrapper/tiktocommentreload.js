@@ -211,7 +211,8 @@ module.exports = {
           }
         }
 
-        await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
+        await tiktokCommentsUsernameDoc.loadInfo();
+        // loads document properties and worksheets
         let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[sheetName];
         let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
 
@@ -223,6 +224,7 @@ module.exports = {
           //code on the go
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
+            
               hasShortcode = true;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
 
@@ -249,8 +251,10 @@ module.exports = {
                     }
                   }
                 }
+            
                 cursorNumber = responseComments.cursor;
                 checkNext = responseComments.has_number;
+            
               } while ( checkNext === 1);
 
               let dataCleaning = [];
@@ -262,10 +266,16 @@ module.exports = {
                   }
                 }
               }
-              console.log('update data');
+
+              console.log(sheetName+' Update Data');
+            
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
+
+              tiktokCommentsUsernameDoc.delete;
+
               updateData++;
+            
             }
           }
           //Final Code
@@ -277,6 +287,7 @@ module.exports = {
             let checkNext = 0;
             
             do{
+            
               let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
               let commentItems = responseComments.comments;
 
@@ -297,22 +308,29 @@ module.exports = {
                 }
               }
             }
-            console.log('Insert new data');
+
+            console.log(sheetName+' Insert new data');
             await tiktokCommentsUsernameSheet.addRow(dataCleaning);
+
+            tiktokCommentsUsernameDoc.delete;
+
             newData++;
           }
         }
       
         let responseData = {
-          message : 'Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
+          message : sheetName+' Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
           state : true,
           code : 1
         }
+
         userClientDoc.delete;
         clientDoc.delete;
         tiktokOfficialDoc.delete;
         tiktokCommentsUsernameDoc.delete;
+        
         return responseData; 
+      
       } catch (error) {
 
         let responseData = {
