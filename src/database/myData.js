@@ -43,6 +43,9 @@ module.exports = {
       }
 
       targetDoc.delete;
+
+      console.log('Return Success');
+
       return responseData;
 
     } catch (error) {
@@ -54,6 +57,9 @@ module.exports = {
       }
 
       targetDoc.delete;
+
+      console.log('Return Success');
+
       return responseData;
     
     }

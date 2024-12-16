@@ -65,6 +65,9 @@ module.exports = {
         state : true,
         code : 1
       }
+      targetDoc.delete;
+      console.log('Return Success');
+
       return responseData;
 
     } catch (error) {
@@ -74,6 +77,10 @@ module.exports = {
         state : false,
         code : 0
       }
+      targetDoc.delete;
+
+      console.log('Return Success');
+
       return responseData;
     }
   },
@@ -126,6 +133,9 @@ module.exports = {
       }
 
       targetDoc.delete;
+
+      console.log('Return Success');
+
       return responseData;
     
     } catch (error) {
@@ -137,6 +147,9 @@ module.exports = {
       }
 
       targetDoc.delete;
+
+      console.log('Return Success');
+
       return responseData;
     
     }

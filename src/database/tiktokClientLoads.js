@@ -57,6 +57,9 @@ module.exports = {
         }
 
         clientDoc.delete;      
+
+        console.log('Return Success');
+
         return responseList;
     }
 }

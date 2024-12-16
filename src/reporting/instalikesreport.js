@@ -190,6 +190,9 @@ module.exports = {
           clientDoc.delete;
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
+
+          console.log('Return Success');
+
           return responseData;
 
         } else {
@@ -202,6 +205,9 @@ module.exports = {
           clientDoc.delete;
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
+
+          console.log('Return Success');
+
           return responseData;
 
         }
@@ -216,6 +222,9 @@ module.exports = {
         clientDoc.delete;
         instaOfficialDoc.delete;
         instaLikesUsernameDoc.delete;
+
+        console.log('Return Success');
+
         return responseData; 
       }
     }  else {
@@ -230,7 +239,8 @@ module.exports = {
       clientDoc.delete;
       instaOfficialDoc.delete;
       instaLikesUsernameDoc.delete;
- 
+      
+      console.log('Return Success');
       return responseData;
 
     }    

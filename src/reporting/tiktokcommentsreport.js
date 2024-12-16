@@ -177,6 +177,9 @@ module.exports = {
         clientDoc.delete;
         tiktokOfficialDoc.delete;
         tiktokCommentsUsernameDoc.delete;
+
+        console.log('Return Success');
+
         return responseData;
 
       } catch (error) {
@@ -190,6 +193,9 @@ module.exports = {
         clientDoc.delete;
         tiktokOfficialDoc.delete;
         tiktokCommentsUsernameDoc.delete;
+
+        console.log('Return Success');
+
         return responseData; 
       }
     }  else {
@@ -203,6 +209,9 @@ module.exports = {
       clientDoc.delete;
       tiktokOfficialDoc.delete;
       tiktokCommentsUsernameDoc.delete;
+
+      console.log('Return Success');
+
       return responseData;
     }     
   },

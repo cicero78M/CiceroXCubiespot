@@ -54,6 +54,11 @@ module.exports = {
             state : true,
             code : 1
           }
+          
+          clientDoc.delete;
+
+          console.log('Return Success');
+
           return responseData;
 
         } else {
@@ -63,6 +68,11 @@ module.exports = {
             state : true,
             code : 1
           }
+
+          console.log('Return Success');
+
+          clientDoc.delete;
+
           return responseData;
 
         }
@@ -73,6 +83,11 @@ module.exports = {
           state : true,
           code : 1
         }
+
+        console.log('Return Success');
+
+        clientDoc.delete;
+
         return responseData;
 
       }
@@ -85,6 +100,9 @@ module.exports = {
         state : false,
         code : 0
       }
+      console.log('Return Success');
+
+      
       return responseData;    }
   },  
 
@@ -112,6 +130,11 @@ module.exports = {
             state : true,
             code : 1
           }
+        
+          console.log('Return Success');
+
+          targetDoc.delete;
+
           return responseData;
         }
       }
@@ -122,6 +145,11 @@ module.exports = {
           state : true,
           code : 1
         }
+      
+        console.log('Return Success');
+
+        targetDoc.delete;
+
         return responseData;
       
       }
@@ -132,6 +160,11 @@ module.exports = {
         state : false,
         code : 0
       }
+
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
     }
   },  
@@ -174,6 +207,11 @@ module.exports = {
         state : true,
         code : 1
       }
+
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
 
     } catch (error) {
@@ -183,7 +221,13 @@ module.exports = {
         state : false,
         code : 0
       }
+
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
+    
     }
   },
 
@@ -192,6 +236,7 @@ module.exports = {
 
     const sourceX = sourceID.split('/').pop();      //Get Last Segment of Links
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
+    await targetDoc.loadInfo(); // loads document properties and worksheets
 
     try {
       //Insert New Sheet
@@ -205,7 +250,6 @@ module.exports = {
       const sheetSource = sourceDoc.sheetsByTitle[sheetName]; //Get Source Sheet Documents by Title
       const rowsSource = await sheetSource.getRows(); // loads document properties and worksheets
       
-      await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];//Get Target Sheet Documents by Title
 
       var userData = [];
@@ -225,6 +269,12 @@ module.exports = {
         state : true,
         code : 1
       }
+
+      console.log('Return Success');
+
+      sourceDoc.delete;
+      targetDoc.delete;
+
       return responseData;
 
     } catch (error) {
@@ -234,7 +284,13 @@ module.exports = {
         state : false,
         code : 0
       }
+
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
+
     }
   },
 
@@ -246,7 +302,6 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
 
-      await targetDoc.loadInfo(); // loads document properties and worksheets
       const rowsData = await sheetTarget.getRows();
 
       let idKeyList = [];
@@ -277,8 +332,13 @@ module.exports = {
             state : true,
             code : 1
           }
+          
+          console.log('Return Success');
+
+          targetDoc.delete;
 
           return responseData;
+        
         } else {
 
           let responseData = {
@@ -286,10 +346,14 @@ module.exports = {
             state : true,
             code : 1
           }
+          
+          console.log('Return Success');
+
+          targetDoc.delete;
 
           return responseData;
-        }
 
+        }
       } else {
 
         let responseData = {
@@ -298,7 +362,12 @@ module.exports = {
           code : 1
         }
 
+        console.log('Return Success');
+
+        targetDoc.delete;
+
         return responseData;
+
       }
     } catch (error) {
 
@@ -307,8 +376,13 @@ module.exports = {
         state : false,
         code : 0
       }
-      
+
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
+
     }
   },
   //Edit User Divisi to Client Data Base Functions  
@@ -319,7 +393,6 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
 
-      await targetDoc.loadInfo(); // loads document properties and worksheets
       const rowsData = await sheetTarget.getRows();
 
       let isDataExist = false;
@@ -340,15 +413,19 @@ module.exports = {
             isDataExist = true;
             rowsData[ii].assign({DIVISI: userDiv, WHATSAPP: phone});; // Update Divisi Value
             await rowsData[ii].save(); //save update
-
-            
+        
             let responseData = {
               message : 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
               state : true,
               code : 1
             }
 
+            console.log('Return Success');
+
+            targetDoc.delete;
+
             return responseData;
+    
           }
         }
 
@@ -359,6 +436,9 @@ module.exports = {
             state : true,
             code : 1
           }
+          console.log('Return Success');
+
+          targetDoc.delete;
 
           return responseData;
         }
@@ -370,6 +450,10 @@ module.exports = {
           code : 1
         }
 
+        console.log('Return Success');
+
+        targetDoc.delete;
+
         return responseData;
       }
     } catch (error) {
@@ -380,7 +464,12 @@ module.exports = {
         code : 0
       }
 
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
+    
     }
   },
 
@@ -393,7 +482,6 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
 
-      await targetDoc.loadInfo(); // loads document properties and worksheets
       const rowsData = await sheetTarget.getRows();
 
       let isDataExist = false;
@@ -410,8 +498,13 @@ module.exports = {
             state : true,
             code : 1
           }
-          
+      
+          console.log('Return Success');
+
+          targetDoc.delete;
+
           return responseData;
+      
         }
       }
 
@@ -423,9 +516,13 @@ module.exports = {
           code : 1
         }
         
+        console.log('Return Success');
+
+        targetDoc.delete;
+
         return responseData;
-      }
       
+      }    
     } catch (error) {
 
       let responseData = {
@@ -433,8 +530,13 @@ module.exports = {
         state : false,
         code : 0
       }
+      
+      console.log('Return Success');
+
+      targetDoc.delete;
 
       return responseData;
+
     }
   },
 
@@ -447,7 +549,6 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
 
-      await targetDoc.loadInfo(); // loads document properties and worksheets
       const rowsData = await sheetTarget.getRows();
 
       let isDataExist = false;
@@ -465,7 +566,12 @@ module.exports = {
             code : 1
           }
       
+          console.log('Return Success');
+
+          targetDoc.delete;
+
           return responseData;
+        
         }
       }
 
@@ -477,7 +583,12 @@ module.exports = {
           code : 1
         }
       
+        console.log('Return Success');
+
+        targetDoc.delete;
+
         return responseData;
+
       }
       
     } catch (error) {
@@ -488,7 +599,12 @@ module.exports = {
         code : 0
       }
       
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
+
     }
   },
 
@@ -503,7 +619,6 @@ module.exports = {
       await targetDoc.loadInfo(); // loads document properties and worksheets
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
 
-      await targetDoc.loadInfo(); // loads document properties and worksheets
       const rowsData = await sheetTarget.getRows();
 
       let isDataExist = false;
@@ -529,7 +644,11 @@ module.exports = {
               state : true,
               code : 1
             }
-            
+
+            console.log('Return Success');
+
+            targetDoc.delete;
+
             return responseData;
           }
         }
@@ -543,6 +662,10 @@ module.exports = {
           code : 1
         }
 
+        console.log('Return Success');
+
+        targetDoc.delete;
+
         return responseData;
       
       }
@@ -554,10 +677,14 @@ module.exports = {
           state : true,
           code : 1
         }
+
+        console.log('Return Success');
+
+        targetDoc.delete;
+        
         return responseData;
 
       }
-      
     } catch (error) {
 
       let responseData = {
@@ -565,8 +692,13 @@ module.exports = {
         state : false,
         code : 0
       }
-      
+
+      console.log('Return Success');
+
+      targetDoc.delete;
+
       return responseData;
+    
     }
   },
 
@@ -606,8 +738,13 @@ module.exports = {
               state : true,
               code : 1
             }
-    
+
+            console.log('Return Success');
+
+            targetDoc.delete;
+
             return responseData;
+          
           }
         }
       } else {
@@ -619,7 +756,10 @@ module.exports = {
           code : 1
         }
 
+        console.log('Return Success');
+
         targetDoc.delete;
+
         return responseData;
       }
 
@@ -630,8 +770,10 @@ module.exports = {
           state : true,
           code : 1
         }
+        console.log('Return Success');
 
         targetDoc.delete;
+
         return responseData;
       }
     } catch (error) {
@@ -641,8 +783,10 @@ module.exports = {
         state : false,
         code : 0
       }
+      console.log('Return Success');
 
       targetDoc.delete;
+
       return responseData;
     
     }

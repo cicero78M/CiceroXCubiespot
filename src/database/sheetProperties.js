@@ -67,6 +67,9 @@ module.exports = {
                 
                             instaOfficialDoc.delete;
                             instaLikesUsernameDoc.delete;
+
+                            console.log('Return Success');
+
                             return responseData;                        }
                         
                     } else {
@@ -79,6 +82,9 @@ module.exports = {
             
                         instaOfficialDoc.delete;
                         instaLikesUsernameDoc.delete;
+
+                        console.log('Return Success');
+
                         return responseData;
                     }
                 }, 800);
@@ -98,6 +104,9 @@ module.exports = {
                                 
                 instaOfficialDoc.delete;
                 instaLikesUsernameDoc.delete;
+
+                console.log('Return Success');
+  
                 return responseData;            
             }
 
@@ -108,8 +117,10 @@ module.exports = {
                 state : false,
                 code : 0
               }
-            
-            return responseData;        
+
+              console.log('Return Success');
+
+              return responseData;        
         }
     }
 }

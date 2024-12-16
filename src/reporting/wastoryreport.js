@@ -29,7 +29,6 @@ module.exports = {
     const waStoryDoc = new GoogleSpreadsheet(waStoryID, googleAuth);//Google Authentication for InstaOfficial DB
     await waStoryDoc.loadInfo(); // loads document properties and worksheets
 
-    const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
 
     //Check Client_ID. then get async data
     let isClientID = false;
