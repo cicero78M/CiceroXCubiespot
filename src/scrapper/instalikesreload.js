@@ -155,15 +155,14 @@ module.exports = {
                   //Update Existing Content Database                
                   officialInstaData[ii].assign({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].user.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, 
                     TYPE:itemByDay[i].media_name, CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	
-                    PLAY_COUNT:itemByDay[i].play_count, THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url	}); // Jabatan Divisi Value
+                    PLAY_COUNT:itemByDay[i].play_count	}); // Jabatan Divisi Value
                     await officialInstaData[ii].save(); //save update
                   shortcodeUpdateCounter++;
                 } else if(!shortcodeList.includes(itemByDay[i].code)){
                   //Push New Content to Database  
                   shortcodeList.push(itemByDay[i].code);
                   officialInstaSheet.addRow({TIMESTAMP: itemByDay[i].taken_at,	USER_ACCOUNT:itemByDay[i].user.username,	SHORTCODE:itemByDay[i].code, ID: itemByDay[i].id, TYPE:itemByDay[i].media_name, 	
-                    CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count,
-                    THUMBNAIL:itemByDay[i].thumbnail_url,	VIDEO_URL:itemByDay[i].video_url});  
+                    CAPTION:itemByDay[i].caption.text,	COMMENT_COUNT:itemByDay[i].comment_count,	LIKE_COUNT:itemByDay[i].like_count,	PLAY_COUNT:itemByDay[i].play_count});  
                   shortcodeNewCounter++;
                 }
               }            

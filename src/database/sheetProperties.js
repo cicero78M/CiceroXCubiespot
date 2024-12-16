@@ -24,7 +24,7 @@ module.exports = {
             
             await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
             await instaOfficialDoc.addSheet({title : sheetName, headerValues: ['TIMESTAMP',	'USER_ACCOUNT',	'SHORTCODE', 'ID', 'TYPE', 'CAPTION', 
-                'COMMENT_COUNT', 'LIKE_COUNT', 'PLAY_COUNT', 'THUMBNAIL', 'VIDEO_URL']});
+                'COMMENT_COUNT', 'LIKE_COUNT', 'PLAY_COUNT']});
 
             const instaLikesUsernameDoc= new GoogleSpreadsheet(instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
             
