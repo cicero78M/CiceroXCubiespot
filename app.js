@@ -76,8 +76,8 @@ client.on('ready', () => {
     //Server Check Jobs
     cron.schedule('*/10 * * * *', async () =>  {     
 
-        console.log('CICERO X CUBIESPOT <<<System Alive>>>');
-        await client.sendMessage('6281235114745@c.us', 'CICERO X CUBIESPOT <<<System Alive>>>');
+        console.log('CUBIESPOT <<<System Alive>>>');
+        await client.sendMessage('6281235114745@c.us', 'CUBIESPOT <<<System Alive>>>');
             
     });
     
@@ -87,7 +87,6 @@ client.on('ready', () => {
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
-
                 await client.sendMessage('6281235114745@c.us', response[i].message);
             }
         }

@@ -31,7 +31,6 @@ module.exports = {
     
     const tiktokCommentsUsernameDoc= new GoogleSpreadsheet(tiktokCommentsUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
 
-
     //Check Client_ID. then get async data
     let isClientID = false;
     let isStatus;

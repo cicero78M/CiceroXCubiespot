@@ -38,7 +38,7 @@ module.exports = {
 
         for (let i = 0; i < rowsClientData.length; i++){
 
-            if(rowsClientData[i].get('STATUS')  === "TRUE" && rowsClientData[i].get('INSTA_STATE') === "TRUE"){
+            if(rowsClientData[i].get('STATUS')  === "TRUE" && rowsClientData[i].get('INSTA_STATE') === "TRUE" && rowsClientData[i].get('TYPE') === googleCreds.ciceroClientType ){
 
                 console.log(rowsClientData[i].get('CLIENT_ID')+' Client Loaded');
 
