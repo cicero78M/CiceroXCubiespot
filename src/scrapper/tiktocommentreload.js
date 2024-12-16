@@ -1,9 +1,9 @@
-const fs = require('fs');
-const axios = require('axios');
-
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
+
+const fs = require('fs');
+const axios = require('axios');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -88,7 +88,7 @@ async function tiktokCommentAPI(key, cursors){
 module.exports = {  
 
   reloadTiktokComments: async function reloadTiktokComments(sheetName, userClientID, clientID, tiktokOfficialID, tiktokCommentsUsernameID){
-
+    
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
 

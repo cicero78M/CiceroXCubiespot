@@ -1,10 +1,8 @@
-const fs = require('fs');
-const axios = require('axios');
-
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
-
+const fs = require('fs');
+const axios = require('axios');
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
 const headers = {
@@ -122,7 +120,7 @@ module.exports = {
 
         if(hasContent){
 
-          console.log(sheetName+" Official Account Has Content");
+          console.log(sheetName+" Insta Official Account Has Content");
           
           await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
 
@@ -243,7 +241,7 @@ module.exports = {
           }
 
           let responseData = {
-            message : sheetName+'\n\nSucces Reload Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
+            message : sheetName+'\n\nSucces Reload Insta Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
             state : true,
             code : 1
           }
@@ -257,7 +255,7 @@ module.exports = {
         } else { 
 
           let responseData = {
-            message : sheetName+'\n\nNo Content',
+            message : sheetName+'\n\nHas No Insta Content',
             state : true,
             code : 1
           }

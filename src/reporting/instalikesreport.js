@@ -1,8 +1,7 @@
-const fs = require('fs');
-
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
+const fs = require('fs');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -17,7 +16,7 @@ const googleAuth = new JWT({
 module.exports = {  
   reportInstaLikes: async function reportInstaLikes(sheetName, userClientID, clientID, instaOfficialID, instaLikesUsernameID){
 
-    console.log("Report Function Executed");
+    console.log("Insta Report Function Executed");
 
     const d = new Date();
     const localDate = d.toLocaleDateString('id');

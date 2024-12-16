@@ -1,8 +1,8 @@
-const fs = require('fs');
-
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
+
+const fs = require('fs');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -17,10 +17,11 @@ const googleAuth = new JWT({
 module.exports = {  
   reportTiktokComments: async function reportTiktokComments(sheetName, userClientID, clientID, tiktokOfficialID, tiktokCommentsUsernameID){
 
-    console.log("Executing Report Comments Functions");
+    console.log("Report Tiktok Function Executed");
 
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
+    const localHours = d.toLocaleTimeString('id');
 
     const userClientDoc = new GoogleSpreadsheet(userClientID, googleAuth);//Google Authentication for user client DB
 
@@ -35,6 +36,7 @@ module.exports = {
     let isClientID = false;
     let isStatus;
     let tiktokAccount;
+    let isClientType;
 
     await clientDoc.loadInfo(); // loads document properties and worksheets
 
@@ -48,6 +50,7 @@ module.exports = {
         console.log(sheetName+' Client Exist');
         isClientID = true;
         isStatus = rowsClientData[i].get('STATUS');
+        isClientType = rowsClientData[i].get('TYPE');
         tiktokAccount = rowsClientData[i].get('TIKTOK');
       }
     }
@@ -64,9 +67,9 @@ module.exports = {
         let divisiList = [];
 
         for (let i = 0; i < userClientData.length; i++){
-            if(!divisiList.includes(userClientData[i].get('DIVISI'))){
-                divisiList.push(userClientData[i].get('DIVISI')); 
-            }
+          if(!divisiList.includes(userClientData[i].get('DIVISI'))){
+            divisiList.push(userClientData[i].get('DIVISI')); 
+          }
         }
 
         //Collect Shortcode from Database        
@@ -81,13 +84,13 @@ module.exports = {
         let shortcodeListString = '';
 
         for (let i = 0; i < tiktokOfficialData.length; i++){
-            let itemDate = new Date(tiktokOfficialData[i].get('TIMESTAMP')*1000);
-            if(itemDate.toLocaleDateString('id') === localDate){
-                if (!shortcodeList.includes(tiktokOfficialData[i].get('SHORTCODE'))){
-                    shortcodeList.push(tiktokOfficialData[i].get('SHORTCODE'));
-                    shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/'+tiktokAccount+'/video/'+tiktokOfficialData[i].get('SHORTCODE'));  
-                }
+          let itemDate = new Date(tiktokOfficialData[i].get('TIMESTAMP')*1000);
+          if(itemDate.toLocaleDateString('id') === localDate){
+            if (!shortcodeList.includes(tiktokOfficialData[i].get('SHORTCODE'))){
+              shortcodeList.push(tiktokOfficialData[i].get('SHORTCODE'));
+              shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/'+tiktokAccount+'/video/'+tiktokOfficialData[i].get('SHORTCODE'));  
             }
+          }
         }
 
         await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
@@ -101,29 +104,29 @@ module.exports = {
         for (let i = 0; i < shortcodeList.length; i++){
           //code on the go
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
-                if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
-                    const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
-                    for (let iii = 1; iii < fromRows.length; iii++){
-                        if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
-                            if(!userCommentData.includes(fromRows[iii])){
-                                userCommentData.push(fromRows[iii]);
-                            }
-                        }
-                    }        
+            if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === shortcodeList[i]){
+              const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
+              for (let iii = 1; iii < fromRows.length; iii++){
+                if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+                  if(!userCommentData.includes(fromRows[iii])){
+                    userCommentData.push(fromRows[iii]);
+                  }
                 }
+              }        
             }
+          }
         }
 
         let userNotComment = [];
         let notCommentList = [];
 
         for (let iii = 1; iii < userClientData.length; iii++){
-            if(!userCommentData.includes(userClientData[iii].get('TIKTOK').replaceAll('@', ''))){
-                if(!userNotComment.includes(userClientData[iii].get('ID_KEY'))){    
-                    userNotComment.push(userClientData[iii].get('ID_KEY'));
-                    notCommentList.push(userClientData[iii]);
-                }
+          if(!userCommentData.includes(userClientData[iii].get('TIKTOK').replaceAll('@', ''))){
+            if(!userNotComment.includes(userClientData[iii].get('ID_KEY'))){    
+              userNotComment.push(userClientData[iii].get('ID_KEY'));
+              notCommentList.push(userClientData[iii]);
             }
+          }
         }
 
         let dataTiktok = '';
@@ -131,30 +134,45 @@ module.exports = {
   
         for (let iii = 0; iii < divisiList.length; iii++){
         
-            let divisiCounter = 0 ;
-            let userByDivisi = '';
-  
-            for (let iv = 0; iv < notCommentList.length; iv++){
-                if(divisiList[iii] === notCommentList[iv].get('DIVISI')){
-                    userByDivisi = userByDivisi.concat('\n'+notCommentList[iv].get('TITLE') +' '+notCommentList[iv].get('NAMA')+' - '+notCommentList[iv].get('TIKTOK'));
-                    divisiCounter++;
-                    userCounter++;
-                }  
-            }
-            
-            if ( divisiCounter != 0){
-                dataTiktok = dataTiktok.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
-            }
+          let divisiCounter = 0 ;
+          let userByDivisi = '';
+
+          for (let iv = 0; iv < notCommentList.length; iv++){
+            if(divisiList[iii] === notCommentList[iv].get('DIVISI')){
+              userByDivisi = userByDivisi.concat('\n'+notCommentList[iv].get('TITLE') +' '+notCommentList[iv].get('NAMA')+' - '+notCommentList[iv].get('TIKTOK'));
+              divisiCounter++;
+              userCounter++;
+            }  
+          }
+          
+          if ( divisiCounter != 0){
+            dataTiktok = dataTiktok.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
+          }
         }
-  
+        
         let tiktokSudah = userClientData.length-notCommentList.length;
-        let responseData = {
-          message : "*"+sheetName+"*\n\nInformasi Rekap Data yang belum melaksanakan likes dan komentar pada konten TikTok :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "
-          +userClientData.length+" \nJumlah User Sudah melaksanakan: "+tiktokSudah+"\nJumlah User Belum melaksanakan : "
-          +userCounter+"\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
-          state : true,
-          code : 1
+        let responseData;
+
+        if (isClientType === "RES"){
+          responseData = {
+            message : "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Tik Tok *POLRES "+sheetName
+            +"* dengan Link konten sbb ::\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"Jam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+            +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
+            +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
+            state : true,
+            code : 1
+          }
+        } else {
+          responseData = {
+            message : "*"+sheetName+"*\n\nRekap Pelaksanaan Komentar dan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Tik Tok "+tiktokAccount
+            +" dengan Link konten sbb :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"Jam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+            +userClientData.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
+            +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
+            state : true,
+            code : 1
+          }
         }
+
         userClientDoc.delete;
         clientDoc.delete;
         tiktokOfficialDoc.delete;

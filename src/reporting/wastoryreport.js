@@ -1,8 +1,7 @@
-const fs = require('fs');
-
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
+const fs = require('fs');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
