@@ -297,6 +297,8 @@ module.exports = {
               //Add new Row
               cursorNumber = responseComments.cursor
               checkNext = responseComments.has_more;
+              console.log(checkNext);
+
             } while (checkNext === 1);
 
             let dataCleaning = [];
