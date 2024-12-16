@@ -104,7 +104,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every 1 hours until 14.55
-    cron.schedule('50 4-21 * * *', async () => {
+    cron.schedule('50 5-21 * * *', async () => {
         let response = await tiktokClientLoad.tiktokLoadClient(clientDataBase);
 
         if (response.length >= 1){
