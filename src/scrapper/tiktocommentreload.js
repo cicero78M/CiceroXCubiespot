@@ -31,9 +31,11 @@ async function tiktokUserInfoAPI(key){
   };
   
   try {
+  
     const response = await axios.request(options);
 
     return response.data;
+  
   } catch (error) {
     console.error(error);
   }
@@ -53,9 +55,11 @@ async function tiktokPostAPI(key, cursors){
   };
 
   try {
+  
     const response = await axios.request(options);
     
     return response.data; 
+  
   } catch (error) {
     console.error(error);
   }
@@ -274,8 +278,6 @@ module.exports = {
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
 
-              tiktokCommentsUsernameDoc.delete;
-
               updateData++;
             
             }
@@ -317,7 +319,6 @@ module.exports = {
             console.log(sheetName+' Insert new data');
             await tiktokCommentsUsernameSheet.addRow(dataCleaning);
 
-            tiktokCommentsUsernameDoc.delete;
 
             newData++;
           }
