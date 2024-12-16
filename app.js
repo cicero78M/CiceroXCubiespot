@@ -125,7 +125,7 @@ client.on('qr', qr => {
 client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientres', 'newclientcom' ];
-    const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
+    const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan', 'satfung'];
     const dataOrder = ['menu', 'mydata', 'instacheck', 'tiktokcheck', 'clientstate'];
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
@@ -249,7 +249,7 @@ client.on('message', async (msg) => {
                             }
                        
                         }
-                    } else if (splittedMsg[1].toLowerCase() === 'editdivisi') {
+                    } else if (splittedMsg[1].toLowerCase() === 'editdivisi' || splittedMsg[1].toLowerCase() === 'satfung') {
                         //update Divisi Name
                         let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         msg.from.replace('@c.us', ''), userDataBase);
@@ -261,7 +261,7 @@ client.on('message', async (msg) => {
                             console.log(response.message);
                         }
 
-                    } else if (splittedMsg[1].toLowerCase() === 'editjabatan') {
+                    } else if (splittedMsg[1].toLowerCase() === 'editjabatan' || splittedMsg[1].toLowerCase() === 'jabatan') {
                         //Update Jabatan
                         let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         msg.from.replace('@c.us', ''), userDataBase);
@@ -285,7 +285,7 @@ client.on('message', async (msg) => {
                             console.log(response.message);
                         }
 
-                    } else if (splittedMsg[1].toLowerCase() === 'updateinsta') {
+                    } else if (splittedMsg[1].toLowerCase() === 'updateinsta' || splittedMsg[1].toLowerCase() === 'ig') {
                         //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
 
@@ -311,7 +311,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }
 
-                    } else if (splittedMsg[1].toLowerCase() === 'updatetiktok') {
+                    } else if (splittedMsg[1].toLowerCase() === 'updatetiktok' || splittedMsg[1].toLowerCase() === 'tiktok') {
                         //Update Tiktok profile
                         if (splittedMsg[3].includes('tiktok.com')){                    
                         
