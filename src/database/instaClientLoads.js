@@ -26,6 +26,7 @@ module.exports = {
     instaLoadClient: async function instaLoadClient(clientID){
 
         const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB        
+ 
         await clientDoc.loadInfo(); // loads document properties and worksheets
 
         console.log('Load Client Functions');
@@ -50,11 +51,9 @@ module.exports = {
                 instaOfficialDataBase, instaLikesUsernameDataBase);
 
                 responseList.push(responsereport);
-
             } 
         }
-
-        await clientDoc.delete();
+         
         return responseList;
     }
 }

@@ -44,7 +44,7 @@ async function instaLikesAPI(key){
   //Insta Likes API
   let options = {
     method: 'GET',
-    url: instaKey.instahostLikes,
+    url: googleCreds.instaKey.instahostLikes,
     params: {
       code_or_id_or_url: key
     },
@@ -121,6 +121,7 @@ module.exports = {
         }
 
         if(hasContent){
+
           console.log(sheetName+" Official Account Has Content");
           
           await instaOfficialDoc.loadInfo(); // loads document properties and worksheets

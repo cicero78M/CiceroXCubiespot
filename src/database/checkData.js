@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 let date = new Date();
 
 //Google Spreadsheet
@@ -88,7 +89,7 @@ module.exports = {
       const sheetTarget = targetDoc.sheetsByTitle[sheetName];
       const rowsData = await sheetTarget.getRows();
 
-      let divisiList= [];
+      let divisiList = [];
 
       for (let i = 0; i < rowsData.length; i++){
         if (rowsData[i].get('TIKTOK') === null || rowsData[i].get('TIKTOK') === undefined ){

@@ -37,6 +37,7 @@ module.exports = {
     let isType;
 
     await clientDoc.loadInfo(); // loads document properties and worksheets
+ 
     const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
     const rowsClientData = await clientDataSheet.getRows();
 
@@ -225,15 +226,14 @@ module.exports = {
         state : true,
         code : 1
       }
+ 
       userClientDoc.delete;
       clientDoc.delete;
       instaOfficialDoc.delete;
       instaLikesUsernameDoc.delete;
+ 
       return responseData;
 
-      
-    } 
-    
-    
+    }    
   },
 }

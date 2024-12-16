@@ -26,7 +26,7 @@ const port = 3007;
 
 const userDataBase = dbKey.dbKey.databaseID;;
 const clientDataBase = dbKey.dbKey.clientDataID;
-const instaOfficialDataBase = dbKey.dbKeyinstaOfficialID;
+const instaOfficialDataBase = dbKey.dbKey.instaOfficialID;
 const instaLikesUsernameDataBase = dbKey.dbKey.instaLikesUsernameID;
 const tiktokOfficialDataBase = dbKey.dbKey.tiktokOfficialID;
 const tiktokCommentUsernameDataBase = dbKey.dbKey.tiktokCommentUsernameID;
