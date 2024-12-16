@@ -242,6 +242,7 @@ module.exports = {
       //Insert New Sheet
       const targetSheet = await targetDoc.addSheet({ title: sheetName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 
         'WHATSAPP', 'INSTA', 'TIKTOK'] });
+        
       console.log(targetSheet.title);
 
       const sourceDoc = new GoogleSpreadsheet(sourceX, googleAuth); //Google Auth

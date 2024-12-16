@@ -12,8 +12,7 @@ const instaReport = require('./src/reporting/instalikesreport');
 const tiktokReport = require('./src/reporting/tiktokcommentsreport');
 const tiktokReload = require('./src/scrapper/tiktocommentreload');
 const waStory = require('./src/scrapper/wastory');
-const instaClientLoad = require('./src/database/instaClientLoads');
-const tiktokClientLoad = require('./src/database/tiktokClientLoads');
+const clientLoad = require('./src/database/clientLoad');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 
@@ -83,7 +82,7 @@ client.on('ready', () => {
     
     // Reload Insta every 2 hours until 14.55
     cron.schedule('55 4-14/2 * * *', async () => {
-        let response = await instaClientLoad.instaLoadClient(clientDataBase);
+        let response = await clientLoad.instaLoadClient(clientDataBase);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -94,7 +93,7 @@ client.on('ready', () => {
 
     // Reload every 1 hours after 15 until 21
     cron.schedule('55 15-21 * * *', async () => {
-        let response = await instaClientLoad.instaLoadClient(clientDataBase);
+        let response = await clientLoad.instaLoadClient(clientDataBase);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -105,7 +104,7 @@ client.on('ready', () => {
 
     // Reload Tiktok every 1 hours until 14.55
     cron.schedule('50 5-21 * * *', async () => {
-        let response = await tiktokClientLoad.tiktokLoadClient(clientDataBase);
+        let response = await clientLoad.tiktokLoadClient(clientDataBase);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -407,7 +406,7 @@ client.on('message', async (msg) => {
                         }               
 
                     } else if (splittedMsg[1].toLowerCase() === 'reloadallinsta'){
-                        let response = await instaClientLoad.instaLoadClient(clientDataBase);
+                        let response = await clientLoad.instaLoadClient(clientDataBase);
 
                         if (response.length >= 1){
                             for (let i = 0; i < response.length; i++){
@@ -417,7 +416,7 @@ client.on('message', async (msg) => {
                         }
                     } else if (splittedMsg[1].toLowerCase() === 'reloadalltiktok'){
 
-                        let response = await tiktokClientLoad.tiktokLoadClient(clientDataBase);
+                        let response = await clientLoad.tiktokLoadClient(clientDataBase);
 
                         if (response.length >= 1){
                             for (let i = 0; i < response.length; i++){
@@ -459,13 +458,14 @@ client.on('message', async (msg) => {
                 //const chat = await msg.getChat();
                 //chat.sendSeen();
                 //chat.sendStateTyping();
-                
+                console.log(contact.number+" ===>>>> "+msg.body);
+
                 if (contact.pushname != undefined){
                     
                     let body = msg.body;
                     let url = body.match(/\bhttps?:\/\/\S+/gi);
                     if (url != null){
-                        console.log(contact.number+" ===>>>> "+msg.body);
+//                        console.log(contact.number+" ===>>>> "+msg.body);
 //                      let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
 //                      console.log(response);
 //                      client.sendMessage(contact.number+"@c.us", response);  

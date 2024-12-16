@@ -34,7 +34,7 @@ module.exports = {
         if (rowsData[i].get('INSTA') === null || rowsData[i].get('INSTA') === undefined ){
           if(!divisiList.includes(rowsData[i].get('DIVISI'))){
             divisiList.push(rowsData[i].get('DIVISI')); 
-         }
+          }
         }
       }
  
@@ -65,7 +65,9 @@ module.exports = {
         state : true,
         code : 1
       }
+
       targetDoc.delete;
+      
       console.log('Return Success');
 
       return responseData;
@@ -77,6 +79,7 @@ module.exports = {
         state : false,
         code : 0
       }
+      
       targetDoc.delete;
 
       console.log('Return Success');
@@ -89,7 +92,6 @@ module.exports = {
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     await targetDoc.loadInfo(); // loads document properties and worksheets
-
 
     try {
 
