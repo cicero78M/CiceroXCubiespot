@@ -186,6 +186,7 @@ module.exports = {
             }
 
           }
+          
           userClientDoc.delete;
           clientDoc.delete;
           instaOfficialDoc.delete;

@@ -54,7 +54,7 @@ module.exports = {
             } 
         }
 
-        clientDoc.delete();
+        clientDoc.delete;
         
         console.log('Return Success');
 
