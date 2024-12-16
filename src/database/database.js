@@ -194,9 +194,9 @@ module.exports = {
 
       for (let i = 0; i < rowsSource.length; i++){
 
-        userData.push({ID_KEY: rowsSource[i].get('ID_KEY'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), 
-          DIVISI: rowsSource[i].get('DIVISI'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), 
-          INSTA: rowsSource[i].get('INSTA'), TIKTOK: rowsSource[i].get('TIKTOK')});
+        userData.push({ID_KEY: rowsSource[i].get('NRP'), NAMA: rowsSource[i].get('NAMA'), TITLE: rowsSource[i].get('PANGKAT'), 
+          DIVISI: rowsSource[i].get('SATFUNG'), JABATAN: rowsSource[i].get('JABATAN'), STATUS: true, WHATSAPP: rowsSource[i].get('WHATSAPP'), 
+          INSTA: rowsSource[i].get('IG1'), TIKTOK: rowsSource[i].get('TIKTOK')});
 
       }
 
