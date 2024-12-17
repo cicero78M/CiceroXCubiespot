@@ -14,6 +14,11 @@ const tiktokReload = require('./src/scrapper/tiktocommentreload');
 const waStory = require('./src/scrapper/wastory');
 const clientLoad = require('./src/database/clientLoad');
 
+//Unit Test
+const createClient = require('./src/unitTest/database/newClient/createClient');
+const newClientRes = require('./src/unitTest/database/newClient/newClientRes');
+
+
 const { Client , LocalAuth } = require('whatsapp-web.js');
 
 const figlet = require('figlet');
@@ -130,6 +135,8 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
+    const unitTest = ['createclient'];
+
     try {
         if (msg.isStatus){
             //If Msg is WA Story
@@ -193,9 +200,9 @@ client.on('message', async (msg) => {
                         //Is contains Links
                         if (splittedMsg[1].toLowerCase() === "newclientres"){
                             //Res Request
-                            let response = await dataBase.newClientRes(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
+                            let response = await newClientRes.newClientRes(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
                             
-                            if (response.code === 1){
+                            if (response.code === 200){
                                 console.log(response.message);
                                 client.sendMessage(msg.from, response.message);
                             } else {
@@ -451,7 +458,21 @@ client.on('message', async (msg) => {
                             console.log(response.message);
                         }
                     }
-                }//if(splittedMsg[1].toLowerCase()......
+                } else if(unitTest.includes(splittedMsg[1].toLowerCase())){
+                    if(splittedMsg[1].toLowerCase() === 'createclient'){
+
+                        let response = await createClient.createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
+
+                        for (let i = 0; i < response.length; i++){
+
+                            console.log(response[i].data);
+                            client.sendMessage(msg.from, response[i].data);
+                            
+                        }
+
+                    }
+                }
+                //if(splittedMsg[1].toLowerCase()......
             } else {
                 //Regular Messages
                 const contact = await msg.getContact();
