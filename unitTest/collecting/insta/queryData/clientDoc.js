@@ -28,47 +28,44 @@ module.exports = {
 
         for (let i = 0; i < clientRows.length; i++){
         
-        if (clientRows[i].get('CLIENT_ID') === clientName){
-        
-          isClientID = true;
-          instaOfficialAccount = clientRows[i].get('INSTAGRAM');
-          isStatus = clientRows[i].get('STATUS');
-        
-        }
-        if(isClientID){
-
-            let data = {
-                isClientID : isClientID,
-                instaOfficialAccount : instaOfficialAccount,
-                isStatus : isStatus,
-                code : 200,
-                state : true
+            if (clientRows[i].get('CLIENT_ID') === clientName){
+            
+            isClientID = true;
+            instaOfficialAccount = clientRows[i].get('INSTAGRAM');
+            isStatus = clientRows[i].get('STATUS');
+            
             }
 
-            clientDoc.delete;
+            if(isClientID){
 
-            return data;
-        } else {
+                let data = {
+                    isClientID : isClientID,
+                    instaOfficialAccount : instaOfficialAccount,
+                    isStatus : isStatus,
+                    code : 200,
+                    state : true
+                }
 
-            let data = {
-                
-                isClientID : isClientID,
-                instaOfficialAccount : instaOfficialAccount,
-                isStatus : isStatus,
-                code : 200,
-                state : true
+                clientDoc.delete;
+
+                return data;
+      
+            } else {
+
+                let data = {
+                    
+                    isClientID : isClientID,
+                    instaOfficialAccount : instaOfficialAccount,
+                    isStatus : isStatus,
+                    code : 200,
+                    state : true
+                }
+
+                clientDoc.delete;
+
+                return data;
+
             }
-
-            clientDoc.delete;
-
-            return data;
-
         }
-
-        }
-      }
-        
     }
-
-
 }

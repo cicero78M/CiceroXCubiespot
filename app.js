@@ -15,8 +15,8 @@ const waStory = require('./src/scrapper/wastory');
 const clientLoad = require('./src/database/clientLoad');
 
 //Unit Test
-const createClient = require('./src/unitTest/database/newClient/createClient');
-const newClientRes = require('./src/unitTest/database/newClient/newClientRes');
+const createClient = require('./unitTest/database/newClient/createClient');
+const newClientRes = require('./unitTest/database/newClient/newClientRes');
 
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
