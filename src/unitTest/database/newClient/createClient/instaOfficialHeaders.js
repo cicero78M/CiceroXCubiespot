@@ -22,8 +22,7 @@ module.exports = {
         //Insta Official DataBase Headers
         try {
 
-            const instaOfficialDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
-            
+            const instaOfficialDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB            
             await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
 
             await instaOfficialDoc.addSheet({title : clientName, headerValues: ['TIMESTAMP', 'USER_ACCOUNT', 'SHORTCODE', 'ID', 'TYPE', 'CAPTION', 
@@ -35,19 +34,17 @@ module.exports = {
                 code : 200
             }
                 
-            instaOfficialDoc.delete;
-
             return response;
             
         } catch (error) {
-
-            console.log(error);
             
             response = {
                 data: 'Error Create Insta Official Data Sheet',
                 state : false,
                 code : 303
             }
+            
+            console.log(error);
 
             return response;
         }

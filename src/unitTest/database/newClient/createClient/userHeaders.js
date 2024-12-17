@@ -32,8 +32,6 @@ module.exports = {
                 code : 200
             }
 
-            userDoc.delete;
-
             return response;
 
         } catch (error) {

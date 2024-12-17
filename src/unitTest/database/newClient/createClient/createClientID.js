@@ -58,8 +58,6 @@ module.exports = {
                         code : 200
                     }
 
-                    clientDoc.delete;
-
                     return response;
 
                 }
@@ -71,8 +69,6 @@ module.exports = {
                     state : true,
                     code : 200
                 }
-
-                clientDoc.delete;
 
                 return response;
             }

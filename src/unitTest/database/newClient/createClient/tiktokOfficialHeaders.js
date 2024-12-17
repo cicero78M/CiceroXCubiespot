@@ -32,8 +32,6 @@ module.exports = {
                 code : 200
             }
         
-            tiktokOfficialDoc.delete;
-
             return response;
     
         } catch (error) {

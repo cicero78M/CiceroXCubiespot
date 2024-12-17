@@ -259,8 +259,9 @@ module.exports = {
                 cursorNumber = responseComments.cursor;
                 checkNext = responseComments.has_more;
                 
-                console.log(checkNext);
-
+                setTimeout(() => {
+                  console.log(checkNext);
+                }, 1200);
               } while ( checkNext === 1);
 
               let dataCleaning = [];
@@ -289,8 +290,10 @@ module.exports = {
             let cursorNumber = 0;
             let newDataUsers = [todayItems[i]];
             let checkNext = 0;
+
             
-            do{
+            
+            do {
             
               let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
               let commentItems = responseComments.comments;
@@ -301,9 +304,9 @@ module.exports = {
               //Add new Row
               cursorNumber = responseComments.cursor
               checkNext = responseComments.has_more;
-
-              console.log(checkNext);
-
+              setTimeout(() => {
+                console.log(checkNext);
+              }, 1200);
             } while (checkNext === 1);
 
             let dataCleaning = [];

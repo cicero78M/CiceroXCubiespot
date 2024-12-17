@@ -42,8 +42,6 @@ module.exports = {
                 code : 200
             }
 
-            instaLikesUsernameDoc.delete;
-
             return response;
 
         } catch (error) {

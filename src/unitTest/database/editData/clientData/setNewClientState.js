@@ -16,7 +16,7 @@ const googleAuth = new JWT({
 
 module.exports = {
     //Set Client State to Database Client ID  
-    setClientState: async function setClientState(clientName, newstate){
+    setNewClientState: async function setNewClientState(clientName, newstate){
         
         try {
 

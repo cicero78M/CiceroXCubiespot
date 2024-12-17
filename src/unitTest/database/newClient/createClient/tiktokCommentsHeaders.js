@@ -41,7 +41,6 @@ module.exports = {
                 code : 200
             }
 
-            tiktokCommentsUsernameDoc.delete;
             return response;
             
         } catch (error) {
