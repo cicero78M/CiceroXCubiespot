@@ -53,10 +53,10 @@ module.exports = {
                     state : true,
                     code : 200
                 }
-                    console.log('Return Success');
-                    clientDoc.delete;
+                console.log('Return Success');
+                clientDoc.delete;
 
-                    return responseData;
+                return responseData;
             }
         } catch (error) {
             

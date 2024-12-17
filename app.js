@@ -180,21 +180,7 @@ client.on('message', async (msg) => {
 
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
             
-                if (splittedMsg[1].toLowerCase() === 'addclient'){//AddClient
-                    if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') && splittedMsg[3].includes('instagram.com') && !splittedMsg[4].includes('tiktok.com')){
-                        
-                        let response = await dataBase.addClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase(), splittedMsg[3], splittedMsg[4], 
-                        clientDataBase, instaOfficialDataBase, instaLikesUsernameDataBase);
-                        
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
-                        } else {
-                            console.log(response.message);
-                        }
-
-                    }
-                } else if (newClientOrder.includes(splittedMsg[1].toLowerCase())){//const newClientOrder = ['newclientres', 'newclientcom' ];
+                if (newClientOrder.includes(splittedMsg[1].toLowerCase())){//const newClientOrder = ['newclientres', 'newclientcom' ];
                     
                     if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                         //Is contains Links
@@ -467,7 +453,7 @@ client.on('message', async (msg) => {
 
                             console.log(response[i].data);
                             client.sendMessage(msg.from, response[i].data);
-                            
+
                         }
 
                     }

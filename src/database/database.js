@@ -1,7 +1,5 @@
 const fs = require('fs');
 
-const addHeader = require('./sheetProperties');
-
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
@@ -17,94 +15,6 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-  
-  //Add New Client to Database Client ID  
-  addClient: async function addClient(sheetName, type, insta, tiktok, clientID, instaOfficialID, instaLikesUsernameID){
-
-    let instaLink = insta.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
-    let tiktokLink = tiktok.split('/').pop();      //Get Last Segment of Links
-    console.log(sheetName+' / '+ type+' / '+instaLink+' / '+tiktokLink);
-    try {
-      const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Auth
-
-      //Insert New Sheet
-      await clientDoc.loadInfo(); // loads document properties and worksheets
-      const clientSheet = clientDoc.sheetsByTitle['ClientData'];
-      const clientData = await clientSheet.getRows();
-
-      let isClient = false;
-      let clientState;
-
-      for (let i = 0; i < clientData.length; i++){
-        if(clientData[i].get('CLIENT_ID') === sheetName){
-          isClient = true;
-          clientState = clientData[i].get('STATUS')
-        }
-      }
-
-      if (!isClient){
-        if (['COM', 'RES'].includes(type)){
-          clientSheet.addRow({CLIENT_ID: sheetName, TYPE: type, STATUS: true, INSTAGRAM: instaLink, TIKTOK: tiktokLink});
-
-          await addHeader.headerData(sheetName, instaOfficialID, instaLikesUsernameID);
-          
-          
-          let responseData = {
-            message : 'Client DataBase for '+sheetName+' Created, with header properties',
-            state : true,
-            code : 1
-          }
-          
-          clientDoc.delete;
-
-          console.log('Return Success');
-
-          return responseData;
-
-        } else {
-
-          let responseData = {
-            message : 'Client type does\'nt Match requirements',
-            state : true,
-            code : 1
-          }
-
-          console.log('Return Success');
-
-          clientDoc.delete;
-
-          return responseData;
-
-        }
-      } else {
-
-        let responseData = {
-          message : 'Client is exist with status : '+clientState,
-          state : true,
-          code : 1
-        }
-
-        console.log('Return Success');
-
-        clientDoc.delete;
-
-        return responseData;
-
-      }
-
-    } catch (error) {
-      //if sheet name is exist
-      
-      let responseData = {
-        message : error,
-        state : false,
-        code : 0
-      }
-      console.log('Return Success');
-
-      
-      return responseData;    }
-  },  
 
   //Set Client State to Database Client ID  
   setClientState: async function setClientState(sheetName, state, filesID){

@@ -1,6 +1,14 @@
 const fs = require('fs');
 
 const ciceroKeys = JSON.parse (fs.readFileSync('ciceroKey.json'));
+const userDataBaseHeaders = require('./createClient/userHeaders');
+const createClientID = require('./createClient/createClientID');
+const instaOfficialHeaders = require('./createClient/instaOfficialHeaders');
+const instaLikesHeaders = require('./createClient/instaLikesHeaders');
+const tiktokOfficialHeaders = require('./createClient/tiktokOfficialHeaders');
+const tiktokCommentsHeaders = require('./createClient/tiktokCommentsHeaders');
+
+
 
 
 //Google Spreadsheet
@@ -22,238 +30,30 @@ module.exports = {
         let responseData =[];
         let response;
 
-        //User DataBase Headers
-        try {
-            const userDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.databaseID, googleAuth);//Google Auth
-            await userDoc.loadInfo;
+        //User Database Headers
+        response = await userDataBaseHeaders.userDataBaseHeaders(clientName);
+        responseData.push(response);
 
-            const userHeaderSheet = await userDoc.addSheet({ title: clientName, headerValues:['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 
-                'WHATSAPP', 'INSTA', 'TIKTOK']});
+        //Create ClientID
+        response = await createClientID.createClientID(clientName, type);
+        responseData.push(response);
 
-            response = {
-                data: 'Create User Data Sheet '+userHeaderSheet.title,
-                state : true,
-                code : 200
-            }
+        //Create Insta Official Headers
+        response = await instaOfficialHeaders.instaOfficialHeaders(clientName);
+        responseData.push(response);
 
-            responseData.push(response);
-            userDoc.delete;
+        //Create Insta Likes Headers
+        response = await instaLikesHeaders.instaLikesHeaders(clientName);
+        responseData.push(response);
 
-        } catch (error) {
-            
-            response = {
-                data: 'Create User Data Sheet Error',
-                state : false,
-                code : 303
-                }
+        //Create Tiktok Official Headers
+        response = await tiktokOfficialHeaders.tiktokOfficialHeaders(clientName);
+        responseData.push(response);
 
-            responseData.push(response);
-        }
-
-        //Adding Client DataBase
-        try {
-
-            const clientDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.clientDataID, googleAuth);//Google Auth
-            await clientDoc.loadInfo();
-
-            const clientSheet = await clientDoc.sheetsByTitle['ClientData'];
-
-            if (['COM', 'RES'].includes(type)){
-
-                const rows = await clientSheet.getRows();
-
-                let isExist = false;
-
-                for(let i = 0; i < rows.length; i++){
-                    if(rows[i].get('CLIENT_ID') === clientName){
-                        isExist = true;
-                    }
-                }
-
-                if(isExist){
-                
-                    response = {
-                        data: 'Client Name is Exist :'+clientName+'\nType : '+type+'\nStatus : false',
-                        state : true,
-                        code : 200
-                    }
-
-                    responseData.push(response);
-                
-                } else {
-                
-                    await clientSheet.addRow({CLIENT_ID: clientName, TYPE: type, STATUS: false});
-
-                    response = {
-                        data: 'Success Add Client Name : '+clientName+'\nType : '+type+'\nStatus : false',
-                        state : true,
-                        code : 200
-                    }
-
-                    responseData.push(response);
-                }
-                
-            } else {
-
-                response = {
-                    data: 'Failing Add Client Name : '+clientName+'\nType : '+type+'\nStatus : false',
-                    state : true,
-                    code : 200
-                }
-
-                responseData.push(response);
-            }
-
-            clientDoc.delete;
-
-        } catch (error) {
-
-            console.log(error);
-
-            response = {
-                data: 'Error  Add Client Name : '+clientName,
-                state : false,
-                code : 303
-            }
-
-            responseData.push(response);
-            
-        }
-
-        //Insta Official DataBase Headers
-        try {
-                    const instaOfficialDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
-                    
-                    await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-                    let instaOfficialHeadersSheet = await instaOfficialDoc.addSheet({title : clientName, headerValues: ['TIMESTAMP', 'USER_ACCOUNT',	'SHORTCODE', 'ID', 'TYPE', 'CAPTION', 
-                        'COMMENT_COUNT', 'LIKE_COUNT', 'PLAY_COUNT']});
-            
-                    response = {
-                        data: 'Create Insta Official Data Sheet '+instaOfficialHeadersSheet.title,
-                        state : true,
-                        code : 200
-                    }
-            
-                    responseData.push(response);
-            
-                    instaOfficialDoc.delete;
-            
-        } catch (error) {
-
-            console.log(error);
-            
-            response = {
-                data: 'Error Create Insta Official Data Sheet',
-                state : false,
-                code : 303
-            }
-
-            responseData.push(response);
-        }
-
-        //Insta Likes User DataBase Headers
-        try {
-            
-            const instaLikesUsernameDoc= new GoogleSpreadsheet(ciceroKeys.dbKey.instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
-            await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets 
-            let instaLikesUsernameSheet = await instaLikesUsernameDoc.addSheet({title : clientName});        
-            await instaLikesUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
-
-            let headersRows =['SHORTCODE'];
-
-            for (let i = 1; i < 1501; i++){
-                headersRows.push('USER_'+i);
-            }
-
-
-            await instaLikesUsernameSheet.setHeaderRow(headersRows, 1);
-
-            response = {
-                data: 'Create Insta Official Data Sheet '+instaOfficialHeadersSheet.title,
-                state : true,
-                code : 200
-            }
-
-            instaLikesUsernameDoc.delete;
-
-        } catch (error) {
-
-            response = {
-                data: 'Error Create Insta Official Data Sheet',
-                state : true,
-                code : 200
-            }           
-        }
-
-        //Insta Official DataBase Headers
-        try {
-            const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.tiktokOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
-            
-            await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
-            let tiktokOfficialHeadersSheet = await tiktokOfficialDoc.addSheet({title : clientName, headerValues: ['TIMESTAMP', 'USER_ACCOUNT'	, 'ID'	, 'COMMENT_COUNT',
-                'LIKE_COUNT', 'PLAY_COUNT', 'SHARE_COUNT', 'REPOST_COUNT']});
-    
-            response = {
-                data: 'Create Tiktok Official Data Sheet '+tiktokOfficialHeadersSheet.title,
-                state : true,
-                code : 200
-            }
-    
-            responseData.push(response);
-    
-            tiktokOfficialDoc.delete;
-    
-        } catch (error) {
-
-            console.log(error);
-            
-            response = {
-                data: 'Error Create Tiktok Official Data Sheet',
-                state : false,
-                code : 303
-            }
-
-            responseData.push(response);
-        }
-
-        //Tiktok Comments User DataBase Headers
-        try {
-        
-            const tiktokCommentsUsernameDoc= new GoogleSpreadsheet(ciceroKeys.dbKey.tiktokCommentUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
-            await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets 
-
-            let tiktokCommentsUsernameSheet = await tiktokCommentsUsernameDoc.addSheet({title : clientName});        
-            await tiktokCommentsUsernameSheet.resize({rowCount:1000 , columnCount : 1501});
-
-            let headersRows =['SHORTCODE'];
-
-            for (let i = 1; i < 1501; i++){
-                headersRows.push('USER_'+i);
-            }
-
-            await tiktokCommentsUsernameSheet.setHeaderRow(headersRows, 1);
-
-            response = {
-                data: 'Create Tiktok Comments User Data Sheet '+tiktokCommentsUsernameSheet.title,
-                state : true,
-                code : 200
-            }
-
-            responseData.push(response);
-
-        } catch (error) {
-
-            response = {
-                data: 'Error Create Tiktok Comments User Data Sheet',
-                state : true,
-                code : 200
-            }
-
-            responseData.push(response);
-            
-        }
+        //Create Tiktok Comment Headers
+        response = await tiktokCommentsHeaders.tiktokCommentsHeaders(clientName);
+        responseData.push(response);
 
         return responseData;
-
     }
 }
