@@ -6,15 +6,11 @@ const { JWT } = require ('google-auth-library');
 
 const googleCreds = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
-const instaReload = require('../scrapper/instalikesreload');
-const instaReport = require('../reporting/instalikesreport');
 const tiktokReload = require('../scrapper/tiktocommentreload');
 const tiktokReport = require('../reporting/tiktokcommentsreport');
 
 const userDataBase = googleCreds.dbKey.databaseID;;
 const clientDataBase = googleCreds.dbKey.clientDataID;
-const instaOfficialDataBase = googleCreds.dbKey.instaOfficialID;
-const instaLikesUsernameDataBase = googleCreds.dbKey.instaLikesUsernameID;
 const tiktokOfficialDataBase = googleCreds.dbKey.tiktokOfficialID;
 const tiktokCommentUsernameDataBase = googleCreds.dbKey.tiktokCommentUsernameID;
 
@@ -27,43 +23,6 @@ const googleAuth = new JWT({
 });
 
 module.exports = { 
-    instaLoadClient: async function instaLoadClient(clientID){
-
-        const clientDoc = new GoogleSpreadsheet(clientID, googleAuth);//Google Authentication for client DB        
- 
-        await clientDoc.loadInfo(); // loads document properties and worksheets
-
-        console.log('Load Client Functions');
-
-        const clientDataSheet = clientDoc.sheetsByTitle['ClientData'];
-        const rowsClientData = await clientDataSheet.getRows();
-
-        let responseList = [];
-
-        for (let i = 0; i < rowsClientData.length; i++){
-
-            if(rowsClientData[i].get('STATUS')  === "TRUE" && rowsClientData[i].get('INSTA_STATE') === "TRUE" && rowsClientData[i].get('TYPE') === googleCreds.ciceroClientType ){
-
-                console.log(rowsClientData[i].get('CLIENT_ID')+' Client Loaded');
-
-                let response = await instaReload.reloadInstaLikes(rowsClientData[i].get('CLIENT_ID'), userDataBase, clientDataBase, 
-                instaOfficialDataBase, instaLikesUsernameDataBase);
-
-                responseList.push(response);
-
-                let responsereport = await instaReport.reportInstaLikes(rowsClientData[i].get('CLIENT_ID'), userDataBase, clientDataBase, 
-                instaOfficialDataBase, instaLikesUsernameDataBase);
-
-                responseList.push(responsereport);
-            } 
-        }
-
-        clientDoc.delete;
-        
-        console.log('Return Success');
-
-        return responseList;
-    },
 
     tiktokLoadClient: async function tiktokLoadClient(clientID){
 

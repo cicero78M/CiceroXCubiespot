@@ -21,7 +21,7 @@ module.exports = {
       try {
         //Insert New Sheet
         const sourceID = sourceFile.split('/').pop(); //Get Last Segment of Links    
-        const userDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.databaseID, googleAuth); //Google Auth
+        const userDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.userDataID, googleAuth); //Google Auth
 
         const sourceDoc = new GoogleSpreadsheet(sourceID, googleAuth); //Google Auth
         await sourceDoc.loadInfo(); // loads document properties and worksheets
