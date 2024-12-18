@@ -16,8 +16,8 @@ const clientLoad = require('./src/database/clientLoad');
 
 //Unit Test
 const createClient = require('./unitTest/database/newClient/createClient');
-const newClientRes = require('./unitTest/database/newClient/newClientRes');
-const newClientCom = require('./unitTest/database/newClient/newClientCom');
+const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientRes');
+const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 
@@ -25,6 +25,8 @@ const figlet = require('figlet');
 const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
 const cron = require('node-cron');
+const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientRes');
+const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
  
 const port = 3007;
 
@@ -475,7 +477,7 @@ client.on('message', async (msg) => {
 
                                     console.log("Res Triggered");
     
-                                    response = await newClientRes.newClientRes(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
+                                    response = await pushUserClientRes.pushUserClientRes(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
                                     
                                     if (response.code === 200){
                                         console.log(response.message);
@@ -488,7 +490,7 @@ client.on('message', async (msg) => {
                                 
                                 case 'com':
                      
-                                    response = await newClientCom.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
+                                    response = await pushUserClientCom.pushUserClientCom(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
                                     
                                     if (response.code === 200){
                                         console.log(response.message);

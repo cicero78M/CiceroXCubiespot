@@ -16,7 +16,7 @@ const googleAuth = new JWT({
 
 module.exports = {
     //New Client Database by Organizations Source Functions
-    newClientCom: async function newClientCom(clientName, sourceFile){
+    pushUserClientCom: async function pushUserClientCom(clientName, sourceFile){
     
       try {
         //Insert New Sheet
