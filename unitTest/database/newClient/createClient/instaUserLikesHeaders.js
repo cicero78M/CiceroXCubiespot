@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * 
+ * This Function Create a new Insta Username Likes Data Sheet and Properties / Headers.
+ * As a Child of Create Client Function
+ * 
+ */
+
 const fs = require('fs');
 
 const ciceroKeys = JSON.parse (fs.readFileSync('ciceroKey.json'));
@@ -15,7 +22,7 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-    instaLikesHeaders: async function instaLikesHeaders(clientName){
+    instaUserLikesHeaders: async function instaUserLikesHeaders(clientName){
         let response;
 
         //Insta Likes User DataBase Headers

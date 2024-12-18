@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * 
+ * This Function Create a new Tiktok User Comments Data Sheet and Properties / Headers.
+ * As a Child of Create Client Function
+ * 
+ */
+
 const fs = require('fs');
 
 const ciceroKeys = JSON.parse (fs.readFileSync('ciceroKey.json'));
@@ -15,7 +22,7 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-    tiktokCommentsHeaders: async function tiktokCommentsHeaders(clientName){
+    tiktokUserCommentsHeaders: async function tiktokUserCommentsHeaders(clientName){
         let response;
 
         //Tiktok Comments User DataBase Headers

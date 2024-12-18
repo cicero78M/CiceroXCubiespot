@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * 
+ * This Function Create a new Client ID and Properties on Client Sheet Database.
+ * As a Child of Create Client Function
+ * 
+ */
+
 const fs = require('fs');
 
 const ciceroKeys = JSON.parse (fs.readFileSync('ciceroKey.json'));

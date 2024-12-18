@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * 
+ * This Function Create a new User Data Base Sheet Name and Properties / Headers.
+ * As a Child of Create Client Function
+ * 
+ */
+
 const fs = require('fs');
 
 const ciceroKeys = JSON.parse (fs.readFileSync('ciceroKey.json'));
@@ -15,7 +22,7 @@ const googleAuth = new JWT({
 });
 
 module.exports = {
-    userDataBaseHeaders: async function userDataBaseHeaders(clientName){
+    userHeaders: async function userHeaders(clientName){
         let response;
         //User DataBase Headers
         try {

@@ -18,7 +18,6 @@ const clientLoad = require('./src/database/clientLoad');
 const createClient = require('./unitTest/database/newClient/createClient');
 const newClientRes = require('./unitTest/database/newClient/newClientRes');
 
-
 const { Client , LocalAuth } = require('whatsapp-web.js');
 
 const figlet = require('figlet');
