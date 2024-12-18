@@ -18,7 +18,6 @@ const instaOfficialHeaders = require('./createClient/instaOfficialHeaders');
 const instaUserLikesHeaders = require('./createClient/instaUserLikesHeaders');
 const tiktokOfficialHeaders = require('./createClient/tiktokOfficialHeaders');
 const tiktokUserCommentsHeader = require('./createClient/tiktokUserCommentsHeaders');
-const instaUserLikesHeaders = require('./createClient/instaUserLikesHeaders');
 
 module.exports = {
     //Add New Client to Database Client ID  

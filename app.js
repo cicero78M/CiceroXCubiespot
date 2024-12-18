@@ -17,6 +17,7 @@ const clientLoad = require('./src/database/clientLoad');
 //Unit Test
 const createClient = require('./unitTest/database/newClient/createClient');
 const newClientRes = require('./unitTest/database/newClient/newClientRes');
+const newClientCom = require('./unitTest/database/newClient/newClientCom');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 
@@ -134,7 +135,7 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient'];
+    const unitTest = ['createclient', 'pushclientuser', ];
 
     try {
         if (msg.isStatus){
@@ -444,7 +445,9 @@ client.on('message', async (msg) => {
                         }
                     }
                 } else if(unitTest.includes(splittedMsg[1].toLowerCase())){
+                    // WA Order newClientName#createclient
                     if(splittedMsg[1].toLowerCase() === 'createclient'){
+
 
                         let response = await createClient.createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
 
@@ -453,6 +456,57 @@ client.on('message', async (msg) => {
                             console.log(response[i].data);
                             client.sendMessage(msg.from, response[i].data);
 
+                        }
+
+                    // WA Order ClientName#pushclientuser#type['res', 'com']#spreadsheetsourcelink
+                    } else if (splittedMsg[1].toLowerCase() === 'pushclientuser'){
+
+                        console.log('Push User Client Triggered');
+
+                        if (splittedMsg[3].includes('https://docs.google.com/spreadsheets/d/')){
+
+                            console.log("Link True");
+
+                            let response;
+                        
+                            switch (splittedMsg[2].toLowerCase()) {
+                     
+                                case 'res':
+
+                                    console.log("Res Triggered");
+    
+                                    response = await newClientRes.newClientRes(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
+                                    
+                                    if (response.code === 200){
+                                        console.log(response.message);
+                                        client.sendMessage(msg.from, response.message);
+                                    } else {
+                                        console.log(response.message);
+                                    }  
+                                    
+                                    break;
+                                
+                                case 'com':
+                     
+                                    response = await newClientCom.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
+                                    
+                                    if (response.code === 200){
+                                        console.log(response.message);
+                                        client.sendMessage(msg.from, response.message);
+                                    } else {
+                                        console.log(response.message);
+                                    }  
+                                    
+                                    break;      
+
+                                default:
+
+                                    client.sendMessage(msg.from, 'Client Type Value ["RES", "COM"]');
+    
+                                    break;
+                     
+                            }
+                        
                         }
 
                     }
