@@ -3,7 +3,9 @@ const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
 
 const fs = require('fs');
+
 const tiktokAPI = require('../SocialMediaAPI/tiktokAPI');
+const sheetDoc = require('../../queryData/rowsData/sheetDoc');
 
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -17,7 +19,7 @@ const googleAuth = new JWT({
 
 module.exports = {  
 
-  reloadTiktokComments: async function reloadTiktokComments(clientName){
+  collectTiktokComments: async function collectTiktokComments(clientName){
     
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
@@ -25,11 +27,8 @@ module.exports = {
     const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
     await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
 
-    const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentsUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
+    const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
     await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
-
-
-    
     
     //Check Client_ID. then get async data
     let isClientID = false;
@@ -148,17 +147,20 @@ module.exports = {
         var updateData = 0;
 
         for (let i = 0; i < todayItems.length; i++){
+
           let hasShortcode = false;
+          let cursorNumber = 0;
+          let newDataUsers = [];
+          let total = 0;
+
           //code on the go
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
-            
+              
+
+
               hasShortcode = true;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
-
-              let cursorNumber = 0;
-              let newDataUsers = [];
-              let checkNext = 0;
 
               for (let iii = 0; iii < fromRows.length; iii++){
                 if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
@@ -171,7 +173,7 @@ module.exports = {
               do  { 
                 let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
                 let commentItems = responseComments.data.comments;       
-
+                
                 for (let iii = 0; iii < commentItems.length; iii++){
                   if(commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != ""){
                     if(!newDataUsers.includes(commentItems[iii].user.unique_id)){
@@ -180,14 +182,14 @@ module.exports = {
                   }
                 }
             
-                cursorNumber = responseComments.cursor;
-                checkNext = responseComments.has_more;
+                cursorNumber = responseComments.data.cursor;
+                total = responseComments.data.total+50;
                 
                 setTimeout(() => {
-                  console.log(checkNext);
+                  console.log(cursorNumber+" < "+total);
                 }, 1200);
 
-              } while ( checkNext === 1);
+              } while ( cursorNumber < total);
 
               let dataCleaning = [];
 
@@ -199,7 +201,7 @@ module.exports = {
                 }
               }
 
-              console.log(sheetName+' Update Data');
+              console.log(clientName+' Update Data');
             
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
@@ -214,25 +216,26 @@ module.exports = {
 
             let cursorNumber = 0;
             let newDataUsers = [todayItems[i]];
-            let checkNext = 0;
+            let total = 0;
             
             do {
             
               let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
               let commentItems = responseComments.data.comments;
-
+              
+              console.log(commentItems);
               for (let iii = 0; iii < commentItems.length; iii++){
                 newDataUsers.push(commentItems[iii].user.unique_id);             
               }
               //Add new Row
-              cursorNumber = responseComments.cursor
-              checkNext = responseComments.has_more;
+              cursorNumber = responseComments.data.cursor;
+              total = responseComments.data.total+50;
 
               setTimeout(() => {
-                console.log(checkNext);
+                console.log(cursorNumber+" < "+total);
               }, 1200);
             
-            } while (checkNext === 1);
+            } while (cursorNumber < total);
 
             let dataCleaning = [];
 
@@ -244,16 +247,15 @@ module.exports = {
               }
             }
 
-            console.log(sheetName+' Insert new data');
+            console.log(clientName+' Insert new data');
             await tiktokCommentsUsernameSheet.addRow(dataCleaning);
-
 
             newData++;
           }
         }
       
         let responseData = {
-          data : sheetName+' Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
+          data : clientName+' Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
           state : true,
           code : 200
         }

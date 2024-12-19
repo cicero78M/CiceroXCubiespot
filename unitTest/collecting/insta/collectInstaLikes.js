@@ -24,13 +24,13 @@ module.exports = {
 
   collectInstaLikes: async function colectInstaLikes(clientName){
 
+    console.log("Collecting Insta Likes Starting...");
+
     try {
 
       let isClientID = false;
       let instaOfficialAccount;
       let isStatus;
-
-      console.log(clientName+" Insta Load Function Executed");
       
       const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth);//Google Authentication for InstaOfficial DB
   
@@ -155,11 +155,10 @@ module.exports = {
                     updateData++;
     
                     const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+                    
                     const responseLikes = await instaAPI.instaLikesAPI(todayItems[i]);
-
                     const likesItems = await responseLikes.data.data.items;
 
-    
                     let newDataUsers = [];
                   
                     for (let iii = 0; iii < fromRows.length; iii++){
@@ -176,10 +175,11 @@ module.exports = {
                           newDataUsers.push(likesItems[iii].username);
                         }
                       }
-                    }
-                    console.log('update data '+todayItems[i]);
+                    }               
                     await instaLikesUsernameData[ii].delete();
                     await instaLikesUsernameSheet.addRow(newDataUsers);
+                    console.log(clientName+' Update data '+todayItems[i]);
+
                   }
                 }
                 //Final Code
@@ -196,81 +196,67 @@ module.exports = {
                     }         
                   }
                   //Add new Row
-                  console.log(clientName+'\n\nInsert new data');
                   await instaLikesUsernameSheet.addRow(userNameList);
                   newData++;
+                  console.log(clientName+'\n\nInsert new data'+todayItems[i]);
+
                 }
               }
-    
               let responseData = {
-                message : clientName+'\n\nSucces Reload Insta Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
+                data : clientName+'\n\nSucces Reload Insta Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
                 state : true,
                 code : 200
               }
-        
               instaOfficialDoc.delete;
               instaLikesUsernameDoc.delete;
               return responseData; 
-    
             } else { 
-    
               let responseData = {
-                message : clientName+'\n\nHas No Insta Content',
+                data : clientName+'\n\nHas No Insta Content',
                 state : true,
                 code : 200
               }
-        
               instaOfficialDoc.delete;
               instaLikesUsernameDoc.delete;
-
               return responseData;         
             }
 
           } else {
-
             let responseData = {
-              message : clientName+'\n\nInsta Post API Error',
+              data : clientName+'\n\nInsta Post API Error',
               state : true,
               code : 200
             }
-      
             instaOfficialDoc.delete;
             instaLikesUsernameDoc.delete;
             return responseData;             
-
           }
         }  else {
-
           let responseData = {
-            message : clientName+'\n\nYour Client ID has Expired, Contacts Developers for more Informations',
+            data : clientName+'\n\nYour Client ID has Expired, Contacts Developers for more Informations',
             state : true,
             code : 200
           }
-    
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
           return responseData;          
-
         }
         
       } else {
         let responseData = {
-          message : 'Data Error',
+          data : 'Data Error',
           state : true,
           code : 200
         }
         return responseData;
       }     
     } catch (error) {
-
       let responseData = {
-        message : error,
+        data : error,
         state : false,
         code : 303
       }
-
       return responseData;     
- 
     }     
   },
 }

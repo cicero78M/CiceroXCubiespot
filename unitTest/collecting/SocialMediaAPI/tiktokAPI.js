@@ -87,7 +87,7 @@ module.exports = {
       url: ciceroKey.tiktokKey.tiktokhostComments,
       params: {
         videoId: key,
-        count: '50',
+        count: '100',
         cursor: cursors
       },
       headers: headers

@@ -28,6 +28,7 @@ const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
 const editProfile = require('./unitTest/database/editData/userData/editProfile');
 const pushUserClient = require('./unitTest/database/newClient/pushUserClient');
 const updateUsername = require('./unitTest/database/editData/userData/updateUsername');
+const collectTiktokComments = require('./unitTest/collecting/tiktok/collectTiktokEngagements');
  
 const port = 3007;
 
@@ -490,8 +491,8 @@ client.on('message', async (msg) => {
                         response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 200){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.message);
                         }  
@@ -503,7 +504,26 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
+                            console.log(response.data);
+                        } 
+                    } else if (splittedMsg[1].toLowerCase() === 'collecttiktokengagements'){  
+                        response = await collectTiktokComments.collectTiktokComments(splittedMsg[0].toUpperCase());
+                                    
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
                             console.log(response.message);
+                        }  
+                    } else if (splittedMsg[1].toLowerCase() === 'tiktokcommentsreport') {
+                        //Report Likes from Insta Official
+                        let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
+                        
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
                         } 
                     } 
                 } else if (editdata.includes(splittedMsg[1].toLowerCase())){
