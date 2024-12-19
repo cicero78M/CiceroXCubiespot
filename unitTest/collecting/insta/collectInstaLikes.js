@@ -5,8 +5,7 @@ const { JWT } = require ('google-auth-library');
 const fs = require('fs');
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
-const instaPostAPI = require('./instaAPI/instaPostAPI');
-const instaLikesAPI = require('./instaAPI/instaLikesAPI');
+const instaAPI = require('../SocialMediaAPI/instaAPI');
 const sheetDoc = require('../../queryData/rowsData/sheetDoc');
 
 
@@ -37,7 +36,7 @@ module.exports = {
   
       const instaLikesUsernameDoc= new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
       
-      let response = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+      let response = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData', );
 
       if (response.state){
 
@@ -61,7 +60,7 @@ module.exports = {
           let todayItems = [];
           let postItems =[];
 
-          let instaPostAPIResponse = await instaPostAPI.instaPostAPI(instaOfficialAccount);      
+          let instaPostAPIResponse = await instaAPI.instaPostAPI(instaOfficialAccount);      
 
           if(instaPostAPIResponse.state){
 
@@ -156,7 +155,7 @@ module.exports = {
                     updateData++;
     
                     const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-                    const responseLikes = await instaLikesAPI.instaLikesAPI(todayItems[i]);
+                    const responseLikes = await instaAPI.instaLikesAPI(todayItems[i]);
 
                     const likesItems = await responseLikes.data.data.items;
 
@@ -186,7 +185,7 @@ module.exports = {
                 //Final Code
                 if (!hasShortcode){
                   //If Shortcode doesn't exist push new data
-                  let responseLikes = await instaLikesAPI.instaLikesAPI(todayItems[i]);
+                  let responseLikes = await instaAPI.instaLikesAPI(todayItems[i]);
                                 
                   let likesItems = responseLikes.data.data.items;
                   let userNameList = [todayItems[i]];

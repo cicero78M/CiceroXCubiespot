@@ -25,9 +25,9 @@ const cron = require('node-cron');
 const createClient = require('./unitTest/database/newClient/createClient');
 const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
 const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
-const updateUsername = require('./unitTest/database/editData/userData/updateusername');
 const editProfile = require('./unitTest/database/editData/userData/editProfile');
 const pushUserClient = require('./unitTest/database/newClient/pushUserClient');
+const updateUsername = require('./unitTest/database/editData/userData/updateUsername');
  
 const port = 3007;
 
@@ -138,8 +138,9 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport', 'updateinstausername','updatetiktokusername' ];
+    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport' ];
     const editdata = ['id_key', 'nama', 'title', 'jabatan', 'divisi', 'status'];
+    const updateUser = ['updateinstausername','updatetiktokusername' ];
 
     try {
         if (msg.isStatus){
@@ -504,7 +505,22 @@ client.on('message', async (msg) => {
                         } else {
                             console.log(response.message);
                         } 
-                    } else if (splittedMsg[1].toLowerCase() === 'updateinstausername') {
+                    } 
+                } else if (editdata.includes(splittedMsg[1].toLowerCase())){
+                        
+                    //Report Likes from Insta Official
+                    let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), splittedMsg[1].toUpperCase());
+                    
+                    if (response.code === 200){
+                        console.log(response.data);
+                        client.sendMessage(msg.from, response.data);
+                    } else {
+                        console.log(response.message);
+                    }   
+                
+                } else if (updateUser.includes(splittedMsg[1].toLowerCase())){
+                    
+                    if (splittedMsg[1].toLowerCase() === 'updateinstausername') {
                         //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
 
@@ -556,21 +572,10 @@ client.on('message', async (msg) => {
                             console.log('Bukan Link Profile Instagram');
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }                     
-
                     }
-                } else if (editdata.includes(splittedMsg[1].toLowerCase())){
-                        
-                    //Report Likes from Insta Official
-                    let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), splittedMsg[1].toUpperCase());
-                    
-                    if (response.code === 200){
-                        console.log(response.data);
-                        client.sendMessage(msg.from, response.data);
-                    } else {
-                        console.log(response.message);
-                    }   
-                
                 }
+                
+               
                 //if(splittedMsg[1].toLowerCase()......
             } else {
                 //Regular Messages

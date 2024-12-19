@@ -76,7 +76,7 @@ async function tiktokCommentAPI(key, cursors){
       cursor: cursors
     },
     headers: headers
-  };
+  }
   
   try {
  
