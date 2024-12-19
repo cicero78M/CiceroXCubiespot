@@ -64,3 +64,13 @@ Client Activations Mechanism :
 >> WEB-APP DASHBOARD
 
 - Data Manajemen System.
+
+
+>> UNIT TEST
+
+- Create Client Function (User Data Header, Client ID, Insta Official Header, Insta User Likes Header, Tiktok Official, Tiktok User Comments Header).
+- Push Client User Data by RES.
+- Push USer Data by COM.
+- Collect Insta Likes.
+- Report Insta Likes.
+

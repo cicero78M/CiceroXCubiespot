@@ -205,7 +205,7 @@ module.exports = {
     }
   },
 
-  //Add New User to Client Data Base Functions  
+  //Add New User to User Data Base  
   addUser: async function addUser(sheetName, idKey, userName, userDiv, userJab, userTitle, filesID){
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -296,7 +296,7 @@ module.exports = {
 
     }
   },
-  //Edit User Divisi to Client Data Base Functions  
+  //Edit User Divisi to User Data Base   
   editDivisi: async function editDivisi(sheetName, idKey, userDiv, phone, filesID){
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
     try {
@@ -384,7 +384,7 @@ module.exports = {
     }
   },
 
-  //Edit User Jabatan to Client Data Base Functions  
+  //Edit User Jabatan to User Data Base  
   editJabatan: async function editJabatan(sheetName, idKey, userJab, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
@@ -451,7 +451,7 @@ module.exports = {
     }
   },
 
-  //Edit User Jabatan to Client Data Base Functions  
+  //Edit User Name to User Data Base   
   editNama: async function editNama(sheetName, idKey, userNama, phone, filesID){
 
     const targetDoc = new GoogleSpreadsheet(filesID, googleAuth);//Google Auth
@@ -519,7 +519,7 @@ module.exports = {
     }
   },
 
-  //Edit User Jabatan to Client Data Base Functions  
+  //Edit Insta Username to User Data Base   
   updateInsta: async function updateInsta(sheetName, idKey, insta, phone, filesID){
     
     const userLink = insta.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
@@ -613,7 +613,7 @@ module.exports = {
     }
   },
 
-  //Edit User Jabatan to Client Data Base Functions  
+  //Edit Tiktok Username to User Data Base   
   updateTiktok: async function updateTiktok(sheetName, idKey, tiktok, phone, filesID){
     
     const userLink = tiktok.split('/').pop();      //Get Last Segment of Links

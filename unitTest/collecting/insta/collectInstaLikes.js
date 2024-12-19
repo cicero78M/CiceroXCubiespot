@@ -22,7 +22,7 @@ const googleAuth = new JWT({
 
 module.exports = {  
 
-  reloadInstaLikes: async function reloadInstaLikes(clientName){
+  collectInstaLikes: async function colectInstaLikes(clientName){
 
     try {
       
@@ -42,12 +42,13 @@ module.exports = {
         let hasContent = false;
         let itemByDay = [];
         let todayItems = [];
+        let postItems =[];
 
-        let instaPostAPIResponse = await instaPostAPI(clientDocResponse.instaOfficialAccount);
+        let instaPostAPIResponse = await instaPostAPI.instaPostAPI(clientDocResponse.instaOfficialAccount);      
 
         if(instaPostAPIResponse.state){
 
-          const postItems = instaPostAPIResponse.data.items;
+          postItems = await instaPostAPIResponse.data.data.items;
 
           for (let i = 0; i < postItems.length; i++){
 
@@ -123,7 +124,7 @@ module.exports = {
     
             await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
             
-            let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[sheetName];
+            let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
             let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
   
             var newData = 0;
@@ -138,7 +139,7 @@ module.exports = {
                   updateData++;
   
                   const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-                  const responseLikes = await instaLikesAPI(todayItems[i]);
+                  const responseLikes = await instaLikesAPI.instaLikesAPI(todayItems[i]);
                   const likesItems = responseLikes.data.items;
   
                   let newDataUsers = [];
@@ -166,9 +167,9 @@ module.exports = {
               //Final Code
               if (!hasShortcode){
                 //If Shortcode doesn't exist push new data
-                let responseLikes = await instaLikesAPI(todayItems[i]);
+                let responseLikes = await instaLikesAPI.instaLikesAPI(todayItems[i]);
                               
-                let likesItems = responseLikes.data.items;
+                let likesItems = responseLikes.data.data.items;
                 let userNameList = [todayItems[i]];
   
                 for (let iii = 0; iii < likesItems.length; iii++){

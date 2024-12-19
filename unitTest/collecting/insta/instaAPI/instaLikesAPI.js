@@ -16,7 +16,7 @@ module.exports = {
         //Insta Likes API
         let options = {
             method: 'GET',
-            url: googleCreds.instaKey.instahostLikes,
+            url: ciceroKey.instaKey.instahostLikes,
             params: {
             code_or_id_or_url: key
             },

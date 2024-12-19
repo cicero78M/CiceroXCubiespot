@@ -14,23 +14,23 @@ const tiktokReload = require('./src/scrapper/tiktocommentreload');
 const waStory = require('./src/scrapper/wastory');
 const clientLoad = require('./src/database/clientLoad');
 
-//Unit Test
-const createClient = require('./unitTest/database/newClient/createClient');
-const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientRes');
-const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
-
 const { Client , LocalAuth } = require('whatsapp-web.js');
 
 const figlet = require('figlet');
 const banner = require('simple-banner');
 const qrcode = require('qrcode-terminal');
 const cron = require('node-cron');
+
+//Unit Test
+const createClient = require('./unitTest/database/newClient/createClient');
 const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientRes');
 const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
+const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
+const updateInstaUsername = require('./unitTest/database/editData/userData/updateinstausername');
  
 const port = 3007;
 
-const userDataBase = dbKey.dbKey.databaseID;;
+const userDataBase = dbKey.dbKey.userDataID;;
 const clientDataBase = dbKey.dbKey.clientDataID;
 const instaOfficialDataBase = dbKey.dbKey.instaOfficialID;
 const instaLikesUsernameDataBase = dbKey.dbKey.instaLikesUsernameID;
@@ -137,7 +137,7 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient', 'pushclientuser', ];
+    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'updateinstausername' ];
 
     try {
         if (msg.isStatus){
@@ -509,6 +509,44 @@ client.on('message', async (msg) => {
                      
                             }
                         
+                        }
+
+                    } else if (splittedMsg[1].toLowerCase() === 'collectinstalikes'){
+                        
+                        response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
+                                    
+                        if (response.code === 200){
+                            console.log(response.message);
+                            client.sendMessage(msg.from, response.message);
+                        } else {
+                            console.log(response.message);
+                        }  
+
+                    } else if (splittedMsg[1].toLowerCase() === 'updateinstausername') {
+                        //Update Insta Profile
+                        if (splittedMsg[3].includes('instagram.com')){
+
+                            if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
+                        
+                                let response = await updateInstaUsername.updateInstaUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], 
+                                msg.from.replace('@c.us', ''), userDataBase);
+                            
+                        
+                                if(response.code === 200){
+                                    console.log(response.message);
+                                    client.sendMessage(msg.from, response.message);
+                                } else {
+                                    console.log(response.message);
+                                }                                   
+                        
+                            } else {
+                                console.log('Bukan Link Profile Instagram');
+                                client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                            }
+                        
+                        } else {
+                            console.log('Bukan Link Profile Instagram');
+                            client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }
 
                     }
