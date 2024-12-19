@@ -253,9 +253,9 @@ module.exports = {
         }
       
         let responseData = {
-          message : sheetName+' Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
+          data : sheetName+' Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
           state : true,
-          code : 1
+          code : 200
         }
 
         tiktokOfficialDoc.delete;
@@ -266,23 +266,25 @@ module.exports = {
       } catch (error) {
 
         let responseData = {
-          message : error,
+          data : error,
           state : false,
-          code : 0
+          code : 303
         }
         tiktokOfficialDoc.delete;
         tiktokCommentsUsernameDoc.delete;
         return responseData;           
       }
     }  else {
+
       let responseData = {
-        message : 'Your Client ID has Expired, Contacts Developers for more Informations',
+        data : 'Your Client ID has Expired, Contacts Developers for more Informations',
         state : true,
-        code : 1
+        code : 200
       }
  
       tiktokOfficialDoc.delete;
       tiktokCommentsUsernameDoc.delete;
+      
       return responseData;      
  
     }     
