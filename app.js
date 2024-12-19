@@ -27,7 +27,8 @@ const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientR
 const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
 const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
 const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
-const updateUsername = require('./unitTest/database/editData/userData/updateUsername/');
+const updateUsername = require('./unitTest/database/editData/userData/updateusername');
+const editProfile = require('./unitTest/database/editData/userData/editProfile');
  
 const port = 3007;
 
@@ -139,6 +140,7 @@ client.on('message', async (msg) => {
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
     const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'updateinstausername','updatetiktokusername', 'instalikesreport' ];
+    const editdata = ['id_key', 'nama', 'title', 'jabatan', 'divisi', 'status'];
 
     try {
         if (msg.isStatus){
@@ -579,7 +581,6 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'instalikesreport') {
                         //Report Likes from Insta Official
                         let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
-                        console.log(response);
                         
                         if (response.code === 200){
                             console.log(response.data);
@@ -589,6 +590,19 @@ client.on('message', async (msg) => {
                         }                      
 
                     }
+                } else if (editdata.includes(splittedMsg[1].toLowerCase())){
+                        
+                    //Report Likes from Insta Official
+                    let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), splittedMsg[1].toUpperCase());
+                    
+                    if (response.code === 200){
+                        console.log(response.data);
+                        client.sendMessage(msg.from, response.data);
+                    } else {
+                        console.log(response.message);
+                    }   
+                
+
                 }
                 //if(splittedMsg[1].toLowerCase()......
             } else {
