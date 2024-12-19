@@ -514,8 +514,7 @@ client.on('message', async (msg) => {
                         
                         }
 
-                    } else if (splittedMsg[1].toLowerCase() === 'collectinstalikes'){
-                        
+                    } else if (splittedMsg[1].toLowerCase() === 'collectinstalikes'){  
                         response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 200){
@@ -524,7 +523,16 @@ client.on('message', async (msg) => {
                         } else {
                             console.log(response.message);
                         }  
-
+                    } else if (splittedMsg[1].toLowerCase() === 'instalikesreport') {
+                        //Report Likes from Insta Official
+                        let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
+                        
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.message);
+                        } 
                     } else if (splittedMsg[1].toLowerCase() === 'updateinstausername') {
                         //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
@@ -576,18 +584,7 @@ client.on('message', async (msg) => {
                         } else {
                             console.log('Bukan Link Profile Instagram');
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
-                        }
-
-                    } else if (splittedMsg[1].toLowerCase() === 'instalikesreport') {
-                        //Report Likes from Insta Official
-                        let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
-                        
-                        if (response.code === 200){
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.message);
-                        }                      
+                        }                     
 
                     }
                 } else if (editdata.includes(splittedMsg[1].toLowerCase())){
@@ -602,7 +599,6 @@ client.on('message', async (msg) => {
                         console.log(response.message);
                     }   
                 
-
                 }
                 //if(splittedMsg[1].toLowerCase()......
             } else {

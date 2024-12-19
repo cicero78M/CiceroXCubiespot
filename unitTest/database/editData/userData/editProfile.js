@@ -118,8 +118,10 @@ module.exports = {
           state : true,
           code : 200
         }
+
         console.log('Return Success');
         userDoc.delete;
+
         return responseData;
       
       }
