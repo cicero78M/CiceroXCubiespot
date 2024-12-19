@@ -16,15 +16,12 @@ const googleAuth = new JWT({
 
 module.exports = {
  //Edit Insta Username to User Data Base   
-  updateInstaUsername: async function updateInstaUsername(clientName, idKey, insta, phone, userID){
+  updateUsername: async function updateUsername(clientName, idKey, username, phone, type){
     
+    //Get Last Segment of Links
+    const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth);  //Google Auth
 
-    const instaLink = insta.split('?')[0];
-    
-    const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
-    const userDoc = new GoogleSpreadsheet(userID, googleAuth);  //Google Auth
-
-    console.log(instaUsername);
+    console.log(username);
     
     try {
       //Insert New Sheet
@@ -34,22 +31,37 @@ module.exports = {
       const userRows = await userSheet.getRows();
 
       let isDataExist = false;
-      let instaList = [];
+      let usernameList = [];
+      let userType;
   
       //Collect Divisi List String
+
+      if(type === "updateinstausername"){
+
+        userType = 'INSTA';
+
+      } else if (type === "updatetiktokusername"){
+        userType = 'TIKTOK';
+      }
+
       for (let i = 0; i < userRows.length; i++){
-        if(!instaList.includes(userRows[i].get('INSTA'))){
-          instaList.push(userRows[i].get('INSTA'));
+
+        if(!usernameList.includes(userRows[i].get(userType))){
+          usernameList.push(userRows[i].get(userType));
         }
       }
 
-      if(!instaList.includes(instaUsername)){
-        
+      if(!usernameList.includes(username)){
+      
         for (let i = 0; i < userRows.length; i++){
           if (userRows[i].get('ID_KEY') === idKey){
 
             isDataExist = true;
-            userRows[i].assign({INSTA: instaUsername, WHATSAPP: phone}); // Update Insta Value
+            if (type === "updateinstausername"){
+              userRows[i].assign({INSTA: username, WHATSAPP: phone}); // Update Insta Value
+            } else if (type === "updatetiktokusername"){
+              userRows[i].assign({TIKTOK: username, WHATSAPP: phone}); // Update Insta Value
+            }
             await userRows[i].save(); //save update
 
             let responseData = {
@@ -57,48 +69,46 @@ module.exports = {
               state : true,
               code : 200
             }
-
+    
             console.log('Return Success');
-
+    
             userDoc.delete;
-
             return responseData;
+
           }
-        }
 
-      } else {
+        } 
 
-        isDataExist = true;
-        
-        let responseData = {
-          message : 'Username Instagram is Used by another User',
-          state : true,
-          code : 200
-        }
+        if(!isDataExist){
 
-        console.log('Return Success');
-
-        userDoc.delete;
-
-        return responseData;
-      
-      }
-
-      if(!isDataExist){
-
-        let responseData = {
+         let responseData = {
           message : 'User Data with delegated ID_KEY Doesn\'t Exist',
           state : true,
           code : 200
+          }
+
+          console.log('Return Success');
+
+          userDoc.delete;
+        
+          return responseData;
+
+        } 
+      } else {       
+        
+        let responseData = {
+          message : 'Username Sudah Terdaftar',
+          state : true,
+          code : 200
         }
 
         console.log('Return Success');
 
         userDoc.delete;
-        
-        return responseData;
 
+        return responseData;
       }
+
     } catch (error) {
 
       let responseData = {
@@ -114,5 +124,5 @@ module.exports = {
       return responseData;
     
     }
-  }
+  } 
 }

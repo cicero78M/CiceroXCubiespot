@@ -26,8 +26,8 @@ const createClient = require('./unitTest/database/newClient/createClient');
 const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientRes');
 const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
 const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
-const updateInstaUsername = require('./unitTest/database/editData/userData/updateinstausername');
 const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
+const updateUsername = require('./unitTest/database/editData/userData/updateUsername/');
  
 const port = 3007;
 
@@ -138,7 +138,7 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'updateinstausername', 'instalikesreport' ];
+    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'updateinstausername','updatetiktokusername', 'instalikesreport' ];
 
     try {
         if (msg.isStatus){
@@ -528,9 +528,13 @@ client.on('message', async (msg) => {
                         if (splittedMsg[3].includes('instagram.com')){
 
                             if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
+
+                                const instaLink = splittedMsg[3].split('?')[0];
+    
+                                const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
                         
-                                let response = await updateInstaUsername.updateInstaUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], 
-                                msg.from.replace('@c.us', ''), userDataBase);
+                                let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, 
+                                msg.from.replace('@c.us', ''), splittedMsg[1].toLowerCase());
                             
                                 if(response.code === 200){
                                     console.log(response.message);
@@ -544,6 +548,29 @@ client.on('message', async (msg) => {
                                 client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                             }
                         
+                        } else {
+                            console.log('Bukan Link Profile Instagram');
+                            client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                        }
+
+                    } else if (splittedMsg[1].toLowerCase() === 'updatetiktokusername') {
+                        //Update Insta Profile
+                        if (splittedMsg[3].includes('tiktok.com')){
+
+                            const tiktokLink = splittedMsg[3].split('?')[0];
+
+                            const tiktokUsername = tiktokLink.split('/').pop();  
+                    
+                            let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, 
+                            msg.from.replace('@c.us', ''), splittedMsg[1].toLowerCase());
+                        
+                            if(response.code === 200){
+                                console.log(response.message);
+                                client.sendMessage(msg.from, response.message);
+                            } else {
+                                console.log(response.message);
+                            }                                   
+                    
                         } else {
                             console.log('Bukan Link Profile Instagram');
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');

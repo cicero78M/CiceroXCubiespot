@@ -75,6 +75,5 @@ Client Activations Mechanism :
 - Edit Data:
     - update insta username.
 - Collect Insta Likes.
-- Report Insta Likes.
-- 
+- Insta Likes Report.
 
