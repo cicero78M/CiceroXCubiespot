@@ -23,12 +23,11 @@ const cron = require('node-cron');
 
 //Unit Test
 const createClient = require('./unitTest/database/newClient/createClient');
-const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientRes');
-const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
 const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
 const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
 const updateUsername = require('./unitTest/database/editData/userData/updateusername');
 const editProfile = require('./unitTest/database/editData/userData/editProfile');
+const pushUserClient = require('./unitTest/database/newClient/pushUserClient');
  
 const port = 3007;
 
@@ -139,7 +138,7 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'updateinstausername','updatetiktokusername', 'instalikesreport' ];
+    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport', 'updateinstausername','updatetiktokusername' ];
     const editdata = ['id_key', 'nama', 'title', 'jabatan', 'divisi', 'status'];
 
     try {
@@ -449,7 +448,7 @@ client.on('message', async (msg) => {
                             console.log(response.message);
                         }
                     }
-                } else if(unitTest.includes(splittedMsg[1].toLowerCase())){
+                } else if (unitTest.includes(splittedMsg[1].toLowerCase())){
                     // WA Order newClientName#createclient
                     if(splittedMsg[1].toLowerCase() === 'createclient'){
 
@@ -474,44 +473,16 @@ client.on('message', async (msg) => {
 
                             let response;
                         
-                            switch (splittedMsg[2].toLowerCase()) {
-                     
-                                case 'res':
+                            console.log(splittedMsg[3].toUpperCase()+" Triggered");
 
-                                    console.log("Res Triggered");
-    
-                                    response = await pushUserClientRes.pushUserClientRes(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
-                                    
-                                    if (response.code === 200){
-                                        console.log(response.message);
-                                        client.sendMessage(msg.from, response.message);
-                                    } else {
-                                        console.log(response.message);
-                                    }  
-                                    
-                                    break;
-                                
-                                case 'com':
-                     
-                                    response = await pushUserClientCom.pushUserClientCom(splittedMsg[0].toUpperCase(), splittedMsg[3], userDataBase);
-                                    
-                                    if (response.code === 200){
-                                        console.log(response.message);
-                                        client.sendMessage(msg.from, response.message);
-                                    } else {
-                                        console.log(response.message);
-                                    }  
-                                    
-                                    break;      
-
-                                default:
-
-                                    client.sendMessage(msg.from, 'Client Type Value ["RES", "COM"]');
-    
-                                    break;
-                     
-                            }
-                        
+                            response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[3], splittedMsg[2].toUpperCase());
+                            
+                            if (response.code === 200){
+                                console.log(response.message);
+                                client.sendMessage(msg.from, response.message);
+                            } else {
+                                console.log(response.message);
+                            }                          
                         }
 
                     } else if (splittedMsg[1].toLowerCase() === 'collectinstalikes'){  
