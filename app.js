@@ -27,6 +27,7 @@ const pushUserClientRes = require('./unitTest/database/newClient/pushUserClientR
 const pushUserClientCom = require('./unitTest/database/newClient/pushUserClientCom');
 const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
 const updateInstaUsername = require('./unitTest/database/editData/userData/updateinstausername');
+const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
  
 const port = 3007;
 
@@ -137,7 +138,7 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'updateinstausername' ];
+    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'updateinstausername', 'instalikesreport' ];
 
     try {
         if (msg.isStatus){
@@ -531,7 +532,6 @@ client.on('message', async (msg) => {
                                 let response = await updateInstaUsername.updateInstaUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], 
                                 msg.from.replace('@c.us', ''), userDataBase);
                             
-                        
                                 if(response.code === 200){
                                     console.log(response.message);
                                     client.sendMessage(msg.from, response.message);
@@ -548,6 +548,18 @@ client.on('message', async (msg) => {
                             console.log('Bukan Link Profile Instagram');
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }
+
+                    } else if (splittedMsg[1].toLowerCase() === 'instalikesreport') {
+                        //Report Likes from Insta Official
+                        let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
+                        console.log(response);
+                        
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.message);
+                        }                      
 
                     }
                 }

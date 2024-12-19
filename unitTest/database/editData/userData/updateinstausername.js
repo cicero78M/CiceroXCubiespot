@@ -17,11 +17,12 @@ const googleAuth = new JWT({
 module.exports = {
  //Edit Insta Username to User Data Base   
   updateInstaUsername: async function updateInstaUsername(clientName, idKey, insta, phone, userID){
+    
 
     const instaLink = insta.split('?')[0];
     
     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();      //Get Last Segment of Links
-    const userDoc = new GoogleSpreadsheet(userID, googleAuth);//Google Auth
+    const userDoc = new GoogleSpreadsheet(userID, googleAuth);  //Google Auth
 
     console.log(instaUsername);
     
@@ -43,6 +44,7 @@ module.exports = {
       }
 
       if(!instaList.includes(instaUsername)){
+        
         for (let i = 0; i < userRows.length; i++){
           if (userRows[i].get('ID_KEY') === idKey){
 
@@ -63,6 +65,7 @@ module.exports = {
             return responseData;
           }
         }
+
       } else {
 
         isDataExist = true;
