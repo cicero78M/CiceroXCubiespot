@@ -4,8 +4,8 @@ const { JWT } = require ('google-auth-library');
 
 const fs = require('fs');
 
-const tiktokAPI = require('../SocialMediaAPI/tiktokAPI');
-const sheetDoc = require('../../queryData/rowsData/sheetDoc');
+const tiktokAPI = require('../../SocialMediaAPI/tiktokAPI');
+const sheetDoc = require('../../queryData/sheetDoc');
 
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 

@@ -5,8 +5,8 @@ const { JWT } = require ('google-auth-library');
 const fs = require('fs');
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
-const instaAPI = require('../SocialMediaAPI/instaAPI');
-const sheetDoc = require('../../queryData/rowsData/sheetDoc');
+const instaAPI = require('../../SocialMediaAPI/instaAPI');
+const sheetDoc = require('../../queryData/sheetDoc');
 
 
 const d = new Date();
