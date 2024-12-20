@@ -123,7 +123,7 @@ client.on('qr', qr => {
 
 client.on('message', async (msg) => {
 
-    const newClientOrder = ['newclientres', 'newclientcom' ];
+    const newClientOrder = ['newclientres', 'newclientcom', 'pushuserres', 'pushusercom'];
     const updateUserData = ['addnewuser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan', 'satfung', 
         'status', 'idkey', 'deleteuser'];
     const dataOrder = ['menu', 'mydata', 'instacheck', 'tiktokcheck', 'clientstate'];
@@ -191,7 +191,7 @@ client.on('message', async (msg) => {
                     //ClientName#newclientres/newclientcom#linkspreadsheet
                     if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                         //Is contains Links
-                        if (splittedMsg[1].toLowerCase() === "newclientres"){
+                        if (['newclientres', 'pushuserres'].includes(splittedMsg[1].toLowerCase())){
                             //Res Request
                             console.log('Push User Client Triggered');
 
@@ -203,7 +203,7 @@ client.on('message', async (msg) => {
                             
                                 console.log(splittedMsg[1].toUpperCase()+" Triggered");
     
-                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[3], "RES");
+                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
                                 
                                 if (response.code === 200){
                                     console.log(response.data);
@@ -224,7 +224,7 @@ client.on('message', async (msg) => {
                             
                                 console.log(splittedMsg[1].toUpperCase()+" Triggered");
     
-                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[3], "COM");
+                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
                                 
                                 if (response.code === 200){
                                     console.log(response.data);
