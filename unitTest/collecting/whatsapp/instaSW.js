@@ -17,8 +17,6 @@ const googleAuth = new JWT({
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-
-
 module.exports = {
 
   instaSW: async function waStoryInsta(waNumber, shortcode){
@@ -88,6 +86,8 @@ module.exports = {
             if (waStoryRows[iv].get('SHORTCODE') === shortcode){
               
               hasShortcode = true;
+
+
               
               await waStorySheet.loadCells();
                             

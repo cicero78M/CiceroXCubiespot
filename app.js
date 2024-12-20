@@ -154,25 +154,38 @@ client.on('message', async (msg) => {
 
             console.log(contact.pushname+" ===>>>> "+msg.body);
 
-            if (contact.pushname != undefined){
+            if (contact.pushname !== undefined){
                     
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
              
                 if (url !== null){
                     if (url[0].includes('instagram.com')){
-   
-                        console.log(contact.pushname+" ===>>>> "+msg.body);
-             
-                        let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
-             
-                        if (response.code === 1 ){
-                            console.log(response.message);
-                            client.sendMessage(contact.number+"@c.us", response.message);
-                        } else {
-                            console.log(response.message);
-                        }
 
+                        if (url[0].includes('/p/') || url[0].includes('/reels/') || url[0].includes('/video/') ){
+                               
+                            let rawLink;
+                            
+                            if(url[0].includes('/?')){
+                                rawLink = url[0].replaceAll('/?', '?');
+                                shortcode = rawLink.split('?')[0].split('/').pop();
+                            } else {
+                                shortcode = url[0].split('/').pop();
+                            }
+
+                            console.log(shortcode);
+                                             
+                            //Report Likes from Insta Official
+                        
+                            let response = await instaSW.instaSW(contact.number, shortcode);
+                        
+                            if (response.code === 200){
+                                console.log(response.data);
+                                client.sendMessage(msg.from, response.data);
+                            } else {
+                                console.log(response.data);
+                            } 
+                        }
                     }
                 }
             }
