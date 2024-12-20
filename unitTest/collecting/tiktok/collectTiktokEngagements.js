@@ -67,18 +67,19 @@ module.exports = {
           items = responseContent.data.itemList;
         }
 
-        console.log(Array.isArray(items));
         
         let hasContent = false;
         let itemByDay = [];
         let todayItems = [];
         
-        for (let i = 0; i < items.length; i++){
-          let itemDate = new Date(items[i].createTime*1000);
-          if(itemDate.toLocaleDateString('id') === localDate){
-            hasContent = true;
-            itemByDay.push(items[i]);
-            todayItems.push(items[i].video.id);
+        if(Array.isArray(items)){
+          for (let i = 0; i < items.length; i++){
+            let itemDate = new Date(items[i].createTime*1000);
+            if(itemDate.toLocaleDateString('id') === localDate){
+              hasContent = true;
+              itemByDay.push(items[i]);
+              todayItems.push(items[i].video.id);
+            }
           }
         }
 
