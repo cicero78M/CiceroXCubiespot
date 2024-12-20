@@ -80,6 +80,7 @@ module.exports = {
         }
 
         if(hasContent){
+          
           const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
           const officialTiktokData = await officialTiktokSheet.getRows();
 
@@ -157,13 +158,11 @@ module.exports = {
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
               
-
-
               hasShortcode = true;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
 
               for (let iii = 0; iii < fromRows.length; iii++){
-                if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+                if(fromRows[iii] !== undefined || fromRows[iii] !== null || fromRows[iii] !== ""){
                   if(!newDataUsers.includes(fromRows[iii])){
                     newDataUsers.push(fromRows[iii]);
                   }

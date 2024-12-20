@@ -29,6 +29,7 @@ const editProfile = require('./unitTest/database/editData/userData/editProfile')
 const pushUserClient = require('./unitTest/database/newClient/pushUserClient');
 const updateUsername = require('./unitTest/database/editData/userData/updateUsername');
 const collectTiktokComments = require('./unitTest/collecting/tiktok/collectTiktokEngagements');
+const tiktokCommentsReport = require('./unitTest/reporting/tiktok/reportTiktokComments');
  
 const port = 3007;
 
@@ -517,7 +518,7 @@ client.on('message', async (msg) => {
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'tiktokcommentsreport') {
                         //Report Likes from Insta Official
-                        let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
+                        let response = await tiktokCommentsReport.tiktokCommentsReport(splittedMsg[0].toUpperCase());
                         
                         if (response.code === 200){
                             console.log(response.data);

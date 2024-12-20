@@ -1,9 +1,9 @@
 //Google Spreadsheet
 
 const fs = require('fs');
+const sheetDoc = require('../../queryData/sheetDoc');
 
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
-const sheetDoc = require('../../queryData/rowsData/sheetDoc');
 
 module.exports = {  
   reportInstaLikes: async function reportInstaLikes(clientName){

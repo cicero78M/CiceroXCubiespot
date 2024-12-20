@@ -27,6 +27,8 @@ module.exports = {
       const sheetTitle = dataDoc.sheetsByTitle[clientName];
     
       let data = await sheetTitle.getRows();
+
+      console.log(data);      
       
       let response = {
         data : data,
@@ -40,9 +42,9 @@ module.exports = {
     
     } catch (err){
       let response = {
-        data : data,
-        state : true,
-        code : 200
+        data : err,
+        state : false,
+        code : 303
       }
       return response;      
     } 
