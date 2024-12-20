@@ -126,10 +126,12 @@ client.on('message', async (msg) => {
     const updateUser = ['updateinstausername','updatetiktokusername' ];
 
     try {
+
+        const contact = await msg.getContact();
+
         if (msg.isStatus){
             
             //If Msg is WA Story
-            const contact = await msg.getContact();
             const chat = await msg.getChat();
             chat.sendSeen();
             if (contact.pushname !== undefined){
@@ -301,14 +303,13 @@ client.on('message', async (msg) => {
         
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
                             
-                                    let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, 
-                                    msg.from.replace('@c.us', ''), "INSTA");
+                                    let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
                                 
                                     if(response.code === 200){
-                                        console.log(response.message);
-                                        client.sendMessage(msg.from, response.message);
+                                        console.log(response.data);
+                                        client.sendMessage(msg.from, response.data);
                                     } else {
-                                        console.log(response.message);
+                                        console.log(response.data);
                                     }                                   
                             
                                 } else {
@@ -331,14 +332,16 @@ client.on('message', async (msg) => {
 
                             const tiktokUsername = tiktokLink.split('/').pop();  
                     
-                            let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, 
-                            msg.from.replace('@c.us', ''), "TIKTOK");
+                            let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
                         
                             if(response.code === 200){
-                                console.log(response.message);
-                                client.sendMessage(msg.from, response.message);
+
+                                console.log(response.data);
+                                client.sendMessage(msg.from, response.data);
+                            
                             } else {
-                                console.log(response.message);
+                            
+                                console.log(response.data);
                             }                                   
 
                         } else {

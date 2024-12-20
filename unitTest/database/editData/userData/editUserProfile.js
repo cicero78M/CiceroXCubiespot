@@ -3,6 +3,7 @@ const fs = require('fs');
 //Google Spreadsheet
 const { GoogleSpreadsheet } = require ('google-spreadsheet');
 const { JWT } = require ('google-auth-library');
+const checkMyData = require('../../checkMyData');
 
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -39,8 +40,8 @@ module.exports = {
 
       for (let ii = 0; ii < userRows.length; ii++){
         if (userRows[ii].get('ID_KEY') === idKey){
+        
           isDataExist = true;
-
 
           if (type === 'DIVISI'){
             if (dataList.includes(newData)){
@@ -113,15 +114,9 @@ module.exports = {
      
       } else {
 
-        let responseData = {
-          data : 'Data Updated, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
-          state : true,
-          code : 200
-        }
-
-        console.log('Return Success');
+        let responseMyData = await checkMyData.checkMyData(clientName, idKey);
         userDoc.delete;
-        return responseData;
+        return responseMyData;
       
       }
 
