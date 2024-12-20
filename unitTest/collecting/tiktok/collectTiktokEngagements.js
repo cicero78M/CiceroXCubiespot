@@ -137,67 +137,117 @@ module.exports = {
               shortcodeNewCounter++;
             }
           }
-        }
+      
+          await tiktokCommentsUsernameDoc.loadInfo();
+          // loads document properties and worksheets
+          let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
+          let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
 
-        await tiktokCommentsUsernameDoc.loadInfo();
-        // loads document properties and worksheets
-        let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
-        let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
+          var newData = 0;
+          var updateData = 0;
 
-        var newData = 0;
-        var updateData = 0;
+          for (let i = 0; i < todayItems.length; i++){
 
-        for (let i = 0; i < todayItems.length; i++){
-
-          let hasShortcode = false;
-
-
-          //code on the go
-          for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
+            let hasShortcode = false;
 
 
-            if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
-              let newDataUsers = [];           
-              hasShortcode = true;
-              const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
+            //code on the go
+            for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
 
-              for (let iii = 0; iii < fromRows.length; iii++){
-                if(fromRows[iii] !== undefined || fromRows[iii] !== null || fromRows[iii] !== ""){
-                  if(!newDataUsers.includes(fromRows[iii])){
-                    newDataUsers.push(fromRows[iii]);
-                  }
-                }
-              }
 
-              let cursorNumber = 0;
-              let total = 0; 
+              if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
+                let newDataUsers = [];           
+                hasShortcode = true;
+                const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
 
-              do  { 
-
-                let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
-
-                
-                let commentItems = responseComments.data.comments;       
-                
-                for (let iii = 0; iii < commentItems.length; iii++){
-                  if(commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != ""){
-                    if(!newDataUsers.includes(commentItems[iii].user.unique_id)){
-                      newDataUsers.push(commentItems[iii].user.unique_id);
+                for (let iii = 0; iii < fromRows.length; iii++){
+                  if(fromRows[iii] !== undefined || fromRows[iii] !== null || fromRows[iii] !== ""){
+                    if(!newDataUsers.includes(fromRows[iii])){
+                      newDataUsers.push(fromRows[iii]);
                     }
                   }
                 }
 
+                let cursorNumber = 0;
+                let total = 0; 
+
+                do  { 
+
+                  let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
+
+                  
+                  let commentItems = responseComments.data.comments;       
+                  
+                  for (let iii = 0; iii < commentItems.length; iii++){
+                    if(commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != ""){
+                      if(!newDataUsers.includes(commentItems[iii].user.unique_id)){
+                        newDataUsers.push(commentItems[iii].user.unique_id);
+                      }
+                    }
+                  }
+
+                  setTimeout(() => {
+                    console.log("Update Data "+cursorNumber+" < "+total);
+                  }, 2200);
+
+                  cursorNumber;
+                  total;
+                              
+                  total = responseComments.data.total+50;
+                  cursorNumber = responseComments.data.cursor;
+
+                } while ( cursorNumber < total);
+
+                let dataCleaning = [];
+
+                for(let iv = 0; iv < newDataUsers.length; iv++){
+                  if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined){
+                    if (!dataCleaning.includes(newDataUsers[iv])){
+                      dataCleaning.push(newDataUsers[iv]);
+                    }
+                  }
+                }
+
+                console.log(clientName+' Update Data');
+              
+                await tiktokCommentsUsernameData[ii].delete();
+                await tiktokCommentsUsernameSheet.addRow(dataCleaning);
+
+                updateData++;
+              
+              }
+            }
+            //Final Code
+            if(!hasShortcode){
+              //If Shortcode doesn't exist push new data
+
+              let cursorNumber = 0;
+              let newDataUsers = [todayItems[i]];
+              let total = 0;
+              
+              do {
+                
+                let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
+
+
+                let commentItems = responseComments.data.comments;
+                
+                for (let iii = 0; iii < commentItems.length; iii++){
+                  newDataUsers.push(commentItems[iii].user.unique_id);             
+                }
+
                 setTimeout(() => {
-                  console.log("Update Data "+cursorNumber+" < "+total);
+                  console.log(cursorNumber+" < "+total);
                 }, 2200);
 
                 cursorNumber;
                 total;
-                            
-                total = responseComments.data.total+50;
-                cursorNumber = responseComments.data.cursor;
 
-              } while ( cursorNumber < total);
+                total = responseComments.data.total+50;
+
+                cursorNumber = responseComments.data.cursor;
+              
+              } while (cursorNumber < total);
 
               let dataCleaning = [];
 
@@ -209,74 +259,33 @@ module.exports = {
                 }
               }
 
-              console.log(clientName+' Update Data');
-            
-              await tiktokCommentsUsernameData[ii].delete();
+              console.log(clientName+' Insert new data');
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
 
-              updateData++;
-            
+              newData++;
             }
           }
-          //Final Code
-          if(!hasShortcode){
-            //If Shortcode doesn't exist push new data
-
-            let cursorNumber = 0;
-            let newDataUsers = [todayItems[i]];
-            let total = 0;
-            
-            do {
-              
-              let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
-
-
-              let commentItems = responseComments.data.comments;
-              
-              for (let iii = 0; iii < commentItems.length; iii++){
-                newDataUsers.push(commentItems[iii].user.unique_id);             
-              }
-
-              setTimeout(() => {
-                console.log(cursorNumber+" < "+total);
-              }, 2200);
-
-              cursorNumber;
-              total;
-
-              total = responseComments.data.total+50;
-
-              cursorNumber = responseComments.data.cursor;
-            
-            } while (cursorNumber < total);
-
-            let dataCleaning = [];
-
-            for(let iv = 0; iv < newDataUsers.length; iv++){
-              if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined){
-                if (!dataCleaning.includes(newDataUsers[iv])){
-                  dataCleaning.push(newDataUsers[iv]);
-                }
-              }
-            }
-
-            console.log(clientName+' Insert new data');
-            await tiktokCommentsUsernameSheet.addRow(dataCleaning);
-
-            newData++;
-          }
-        }
-      
-        let responseData = {
-          data : clientName+' Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
-          state : true,
-          code : 200
-        }
-
-        tiktokOfficialDoc.delete;
-        tiktokCommentsUsernameDoc.delete;
         
-        return responseData; 
+          let responseData = {
+            data : clientName+' Succes Reload Comments Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
+            state : true,
+            code : 200
+          }
+
+          tiktokOfficialDoc.delete;
+          tiktokCommentsUsernameDoc.delete;
+          
+          return responseData; 
+        } else {
+          let responseData = {
+            data : clientName+' Tiktok Account Has No Content',
+            state : true,
+            code : 200
+          }
+          tiktokOfficialDoc.delete;
+          tiktokCommentsUsernameDoc.delete;
+          return responseData;  
+        }
       
       } catch (error) {
 
