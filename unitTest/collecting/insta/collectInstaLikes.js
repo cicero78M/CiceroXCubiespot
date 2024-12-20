@@ -24,7 +24,7 @@ module.exports = {
 
   collectInstaLikes: async function colectInstaLikes(clientName){
 
-    console.log("Collecting Insta Likes Starting...");
+    console.log(clientName+" Collecting Insta Likes Starting...");
 
     try {
 
@@ -76,8 +76,6 @@ module.exports = {
               }    
             }
 
-            console.log(itemByDay);
-
             if(hasContent){
 
               console.log(clientName+" Insta Official Account Has Content");
@@ -107,6 +105,7 @@ module.exports = {
     
               //If Database Contains Shortcode 
               if(hasShortcode){    
+                
                 for (let i = 0; i < itemByDay.length; i++){
                   for (let ii = 0; ii < officialInstaData.length; ii++){
                     if(officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code){
@@ -200,7 +199,7 @@ module.exports = {
 
                 }
               }
-              
+
               let responseData = {
                 data : clientName+'\n\nSucces Reload Insta Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
                 state : true,
