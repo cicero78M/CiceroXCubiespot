@@ -19,8 +19,8 @@ module.exports = {
     let isStatus;
     let isType;
 
-    const clientDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-    const clientRows = clientDoc.data;
+    let clientDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+    let clientRows = clientDoc.data;
 
     for (let i = 0; i < clientRows.length; i++){
       if (clientRows[i].get('CLIENT_ID') === clientName){
