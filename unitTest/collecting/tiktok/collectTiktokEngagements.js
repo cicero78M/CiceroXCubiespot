@@ -190,6 +190,9 @@ module.exports = {
                 setTimeout(() => {
                   console.log("Update Data "+cursorNumber+" < "+total);
                 }, 2200);
+
+                cursorNumber;
+                total;
                             
                 total = responseComments.data.total+50;
                 cursorNumber = responseComments.data.cursor;
@@ -237,6 +240,9 @@ module.exports = {
               setTimeout(() => {
                 console.log(cursorNumber+" < "+total);
               }, 2200);
+
+              cursorNumber;
+              total;
 
               total = responseComments.data.total+50;
 

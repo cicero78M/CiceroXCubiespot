@@ -32,15 +32,10 @@ const instaSW = require('./unitTest/collecting/whatsapp/instaSW');
 const instaLoadClients = require('./unitTest/bridge/instaLoadClients');
 const tiktokLoadClients = require('./unitTest/bridge/tiktokLoadClients.js');
 const reportTiktokComments = require('./unitTest/reporting/tiktok/reportTiktokComments.js');
+const addNewUser = require('./unitTest/database/editData/userData/addNewUser.js');
+const checkMyData = require('./unitTest/database/checkMyData.js');
  
 const port = 3007;
-
-const userDataBase = dbKey.dbKey.userDataID;;
-const clientDataBase = dbKey.dbKey.clientDataID;
-const instaOfficialDataBase = dbKey.dbKey.instaOfficialID;
-const instaLikesUsernameDataBase = dbKey.dbKey.instaLikesUsernameID;
-const tiktokOfficialDataBase = dbKey.dbKey.tiktokOfficialID;
-const tiktokCommentUsernameDataBase = dbKey.dbKey.tiktokCommentUsernameID;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -91,10 +86,23 @@ client.on('ready', () => {
             
     });
     
-    // Reload Insta every 2 hours until 14.55
-    cron.schedule('55 4-14/2 * * *', async () => {
+    // Reload Insta every hours until 22.00
+    cron.schedule('0 6-22 * * *', async () => {
 
         let response = await instaLoadClients.instaLoadClients('RES');
+
+        if (response.length >= 1){
+            for (let i = 0; i < response.length; i++){
+                await client.sendMessage('6281235114745@c.us', response[i].data);
+            }
+        }
+
+    });
+
+    // Reload Tiktok every hours until 22
+    cron.schedule('55 6-21 * * *', async () => {
+
+        let response = await tiktokLoadClients.tiktokLoadClients('RES');
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -116,7 +124,8 @@ client.on('qr', qr => {
 client.on('message', async (msg) => {
 
     const newClientOrder = ['newclientres', 'newclientcom' ];
-    const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan', 'satfung'];
+    const updateUserData = ['addnewuser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan', 'satfung', 
+        'status', 'idkey', 'deleteuser'];
     const dataOrder = ['menu', 'mydata', 'instacheck', 'tiktokcheck', 'clientstate'];
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
@@ -132,11 +141,10 @@ client.on('message', async (msg) => {
             const contact = await msg.getContact();
             const chat = await msg.getChat();
             chat.sendSeen();
-
-            console.log(contact.pushname+" ===>>>> "+msg.body);
-
             if (contact.pushname !== undefined){
-                    
+
+                console.log(contact.pushname+" ===>>>> "+msg.body);
+
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
              
@@ -154,14 +162,10 @@ client.on('message', async (msg) => {
                                 shortcode = url[0].split('/').pop();
                             }
 
-                            console.log(shortcode);
-                                             
                             //Report Likes from Insta Official
-                        
                             let response = await instaSW.instaSW(contact.number, shortcode);
                         
                             if (response.code === 200){
-                                console.log(response.data);
                                 client.sendMessage(msg.from, response.data);
                             } else {
                                 console.log(response.data);
@@ -184,30 +188,51 @@ client.on('message', async (msg) => {
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
             
                 if (newClientOrder.includes(splittedMsg[1].toLowerCase())){//const newClientOrder = ['newclientres', 'newclientcom' ];
-                    
+                    //ClientName#newclientres/newclientcom#linkspreadsheet
                     if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
                         //Is contains Links
                         if (splittedMsg[1].toLowerCase() === "newclientres"){
                             //Res Request
-                            let response = await newClientRes.newClientRes(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
+                            console.log('Push User Client Triggered');
+
+                            if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+    
+                                console.log("Link True");
+    
+                                let response;
                             
-                            if (response.code === 200){
-                                console.log(response.message);
-                                client.sendMessage(msg.from, response.message);
-                            } else {
-                                console.log(response.message);
-                            }      
+                                console.log(splittedMsg[1].toUpperCase()+" Triggered");
+    
+                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[3], "RES");
+                                
+                                if (response.code === 200){
+                                    console.log(response.data);
+                                    client.sendMessage(msg.from, response.data);
+                                } else {
+                                    console.log(response.data);
+                                }                          
+                            }  
                         
                         }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
-                            //Company Request
-                            let response = await dataBase.newClientCom(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
+                            //Company Request                            console.log('Push User Client Triggered');
+
+                            if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+    
+                                console.log("Link True");
+    
+                                let response;
                             
-                            if (response.code === 1){
-                                console.log(response.message);
-                                client.sendMessage(msg.from, response.message);
-                            } else {
-                                console.log(response.message);
-                            }                          
+                                console.log(splittedMsg[1].toUpperCase()+" Triggered");
+    
+                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[3], "COM");
+                                
+                                if (response.code === 200){
+                                    console.log(response.data);
+                                    client.sendMessage(msg.from, response.data);
+                                } else {
+                                    console.log(response.message);
+                                }                          
+                            }  
                         
                         }
                     } else {
@@ -217,237 +242,218 @@ client.on('message', async (msg) => {
 
                     }       
                 //Update Data         
-                } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){//const updateUserData = ['adduser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
-                    if (splittedMsg[1].toLowerCase() === 'adduser'){ 
+                } else if (updateUserData.includes(splittedMsg[1].toLowerCase())){//const updateUserData = ['addnewuser', 'editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok'];
+                    //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
+                    if (splittedMsg[1].toLowerCase() === 'addnewuser'){ 
                         //Check Between Corporate And Organizations
-                        if(splittedMsg.length > 6){                   
                         
-                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
-                            splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase(), userDataBase);
-                            
-                            if(response.code === 1){
-                                console.log(response.message);
-                                client.sendMessage(msg.from, response.message);
-                            } else {
-                                console.log(response.message);
-                            }                          
-                        
-                        } else {
-                        
-                            let response = await dataBase.addUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
-                            splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), null, userDataBase);
-                        
-                            if(response.code === 1){
-                                console.log(response.message);
-                                client.sendMessage(msg.from, response.message);
-                            } else {
-                                console.log(response.message);
-                            }
-                       
-                        }
-                    } else if (splittedMsg[1].toLowerCase() === 'editdivisi' || splittedMsg[1].toLowerCase() === 'satfung') {
-                        //update Divisi Name
-                        let response = await dataBase.editDivisi(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
-                        msg.from.replace('@c.us', ''), userDataBase);
+                        let response = await addNewUser.addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                        splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase());
                         
                         if(response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
+                        }                          
+            
+                    } else if (splittedMsg[1].toLowerCase() === 'editdivisi' || splittedMsg[1].toLowerCase() === 'satfung') {
+                        //update Divisi Name
+                    //clientName#editdivisi/satfung#id_key/NRP#newdata
+                    let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
+                        
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.message);
-                        }
+                        }   
 
                     } else if (splittedMsg[1].toLowerCase() === 'editjabatan' || splittedMsg[1].toLowerCase() === 'jabatan') {
                         //Update Jabatan
-                        let response = await dataBase.editJabatan(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
-                        msg.from.replace('@c.us', ''), userDataBase);
+                        //clientName#editjabatan/jabatan#id_key/NRP#newdata
+                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
                         
-                        if(response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.message);
-                        }
+                        }   
+                    } else if (splittedMsg[1].toLowerCase() === 'editnama' || splittedMsg[1].toLowerCase() === 'nama') {
+                        //clientName#editnama/nama#id_key/NRP#newdata
+                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
+                        
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.message);
+                        }   
 
-                    } else if (splittedMsg[1].toLowerCase() === 'editnama') {
+                    } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
                         //Update Nama
-                        let response = await dataBase.editNama(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
-                        msg.from.replace('@c.us', ''), userDataBase);
+                        //clientName#deleteuser#id_key/NRP#newdata
+                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(), false, splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "STATUS");
                         
-                        if(response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.message);
-                        }
+                        }   
 
                     } else if (splittedMsg[1].toLowerCase() === 'updateinsta' || splittedMsg[1].toLowerCase() === 'ig') {
                         //Update Insta Profile
-                        if (splittedMsg[3].includes('instagram.com')){
+                        //CLientName#updateinsta/ig/#linkprofileinstagram
+                            if (splittedMsg[3].includes('instagram.com')){
 
-                            if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
-                        
-                                let response = await dataBase.updateInsta(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3], 
-                                msg.from.replace('@c.us', ''), userDataBase);
-                        
-                                if(response.code === 1){
-                                    console.log(response.message);
-                                    client.sendMessage(msg.from, response.message);
+                                if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
+    
+                                    const instaLink = splittedMsg[3].split('?')[0];
+        
+                                    const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
+                            
+                                    let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, 
+                                    msg.from.replace('@c.us', ''), "INSTA");
+                                
+                                    if(response.code === 200){
+                                        console.log(response.message);
+                                        client.sendMessage(msg.from, response.message);
+                                    } else {
+                                        console.log(response.message);
+                                    }                                   
+                            
                                 } else {
-                                    console.log(response.message);
-                                }                                   
-                        
+                                    console.log('Bukan Link Profile Instagram');
+                                    client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                                }
+                            
                             } else {
                                 console.log('Bukan Link Profile Instagram');
                                 client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                             }
-                        
-                        } else {
-                            console.log('Bukan Link Profile Instagram');
-                            client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
-                        }
 
                     } else if (splittedMsg[1].toLowerCase() === 'updatetiktok' || splittedMsg[1].toLowerCase() === 'tiktok') {
                         //Update Tiktok profile
-                        if (splittedMsg[3].includes('tiktok.com')){                    
+                        //CLientName#updatetiktok/tiktok/#linkprofiletiktok
+
+                        if (splittedMsg[3].includes('tiktok.com')){
+
+                            const tiktokLink = splittedMsg[3].split('?')[0];
+
+                            const tiktokUsername = tiktokLink.split('/').pop();  
+                    
+                            let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, 
+                            msg.from.replace('@c.us', ''), "TIKTOK");
                         
-                            let response = await dataBase.updateTiktok(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3],
-                            msg.from.replace('@c.us', ''), userDataBase);
-                        
-                            if (response.code === 1){
+                            if(response.code === 200){
                                 console.log(response.message);
                                 client.sendMessage(msg.from, response.message);
                             } else {
                                 console.log(response.message);
-                            }                             
-                        
+                            }                                   
+
                         } else {
-                    
                             console.log('Bukan Link Profile Tiktok');
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
-
-                        }
+                        }      
                     }
                 //Data Order
                 } else if (dataOrder.includes(splittedMsg[1].toLowerCase())){//const dataOrder = ['mydata','instacheck', 'tiktokcheck', 'clientstate'];
                     if (splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
-                        let response = await checkData.instaCheck(splittedMsg[0].toUpperCase(), userDataBase);
-                        
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
-                        } else {
-                            console.log(response.message);
-                        }
 
                     } else if (splittedMsg[1].toLowerCase() === 'tiktokcheck') {
                         //Checking If User hasn't update Tiktok Profile
-                        let response = await checkData.tiktokCheck(splittedMsg[0].toUpperCase(), userDataBase);
                         
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
-                        } else {
-                            console.log(response.message);
-                        }
-
                     } else if (splittedMsg[1].toLowerCase() === 'mydata'){
                         //User Checking myData
-                        let response = await query.myData(splittedMsg[0].toUpperCase(), splittedMsg[2], userDataBase);
+                        let response = await checkMyData.checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
                         
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
                         }
 
                     } else if (splittedMsg[1].toLowerCase() === 'clientstate'){
-                        //User Checking myData
-                        let response = await dataBase.setClientState(splittedMsg[0].toUpperCase(), splittedMsg[2], clientDataBase);
-
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
-                        } else {
-                            console.log(response.message);
-                        }                    
-
+                   
                     }
                 //Reload Data       
                 } else if (reloadOrder.includes(splittedMsg[1].toLowerCase())){//const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing'];
                     if (splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
                         //Reload Likes from Insta Official
-                        let response = await instaReload.reloadInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
-                        instaOfficialDataBase, instaLikesUsernameDataBase);
-                        
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                        //ClientName#reloadinstalikes
+                        response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
+                                    
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.message);
-                        }
+                        } 
 
                     } else if (splittedMsg[1].toLowerCase() === 'reloadtiktokcomments') {
                         //Reload Comments from Tiktok Official
-                        let response = await tiktokReload.reloadTiktokComments(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
-                        tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
-                        
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                        //ClientName#reloadtiktokcomments
+                        response = await collectTiktokComments.collectTiktokComments(splittedMsg[0].toUpperCase());
+                                    
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.message);
-                        }               
+                        }  
 
                     } else if (splittedMsg[1].toLowerCase() === 'reloadallinsta'){
-                        let response = await clientLoad.instaLoadClient(clientDataBase);
+                        //Cicero#reloadallinsta
+
+                        let response = await instaLoadClients.instaLoadClients('RES');
 
                         if (response.length >= 1){
                             for (let i = 0; i < response.length; i++){
-
-                                await client.sendMessage(msg.from, response[i].message);
+                                await client.sendMessage(msg.from, response[i].data);
                             }
-                        }
+                        }           
+
                     } else if (splittedMsg[1].toLowerCase() === 'reloadalltiktok'){
-
-                        let response = await clientLoad.tiktokLoadClient(clientDataBase);
+                        //Cicero#reloadalltiktok                        
+                        let response = await tiktokLoadClients.tiktokLoadClients('RES');
 
                         if (response.length >= 1){
                             for (let i = 0; i < response.length; i++){
-
-                                await client.sendMessage(msg.from, response[i].message);
+                                await client.sendMessage(msg.from, response[i].data);
                             }
-                        }
+                        } 
                     }
                 //Reporting
                 } else if (reportOrder.includes(splittedMsg[1].toLowerCase())){//const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportstorysharing'];
                     if (splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
-                        let response = await instaReport.reportInstaLikes(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
-                        instaOfficialDataBase, instaLikesUsernameDataBase);
-                        
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                        //ClientName#reportinstalikes
+                        response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
+                                    
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.message);
-                        }                      
+                        }  
 
                     } else if (splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
                         //Report Comments from Tiktok Official
-                        let response = await tiktokReport.reportTiktokComments(splittedMsg[0].toUpperCase(), userDataBase, clientDataBase, 
-                        tiktokOfficialDataBase, tiktokCommentUsernameDataBase);
-                        
-                        if (response.code === 1){
-                            console.log(response.message);
-                            client.sendMessage(msg.from, response.message);
+                        //ClientName#reporttiktokcomments
+                        let response = await reportTiktokComments.reportTiktokComments(splittedMsg[0].toUpperCase());
+
+                        if (response.code === 200){
+                            client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
-                        }
+                            console.log(response.data);
+                        } 
                     }
-                } else if (unitTest.includes(splittedMsg[1].toLowerCase())){//const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport', 'swtest','crontestinsta', 'crontesttiktok' ];
+                } else if (unitTest.includes(splittedMsg[1].toLowerCase())){//const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport' , 'collecttiktokengagements', 'tiktokcommentsreport', 'swtest','crontestinsta', 'crontesttiktok' ];
 
                     // WA Order newClientName#createclient
                     if(splittedMsg[1].toLowerCase() === 'createclient'){
@@ -647,18 +653,6 @@ client.on('message', async (msg) => {
                 //chat.sendSeen();
                 //chat.sendStateTyping();
                 console.log(contact.number+" ===>>>> "+msg.body);
-
-                if (contact.pushname != undefined){
-                    
-                    let body = msg.body;
-                    let url = body.match(/\bhttps?:\/\/\S+/gi);
-                    if (url != null){
-//                        console.log(contact.number+" ===>>>> "+msg.body);
-//                      let response = await waStory.waStoryInsta(msg.from, url, userDataBase, clientDataBase, waStoryDataBase);
-//                      console.log(response);
-//                      client.sendMessage(contact.number+"@c.us", response);  
-                    }
-                }
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {

@@ -18,13 +18,13 @@ const googleAuth = new JWT({
 module.exports = {
 
   //Add New User to User Data Base  
-  addNewUser: async function addNewUser(sheetName, idKey, name, divisi, jabatan, title){
+  addNewUser: async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
     try {
         
         const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth);//Google Auth
 
         await userDoc.loadInfo(); // loads document properties and worksheets
-        const userSheet = userDoc.sheetsByTitle[sheetName];
+        const userSheet = userDoc.sheetsByTitle[clientName];
 
         const userRows = await userSheet.getRows();
 
@@ -46,7 +46,7 @@ module.exports = {
             }
         }
 
-        if(divisiList.includes(userDiv)){
+        if(divisiList.includes(divisi)){
             if (!idKeyList.includes(idKey)){
 
             //Get Target Sheet Documents by Title
