@@ -22,6 +22,7 @@ module.exports = {
 
             const clientDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.clientDataID, googleAuth);//Google Auth
             await clientDoc.loadInfo(); // loads document properties and worksheets
+            
             const clientSheet = clientDoc.sheetsByTitle['ClientData'];
             const clientRows = await clientSheet.getRows();
 

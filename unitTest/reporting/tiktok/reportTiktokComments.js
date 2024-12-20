@@ -4,7 +4,7 @@ const sheetDoc = require('../../queryData/sheetDoc');
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
 module.exports = {  
-  tiktokCommentsReport: async function tiktokCommentsReport(clientName){
+  reportTiktokComments: async function reportTiktokComments(clientName){
 
     console.log("Report Tiktok Function Executed");
 
@@ -50,7 +50,7 @@ module.exports = {
 
         const tiktokOfficialDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName);
         const tiktokOfficialRows = tiktokOfficialDoc.data; 
-
+        
         let shortcodeListString = '';
 
         for (let i = 0; i < tiktokOfficialRows.length; i++){
@@ -63,9 +63,9 @@ module.exports = {
           }
         }
 
-        let tiktokUsernameDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.tiktokCommentsUsernameID, clientName);
+        let tiktokUsernameDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
         let tiktokCommentsUsernameRows = tiktokUsernameDoc.data;
-
+        
         let userCommentData = [];
         
         for (let i = 0; i < shortcodeList.length; i++){
@@ -75,7 +75,7 @@ module.exports = {
 
               const fromRows = Object.values(tiktokCommentsUsernameRows[ii].toObject());
               
-              for (let iii = 1; iii < fromRows.length; iii++){
+              for (let iii = 0; iii < fromRows.length; iii++){
                 if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
                   if(!userCommentData.includes(fromRows[iii])){
                     userCommentData.push(fromRows[iii]);
@@ -90,7 +90,7 @@ module.exports = {
         let userNotComment = [];
         let notCommentList = [];
 
-        for (let iii = 1; iii < userRows.length; iii++){
+        for (let iii = 0; iii < userRows.length; iii++){
           if(!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))){
             if(!userNotComment.includes(userRows[iii].get('ID_KEY'))){    
               userNotComment.push(userRows[iii].get('ID_KEY'));

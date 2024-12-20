@@ -150,14 +150,14 @@ module.exports = {
         for (let i = 0; i < todayItems.length; i++){
 
           let hasShortcode = false;
-          let cursorNumber = 0;
-          let newDataUsers = [];
-          let total = 0;
+
 
           //code on the go
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++){
+
+
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]){
-              
+              let newDataUsers = [];           
               hasShortcode = true;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
 
@@ -169,8 +169,14 @@ module.exports = {
                 }
               }
 
+              let cursorNumber = 0;
+              let total = 0; 
+
               do  { 
+
                 let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
+
+                
                 let commentItems = responseComments.data.comments;       
                 
                 for (let iii = 0; iii < commentItems.length; iii++){
@@ -180,13 +186,13 @@ module.exports = {
                     }
                   }
                 }
-            
-                cursorNumber = responseComments.data.cursor;
-                total = responseComments.data.total+50;
-                
+
                 setTimeout(() => {
-                  console.log(cursorNumber+" < "+total);
-                }, 1200);
+                  console.log("Update Data "+cursorNumber+" < "+total);
+                }, 2200);
+                            
+                total = responseComments.data.total+50;
+                cursorNumber = responseComments.data.cursor;
 
               } while ( cursorNumber < total);
 
@@ -218,21 +224,23 @@ module.exports = {
             let total = 0;
             
             do {
-            
+              
               let responseComments = await tiktokAPI.tiktokCommentAPI(todayItems[i], cursorNumber);
+
+
               let commentItems = responseComments.data.comments;
               
-              console.log(commentItems);
               for (let iii = 0; iii < commentItems.length; iii++){
                 newDataUsers.push(commentItems[iii].user.unique_id);             
               }
-              //Add new Row
-              cursorNumber = responseComments.data.cursor;
-              total = responseComments.data.total+50;
 
               setTimeout(() => {
                 console.log(cursorNumber+" < "+total);
-              }, 1200);
+              }, 2200);
+
+              total = responseComments.data.total+50;
+
+              cursorNumber = responseComments.data.cursor;
             
             } while (cursorNumber < total);
 

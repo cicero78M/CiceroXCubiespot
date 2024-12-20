@@ -198,7 +198,7 @@ module.exports = {
                   //Add new Row
                   await instaLikesUsernameSheet.addRow(userNameList);
                   newData++;
-                  console.log(clientName+'\n\nInsert new data'+todayItems[i]);
+                  console.log(clientName+'\n\nInsert new data '+todayItems[i]);
 
                 }
               }

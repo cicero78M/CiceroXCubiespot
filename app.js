@@ -11,7 +11,6 @@ const instaReload = require('./src/scrapper/instalikesreload');
 const instaReport = require('./src/reporting/instalikesreport');
 const tiktokReport = require('./src/reporting/tiktokcommentsreport');
 const tiktokReload = require('./src/scrapper/tiktocommentreload');
-const waStory = require('./src/scrapper/wastory');
 const clientLoad = require('./src/database/clientLoad');
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
@@ -25,12 +24,14 @@ const cron = require('node-cron');
 const createClient = require('./unitTest/database/newClient/createClient');
 const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
 const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
-const editProfile = require('./unitTest/database/editData/userData/editProfile');
+const editProfile = require('./unitTest/database/editData/userData/editUserProfile');
 const pushUserClient = require('./unitTest/database/newClient/pushUserClient');
 const updateUsername = require('./unitTest/database/editData/userData/updateUsername');
 const collectTiktokComments = require('./unitTest/collecting/tiktok/collectTiktokEngagements');
-const tiktokCommentsReport = require('./unitTest/reporting/tiktok/reportTiktokComments');
 const instaSW = require('./unitTest/collecting/whatsapp/instaSW');
+const instaLoadClients = require('./unitTest/bridge/instaLoadClients');
+const tiktokLoadClients = require('./unitTest/bridge/tiktokLoadClients.js');
+const reportTiktokComments = require('./unitTest/reporting/tiktok/reportTiktokComments.js');
  
 const port = 3007;
 
@@ -40,7 +41,6 @@ const instaOfficialDataBase = dbKey.dbKey.instaOfficialID;
 const instaLikesUsernameDataBase = dbKey.dbKey.instaLikesUsernameID;
 const tiktokOfficialDataBase = dbKey.dbKey.tiktokOfficialID;
 const tiktokCommentUsernameDataBase = dbKey.dbKey.tiktokCommentUsernameID;
-const waStoryDataBase = dbKey.dbKey.waStoryID;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -93,35 +93,15 @@ client.on('ready', () => {
     
     // Reload Insta every 2 hours until 14.55
     cron.schedule('55 4-14/2 * * *', async () => {
-        let response = await clientLoad.instaLoadClient(clientDataBase);
+
+        let response = await instaLoadClients.instaLoadClients('RES');
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
-                await client.sendMessage('6281235114745@c.us', response[i].message);
+                await client.sendMessage('6281235114745@c.us', response[i].data);
             }
         }
-    });
 
-    // Reload every 1 hours after 15 until 21
-    cron.schedule('55 15-21 * * *', async () => {
-        let response = await clientLoad.instaLoadClient(clientDataBase);
-
-        if (response.length >= 1){
-            for (let i = 0; i < response.length; i++){
-                await client.sendMessage('6281235114745@c.us', response[i].message);
-            }
-        }
-    });
-
-    // Reload Tiktok every 1 hours until 14.55
-    cron.schedule('50 5-21 * * *', async () => {
-        let response = await clientLoad.tiktokLoadClient(clientDataBase);
-
-        if (response.length >= 1){
-            for (let i = 0; i < response.length; i++){
-                await client.sendMessage('6281235114745@c.us', response[i].message);
-            }
-        }
     });
 
 });
@@ -141,12 +121,13 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport', 'swtest' ];
+    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport', 'swtest','crontestinsta', 'crontesttiktok' ];
     const editdata = ['id_key', 'nama', 'title', 'jabatan', 'divisi', 'status'];
     const updateUser = ['updateinstausername','updatetiktokusername' ];
 
     try {
         if (msg.isStatus){
+            
             //If Msg is WA Story
             const contact = await msg.getContact();
             const chat = await msg.getChat();
@@ -189,6 +170,7 @@ client.on('message', async (msg) => {
                     }
                 }
             }
+
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
@@ -465,7 +447,8 @@ client.on('message', async (msg) => {
                             console.log(response.message);
                         }
                     }
-                } else if (unitTest.includes(splittedMsg[1].toLowerCase())){
+                } else if (unitTest.includes(splittedMsg[1].toLowerCase())){//const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport', 'swtest','crontestinsta', 'crontesttiktok' ];
+
                     // WA Order newClientName#createclient
                     if(splittedMsg[1].toLowerCase() === 'createclient'){
 
@@ -532,10 +515,9 @@ client.on('message', async (msg) => {
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'tiktokcommentsreport') {
                         //Report Likes from Insta Official
-                        let response = await tiktokCommentsReport.tiktokCommentsReport(splittedMsg[0].toUpperCase());
+                        let response = await reportTiktokComments.reportTiktokComments(splittedMsg[0].toUpperCase());
                         
                         if (response.code === 200){
-                            console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
@@ -569,8 +551,27 @@ client.on('message', async (msg) => {
                                 } 
                             }
                         }
+                    } else if (splittedMsg[1].toLowerCase() === 'crontestinsta') {
+
+                        let response = await instaLoadClients.instaLoadClients('RES');
+
+                        if (response.length >= 1){
+                            for (let i = 0; i < response.length; i++){
+                                await client.sendMessage(msg.from, response[i].data);
+                            }
+                        }           
+                    } else if (splittedMsg[1].toLowerCase() === 'crontesttiktok') {
+
+                        let response = await tiktokLoadClients.tiktokLoadClients('RES');
+
+                        if (response.length >= 1){
+                            for (let i = 0; i < response.length; i++){
+                                await client.sendMessage(msg.from, response[i].data);
+                            }
+                        }           
                     } 
-                } else if (editdata.includes(splittedMsg[1].toLowerCase())){
+                    
+                } else if (editdata.includes(splittedMsg[1].toLowerCase())){//const editdata = ['id_key', 'nama', 'title', 'jabatan', 'divisi', 'status'];
                         
                     //Report Likes from Insta Official
                     let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), splittedMsg[1].toUpperCase());
@@ -582,8 +583,8 @@ client.on('message', async (msg) => {
                         console.log(response.message);
                     }   
                 
-                } else if (updateUser.includes(splittedMsg[1].toLowerCase())){
-                    
+                } else if (updateUser.includes(splittedMsg[1].toLowerCase())){//const updateUser = ['updateinstausername','updatetiktokusername' ];
+
                     if (splittedMsg[1].toLowerCase() === 'updateinstausername') {
                         //Update Insta Profile
                         if (splittedMsg[3].includes('instagram.com')){
@@ -637,9 +638,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                         }                     
                     }
-                }
-                
-               
+                }              
                 //if(splittedMsg[1].toLowerCase()......
             } else {
                 //Regular Messages
