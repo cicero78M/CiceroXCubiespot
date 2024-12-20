@@ -214,7 +214,9 @@ client.on('message', async (msg) => {
                             }  
                         
                         }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
-                            //Company Request                            console.log('Push User Client Triggered');
+                            //Company Request 
+                            
+                            console.log('Push User Client Triggered');
 
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
     
