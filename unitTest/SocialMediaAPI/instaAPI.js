@@ -80,6 +80,40 @@ module.exports = {
         
             return data;  
         }
+    },
+
+    instaPostInfoAPI : async function instaPostInfoAPI(key){
+      //Insta Post API
+      let options = {
+        method: 'GET',
+        url: ciceroKey.instaKey.instapostInfo,
+        params: {
+          code_or_id_or_url: key,
+          include_insights: 'false'},
+        headers: headers
+      };
+    
+      try {
+       
+        let response = await axios.request(options);
+       
+        let data = {
+            data : response.data,
+            code : 200,
+            state : true
+        }
+        
+        
+        return data;      
+    } catch (error) {
+        let data = {
+            data : error,
+            code : 303,
+            state : false
+        }
+        
+    
+        return data;        }
     }
 
 }

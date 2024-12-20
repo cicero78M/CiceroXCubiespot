@@ -30,6 +30,7 @@ const pushUserClient = require('./unitTest/database/newClient/pushUserClient');
 const updateUsername = require('./unitTest/database/editData/userData/updateUsername');
 const collectTiktokComments = require('./unitTest/collecting/tiktok/collectTiktokEngagements');
 const tiktokCommentsReport = require('./unitTest/reporting/tiktok/reportTiktokComments');
+const instaSW = require('./unitTest/collecting/whatsapp/instaSW');
  
 const port = 3007;
 
@@ -140,7 +141,7 @@ client.on('message', async (msg) => {
     const reloadOrder = ['reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok'];
     const reportOrder = ['reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
 
-    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport' ];
+    const unitTest = ['createclient', 'pushclientuser', 'collectinstalikes', 'instalikesreport', , 'collecttiktokengagements', 'tiktokcommentsreport', 'swtest' ];
     const editdata = ['id_key', 'nama', 'title', 'jabatan', 'divisi', 'status'];
     const updateUser = ['updateinstausername','updatetiktokusername' ];
 
@@ -526,6 +527,35 @@ client.on('message', async (msg) => {
                         } else {
                             console.log(response.data);
                         } 
+                    } else if (splittedMsg[1].toLowerCase() === 'swtest') {
+
+                        if (splittedMsg[2].includes('instagram.com')){
+
+                            if (splittedMsg[2].includes('/p/') || splittedMsg[2].includes('/reels/') || splittedMsg[2].includes('/video/') ){
+                               
+                                let rawLink;
+                                
+                                if(splittedMsg[2].includes('/?')){
+                                    rawLink = splittedMsg[2].replaceAll('/?', '?');
+                                    shortcode = rawLink.split('?')[0].split('/').pop();
+                                } else {
+                                    shortcode = splittedMsg[2].split('/').pop();
+                                }
+
+                                console.log(shortcode);
+                                                 
+                                //Report Likes from Insta Official
+                            
+                                let response = await instaSW.instaSW(msg.from.replaceAll('@c.us', ''), shortcode);
+                            
+                                if (response.code === 200){
+                                    console.log(response.data);
+                                    client.sendMessage(msg.from, response.data);
+                                } else {
+                                    console.log(response.data);
+                                } 
+                            }
+                        }
                     } 
                 } else if (editdata.includes(splittedMsg[1].toLowerCase())){
                         

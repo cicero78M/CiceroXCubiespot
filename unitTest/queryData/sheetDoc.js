@@ -27,8 +27,6 @@ module.exports = {
       const sheetTitle = dataDoc.sheetsByTitle[clientName];
     
       let data = await sheetTitle.getRows();
-
-      console.log(data);      
       
       let response = {
         data : data,
