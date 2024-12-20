@@ -36,11 +36,11 @@ module.exports = {
   
       const instaLikesUsernameDoc= new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth);//Google Authentication for instaLikes Username DB
       
-      let response = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData', );
+      let clientResponse = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData', );
 
-      if (response.state){
+      if (clientResponse.state){
 
-        let clientRows = response.data;
+        let clientRows = clientResponse.data;
 
         for (let i = 0; i < clientRows.length; i++){
           if (clientRows[i].get('CLIENT_ID') === clientName){
@@ -54,7 +54,6 @@ module.exports = {
 
         if (isClientID && isStatus === "TRUE"){    
           //Collect Content Shortcode from Official Account
-
           let hasContent = false;
           let itemByDay = [];
           let todayItems = [];
@@ -71,20 +70,19 @@ module.exports = {
               let itemDate = new Date(postItems[i].taken_at*1000);
               
               if(itemDate.toLocaleDateString('id') === localDate){
-    
                 hasContent = true;
                 itemByDay.push(postItems[i]);
-                todayItems.push(postItems[i].code);
-    
+                todayItems.push(postItems[i].code);    
               }    
             }
+
+            console.log(itemByDay);
 
             if(hasContent){
 
               console.log(clientName+" Insta Official Account Has Content");
               
               await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-    
               const officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
               const officialInstaData = await officialInstaSheet.getRows();
               
@@ -108,8 +106,7 @@ module.exports = {
               let shortcodeNewCounter = 0;
     
               //If Database Contains Shortcode 
-              if(hasShortcode){
-    
+              if(hasShortcode){    
                 for (let i = 0; i < itemByDay.length; i++){
                   for (let ii = 0; ii < officialInstaData.length; ii++){
                     if(officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code){
@@ -152,7 +149,6 @@ module.exports = {
                 for (let ii = 0; ii < instaLikesUsernameData.length; ii++){
                   if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]){
                     hasShortcode = true;
-                    updateData++;
     
                     const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
                     
@@ -175,10 +171,12 @@ module.exports = {
                           newDataUsers.push(likesItems[iii].username);
                         }
                       }
-                    }               
+                    }          
+
                     await instaLikesUsernameData[ii].delete();
                     await instaLikesUsernameSheet.addRow(newDataUsers);
                     console.log(clientName+' Update data '+todayItems[i]);
+                    updateData++;
 
                   }
                 }
@@ -202,6 +200,7 @@ module.exports = {
 
                 }
               }
+              
               let responseData = {
                 data : clientName+'\n\nSucces Reload Insta Data : '+todayItems.length+'\n\nNew Content : '+newData+'\nUpdate Content : '+updateData,
                 state : true,
