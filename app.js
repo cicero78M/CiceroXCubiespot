@@ -212,7 +212,6 @@ client.on('message', async (msg) => {
                                     console.log(response.data);
                                 }                          
                             }  
-                        
                         }  else if (splittedMsg[1].toLowerCase() === "newclientcom"){
                             //Company Request 
                             
@@ -235,7 +234,6 @@ client.on('message', async (msg) => {
                                     console.log(response.message);
                                 }                          
                             }  
-                        
                         }
                     } else {
                         
