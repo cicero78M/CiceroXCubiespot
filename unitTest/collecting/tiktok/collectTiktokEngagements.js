@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const tiktokAPI = require('../../SocialMediaAPI/tiktokAPI');
 const sheetDoc = require('../../queryData/sheetDoc');
+const { isArray } = require('util');
 
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
@@ -66,7 +67,7 @@ module.exports = {
           items = responseContent.data.itemList;
         }
 
-        console.log(items);
+        console.log(items.isArray());
         
         let hasContent = false;
         let itemByDay = [];
