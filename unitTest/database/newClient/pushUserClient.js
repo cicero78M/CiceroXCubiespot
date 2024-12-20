@@ -27,6 +27,7 @@ module.exports = {
     try {
       //Insert New Sheet
       const sourceID = sourceFile.split('/').pop(); //Get Last Segment of Links    
+      
       const userDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.userDataID, googleAuth); //Google Auth
 
       const sourceDoc = new GoogleSpreadsheet(sourceID, googleAuth); //Google Auth
@@ -58,7 +59,7 @@ module.exports = {
       await userSheet.addRows(userData);
 
       let responseData = {
-        message : 'Adding '+clientName+ ' as Client, and post user data to DB Client',
+        data : 'Adding '+clientName+ ' as Client, and post user data to DB Client',
         state : true,
         code : 200
       }
@@ -73,7 +74,7 @@ module.exports = {
       console.log(error);
       
       let responseData = {
-        message : 'Adding User Data List Error',
+        data : 'Adding User Data List Error',
         state : false,
         code : 303
       }

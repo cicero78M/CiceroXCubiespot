@@ -121,7 +121,6 @@ module.exports = {
 
         console.log('Return Success');
         userDoc.delete;
-
         return responseData;
       
       }

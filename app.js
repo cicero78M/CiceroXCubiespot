@@ -2,16 +2,7 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const dbKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
-
-const dataBase = require('./src/database/database');
-const query = require('./src/database/myData');
-const checkData = require('./src/database/checkData');
-const instaReload = require('./src/scrapper/instalikesreload');
-const instaReport = require('./src/reporting/instalikesreport');
-const tiktokReport = require('./src/reporting/tiktokcommentsreport');
-const tiktokReload = require('./src/scrapper/tiktocommentreload');
-const clientLoad = require('./src/database/clientLoad');
+const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
 const { Client , LocalAuth } = require('whatsapp-web.js');
 
@@ -35,7 +26,7 @@ const reportTiktokComments = require('./unitTest/reporting/tiktok/reportTiktokCo
 const addNewUser = require('./unitTest/database/editData/userData/addNewUser.js');
 const checkMyData = require('./unitTest/database/checkMyData.js');
  
-const port = 3007;
+const port = ciceroKey.port;
 
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
@@ -43,7 +34,7 @@ app.listen(port, () => {
 
 const client = new Client({
     authStrategy: new LocalAuth({
-        clientId: "Client_Name",
+        clientId: ciceroKey.waSession,
     }),
 });
 
@@ -198,12 +189,10 @@ client.on('message', async (msg) => {
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
     
                                 console.log("Link True");
-    
-                                let response;
                             
                                 console.log(splittedMsg[1].toUpperCase()+" Triggered");
     
-                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
+                                let response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
                                 
                                 if (response.code === 200){
                                     console.log(response.data);
@@ -220,12 +209,10 @@ client.on('message', async (msg) => {
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
     
                                 console.log("Link True");
-    
-                                let response;
-                            
+                                
                                 console.log(splittedMsg[1].toUpperCase()+" Triggered");
     
-                                response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
+                                let response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
                                 
                                 if (response.code === 200){
                                     console.log(response.data);
@@ -238,7 +225,7 @@ client.on('message', async (msg) => {
                     } else {
                         
                         console.log('Bukan Spreadsheet Links');
-                        client.sendMessage(contact.number+"@c.us", 'Bukan Spreadsheet Links');
+                        client.sendMessage(msg.from, 'Bukan Spreadsheet Links');
 
                     }       
                 //Update Data         
@@ -433,7 +420,7 @@ client.on('message', async (msg) => {
                     if (splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
                         //ClientName#reportinstalikes
-                        response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
+                        response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 200){
                             console.log(response.data);
