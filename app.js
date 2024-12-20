@@ -218,7 +218,7 @@ client.on('message', async (msg) => {
                                 console.log(response.data);
                                 client.sendMessage(msg.from, response.data);
                             } else {
-                                console.log(response.message);
+                                console.log(response.data);
                             }                          
                         } else {
                     
@@ -236,7 +236,7 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
                         } 
                     } else if (splittedMsg[1].toLowerCase() === 'reloadtiktokcomments') {
                         //Reload Comments from Tiktok Official
@@ -247,7 +247,7 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
@@ -258,7 +258,7 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
                         //Report Comments from Tiktok Official
@@ -328,7 +328,7 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
                         }   
 
                     } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
@@ -406,7 +406,7 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
                         }   
 
                     } else if (splittedMsg[1].toLowerCase() === 'editjabatan' || splittedMsg[1].toLowerCase() === 'jabatan') {
@@ -418,7 +418,7 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'editnama' || splittedMsg[1].toLowerCase() === 'nama') {
                         //clientName#editnama/nama#id_key/NRP#newdata
@@ -428,7 +428,15 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            console.log(response.message);
+                            console.log(response.data);
+                        }   
+                    } else if (splittedMsg[1].toLowerCase() === 'mydata'){
+                        let response = await checkMyData.checkMyData(splittedMsg[1].toUpperCase(), splittedMsg[2]);
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
                         }   
                     }
 
