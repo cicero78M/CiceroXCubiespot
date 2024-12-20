@@ -283,7 +283,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
                         //Update Nama
                         //clientName#deleteuser#id_key/NRP#newdata
-                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(), false, splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "STATUS");
+                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(), false, null, msg.from.replace('@c.us', ''), "STATUS");
                         
                         if (response.code === 200){
                             console.log(response.data);
