@@ -67,7 +67,7 @@ module.exports = {
           items = responseContent.data.itemList;
         }
 
-        console.log(items.isArray());
+        console.log(Array.isArray(items));
         
         let hasContent = false;
         let itemByDay = [];
