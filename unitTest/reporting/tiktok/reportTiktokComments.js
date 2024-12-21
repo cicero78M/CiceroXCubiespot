@@ -63,90 +63,105 @@ module.exports = {
           }
         }
 
-        let tiktokUsernameDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
-        let tiktokCommentsUsernameRows = tiktokUsernameDoc.data;
-        
-        let userCommentData = [];
-        
-        for (let i = 0; i < shortcodeList.length; i++){
-          //code on the go
-          for (let ii = 0; ii < tiktokCommentsUsernameRows.length; ii++){
-            if (tiktokCommentsUsernameRows[ii].get('SHORTCODE') === shortcodeList[i]){
 
-              const fromRows = Object.values(tiktokCommentsUsernameRows[ii].toObject());
-              
-              for (let iii = 0; iii < fromRows.length; iii++){
-                if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
-                  if(!userCommentData.includes(fromRows[iii])){
-                    userCommentData.push(fromRows[iii]);
+        if(shortcodeList.length >= 1){
+
+          let tiktokUsernameDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
+          let tiktokCommentsUsernameRows = tiktokUsernameDoc.data;
+          
+          let userCommentData = [];
+          
+          for (let i = 0; i < shortcodeList.length; i++){
+            //code on the go
+            for (let ii = 0; ii < tiktokCommentsUsernameRows.length; ii++){
+              if (tiktokCommentsUsernameRows[ii].get('SHORTCODE') === shortcodeList[i]){
+
+                const fromRows = Object.values(tiktokCommentsUsernameRows[ii].toObject());
+                
+                for (let iii = 0; iii < fromRows.length; iii++){
+                  if(fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != ""){
+                    if(!userCommentData.includes(fromRows[iii])){
+                      userCommentData.push(fromRows[iii]);
+                    }
                   }
                 }
+
               }
-
             }
           }
-        }
 
-        let userNotComment = [];
-        let notCommentList = [];
+          let userNotComment = [];
+          let notCommentList = [];
 
-        for (let iii = 0; iii < userRows.length; iii++){
-          if(!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))){
-            if(!userNotComment.includes(userRows[iii].get('ID_KEY'))){    
-              userNotComment.push(userRows[iii].get('ID_KEY'));
-              notCommentList.push(userRows[iii]);
+          for (let iii = 0; iii < userRows.length; iii++){
+            if(!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))){
+              if(!userNotComment.includes(userRows[iii].get('ID_KEY'))){    
+                userNotComment.push(userRows[iii].get('ID_KEY'));
+                notCommentList.push(userRows[iii]);
+              }
             }
           }
-        }
 
-        let dataTiktok = '';
-        let userCounter = 0;
-  
-        for (let iii = 0; iii < divisiList.length; iii++){
-        
-          let divisiCounter = 0 ;
-          let userByDivisi = '';
+          let dataTiktok = '';
+          let userCounter = 0;
+    
+          for (let iii = 0; iii < divisiList.length; iii++){
+          
+            let divisiCounter = 0 ;
+            let userByDivisi = '';
 
-          for (let iv = 0; iv < notCommentList.length; iv++){
-            if(divisiList[iii] === notCommentList[iv].get('DIVISI')){
-              userByDivisi = userByDivisi.concat('\n'+notCommentList[iv].get('TITLE') +' '+notCommentList[iv].get('NAMA')+' - '+notCommentList[iv].get('TIKTOK'));
-              divisiCounter++;
-              userCounter++;
-            }  
+            for (let iv = 0; iv < notCommentList.length; iv++){
+              if(divisiList[iii] === notCommentList[iv].get('DIVISI')){
+                userByDivisi = userByDivisi.concat('\n'+notCommentList[iv].get('TITLE') +' '+notCommentList[iv].get('NAMA')+' - '+notCommentList[iv].get('TIKTOK'));
+                divisiCounter++;
+                userCounter++;
+              }  
+            }
+            
+            if ( divisiCounter != 0){
+              dataTiktok = dataTiktok.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
+            }
           }
           
-          if ( divisiCounter != 0){
-            dataTiktok = dataTiktok.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
+          let tiktokSudah = userRows.length-notCommentList.length;
+          let responseData;
+
+          if (isClientType === "RES"){
+            responseData = {
+              data : "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Tik Tok *POLRES "+clientName
+              +"* dengan Link konten sbb ::\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
+              +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
+              state : true,
+              code : 200
+            }
+          } else if (isClientType === "RES"){
+            responseData = {
+              data : "*"+clientName+"*\n\nRekap Pelaksanaan Komentar dan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Tik Tok "+tiktokAccount
+              +" dengan Link konten sbb :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
+              +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
+              state : true,
+              code : 200
+            }
           }
+
+          console.log('Return Success');
+
+          return responseData;
+        } else {
+
+          let responseData = {
+            data : 'Tidak ada Konten Data untuk di Olah',
+            state : false,
+            code : 303
+          }
+  
+          console.log('Return Success');
+  
+          return responseData; 
+
         }
-        
-        let tiktokSudah = userRows.length-notCommentList.length;
-        let responseData;
-
-        if (isClientType === "RES"){
-          responseData = {
-            data : "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Tik Tok *POLRES "+clientName
-            +"* dengan Link konten sbb ::\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-            +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
-            +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
-            state : true,
-            code : 200
-          }
-        } else if (isClientType === "RES"){
-          responseData = {
-            data : "*"+clientName+"*\n\nRekap Pelaksanaan Komentar dan Likes Pada "+shortcodeList.length+" Konten dari akun Resmi Tik Tok "+tiktokAccount
-            +" dengan Link konten sbb :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-            +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
-            +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
-            state : true,
-            code : 200
-          }
-        }
-
-        console.log('Return Success');
-
-        return responseData;
-
       } catch (error) {
 
         let responseData = {

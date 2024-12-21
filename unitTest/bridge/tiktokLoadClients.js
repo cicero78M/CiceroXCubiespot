@@ -21,12 +21,15 @@ module.exports = {
                 responseLoad = await collectTiktokEngagements.collectTiktokComments(clientRows[i].get('CLIENT_ID'));
                             
                 if (responseLoad.code === 200){
+
                     responseList.push(responseLoad);
 
                     let responseReport = await reportTiktokComments.reportTiktokComments(clientRows[i].get('CLIENT_ID'));
                     
                     if (responseReport.code === 200){
+
                         responseList.push(responseReport);
+
                     } else {
                         console.log(responseReport.data);
                     } 

@@ -62,16 +62,15 @@ module.exports = {
         let items =[];
       
         try{
-          items = responseContent.data.data.itemList;
+          items = await responseContent.data.data.itemList;
         } catch (e){
-          items = responseContent.data.itemList;
+          items = await responseContent.data.itemList;
         }
 
-        
         let hasContent = false;
         let itemByDay = [];
         let todayItems = [];
-        
+
         if(Array.isArray(items)){
           for (let i = 0; i < items.length; i++){
             let itemDate = new Date(items[i].createTime*1000);
