@@ -25,6 +25,7 @@ const tiktokLoadClients = require('./unitTest/bridge/tiktokLoadClients.js');
 const reportTiktokComments = require('./unitTest/reporting/tiktok/reportTiktokComments.js');
 const addNewUser = require('./unitTest/database/editData/userData/addNewUser.js');
 const checkMyData = require('./unitTest/database/checkMyData.js');
+const usernameAbsensi = require('./unitTest/database/usernameAbsensi.js');
  
 const port = ciceroKey.port;
 
@@ -332,15 +333,29 @@ client.on('message', async (msg) => {
                         }   
 
                     } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
-                            //Checking If User hasn't update Insta Profile
-
+                        //Checking If User hasn't update Insta Profile
+                        let response = await usernameAbsensi.usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
+                                                            
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
+                        }  
                     } else if (splittedMsg[1].toLowerCase() === 'tiktokcheck') {
                         //Checking If User hasn't update Tiktok Profile
-                        
+                        let response = await usernameAbsensi.usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');
+                                                            
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
+                        }  
                     }
 
                 //User Order Data         
-                } else if (userOrder.includes(splittedMsg[1].toLowerCase())){//    const userOrder =['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
+                } else if (userOrder.includes(splittedMsg[1].toLowerCase())){//const userOrder =['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
                     if (splittedMsg[1].toLowerCase() === 'updateinsta' || splittedMsg[1].toLowerCase() === 'ig') {
                     //Update Insta Profile
                     //CLientName#updateinsta/ig/#linkprofileinstagram
