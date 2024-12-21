@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+import { sheetDoc } from './sheetDoc.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -11,7 +12,7 @@ export async function clientData(clientName) {
     let isClientType;
     let instaAccount;
 
-    const clientDoc =  await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData', clientName);
+    const clientDoc =  await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData', clientName);
     const clientRows = clientDoc.data;
 
     for (let i = 0; i < clientRows.length; i++){
