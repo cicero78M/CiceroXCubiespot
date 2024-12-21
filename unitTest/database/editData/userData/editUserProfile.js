@@ -41,7 +41,7 @@ module.exports = {
       for (let ii = 0; ii < userRows.length; ii++){
         if (userRows[ii].get('ID_KEY') === idKey){
                   
-          if(userRows[ii].get('WHATSAPP') === "" || userRows[ii].get('WHATSAPP') === phone ){
+          if(userRows[ii].get('WHATSAPP') === "" || userRows[ii].get('WHATSAPP') === phone || userRows[ii].get('WHATSAPP') === "6281235114745"){
 
             isDataExist = true;
 

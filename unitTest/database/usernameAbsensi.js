@@ -40,12 +40,10 @@ module.exports = {
             }
           }  
         }
-
         userString = userString.concat('\n\n'+divisiList[i]+' : '+divisiCounter+' User\n'+userByDivisi);
       }
-
+      
       let userDone = userRows.length-userCounter;
-
       let responseData = {
         data :"*"+clientName+"*\n\nInformasi Rekap Data username profile akun "+clientType+" sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+userRows.length+" \nJumlah User Sudah melengkapi: "+userDone+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username "+clientType+" :"+userString+"\n\n_System Administrator Cicero_",
         state : true,
@@ -53,7 +51,6 @@ module.exports = {
       }
       
       console.log('Return Success');
-
       return responseData;
 
     } catch (error) {
@@ -65,7 +62,6 @@ module.exports = {
       }
       
       console.log('Return Success');
-
       return responseData;
     }
   },
