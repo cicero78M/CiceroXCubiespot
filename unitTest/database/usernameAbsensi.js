@@ -11,7 +11,8 @@ module.exports = {
 
     try {
 
-      const userRows = await sheetDoc.sheetDoc(ciceroKey.dbKey.userDataID, clientName);
+      const userDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.userDataID, clientName);
+      const userRows = userDoc.data;
 
       let divisiList= [];
 
