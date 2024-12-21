@@ -4,6 +4,7 @@ const collectTiktokEngagements = require('../collecting/tiktok/collectTiktokEnga
 const sheetDoc = require('../queryData/sheetDoc');
 const reportTiktokComments = require('../reporting/tiktok/reportTiktokComments');
 
+
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
 module.exports = { 

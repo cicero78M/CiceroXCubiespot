@@ -14,37 +14,35 @@ const googleAuth = new JWT({
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-module.exports = {  
 
-  sheetDoc: async function sheetDoc(sheetID, clientName) {
+export async function sheetDoc(sheetID, clientName) {
 
-    try {
+  try {
 
-      const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
-      
-      await dataDoc.loadInfo(); // loads document properties and worksheets
-
-      const sheetTitle = dataDoc.sheetsByTitle[clientName];
+    const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
     
-      let data = await sheetTitle.getRows();
-      
-      let response = {
-        data : data,
-        state : true,
-        code : 200
-      }
+    await dataDoc.loadInfo(); // loads document properties and worksheets
 
-      dataDoc.delete;
-
-      return response;
+    const sheetTitle = dataDoc.sheetsByTitle[clientName];
+  
+    let data = await sheetTitle.getRows();
     
-    } catch (err){
-      let response = {
-        data : err,
-        state : false,
-        code : 303
-      }
-      return response;      
-    } 
-  }
+    let response = {
+      data : data,
+      state : true,
+      code : 200
+    }
+
+    dataDoc.delete;
+
+    return response;
+  
+  } catch (err){
+    let response = {
+      data : err,
+      state : false,
+      code : 303
+    }
+    return response;      
+  } 
 }
