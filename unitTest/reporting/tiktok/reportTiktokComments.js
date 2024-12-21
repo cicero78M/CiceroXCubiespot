@@ -153,8 +153,8 @@ module.exports = {
 
           let responseData = {
             data : 'Tidak ada Konten Data untuk di Olah',
-            state : false,
-            code : 303
+            state : true,
+            code : 200
           }
   
           console.log('Return Success');
