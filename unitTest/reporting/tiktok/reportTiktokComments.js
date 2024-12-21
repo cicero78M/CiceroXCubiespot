@@ -44,7 +44,7 @@ export async function reportTiktokComments(clientName) {
           if (itemDate.toLocaleDateString('id') === localDate) {
             if (!shortcodeList.includes(tiktokOfficialRows[i].get('SHORTCODE'))) {
               shortcodeList.push(tiktokOfficialRows[i].get('SHORTCODE'));
-              shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + tiktokAccount + '/video/' + tiktokOfficialRows[i].get('SHORTCODE'));
+              shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + clientResponse.data.tiktokAccount + '/video/' + tiktokOfficialRows[i].get('SHORTCODE'));
             }
           }
         }
