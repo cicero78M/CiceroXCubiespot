@@ -12,15 +12,15 @@ import { generate } from 'qrcode-terminal';
 import { schedule } from 'node-cron';
 
 //Unit Test
-import { createClient as _createClient } from './unitTest/database/newClient/createClient';
-import { collectInstaLikes as _collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes';
-import { reportInstaLikes as _reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes';
-import { editProfile as _editProfile } from './unitTest/database/editData/userData/editUserProfile';
-import { pushUserClient as _pushUserClient } from './unitTest/database/newClient/pushUserClient';
-import { updateUsername as _updateUsername } from './unitTest/database/editData/userData/updateUsername';
-import { collectTiktokComments as _collectTiktokComments } from './unitTest/collecting/tiktok/collectTiktokEngagements';
-import { instaSW as _instaSW } from './unitTest/collecting/whatsapp/instaSW';
-import { instaLoadClients as _instaLoadClients } from './unitTest/bridge/instaLoadClients';
+import { createClient as _createClient } from './unitTest/database/newClient/createClient.js';
+import { collectInstaLikes as _collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes.js';
+import { reportInstaLikes as _reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes.js';
+import { editProfile as _editProfile } from './unitTest/database/editData/userData/editUserProfile.js';
+import { pushUserClient as _pushUserClient } from './unitTest/database/newClient/pushUserClient.js';
+import { updateUsername as _updateUsername } from './unitTest/database/editData/userData/updateUsername.js';
+import { collectTiktokComments as _collectTiktokComments } from './unitTest/collecting/tiktok/collectTiktokEngagements.js';
+import { instaSW as _instaSW } from './unitTest/collecting/whatsapp/instaSW.js';
+import { instaLoadClients as _instaLoadClients } from './unitTest/bridge/instaLoadClients.js';
 import { tiktokLoadClients as _tiktokLoadClients } from './unitTest/bridge/tiktokLoadClients.js';
 import { reportTiktokComments as _reportTiktokComments } from './unitTest/reporting/tiktok/reportTiktokComments.js';
 import { addNewUser as _addNewUser } from './unitTest/database/editData/userData/addNewUser.js';
