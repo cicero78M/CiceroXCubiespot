@@ -96,8 +96,10 @@ module.exports = {
 
           for (let iii = 0; iii < userRows.length; iii++){
             if(!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))){
-              if(!userNotComment.includes(userRows[iii].get('ID_KEY'))){    
-                phoneList.push(userRows[iii].get('WHATSAPP'));
+              if(!userNotComment.includes(userRows[iii].get('ID_KEY'))){  
+                if(!phoneList.includes(userRows[iii].get('WHATSAPP'))){    
+                  phoneList.push(userRows[iii].get('WHATSAPP'));
+                }
                 userNotComment.push(userRows[iii].get('ID_KEY'));
                 notCommentList.push(userRows[iii]);
               }
