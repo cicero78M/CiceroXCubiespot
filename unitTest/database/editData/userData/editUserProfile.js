@@ -45,63 +45,77 @@ module.exports = {
 
             isDataExist = true;
 
-            if (type === 'DIVISI'){
-              if (dataList.includes(newData)){
-  
-                userRows[ii].assign({DIVISI: newData, WHATSAPP: phone});; // Update Divisi Value
-  
-              } else {
-  
-                let responseData = {
-                  data : 'Divisi Unregsitered',
-                  state : true,
-                  code : 200
-                }
-        
-                console.log('Return Success');
-        
-                userDoc.delete;
-  
-                return responseData;
-              }
-  
-  
-            } else if (type === 'JABATAN') {
-              userRows[ii].assign({JABATAN: newData, WHATSAPP: phone});// Update Divisi Value
-            } else if (type === 'NAMA') {
-              userRows[ii].assign({NAMA: newData, WHATSAPP: phone}); // Update Divisi Value
-            } else if (type === 'ID_KEY') {
-              userRows[ii].assign({ID_KEY: newData.toLowerCase(), WHATSAPP: phone}); // Update Divisi Value
-            } else if (type === 'TITLE') {
-  
-              if (dataList.includes(newData)){
-  
-                userRows[ii].assign({TITLE: newData, WHATSAPP: phone});// Update Divisi Value
-  
-              } else {
-  
-                let responseData = {
-                  data : 'Title Unregsitered',
-                  state : true,
-                  code : 200
-                }
-        
-                console.log('Return Success');
-        
-                userDoc.delete;
-  
-                return responseData;
-              }
-  
-            } else if (type === 'STATUS') {
-              userRows[ii].assign({STATUS: newData, WHATSAPP: phone});// Update Divisi Value
-            }
-  
-            await userRows[ii].save(); //save update
+            if(userRows[ii].get('STATUS') === "TRUE"){
 
-            let responseMyData = await checkMyData.checkMyData(clientName, idKey);
-            userDoc.delete;
-            return responseMyData;
+              if (type === 'DIVISI'){
+                if (dataList.includes(newData)){
+    
+                  userRows[ii].assign({DIVISI: newData, WHATSAPP: phone});; // Update Divisi Value
+    
+                } else {
+    
+                  let responseData = {
+                    data : 'Divisi Unregsitered',
+                    state : true,
+                    code : 200
+                  }
+          
+                  console.log('Return Success');
+          
+                  userDoc.delete;
+    
+                  return responseData;
+                }
+    
+    
+              } else if (type === 'JABATAN') {
+                userRows[ii].assign({JABATAN: newData, WHATSAPP: phone});// Update Divisi Value
+              } else if (type === 'NAMA') {
+                userRows[ii].assign({NAMA: newData, WHATSAPP: phone}); // Update Divisi Value
+              } else if (type === 'ID_KEY') {
+                userRows[ii].assign({ID_KEY: newData.toLowerCase(), WHATSAPP: phone}); // Update Divisi Value
+              } else if (type === 'TITLE') {
+    
+                if (dataList.includes(newData)){
+    
+                  userRows[ii].assign({TITLE: newData, WHATSAPP: phone});// Update Divisi Value
+    
+                } else {
+    
+                  let responseData = {
+                    data : 'Title Unregsitered',
+                    state : true,
+                    code : 200
+                  }
+          
+                  console.log('Return Success');
+          
+                  userDoc.delete;
+    
+                  return responseData;
+                }
+    
+              } else if (type === 'STATUS') {
+                userRows[ii].assign({STATUS: newData, WHATSAPP: phone});// Update Divisi Value
+              }
+    
+              await userRows[ii].save(); //save update
+
+              let responseMyData = await checkMyData.checkMyData(clientName, idKey);
+              userDoc.delete;
+              return responseMyData;
+            } else {
+
+              let responseData = {
+                data : 'Your Account Suspended',
+                state : true,
+                code : 200
+              }
+              console.log('Return Success');
+              userDoc.delete;
+              return responseData;
+
+            }
       
           } else {
             let responseData = {

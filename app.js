@@ -126,7 +126,7 @@ client.on('message', async (msg) => {
 
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama', 'editdivisi', 'editjabatan', 'ig', 'tiktok', 'jabatan']
+    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan', 'ig', 'tiktok', 'jabatan']
 
 
 
