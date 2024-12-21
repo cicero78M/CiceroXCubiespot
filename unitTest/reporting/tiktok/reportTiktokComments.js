@@ -31,7 +31,7 @@ module.exports = {
           let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
           let userRows = userDoc.data;
 
-          const tiktokOfficialDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName);
+          const tiktokOfficialDoc = await sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName);
           const tiktokOfficialRows = tiktokOfficialDoc.data; 
           
           let shortcodeListString = '';
@@ -48,7 +48,7 @@ module.exports = {
 
           if(shortcodeList.length >= 1){
 
-            let tiktokUsernameDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
+            let tiktokUsernameDoc = await sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
             let tiktokCommentsUsernameRows = tiktokUsernameDoc.data;
             
             let userCommentData = [];

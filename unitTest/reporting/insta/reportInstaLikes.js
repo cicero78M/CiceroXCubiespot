@@ -1,8 +1,7 @@
 //Google Spreadsheet
 
 const fs = require('fs');
-const sheetDoc = require('../../queryData/sheetDoc');
-
+import { sheetDoc } from '../../queryData/sheetDoc';
 const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
 
 module.exports = {  
@@ -19,7 +18,7 @@ module.exports = {
     let isStatus;
     let isType;
 
-    let clientDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+    let clientDoc = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     let clientRows = clientDoc.data;
 
     for (let i = 0; i < clientRows.length; i++){
@@ -34,7 +33,7 @@ module.exports = {
     if (isClientID && isStatus){    
       try {
 
-        let userDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.userDataID, clientName);
+        let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
         let userRows = userDoc.data;
         
         let divisiList = [];
@@ -50,7 +49,7 @@ module.exports = {
         //Collect Shortcode from Database        
         let shortcodeList = [];
 
-        const instaOfficialDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName);
+        const instaOfficialDoc = await sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName);
         const instaOfficialRows = instaOfficialDoc.data; 
 
         let shortcodeListString = '';
@@ -76,7 +75,7 @@ module.exports = {
 
         if(shortcodeList.length >= 1){
 
-          let instaLikesUsernameDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.instaLikesUsernameID, clientName);
+          let instaLikesUsernameDoc = await sheetDoc(ciceroKey.dbKey.instaLikesUsernameID, clientName);
           let instaLikesUsernameRows = instaLikesUsernameDoc.data;
 
           let userLikesData = [];

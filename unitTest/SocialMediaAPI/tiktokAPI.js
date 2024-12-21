@@ -1,8 +1,8 @@
 
-const fs = require('fs');
-const axios = require('axios');
+import { readFileSync } from 'fs';
+import { request } from 'axios';
 
-const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 const headers = {
   'x-cache-control': 'no-cache',
@@ -10,109 +10,106 @@ const headers = {
   'x-rapidapi-host': ciceroKey.tiktokKey.tiktokHost
 }
 
-module.exports = {  
+export async function tiktokUserInfoAPI(key) {
+  const options = {
+    method: 'GET',
+    url: ciceroKey.tiktokKey.tiktokhostInfo,
+    params: {
+      uniqueId: key
+    },
+    headers: headers
+  };
 
-  tiktokUserInfoAPI: async function tiktokUserInfoAPI(key){
-    const options = {
-      method: 'GET',
-      url: ciceroKey.tiktokKey.tiktokhostInfo,
-      params: {
-        uniqueId: key
-      },
-      headers: headers
+  try {
+
+    let response = await request(options);
+
+    let data = {
+      data: response.data,
+      code: 200,
+      state: true
     };
-    
-    try {
-    
-      let response = await axios.request(options);
 
-      let data = {
-        data : response.data,
-        code : 200,
-        state : true
-      }
-      
-      return data;
-    
-    } catch (error) {
-      let data = {
-        data : error,
-        code : 303,
-        state : false
-      }
-    
-      return data;      }
-  },
+    return data;
 
-  tiktokPostAPI: async function tiktokPostAPI(key, cursors){
+  } catch (error) {
+    let data = {
+      data: error,
+      code: 303,
+      state: false
+    };
+
+    return data;
+  }
+}
+export async function tiktokPostAPI(key, cursors) {
   //Tiktok Post API
-    const options = {
-      method: 'GET',
-      url: ciceroKey.tiktokKey.tiktokhostContent,
-      params: {
-        secUid: key,
-        count: '50',
-        cursor: cursors
-      },
-      headers : headers
+  const options = {
+    method: 'GET',
+    url: ciceroKey.tiktokKey.tiktokhostContent,
+    params: {
+      secUid: key,
+      count: '50',
+      cursor: cursors
+    },
+    headers: headers
+  };
+
+  try {
+
+
+    let response = await request(options);
+
+    let data = {
+      data: response.data,
+      code: 200,
+      state: true
     };
 
-    try {
-    
-      
-      let response = await axios.request(options);
+    return data;
 
-      let data = {
-        data : response.data,
-        code : 200,
-        state : true
-      }
-            
-      return data;    
-
-    } catch (error) {
-      let data = {
-        data : error,
-        code : 303,
-        state : false
-      }
-    
-      return data;      }
-  },
-
-  tiktokCommentAPI: async function tiktokCommentAPI(key, cursors){
-    //Insta Likes API
-    const options = {
-      method: 'GET',
-      url: ciceroKey.tiktokKey.tiktokhostComments,
-      params: {
-        videoId: key,
-        count: '100',
-        cursor: cursors
-      },
-      headers: headers
+  } catch (error) {
+    let data = {
+      data: error,
+      code: 303,
+      state: false
     };
-    
-    try {
 
-      let response = await axios.request(options);
+    return data;
+  }
+}
+export async function tiktokCommentAPI(key, cursors) {
+  //Insta Likes API
+  const options = {
+    method: 'GET',
+    url: ciceroKey.tiktokKey.tiktokhostComments,
+    params: {
+      videoId: key,
+      count: '100',
+      cursor: cursors
+    },
+    headers: headers
+  };
 
-      let data = {
-        data : response.data,
-        code : 200,
-        state : true
-      }
-      
-      return data;
-  
-    } catch (error) {
-      let data = {
-        data : error,
-        code : 303,
-        state : false
-      }
-    
-      return data;   
-    }
+  try {
+
+    let response = await request(options);
+
+    let data = {
+      data: response.data,
+      code: 200,
+      state: true
+    };
+
+    return data;
+
+  } catch (error) {
+    let data = {
+      data: error,
+      code: 303,
+      state: false
+    };
+
+    return data;
   }
 }

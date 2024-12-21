@@ -1,7 +1,7 @@
-const axios = require('axios');
+import { request } from 'axios';
 
-const fs = require('fs');
-const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+import { readFileSync } from 'fs';
+const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 const headers = {
   'x-cache-control': 'no-cache',
@@ -10,110 +10,105 @@ const headers = {
 }
 
 
-module.exports = {  
-
-    instaLikesAPI: async function instaLikesAPI(key){
-        //Insta Likes API
-        let options = {
-            method: 'GET',
-            url: ciceroKey.instaKey.instahostLikes,
-            params: {
+export async function instaLikesAPI(key) {
+    //Insta Likes API
+    let options = {
+        method: 'GET',
+        url: ciceroKey.instaKey.instahostLikes,
+        params: {
             code_or_id_or_url: key
-            },
-            headers: headers
+        },
+        headers: headers
+    };
+
+    try {
+        let response = await request(options);
+
+        let data = {
+            data: response.data,
+            code: 200,
+            state: true
         };
 
-        try {
-            let response = await axios.request(options);
+        return data;
 
-            let data = {
-                data : response.data,
-                code : 200,
-                state : true
-            }
-            
-            return data;        
-        
-        } catch (error) {
+    } catch (error) {
 
-            let data = {
-                data : error,
-                code : 303,
-                state : false
-            }
-            
-           return data;         
-        }
-    },
+        let data = {
+            data: error,
+            code: 303,
+            state: false
+        };
 
-    
-    instaPostAPI : async function instaPostAPI(key){
+        return data;
+    }
+}
+export async function instaPostAPI(key) {
     //Insta Post API
-        let options = {
-            method: 'GET',
-            url: ciceroKey.instaKey.instahostContent,
-            params: {
+    let options = {
+        method: 'GET',
+        url: ciceroKey.instaKey.instahostContent,
+        params: {
             username_or_id_or_url: key
-            },
-            headers: headers
+        },
+        headers: headers
+    };
+
+    try {
+        let response = await request(options);
+
+        let data = {
+            data: response.data,
+            code: 200,
+            state: true
         };
 
-        try {
-            let response = await axios.request(options);
 
-            let data = {
-                data : response.data,
-                code : 200,
-                state : true
-            }
-            
-            
-            return data;
+        return data;
 
-        } catch (error) {
-            let data = {
-                data : error,
-                code : 303,
-                state : false
-            }
-            
-        
-            return data;  
-        }
-    },
+    } catch (error) {
+        let data = {
+            data: error,
+            code: 303,
+            state: false
+        };
 
-    instaPostInfoAPI : async function instaPostInfoAPI(key){
-      //Insta Post API
-      let options = {
+
+        return data;
+    }
+}
+export async function instaPostInfoAPI(key) {
+    //Insta Post API
+    let options = {
         method: 'GET',
         url: ciceroKey.instaKey.instapostInfo,
         params: {
-          code_or_id_or_url: key,
-          include_insights: 'false'},
+            code_or_id_or_url: key,
+            include_insights: 'false'
+        },
         headers: headers
-      };
-    
-      try {
-       
-        let response = await axios.request(options);
-       
+    };
+
+    try {
+
+        let response = await request(options);
+
         let data = {
-            data : response.data,
-            code : 200,
-            state : true
-        }
-        
-        
-        return data;      
+            data: response.data,
+            code: 200,
+            state: true
+        };
+
+
+        return data;
     } catch (error) {
         let data = {
-            data : error,
-            code : 303,
-            state : false
-        }
-        
-    
-        return data;        }
-    }
+            data: error,
+            code: 303,
+            state: false
+        };
 
+
+        return data;
+    }
 }

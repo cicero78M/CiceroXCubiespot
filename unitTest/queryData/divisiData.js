@@ -1,5 +1,7 @@
-const fs = require('fs');
-const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+import { readFileSync } from 'fs';
+
+const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+
 
 export async function divisiData(clientName) {
 

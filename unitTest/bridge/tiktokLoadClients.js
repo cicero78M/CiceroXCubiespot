@@ -1,48 +1,46 @@
-const fs = require('fs');
+import { readFileSync } from 'fs';
 
-const collectTiktokEngagements = require('../collecting/tiktok/collectTiktokEngagements');
-const sheetDoc = require('../queryData/sheetDoc');
-const reportTiktokComments = require('../reporting/tiktok/reportTiktokComments');
+import { collectTiktokComments } from '../collecting/tiktok/collectTiktokEngagements';
+import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc';
+import { reportTiktokComments as _reportTiktokComments } from '../reporting/tiktok/reportTiktokComments';
 
 
-const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-module.exports = { 
-    tiktokLoadClients: async function tiktokLoadClients(typeOrg){
+export async function tiktokLoadClients(typeOrg) {
 
-        let responseList = [];
+    let responseList = [];
 
-        let clientResponse = await sheetDoc.sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-        let clientRows = clientResponse.data;
+    let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+    let clientRows = clientResponse.data;
 
-        for (let i = 0; i < clientRows.length; i++){
+    for (let i = 0; i < clientRows.length; i++) {
 
-            if(clientRows[i].get('STATUS')  === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg){
+        if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
 
-                responseLoad = await collectTiktokEngagements.collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-                            
-                if (responseLoad.code === 200){
+            responseLoad = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
 
-                    responseList.push(responseLoad);
+            if (responseLoad.code === 200) {
 
-                    let responseReport = await reportTiktokComments.reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                    
-                    if (responseReport.code === 202){
+                responseList.push(responseLoad);
 
-                        responseList.push(responseReport);
+                let responseReport = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'));
 
-                    } else {
-                        console.log(responseReport.data);
-                    } 
+                if (responseReport.code === 202) {
+
+                    responseList.push(responseReport);
 
                 } else {
-                    console.log(responseLoad.data);
-                }  
+                    console.log(responseReport.data);
+                }
 
-            } 
+            } else {
+                console.log(responseLoad.data);
+            }
+
         }
-       
-        console.log('Return Success');
-        return responseList;
-    },
+    }
+
+    console.log('Return Success');
+    return responseList;
 }
