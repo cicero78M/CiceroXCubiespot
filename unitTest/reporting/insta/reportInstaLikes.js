@@ -142,6 +142,7 @@ module.exports = {
             if ( divisiCounter != 0){
               dataInsta = dataInsta.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
             }
+            
           }
     
           let instaSudah = userRows.length-notLikesList.length;
@@ -177,13 +178,14 @@ module.exports = {
           return responseData;
 
         } else {
+          
           responseData = {
             data : "Tidak ada konten data untuk di olah",
             state : true,
             code : 200
           }
 
-          console.log('Return Success');
+          console.log('Return No Content');
           return responseData;
 
         }
@@ -195,7 +197,7 @@ module.exports = {
           code : 303
         }
 
-        console.log('Return Success');
+        console.log('Return Error');
         return responseData; 
       
       }
@@ -208,7 +210,7 @@ module.exports = {
         code : 200
       }
        
-      console.log('Return Success');
+      console.log('Return Expired ID');
       return responseData;
 
     }    
