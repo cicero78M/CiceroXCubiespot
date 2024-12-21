@@ -451,7 +451,8 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'mydata'){
-                        let response = await checkMyData.checkMyData(splittedMsg[1].toUpperCase(), splittedMsg[2]);
+                        let response = await checkMyData.checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
+
                         if (response.code === 200){
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
