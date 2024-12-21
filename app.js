@@ -90,8 +90,10 @@ client.on('ready', () => {
                     console.log(response.phone[ii]+" Mengingatkan, anda belum melaksanakan Komentar dan Likes Konten Instagram Akun Resmi.");
                     
                 }
-                await client.sendMessage('6281235114745@c.us', response[i].data);
                 */
+
+                await client.sendMessage('6281235114745@c.us', response[i].data);
+                
             }
         }
     });

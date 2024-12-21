@@ -166,7 +166,6 @@ module.exports = {
               "* dengan Link konten sbb : \n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
               +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
-              phone : phoneList,
               state : true,
               code : 202
             }
