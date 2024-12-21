@@ -46,7 +46,7 @@ module.exports = {
       let userDone = userRows.length-userCounter;
 
       let responseData = {
-        data :"*"+clientName+"*\n\nInformasi Rekap Data username profile akun "+clientType+" sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+userRows.length+" \nJumlah User Sudah melengkapi: "+userDone+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username "+clientType+" :"+dataInsta+"\n\n_System Administrator Cicero_",
+        data :"*"+clientName+"*\n\nInformasi Rekap Data username profile akun "+clientType+" sampai dengan\n\nWaktu Rekap : "+date+"\n\nDengan Rincian Data sbb:\n\nJumlah User : "+userRows.length+" \nJumlah User Sudah melengkapi: "+userDone+"\nJumlah User Belum melengkapi : "+userCounter+"\n\nRincian Data Username "+clientType+" :"+userString+"\n\n_System Administrator Cicero_",
         state : true,
         code : 200
       }
