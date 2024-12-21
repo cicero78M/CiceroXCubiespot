@@ -24,7 +24,7 @@ export async function clientData(clientName) {
         instaAccount = clientRows[i].get('INSTA');
 
         let response = {
-            data : {isClientID:isClientID, isStatus:isStatus, isClientType:isClientType, tiktokAccount:tiktokAccount, instaAccount:instaAccount},
+            data : {isClientID : isClientID, isStatus : isStatus, isClientType : isClientType, tiktokAccount : tiktokAccount, instaAccount : instaAccount},
             state : true,
             code : 200
           }

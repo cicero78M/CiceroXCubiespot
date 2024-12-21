@@ -18,6 +18,7 @@ export async function reportTiktokComments(clientName) {
 
     // If Client_ID exist. then get official content
     if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
+   
       try {
 
         let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
@@ -116,7 +117,7 @@ export async function reportTiktokComments(clientName) {
           let tiktokSudah = userRows.length - notCommentList.length;
           let responseData;
 
-          if (isClientType === "RES") {
+          if (clientResponse.data.isClientType === "RES") {
             responseData = {
               data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " + clientName
                 + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
@@ -126,7 +127,7 @@ export async function reportTiktokComments(clientName) {
               state: true,
               code: 202
             };
-          } else if (isClientType === "RES") {
+          } else if (clientResponse.data.isClientType === "COM") {
             responseData = {
               data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " + tiktokAccount
                 + " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
