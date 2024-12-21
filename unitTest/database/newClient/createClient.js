@@ -12,7 +12,7 @@
  * 
  */
 
-import { userHeaders as _userHeaders } from './createClient/userHeaders';
+import { userHeaders as _userHeaders } from './createClient/userHeaders.js';
 import { createClientID as _createClientID } from './createClient/createClientID';
 import { instaOfficialHeaders as _instaOfficialHeaders } from './createClient/instaOfficialHeaders';
 import { instaUserLikesHeaders as _instaUserLikesHeaders } from './createClient/instaUserLikesHeaders';
