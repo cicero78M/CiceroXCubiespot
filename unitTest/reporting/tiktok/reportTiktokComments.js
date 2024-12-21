@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
 import { clientData } from '../../queryData/clientData.js';
+import { divisiData } from '../../queryData/divisiData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -24,13 +25,8 @@ export async function reportTiktokComments(clientName) {
         let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
         let userRows = userDoc.data;
 
-        let divisiList = [];
-
-        for (let i = 0; i < userRows.length; i++) {
-          if (!divisiList.includes(userRows[i].get('DIVISI'))) {
-            divisiList.push(userRows[i].get('DIVISI'));
-          }
-        }
+        let divisiResponse = divisiData(clientName);
+        let divisiList = divisiResponse.data;
 
         //Collect Shortcode from Database        
         let shortcodeList = [];
