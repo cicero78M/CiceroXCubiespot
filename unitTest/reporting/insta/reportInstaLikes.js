@@ -142,7 +142,7 @@ module.exports = {
             if ( divisiCounter != 0){
               dataInsta = dataInsta.concat('\n\n*'+divisiList[iii]+'* : '+divisiCounter+' User\n'+userByDivisi);
             }
-            
+
           }
     
           let instaSudah = userRows.length-notLikesList.length;
@@ -157,7 +157,7 @@ module.exports = {
               +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
               phone : phoneList,
               state : true,
-              code : 200
+              code : 202
             }
 
           } else if(isType === "RES"){

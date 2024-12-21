@@ -26,7 +26,7 @@ module.exports = {
 
                     let responseReport = await reportTiktokComments.reportTiktokComments(clientRows[i].get('CLIENT_ID'));
                     
-                    if (responseReport.code === 200){
+                    if (responseReport.code === 202){
 
                         responseList.push(responseReport);
 

@@ -138,7 +138,7 @@ module.exports = {
               +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
               phone : phoneList,
               state : true,
-              code : 200
+              code : 202
             }
           } else if (isClientType === "RES"){
             responseData = {
@@ -148,7 +148,7 @@ module.exports = {
               +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
               phone : phoneList,
               state : true,
-              code : 200
+              code : 202
             }
           }
 

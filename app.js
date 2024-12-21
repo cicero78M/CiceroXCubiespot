@@ -241,7 +241,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
                         //Reload Likes from Insta Official
                         //ClientName#reloadinstalikes
-                        response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
+                        let response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 200){
                             console.log(response.data);
@@ -252,7 +252,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reloadtiktokcomments') {
                         //Reload Comments from Tiktok Official
                         //ClientName#reloadtiktokcomments
-                        response = await collectTiktokComments.collectTiktokComments(splittedMsg[0].toUpperCase());
+                        let response = await collectTiktokComments.collectTiktokComments(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 200){
                             console.log(response.data);
@@ -263,9 +263,9 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
                         //ClientName#reportinstalikes
-                        response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
+                        let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
                                     
-                        if (response.code === 200){
+                        if (response.code === 202){
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
