@@ -98,6 +98,10 @@ module.exports = {
             }
   
             await userRows[ii].save(); //save update
+
+            let responseMyData = await checkMyData.checkMyData(clientName, idKey);
+            userDoc.delete;
+            return responseMyData;
       
           } else {
             let responseData = {
@@ -124,13 +128,7 @@ module.exports = {
         userDoc.delete;
         return responseData;
      
-      } else {
-
-        let responseMyData = await checkMyData.checkMyData(clientName, idKey);
-        userDoc.delete;
-        return responseMyData;
-      
-      }
+      } 
 
     } catch (error) {
 
