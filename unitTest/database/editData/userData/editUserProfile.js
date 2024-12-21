@@ -101,7 +101,7 @@ module.exports = {
       
           } else {
             let responseData = {
-              data : 'Nomor Whatsapp User Tidak Sama',
+              data : 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
               state : true,
               code : 200
             }

@@ -74,14 +74,14 @@ client.on('ready', () => {
     cron.schedule('*/10 * * * *', async () =>  {     
 
         console.log('CUBIESPOT <<<System Alive>>>');
-        await client.sendMessage('6281235114745@c.us', 'CUBIESPOT <<<System Alive>>>');
+        await client.sendMessage('6281235114745@c.us', 'CICERO <<<System Alive>>>');
             
     });
     
     // Reload Insta every hours until 22.00
     cron.schedule('0 6-22 * * *', async () => {
 
-        let response = await instaLoadClients.instaLoadClients('RES');
+        let response = await instaLoadClients.instaLoadClients(ciceroKey.ciceroClientType);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -94,7 +94,7 @@ client.on('ready', () => {
     // Reload Tiktok every hours until 22
     cron.schedule('55 6-21 * * *', async () => {
 
-        let response = await tiktokLoadClients.tiktokLoadClients('RES');
+        let response = await tiktokLoadClients.tiktokLoadClients(ciceroKey.ciceroClientType);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){

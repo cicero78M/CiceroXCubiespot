@@ -66,7 +66,7 @@ module.exports = {
               return responseMyData;
             } else {
               let responseData = {
-                data : 'User Data with delegated ID_KEY Doesn\'t Exist',
+                data : 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
                 state : true,
                 code : 200
               }
@@ -79,10 +79,10 @@ module.exports = {
 
         if(!isDataExist){
 
-         let responseData = {
-          data : 'User Data with delegated ID_KEY Doesn\'t Exist',
-          state : true,
-          code : 200
+          let responseData = {
+            data : 'User Data with delegated ID_KEY Doesn\'t Exist',
+            state : true,
+            code : 200
           }
 
           console.log('Return Success');
