@@ -1,31 +1,31 @@
-const fs = require('fs');
-const express = require('express');
+import { readFileSync } from 'fs';
+import express from 'express';
 const app = express();
 
-const ciceroKey = JSON.parse (fs.readFileSync('ciceroKey.json'));
+const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-const { Client , LocalAuth } = require('whatsapp-web.js');
+import { Client, LocalAuth } from 'whatsapp-web.js';
 
-const figlet = require('figlet');
-const banner = require('simple-banner');
-const qrcode = require('qrcode-terminal');
-const cron = require('node-cron');
+import { textSync } from 'figlet';
+import { set } from 'simple-banner';
+import { generate } from 'qrcode-terminal';
+import { schedule } from 'node-cron';
 
 //Unit Test
-const createClient = require('./unitTest/database/newClient/createClient');
-const collectInstaLikes = require('./unitTest/collecting/insta/collectInstaLikes');
-const reportInstaLikes = require('./unitTest/reporting/insta/reportInstaLikes');
-const editProfile = require('./unitTest/database/editData/userData/editUserProfile');
-const pushUserClient = require('./unitTest/database/newClient/pushUserClient');
-const updateUsername = require('./unitTest/database/editData/userData/updateUsername');
-const collectTiktokComments = require('./unitTest/collecting/tiktok/collectTiktokEngagements');
-const instaSW = require('./unitTest/collecting/whatsapp/instaSW');
-const instaLoadClients = require('./unitTest/bridge/instaLoadClients');
-const tiktokLoadClients = require('./unitTest/bridge/tiktokLoadClients.js');
-const reportTiktokComments = require('./unitTest/reporting/tiktok/reportTiktokComments.js');
-const addNewUser = require('./unitTest/database/editData/userData/addNewUser.js');
-const checkMyData = require('./unitTest/database/checkMyData.js');
-const usernameAbsensi = require('./unitTest/database/usernameAbsensi.js');
+import { createClient as _createClient } from './unitTest/database/newClient/createClient';
+import { collectInstaLikes as _collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes';
+import { reportInstaLikes as _reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes';
+import { editProfile as _editProfile } from './unitTest/database/editData/userData/editUserProfile';
+import { pushUserClient as _pushUserClient } from './unitTest/database/newClient/pushUserClient';
+import { updateUsername as _updateUsername } from './unitTest/database/editData/userData/updateUsername';
+import { collectTiktokComments as _collectTiktokComments } from './unitTest/collecting/tiktok/collectTiktokEngagements';
+import { instaSW as _instaSW } from './unitTest/collecting/whatsapp/instaSW';
+import { instaLoadClients as _instaLoadClients } from './unitTest/bridge/instaLoadClients';
+import { tiktokLoadClients as _tiktokLoadClients } from './unitTest/bridge/tiktokLoadClients.js';
+import { reportTiktokComments as _reportTiktokComments } from './unitTest/reporting/tiktok/reportTiktokComments.js';
+import { addNewUser as _addNewUser } from './unitTest/database/editData/userData/addNewUser.js';
+import { checkMyData as _checkMyData } from './unitTest/database/checkMyData.js';
+import { usernameAbsensi as _usernameAbsensi } from './unitTest/database/usernameAbsensi.js';
  
 const port = ciceroKey.port;
 
@@ -53,7 +53,7 @@ client.on('auth_failure', msg => {
 
 client.on('ready', () => {
 
-    console.log(figlet.textSync("CICERO -X- CUBIESPOT", {
+    console.log(textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
         horizontalLayout: "fitted",
         verticalLayout: "default",
@@ -61,7 +61,7 @@ client.on('ready', () => {
         whitespaceBreak: true,
     }));
 
-    banner.set("Cicero System Manajemen As A Services");
+    set("Cicero System Manajemen As A Services");
     console.log('===============================');
     console.log('===============================');
     console.log('======System Fully Loaded!=====');
@@ -71,7 +71,7 @@ client.on('ready', () => {
     console.log('===============================');
 
     //Server Check Jobs
-    cron.schedule('*/10 * * * *', async () =>  {     
+    schedule('*/10 * * * *', async () =>  {     
 
         console.log(ciceroKey.waSession+' <<<System Alive>>>');
         await client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
@@ -79,9 +79,9 @@ client.on('ready', () => {
     });
     
     // Reload Insta every hours until 22.00
-    cron.schedule('0 6-22 * * *', async () => {
+    schedule('0 6-22 * * *', async () => {
 
-        let response = await instaLoadClients.instaLoadClients(ciceroKey.ciceroClientType);
+        let response = await _instaLoadClients(ciceroKey.ciceroClientType);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -98,9 +98,9 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    cron.schedule('55 6-21 * * *', async () => {
+    schedule('55 6-21 * * *', async () => {
 
-        let response = await tiktokLoadClients.tiktokLoadClients(ciceroKey.ciceroClientType);
+        let response = await _tiktokLoadClients(ciceroKey.ciceroClientType);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
@@ -119,7 +119,7 @@ client.on('ready', () => {
 client.on('qr', qr => {
 
     //Pairing WA Center
-    qrcode.generate(qr, {small: true});
+    generate(qr, {small: true});
 
 });
 
@@ -162,7 +162,7 @@ client.on('message', async (msg) => {
                             }
 
                             //Report Likes from Insta Official
-                            let response = await instaSW.instaSW(contact.number, shortcode);
+                            let response = await _instaSW(contact.number, shortcode);
                         
                             if (response.code === 200){
                                 client.sendMessage(msg.from, response.data);
@@ -199,7 +199,7 @@ client.on('message', async (msg) => {
                         
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                            let response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
+                            let response = await _pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
                             
                             if (response.code === 200){
                                 console.log(response.data);
@@ -223,7 +223,7 @@ client.on('message', async (msg) => {
                             
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                            let response = await pushUserClient.pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
+                            let response = await _pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
                             
                             if (response.code === 200){
                                 console.log(response.data);
@@ -241,7 +241,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
                         //Reload Likes from Insta Official
                         //ClientName#reloadinstalikes
-                        let response = await collectInstaLikes.collectInstaLikes(splittedMsg[0].toUpperCase());
+                        let response = await _collectInstaLikes(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 200){
                             console.log(response.data);
@@ -252,7 +252,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reloadtiktokcomments') {
                         //Reload Comments from Tiktok Official
                         //ClientName#reloadtiktokcomments
-                        let response = await collectTiktokComments.collectTiktokComments(splittedMsg[0].toUpperCase());
+                        let response = await _collectTiktokComments(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 200){
                             console.log(response.data);
@@ -263,7 +263,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reportinstalikes') {
                         //Report Likes from Insta Official
                         //ClientName#reportinstalikes
-                        let response = await reportInstaLikes.reportInstaLikes(splittedMsg[0].toUpperCase());
+                        let response = await _reportInstaLikes(splittedMsg[0].toUpperCase());
                                     
                         if (response.code === 202){
                             console.log(response.data);
@@ -274,7 +274,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
                         //Report Comments from Tiktok Official
                         //ClientName#reporttiktokcomments
-                        let response = await reportTiktokComments.reportTiktokComments(splittedMsg[0].toUpperCase());
+                        let response = await _reportTiktokComments(splittedMsg[0].toUpperCase());
 
                         if (response.code === 202){
                             client.sendMessage(msg.from, response.data);
@@ -284,7 +284,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'reloadallinsta'){
                         //Cicero#reloadallinsta
 
-                        let response = await instaLoadClients.instaLoadClients('RES');
+                        let response = await _instaLoadClients('RES');
 
                         if (response.length >= 1){
                             for (let i = 0; i < response.length; i++){
@@ -294,7 +294,7 @@ client.on('message', async (msg) => {
 
                     } else if (splittedMsg[1].toLowerCase() === 'reloadalltiktok'){
                         //Cicero#reloadalltiktok                        
-                        let response = await tiktokLoadClients.tiktokLoadClients('RES');
+                        let response = await _tiktokLoadClients('RES');
 
                         if (response.length >= 1){
                             for (let i = 0; i < response.length; i++){
@@ -304,7 +304,7 @@ client.on('message', async (msg) => {
 
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
-                        let response = await createClient.createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
+                        let response = await _createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
 
                         for (let i = 0; i < response.length; i++){
 
@@ -320,7 +320,7 @@ client.on('message', async (msg) => {
                     if (splittedMsg[1].toLowerCase() === 'addnewuser'){ 
                         //Check Between Corporate And Organizations
                         
-                        let response = await addNewUser.addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                        let response = await _addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase());
                         
                         if(response.code === 1){
@@ -333,7 +333,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
                         //Update Nama
                         //clientName#deleteuser#id_key/NRP#newdata
-                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
+                        let response = await _editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
                         
                         if (response.code === 200){
                             console.log(response.data);
@@ -344,7 +344,7 @@ client.on('message', async (msg) => {
 
                     } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
-                        let response = await usernameAbsensi.usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
+                        let response = await _usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
                                                             
                         if (response.code === 200){
                             console.log(response.data);
@@ -354,7 +354,7 @@ client.on('message', async (msg) => {
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'tiktokcheck') {
                         //Checking If User hasn't update Tiktok Profile
-                        let response = await usernameAbsensi.usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');
+                        let response = await _usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');
                                                             
                         if (response.code === 200){
                             console.log(response.data);
@@ -377,7 +377,7 @@ client.on('message', async (msg) => {
     
                                 const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
                         
-                                let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
+                                let response = await _updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
                             
                                 if(response.code === 200){
                                     console.log(response.data);
@@ -405,7 +405,7 @@ client.on('message', async (msg) => {
 
                             const tiktokUsername = tiktokLink.split('/').pop();  
                     
-                            let response = await updateUsername.updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
+                            let response = await _updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
                         
                             if(response.code === 200){
 
@@ -425,7 +425,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'editdivisi' || splittedMsg[1].toLowerCase() === 'satfung') {
                         //update Divisi Name
                         //clientName#editdivisi/satfung#id_key/NRP#newdata
-                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
+                        let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
                         
                         if (response.code === 200){
                             console.log(response.data);
@@ -437,7 +437,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'editjabatan' || splittedMsg[1].toLowerCase() === 'jabatan') {
                         //Update Jabatan
                         //clientName#editjabatan/jabatan#id_key/NRP#newdata
-                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
+                        let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
                         
                         if (response.code === 200){
                             console.log(response.data);
@@ -447,7 +447,7 @@ client.on('message', async (msg) => {
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'editnama' || splittedMsg[1].toLowerCase() === 'nama') {
                         //clientName#editnama/nama#id_key/NRP#newdata
-                        let response = await editProfile.editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
+                        let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
                         
                         if (response.code === 200){
                             console.log(response.data);
@@ -456,7 +456,7 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'mydata'){
-                        let response = await checkMyData.checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
+                        let response = await _checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
 
                         if (response.code === 200){
                             console.log(response.data);
