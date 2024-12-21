@@ -8,7 +8,6 @@ export async function divisiData(clientName) {
 
     let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
     let userRows = userDoc.data;
-      console.log(userRows)
     let divisiList = [];
 
     for (let i = 0; i < userRows.length; i++){
@@ -16,7 +15,6 @@ export async function divisiData(clientName) {
           divisiList.push(userRows[i].get('DIVISI')); 
         }
     }
-    console.log(divisiList);
     let response = {
         data : divisiList,
         state : true,
