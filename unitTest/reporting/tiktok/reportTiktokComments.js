@@ -25,9 +25,9 @@ export async function reportTiktokComments(clientName) {
         let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
         let userRows = userDoc.data;
 
-        let divisiResponse = divisiData(clientName);
+        let divisiResponse = await divisiData(clientName);
+
         let divisiList = divisiResponse.data;
-        console.log(divisiList);
 
         //Collect Shortcode from Database        
         let shortcodeList = [];
