@@ -73,8 +73,8 @@ client.on('ready', () => {
     //Server Check Jobs
     cron.schedule('*/10 * * * *', async () =>  {     
 
-        console.log('CUBIESPOT <<<System Alive>>>');
-        await client.sendMessage('6281235114745@c.us', 'CICERO <<<System Alive>>>');
+        console.log(ciceroKey.waSessionName+' <<<System Alive>>>');
+        await client.sendMessage('6281235114745@c.us', ciceroKey.waSessionName+' <<<System Alive>>>');
             
     });
     
