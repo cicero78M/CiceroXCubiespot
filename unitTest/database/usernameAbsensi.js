@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { sheetDoc } from '../queryData/sheetDoc';
+import { sheetDoc } from '../queryData/sheetDoc.js';
 
 let date = new Date();
 

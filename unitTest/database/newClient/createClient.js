@@ -12,12 +12,12 @@
  * 
  */
 
-import { userHeaders as _userHeaders } from './createClient/userHeaders';
-import { createClientID as _createClientID } from './createClient/createClientID';
-import { instaOfficialHeaders as _instaOfficialHeaders } from './createClient/instaOfficialHeaders';
-import { instaUserLikesHeaders as _instaUserLikesHeaders } from './createClient/instaUserLikesHeaders';
-import { tiktokOfficialHeaders as _tiktokOfficialHeaders } from './createClient/tiktokOfficialHeaders';
-import { tiktokUserCommentsHeaders } from './createClient/tiktokUserCommentsHeaders';
+import { userHeaders as _userHeaders } from './createClient/userHeaders.js';
+import { createClientID as _createClientID } from './createClient/createClientID.js';
+import { instaOfficialHeaders as _instaOfficialHeaders } from './createClient/instaOfficialHeaders.js';
+import { instaUserLikesHeaders as _instaUserLikesHeaders } from './createClient/instaUserLikesHeaders.js';
+import { tiktokOfficialHeaders as _tiktokOfficialHeaders } from './createClient/tiktokOfficialHeaders.js';
+import { tiktokUserCommentsHeaders } from './createClient/tiktokUserCommentsHeaders.js';
 
 export async function createClient(clientName, type) {
     let responseData = [];

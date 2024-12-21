@@ -1,7 +1,7 @@
+import axios from 'axios';
+const { request } = axios;
 
 import { readFileSync } from 'fs';
-import { request } from 'axios';
-
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 const headers = {

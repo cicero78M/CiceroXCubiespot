@@ -4,11 +4,16 @@ const app = express();
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-import { Client, LocalAuth } from 'whatsapp-web.js';
+import wwebjs from 'whatsapp-web.js';
+const { Client, LocalAuth } = wwebjs;
 
-import { textSync } from 'figlet';
+import qrcode from 'qrcode-terminal';
+const { generate } = qrcode;
+
+
+import figlet from 'figlet';
+const { textSync } = figlet;
 import { set } from 'simple-banner';
-import { generate } from 'qrcode-terminal';
 import { schedule } from 'node-cron';
 
 //Unit Test

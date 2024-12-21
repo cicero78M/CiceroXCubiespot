@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 
-import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc';
-import { collectInstaLikes as _collectInstaLikes } from '../collecting/insta/collectInstaLikes';
-import { reportInstaLikes as _reportInstaLikes } from '../reporting/insta/reportInstaLikes';
+import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc.js';
+import { collectInstaLikes as _collectInstaLikes } from '../collecting/insta/collectInstaLikes.js';
+import { reportInstaLikes as _reportInstaLikes } from '../reporting/insta/reportInstaLikes.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 

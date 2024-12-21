@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 
-import { collectTiktokComments } from '../collecting/tiktok/collectTiktokEngagements';
-import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc';
-import { reportTiktokComments as _reportTiktokComments } from '../reporting/tiktok/reportTiktokComments';
+import { collectTiktokComments } from '../collecting/tiktok/collectTiktokEngagements.js';
+import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc.js';
+import { reportTiktokComments as _reportTiktokComments } from '../reporting/tiktok/reportTiktokComments.js';
 
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));

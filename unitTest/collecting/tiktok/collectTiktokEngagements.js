@@ -4,9 +4,8 @@ import { JWT } from 'google-auth-library';
 
 import { readFileSync } from 'fs';
 
-import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../../SocialMediaAPI/tiktokAPI';
-import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc';
-import { isArray } from 'util';
+import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../../SocialMediaAPI/tiktokAPI.js';
+import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 

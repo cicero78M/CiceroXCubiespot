@@ -5,8 +5,8 @@ import { JWT } from 'google-auth-library';
 import { readFileSync } from 'fs';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-import { instaPostAPI, instaLikesAPI } from '../../SocialMediaAPI/instaAPI';
-import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc';
+import { instaPostAPI, instaLikesAPI } from '../../SocialMediaAPI/instaAPI.js';
+import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
 
 
 const d = new Date();
