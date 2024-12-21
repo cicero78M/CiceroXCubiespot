@@ -40,63 +40,75 @@ module.exports = {
 
       for (let ii = 0; ii < userRows.length; ii++){
         if (userRows[ii].get('ID_KEY') === idKey){
+                  
+          if(userRows[ii].get('WHATSAPP') === "" || userRows[ii].get('WHATSAPP') === phone ){
+
+            isDataExist = true;
+
+            if (type === 'DIVISI'){
+              if (dataList.includes(newData)){
+  
+                userRows[ii].assign({DIVISI: newData, WHATSAPP: phone});; // Update Divisi Value
+  
+              } else {
+  
+                let responseData = {
+                  data : 'Divisi Unregsitered',
+                  state : true,
+                  code : 200
+                }
         
-          isDataExist = true;
-
-          if (type === 'DIVISI'){
-            if (dataList.includes(newData)){
-
-              userRows[ii].assign({DIVISI: newData, WHATSAPP: phone});; // Update Divisi Value
-
-            } else {
-
-              let responseData = {
-                data : 'Divisi Unregsitered',
-                state : true,
-                code : 200
+                console.log('Return Success');
+        
+                userDoc.delete;
+  
+                return responseData;
               }
-      
-              console.log('Return Success');
-      
-              userDoc.delete;
-
-              return responseData;
-            }
-
-
-          } else if (type === 'JABATAN') {
-            userRows[ii].assign({JABATAN: newData, WHATSAPP: phone});// Update Divisi Value
-          } else if (type === 'NAMA') {
-            userRows[ii].assign({NAMA: newData, WHATSAPP: phone}); // Update Divisi Value
-          } else if (type === 'ID_KEY') {
-            userRows[ii].assign({ID_KEY: newData.toLowerCase(), WHATSAPP: phone}); // Update Divisi Value
-          } else if (type === 'TITLE') {
-
-            if (dataList.includes(newData)){
-
-              userRows[ii].assign({TITLE: newData, WHATSAPP: phone});// Update Divisi Value
-
-            } else {
-
-              let responseData = {
-                data : 'Title Unregsitered',
-                state : true,
-                code : 200
+  
+  
+            } else if (type === 'JABATAN') {
+              userRows[ii].assign({JABATAN: newData, WHATSAPP: phone});// Update Divisi Value
+            } else if (type === 'NAMA') {
+              userRows[ii].assign({NAMA: newData, WHATSAPP: phone}); // Update Divisi Value
+            } else if (type === 'ID_KEY') {
+              userRows[ii].assign({ID_KEY: newData.toLowerCase(), WHATSAPP: phone}); // Update Divisi Value
+            } else if (type === 'TITLE') {
+  
+              if (dataList.includes(newData)){
+  
+                userRows[ii].assign({TITLE: newData, WHATSAPP: phone});// Update Divisi Value
+  
+              } else {
+  
+                let responseData = {
+                  data : 'Title Unregsitered',
+                  state : true,
+                  code : 200
+                }
+        
+                console.log('Return Success');
+        
+                userDoc.delete;
+  
+                return responseData;
               }
-      
-              console.log('Return Success');
-      
-              userDoc.delete;
-
-              return responseData;
+  
+            } else if (type === 'STATUS') {
+              userRows[ii].assign({STATUS: newData, WHATSAPP: phone});// Update Divisi Value
             }
-
-          } else if (type === 'STATUS') {
-            userRows[ii].assign({STATUS: newData, WHATSAPP: phone});// Update Divisi Value
-          }
-
-          await userRows[ii].save(); //save update
-    
+  
+            await userRows[ii].save(); //save update
+      
+          } else {
+            let responseData = {
+              data : 'Nomor Whatsapp User Tidak Sama',
+              state : true,
+              code : 200
+            }
+            console.log('Return Success');
+            userDoc.delete;
+            return responseData;
+          }         
         } 
       }
 
