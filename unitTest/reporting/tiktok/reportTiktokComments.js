@@ -27,6 +27,7 @@ export async function reportTiktokComments(clientName) {
 
         let divisiResponse = divisiData(clientName);
         let divisiList = divisiResponse.data;
+        console.log(divisiList);
 
         //Collect Shortcode from Database        
         let shortcodeList = [];
