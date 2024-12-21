@@ -276,7 +276,7 @@ client.on('message', async (msg) => {
                         //ClientName#reporttiktokcomments
                         let response = await reportTiktokComments.reportTiktokComments(splittedMsg[0].toUpperCase());
 
-                        if (response.code === 200){
+                        if (response.code === 202){
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
