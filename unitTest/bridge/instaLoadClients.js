@@ -21,12 +21,13 @@ module.exports = {
                 responseLoad = await collectInstaLikes.collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                             
                 if (responseLoad.code === 200){
-                    responseList.push(responseLoad);
 
                     let responseReport = await reportInstaLikes.reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                     
-                    if (responseReport.code === 200){
+                    if (responseReport.code === 202){
+
                         responseList.push(responseReport);
+                    
                     } else {
                         console.log(responseReport.data);
                     } 

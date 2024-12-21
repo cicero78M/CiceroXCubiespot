@@ -86,6 +86,11 @@ client.on('ready', () => {
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
                 await client.sendMessage('6281235114745@c.us', response[i].data);
+
+                for (let i = 0; i < response.phone.length; i++){
+                    console.log(response.phone[i]+" Mengingatkan, anda belum melaksanakan Komentar dan Likes Konten Instagram Akun Resmi.");
+                    
+                }
             }
         }
 
@@ -99,6 +104,12 @@ client.on('ready', () => {
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
                 await client.sendMessage('6281235114745@c.us', response[i].data);
+
+                for (let i = 0; i < response.phone.length; i++){
+                    console.log(response.phone[i]+" Mengingatkan, anda belum melaksanakan Komentar dan Likes Konten Tiktok Akun Resmi.");
+                    
+                }
+                
             }
         }
 

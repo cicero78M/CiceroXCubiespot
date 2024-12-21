@@ -92,10 +92,12 @@ module.exports = {
 
           let userNotComment = [];
           let notCommentList = [];
+          let phoneList = [];
 
           for (let iii = 0; iii < userRows.length; iii++){
             if(!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))){
               if(!userNotComment.includes(userRows[iii].get('ID_KEY'))){    
+                phoneList.push(userRows[iii].get('WHATSAPP'));
                 userNotComment.push(userRows[iii].get('ID_KEY'));
                 notCommentList.push(userRows[iii]);
               }
@@ -132,6 +134,7 @@ module.exports = {
               +"* dengan Link konten sbb ::\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
               +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
+              phone : phoneList,
               state : true,
               code : 200
             }
@@ -141,6 +144,7 @@ module.exports = {
               +" dengan Link konten sbb :\n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+localHours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+tiktokSudah+"_\n_Jumlah User Belum melaksanakan : "
               +userCounter+"_\n\nRincian Data Username Tiktok :"+dataTiktok+"\n\n_System Administrator Cicero_",
+              phone : phoneList,
               state : true,
               code : 200
             }

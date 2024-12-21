@@ -103,10 +103,13 @@ module.exports = {
 
           let UserNotLikes = [];
           let notLikesList = [];
+          let phoneList = [];
 
           for (let iii = 0; iii < userRows.length; iii++){
             if(!userLikesData.includes(userRows[iii].get('INSTA'))){
               if(!UserNotLikes.includes(userRows[iii].get('ID_KEY'))){    
+
+                phoneList.push(userRows[iii].get('WHATSAPP'));
                 UserNotLikes.push(userRows[iii].get('ID_KEY'));
                 notLikesList.push(userRows[iii]);
               }
@@ -150,6 +153,7 @@ module.exports = {
               "\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
               +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
+              phone : phoneList,
               state : true,
               code : 200
             }
@@ -161,8 +165,9 @@ module.exports = {
               "* dengan Link konten sbb : \n"+shortcodeListString+"\n\nWaktu Rekap : "+localDate+"\nJam : "+hours+" WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               +userRows.length+"_\n_Jumlah User Sudah melaksanakan: "+instaSudah+"_\n_Jumlah User Belum melaksanakan : "
               +userCounter+"_\n\n*Rincian Yang Belum Melaksanakan :*"+dataInsta+"\n\n_System Administrator Cicero_",
+              phone : phoneList,
               state : true,
-              code : 200
+              code : 202
             }
 
           }
