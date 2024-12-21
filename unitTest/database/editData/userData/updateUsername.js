@@ -55,30 +55,32 @@ module.exports = {
           if (userRows[i].get('ID_KEY') === idKey){
             if (userRows[i].get('WHATSAPP') === phone || userRows[i].get('WHATSAPP') === "" || userRows[ii].get('WHATSAPP') === "6281235114745"){
 
-                if(userRows[ii].get('STATUS') === "TRUE"){
+              if(userRows[i].get('STATUS') === "TRUE"){
 
-                  isDataExist = true;
-                  if (type === "updateinstausername"){
-                    userRows[i].assign({INSTA: username, WHATSAPP: phone}); // Update Insta Value
-                  } else if (type === "updatetiktokusername"){
-                    userRows[i].assign({TIKTOK: username, WHATSAPP: phone}); // Update Insta Value
-                  }
-                  await userRows[i].save(); //save update
-                  userDoc.delete;
-                  let responseMyData = await checkMyData.checkMyData(clientName, idKey);
-                  return responseMyData;
-                } else {
+                isDataExist = true;
+                if (type === "updateinstausername"){
+                  userRows[i].assign({INSTA: username, WHATSAPP: phone}); // Update Insta Value
+                } else if (type === "updatetiktokusername"){
+                  userRows[i].assign({TIKTOK: username, WHATSAPP: phone}); // Update Insta Value
+                }
+                await userRows[i].save(); //save update
+                userDoc.delete;
+                let responseMyData = await checkMyData.checkMyData(clientName, idKey);
+                return responseMyData;
 
-                  let responseData = {
-                    data : 'Your Account Suspended',
-                    state : true,
-                    code : 200
-                  }
-                  console.log('Return Success');
-                  userDoc.delete;
-                  return responseData;
-    
-                }  
+              } else {
+
+                let responseData = {
+                  data : 'Your Account Suspended',
+                  state : true,
+                  code : 200
+                }
+                console.log('Return Success');
+                userDoc.delete;
+                return responseData;
+  
+              }  
+
             } else {
               let responseData = {
                 data : 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
@@ -90,7 +92,7 @@ module.exports = {
               return responseData;
             }
 
-          }
+          
           }
         } 
 
