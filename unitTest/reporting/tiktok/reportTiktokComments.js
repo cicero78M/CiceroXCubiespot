@@ -1,5 +1,4 @@
 const fs = require('fs');
-const sheetDoc = require('../../queryData/sheetDoc');
 import { clientData } from '../../queryData/clientData';
 import { divisiData } from '../../queryData/divisiData';
 import { sheetDoc } from '../../queryData/sheetDoc';
