@@ -1,11 +1,12 @@
 import { readFileSync } from 'fs';
+import { sheetDoc } from './sheetDoc';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 
 export async function divisiData(clientName) {
 
-    let userDoc = await sheetDoc.sheetDoc(ciceroKey.dbKey.userDataID, clientName);
+    let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
     let userRows = userDoc.data;
       
     let divisiList = [];
