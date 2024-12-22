@@ -140,37 +140,27 @@ client.on('ready', () => {
 
     
     // Reload Insta every hours until 22.00
-    schedule('50 6-22 * * *', async () => {
+    schedule('50 6-21 * * *', async () => {
 
         let response = await _instaLoadClients(ciceroKey.ciceroClientType);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
                 await client.sendMessage('6281235114745@c.us', response[i].data);
-
-                /*
-                for (let ii = 0; ii < response.phone.length; ii++){
-                    console.log(response.phone[ii]+" Mengingatkan, anda belum melaksanakan Komentar dan Likes Konten Instagram Akun Resmi.");
-                    
-                }
-                */                
+           
             }
         }
     });
 
     // Reload Tiktok every hours until 22
-    schedule('45 6-21 * * *', async () => {
+    schedule('40 6-21 * * *', async () => {
 
         let response = await _tiktokLoadClients(ciceroKey.ciceroClientType);
 
         if (response.length >= 1){
             for (let i = 0; i < response.length; i++){
                 await client.sendMessage('6281235114745@c.us', response[i].data);
-                /*
-                for (let ii = 0; ii < response.phone.length; ii++){
-                    console.log(response.phone[ii]+" Mengingatkan, anda belum melaksanakan Komentar dan Likes Konten Tiktok Akun Resmi.");   
-                } 
-                */      
+     
             }
         }
     });
