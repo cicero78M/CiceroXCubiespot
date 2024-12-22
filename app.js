@@ -180,7 +180,7 @@ client.on('message', async (msg) => {
 
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory', 'exception'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan', 'ig', 'tiktok', 'jabatan']
+    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan', 'ig', 'tiktok', 'jabatan', 'ig1', 'ig2','ig3', 'insta']
 
 
 
@@ -439,7 +439,7 @@ client.on('message', async (msg) => {
 
                 //User Order Data         
                 } else if (userOrder.includes(splittedMsg[1].toLowerCase())){//const userOrder =['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
-                    if (splittedMsg[1].toLowerCase() === 'updateinsta' || splittedMsg[1].toLowerCase() === 'ig') {
+                    if (['updateinsta', 'ig', 'ig1', 'ig2','ig3', 'insta'].includes(splittedMsg[1].toLowerCase())) {
                     //Update Insta Profile
                     //CLientName#updateinsta/ig/#linkprofileinstagram
                         if (splittedMsg[3].includes('instagram.com')){
