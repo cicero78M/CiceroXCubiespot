@@ -43,15 +43,36 @@ export async function pushUserClient(clientName, sourceFile, pushType) {
 
       if (pushType === 'RES') {
 
-        userData.push({
-          ID_KEY: sourceRows[i].get('NRP'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('PANGKAT'),
-          DIVISI: sourceRows[i].get('SATFUNG'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'),
-          INSTA: sourceRows[i].get('IG1'), TIKTOK: sourceRows[i].get('TIKTOK')
-        });
+        if (sourceRows[i].get('IG3') !== undefined){
+
+          userData.push({
+            ID_KEY: sourceRows[i].get('NRP'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('PANGKAT'),
+            DIVISI: sourceRows[i].get('SATFUNG'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'),
+            INSTA: sourceRows[i].get('IG1'), TIKTOK: sourceRows[i].get('TIKTOK')
+          });
+
+        } else if(sourceRows[i].get('IG2') !== undefined){
+
+          userData.push({
+            ID_KEY: sourceRows[i].get('NRP'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('PANGKAT'),
+            DIVISI: sourceRows[i].get('SATFUNG'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'),
+            INSTA: sourceRows[i].get('IG2'), TIKTOK: sourceRows[i].get('TIKTOK'), EXCEPTION : false
+          });          
+
+        } else {
+
+          userData.push({
+            ID_KEY: sourceRows[i].get('NRP'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('PANGKAT'),
+            DIVISI: sourceRows[i].get('SATFUNG'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'),
+            INSTA: sourceRows[i].get('IG1'), TIKTOK: sourceRows[i].get('TIKTOK'), EXCEPTION : false
+          });
+        }
+
+
       } else if (pushType === 'COM') {
         userData.push({
           ID_KEY: sourceRows[i].get('ID_KEY'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('TITLE'),
-          DIVISI: sourceRows[i].get('DIVISI'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP')
+          DIVISI: sourceRows[i].get('DIVISI'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'), EXCEPTION : false
         });
       }
 

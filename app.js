@@ -87,91 +87,55 @@ client.on('ready', () => {
     });
 
     schedule('00 15/21 * * *', async () => {
-
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
-
         for (let i = 0; i < clientRows.length; i++) {
-
             if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
-
                 let responseLoad = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-
                 if (responseLoad.code === 200) {
-
                     let responseReport = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                
                     if (responseReport.code === 202) {
-
                         console.log(responseReport.data);
-
                         client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
                         client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
-
                         if (clientRows[i].get('GROUP') !== null){
-
                             client.sendMessage(clientRows[i].get('group'), responseReport.data);
-
                         }
-
                     } else {
-
                         console.log(responseReport.data);
                     }
-
                 } else {
-
                     console.log(responseLoad.data);
                 }
-
             }
         }
-
     });
 
     schedule('05 15/21 * * *', async () => {
-
         let responseList = [];
-    
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
-    
         for (let i = 0; i < clientRows.length; i++) {
-    
             if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
-    
                 let responseLoad = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-    
                 if (responseLoad.code === 200) {
-    
                     responseList.push(responseLoad);
-    
                     let responseReport = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-    
                     if (responseReport.code === 202) {
-
                         console.log(responseReport.data);
-    
                         client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
                         client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
-
                         if (clientRows[i].get('GROUP') !== null){
-
                             client.sendMessage(clientRows[i].get('group'), responseReport.data);
-
-
                         }    
                     } else {
                         console.log(responseReport.data);
                     }
-    
                 } else {
                     console.log(responseLoad.data);
                 }
-    
             }
         }
-
     });
 
     
