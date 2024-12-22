@@ -157,8 +157,10 @@ client.on('message', async (msg) => {
 
                         if (url[0].includes('/p/') || url[0].includes('/reels/') || url[0].includes('/video/') ){
                                
-                            let rawLink;
-                            
+                         //   let rawLink;
+                            client.sendMessage(msg.from, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+ '\n\nSelalu Semangat ya.');
+
+/*                            
                             if(url[0].includes('/?')){
                                 rawLink = url[0].replaceAll('/?', '?');
                                 shortcode = rawLink.split('?')[0].split('/').pop();
@@ -173,7 +175,8 @@ client.on('message', async (msg) => {
                                 client.sendMessage(msg.from, response.data);
                             } else {
                                 console.log(response.data);
-                            } 
+                            }
+                                */ 
                         }
                     }
                 }
