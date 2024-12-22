@@ -32,7 +32,7 @@ import { reportTiktokComments as _reportTiktokComments } from './unitTest/report
 import { addNewUser as _addNewUser } from './unitTest/database/editData/userData/addNewUser.js';
 import { checkMyData as _checkMyData } from './unitTest/database/checkMyData.js';
 import { usernameAbsensi as _usernameAbsensi } from './unitTest/database/usernameAbsensi.js';
-import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc.js';
+import { sheetDoc as _sheetDoc } from './unitTest/queryData/sheetDoc.js';
 
  
 const port = ciceroKey.port;
