@@ -72,10 +72,11 @@ export async function pushUserClient(clientName, sourceFile, pushType) {
       } else if (pushType === 'COM') {
         userData.push({
           ID_KEY: sourceRows[i].get('ID_KEY'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('TITLE'),
-          DIVISI: sourceRows[i].get('DIVISI'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'), EXCEPTION : false
+          DIVISI: sourceRows[i].get('DIVISI'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'),
+          INSTA: sourceRows[i].get('IG1'), TIKTOK: sourceRows[i].get('TIKTOK'), EXCEPTION : false
+ 
         });
       }
-
 
     }
 
@@ -103,6 +104,5 @@ export async function pushUserClient(clientName, sourceFile, pushType) {
     };
 
     return responseData;
-
   }
 }

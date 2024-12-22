@@ -265,6 +265,9 @@ client.on('message', async (msg) => {
                         //Res Request
                         console.log('Push User Client Triggered');
 
+                        console.log(splittedMsg[1].toUpperCase());
+
+
                         if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
                             console.log("Link True");
