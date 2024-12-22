@@ -48,7 +48,7 @@ export async function pushUserClient(clientName, sourceFile, pushType) {
           userData.push({
             ID_KEY: sourceRows[i].get('NRP'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('PANGKAT'),
             DIVISI: sourceRows[i].get('SATFUNG'), JABATAN: sourceRows[i].get('JABATAN'), STATUS: true, WHATSAPP: sourceRows[i].get('WHATSAPP'),
-            INSTA: sourceRows[i].get('IG1'), TIKTOK: sourceRows[i].get('TIKTOK')
+            INSTA: sourceRows[i].get('IG1'), TIKTOK: sourceRows[i].get('TIKTOK'), EXCEPTION : false
           });
 
         } else if(sourceRows[i].get('IG2') !== undefined){
