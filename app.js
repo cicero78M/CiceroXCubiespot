@@ -98,7 +98,13 @@ client.on('ready', () => {
                         let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                         if(reportInsta.code === 202){
                             client.sendMessage('6281235114745@c.us', reportInsta.data);
+                        } else {
+                            client.sendMessage('6281235114745@c.us', reportInsta.data);
+
                         }
+                    } else {
+                        client.sendMessage('6281235114745@c.us', reportInsta.data);
+
                     }
                 }           
             }
@@ -119,7 +125,11 @@ client.on('ready', () => {
                         let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                         if(reportTiktok.code === 202){
                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                        } else {
+                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
                         }
+                    } else {
+                        client.sendMessage('6281235114745@c.us', reportTiktok.data);
                     }
                 }           
             }
@@ -145,8 +155,11 @@ client.on('ready', () => {
                             if (clientRows[i].get('GROUP') !== null){
                                 client.sendMessage(clientRows[i].get('group'), responseReport.data);
                             }
-                    
+                        } else {
+                            client.sendMessage('6281235114745@c.us', responseReport.data);
                         }
+                    } else {
+                        client.sendMessage('6281235114745@c.us', responseReport.data);
                     }
                 }           
             }
@@ -163,6 +176,7 @@ client.on('ready', () => {
                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
                     console.log('Starting');
                     let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+
                     if(loadTiktok.code === 200){
                         let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                         if(reportTiktok.code === 202){
@@ -172,7 +186,11 @@ client.on('ready', () => {
                             if (clientRows[i].get('GROUP') !== null){
                                 client.sendMessage(clientRows[i].get('group'), responseReport.data);
                             }
+                        } else {
+                            client.sendMessage('6281235114745@c.us', responseReport.data);
                         }
+                    } else {
+                        client.sendMessage('6281235114745@c.us', responseReport.data);
                     }
                 }           
             }
@@ -324,8 +342,15 @@ client.on('message', async (msg) => {
                                         let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                                         if(reportInsta.code === 202){
                                             client.sendMessage(msg.from, reportInsta.data);
+                                        } else {
+                                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+
                                         }
+                                    } else {
+                                        client.sendMessage('6281235114745@c.us', reportTiktok.data);
+
                                     }
+                                    
                                 }           
                             }
                         }
@@ -342,7 +367,13 @@ client.on('message', async (msg) => {
                                         let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                                         if(reportTiktok.code === 202){
                                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                        } else {
+                                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+
                                         }
+                                    } else {
+                                        client.sendMessage('6281235114745@c.us', reportTiktok.data);
+
                                     }
                                 }           
                             }
