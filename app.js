@@ -131,7 +131,7 @@ client.on('qr', qr => {
 
 client.on('message', async (msg) => {
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory', 'exception'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan', 'ig', 'tiktok', 'jabatan']
 
@@ -327,7 +327,18 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response[i].data);
 
                         }                   
+                    } else if (splittedMsg[1].toLowerCase() === 'exception') {
+                        //clientName#editnama/nama#id_key/NRP#newdata
+                        let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "EXCEPTION");
+                        
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
+                        }   
                     }
+                    
                            
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){//['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];

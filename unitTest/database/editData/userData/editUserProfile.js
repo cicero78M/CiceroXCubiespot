@@ -47,7 +47,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             if (type === 'DIVISI') {
               if (dataList.includes(newData)) {
 
-                userRows[ii].assign({ DIVISI: newData, WHATSAPP: phone });; // Update Divisi Value
+                userRows[ii].assign({ DIVISI: newData });; // Update Divisi Value
 
               } else {
 
@@ -66,16 +66,16 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
 
 
             } else if (type === 'JABATAN') {
-              userRows[ii].assign({ JABATAN: newData, WHATSAPP: phone }); // Update Divisi Value
+              userRows[ii].assign({ JABATAN: newData }); // Update Divisi Value
             } else if (type === 'NAMA') {
-              userRows[ii].assign({ NAMA: newData, WHATSAPP: phone }); // Update Divisi Value
+              userRows[ii].assign({ NAMA: newData }); // Update Divisi Value
             } else if (type === 'ID_KEY') {
-              userRows[ii].assign({ ID_KEY: newData.toLowerCase(), WHATSAPP: phone }); // Update Divisi Value
+              userRows[ii].assign({ ID_KEY: newData}); // Update Divisi Value
             } else if (type === 'TITLE') {
 
               if (dataList.includes(newData)) {
 
-                userRows[ii].assign({ TITLE: newData, WHATSAPP: phone }); // Update Divisi Value
+                userRows[ii].assign({ TITLE: newData }); // Update Divisi Value
 
               } else {
 
@@ -93,7 +93,9 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               }
 
             } else if (type === 'STATUS') {
-              userRows[ii].assign({ STATUS: newData, WHATSAPP: phone }); // Update Divisi Value
+              userRows[ii].assign({ STATUS: newData}); // Update Divisi Value
+            } else if (type === 'EXCEPTION') {
+              userRows[ii].assign({ STATUS: newData}); // Update Divisi Value
             }
 
             await userRows[ii].save(); //save update
