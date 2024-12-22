@@ -43,7 +43,7 @@ export async function pushUserClient(clientName, sourceFile, pushType) {
 
       if (pushType === 'RES') {
 
-        if (sourceRows[i].get('IG3') !== undefined){
+        if (sourceRows[i].get('IG3') !== ""){
 
           userData.push({
             ID_KEY: sourceRows[i].get('NRP'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('PANGKAT'),
@@ -51,7 +51,7 @@ export async function pushUserClient(clientName, sourceFile, pushType) {
             INSTA: sourceRows[i].get('IG3'), TIKTOK: sourceRows[i].get('TIKTOK'), EXCEPTION : false
           });
 
-        } else if(sourceRows[i].get('IG2') !== undefined){
+        } else if(sourceRows[i].get('IG2') !== ""){
 
           userData.push({
             ID_KEY: sourceRows[i].get('NRP'), NAMA: sourceRows[i].get('NAMA').replaceAll('CO3A', ','), TITLE: sourceRows[i].get('PANGKAT'),
