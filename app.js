@@ -156,9 +156,10 @@ client.on('message', async (msg) => {
                     if (url[0].includes('instagram.com')){
 
                         if (url[0].includes('/p/') || url[0].includes('/reels/') || url[0].includes('/video/') ){
-                            console.log(msg);
 
-                            client.sendMessage(msg.from, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
+                            console.log('Response Sent');
+
+                            client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
 
 
                                
