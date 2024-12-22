@@ -87,15 +87,24 @@ client.on('ready', () => {
     });
 
     // Reload Insta every hours until 22.00
-    schedule('40 23 * * *', async () => {
+    schedule('44 23 * * *', async () => {
         console.log('Cron Job Insta');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
+        
         console.log(clientRows);
+        
         if (clientRows.length >= 1){
+            
             for (let i = 0; i < clientRows.length; i++){
+
+                console.log(clientRows[i].get('TYPE'));
+                console.log(clientRows[i].get('CLIENT_ID'));
+
                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.dbKey.ciceroClientType) {
+            
                     console.log('Starting');
+
                     let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
 
                     if(loadInsta.code === 200){
