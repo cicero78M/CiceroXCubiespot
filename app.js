@@ -261,7 +261,7 @@ client.on('message', async (msg) => {
             
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){//adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
                     //ClientName#pushnewuserres#linkspreadsheet
-                    if (splittedMsg[1].toLowerCase() === 'pushnewuserres'){
+                    if (splittedMsg[1].toLowerCase() === 'pushuserres'){
                         //Res Request
                         console.log('Push User Client Triggered');
 
@@ -286,7 +286,7 @@ client.on('message', async (msg) => {
                             console.log('Bukan Spreadsheet Links');
                             client.sendMessage(msg.from, 'Bukan Spreadsheet Links');
                         }
-                    } else if (splittedMsg[1].toLowerCase() === 'pushnewusercom'){
+                    } else if (splittedMsg[1].toLowerCase() === 'pushusercom'){
                         //Company Request     
                         //ClientName#pushnewusercom#linkspreadsheet
                         
