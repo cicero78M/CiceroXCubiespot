@@ -116,7 +116,7 @@ client.on('ready', () => {
                     console.log('Starting');
                     let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
                     if(loadTiktok.code === 200){
-                        let reportTiktok = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
+                        let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                         if(reportTiktok.code === 202){
                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
                         }
@@ -164,7 +164,7 @@ client.on('ready', () => {
                     console.log('Starting');
                     let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
                     if(loadTiktok.code === 200){
-                        let reportTiktok = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
+                        let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                         if(reportTiktok.code === 202){
                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
                             client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
@@ -319,9 +319,9 @@ client.on('message', async (msg) => {
                             for (let i = 0; i < clientRows.length; i++){
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                     console.log('Starting...');
-                                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                    let loadInsta = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                                     if(loadInsta.code === 200){
-                                        let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                        let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                                         if(reportInsta.code === 202){
                                             client.sendMessage(msg.from, reportInsta.data);
                                         }
@@ -339,7 +339,7 @@ client.on('message', async (msg) => {
                                     console.log('Starting...');
                                     let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
                                     if(loadTiktok.code === 200){
-                                        let reportTiktok = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
+                                        let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                                         if(reportTiktok.code === 202){
                                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
                                         }
