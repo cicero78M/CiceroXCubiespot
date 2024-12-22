@@ -38,7 +38,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
     for (let ii = 0; ii < userRows.length; ii++) {
       if (userRows[ii].get('ID_KEY') === idKey) {
 
-        if (userRows[ii].get('WHATSAPP') === "" || userRows[ii].get('WHATSAPP') === phone || userRows[ii].get('WHATSAPP') === "6281235114745") {
+        if (userRows[ii].get('WHATSAPP') === "" || userRows[ii].get('WHATSAPP') === phone || phone === "6281235114745") {
 
           isDataExist = true;
 
@@ -71,7 +71,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               userRows[ii].assign({ NAMA : newData }); // Update Divisi Value
             } else if (type === 'ID_KEY') {
               userRows[ii].assign({ ID_KEY : newData}); // Update Divisi Value
-            } else if (type === 'TITLE') {
+            } else if (type === 'PANGKAT') {
 
               if (dataList.includes(newData)) {
 

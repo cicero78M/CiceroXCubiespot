@@ -19,15 +19,13 @@ import { schedule } from 'node-cron';
 
 //Unit Test
 import { createClient as _createClient } from './unitTest/database/newClient/createClient.js';
-import { collectInstaLikes as _collectInstaLikes, collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes.js';
-import { reportInstaLikes as _reportInstaLikes, reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes.js';
+import { collectInstaLikes as _collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes.js';
+import { reportInstaLikes as _reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes.js';
 import { editProfile as _editProfile } from './unitTest/database/editData/userData/editUserProfile.js';
 import { pushUserClient as _pushUserClient } from './unitTest/database/newClient/pushUserClient.js';
 import { updateUsername as _updateUsername } from './unitTest/database/editData/userData/updateUsername.js';
 import { collectTiktokComments as _collectTiktokComments } from './unitTest/collecting/tiktok/collectTiktokEngagements.js';
 import { instaSW as _instaSW } from './unitTest/collecting/whatsapp/instaSW.js';
-import { instaLoadClients as _instaLoadClients, instaLoadClients } from './unitTest/bridge/instaLoadClients.js';
-import { tiktokLoadClients as _tiktokLoadClients } from './unitTest/bridge/tiktokLoadClients.js';
 import { reportTiktokComments as _reportTiktokComments } from './unitTest/reporting/tiktok/reportTiktokComments.js';
 import { addNewUser as _addNewUser } from './unitTest/database/editData/userData/addNewUser.js';
 import { checkMyData as _checkMyData } from './unitTest/database/checkMyData.js';
@@ -86,34 +84,20 @@ client.on('ready', () => {
             
     });
 
-
-
     // Reload Insta every hours until 22.00
-    schedule('52 23 * * *', async () => {
+    schedule('50 6-21 * * *', async () => {
         console.log('Cron Job Insta');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-        let clientRows = clientResponse.data;
-        
-        console.log(clientRows);
-        
+        let clientRows = clientResponse.data;    
         if (clientRows.length >= 1){
-            
             for (let i = 0; i < clientRows.length; i++){
-
-                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
-            
+                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                     console.log('Starting');
-
-                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-
+                    let loadInsta = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                     if(loadInsta.code === 200){
-                    
-                        let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
-                    
+                        let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                         if(reportInsta.code === 202){
-                    
                             client.sendMessage('6281235114745@c.us', reportInsta.data);
-                    
                         }
                     }
                 }           
@@ -122,93 +106,75 @@ client.on('ready', () => {
     });
 
  // Reload Tiktok every hours until 22
-    schedule('30 6-21 * * *', async () => {
+    schedule('45 6-21 * * *', async () => {
         console.log('Cron Job Tiktok');
-
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
-
         if (clientRows.length >= 1){
             for (let i = 0; i < clientRows.length; i++){
                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
                     console.log('Starting');
-
                     let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-
                     if(loadTiktok.code === 200){
                         let reportTiktok = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
-
                         if(reportTiktok.code === 202){
-
                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
-
                         }
                     }
                 }           
             }
         }
-
-
     });
 
-
-    schedule('00 15/21 * * *', async () => {
-
+    // Reload Insta every 15.00 && 21.00
+    schedule('* 15/21 * * *', async () => {
         console.log('Cron Job Insta');
-
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-        let clientRows = clientResponse.data;
-
-        for (let i = 0; i < clientRows.length; i++) {
-            if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                console.log('Starting');
-                let responseLoad = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-                if (responseLoad.code === 200) {
-                    let responseReport = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-
-                    if (responseReport.code === 202) {
-                        console.log(responseReport.data);
-                        client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
-                        client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
-                        if (clientRows[i].get('GROUP') !== null){
-                            client.sendMessage(clientRows[i].get('group'), responseReport.data);
+        let clientRows = clientResponse.data;    
+        if (clientRows.length >= 1){
+            for (let i = 0; i < clientRows.length; i++){
+                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                    console.log('Starting');
+                    let loadInsta = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                    if(loadInsta.code === 200){
+                        let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                        if(reportInsta.code === 202){         
+                            client.sendMessage('6281235114745@c.us', reportInsta.data);
+                            client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
+                            client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
+                            if (clientRows[i].get('GROUP') !== null){
+                                client.sendMessage(clientRows[i].get('group'), responseReport.data);
+                            }
+                    
                         }
-                    } else {
-                        console.log(responseReport.data);
                     }
-                } else {
-                    console.log(responseLoad.data);
-                }
+                }           
             }
         }
     });
 
-    schedule('0 15/21 * * *', async () => {
-
-        console.log('Cron Job tiktok');
-
+    // Reload Tiktok every 15.05 && 21.05
+    schedule('5 15/21 * * *', async () => {
+        console.log('Cron Job Tiktok');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
-        for (let i = 0; i < clientRows.length; i++) {
-            if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
-                console.log('Starting');
-                let responseLoad = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-                if (responseLoad.code === 200) {
-                    responseList.push(responseLoad);
-                    let responseReport = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                    if (responseReport.code === 202) {
-                        console.log(responseReport.data);
-                        client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
-                        client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
-                        if (clientRows[i].get('GROUP') !== null){
-                            client.sendMessage(clientRows[i].get('group'), responseReport.data);
-                        }    
-                    } else {
-                        console.log(responseReport.data);
+        if (clientRows.length >= 1){
+            for (let i = 0; i < clientRows.length; i++){
+                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                    console.log('Starting');
+                    let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+                    if(loadTiktok.code === 200){
+                        let reportTiktok = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
+                        if(reportTiktok.code === 202){
+                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                            client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
+                            client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
+                            if (clientRows[i].get('GROUP') !== null){
+                                client.sendMessage(clientRows[i].get('group'), responseReport.data);
+                            }
+                        }
                     }
-                } else {
-                    console.log(responseLoad.data);
-                }
+                }           
             }
         }
     });
@@ -225,11 +191,9 @@ client.on('qr', qr => {
 
 client.on('message', async (msg) => {
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory', 'exception'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'exception'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan', 'ig', 'tiktok', 'jabatan', 'ig1', 'ig2','ig3', 'insta']
-
-
+    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
 
     try {
 
@@ -300,7 +264,7 @@ client.on('message', async (msg) => {
                     //ClientName#pushnewuserres#linkspreadsheet
                     if (splittedMsg[1].toLowerCase() === 'pushuserres'){
                         //Res Request
-                        console.log('Push User Client Triggered');
+                        console.log('Push User Res Client Triggered');
 
                         if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
@@ -324,7 +288,7 @@ client.on('message', async (msg) => {
                         //Company Request     
                         //ClientName#pushnewusercom#linkspreadsheet
                         
-                        console.log('Push User Client Triggered');
+                        console.log('Push User Com Client Triggered');
 
                         if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
@@ -347,70 +311,42 @@ client.on('message', async (msg) => {
     
                         }
                         
-                    } else if (splittedMsg[1].toLowerCase() === 'reloadinstalikes') {
-                        //Reload Likes from Insta Official
-                        //ClientName#reloadinstalikes
-                        let response = await _collectInstaLikes(splittedMsg[0].toUpperCase());
-                                    
-                        if (response.code === 200){
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.data);
-                        } 
-                    } else if (splittedMsg[1].toLowerCase() === 'reloadtiktokcomments') {
-                        //Reload Comments from Tiktok Official
-                        //ClientName#reloadtiktokcomments
-                        let response = await _collectTiktokComments(splittedMsg[0].toUpperCase());
-                                    
-                        if (response.code === 200){
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.data);
-                        }  
-                    } else if (splittedMsg[1].toLowerCase() === 'reportinstalikes') {
-                        //Report Likes from Insta Official
-                        //ClientName#reportinstalikes
-                        let response = await _reportInstaLikes(splittedMsg[0].toUpperCase());
-                                    
-                        if (response.code === 202){
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.data);
-                        }  
-                    } else if (splittedMsg[1].toLowerCase() === 'reporttiktokcomments') {
-                        //Report Comments from Tiktok Official
-                        //ClientName#reporttiktokcomments
-                        let response = await _reportTiktokComments(splittedMsg[0].toUpperCase());
-
-                        if (response.code === 202){
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.data);
-                        }                     
-                    } else if (splittedMsg[1].toLowerCase() === 'reloadallinsta'){
-                        //Cicero#reloadallinsta
-
-                        let response = await _instaLoadClients('RES');
-
-                        if (response.length >= 1){
-                            for (let i = 0; i < response.length; i++){
-                                await client.sendMessage(msg.from, response[i].data);
+                    } else if (splittedMsg[1].toLowerCase() === 'allinsta') {
+                        console.log('Reload All Insta');
+                        let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                        let clientRows = clientResponse.data;    
+                        if (clientRows.length >= 1){
+                            for (let i = 0; i < clientRows.length; i++){
+                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                                    console.log('Starting...');
+                                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                    if(loadInsta.code === 200){
+                                        let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                        if(reportInsta.code === 202){
+                                            client.sendMessage(msg.from, reportInsta.data);
+                                        }
+                                    }
+                                }           
                             }
-                        }           
-
-                    } else if (splittedMsg[1].toLowerCase() === 'reloadalltiktok'){
-                        //Cicero#reloadalltiktok                        
-                        let response = await _tiktokLoadClients('RES');
-
-                        if (response.length >= 1){
-                            for (let i = 0; i < response.length; i++){
-                                await client.sendMessage(msg.from, response[i].data);
+                        }
+                    } else if (splittedMsg[1].toLowerCase() === 'alltiktok') {
+                        console.log('Reload All TikTok');
+                        let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                        let clientRows = clientResponse.data;
+                        if (clientRows.length >= 1){
+                            for (let i = 0; i < clientRows.length; i++){
+                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                    console.log('Starting...');
+                                    let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                    if(loadTiktok.code === 200){
+                                        let reportTiktok = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
+                                        if(reportTiktok.code === 202){
+                                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                        }
+                                    }
+                                }           
                             }
-                        } 
-
+                        }
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
                         let response = await _createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
@@ -430,10 +366,11 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', 'Response Error from Exceptions');
+
                         }   
                     }
-                    
-                           
+                                            
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){//['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
                     //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
@@ -448,6 +385,8 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on Add New User*');
+
                         }                          
 
                     } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
@@ -460,6 +399,8 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on Delete User*');
+
                         }   
 
                     } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
@@ -471,6 +412,8 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on Insta User*');
+
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'tiktokcheck') {
                         //Checking If User hasn't update Tiktok Profile
@@ -481,6 +424,8 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on Tiktok User*');
+
                         }  
                     }
 
@@ -504,6 +449,8 @@ client.on('message', async (msg) => {
                                     client.sendMessage(msg.from, response.data);
                                 } else {
                                     console.log(response.data);
+                                    client.sendMessage('6281235114745@c.us', '*Response Error on Update Insta*');
+
                                 }                                   
                         
                             } else {
@@ -512,8 +459,8 @@ client.on('message', async (msg) => {
                             }
                         
                         } else {
-                            console.log('Bukan Link Profile Instagram');
-                            client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                            console.log('Bukan Link Instagram');
+                            client.sendMessage(msg.from, 'Bukan Link Instagram');
                         }
 
                     } else if (splittedMsg[1].toLowerCase() === 'updatetiktok' || splittedMsg[1].toLowerCase() === 'tiktok') {
@@ -535,6 +482,8 @@ client.on('message', async (msg) => {
                             } else {
                             
                                 console.log(response.data);
+                                client.sendMessage('6281235114745@c.us', '*Response Error on Update Tiktok*');
+
                             }                                   
 
                         } else {
@@ -552,6 +501,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on edit Divisi*');
                         }   
 
                     } else if (splittedMsg[1].toLowerCase() === 'editjabatan' || splittedMsg[1].toLowerCase() === 'jabatan') {
@@ -564,6 +514,8 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on edit Jabatan*');
+
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'editnama' || splittedMsg[1].toLowerCase() === 'nama') {
                         //clientName#editnama/nama#id_key/NRP#newdata
@@ -574,6 +526,20 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on edit Nama*');
+
+                        }   
+                    } else if (splittedMsg[1].toLowerCase() === 'editpangkat' || splittedMsg[1].toLowerCase() === 'pangkat') {
+                        //clientName#editnama/nama#id_key/NRP#newdata
+                        let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
+                        
+                        if (response.code === 200){
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on edit Pangkat*');
+
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'mydata') {
                         let response = await _checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
@@ -583,14 +549,17 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
+                            client.sendMessage('6281235114745@c.us', '*Response Error on Ask My Data*');
+
                         }   
                     }
 
                 //Key Order Data Not Exist         
                 } else {
                     console.log("Request Code Doesn't Exist");
-                    client.sendMessage(msg.from, "Request Order Key Tidak Terdaftar");
-                }         
+                    client.sendMessage(msg.from, "Request Code Tidak Terdaftar");
+                }
+
                 //if(splittedMsg[1].toLowerCase()......
             } else {
                 const contact = await msg.getContact();
@@ -599,5 +568,7 @@ client.on('message', async (msg) => {
         } //if(msg.status....
     } catch (error) {
         console.log(error); 
+
+        client.sendMessage('6281235114745@c.us', 'Error on Apps');
     }//try catch
 });

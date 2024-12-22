@@ -64,3 +64,10 @@ Client Activations Mechanism :
 >> WEB-APP DASHBOARD
 
 - Data Base Manajemen System.
+
+
+
+code response
+
+200 - Success
+303 - Error on Function
