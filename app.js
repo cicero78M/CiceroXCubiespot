@@ -13,6 +13,7 @@ const { generate } = qrcode;
 
 import figlet from 'figlet';
 const { textSync } = figlet;
+
 import { set } from 'simple-banner';
 import { schedule } from 'node-cron';
 

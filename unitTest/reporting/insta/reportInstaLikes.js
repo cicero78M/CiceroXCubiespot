@@ -107,11 +107,16 @@ export async function reportInstaLikes(clientName) {
         for (let iii = 0; iii < userRows.length; iii++) {
           if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
             if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
-              if (!phoneList.includes(userRows[iii].get('WHATSAPP'))) {
-                phoneList.push(userRows[iii].get('WHATSAPP'));
+              if(userRows[iii].get('STATUS') === 'TRUE' && userRows[iii].get('EXCEPTION') === "FALSE"){
+
+                if (!phoneList.includes(userRows[iii].get('WHATSAPP'))) {
+                  phoneList.push(userRows[iii].get('WHATSAPP'));
+                }
+                
+                UserNotLikes.push(userRows[iii].get('ID_KEY'));
+                notLikesList.push(userRows[iii]);
+                
               }
-              UserNotLikes.push(userRows[iii].get('ID_KEY'));
-              notLikesList.push(userRows[iii]);
             }
           }
         }
@@ -126,6 +131,7 @@ export async function reportInstaLikes(clientName) {
 
           for (let iv = 0; iv < notLikesList.length; iv++) {
             if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
+              
               if (isType === "RES") {
                 userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesList[iv].get('INSTA'));
                 divisiCounter++;

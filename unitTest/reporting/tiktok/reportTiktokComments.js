@@ -81,11 +81,16 @@ export async function reportTiktokComments(clientName) {
             for (let iii = 0; iii < userRows.length; iii++) {
               if (!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))) {
                 if (!userNotComment.includes(userRows[iii].get('ID_KEY'))) {
-                  if (!phoneList.includes(userRows[iii].get('WHATSAPP'))) {
-                    phoneList.push(userRows[iii].get('WHATSAPP'));
+                  if(userRows[iii].get('STATUS') === 'TRUE' && userRows[iii].get('EXCEPTION') === "FALSE"){
+
+                    if (!phoneList.includes(userRows[iii].get('WHATSAPP'))) {
+                      phoneList.push(userRows[iii].get('WHATSAPP'));
+                    }
+                   
+                    userNotComment.push(userRows[iii].get('ID_KEY'));
+                    notCommentList.push(userRows[iii]);
+
                   }
-                  userNotComment.push(userRows[iii].get('ID_KEY'));
-                  notCommentList.push(userRows[iii]);
                 }
               }
             }
