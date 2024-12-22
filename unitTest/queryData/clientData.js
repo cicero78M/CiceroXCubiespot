@@ -11,6 +11,9 @@ export async function clientData(clientName) {
     let tiktokAccount;
     let isClientType;
     let instaAccount;
+    let supervisor;
+    let operator;
+    let group;
 
     const clientDoc =  await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData', clientName);
     const clientRows = clientDoc.data;
@@ -22,9 +25,13 @@ export async function clientData(clientName) {
         isClientType = clientRows[i].get('TYPE');
         tiktokAccount = clientRows[i].get('TIKTOK');
         instaAccount = clientRows[i].get('INSTA');
+        supervisor = clientRows[i].get('SUPERVISOR');
+        operator = clientRows[i].get('OPERATOR');
+        group = clientRows[i].get('GROUP');
 
         let response = {
-            data : {isClientID : isClientID, isStatus : isStatus, isClientType : isClientType, tiktokAccount : tiktokAccount, instaAccount : instaAccount},
+            data : {isClientID : isClientID, isStatus : isStatus, isClientType : isClientType, tiktokAccount : tiktokAccount, instaAccount : instaAccount, 
+              supervisor : supervisor, operator : operator, group : group },
             state : true,
             code : 200
           }
