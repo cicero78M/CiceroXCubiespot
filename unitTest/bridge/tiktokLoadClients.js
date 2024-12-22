@@ -18,7 +18,7 @@ export async function tiktokLoadClients(typeOrg) {
 
         if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
 
-            responseLoad = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+            let responseLoad = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
 
             if (responseLoad.code === 200) {
 
