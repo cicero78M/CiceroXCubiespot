@@ -84,7 +84,7 @@ client.on('ready', () => {
     });
     
     // Reload Insta every hours until 22.00
-    schedule('0 6-22 * * *', async () => {
+    schedule('50 6-22 * * *', async () => {
 
         let response = await _instaLoadClients(ciceroKey.ciceroClientType);
 
@@ -103,7 +103,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('55 6-21 * * *', async () => {
+    schedule('45 6-21 * * *', async () => {
 
         let response = await _tiktokLoadClients(ciceroKey.ciceroClientType);
 

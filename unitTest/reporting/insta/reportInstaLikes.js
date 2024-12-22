@@ -178,7 +178,7 @@ export async function reportInstaLikes(clientName) {
 
       } else {
 
-        responseData = {
+        let responseData = {
           data: "Tidak ada konten data untuk di olah",
           state: true,
           code: 200

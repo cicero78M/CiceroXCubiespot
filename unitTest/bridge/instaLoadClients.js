@@ -17,7 +17,7 @@ export async function instaLoadClients(typeOrg) {
 
         if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
 
-            responseLoad = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+            let responseLoad = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
 
             if (responseLoad.code === 200) {
 
