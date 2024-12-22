@@ -87,7 +87,7 @@ client.on('ready', () => {
     });
 
     // Reload Insta every hours until 22.00
-    schedule('36 23 * * *', async () => {
+    schedule('37 23 * * *', async () => {
         console.log('Cron Job Insta');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
