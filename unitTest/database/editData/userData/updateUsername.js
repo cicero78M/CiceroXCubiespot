@@ -49,7 +49,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
     if (!usernameList.includes(username)) {
       for (let i = 0; i < userRows.length; i++) {
         if (userRows[i].get('ID_KEY') === idKey) {
-          if (userRows[i].get('WHATSAPP') === phone || userRows[i].get('WHATSAPP') === "" || userRows[i].get('WHATSAPP') === "6281235114745") {
+          if (userRows[i].get('WHATSAPP') === phone || userRows[i].get('WHATSAPP') === "" || phone === "6281235114745") {
 
             if (userRows[i].get('STATUS') === "TRUE") {
 
