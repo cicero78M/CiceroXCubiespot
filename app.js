@@ -19,14 +19,14 @@ import { schedule } from 'node-cron';
 
 //Unit Test
 import { createClient as _createClient } from './unitTest/database/newClient/createClient.js';
-import { collectInstaLikes as _collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes.js';
-import { reportInstaLikes as _reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes.js';
+import { collectInstaLikes as _collectInstaLikes, collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes.js';
+import { reportInstaLikes as _reportInstaLikes, reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes.js';
 import { editProfile as _editProfile } from './unitTest/database/editData/userData/editUserProfile.js';
 import { pushUserClient as _pushUserClient } from './unitTest/database/newClient/pushUserClient.js';
 import { updateUsername as _updateUsername } from './unitTest/database/editData/userData/updateUsername.js';
 import { collectTiktokComments as _collectTiktokComments } from './unitTest/collecting/tiktok/collectTiktokEngagements.js';
 import { instaSW as _instaSW } from './unitTest/collecting/whatsapp/instaSW.js';
-import { instaLoadClients as _instaLoadClients } from './unitTest/bridge/instaLoadClients.js';
+import { instaLoadClients as _instaLoadClients, instaLoadClients } from './unitTest/bridge/instaLoadClients.js';
 import { tiktokLoadClients as _tiktokLoadClients } from './unitTest/bridge/tiktokLoadClients.js';
 import { reportTiktokComments as _reportTiktokComments } from './unitTest/reporting/tiktok/reportTiktokComments.js';
 import { addNewUser as _addNewUser } from './unitTest/database/editData/userData/addNewUser.js';
@@ -140,29 +140,57 @@ client.on('ready', () => {
 
     
     // Reload Insta every hours until 22.00
-    schedule('50 6-21 * * *', async () => {
+    schedule('25 6-21 * * *', async () => {
 
-        let response = await _instaLoadClients(ciceroKey.ciceroClientType);
+        let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+        let clientRows = clientResponse.data;
 
-        if (response.length >= 1){
-            for (let i = 0; i < response.length; i++){
-                await client.sendMessage('6281235114745@c.us', response[i].data);
-           
+        if (clientRows.length >= 1){
+            for (let i = 0; i < clientRows.length; i++){
+                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
+
+                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+
+                    if(loadInsta.code === 200){
+                        let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
+
+                        if(reportInsta.code === 202){
+
+                            client.sendMessage('6281235114745@c.us', reportInsta.data);
+
+                        }
+                    }
+                }           
             }
         }
     });
 
     // Reload Tiktok every hours until 22
-    schedule('40 6-21 * * *', async () => {
+    schedule('30 6-21 * * *', async () => {
 
-        let response = await _tiktokLoadClients(ciceroKey.ciceroClientType);
+        let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+        let clientRows = clientResponse.data;
 
-        if (response.length >= 1){
-            for (let i = 0; i < response.length; i++){
-                await client.sendMessage('6281235114745@c.us', response[i].data);
-     
+        if (clientRows.length >= 1){
+            for (let i = 0; i < clientRows.length; i++){
+                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
+
+                    let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+
+                    if(loadTiktok.code === 200){
+                        let reportTiktok = await reportInstaLikes(clientRows[i].get('CLIENT_ID'))
+
+                        if(reportTiktok.code === 202){
+
+                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+
+                        }
+                    }
+                }           
             }
         }
+
+
     });
 
 
