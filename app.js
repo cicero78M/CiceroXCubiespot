@@ -87,10 +87,14 @@ client.on('ready', () => {
     });
 
     schedule('00 15/21 * * *', async () => {
+
+        console.log('Cron Job Insta');
+
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
         for (let i = 0; i < clientRows.length; i++) {
             if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                console.log('Starting');
                 let responseLoad = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                 if (responseLoad.code === 200) {
                     let responseReport = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
@@ -111,12 +115,15 @@ client.on('ready', () => {
         }
     });
 
-    schedule('05 15/21 * * *', async () => {
-        let responseList = [];
+    schedule('0 15/21 * * *', async () => {
+
+        console.log('Cron Job tiktok');
+
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
         for (let i = 0; i < clientRows.length; i++) {
             if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
+                console.log('Starting');
                 let responseLoad = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
                 if (responseLoad.code === 200) {
                     responseList.push(responseLoad);
@@ -141,13 +148,16 @@ client.on('ready', () => {
     
     // Reload Insta every hours until 22.00
     schedule('25 6-21 * * *', async () => {
+        console.log('Cron Job Insta');
 
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
 
         if (clientRows.length >= 1){
+
             for (let i = 0; i < clientRows.length; i++){
                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
+                console.log('Starting');
 
                     let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
 
@@ -167,6 +177,7 @@ client.on('ready', () => {
 
     // Reload Tiktok every hours until 22
     schedule('30 6-21 * * *', async () => {
+        console.log('Cron Job Tiktok');
 
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
@@ -174,6 +185,7 @@ client.on('ready', () => {
         if (clientRows.length >= 1){
             for (let i = 0; i < clientRows.length; i++){
                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === typeOrg) {
+                    console.log('Starting');
 
                     let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
 
