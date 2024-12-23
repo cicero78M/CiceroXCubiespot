@@ -141,7 +141,7 @@ client.on('ready', () => {
     });
 
     // Reload Insta every 15.00 && 21.00
-    schedule('2 15/18/21 * * *', async () => {
+    schedule('5 15/18/21 * * *', async () => {
         console.log('Cron Job Insta');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;    
@@ -154,16 +154,16 @@ client.on('ready', () => {
                         let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                         if(reportInsta.code === 202){         
                             client.sendMessage('6281235114745@c.us', reportInsta.data);
-                            client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
-                            client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
+                            client.sendMessage(clientRows[i].get('SUPERVISOR'), reportInsta.data);
+                            client.sendMessage(clientRows[i].get('OPERATOR'), reportInsta.data);
                             if (clientRows[i].get('GROUP') !== null){
-                                client.sendMessage(clientRows[i].get('GROUP'), responseReport.data);
+                                client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
                             }
                         } else {
-                            client.sendMessage('6281235114745@c.us', responseReport.data);
+                            client.sendMessage('6281235114745@c.us', reportInsta.data);
                         }
                     } else {
-                        client.sendMessage('6281235114745@c.us', responseReport.data);
+                        client.sendMessage('6281235114745@c.us', reportInsta.data);
                     }
                 }           
             }
@@ -171,7 +171,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every 15.05 && 21.05
-    schedule('5 15/18/21 * * *', async () => {
+    schedule('10 15/18/21 * * *', async () => {
         console.log('Cron Job Tiktok');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
@@ -185,13 +185,13 @@ client.on('ready', () => {
                         let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                         if(reportTiktok.code === 202){
                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
-                            client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
-                            client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
+                            client.sendMessage(clientRows[i].get('SUPERVISOR'), reportTiktok.data);
+                            client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
                             if (clientRows[i].get('GROUP') !== null){
-                                client.sendMessage(clientRows[i].get('GROUP'), responseReport.data);
+                                client.sendMessage(clientRows[i].get('GROUP'), reportTiktok.data);
                             }
                         } else {
-                            client.sendMessage('6281235114745@c.us', responseReport.data);
+                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
                         }
                     } else {
                         client.sendMessage('6281235114745@c.us', responseReport.data);
