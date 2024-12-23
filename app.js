@@ -466,67 +466,47 @@ client.on('message', async (msg) => {
                     //Update Insta Profile
                     //CLientName#updateinsta/ig/#linkprofileinstagram
                         if (splittedMsg[3].includes('instagram.com')){
-
                             if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
-
                                 const instaLink = splittedMsg[3].split('?')[0];
-    
                                 const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
-                        
                                 let response = await _updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
-                            
                                 if(response.code === 200){
                                     console.log(response.data);
                                     client.sendMessage(msg.from, response.data);
                                 } else {
                                     console.log(response.data);
                                     client.sendMessage('6281235114745@c.us', '*Response Error on Update Insta*');
-
                                 }                                   
-                        
                             } else {
                                 console.log('Bukan Link Profile Instagram');
                                 client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
                             }
-                        
                         } else {
                             console.log('Bukan Link Instagram');
                             client.sendMessage(msg.from, 'Bukan Link Instagram');
                         }
-
-                    } else if (splittedMsg[1].toLowerCase() === 'updatetiktok' || splittedMsg[1].toLowerCase() === 'tiktok') {
+                    } else if (['updatetiktok', 'tiktok'].includes(splittedMsg[1].toLowerCase())) {
                         //Update Tiktok profile
                         //CLientName#updatetiktok/tiktok/#linkprofiletiktok
                         if (splittedMsg[3].includes('tiktok.com')){
-
                             const tiktokLink = splittedMsg[3].split('?')[0];
-
                             const tiktokUsername = tiktokLink.split('/').pop();  
-                    
                             let response = await _updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
-                        
                             if(response.code === 200){
-
                                 console.log(response.data);
                                 client.sendMessage(msg.from, response.data);
-                            
                             } else {
-                            
                                 console.log(response.data);
                                 client.sendMessage('6281235114745@c.us', '*Response Error on Update Tiktok*');
-
                             }                                   
-
                         } else {
                             console.log('Bukan Link Profile Tiktok');
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
                         }      
-                    
-                    } else if (splittedMsg[1].toLowerCase() === 'editdivisi' || splittedMsg[1].toLowerCase() === 'satfung') {
+                    } else if (['editdivisi', 'satfung' ].includes(splittedMsg[1].toLowerCase())) {
                         //update Divisi Name
                         //clientName#editdivisi/satfung#id_key/NRP#newdata
                         let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
-                        
                         if (response.code === 200){
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
@@ -534,31 +514,26 @@ client.on('message', async (msg) => {
                             console.log(response.data);
                             client.sendMessage('6281235114745@c.us', '*Response Error on edit Divisi*');
                         }   
-
-                    } else if (splittedMsg[1].toLowerCase() === 'editjabatan' || splittedMsg[1].toLowerCase() === 'jabatan') {
+                    } else if (['editjabatan', 'jabatan'].includes(splittedMsg[1].toLowerCase())) {
                         //Update Jabatan
                         //clientName#editjabatan/jabatan#id_key/NRP#newdata
                         let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
-                        
                         if (response.code === 200){
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
                             client.sendMessage('6281235114745@c.us', '*Response Error on edit Jabatan*');
-
                         }   
-                    } else if (splittedMsg[1].toLowerCase() === 'editnama' || splittedMsg[1].toLowerCase() === 'nama') {
+                    } else if (['editnama', 'nama'].includes(splittedMsg[1].toLowerCase())) {
                         //clientName#editnama/nama#id_key/NRP#newdata
                         let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
-                        
                         if (response.code === 200){
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
                             client.sendMessage('6281235114745@c.us', '*Response Error on edit Nama*');
-
                         }   
                     } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
                         //clientName#editnama/nama#id_key/NRP#newdata
