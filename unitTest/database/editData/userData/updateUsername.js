@@ -1,6 +1,4 @@
 import { readFileSync } from 'fs';
-
-//Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { checkMyData as _checkMyData } from '../../checkMyData.js';
@@ -26,27 +24,25 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
     //Insert New Sheet
     await userDoc.loadInfo(); // loads document properties and worksheets
     const userSheet = userDoc.sheetsByTitle[clientName];
-
     const userRows = await userSheet.getRows();
-
     let isDataExist = false;
-    let usernameList = [];
     let userType;
+    let usernameList;
 
     //Collect Divisi List String
     if (type === "updateinstausername") {
+
+      let usernameDoc = await listValueData(clientName, 'INSTA');
+      usernameList = usernameDoc.data;
+
       userType = 'INSTA';
     } else if (type === "updatetiktokusername") {
       userType = 'TIKTOK';
+
+      let usernameDoc = await listValueData(clientName, 'TIKTOK');
+      usernameList = usernameDoc.data;
     }
 
-    for (let i = 0; i < userRows.length; i++) {
-      if (!usernameList.includes(userRows[i].get(userType))) {
-        usernameList.push(userRows[i].get(userType));
-      }
-    }
-
-    
 
     if (!usernameList.includes(username)) {
       for (let i = 0; i < userRows.length; i++) {

@@ -27,8 +27,6 @@ export async function reportTiktokComments(clientName) {
           let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
           let userRows = userDoc.data;
 
-
-
           //Collect Shortcode from Database        
           let shortcodeList = [];
 
@@ -47,21 +45,17 @@ export async function reportTiktokComments(clientName) {
             }
           }
 
-
           if (shortcodeList.length >= 1) {
 
             let tiktokUsernameDoc = await _sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
             let tiktokCommentsUsernameRows = tiktokUsernameDoc.data;
-
             let userCommentData = [];
 
             for (let i = 0; i < shortcodeList.length; i++) {
               //code on the go
               for (let ii = 0; ii < tiktokCommentsUsernameRows.length; ii++) {
                 if (tiktokCommentsUsernameRows[ii].get('SHORTCODE') === shortcodeList[i]) {
-
                   const fromRows = Object.values(tiktokCommentsUsernameRows[ii].toObject());
-
                   for (let iii = 0; iii < fromRows.length; iii++) {
                     if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                       if (!userCommentData.includes(fromRows[iii])) {
@@ -69,23 +63,17 @@ export async function reportTiktokComments(clientName) {
                       }
                     }
                   }
-
                 }
               }
             }
 
             let userNotComment = [];
             let notCommentList = [];
-            let phoneList = [];
 
             for (let iii = 0; iii < userRows.length; iii++) {
               if (!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))) {
                 if (!userNotComment.includes(userRows[iii].get('ID_KEY'))) {
                   if(userRows[iii].get('STATUS') === 'TRUE' && userRows[iii].get('EXCEPTION') === "FALSE"){
-
-                    if (!phoneList.includes(userRows[iii].get('WHATSAPP'))) {
-                      phoneList.push(userRows[iii].get('WHATSAPP'));
-                    }
                    
                     userNotComment.push(userRows[iii].get('ID_KEY'));
                     notCommentList.push(userRows[iii]);
@@ -125,7 +113,6 @@ export async function reportTiktokComments(clientName) {
                   + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
                   + userRows.length + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
                   + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
-                phone: phoneList,
                 state: true,
                 code: 202
               };
@@ -135,7 +122,6 @@ export async function reportTiktokComments(clientName) {
                   + " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
                   + userRows.length + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
                   + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
-                phone: phoneList,
                 state: true,
                 code: 202
               };

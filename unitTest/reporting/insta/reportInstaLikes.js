@@ -33,18 +33,11 @@ export async function reportInstaLikes(clientName) {
   if (isClientID && isStatus) {
     try {
 
+      let divisiResponse = await listValueData(clientName, 'DIVISI');
+      let divisiList = divisiResponse.data;
+
       let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       let userRows = userDoc.data;
-
-      let divisiList = [];
-
-      for (let i = 0; i < userRows.length; i++) {
-
-        if (!divisiList.includes(userRows[i].get('DIVISI'))) {
-          divisiList.push(userRows[i].get('DIVISI'));
-        }
-
-      }
 
       //Collect Shortcode from Database        
       let shortcodeList = [];
@@ -102,16 +95,11 @@ export async function reportInstaLikes(clientName) {
 
         let UserNotLikes = [];
         let notLikesList = [];
-        let phoneList = [];
 
         for (let iii = 0; iii < userRows.length; iii++) {
           if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
             if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
               if(userRows[iii].get('STATUS') === 'TRUE' && userRows[iii].get('EXCEPTION') === "FALSE"){
-
-                if (!phoneList.includes(userRows[iii].get('WHATSAPP'))) {
-                  phoneList.push(userRows[iii].get('WHATSAPP'));
-                }
                 
                 UserNotLikes.push(userRows[iii].get('ID_KEY'));
                 notLikesList.push(userRows[iii]);
@@ -160,7 +148,6 @@ export async function reportInstaLikes(clientName) {
               "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               + userRows.length + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
-            phone: phoneList,
             state: true,
             code: 202
           };
