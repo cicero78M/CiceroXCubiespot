@@ -173,9 +173,8 @@ client.on('ready', () => {
                                 client.sendMessage(clientRows[i].get('SUPERVISOR'), reportTiktok.data);
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
 
-                                if (clientRows[i].get('GROUP') != null){
-                                    client.sendMessage(clientRows[i].get('GROUP'), reportTiktok.data);
-                                }
+                                client.sendMessage(clientRows[i].get('GROUP'), reportTiktok.data);
+                                
                             } else {
                                 client.sendMessage('6281235114745@c.us', reportTiktok.data);
                             }
@@ -211,10 +210,8 @@ client.on('ready', () => {
 
                                 client.sendMessage(clientRows[i].get('SUPERVISOR'), reportInsta.data);
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportInsta.data);
-
-                                if (clientRows[i].get('GROUP') !== null){
-                                    client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
-                                }
+                                client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
+\
                             } else {
                                 client.sendMessage('6281235114745@c.us', reportInsta.data);
                             }
