@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
 import { clientData } from '../../queryData/clientData.js';
-import { divisiData } from '../../queryData/divisiData.js';
+import { listValueData } from '../../queryData/listValueData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -21,7 +21,7 @@ export async function reportTiktokComments(clientName) {
       // If Client_ID exist. then get official content
       if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
     
-          let divisiResponse = await divisiData(clientName);
+          let divisiResponse = await listValueData(clientName, 'DIVISI');
           let divisiList = divisiResponse.data;
 
           let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);

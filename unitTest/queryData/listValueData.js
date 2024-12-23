@@ -4,19 +4,19 @@ import { sheetDoc } from './sheetDoc.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 
-export async function divisiData(clientName) {
+export async function listValueData(clientName, keyValue) {
 
     let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
     let userRows = userDoc.data;
-    let divisiList = [];
+    let listValue = [];
 
     for (let i = 0; i < userRows.length; i++){
-        if(!divisiList.includes(userRows[i].get('DIVISI'))){
-          divisiList.push(userRows[i].get('DIVISI')); 
+        if(!listValue.includes(userRows[i].get(keyValue))){
+          listValue.push(userRows[i].get(keyValue)); 
         }
     }
     let response = {
-        data : divisiList,
+        data : listValue,
         state : true,
         code : 200
       }
