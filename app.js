@@ -211,7 +211,7 @@ client.on('message', async (msg) => {
 
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'exception'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
+    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
 
     try {
 
@@ -560,37 +560,31 @@ client.on('message', async (msg) => {
                             client.sendMessage('6281235114745@c.us', '*Response Error on edit Nama*');
 
                         }   
-                    } else if (splittedMsg[1].toLowerCase() === 'editpangkat' || splittedMsg[1].toLowerCase() === 'pangkat') {
+                    } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
                         //clientName#editnama/nama#id_key/NRP#newdata
                         let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
-                        
                         if (response.code === 200){
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
                             client.sendMessage('6281235114745@c.us', '*Response Error on edit Pangkat*');
-
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'mydata') {
                         let response = await _checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
-
                         if (response.code === 200){
                             console.log(response.data);
                             client.sendMessage(msg.from, response.data);
                         } else {
                             console.log(response.data);
                             client.sendMessage('6281235114745@c.us', '*Response Error on Ask My Data*');
-
                         }   
                     }
-
                 //Key Order Data Not Exist         
                 } else {
                     console.log("Request Code Doesn't Exist");
                     client.sendMessage(msg.from, "Request Code Tidak Terdaftar");
                 }
-
                 //if(splittedMsg[1].toLowerCase()......
             } else {
                 const contact = await msg.getContact();
@@ -599,7 +593,6 @@ client.on('message', async (msg) => {
         } //if(msg.status....
     } catch (error) {
         console.log(error); 
-
         client.sendMessage('6281235114745@c.us', 'Error on Apps');
     }//try catch
 });

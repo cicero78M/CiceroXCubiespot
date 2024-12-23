@@ -71,7 +71,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               userRows[ii].assign({ NAMA : newData }); // Update Divisi Value
             } else if (type === 'ID_KEY') {
               userRows[ii].assign({ ID_KEY : newData}); // Update Divisi Value
-            } else if (type === 'PANGKAT') {
+            } else if (type === 'TITLE') {
 
               if (dataList.includes(newData)) {
 
