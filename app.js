@@ -348,13 +348,11 @@ client.on('message', async (msg) => {
                                             client.sendMessage(msg.from, reportInsta.data);
                                         } else {
                                             client.sendMessage('6281235114745@c.us', reportInsta.data);
-
                                         }
                                     } else {
                                         client.sendMessage('6281235114745@c.us', reportInsta.data);
-
                                     }
-                                    
+    
                                 }           
                             }
                         }
