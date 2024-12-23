@@ -85,7 +85,7 @@ client.on('ready', () => {
     });
 
     // Reload Insta every hours until 22.00
-    schedule('50 6-21 * * *', async () => {
+    schedule('35 6-21 * * *', async () => {
         try {
             client.sendMessage('6281235114745@c.us', 'Collecting Insta');
     
@@ -120,7 +120,7 @@ client.on('ready', () => {
     });
 
  // Reload Tiktok every hours until 22
-    schedule('45 6-21 * * *', async () => {
+    schedule('30 6-21 * * *', async () => {
         try {
             client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
     
