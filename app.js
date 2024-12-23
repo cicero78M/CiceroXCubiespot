@@ -168,6 +168,7 @@ client.on('ready', () => {
                         if(loadTiktok.code === 200){
                             let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                             if(reportTiktok.code === 202){
+                 
                                 client.sendMessage('6281235114745@c.us', reportTiktok.data);
                                 client.sendMessage(clientRows[i].get('SUPERVISOR'), reportTiktok.data);
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
@@ -191,10 +192,9 @@ client.on('ready', () => {
         }
     });
 
-    schedule('30 15,18,21 * * *', async () => {
-        try {
+    schedule('33 18 * * *', async () => {
+        try {            
             client.sendMessage('6281235114745@c.us', 'Collecting Insta');
-    
     
             console.log('Cron Job Insta');
             let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
