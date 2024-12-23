@@ -153,7 +153,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 15/18/21
-    schedule('* 15,18,21 * * *', async () => {
+    schedule('00 15,18,21 * * *', async () => {
         try {
 
             client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
@@ -172,7 +172,7 @@ client.on('ready', () => {
                                 client.sendMessage(clientRows[i].get('SUPERVISOR'), reportTiktok.data);
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
 
-                                if (clientRows[i].get('GROUP') !== null){
+                                if (clientRows[i].get('GROUP') != null){
                                     client.sendMessage(clientRows[i].get('GROUP'), reportTiktok.data);
                                 }
                             } else {
