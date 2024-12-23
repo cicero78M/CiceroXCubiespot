@@ -46,65 +46,87 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       }
     }
 
+    let registredPhoneList =[];
+    for (let i = 0; i < userRows.length; i++) {
+      if (!registredPhoneList.includes(userRows[i].get(userType))) {
+        registredPhoneList.push(userRows[i].get(userType));
+      }
+    }
+
     if (!usernameList.includes(username)) {
-      for (let i = 0; i < userRows.length; i++) {
-        if (userRows[i].get('ID_KEY') === idKey) {
-          if (userRows[i].get('WHATSAPP') === phone || userRows[i].get('WHATSAPP') === "" || phone === "6281235114745") {
+      if(!registredPhoneList.includes(phone)){
 
-            if (userRows[i].get('STATUS') === "TRUE") {
-
-              isDataExist = true;
-              if (type === "updateinstausername") {
-                userRows[i].assign({ INSTA: username, WHATSAPP: phone }); // Update Insta Value
-              } else if (type === "updatetiktokusername") {
-                userRows[i].assign({ TIKTOK: username, WHATSAPP: phone }); // Update Insta Value
+        for (let i = 0; i < userRows.length; i++) {
+          if (userRows[i].get('ID_KEY') === idKey) {
+            if (userRows[i].get('WHATSAPP') === phone || userRows[i].get('WHATSAPP') === "" || phone === "6281235114745") {
+  
+              if (userRows[i].get('STATUS') === "TRUE") {
+  
+                isDataExist = true;
+                if (type === "updateinstausername") {
+                  userRows[i].assign({ INSTA: username, WHATSAPP: phone }); // Update Insta Value
+                } else if (type === "updatetiktokusername") {
+                  userRows[i].assign({ TIKTOK: username, WHATSAPP: phone }); // Update Insta Value
+                }
+                await userRows[i].save(); //save update
+                userDoc.delete;
+                let responseMyData = await _checkMyData(clientName, idKey);
+                return responseMyData;
+  
+              } else {
+  
+                let responseData = {
+                  data: 'Your Account Suspended',
+                  state: true,
+                  code: 200
+                };
+                console.log('Return Success');
+                userDoc.delete;
+                return responseData;
+  
               }
-              await userRows[i].save(); //save update
-              userDoc.delete;
-              let responseMyData = await _checkMyData(clientName, idKey);
-              return responseMyData;
-
+  
             } else {
-
               let responseData = {
-                data: 'Your Account Suspended',
+                data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
                 state: true,
                 code: 200
               };
               console.log('Return Success');
               userDoc.delete;
               return responseData;
-
             }
-
-          } else {
-            let responseData = {
-              data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
-              state: true,
-              code: 200
-            };
-            console.log('Return Success');
-            userDoc.delete;
-            return responseData;
+  
+  
           }
-
-
         }
-      }
+  
+        if (!isDataExist) {
+  
+          let responseData = {
+            data: 'User Data with delegated ID_KEY Doesn\'t Exist',
+            state: true,
+            code: 200
+          };
+  
+          console.log('Return Success');
+          userDoc.delete;
+          return responseData;
+  
+        }
 
-      if (!isDataExist) {
-
+      } else {
         let responseData = {
-          data: 'User Data with delegated ID_KEY Doesn\'t Exist',
+          data: 'No Whatsapp  Sudah digunakan pengguna lain.',
           state: true,
           code: 200
         };
-
+  
         console.log('Return Success');
         userDoc.delete;
         return responseData;
-
       }
+
     } else {
 
       let responseData = {
