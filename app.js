@@ -192,7 +192,7 @@ client.on('ready', () => {
         }
     });
 
-    schedule('33 18 * * *', async () => {
+    schedule('40 15,18,21 * * *', async () => {
         try {            
             client.sendMessage('6281235114745@c.us', 'Collecting Insta');
     
