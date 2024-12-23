@@ -153,7 +153,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 15/18/21
-    schedule('27 15,18,21 * * *', async () => {
+    schedule('* 15,18,21 * * *', async () => {
         try {
 
             client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
@@ -191,7 +191,7 @@ client.on('ready', () => {
         }
     });
 
-    schedule('36 15,18,21 * * *', async () => {
+    schedule('30 15,18,21 * * *', async () => {
         try {
             client.sendMessage('6281235114745@c.us', 'Collecting Insta');
     
