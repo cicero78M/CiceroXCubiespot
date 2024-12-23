@@ -208,6 +208,13 @@ client.on('ready', () => {
                             let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                             if(reportInsta.code === 202){
                                 client.sendMessage('6281235114745@c.us', reportInsta.data);
+
+                                client.sendMessage(clientRows[i].get('SUPERVISOR'), reportInsta.data);
+                                client.sendMessage(clientRows[i].get('OPERATOR'), reportInsta.data);
+
+                                if (clientRows[i].get('GROUP') !== null){
+                                    client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
+                                }
                             } else {
                                 client.sendMessage('6281235114745@c.us', reportInsta.data);
                             }
