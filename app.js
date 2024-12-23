@@ -151,7 +151,44 @@ client.on('ready', () => {
             client.sendMessage('6281235114745@c.us', 'Cron Job Tiktok Error');
         }
     });
+ // Reload Tiktok every hours until 22
+ schedule('20 15/18/21 * * *', async () => {
+    try {
+        client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
 
+        console.log('Cron Job Tiktok');
+        let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+        let clientRows = clientResponse.data;
+        if (clientRows.length >= 1){
+            for (let i = 0; i < clientRows.length; i++){
+                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                    console.log('Starting');
+                    let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+                    if(loadTiktok.code === 200){
+                        let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
+                        if(reportTiktok.code === 202){
+                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                            client.sendMessage(clientRows[i].get('SUPERVISOR'), reportTiktok.data);
+                            client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
+
+                            if (clientRows[i].get('GROUP') !== null){
+                                client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
+                            }
+                        } else {
+                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                        }
+                    } else {
+                        client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                    }
+                }           
+            }
+        }
+    } catch (error) {
+        
+        console.log(error)
+        client.sendMessage('6281235114745@c.us', 'Cron Job Tiktok Error');
+    }
+});
     // Reload Insta every 15.00 && 21.00
     schedule('15 15/18/21 * * *', async () => {
       
