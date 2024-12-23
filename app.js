@@ -141,7 +141,7 @@ client.on('ready', () => {
     });
 
     // Reload Insta every 15.00 && 21.00
-    schedule('* 15/21 * * *', async () => {
+    schedule('* 15/18/21 * * *', async () => {
         console.log('Cron Job Insta');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;    
@@ -157,7 +157,7 @@ client.on('ready', () => {
                             client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
                             client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
                             if (clientRows[i].get('GROUP') !== null){
-                                client.sendMessage(clientRows[i].get('group'), responseReport.data);
+                                client.sendMessage(clientRows[i].get('GROUP'), responseReport.data);
                             }
                         } else {
                             client.sendMessage('6281235114745@c.us', responseReport.data);
@@ -171,7 +171,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every 15.05 && 21.05
-    schedule('5 15/21 * * *', async () => {
+    schedule('5 15/18/21 * * *', async () => {
         console.log('Cron Job Tiktok');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
@@ -188,7 +188,7 @@ client.on('ready', () => {
                             client.sendMessage(clientRows[i].get('SUPERVISOR'), responseReport.data);
                             client.sendMessage(clientRows[i].get('OPERATOR'), responseReport.data);
                             if (clientRows[i].get('GROUP') !== null){
-                                client.sendMessage(clientRows[i].get('group'), responseReport.data);
+                                client.sendMessage(clientRows[i].get('GROUP'), responseReport.data);
                             }
                         } else {
                             client.sendMessage('6281235114745@c.us', responseReport.data);
