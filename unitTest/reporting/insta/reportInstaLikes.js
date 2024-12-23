@@ -2,6 +2,7 @@
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
 import { listValueData } from '../../queryData/listValueData.js';
+import { clientData } from '../../queryData/clientData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
