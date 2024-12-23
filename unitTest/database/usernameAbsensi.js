@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { sheetDoc } from '../queryData/sheetDoc.js';
+import { listValueData } from '../queryData/listValueData.js';
 
 let date = new Date();
 
@@ -12,15 +13,9 @@ export async function usernameAbsensi(clientName, clientType) {
     const userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
     const userRows = userDoc.data;
 
-    let divisiList = [];
+    let divisiResponse = await listValueData(clientName, 'DIVISI');
+    let divisiList = divisiResponse.data;
 
-    for (let i = 0; i < userRows.length; i++) {
-      if (userRows[i].get(clientType) === null || userRows[i].get(clientType) === undefined) {
-        if (!divisiList.includes(userRows[i].get('DIVISI'))) {
-          divisiList.push(userRows[i].get('DIVISI'));
-        }
-      }
-    }
 
     let userString = '';
     let userCounter = 0;

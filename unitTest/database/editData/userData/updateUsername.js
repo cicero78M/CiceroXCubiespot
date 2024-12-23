@@ -45,7 +45,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
     }
 
-
     if (!usernameList.includes(username)) {
       for (let i = 0; i < userRows.length; i++) {
         if (userRows[i].get('ID_KEY') === idKey) {
@@ -100,7 +99,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           code: 200
         };
 
-        console.log('Return Success');
+        console.log('Return ID_Key Doesnt Exist');
         userDoc.delete;
         return responseData;
 
@@ -115,7 +114,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         code: 200
       };
 
-      console.log('Return Success');
+      console.log('Return Username Exist');
       userDoc.delete;
       return responseData;
     }
@@ -128,7 +127,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       code: 303
     };
 
-    console.log('Return Success');
+    console.log(error);
     userDoc.delete;
     return responseData;
   }

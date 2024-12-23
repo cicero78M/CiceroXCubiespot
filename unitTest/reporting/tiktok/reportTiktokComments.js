@@ -179,7 +179,7 @@ export async function reportTiktokComments(clientName) {
       code: 303
     };
 
-    console.log('Return Error');
+    console.log(error);
 
     return responseData;
   }

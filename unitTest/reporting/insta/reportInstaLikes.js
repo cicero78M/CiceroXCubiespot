@@ -1,5 +1,4 @@
 //Google Spreadsheet
-
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
 import { listValueData } from '../../queryData/listValueData.js';
@@ -15,23 +14,11 @@ export async function reportInstaLikes(clientName) {
   const hours = d.toLocaleTimeString('id');
 
   //Check Client_ID. then get async data
-  let isClientID = false;
-  let isStatus;
-  let isType;
 
-  let clientDoc = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-  let clientRows = clientDoc.data;
-
-  for (let i = 0; i < clientRows.length; i++) {
-    if (clientRows[i].get('CLIENT_ID') === clientName) {
-      isClientID = true;
-      isStatus = clientRows[i].get('STATUS');
-      isType = clientRows[i].get('TYPE');
-    }
-  }
+  const clientResponse = await clientData(clientName);
 
   // If Client_ID exist. then get official content
-  if (isClientID && isStatus) {
+  if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
     try {
 
       let divisiResponse = await listValueData(clientName, 'DIVISI');
@@ -43,7 +30,7 @@ export async function reportInstaLikes(clientName) {
       //Collect Shortcode from Database        
       let shortcodeList = [];
 
-      const instaOfficialDoc = await _sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName);
+      const instaOfficialDoc = await _sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName).data;
       const instaOfficialRows = instaOfficialDoc.data;
 
       let shortcodeListString = '';
@@ -142,7 +129,7 @@ export async function reportInstaLikes(clientName) {
         let instaSudah = userRows.length - notLikesList.length;
         let responseData;
 
-        if (isType === 'COM') {
+        if (clientResponse.data.isClientType === 'COM') {
 
           responseData = {
             data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" + shortcodeListString +
@@ -153,7 +140,7 @@ export async function reportInstaLikes(clientName) {
             code: 202
           };
 
-        } else if (isType === "RES") {
+        } else if (clientResponse.data.isClientType === "RES") {
 
           responseData = {
             data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " + clientName +

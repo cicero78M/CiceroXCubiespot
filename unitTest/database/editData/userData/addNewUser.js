@@ -48,22 +48,18 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
 
         //Get Target Sheet Documents by Title
         sheetTarget.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true });
-
-        let responseData = {
-          data: 'Success Input Data, untuk melihat data anda saat ini balas pesan dengan: Client#myData#ID_Key',
-          state: true,
-          code: 200
-        };
-        console.log('Return Success');
-        userDoc.delete;
-        return responseData;
+          
+        let responseMyData = await _checkMyData(clientName, idKey);
+          
+          return responseMyData;
+      
       } else {
         let responseData = {
           data: 'ID_Key is Exist, Try Another ID_Key',
           state: true,
           code: 200
         };
-        console.log('Return Success');
+        console.log('Return ID_Key used');
         userDoc.delete;
         return responseData;
       }
@@ -73,11 +69,14 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         state: true,
         code: 200
       };
-      console.log('Return Success');
+
+      console.log('Return Divisi Tidak Terdaftar');
       userDoc.delete;
       return responseData;
     }
   } catch (error) {
+    console.log(error);
+
     let responseData = {
       data: error,
       state: false,

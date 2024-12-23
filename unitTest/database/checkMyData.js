@@ -40,7 +40,7 @@ export async function checkMyData(clientName, idKey) {
         code: 200
       };
 
-      console.log('Return Success');
+      console.log('ID KEY HAVE NO RECORD');
 
       return responseData;
 
@@ -53,7 +53,7 @@ export async function checkMyData(clientName, idKey) {
       state: false,
       code: 303
     };
-    console.log('Return Success');
+    console.log(error);
     return responseData;
   }
 }

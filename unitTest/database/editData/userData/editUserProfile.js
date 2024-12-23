@@ -111,7 +111,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               state: true,
               code: 200
             };
-            console.log('Return Success');
+            console.log('Return Account Suspended');
             userDoc.delete;
             return responseData;
 
@@ -123,7 +123,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             state: true,
             code: 200
           };
-          console.log('Return Success');
+          console.log('Return Whatsapp Used');
           userDoc.delete;
           return responseData;
         }
@@ -138,7 +138,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
         code: 200
       };
 
-      console.log('Return Success');
+      console.log('Return No ID_Key');
       userDoc.delete;
       return responseData;
 
@@ -152,7 +152,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       code: 303
     };
 
-    console.log('Return Success');
+    console.log(error);
     userDoc.delete;
     return responseData;
 
