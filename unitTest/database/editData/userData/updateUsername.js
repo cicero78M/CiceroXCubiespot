@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { checkMyData as _checkMyData } from '../../checkMyData.js';
+import { listValueData } from '../../../queryData/listValueData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -34,13 +35,14 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
       let usernameDoc = await listValueData(clientName, 'INSTA');
       usernameList = usernameDoc.data;
-
       userType = 'INSTA';
+
     } else if (type === "updatetiktokusername") {
-      userType = 'TIKTOK';
 
       let usernameDoc = await listValueData(clientName, 'TIKTOK');
       usernameList = usernameDoc.data;
+      userType = 'TIKTOK';
+
     }
 
 
