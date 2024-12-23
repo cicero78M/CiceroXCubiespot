@@ -169,7 +169,6 @@ client.on('ready', () => {
                             let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                             if(reportTiktok.code === 202){
                  
-                                client.sendMessage('6281235114745@c.us', reportTiktok.data);
                                 client.sendMessage(clientRows[i].get('SUPERVISOR'), reportTiktok.data);
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
 
@@ -190,8 +189,8 @@ client.on('ready', () => {
             client.sendMessage('6281235114745@c.us', 'Cron Job Tiktok Error');
         }
     });
-
-    schedule('40 15,18,21 * * *', async () => {
+//Cronjob Insta
+    schedule('5 15,18,21 * * *', async () => {
         try {            
             client.sendMessage('6281235114745@c.us', 'Collecting Insta');
     
@@ -206,7 +205,6 @@ client.on('ready', () => {
                         if(loadInsta.code === 200){
                             let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                             if(reportInsta.code === 202){
-                                client.sendMessage('6281235114745@c.us', reportInsta.data);
 
                                 client.sendMessage(clientRows[i].get('SUPERVISOR'), reportInsta.data);
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportInsta.data);
