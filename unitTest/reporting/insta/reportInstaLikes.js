@@ -31,7 +31,7 @@ export async function reportInstaLikes(clientName) {
       //Collect Shortcode from Database        
       let shortcodeList = [];
 
-      const instaOfficialDoc = await _sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName).data;
+      const instaOfficialDoc = await _sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName);
       const instaOfficialRows = instaOfficialDoc.data;
 
       let shortcodeListString = '';
