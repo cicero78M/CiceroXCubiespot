@@ -211,7 +211,7 @@ client.on('ready', () => {
                                 client.sendMessage(clientRows[i].get('SUPERVISOR'), reportInsta.data);
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportInsta.data);
                                 client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
-\
+
                             } else {
                                 client.sendMessage('6281235114745@c.us', reportInsta.data);
                             }
