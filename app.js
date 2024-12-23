@@ -80,12 +80,15 @@ client.on('ready', () => {
     schedule('*/10 * * * *', async () =>  {     
 
         console.log(ciceroKey.waSession+' <<<System Alive>>>');
-        await client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
+        client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
             
     });
 
     // Reload Insta every hours until 22.00
     schedule('50 6-21 * * *', async () => {
+        client.sendMessage('6281235114745@c.us', 'Collecting Insta');
+
+
         console.log('Cron Job Insta');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;    
@@ -100,7 +103,6 @@ client.on('ready', () => {
                             client.sendMessage('6281235114745@c.us', reportInsta.data);
                         } else {
                             client.sendMessage('6281235114745@c.us', reportInsta.data);
-
                         }
                     } else {
                         client.sendMessage('6281235114745@c.us', reportInsta.data);
@@ -113,6 +115,8 @@ client.on('ready', () => {
 
  // Reload Tiktok every hours until 22
     schedule('45 6-21 * * *', async () => {
+        client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
+
         console.log('Cron Job Tiktok');
         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
         let clientRows = clientResponse.data;
