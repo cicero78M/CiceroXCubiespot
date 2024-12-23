@@ -131,6 +131,5 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
     console.log('Return Success');
     userDoc.delete;
     return responseData;
-
   }
 }

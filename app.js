@@ -347,11 +347,11 @@ client.on('message', async (msg) => {
                                         if(reportInsta.code === 202){
                                             client.sendMessage(msg.from, reportInsta.data);
                                         } else {
-                                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                            client.sendMessage('6281235114745@c.us', reportInsta.data);
 
                                         }
                                     } else {
-                                        client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                        client.sendMessage('6281235114745@c.us', reportInsta.data);
 
                                     }
                                     
