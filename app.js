@@ -153,7 +153,7 @@ client.on('ready', () => {
     });
 
     // Reload Insta every 15.00 && 21.00
-    schedule('12 15/18/21 * * *', async () => {
+    schedule('15 15/18/21 * * *', async () => {
       
         try {
             console.log('Cron Job Insta');
@@ -190,7 +190,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every 15.05 && 21.05
-    schedule('15 15/18/21 * * *', async () => {
+    schedule('18 15/18/21 * * *', async () => {
       
         try {
             console.log('Cron Job Tiktok');
