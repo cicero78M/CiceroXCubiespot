@@ -153,7 +153,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 15/18/21
-    schedule('22 18 * * *', async () => {
+    schedule('27 15,18,21 * * *', async () => {
         try {
 
             client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
@@ -173,7 +173,7 @@ client.on('ready', () => {
                                 client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
 
                                 if (clientRows[i].get('GROUP') !== null){
-                                    client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
+                                    client.sendMessage(clientRows[i].get('GROUP'), reportTiktok.data);
                                 }
                             } else {
                                 client.sendMessage('6281235114745@c.us', reportTiktok.data);
@@ -191,6 +191,39 @@ client.on('ready', () => {
         }
     });
 
+    schedule('36 15,18,21 * * *', async () => {
+        try {
+            client.sendMessage('6281235114745@c.us', 'Collecting Insta');
+    
+    
+            console.log('Cron Job Insta');
+            let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+            let clientRows = clientResponse.data;    
+            if (clientRows.length >= 1){
+                for (let i = 0; i < clientRows.length; i++){
+                    if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                        console.log('Starting');
+                        let loadInsta = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                        if(loadInsta.code === 200){
+                            let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            if(reportInsta.code === 202){
+                                client.sendMessage('6281235114745@c.us', reportInsta.data);
+                            } else {
+                                client.sendMessage('6281235114745@c.us', reportInsta.data);
+                            }
+                        } else {
+                            client.sendMessage('6281235114745@c.us', reportInsta.data);
+    
+                        }
+                    }           
+                }
+            }
+        } catch (error) {
+            
+            console.log(error)
+            client.sendMessage('6281235114745@c.us', 'Cron Job Insta  Error');
+        }
+    });
 
 });
 
