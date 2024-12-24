@@ -388,7 +388,7 @@ client.on('qr', qr => {
 
 client.on('message', async (msg) => {
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'exception'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'allsocmed', 'exception'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
 
@@ -555,6 +555,117 @@ client.on('message', async (msg) => {
                                 }           
                             }
                         }
+                    } else if (splittedMsg[1].toLowerCase() === 'allsocmed') {
+
+                        try {
+
+                            await client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
+                    
+                            console.log('Cron Job Tiktok');
+                
+                            let tiktokClientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                            let tiktokClientRows = tiktokClientResponse.data;
+                            if (tiktokClientRows.length >= 1){
+                                for (let i = 0; i < tiktokClientRows.length; i++){
+                                    if (tiktokClientRows[i].get('STATUS') === "TRUE" && tiktokClientRows[i].get('TIKTOK_STATE') === "TRUE" && tiktokClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                        console.log('Starting');
+                                        let loadTiktok = await _collectTiktokComments(tiktokClientRows[i].get('CLIENT_ID'));
+                                        if(loadTiktok.code === 200){
+                                            let reportTiktok = await _reportTiktokComments(tiktokClientRows[i].get('CLIENT_ID'))
+                                            if(reportTiktok.code === 202){
+                                                await client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                            } else {
+                                                await client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                            }
+                
+                                        } else {
+                                            await client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                        }
+                                    }           
+                                }
+                
+                            }
+                
+                            
+                            try {
+                            
+                                client.sendMessage('6281235114745@c.us', 'Collecting Insta');
+                                
+                                let instaClientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                                let instaClientRows = instaClientResponse.data;    
+                                if (instaClientRows.length >= 1){
+                                    for (let i = 0; i < instaClientRows.length; i++){
+                                        if (instaClientRows[i].get('STATUS') === "TRUE" && instaClientRows[i].get('INSTA_STATE') === "TRUE" && instaClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                                            console.log('Starting');
+                                            
+                                            let loadInsta = await _collectInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                            
+                                            if(loadInsta.code === 200){
+                                            
+                                                let reportInsta = await _reportInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                            
+                                                if(reportInsta.code === 202){
+                                                    await client.sendMessage('6281235114745@c.us', reportInsta.data);
+                                                } else {
+                                                    await client.sendMessage('6281235114745@c.us', reportInsta.data);
+                                                }
+                                            } else {
+                                                await client.sendMessage('6281235114745@c.us', reportInsta.data);
+                                            }
+                                        }           
+                                    }
+                                }
+                                
+                            } catch (errorinsta) {
+                                
+                                console.log(errorinsta)
+                                await client.sendMessage('6281235114745@c.us', 'Cron Job Insta  Error');
+                            }
+                
+                        } catch (errortiktok) {
+                            
+                            console.log(errortiktok)
+                            await client.sendMessage('6281235114745@c.us', 'Cron Job Tiktok Error');
+                
+                            try {
+                            
+                                await client.sendMessage('6281235114745@c.us', 'Collecting Insta');
+                                
+                                let instaClientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                                let instaClientRows = instaClientResponse.data;    
+                                if (instaClientRows.length >= 1){
+                                    for (let i = 0; i < instaClientRows.length; i++){
+                                        if (instaClientRows[i].get('STATUS') === "TRUE" && instaClientRows[i].get('INSTA_STATE') === "TRUE" && instaClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                                            
+                                            console.log('Starting...');
+                                            
+                                            let loadInsta = await _collectInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                            
+                                            if(loadInsta.code === 200){
+                                            
+                                                let reportInsta = await _reportInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                            
+                                                if(reportInsta.code === 202){
+                                                    await client.sendMessage('6281235114745@c.us', reportInsta.data);
+                                                } else {
+                                                    await client.sendMessage('6281235114745@c.us', reportInsta.data);
+                                                }
+                                            } else {
+                                                await client.sendMessage('6281235114745@c.us', reportInsta.data);
+                        
+                                            }
+                                        }           
+                                    }
+                                }
+                                
+                            } catch (errorinsta) {
+                                
+                                console.log(errorinsta)
+                                await client.sendMessage('6281235114745@c.us', 'Cron Job Insta  Error');
+                            }
+                        }
+
+
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
                         let response = await _createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
