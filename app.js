@@ -281,41 +281,38 @@ client.on('message', async (msg) => {
 
                 console.log(contact.pushname+" ===>>>> "+url);
 
-             
-                if (url !== null){
-                    if (url.includes('instagram.com')){
+            
+                if (url.includes('instagram.com')){
 
-                        if (url.includes('/p/') || url.includes('/reels/') || url.includes('/video/') ){
+                    console.log('Response Sent');
 
-                            console.log('Response Sent');
-
-                            client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url+'\n\nSelalu Semangat ya.');
+                    client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url+'\n\nSelalu Semangat ya.');
 
 
-                               
-                            //   let rawLink;
-
-
-                            /*  
-                            if(url[0].includes('/?')){
-                                rawLink = url[0].replaceAll('/?', '?');
-                                shortcode = rawLink.split('?')[0].split('/').pop();
-                            } else {
-                                shortcode = url[0].split('/').pop();
-                            }
-
-                            //Report Likes from Insta Official
-                            let response = await _instaSW(contact.number, shortcode);
                         
-                            if (response.code === 200){
-                                client.sendMessage(msg.from, response.data);
-                            } else {
-                                console.log(response.data);
-                            }
-                            */ 
-                        }
+                    //   let rawLink;
+
+
+                    /*  
+                    if(url[0].includes('/?')){
+                        rawLink = url[0].replaceAll('/?', '?');
+                        shortcode = rawLink.split('?')[0].split('/').pop();
+                    } else {
+                        shortcode = url[0].split('/').pop();
                     }
+
+                    //Report Likes from Insta Official
+                    let response = await _instaSW(contact.number, shortcode);
+                
+                    if (response.code === 200){
+                        client.sendMessage(msg.from, response.data);
+                    } else {
+                        console.log(response.data);
+                    }
+                    */ 
                 }
+            
+            
             }
 
         } else {
