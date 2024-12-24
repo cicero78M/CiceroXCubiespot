@@ -283,13 +283,13 @@ client.on('message', async (msg) => {
 
              
                 if (url !== null){
-                    if (url[0].includes('instagram.com')){
+                    if (url.includes('instagram.com')){
 
-                        if (url[0].includes('/p/') || url[0].includes('/reels/') || url[0].includes('/video/') ){
+                        if (url.includes('/p/') || url.includes('/reels/') || url.includes('/video/') ){
 
                             console.log('Response Sent');
 
-                            client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
+                            client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url+'\n\nSelalu Semangat ya.');
 
 
                                
