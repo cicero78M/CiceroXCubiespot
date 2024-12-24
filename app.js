@@ -282,7 +282,7 @@ client.on('message', async (msg) => {
                 console.log(msg.author+" ===>>>> "+url);
 
             
-//                if (url.includes('instagram.com')){
+               if (url.includes('instagram.com')){
 
                     console.log('Response Sent');
 
@@ -308,7 +308,7 @@ client.on('message', async (msg) => {
                         console.log(response.data);
                     }
                     */ 
-//              }
+              }
             
             
             }
