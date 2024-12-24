@@ -280,9 +280,9 @@ client.on('message', async (msg) => {
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
                 console.log(msg.author+" ===>>>> "+url);
-                console.log(url.indexOf('instagram.com'));
+                console.log(url.includes('instagram'));
             
-               if (url.includes('instagram.com')){
+               if (url.includes('instagram')){
 
                     console.log('Response Sent');
 
