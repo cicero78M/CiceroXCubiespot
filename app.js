@@ -121,8 +121,7 @@ client.on('ready', () => {
                         
                         if(loadInsta.code === 200){
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Insta Data Success');
-
-                        
+   
                             let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                         
                             if(reportInsta.code === 202){
@@ -275,9 +274,13 @@ client.on('message', async (msg) => {
             if (contact.pushname !== undefined){
 
                 console.log(contact.pushname+" ===>>>> "+msg.body);
+                
 
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
+
+                console.log(contact.pushname+" ===>>>> "+url);
+
              
                 if (url !== null){
                     if (url[0].includes('instagram.com')){
