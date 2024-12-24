@@ -280,7 +280,7 @@ client.on('message', async (msg) => {
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
                 console.log(msg.author+" ===>>>> "+url);
-
+                console.log(url.includes('instagram.com'));
             
                if (url.includes('instagram.com')){
 
