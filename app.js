@@ -91,10 +91,10 @@ client.on('ready', () => {
             let tiktokClientRows = tiktokClientResponse.data;
             if (tiktokClientRows.length >= 1){
                 for (let i = 0; i < tiktokClientRows.length; i++){
-                    await client.sendMessage('6281235114745@c.us', 'Collect '+tiktokClientRows[i].get('CLIENT_ID')+' Tiktok Data');
-
 
                     if (tiktokClientRows[i].get('STATUS') === "TRUE" && tiktokClientRows[i].get('TIKTOK_STATE') === "TRUE" && tiktokClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
+
+                        await client.sendMessage('6281235114745@c.us', 'Collect '+tiktokClientRows[i].get('CLIENT_ID')+' Tiktok Data');
                         console.log('Starting...');
 
                         let loadTiktok = await _collectTiktokComments(tiktokClientRows[i].get('CLIENT_ID'));
@@ -125,9 +125,10 @@ client.on('ready', () => {
                 let instaClientRows = instaClientResponse.data;    
                 if (instaClientRows.length >= 1){
                     for (let i = 0; i < instaClientRows.length; i++){
-                        await client.sendMessage('6281235114745@c.us', 'Collect '+instaClientRows[i].get('CLIENT_ID')+' Insta Data');
 
                         if (instaClientRows[i].get('STATUS') === "TRUE" && instaClientRows[i].get('INSTA_STATE') === "TRUE" && instaClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                            await client.sendMessage('6281235114745@c.us', 'Collect '+instaClientRows[i].get('CLIENT_ID')+' Insta Data');
+
                             console.log('Starting...');
                             
                             let loadInsta = await _collectInstaLikes(instaClientRows[i].get('CLIENT_ID'));
@@ -214,6 +215,7 @@ client.on('ready', () => {
             
             if (tiktokClientRows.length >= 1){
                 for (let i = 0; i < tiktokClientRows.length; i++){
+                    
                     if (tiktokClientRows[i].get('STATUS') === "TRUE" && tiktokClientRows[i].get('TIKTOK_STATE') === "TRUE" && tiktokClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
                         
                         console.log('Starting...');
