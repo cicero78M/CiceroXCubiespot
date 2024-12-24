@@ -279,7 +279,7 @@ client.on('message', async (msg) => {
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
-                console.log(contact.pushname+" ===>>>> "+url);
+                console.log(msg.author+" ===>>>> "+url);
 
             
                 if (url.includes('instagram.com')){
