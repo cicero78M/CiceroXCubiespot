@@ -20,9 +20,9 @@ export async function checkMyData(clientName, idKey) {
         response = userRows[i];
 
         let responseData = {
-          data: `*Profile Anda*\n\nUser : ` + response.get('NAMA') + `\nID Key : ` + response.get('ID_KEY') + `\nDivisi / Jabatan : `
+          data: `*Profile Anda*\n\nUser : ` +response.get('TITLE')+` `+response.get('NAMA') + `\nID Key : ` + response.get('ID_KEY') + `\nDivisi / Jabatan : `
             + response.get('DIVISI') + ` / ` + response.get('JABATAN') + `\nInsta : ` + response.get('INSTA') + `\nTikTok : ` + response.get('TIKTOK')
-            + `\nStatus : ` + response.get('STATUS'),
+            + `\nAccount Status : ` + response.get('STATUS'),
           state: true,
           code: 200
         };
