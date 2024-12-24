@@ -17,7 +17,6 @@ const { textSync } = figlet;
 import { set } from 'simple-banner';
 import { schedule } from 'node-cron';
 
-//Unit Test
 import { createClient as _createClient } from './unitTest/database/newClient/createClient.js';
 import { collectInstaLikes as _collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes.js';
 import { reportInstaLikes as _reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes.js';
@@ -31,7 +30,6 @@ import { addNewUser as _addNewUser } from './unitTest/database/editData/userData
 import { checkMyData as _checkMyData } from './unitTest/database/checkMyData.js';
 import { usernameAbsensi as _usernameAbsensi } from './unitTest/database/usernameAbsensi.js';
 import { sheetDoc as _sheetDoc } from './unitTest/queryData/sheetDoc.js';
-
  
 const port = ciceroKey.port;
 
@@ -45,20 +43,17 @@ const client = new Client({
     }),
 });
 
-//initialize 
 client.initialize();
-//Check if autenticated
+
 client.on('authenthicated', (session)=>{
     console.log(session);
 });
 
 client.on('auth_failure', msg => {
-    // Fired if session restore was unsuccessful
     console.error('AUTHENTICATION FAILURE', msg);
 });
 
 client.on('ready', () => {
-
     console.log(textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
         horizontalLayout: "fitted",
@@ -112,6 +107,7 @@ client.on('ready', () => {
                     }           
                 }
             }
+            
         } catch (error) {
             
             console.log(error)
@@ -178,8 +174,19 @@ client.on('ready', () => {
                                 client.sendMessage('6281235114745@c.us', reportTiktok.data);
                             }
                         } else {
-                            client.sendMessage('6281235114745@c.us', reportTiktok.data);
-                        }
+
+                            let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
+                            if(reportTiktok.code === 202){
+                 
+                                client.sendMessage(clientRows[i].get('SUPERVISOR'), reportTiktok.data);
+                                client.sendMessage(clientRows[i].get('OPERATOR'), reportTiktok.data);
+
+                                client.sendMessage(clientRows[i].get('GROUP'), reportTiktok.data);
+                                
+                            } else {
+                                client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                            }
+                       }
                     }           
                 }
             }
@@ -214,7 +221,16 @@ client.on('ready', () => {
                                 client.sendMessage('6281235114745@c.us', reportInsta.data);
                             }
                         } else {
-                            client.sendMessage('6281235114745@c.us', reportInsta.data);
+                            let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            if(reportInsta.code === 202){
+
+                                client.sendMessage(clientRows[i].get('SUPERVISOR'), reportInsta.data);
+                                client.sendMessage(clientRows[i].get('OPERATOR'), reportInsta.data);
+                                client.sendMessage(clientRows[i].get('GROUP'), reportInsta.data);
+
+                            } else {
+                                client.sendMessage('6281235114745@c.us', reportInsta.data);
+                            }
     
                         }
                     }           
