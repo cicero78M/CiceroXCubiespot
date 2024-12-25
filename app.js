@@ -1,7 +1,7 @@
-import { readFileSync } from 'fs';
 import express from 'express';
 const app = express();
 
+import { readFileSync } from 'fs';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 import wwebjs from 'whatsapp-web.js';
@@ -29,6 +29,7 @@ import { addNewUser as _addNewUser } from './unitTest/database/editData/userData
 import { checkMyData as _checkMyData } from './unitTest/database/checkMyData.js';
 import { usernameAbsensi as _usernameAbsensi } from './unitTest/database/usernameAbsensi.js';
 import { sheetDoc as _sheetDoc } from './unitTest/queryData/sheetDoc.js';
+import { saveContacts } from './unitTest/database/saveContact.js';
  
 const port = ciceroKey.port;
 
@@ -259,7 +260,7 @@ client.on('qr', qr => {
 
 client.on('message', async (msg) => {
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'allsocmed', 'exception'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'allsocmed', 'exception', 'savecontact'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
 
@@ -282,10 +283,9 @@ client.on('message', async (msg) => {
 
                 if (url.length >=1){
 
-
                     let splittedUrl = url[0].split('/');
 
-                   if (splittedUrl.includes("www.instagram.com")){
+                    if (splittedUrl.includes("www.instagram.com")){
 
                     console.log('Response Sent');
 
@@ -406,6 +406,8 @@ client.on('message', async (msg) => {
                                 }           
                             }
                         }
+                    } else if (splittedMsg[1].toLowerCase() === 'allinsta') {
+
                     } else if (splittedMsg[1].toLowerCase() === 'alltiktok') {
                         console.log('Reload All TikTok');
                         let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
@@ -563,6 +565,11 @@ client.on('message', async (msg) => {
                             client.sendMessage('6281235114745@c.us', 'Response Error from Exceptions');
 
                         }   
+                    } else if (splittedMsg[1].toLowerCase() === 'savecontact') {
+                        let response = await saveContacts();
+
+                        console.log(response);
+
                     }
                                             
                 //Operator Order Data         
