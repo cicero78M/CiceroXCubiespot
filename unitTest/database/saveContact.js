@@ -19,6 +19,7 @@ export async function saveContacts() {
     await waContactDoc.loadInfo(); // loads document properties and worksheets
 
     let whatsappList = [];
+    let contactData = [];
 
     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     let clientRows = clientResponse.data;
@@ -32,15 +33,18 @@ export async function saveContacts() {
                 for (let ii = 0; ii < userRows.length; ii++){
                     if(userRows[ii].get('WHATSAPP') !== clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != null|| userRows[ii].get('WHATSAPP') != undefined|| userRows[ii].get('WHATSAPP') != "" ){
                         if(!whatsappList.includes(userRows[ii].get('WHATSAPP'))){
-                            whatsappList.push(userRows[ii].get('WHATSAPP'))
-                            const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
-                            await waSheet.addRow({ 'FIRST NAME': userRows[ii].get('NAMA'), 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID') });
+                         
+                            whatsappList.push(userRows[ii].get('WHATSAPP'));
+                            contactData.push({'FIRST NAME': userRows[ii].get('NAMA'), 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID') });
                     
                         }
                     }
                 }
             }
         }
+
+        const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
+        await waSheet.addRow(contactData);
 
         return 'SUCCESS!!!!';
     }    
