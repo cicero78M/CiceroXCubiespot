@@ -47,7 +47,7 @@ export async function saveContacts() {
                 let userRows = userResponse.data;
 
                 for (let ii = 0; ii < userRows.length; ii++){
-                    if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != null|| userRows[ii].get('WHATSAPP') != undefined || userRows[ii].get('WHATSAPP') != "" ){
+                    if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != null|| userRows[ii].get('WHATSAPP') != 0 || userRows[ii].get('WHATSAPP') != "" ){
                         
                         if(!contactList.includes(userRows[ii].get('WHATSAPP')) || !whatsappList.includes(userRows[ii].get('WHATSAPP'))){ 
                             whatsappList.push(userRows[ii].get('WHATSAPP'));
