@@ -48,11 +48,9 @@ export async function saveContacts() {
             for (let ii = 0; ii < userRows.length; ii++){
                 if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != "" ){
                     
-                    if(!whatsappList.includes(userRows[ii].get('WHATSAPP') )){ 
             
-                        whatsappList.push(userRows[ii].get('WHATSAPP'));
                         contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
-                    }
+                    
                 }
             }
         }
