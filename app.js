@@ -40,6 +40,10 @@ const client = new Client({
     authStrategy: new LocalAuth({
         clientId: ciceroKey.waSession,
     }),
+
+    puppeteer: { 
+        headless: false,
+    }
 });
 
 client.initialize();
