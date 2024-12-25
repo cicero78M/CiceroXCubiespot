@@ -41,9 +41,12 @@ export async function saveContacts() {
     if (clientRows.length >= 1){
         for (let i = 0; i < clientRows.length; i++){
             console.log(clientRows[i].get('CLIENT_ID'));
+
+            let userRows;
+            let userResponse;
             
-            let userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
-            let userRows = userResponse.data;
+            userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
+            userRows = userResponse.data;
 
             for (let ii = 0; ii < userRows.length; ii++){
                 if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != "" ){
