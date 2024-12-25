@@ -28,8 +28,9 @@ export async function saveContacts() {
     let contactList = [];
 
     for (let i = 0; i < contactRows.length; i++){
-        if(!contactList.includes(contactRows[ii].get('MOBILE PHONE'))){ 
-            contactList.push(contactRows[ii].get('MOBILE PHONE'));
+        
+        if(!contactList.includes(contactRows[i].get('MOBILE PHONE'))){ 
+            contactList.push(contactRows[i].get('MOBILE PHONE'));
 
         }
     }
@@ -37,7 +38,7 @@ export async function saveContacts() {
 
     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     let clientRows = clientResponse.data;
-    
+
     if (clientRows.length >= 1){
         for (let i = 0; i < clientRows.length; i++){
             if (clientRows[i].get('STATUS') === "TRUE") { 
