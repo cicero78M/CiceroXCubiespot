@@ -51,7 +51,7 @@ export async function saveContacts() {
 
             for (let ii = 0; ii < userRows.length; ii++){
                 clientRows[i].get('OPERATOR')
-                if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != "" ){
+                if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || Number(userRows[ii].get('WHATSAPP')) != NaN ){
                     
                     if(!whatsappList.includes(userRows[ii].get('WHATSAPP') )){ 
             
