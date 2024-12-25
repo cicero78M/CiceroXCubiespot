@@ -43,9 +43,12 @@ export async function saveContacts() {
     if (clientRows.length >= 1){
         for (let i = 0; i < clientRows.length; i++){
             console.log(clientRows[i].get('CLIENT_ID'));
+
+            let userResponse;
+            let userRows
             
-            let userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
-            let userRows = userResponse.data;
+            userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
+            userRows = userResponse.data;
 
             console.log(userRows);
 
@@ -67,6 +70,7 @@ export async function saveContacts() {
             return 'SUCCESS!!!!';
 
         }    
+
     } catch (error) {
         console.log(error);
     }
