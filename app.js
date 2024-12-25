@@ -41,9 +41,6 @@ const client = new Client({
         clientId: ciceroKey.waSession,
     }),
 
-    puppeteer: { 
-        headless: false,
-    }
 });
 
 client.initialize();
