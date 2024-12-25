@@ -280,14 +280,14 @@ client.on('message', async (msg) => {
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
-                let splittedUrl = url.split('/');
+                let splittedUrl = url[0].split('/');
 
                 if (splittedUrl.length >=1){
                    if (splittedUrl.includes("www.instagram.com")){
 
                     console.log('Response Sent');
 
-                    client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url+'\n\nSelalu Semangat ya.');
+                    client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
                         
                     //   let rawLink;
 
