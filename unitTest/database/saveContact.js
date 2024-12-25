@@ -35,7 +35,6 @@ export async function saveContacts() {
         }
     }
 
-
     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     let clientRows = clientResponse.data;
 
@@ -52,7 +51,6 @@ export async function saveContacts() {
                         if(!contactList.includes(userRows[ii].get('WHATSAPP')) || !whatsappList.includes(userRows[ii].get('WHATSAPP'))){ 
              
                             whatsappList.push(userRows[ii].get('WHATSAPP'));
-                            console.log('+'+userRows[ii].get('WHATSAPP'));
                             contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
                         }
                     }
