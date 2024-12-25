@@ -37,6 +37,7 @@ export async function saveContacts() {
 
     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     let clientRows = clientResponse.data;
+    
     if (clientRows.length >= 1){
         for (let i = 0; i < clientRows.length; i++){
             if (clientRows[i].get('STATUS') === "TRUE") { 

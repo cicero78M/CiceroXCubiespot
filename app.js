@@ -195,8 +195,8 @@ client.on('ready', () => {
                     
                     if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
 
-                        console.log(clientRows[i].get('CLIENT_')+' START LOAD INSTA DATA');
-                        await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_')+' START LOAD INSTA DATA');
+                        console.log(clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                        await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
 
                         console.log('Starting...');
 
@@ -204,8 +204,8 @@ client.on('ready', () => {
 
                         if(loadInsta.code === 200){
                             
-                            console.log(clientRows[i].get('CLIENT_')+' SUCCESS LOAD INSTA DATA');
-                            await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_')+' SUCCESS LOAD INSTA DATA');
+                            console.log(clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
+                            await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                         
                             let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                         
