@@ -18,7 +18,7 @@ export async function saveContacts() {
     const waContactDoc = new GoogleSpreadsheet(ciceroKey.dbKey.waContact, googleAuth); //Google Auth
     await waContactDoc.loadInfo(); // loads document properties and worksheets
 
-    let whatsappList = [];
+    let whatsappList = ['',];
     let contactData = [];
 
     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
@@ -45,7 +45,7 @@ export async function saveContacts() {
         }
         try {
             const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
-            waSheet.addRow(contactData);
+            waSheet.addRows(contactData);
     
             return 'SUCCESS!!!!';
         } catch (error) {
