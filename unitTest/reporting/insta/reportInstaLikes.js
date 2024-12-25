@@ -84,15 +84,17 @@ export async function reportInstaLikes(clientName) {
 
         let UserNotLikes = [];
         let notLikesList = [];
+        var userAll = 0;
 
         for (let iii = 0; iii < userRows.length; iii++) {
           if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
             if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
-              if(userRows[iii].get('STATUS') === 'TRUE' && userRows[iii].get('EXCEPTION') === "FALSE"){
-                
-                UserNotLikes.push(userRows[iii].get('ID_KEY'));
-                notLikesList.push(userRows[iii]);
-                
+              if (userRows[iii].get('STATUS') === 'TRUE' ){
+                userAll++;
+                if (userRows[iii].get('EXCEPTION') === "FALSE"){
+                  UserNotLikes.push(userRows[iii].get('ID_KEY'));
+                  notLikesList.push(userRows[iii]);
+                }
               }
             }
           }
@@ -127,7 +129,7 @@ export async function reportInstaLikes(clientName) {
 
         }
 
-        let instaSudah = userRows.length - notLikesList.length;
+        let instaSudah = userAll - notLikesList.length;
         let responseData;
 
         if (clientResponse.data.isClientType === 'COM') {
@@ -135,7 +137,7 @@ export async function reportInstaLikes(clientName) {
           responseData = {
             data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" + shortcodeListString +
               "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-              + userRows.length + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
+              + userAll+ "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
             code: 202
@@ -146,7 +148,7 @@ export async function reportInstaLikes(clientName) {
           responseData = {
             data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " + clientName +
               "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-              + userRows.length + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
+              + userAll + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
             code: 202

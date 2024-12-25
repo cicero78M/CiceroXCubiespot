@@ -69,12 +69,14 @@ export async function reportTiktokComments(clientName) {
 
             let userNotComment = [];
             let notCommentList = [];
+            var userAll = 0;
 
             for (let iii = 0; iii < userRows.length; iii++) {
               if (!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))) {
                 if (!userNotComment.includes(userRows[iii].get('ID_KEY'))) {
-                  if(userRows[iii].get('STATUS') === 'TRUE' && userRows[iii].get('EXCEPTION') === "FALSE"){
-                   
+                  if (userRows[iii].get('STATUS') === 'TRUE' ){
+                    userAll++;
+                    if (userRows[iii].get('EXCEPTION') === "FALSE"){                   
                     userNotComment.push(userRows[iii].get('ID_KEY'));
                     notCommentList.push(userRows[iii]);
 
