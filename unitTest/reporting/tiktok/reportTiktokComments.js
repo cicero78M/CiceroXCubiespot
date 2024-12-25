@@ -77,9 +77,9 @@ export async function reportTiktokComments(clientName) {
                   if (userRows[iii].get('STATUS') === 'TRUE' ){
                     userAll++;
                     if (userRows[iii].get('EXCEPTION') === "FALSE"){                   
-                    userNotComment.push(userRows[iii].get('ID_KEY'));
-                    notCommentList.push(userRows[iii]);
-
+                      userNotComment.push(userRows[iii].get('ID_KEY'));
+                      notCommentList.push(userRows[iii]);
+                    }
                   }
                 }
               }
