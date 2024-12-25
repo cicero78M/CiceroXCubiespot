@@ -30,6 +30,7 @@ import { checkMyData as _checkMyData } from './unitTest/database/checkMyData.js'
 import { usernameAbsensi as _usernameAbsensi } from './unitTest/database/usernameAbsensi.js';
 import { sheetDoc as _sheetDoc } from './unitTest/queryData/sheetDoc.js';
 import { saveContacts } from './unitTest/database/saveContact.js';
+import { isNullOrUndefined } from 'util';
  
 const port = ciceroKey.port;
 
@@ -81,7 +82,7 @@ client.on('ready', () => {
     });
 
  // Reload Tiktok every hours until 22
-    schedule('50 6-21 * * *', async () => {
+    schedule('45 6-21 * * *', async () => {
         try {
 
             await client.sendMessage('6281235114745@c.us', 'Collecting Tiktok');
@@ -281,7 +282,7 @@ client.on('message', async (msg) => {
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
-                if (url.length >=1){
+                if (url != null || url != undefined){
 
                     let splittedUrl = url[0].split('/');
 
