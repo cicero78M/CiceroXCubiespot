@@ -279,7 +279,7 @@ client.on('message', async (msg) => {
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
-                let splittedUrl = url.replaceAll("?", "");
+                let splittedUrl = url.replace("?", "");
 
                 if (splittedUrl.length >=1){
                if (splittedUrl.includes("www.instagram.com")){
