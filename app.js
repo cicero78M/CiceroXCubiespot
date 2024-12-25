@@ -280,10 +280,10 @@ client.on('message', async (msg) => {
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
-                let splittedUrl = url.replace("?", "");
+                let splittedUrl = url.split('/');
 
                 if (splittedUrl.length >=1){
-               if (splittedUrl.includes("www.instagram.com")){
+                   if (splittedUrl.includes("www.instagram.com")){
 
                     console.log('Response Sent');
 
@@ -309,7 +309,7 @@ client.on('message', async (msg) => {
                         console.log(response.data);
                     }
                     */ 
-              }
+                  }
                 }
             
 
