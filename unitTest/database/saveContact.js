@@ -44,7 +44,7 @@ export async function saveContacts() {
         }
 
         const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
-        await waSheet.addRow(contactData);
+        waSheet.addRow(contactData);
 
         return 'SUCCESS!!!!';
     }    
