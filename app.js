@@ -280,9 +280,11 @@ client.on('message', async (msg) => {
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
-                let splittedUrl = url[0].split('/');
+                if (url.length >=1){
 
-                if (splittedUrl.length >=1){
+
+                    let splittedUrl = url[0].split('/');
+
                    if (splittedUrl.includes("www.instagram.com")){
 
                     console.log('Response Sent');
