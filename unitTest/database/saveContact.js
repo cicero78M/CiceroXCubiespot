@@ -41,19 +41,21 @@ export async function saveContacts() {
     if (clientRows.length >= 1){
         for (let i = 0; i < clientRows.length; i++){
             console.log(clientRows[i].get('CLIENT_ID'));
-
-            let userRows;
-            let userResponse;
             
-            userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
-            userRows = userResponse.data;
+            let userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
+            let userRows = userResponse.data;
+
+            console.log(userRows);
 
             for (let ii = 0; ii < userRows.length; ii++){
+                clientRows[i].get('OPERATOR')
                 if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != "" ){
                     
+                    if(!whatsappList.includes(userRows[ii].get('WHATSAPP') )){ 
             
+                        whatsappList.push(userRows[ii].get('WHATSAPP'));
                         contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
-                    
+                    }
                 }
             }
         }
