@@ -35,6 +35,8 @@ export async function saveContacts() {
         }
     }
 
+    console.log(contactList);
+
     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     let clientRows = clientResponse.data;
 
