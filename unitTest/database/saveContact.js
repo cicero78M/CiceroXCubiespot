@@ -32,9 +32,10 @@ export async function saveContacts() {
                 for (let ii = 0; ii < userRows.length; ii++){
 
                     if(!whatsappList.includes(userRows[ii].get('WHATSAPP'))){
-                        if(userRows[ii].get('WHATSAPP') !== clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') !== '' ){}
-                        const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
-                        await waSheet.addRow({ 'FIRST NAME': userRows[ii].get('NAMA'), 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID') });
+                        if(userRows[ii].get('WHATSAPP') !== clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') !== '' ){
+                            const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
+                            await waSheet.addRow({ 'FIRST NAME': userRows[ii].get('NAMA'), 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID') });
+                        }
                     }
                 }
             }
