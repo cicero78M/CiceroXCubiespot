@@ -23,7 +23,7 @@ export async function saveContacts() {
     let whatsappList = ['',];
     let contactData = [];
 
-    let contactResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'CONTACT');
+    let contactResponse = await sheetDoc(ciceroKey.dbKey.waContact, 'CONTACT');
     let contactRows = contactResponse.data;
     let contactList = [];
 
@@ -50,10 +50,10 @@ export async function saveContacts() {
                     if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || userRows[ii].get('WHATSAPP') != null|| userRows[ii].get('WHATSAPP') != 0 || userRows[ii].get('WHATSAPP') != "" ){
                         
                         if(!contactList.includes(userRows[ii].get('WHATSAPP')) || !whatsappList.includes(userRows[ii].get('WHATSAPP'))){ 
+             
                             whatsappList.push(userRows[ii].get('WHATSAPP'));
                             console.log('+'+userRows[ii].get('WHATSAPP'));
-                            contactData.push({'FIRST NAME': userRows[ii].get('NAMA'), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': +userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
-                    
+                            contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
                         }
                     }
                 }
