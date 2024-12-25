@@ -27,6 +27,14 @@ export async function reportTiktokComments(clientName) {
           let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
           let userRows = userDoc.data;
 
+          var userAll = 0;
+
+          for (let i = 0; i < userRows.length; i++) {
+            if (userRows[i].get('STATUS') === 'TRUE' ){
+              userAll++;
+            }
+          }
+
           //Collect Shortcode from Database        
           let shortcodeList = [];
 
@@ -69,13 +77,11 @@ export async function reportTiktokComments(clientName) {
 
             let userNotComment = [];
             let notCommentList = [];
-            var userAll = 0;
 
             for (let iii = 0; iii < userRows.length; iii++) {
               if (!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))) {
                 if (!userNotComment.includes(userRows[iii].get('ID_KEY'))) {
                   if (userRows[iii].get('STATUS') === 'TRUE' ){
-                    userAll++;
                     if (userRows[iii].get('EXCEPTION') === "FALSE"){                   
                       userNotComment.push(userRows[iii].get('ID_KEY'));
                       notCommentList.push(userRows[iii]);

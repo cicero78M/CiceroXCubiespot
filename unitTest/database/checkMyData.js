@@ -18,11 +18,18 @@ export async function checkMyData(clientName, idKey) {
 
         isUserExist = true;
         response = userRows[i];
+        let accountState;
+
+        if(response.get('STATUS') === "TRUE"){
+          accountState = 'ACTIVE';
+        } else {
+          accountState = 'DELETED';
+        }
 
         let responseData = {
           data: `*Profile Anda*\n\nUser : ` +response.get('TITLE')+` `+response.get('NAMA') + `\nID Key : ` + response.get('ID_KEY') + `\nDivisi / Jabatan : `
             + response.get('DIVISI') + ` / ` + response.get('JABATAN') + `\nInsta : ` + response.get('INSTA') + `\nTikTok : ` + response.get('TIKTOK')
-            + `\nAccount Status : ` + response.get('STATUS'),
+            + `\nAccount Status : ` + accountState,
           state: true,
           code: 200
         };
