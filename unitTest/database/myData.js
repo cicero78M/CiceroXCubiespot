@@ -4,7 +4,7 @@ import { myDataView } from '../view/myDataView.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-export async function checkMyData(clientName, idKey) {
+export async function myData(clientName, idKey) {
   //Auth Request to Files
   try {
     //Data by Sheet Name
@@ -20,32 +20,20 @@ export async function checkMyData(clientName, idKey) {
         isUserExist = true;
         response = userRows[i];
 
-
-        let data = {
-          data: response,
-          state: true,
-          code: 200
-        };
-
-        let responseData = await myDataView(data);
-        
+        let responseData = await myDataView(response);
         return responseData;
-
       }
     }
 
     if (!isUserExist) {
-
+      
       let responseData = {
         data: "ID KEY HAVE NO RECORD",
         state: true,
         code: 201
       };
 
-      console.log('ID KEY HAVE NO RECORD');
-
       return responseData;
-
     }
 
 

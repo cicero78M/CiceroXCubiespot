@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
+import { myData } from '../../myData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -49,7 +50,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         //Get Target Sheet Documents by Title
         sheetTarget.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true });
           
-        let responseMyData = await _checkMyData(clientName, idKey);
+        let responseMyData = await myData(clientName, idKey);
           
           return responseMyData;
       
@@ -57,7 +58,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         let responseData = {
           data: 'ID_Key is Exist, Try Another ID_Key',
           state: true,
-          code: 200
+          code: 201
         };
         console.log('Return ID_Key used');
         userDoc.delete;
@@ -67,7 +68,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       let responseData = {
         data: 'Divisi Tidak Terdaftar',
         state: true,
-        code: 200
+        code: 201
       };
 
       console.log('Return Divisi Tidak Terdaftar');

@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
-import { checkMyData as _checkMyData } from '../../checkMyData.js';
+import { myData } from '../../myData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -74,21 +74,15 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             } else if (type === 'TITLE') {
 
               if (dataList.includes(newData)) {
-
                 userRows[ii].assign({ TITLE: newData }); // Update Divisi Value
-
               } else {
-
                 let responseData = {
                   data: 'Title Unregsitered',
                   state: true,
                   code: 200
                 };
-
                 console.log('Return Success');
-
                 userDoc.delete;
-
                 return responseData;
               }
 
@@ -100,7 +94,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
 
             await userRows[ii].save(); //save update
 
-            let responseMyData = await _checkMyData(clientName, idKey);
+            let responseMyData = await myData(clientName, idKey);
             userDoc.delete;
             return responseMyData;
 
@@ -109,7 +103,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             let responseData = {
               data: 'Your Account Suspended',
               state: true,
-              code: 200
+              code: 201
             };
             console.log('Return Account Suspended');
             userDoc.delete;
@@ -121,7 +115,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
           let responseData = {
             data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
             state: true,
-            code: 200
+            code: 201
           };
           console.log('Return Whatsapp Used');
           userDoc.delete;
@@ -135,7 +129,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       let responseData = {
         data: 'User Data with delegated ID_KEY Doesn\'t Exist',
         state: true,
-        code: 200
+        code: 201
       };
 
       console.log('Return No ID_Key');
