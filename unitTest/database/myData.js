@@ -8,11 +8,13 @@ export async function myData(clientName, idKey) {
   //Auth Request to Files
   try {
     //Data by Sheet Name
-    let responseUser = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
-    let userRows = responseUser.data;
 
     let isUserExist = false;
     let response = [];
+
+    let responseUser = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
+    let userRows = responseUser.data;
+
     //Check if idKey Exist
     for (let i = 0; i < userRows.length; i++) {
       if (userRows[i].get('ID_KEY') === idKey) {
@@ -22,6 +24,7 @@ export async function myData(clientName, idKey) {
 
         let responseData = await myDataView(response);
         return responseData;
+      
       }
     }
 

@@ -410,7 +410,6 @@ client.on('message', async (msg) => {
                                 }           
                             }
                         }
-                    } else if (splittedMsg[1].toLowerCase() === 'allinsta') {
 
                     } else if (splittedMsg[1].toLowerCase() === 'alltiktok') {
                         console.log('Reload All TikTok');
@@ -598,7 +597,6 @@ client.on('message', async (msg) => {
                                 console.log(responseData.data);
                                 client.sendMessage(msg.from, "Error Add New User");
                                 break;
-
                         }                                    
 
                     } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {

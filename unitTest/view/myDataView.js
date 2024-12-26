@@ -15,5 +15,6 @@ export async function myDataView(dataResponse) {
     state: true,
     code: 200
     }
+
     return data;
 }
