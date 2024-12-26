@@ -96,13 +96,16 @@ client.on('ready', () => {
                     if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
 
                         await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Tiktok Data');
+
                         console.log('Starting...');
 
                         let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+
                         if(loadTiktok.code === 200){
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Tiktok Data Success');
 
                             let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
+
                             if(reportTiktok.code === 202){
                                 await client.sendMessage('6281235114745@c.us', reportTiktok.data);
                             } else {
@@ -142,6 +145,7 @@ client.on('ready', () => {
         } catch (errortiktok) {
             
             console.log(errortiktok)
+
             await client.sendMessage('6281235114745@c.us', 'Cron Job Tiktok Error');
         }
     });
@@ -716,14 +720,24 @@ client.on('message', async (msg) => {
                             client.sendMessage('6281235114745@c.us', '*Response Error on edit Pangkat*');
                         }   
                     } else if (splittedMsg[1].toLowerCase() === 'mydata') {
-                        let response = await _checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
-                        if (response.code === 200){
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.data);
-                            client.sendMessage('6281235114745@c.us', '*Response Error on Ask My Data*');
-                        }   
+                        
+                        let responseData = await _checkMyData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
+
+                        switch (responseData.code){
+                            case 200:
+                                console.log(responseData.data);
+                                client.sendMessage(msg.from, responseData.data);
+                                break;
+                            case 201:
+                                
+                                console.log(response.data);
+                                client.sendMessage(msg.from, responseData.data);
+                            case 303:
+                                
+                            console.log(responseData.data);
+                            client.sendMessage(msg.from, "Error on Getting My Data");
+
+                        }
                     }
                 //Key Order Data Not Exist         
                 } else {

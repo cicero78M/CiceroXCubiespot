@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc.js';
+import { myDataView } from '../view/myDataView.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -18,22 +19,16 @@ export async function checkMyData(clientName, idKey) {
 
         isUserExist = true;
         response = userRows[i];
-        let accountState;
 
-        if(response.get('STATUS') === "TRUE"){
-          accountState = 'ACTIVE';
-        } else {
-          accountState = 'DELETED';
-        }
 
-        let responseData = {
-          data: `*Profile Anda*\n\nUser : ` +response.get('TITLE')+` `+response.get('NAMA') + `\nID Key : ` + response.get('ID_KEY') + `\nDivisi / Jabatan : `
-            + response.get('DIVISI') + ` / ` + response.get('JABATAN') + `\nInsta : ` + response.get('INSTA') + `\nTikTok : ` + response.get('TIKTOK')
-            + `\nAccount Status : ` + accountState,
+        let data = {
+          data: response,
           state: true,
           code: 200
         };
 
+        let responseData = await myDataView(data);
+        
         return responseData;
 
       }
@@ -44,7 +39,7 @@ export async function checkMyData(clientName, idKey) {
       let responseData = {
         data: "ID KEY HAVE NO RECORD",
         state: true,
-        code: 200
+        code: 201
       };
 
       console.log('ID KEY HAVE NO RECORD');
@@ -60,6 +55,7 @@ export async function checkMyData(clientName, idKey) {
       state: false,
       code: 303
     };
+
     console.log(error);
     return responseData;
   }
