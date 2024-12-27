@@ -43,7 +43,6 @@ const client = new Client({
     authStrategy: new LocalAuth({
         clientId: ciceroKey.waSession,
     }),
-
 });
 
 client.initialize();
@@ -76,10 +75,8 @@ client.on('ready', () => {
 
     //Server Check Jobs
     schedule('*/10 * * * *', async () =>  {     
-
         console.log(ciceroKey.waSession+' <<<System Alive>>>');
         await client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
-            
     });
 
  // Reload Tiktok every hours until 22
@@ -258,10 +255,8 @@ client.on('ready', () => {
 });
 
 client.on('qr', qr => {
-
     //Pairing WA Center
     generate(qr, {small: true});
-
 });
 
 client.on('message', async (msg) => {
