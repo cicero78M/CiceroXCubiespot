@@ -60,6 +60,10 @@ client.on('auth_failure', msg => {
     console.error('AUTHENTICATION FAILURE', msg);
 });
 
+client.on('disconnected', (reason) => {
+    console.log('Client was logged out', reason);
+});
+
 client.on('ready', () => {
     console.log(textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
@@ -262,6 +266,12 @@ client.on('ready', () => {
 client.on('qr', qr => {
     //Pairing WA Center
     qrcode.generate(qr, {small: true});
+});
+
+let rejectCalls = true;
+client.on('call', async (call) => {
+    console.log('Call received, rejecting. GOTO Line 261 to disable', call);
+    if (rejectCalls) await call.reject();
 });
 
 client.on('message', async (msg) => {
