@@ -13,7 +13,7 @@ export async function propertiesView(clientName, type) {
       for (let i = 0; i < userRows.length; i++) {
         if (!dataList.includes(userRows[i].get(type))) {
           dataList.push(userRows[i].get(type));
-          if(userRows[i].get(type) != undefined){
+          if(userRows[i].get(type) != "undefined"){
             dataString = dataString+"\n"+userRows[i].get(type);
           }
         }
