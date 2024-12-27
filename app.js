@@ -30,6 +30,8 @@ import { usernameAbsensi as _usernameAbsensi } from './unitTest/database/usernam
 import { sheetDoc as _sheetDoc } from './unitTest/queryData/sheetDoc.js';
 import { saveContacts } from './unitTest/database/saveContact.js';
 import { myData } from './unitTest/database/myData.js';
+import { infoView } from './unitTest/view/infoView.js';
+import { propertiesView } from './unitTest/view/propertiesView.js';
  
 const port = ciceroKey.port;
 
@@ -266,8 +268,8 @@ client.on('message', async (msg) => {
 
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'allsocmed', 'exception', 'savecontact'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['menu', 'mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
-
+    const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
+    const info = ['menu', 'divisilist', 'titlelist'];
     try {
 
         const contact = await msg.getContact();
@@ -793,10 +795,26 @@ client.on('message', async (msg) => {
                                 break;
                         }
                     }
+
+                } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
+                    if (splittedMsg[1].toLowerCase() === 'menu') {
+                        let responseData = await infoView(splittedMsg[0].toUpperCase());
+                        client.sendMessage(msg.from, responseData.data);
+                    } else if (splittedMsg[1].toLowerCase() === 'divisilist') {
+                       let responseData = await propertiesView(clientName, "DIVISI");
+                       client.sendMessage(msg.from, responseData.data);                                  
+                    } else if (splittedMsg[1].toLowerCase() === 'titlelist') {
+                        let responseData = await propertiesView(clientName, "TITLE");
+                        client.sendMessage(msg.from, responseData.data);                                   
+                    }
+
+
                 //Key Order Data Not Exist         
                 } else {
                     console.log("Request Code Doesn't Exist");
-                    client.sendMessage(msg.from, "Request Code Tidak Terdaftar");
+                    let responseData = await infoView(splittedMsg[0].toUpperCase());
+
+                    client.sendMessage(msg.from, responseData.data);
                 }
                 //if(splittedMsg[1].toLowerCase()......
             } else {
@@ -806,6 +824,7 @@ client.on('message', async (msg) => {
         } //if(msg.status....
     } catch (error) {
         console.log(error); 
+
         client.sendMessage('6281235114745@c.us', 'Error on Apps');
     }//try catch
 });

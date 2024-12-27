@@ -4,6 +4,7 @@ import { readFileSync } from 'fs';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { myData } from '../../myData.js';
+import { propertiesView } from '../../../view/propertiesView.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -76,12 +77,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               if (dataList.includes(newData)) {
                 userRows[ii].assign({ TITLE: newData }); // Update Divisi Value
               } else {
-                let responseData = {
-                  data: 'Title Unregsitered',
-                  state: true,
-                  code: 200
-                };
-                console.log('Return Success');
+
+                let responseData = await propertiesView(clientName, type);
                 userDoc.delete;
                 return responseData;
               }
