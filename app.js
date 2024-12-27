@@ -44,21 +44,16 @@ app.listen(port, () => {
 const client = new Client({
     authStrategy: new LocalAuth({
         clientId: ciceroKey.waSession,
-
     }),
-    // proxyAuthentication: { username: 'username', password: 'password' },
-    puppeteer: { 
-        // args: ['--proxy-server=proxy-server-that-requires-authentication.example.com'],
-        headless: false,
-    }
+
 });
 
-
+console.log('Initializing...');
 
 client.initialize();
 
 client.on('authenthicated', (session)=>{
-    console.log(session);
+    console.log(JSON.stringify(session));
 });
 
 client.on('auth_failure', msg => {
@@ -266,7 +261,7 @@ client.on('ready', () => {
 
 client.on('qr', qr => {
     //Pairing WA Center
-    generate(qr, {small: true});
+    qrcode.generate(qr, {small: true});
 });
 
 client.on('message', async (msg) => {
