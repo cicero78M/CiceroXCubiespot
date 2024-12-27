@@ -6,7 +6,7 @@ export async function propertiesView(clientName, type) {
   
       const userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       const userRows = userDoc.data;
-      let dataList;
+      let dataList = [];
       let dataString;
 
       //Collect Divisi List String
