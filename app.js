@@ -801,10 +801,10 @@ client.on('message', async (msg) => {
                         let responseData = await infoView(splittedMsg[0].toUpperCase());
                         client.sendMessage(msg.from, responseData.data);
                     } else if (splittedMsg[1].toLowerCase() === 'divisilist') {
-                       let responseData = await propertiesView(clientName, "DIVISI");
+                       let responseData = await propertiesView(splittedMsg[0].toUpperCase(), "DIVISI");
                        client.sendMessage(msg.from, responseData.data);                                  
                     } else if (splittedMsg[1].toLowerCase() === 'titlelist') {
-                        let responseData = await propertiesView(clientName, "TITLE");
+                        let responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
                         client.sendMessage(msg.from, responseData.data);                                   
                     }
 
