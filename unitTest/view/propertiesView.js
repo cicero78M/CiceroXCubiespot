@@ -6,12 +6,13 @@ export async function propertiesView(clientName, type) {
   
       const userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       const userRows = userDoc.data;
-
+      let dataList;
       let dataString;
 
       //Collect Divisi List String
       for (let i = 0; i < userRows.length; i++) {
         if (!dataList.includes(userRows[i].get(type))) {
+          dataList.push(userRows[i].get(type));
           dataString = dataString+"\n"+userRows[i].get(type);
         }
       }
