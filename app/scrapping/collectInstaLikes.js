@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 import { instaPostAPI, instaLikesAPI } from '../../SocialMediaAPI/instaAPI.js';
-import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
+import { sheetDoc as _sheetDoc } from '../../BussinessProcess/sheetDoc.js';
 
 
 const d = new Date();

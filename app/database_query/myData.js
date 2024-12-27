@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { sheetDoc as _sheetDoc } from '../queryData/sheetDoc.js';
+import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
 import { myDataView } from '../view/myDataView.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));

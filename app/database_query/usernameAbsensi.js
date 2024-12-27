@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
-import { sheetDoc } from '../queryData/sheetDoc.js';
-import { listValueData } from '../queryData/listValueData.js';
+import { sheetDoc } from '../database_query/sheetDoc.js';
+import { listValueData } from '../database_query/listValueData.js';
 
 let date = new Date();
 

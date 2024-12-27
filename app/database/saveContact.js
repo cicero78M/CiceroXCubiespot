@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-import { sheetDoc } from "../queryData/sheetDoc.js";
+import { sheetDoc } from "../database_query/sheetDoc.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 

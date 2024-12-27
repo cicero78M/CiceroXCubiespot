@@ -8,7 +8,6 @@ import wwebjs from 'whatsapp-web.js';
 const { Client, LocalAuth } = wwebjs;
 
 import qrcode from 'qrcode-terminal';
-const { generate } = qrcode;
 
 import figlet from 'figlet';
 const { textSync } = figlet;
@@ -16,22 +15,19 @@ const { textSync } = figlet;
 import { set } from 'simple-banner';
 import { schedule } from 'node-cron';
 
-import { createClient as _createClient } from './unitTest/database/newClient/createClient.js';
-import { collectInstaLikes as _collectInstaLikes } from './unitTest/collecting/insta/collectInstaLikes.js';
-import { reportInstaLikes as _reportInstaLikes } from './unitTest/reporting/insta/reportInstaLikes.js';
-import { editProfile as _editProfile } from './unitTest/database/editData/userData/editUserProfile.js';
-import { pushUserClient as _pushUserClient } from './unitTest/database/newClient/pushUserClient.js';
-import { updateUsername as _updateUsername } from './unitTest/database/editData/userData/updateUsername.js';
-import { collectTiktokComments as _collectTiktokComments } from './unitTest/collecting/tiktok/collectTiktokEngagements.js';
-import { instaSW as _instaSW } from './unitTest/collecting/whatsapp/instaSW.js';
-import { reportTiktokComments as _reportTiktokComments } from './unitTest/reporting/tiktok/reportTiktokComments.js';
-import { addNewUser as _addNewUser } from './unitTest/database/editData/userData/addNewUser.js';
-import { usernameAbsensi as _usernameAbsensi } from './unitTest/database/usernameAbsensi.js';
-import { sheetDoc as _sheetDoc } from './unitTest/queryData/sheetDoc.js';
-import { saveContacts } from './unitTest/database/saveContact.js';
-import { myData } from './unitTest/database/myData.js';
-import { infoView } from './unitTest/view/infoView.js';
-import { propertiesView } from './unitTest/view/propertiesView.js';
+import { saveContacts } from './app/database/saveContact.js';
+import { myData } from './app/database/myData.js';
+import { infoView } from './app/view/infoView.js';
+import { propertiesView } from './app/view/propertiesView.js';
+import { collectInstaLikes } from './Scrapping/collectInstaLikes.js';
+import { reportInstaLikes } from './app/reporting/reportInstaLikes.js';
+import { collectTiktokComments } from './Scrapping/collectTiktokEngagements.js';
+import { reportTiktokComments } from './app/reporting/reportTiktokComments.js';
+import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
+import { sheetDoc } from './app/database_query/sheetDoc.js';
+import { pushUserClient } from './app/database/pushUserClient.js';
+import { addNewUser } from './app/database/addNewUser.js';
+import { updateUsername } from './app/database/updateUsername.js';
  
 const port = ciceroKey.port;
 
@@ -96,7 +92,7 @@ client.on('ready', () => {
     
             console.log('Cron Job Tiktok');
 
-            let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
             let clientRows = clientResponse.data;
             if (clientRows.length >= 1){
                 for (let i = 0; i < clientRows.length; i++){
@@ -107,12 +103,12 @@ client.on('ready', () => {
 
                         console.log('Starting...');
 
-                        let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+                        let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
 
                         if(loadTiktok.code === 200){
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Tiktok Data Success');
 
-                            let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
+                            let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
 
                             if(reportTiktok.code === 202){
                                 await client.sendMessage('6281235114745@c.us', reportTiktok.data);
@@ -130,12 +126,12 @@ client.on('ready', () => {
 
                         console.log('Starting...');
                         
-                        let loadInsta = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                        let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                         
                         if(loadInsta.code === 200){
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Insta Data Success');
    
-                            let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                         
                             if(reportInsta.code === 202){
                                 await client.sendMessage('6281235114745@c.us', reportInsta.data);
@@ -360,7 +356,7 @@ client.on('message', async (msg) => {
                         
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                            let response = await _pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
+                            let response = await pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
                             
                             if (response.code === 200){
                                 console.log(response.data);
@@ -384,7 +380,7 @@ client.on('message', async (msg) => {
                             
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                            let response = await _pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
+                            let response = await pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
                             
                             if (response.code === 200){
                                 console.log(response.data);
@@ -401,15 +397,15 @@ client.on('message', async (msg) => {
                         
                     } else if (splittedMsg[1].toLowerCase() === 'allinsta') {
                         console.log('Reload All Insta');
-                        let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                        let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                         let clientRows = clientResponse.data;    
                         if (clientRows.length >= 1){
                             for (let i = 0; i < clientRows.length; i++){
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                     console.log('Starting...');
-                                    let loadInsta = await _collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                                     if(loadInsta.code === 200){
-                                        let reportInsta = await _reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                        let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                                         if(reportInsta.code === 202){
                                             client.sendMessage(msg.from, reportInsta.data);
                                         } else {
@@ -425,15 +421,15 @@ client.on('message', async (msg) => {
 
                     } else if (splittedMsg[1].toLowerCase() === 'alltiktok') {
                         console.log('Reload All TikTok');
-                        let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                        let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                         let clientRows = clientResponse.data;
                         if (clientRows.length >= 1){
                             for (let i = 0; i < clientRows.length; i++){
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                     console.log('Starting...');
-                                    let loadTiktok = await _collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                    let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
                                     if(loadTiktok.code === 200){
-                                        let reportTiktok = await _reportTiktokComments(clientRows[i].get('CLIENT_ID'))
+                                        let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                                         if(reportTiktok.code === 202){
                                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
                                         } else {
@@ -455,15 +451,15 @@ client.on('message', async (msg) => {
                     
                             console.log('Cron Job Tiktok');
                 
-                            let tiktokClientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                            let tiktokClientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                             let tiktokClientRows = tiktokClientResponse.data;
                             if (tiktokClientRows.length >= 1){
                                 for (let i = 0; i < tiktokClientRows.length; i++){
                                     if (tiktokClientRows[i].get('STATUS') === "TRUE" && tiktokClientRows[i].get('TIKTOK_STATE') === "TRUE" && tiktokClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                         console.log('Starting...');
-                                        let loadTiktok = await _collectTiktokComments(tiktokClientRows[i].get('CLIENT_ID'));
+                                        let loadTiktok = await collectTiktokComments(tiktokClientRows[i].get('CLIENT_ID'));
                                         if(loadTiktok.code === 200){
-                                            let reportTiktok = await _reportTiktokComments(tiktokClientRows[i].get('CLIENT_ID'))
+                                            let reportTiktok = await reportTiktokComments(tiktokClientRows[i].get('CLIENT_ID'))
                                             if(reportTiktok.code === 202){
                                                 await client.sendMessage('6281235114745@c.us', reportTiktok.data);
                                             } else {
@@ -483,18 +479,18 @@ client.on('message', async (msg) => {
                             
                                 client.sendMessage('6281235114745@c.us', 'Collecting Insta');
                                 
-                                let instaClientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                                let instaClientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                                 let instaClientRows = instaClientResponse.data;    
                                 if (instaClientRows.length >= 1){
                                     for (let i = 0; i < instaClientRows.length; i++){
                                         if (instaClientRows[i].get('STATUS') === "TRUE" && instaClientRows[i].get('INSTA_STATE') === "TRUE" && instaClientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                             console.log('Starting...');
                                             
-                                            let loadInsta = await _collectInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                            let loadInsta = await collectInstaLikes(instaClientRows[i].get('CLIENT_ID'));
                                             
                                             if(loadInsta.code === 200){
                                             
-                                                let reportInsta = await _reportInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                                let reportInsta = await reportInstaLikes(instaClientRows[i].get('CLIENT_ID'));
                                             
                                                 if(reportInsta.code === 202){
                                                     await client.sendMessage('6281235114745@c.us', reportInsta.data);
@@ -523,7 +519,7 @@ client.on('message', async (msg) => {
                             
                                 await client.sendMessage('6281235114745@c.us', 'Collecting Insta');
                                 
-                                let instaClientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                                let instaClientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                                 let instaClientRows = instaClientResponse.data;    
                                 if (instaClientRows.length >= 1){
                                     for (let i = 0; i < instaClientRows.length; i++){
@@ -531,11 +527,11 @@ client.on('message', async (msg) => {
                                             
                                             console.log('Starting...');
                                             
-                                            let loadInsta = await _collectInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                            let loadInsta = await collectInstaLikes(instaClientRows[i].get('CLIENT_ID'));
                                             
                                             if(loadInsta.code === 200){
                                             
-                                                let reportInsta = await _reportInstaLikes(instaClientRows[i].get('CLIENT_ID'));
+                                                let reportInsta = await reportInstaLikes(instaClientRows[i].get('CLIENT_ID'));
                                             
                                                 if(reportInsta.code === 202){
                                                     await client.sendMessage('6281235114745@c.us', reportInsta.data);
@@ -560,7 +556,7 @@ client.on('message', async (msg) => {
 
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
-                        let response = await _createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
+                        let response = await createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
 
                         for (let i = 0; i < response.length; i++){
 
@@ -570,7 +566,7 @@ client.on('message', async (msg) => {
                         }                   
                     } else if (splittedMsg[1].toLowerCase() === 'exception') {
                         //clientName#editnama/nama#id_key/NRP#newdata
-                        let response = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "EXCEPTION");
+                        let response = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "EXCEPTION");
                         
                         if (response.code === 200){
                             console.log(response.data);
@@ -593,7 +589,8 @@ client.on('message', async (msg) => {
                     if (splittedMsg[1].toLowerCase() === 'addnewuser'){ 
                         //Check Between Corporate And Organizations
                         
-                        let responseData = await _addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                        
+                        let responseData = await addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase());
                         
                         switch (responseData.code){
@@ -614,7 +611,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
                         //Update Nama
                         //clientName#deleteuser#id_key/NRP#newdata
-                        let responseData = await _editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
+                        let responseData = await editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
                         
                         switch (responseData.code){
                             case 200:
@@ -633,7 +630,7 @@ client.on('message', async (msg) => {
                         }           
                     } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
-                        let response = await _usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
+                        let response = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
                                                             
                         if (response.code === 200){
                             console.log(response.data);
@@ -645,7 +642,7 @@ client.on('message', async (msg) => {
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'tiktokcheck') {
                         //Checking If User hasn't update Tiktok Profile
-                        let response = await _usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');
+                        let response = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');
                                                             
                         if (response.code === 200){
                             console.log(response.data);
@@ -666,7 +663,7 @@ client.on('message', async (msg) => {
                             if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
                                 const instaLink = splittedMsg[3].split('?')[0];
                                 const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
-                                let responseData = await _updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
+                                let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
                                 switch (responseData.code){
                                     case 200:
                                         console.log(responseData.data);
@@ -696,7 +693,7 @@ client.on('message', async (msg) => {
                         if (splittedMsg[3].includes('tiktok.com')){
                             const tiktokLink = splittedMsg[3].split('?')[0];
                             const tiktokUsername = tiktokLink.split('/').pop();  
-                            let responseData = await _updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
+                            let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
                             switch (responseData.code){
                                 case 200:
                                     console.log(responseData.data);
@@ -718,7 +715,7 @@ client.on('message', async (msg) => {
                     } else if (['editdivisi', 'satfung' ].includes(splittedMsg[1].toLowerCase())) {
                         //update Divisi Name
                         //clientName#editdivisi/satfung#id_key/NRP#newdata
-                        let responseData = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
+                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
                         
                         switch (responseData.code){
                             case 200:
@@ -737,7 +734,7 @@ client.on('message', async (msg) => {
                     } else if (['editjabatan', 'jabatan'].includes(splittedMsg[1].toLowerCase())) {
                         //Update Jabatan
                         //clientName#editjabatan/jabatan#id_key/NRP#newdata
-                        let responseData = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
+                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
                         switch (responseData.code){
                             case 200:
                                 console.log(responseData.data);
@@ -754,7 +751,7 @@ client.on('message', async (msg) => {
                         }   
                     } else if (['editnama', 'nama'].includes(splittedMsg[1].toLowerCase())) {
                         //clientName#editnama/nama#id_key/NRP#newdata
-                        let responseData = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
+                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
                         switch (responseData.code){
                             case 200:
                                 console.log(responseData.data);
@@ -771,7 +768,7 @@ client.on('message', async (msg) => {
                         }  
                     } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
                         //clientName#editnama/nama#id_key/NRP#newdata
-                        let responseData = await _editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
+                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
                         switch (responseData.code){
                             case 200:
                                 console.log(responseData.data);

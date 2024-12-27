@@ -1,8 +1,8 @@
 //Google Spreadsheet
 import { readFileSync } from 'fs';
-import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
-import { listValueData } from '../../queryData/listValueData.js';
-import { clientData } from '../../queryData/clientData.js';
+import { sheetDoc as _sheetDoc } from '../../database_query/sheetDoc.js';
+import { listValueData } from '../../database_query/listValueData.js';
+import { clientData } from '../../database_query/clientData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 

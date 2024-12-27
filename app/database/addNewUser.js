@@ -16,7 +16,7 @@ const googleAuth = new JWT({
 });
 
 
-export async function addNewUser(clientName, idKey, name, divisi, jabatan, title) {
+export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
   try {
 
     const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth); //Google Auth

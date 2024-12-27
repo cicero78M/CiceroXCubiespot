@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { instaPostInfoAPI, instaPostAPI } from '../../SocialMediaAPI/instaAPI.js';
-import { sheetDoc as _sheetDoc } from '../../queryData/sheetDoc.js';
+import { sheetDoc as _sheetDoc } from '../../BussinessProcess/sheetDoc.js';
 
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
