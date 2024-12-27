@@ -1,4 +1,4 @@
-import { sheetDoc } from "../queryData/sheetDoc";
+import { sheetDoc } from "../queryData/sheetDoc.js";
 
 export async function propertiesView(clientName, type) {
 
