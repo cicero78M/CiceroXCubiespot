@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
-import { myData } from '../../myData.js';
+import { myData } from '../database_query/myData.js';
 import { propertiesView } from '../view/propertiesView.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));

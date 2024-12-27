@@ -13,8 +13,8 @@
  */
 
 import { userHeaders as _userHeaders } from './userHeaders.js';
-import { createClientID as _createClientID } from './editData/createClientID.js';
-import { instaOfficialHeaders as _instaOfficialHeaders } from './editData/instaOfficialHeaders.js';
+import { createClientID as _createClientID } from './createClientID.js';
+import { instaOfficialHeaders as _instaOfficialHeaders } from './instaOfficialHeaders.js';
 import { instaUserLikesHeaders as _instaUserLikesHeaders } from './instaUserLikesHeaders.js';
 import { tiktokOfficialHeaders as _tiktokOfficialHeaders } from './tiktokOfficialHeaders.js';
 import { tiktokUserCommentsHeaders } from './tiktokUserCommentsHeaders.js';

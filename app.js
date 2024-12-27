@@ -16,12 +16,12 @@ import { set } from 'simple-banner';
 import { schedule } from 'node-cron';
 
 import { saveContacts } from './app/database/saveContact.js';
-import { myData } from './app/database/myData.js';
+import { myData } from './app/database_query/myData.js';
 import { infoView } from './app/view/infoView.js';
 import { propertiesView } from './app/view/propertiesView.js';
-import { collectInstaLikes } from './Scrapping/collectInstaLikes.js';
+import { collectInstaLikes } from './app/scrapping/collectInstaLikes.js';
 import { reportInstaLikes } from './app/reporting/reportInstaLikes.js';
-import { collectTiktokComments } from './Scrapping/collectTiktokEngagements.js';
+import { collectTiktokComments } from './app/scrapping/collectTiktokEngagements.js';
 import { reportTiktokComments } from './app/reporting/reportTiktokComments.js';
 import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
 import { sheetDoc } from './app/database_query/sheetDoc.js';
