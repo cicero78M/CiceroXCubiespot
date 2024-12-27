@@ -39,11 +39,21 @@ app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
 });
 
+
+
 const client = new Client({
     authStrategy: new LocalAuth({
         clientId: ciceroKey.waSession,
+
     }),
+    // proxyAuthentication: { username: 'username', password: 'password' },
+    puppeteer: { 
+        // args: ['--proxy-server=proxy-server-that-requires-authentication.example.com'],
+        headless: false,
+    }
 });
+
+
 
 client.initialize();
 
@@ -114,7 +124,7 @@ client.on('ready', () => {
                         } else {
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Tiktok Data Failed');
                         }
-                    }
+                    } 
                     
                     if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                         await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Insta Data');
