@@ -765,7 +765,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'mydata') {
         
                         let responseData = await myData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
-                        sendResponse(responseData, "Error on Getting My Data");
+                        sendResponse(msg.from, responseData, "Error on Getting My Data");
 
                     }
 
@@ -804,20 +804,20 @@ client.on('message', async (msg) => {
 
 /*This Function Must Created Here*/
 
-function sendResponse(responseData, errormessage) {
+function sendResponse(from, responseData, errormessage) {
 
     switch (responseData.code){
         case 200:
             console.log(responseData.data);
-            client.sendMessage(msg.from, responseData.data);
+            client.sendMessage(from, responseData.data);
             break;
         case 201:
             console.log(response.data);
-            client.sendMessage(msg.from, responseData.data);
+            client.sendMessage(from, responseData.data);
             break;
         case 303:                                
             console.log(responseData.data);
-            client.sendMessage(msg.from, errormessage);
+            client.sendMessage(from, errormessage);
             break;
     }
     
