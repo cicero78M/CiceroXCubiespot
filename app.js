@@ -50,7 +50,7 @@ const client = new Client({
 
 });
 
-console.log(time+'Initializing...');
+console.log(time+' Initializing...');
 
 client.initialize();
 
