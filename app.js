@@ -91,7 +91,7 @@ client.on('ready', () => {
     });
 
  // Reload Tiktok every hours until 22
-    schedule('45 6-21 * * *', async () => {
+    schedule('55 6-21 * * *', async () => {
         try {
             await client.sendMessage('6281235114745@c.us', 'Cron Job Startting...');
             console.log(time+' Cron Job Starting...');
