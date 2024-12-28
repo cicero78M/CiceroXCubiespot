@@ -108,13 +108,7 @@ client.on('ready', () => {
                             console.log(clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Tiktok Data Success');
                             let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
-                            if(reportTiktok.code === 202){
-                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS REPORT TIKTOK DATA');
-                                await client.sendMessage('6281235114745@c.us', reportTiktok.data);
-                            } else {
-                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL REPORT TIKTOK DATA');
-                                await client.sendMessage('6281235114745@c.us', reportTiktok.data);
-                            }
+                            sendSuperviseResponse(clientRows[i].get('CLIENT_ID'), reportTiktok, "REPORT TIKTOK");
                         } else {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD TIKTOK DATA');
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Tiktok Data Failed');
@@ -129,13 +123,7 @@ client.on('ready', () => {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Insta Data Success');
                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                            if(reportInsta.code === 202){
-                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCESS REPORT INSTA DATA');
-                                await client.sendMessage('6281235114745@c.us', reportInsta.data);
-                            } else {
-                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL REPORT INSTA DATA');
-                                await client.sendMessage('6281235114745@c.us', reportInsta.data);
-                            }
+                            sendSuperviseResponse(clientRows[i].get('CLIENT_ID'), reportInsta, "REPORT INSTA");
                         } else {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Insta Data Fail');
@@ -166,14 +154,12 @@ client.on('ready', () => {
                         if(loadTiktok.code === 200){
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                             let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK')
-
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');
                         } else {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL REPORT TIKTOK DATA');
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
-                            let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK')
-
+                            let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');
                         }
                     }
                     
@@ -182,26 +168,19 @@ client.on('ready', () => {
                         await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                         let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                         if(loadInsta.code === 200){
-
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA')
-
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
                         } else {
-
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT INSTA DATA');
                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA')
-    
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
                         }
                     } 
                 }
             }
-                   
         } catch (errorcronjob) {
             
             console.log(time+" "+errorcronjob)
@@ -646,7 +625,7 @@ client.on('message', async (msg) => {
     }//try catch
 });
 
-/*This Function Must Created Here*/
+/*This Function Must be Created Here*/
 //Response By User
 function sendResponse(from, responseData, errormessage) {
     switch (responseData.code){
@@ -666,7 +645,6 @@ function sendResponse(from, responseData, errormessage) {
 }
 
 //Response By Client
-
 function sendClientResponse(clientID, supervisor, operator, group, data, type) {
     if(data.code === 202){
         console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
@@ -675,6 +653,17 @@ function sendClientResponse(clientID, supervisor, operator, group, data, type) {
         client.sendMessage(group, data.data);
     } else {
         console.log(time+" "+clientID+' FAIL '+type+' DATA');
+        client.sendMessage('6281235114745@c.us', data.data);
+    }
+}
+
+//Response By Client
+function sendSuperviseResponse(clientID, data, type) {
+    if(data.code === 202){
+        console.log(time+" "+clientID+" SUCESS "+type+" DATA");
+        client.sendMessage('6281235114745@c.us', data.data);
+    } else {
+        console.log(time+" "+clientID+" FAIL "+type+" DATA");
         client.sendMessage('6281235114745@c.us', data.data);
     }
 }
