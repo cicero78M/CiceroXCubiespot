@@ -571,42 +571,14 @@ client.on('message', async (msg) => {
                         
                         let responseData = await addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                         splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase());
-                        
-                        switch (responseData.code){
-                            case 200:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 201:
-                                console.log(response.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 303:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, "Error Add New User");
-                                break;
-                        }                                    
+                        sendResponse(msg.from, responseData, "Error Adding New User");
 
                     } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
                         //Update Nama
                         //clientName#deleteuser#id_key/NRP#newdata
                         let responseData = await editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
-                        
-                        switch (responseData.code){
-                            case 200:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 201:
-                                console.log(response.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 303:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, "Error Delete User Data");
-                                break;
-
-                        }           
+                        sendResponse(msg.from, responseData, "Error Delete User Data");
+  
                     } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
                         //Checking If User hasn't update Insta Profile
                         let response = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
@@ -643,21 +615,8 @@ client.on('message', async (msg) => {
                                 const instaLink = splittedMsg[3].split('?')[0];
                                 const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
                                 let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
-                                switch (responseData.code){
-                                    case 200:
-                                        console.log(responseData.data);
-                                        client.sendMessage(msg.from, responseData.data);
-                                        break;
-                                    case 201:
-                                        console.log(response.data);
-                                        client.sendMessage(msg.from, responseData.data);
-                                        break;
-                                    case 303:
-                                        console.log(responseData.data);
-                                        client.sendMessage(msg.from, "Error Update Instagram");
-                                        break;
-        
-                                }                                   
+                                sendResponse(msg.from, responseData, "Error Update Insta");
+                     
                             } else {
                                 console.log('Bukan Link Profile Instagram');
                                 client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
@@ -673,20 +632,8 @@ client.on('message', async (msg) => {
                             const tiktokLink = splittedMsg[3].split('?')[0];
                             const tiktokUsername = tiktokLink.split('/').pop();  
                             let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
-                            switch (responseData.code){
-                                case 200:
-                                    console.log(responseData.data);
-                                    client.sendMessage(msg.from, responseData.data);
-                                    break;
-                                case 201:
-                                    console.log(response.data);
-                                    client.sendMessage(msg.from, responseData.data);
-                                    break;
-                                case 303:
-                                    console.log(responseData.data);
-                                    client.sendMessage(msg.from, "Error Update Tiktok");
-                                    break;
-                            }                                 
+                            sendResponse(msg.from, responseData, "Error Update Tiktok");
+                         
                         } else {
                             console.log('Bukan Link Profile Tiktok');
                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
@@ -695,73 +642,23 @@ client.on('message', async (msg) => {
                         //update Divisi Name
                         //clientName#editdivisi/satfung#id_key/NRP#newdata
                         let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
-                        
-                        switch (responseData.code){
-                            case 200:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 201:
-                                console.log(response.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 303:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, "Error Edit Divisi");
-                                break;
-                        }
+                        sendResponse(msg.from, responseData, "Error Edit Satfung");
+
                     } else if (['editjabatan', 'jabatan'].includes(splittedMsg[1].toLowerCase())) {
                         //Update Jabatan
                         //clientName#editjabatan/jabatan#id_key/NRP#newdata
                         let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
-                        switch (responseData.code){
-                            case 200:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 201:
-                                console.log(response.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 303:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, "Error on Update Jabatan");
-                                break;
-                        }   
+                        sendResponse(msg.from, responseData, "Error Edit Jabatan");
+
                     } else if (['editnama', 'nama'].includes(splittedMsg[1].toLowerCase())) {
                         //clientName#editnama/nama#id_key/NRP#newdata
                         let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
-                        switch (responseData.code){
-                            case 200:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 201:
-                                console.log(response.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 303:                                
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, "Error on Getting My Data");
-                                break;
-                        }  
+                        sendResponse(msg.from, responseData, "Error Edit Nama");
+
                     } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
                         //clientName#editnama/nama#id_key/NRP#newdata
                         let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
-                        switch (responseData.code){
-                            case 200:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 201:
-                                console.log(response.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 303:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, "Error Edit Pangkat");
-                                break;
-                        }  
+                        sendResponse(msg.from, responseData, "Error Edit Pangkat");
                     } else if (splittedMsg[1].toLowerCase() === 'mydata') {
         
                         let responseData = await myData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
@@ -780,7 +677,6 @@ client.on('message', async (msg) => {
                         let responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
                         client.sendMessage(msg.from, responseData.data);                                   
                     }
-
 
                 //Key Order Data Not Exist         
                 } else {
@@ -805,7 +701,6 @@ client.on('message', async (msg) => {
 /*This Function Must Created Here*/
 
 function sendResponse(from, responseData, errormessage) {
-
     switch (responseData.code){
         case 200:
             console.log(responseData.data);
@@ -819,6 +714,5 @@ function sendResponse(from, responseData, errormessage) {
             console.log(responseData.data);
             client.sendMessage(from, errormessage);
             break;
-    }
-    
+    }   
 }
