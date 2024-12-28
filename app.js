@@ -405,6 +405,8 @@ client.on('message', async (msg) => {
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                     console.log('Starting...');
                                     let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+
+
                                     if(loadTiktok.code === 200){
                                         let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                                         if(reportTiktok.code === 202){
@@ -761,23 +763,10 @@ client.on('message', async (msg) => {
                                 break;
                         }  
                     } else if (splittedMsg[1].toLowerCase() === 'mydata') {
-                        
+        
                         let responseData = await myData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
+                        sendResponse(responseData, "Error on Getting My Data");
 
-                        switch (responseData.code){
-                            case 200:
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 201:
-                                console.log(response.data);
-                                client.sendMessage(msg.from, responseData.data);
-                                break;
-                            case 303:                                
-                                console.log(responseData.data);
-                                client.sendMessage(msg.from, "Error on Getting My Data");
-                                break;
-                        }
                     }
 
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
@@ -812,3 +801,24 @@ client.on('message', async (msg) => {
         client.sendMessage('6281235114745@c.us', 'Error on Apps');
     }//try catch
 });
+
+/*This Function Must Created Here*/
+
+function sendResponse(responseData, errormessage) {
+
+    switch (responseData.code){
+        case 200:
+            console.log(responseData.data);
+            client.sendMessage(msg.from, responseData.data);
+            break;
+        case 201:
+            console.log(response.data);
+            client.sendMessage(msg.from, responseData.data);
+            break;
+        case 303:                                
+            console.log(responseData.data);
+            client.sendMessage(msg.from, errormessage);
+            break;
+    }
+    
+}
