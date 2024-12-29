@@ -324,7 +324,9 @@ client.on('message', async (msg) => {
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                     console.log('Starting...');
                                     let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+
                                     if(loadInsta.code === 200){
+
                                         let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
 
                                         if(reportInsta.code === 200){
@@ -334,7 +336,8 @@ client.on('message', async (msg) => {
                                         }
 
                                     } else {
-                                        client.sendMessage('6281235114745@c.us', loadInsta.data);
+                                        console.log(loadInsta.data)
+                                        client.sendMessage('6281235114745@c.us', 'Error On Load Insta');
                                     }
     
                                 }           
@@ -351,7 +354,6 @@ client.on('message', async (msg) => {
                                     console.log('Starting...');
                                     let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
 
-
                                     if(loadTiktok.code === 200){
                                         let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                                         if(reportTiktok.code === 200){
@@ -361,7 +363,8 @@ client.on('message', async (msg) => {
 
                                         }
                                     } else {
-                                        client.sendMessage('6281235114745@c.us', loadTiktok.data);
+                                        console.log(loadTiktok.data);
+                                        client.sendMessage('6281235114745@c.us', 'Error On Load Tiktok');
 
                                     }
                                 }           

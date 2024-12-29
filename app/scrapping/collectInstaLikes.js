@@ -33,7 +33,9 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
     let responseClient = await clientData(ciceroKey.dbKey.clientDataID, 'ClientData');
 
     if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
+      
       console.log(clientName+' Insta Post Loaded...');
+      
       //Collect Content Shortcode from Official Account
       let hasContent = false;
       let itemByDay = [];
