@@ -28,7 +28,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
     const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
 
-    clientData(clientName).then(async (responseClient) => {
+    clientData(clientName).then(async (params) => {
       if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
       
         console.log(clientName+' Insta Post Loaded...');
@@ -46,7 +46,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           postItems = await instaPostAPIResponse.data.data.items;
   
           for (let i = 0; i < postItems.length; i++) {
-  
+  console.log(postItems[i]);
             let itemDate = new Date(postItems[i].taken_at * 1000);
   
             if (itemDate.toLocaleDateString('id') === localDate) {
