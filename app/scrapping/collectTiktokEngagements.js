@@ -39,7 +39,8 @@ export async function collectTiktokComments(clientName) {
   if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
     try {
       //Collect Content Shortcode from Official Account
-      let responseInfo = await tiktokUserInfoAPI(responseClient.data.tiktokAccount.replaceAll('@', ''));
+      let tiktokAccount = responseClient.data.tiktokAccount;
+      let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
       const secUid = responseInfo.data.userInfo.user.secUid;
 
       let cursor = 0;
