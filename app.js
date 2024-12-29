@@ -199,7 +199,7 @@ client.on('call', async (call) => {
 
 client.on('message', async (msg) => {
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allinsta', 'alltiktok', 'allsocmed', 'exception', 'savecontact'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'exception', 'savecontact'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['menu', 'divisilist', 'titlelist'];
