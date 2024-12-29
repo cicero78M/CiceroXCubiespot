@@ -521,7 +521,7 @@ client.on('message', async (msg) => {
 function sendResponse(from, responseData, errormessage) {
     switch (responseData.code){
         case 200:
-            console.log(responseData.data);
+            console.log(time+" "+' SUCCESS GENERATE DATA');
             client.sendMessage(from, responseData.data);
             break;
         case 201:
