@@ -26,7 +26,7 @@ export async function clientData(clientName) {
         isStatus = clientRows[i].get('STATUS');
         isClientType = clientRows[i].get('TYPE');
         tiktokAccount = clientRows[i].get('TIKTOK');
-        instaAccount = clientRows[i].get('INSTA');
+        instaAccount = clientRows[i].get('INSTAGRAM');
         supervisor = clientRows[i].get('SUPERVISOR');
         operator = clientRows[i].get('OPERATOR');
         group = clientRows[i].get('GROUP');
