@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 import { instaPostAPI, instaLikesAPI } from '../socialMediaAPI/instaAPI.js';
-import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
+import { clientData } from '../database_query/clientData.js';
 
 
 const d = new Date();
@@ -26,38 +26,23 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
 
   try {
 
-    let isClientID = false;
-    let instaOfficialAccount;
-    let isStatus;
-
     const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
 
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
 
-    let clientResponse = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+    let responseClient = await clientData(ciceroKey.dbKey.clientDataID, 'ClientData');
 
-    if (clientResponse.state) {
+      
 
-      let clientRows = clientResponse.data;
-
-      for (let i = 0; i < clientRows.length; i++) {
-        if (clientRows[i].get('CLIENT_ID') === clientName) {
-
-          isClientID = true;
-          instaOfficialAccount = clientRows[i].get('INSTAGRAM');
-          isStatus = clientRows[i].get('STATUS');
-
-        }
-      }
-
-      if (isClientID && isStatus === "TRUE") {
+      if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
+        console.log(clientName+' Insta Post Loaded...');
         //Collect Content Shortcode from Official Account
         let hasContent = false;
         let itemByDay = [];
         let todayItems = [];
         let postItems = [];
 
-        let instaPostAPIResponse = await instaPostAPI(instaOfficialAccount);
+        let instaPostAPIResponse = await instaPostAPI(responseClient.data.instaAccount);
 
         if (instaPostAPIResponse.state) {
 
@@ -185,6 +170,8 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
               }
               //Final Code
               if (!hasShortcode) {
+
+                console.log(clientName+' Has No Content');
                 //If Shortcode doesn't exist push new data
                 let responseLikes = await instaLikesAPI(todayItems[i]);
 
@@ -199,7 +186,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
                 //Add new Row
                 await instaLikesUsernameSheet.addRow(userNameList);
                 newData++;
-                console.log(clientName + '\n\nInsert new data ' + todayItems[i]);
+                console.log(clientName + 'Insert new data ' + todayItems[i]);
 
               }
             }
@@ -212,11 +199,13 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             instaOfficialDoc.delete;
             instaLikesUsernameDoc.delete;
             return responseData;
+
           } else {
+            
             let responseData = {
               data: clientName + '\n\nHas No Insta Content',
               state: true,
-              code: 200
+              code: 201
             };
             instaOfficialDoc.delete;
             instaLikesUsernameDoc.delete;
@@ -227,7 +216,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           let responseData = {
             data: clientName + '\n\nInsta Post API Error',
             state: true,
-            code: 200
+            code: 201
           };
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
@@ -237,7 +226,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         let responseData = {
           data: clientName + '\n\nYour Client ID has Expired, Contacts Developers for more Informations',
           state: true,
-          code: 200
+          code: 201
         };
         instaOfficialDoc.delete;
         instaLikesUsernameDoc.delete;
@@ -246,9 +235,9 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
 
     } else {
       let responseData = {
-        data: 'Data Error',
+        data: 'Client Load Data Error',
         state: true,
-        code: 200
+        code: 201
       };
       return responseData;
     }

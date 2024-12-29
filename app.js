@@ -93,7 +93,7 @@ client.on('ready', () => {
  // Reload Tiktok every hours until 22
     schedule('40 6-21 * * *', async () => {
         try {
-            await client.sendMessage('6281235114745@c.us', 'Cron Job Startting...');
+            await client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');
             console.log(time+' Cron Job Starting...');
             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
             let clientRows = clientResponse.data;
@@ -104,7 +104,7 @@ client.on('ready', () => {
                         console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                         let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
                         if(loadTiktok.code === 200){
-                            console.log(clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
+                            console.log(clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                             await client.sendMessage('6281235114745@c.us', 'Collect '+clientRows[i].get('CLIENT_ID')+' Tiktok Data Success');
                             let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
                             sendSuperviseResponse(clientRows[i].get('CLIENT_ID'), reportTiktok, "REPORT TIKTOK");
@@ -635,7 +635,7 @@ function sendResponse(from, responseData, errormessage) {
 
 //Response By Client
 function sendClientResponse(clientID, supervisor, operator, group, data, type) {
-    if(data.code === 202){
+    if(data.code === 200){
         console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
         client.sendMessage(supervisor, data.data);
         client.sendMessage(operator, data.data);
@@ -648,7 +648,7 @@ function sendClientResponse(clientID, supervisor, operator, group, data, type) {
 
 //Response By Client
 function sendSuperviseResponse(clientID, data, type) {
-    if(data.code === 202){
+    if(data.code === 200){
         console.log(time+" "+clientID+" SUCESS "+type+" DATA");
         client.sendMessage('6281235114745@c.us', data.data);
     } else {

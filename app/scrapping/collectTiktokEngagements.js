@@ -5,7 +5,8 @@ import { JWT } from 'google-auth-library';
 import { readFileSync } from 'fs';
 
 import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
-import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
+import { sheetDoc } from '../database_query/sheetDoc.js';
+import { clientData } from '../database_query/clientData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -30,28 +31,15 @@ export async function collectTiktokComments(clientName) {
 
 
   //Check Client_ID. then get async data
-  let isClientID = false;
-  let tiktokOfficial;
-  let isStatus;
 
-  let response = await _sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+  let responseClient = await clientData(clientName);
 
-  if (response.state) {
-    let clientRows = response.data;
-    for (let i = 0; i < clientRows.length; i++) {
-      if (clientRows[i].get('CLIENT_ID') === clientName) {
-        isClientID = true;
-        tiktokOfficial = clientRows[i].get('TIKTOK');
-        isStatus = clientRows[i].get('STATUS');
-      }
-    }
-  }
 
   // If Client_ID exist. then get official content
-  if (isClientID && isStatus) {
+  if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
     try {
       //Collect Content Shortcode from Official Account
-      let responseInfo = await tiktokUserInfoAPI(tiktokOfficial.replaceAll('@', ''));
+      let responseInfo = await tiktokUserInfoAPI(responseClient.data.tiktokAccount.replaceAll('@', ''));
       const secUid = responseInfo.data.userInfo.user.secUid;
 
       let cursor = 0;
@@ -286,7 +274,7 @@ export async function collectTiktokComments(clientName) {
         let responseData = {
           data: clientName + ' Tiktok Account Has No Content',
           state: true,
-          code: 200
+          code: 201
         };
         tiktokOfficialDoc.delete;
         tiktokCommentsUsernameDoc.delete;
@@ -309,7 +297,7 @@ export async function collectTiktokComments(clientName) {
     let responseData = {
       data: 'Your Client ID has Expired, Contacts Developers for more Informations',
       state: true,
-      code: 200
+      code: 201
     };
 
     tiktokOfficialDoc.delete;

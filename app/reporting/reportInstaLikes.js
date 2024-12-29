@@ -147,7 +147,7 @@ export async function reportInstaLikes(clientName) {
               + userAll+ "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
-            code: 202
+            code: 200
           };
 
         } else if (clientResponse.data.isClientType === "RES") {
@@ -158,7 +158,7 @@ export async function reportInstaLikes(clientName) {
               + userAll + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
-            code: 202
+            code: 200
           };
 
         }
@@ -172,7 +172,7 @@ export async function reportInstaLikes(clientName) {
         let responseData = {
           data: "Tidak ada konten data untuk di olah",
           state: true,
-          code: 200
+          code: 201
         };
 
         console.log('Return No Content');
@@ -197,7 +197,7 @@ export async function reportInstaLikes(clientName) {
     let responseData = {
       data: 'Your Client ID has Expired, Contacts Developers for more Informations',
       state: true,
-      code: 200
+      code: 201
     };
 
     console.log('Return Expired ID');

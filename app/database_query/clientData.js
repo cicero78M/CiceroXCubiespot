@@ -45,7 +45,7 @@ export async function clientData(clientName) {
         let response = {
             data : null,
             state : false,
-            code : 404
+            code : 303
           }
 
           return response;
