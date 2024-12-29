@@ -11,7 +11,40 @@ const headers = {
   'x-rapidapi-host': ciceroKey.instaKey.instahostAPI
 }
 
+export async function instaUserAPI(key, url) {
+    //Insta Post API
+    let options = {
+        method: 'GET',
+        url: url,
+        params: {
+            username_or_id_or_url: key
+          },
+        headers: headers
+    };
 
+    try {
+
+        let response = await request(options);
+
+        let data = {
+            data: response.data,
+            code: 200,
+            state: true
+        };
+
+
+        return data;
+    } catch (error) {
+        let data = {
+            data: error,
+            code: 303,
+            state: false
+        };
+
+
+        return data;
+    }
+}
 export async function instaLikesAPI(key) {
     //Insta Likes API
     let options = {
