@@ -332,8 +332,9 @@ client.on('message', async (msg) => {
                                         } else {
                                             client.sendMessage('6281235114745@c.us', reportInsta.data);
                                         }
+
                                     } else {
-                                        client.sendMessage('6281235114745@c.us', reportInsta.data);
+                                        client.sendMessage('6281235114745@c.us', loadInsta.data);
                                     }
     
                                 }           
@@ -360,7 +361,7 @@ client.on('message', async (msg) => {
 
                                         }
                                     } else {
-                                        client.sendMessage('6281235114745@c.us', reportTiktok.data);
+                                        client.sendMessage('6281235114745@c.us', loadTiktok.data);
 
                                     }
                                 }           
