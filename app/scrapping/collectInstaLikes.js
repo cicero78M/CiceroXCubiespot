@@ -68,6 +68,8 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
               
               officialInstaSheet.getRows().then (async (officialInstaData)=>{
 
+                console.log(officialInstaData);
+
                 for (let i = 0; i < officialInstaData.length; i++) {
                   if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))) {
                     shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
