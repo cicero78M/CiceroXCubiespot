@@ -326,7 +326,8 @@ client.on('message', async (msg) => {
                                     let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                                     if(loadInsta.code === 200){
                                         let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                        if(reportInsta.code === 202){
+
+                                        if(reportInsta.code === 200){
                                             client.sendMessage(msg.from, reportInsta.data);
                                         } else {
                                             client.sendMessage('6281235114745@c.us', reportInsta.data);
@@ -352,7 +353,7 @@ client.on('message', async (msg) => {
 
                                     if(loadTiktok.code === 200){
                                         let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'))
-                                        if(reportTiktok.code === 202){
+                                        if(reportTiktok.code === 200){
                                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
                                         } else {
                                             client.sendMessage('6281235114745@c.us', reportTiktok.data);
