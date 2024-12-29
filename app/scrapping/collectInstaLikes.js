@@ -21,18 +21,14 @@ const googleAuth = new JWT({
 });
 
 export const collectInstaLikes = async function colectInstaLikes(clientName) {
-
   console.log(clientName + " Collecting Insta Likes Starting...");
 
   try {
 
     const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
 
     let responseClient = await clientData(clientName);
-
-    console.log(responseClient);
 
     if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
       
@@ -44,8 +40,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       let todayItems = [];
       let postItems = [];
       
-      console.log(responseClient.data.instaAccount);
-
       let instaPostAPIResponse = await instaPostAPI(responseClient.data.instaAccount);
 
       if (instaPostAPIResponse.state) {
@@ -188,6 +182,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
                 }
               }
               //Add new Row
+              
               await instaLikesUsernameSheet.addRow(userNameList);
               newData++;
               console.log(clientName + 'Insert new data ' + todayItems[i]);
@@ -200,6 +195,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             state: true,
             code: 200
           };
+          console.log(responseData.data);
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
           return responseData;
@@ -211,6 +207,8 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             state: true,
             code: 201
           };
+          console.log(responseData.data);
+
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
           return responseData;
@@ -222,6 +220,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           state: true,
           code: 201
         };
+        console.log(responseData.data);
         instaOfficialDoc.delete;
         instaLikesUsernameDoc.delete;
         return responseData;
@@ -232,6 +231,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         state: true,
         code: 201
       };
+      console.log(responseData.data);
       instaOfficialDoc.delete;
       instaLikesUsernameDoc.delete;
       return responseData;
@@ -243,6 +243,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       state: false,
       code: 303
     };
+    console.log(responseData.data);
     return responseData;
   }
 };

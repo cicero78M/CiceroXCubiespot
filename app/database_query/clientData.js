@@ -3,7 +3,6 @@ import { sheetDoc } from './sheetDoc.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-
 export async function clientData(clientName) {
 
     let isClientID = false;
@@ -31,26 +30,27 @@ export async function clientData(clientName) {
         operator = clientRows[i].get('OPERATOR');
         group = clientRows[i].get('GROUP');
 
-        let response = {
+        let responseData = {
             data : {isClientID : isClientID, isStatus : isStatus, isClientType : isClientType, tiktokAccount : tiktokAccount, instaAccount : instaAccount, 
               supervisor : supervisor, operator : operator, group : group },
             state : true,
             code : 200
           }
 
-          return response;
+          return responseData;
       }
     } 
 
     if (!isClientID){
 
-        let response = {
+        let responseData = {
             data : null,
             state : false,
             code : 303
           }
+          console.log(responseData.data);
 
-          return response;
+          return responseData;
 
     }
     

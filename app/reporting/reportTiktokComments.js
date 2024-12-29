@@ -134,24 +134,17 @@ export async function reportTiktokComments(clientName) {
                 code: 202
               };
             }
-
             console.log('Return Success');
-
             return responseData;
           } else {
-
             let responseData = {
               data: 'Tidak ada Konten Data untuk di Olah',
               state: true,
               code: 200
             };
-
-            console.log('Return No Data');
-
+            console.log(responseData.data);
             return responseData;
-
           }
-
       } else {
 
         let responseData = {
@@ -159,9 +152,7 @@ export async function reportTiktokComments(clientName) {
           state: true,
           code: 200
         };
-
-        console.log('Return Client ID has Expire');
-
+        console.log(responseData.data);
         return responseData;
       }
 
@@ -172,23 +163,17 @@ export async function reportTiktokComments(clientName) {
         state: false,
         code: 303
       };
-
-      console.log('Return Client Name Doesn\'t Exis');
-
+      console.log(responseData.data);
       return responseData;
-
     }
 
   } catch (error) {
-
     let responseData = {
       data: error,
       state: false,
       code: 303
     };
-
-    console.log(error);
-
+    console.log(responseData.data);
     return responseData;
   }
 }

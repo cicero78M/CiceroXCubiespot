@@ -5,7 +5,6 @@ import { JWT } from 'google-auth-library';
 import { readFileSync } from 'fs';
 
 import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
-import { sheetDoc } from '../database_query/sheetDoc.js';
 import { clientData } from '../database_query/clientData.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
@@ -41,10 +40,9 @@ export async function collectTiktokComments(clientName) {
       //Collect Content Shortcode from Official Account
       let tiktokAccount = responseClient.data.tiktokAccount;
       let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
+
       const secUid = responseInfo.data.userInfo.user.secUid;
-
       let cursor = 0;
-
       let responseContent = await tiktokPostAPI(secUid, cursor);
       let items = [];
 
@@ -266,10 +264,9 @@ export async function collectTiktokComments(clientName) {
           state: true,
           code: 200
         };
-
+        console.log(responseData.data);
         tiktokOfficialDoc.delete;
         tiktokCommentsUsernameDoc.delete;
-
         return responseData;
       } else {
         let responseData = {
@@ -277,34 +274,31 @@ export async function collectTiktokComments(clientName) {
           state: true,
           code: 201
         };
+        console.log(responseData.data);
         tiktokOfficialDoc.delete;
         tiktokCommentsUsernameDoc.delete;
         return responseData;
       }
-
     } catch (error) {
-
       let responseData = {
         data: error,
         state: false,
         code: 303
       };
+      console.log(responseData.data);
       tiktokOfficialDoc.delete;
       tiktokCommentsUsernameDoc.delete;
       return responseData;
     }
   } else {
-
     let responseData = {
       data: 'Your Client ID has Expired, Contacts Developers for more Informations',
       state: true,
       code: 201
     };
-
+    console.log(responseData.data);
     tiktokOfficialDoc.delete;
     tiktokCommentsUsernameDoc.delete;
-
     return responseData;
-
   }
 }

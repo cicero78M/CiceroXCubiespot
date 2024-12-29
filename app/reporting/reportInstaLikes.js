@@ -35,7 +35,6 @@ export async function reportInstaLikes(clientName) {
         }
       }
 
-      console.log('OK1');
       //Collect Shortcode from Database        
       let shortcodeList = [];
 
@@ -62,7 +61,6 @@ export async function reportInstaLikes(clientName) {
           }
         }
       }
-      console.log('OK2');
 
       if (shortcodeList.length >= 1) {
 
@@ -133,7 +131,6 @@ export async function reportInstaLikes(clientName) {
           if (divisiCounter != 0) {
             dataInsta = dataInsta.concat('\n\n*' + divisiList[iii] + '* : ' + divisiCounter + ' User\n' + userByDivisi);
           }
-
         }
 
         let instaSudah = userAll - notLikesList.length;
@@ -175,7 +172,7 @@ export async function reportInstaLikes(clientName) {
           code: 201
         };
 
-        console.log('Return No Content');
+        console.log(responseData.data);
         return responseData;
 
       }
@@ -200,7 +197,7 @@ export async function reportInstaLikes(clientName) {
       code: 201
     };
 
-    console.log('Return Expired ID');
+    console.log(responseData.data);
     
     return responseData;
 
