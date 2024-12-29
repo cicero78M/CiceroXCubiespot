@@ -30,7 +30,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
 
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
 
-    let responseClient = await clientData(ciceroKey.dbKey.clientDataID, 'ClientData');
+    let responseClient = await clientData('ClientData');
 
     console.log(responseClient);
 
