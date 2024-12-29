@@ -15,12 +15,12 @@ export async function clientData(clientName) {
     let operator;
     let group;
 
-    const clientDoc =  await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData', clientName);
+    const clientDoc =  await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     const clientRows = clientDoc.data;
-    
-    console.log(clientRows);
+        
     for (let i = 0; i < clientRows.length; i++){
       if (clientRows[i].get('CLIENT_ID') === clientName){
+
         isClientID = true;
         isStatus = clientRows[i].get('STATUS');
         isClientType = clientRows[i].get('TYPE');
