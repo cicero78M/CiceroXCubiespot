@@ -166,6 +166,7 @@ client.on('ready', () => {
                         await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                         let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                         if(loadInsta.code === 200){
+                            
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));

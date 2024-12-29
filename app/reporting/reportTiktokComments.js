@@ -95,7 +95,7 @@ export async function reportTiktokComments(clientName) {
                   + userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
                   + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
-                code: 202
+                code: 200
               };
             } else if (clientResponse.data.isClientType === "COM") {
               responseData = {
@@ -104,7 +104,7 @@ export async function reportTiktokComments(clientName) {
                   + userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
                   + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
-                code: 202
+                code: 200
               };
             }
             console.log('Return Success');
@@ -113,7 +113,7 @@ export async function reportTiktokComments(clientName) {
             let responseData = {
               data: 'Tidak ada Konten Data untuk di Olah',
               state: true,
-              code: 200
+              code: 201
             };
             console.log(responseData.data);
             return responseData;
@@ -122,7 +122,7 @@ export async function reportTiktokComments(clientName) {
         let responseData = {
           data: 'Your Client ID has Expired, Contacts Developers for more Informations',
           state: true,
-          code: 200
+          code: 201
         };
         console.log(responseData.data);
         return responseData;
@@ -131,7 +131,7 @@ export async function reportTiktokComments(clientName) {
       let responseData = {
         data: 'Client Name Doesn\'t Exist',
         state: false,
-        code: 303
+        code: 201
       };
       console.log(responseData.data);
       return responseData;
