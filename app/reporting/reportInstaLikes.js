@@ -63,10 +63,10 @@ export async function reportInstaLikes(clientName) {
         }
       }
       console.log('OK2');
-      
+
       if (shortcodeList.length >= 1) {
 
-        let instaLikesUsernameDoc = await _sheetDoc(ciceroKey.dbKey.instaLikesUsernameID, clientName);
+        let instaLikesUsernameDoc = await sheetDoc(ciceroKey.dbKey.instaLikesUsernameID, clientName);
         let instaLikesUsernameRows = instaLikesUsernameDoc.data;
 
         let userLikesData = [];
