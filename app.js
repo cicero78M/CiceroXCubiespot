@@ -319,8 +319,8 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'allsocmed') {
                         
                         try {
-                            await client.sendMessage('6281235114745@c.us', 'Generate All Data Starting...');            
-                            console.log(time+' Cron Job Starting');
+                            await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');            
+                            console.log(time+' Generate All Socmed Data Starting');
                             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                             let clientRows = clientResponse.data;
                             if (clientRows.length >= 1){
@@ -333,11 +333,11 @@ client.on('message', async (msg) => {
                                         if(loadTiktok.code === 200){
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                                             let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            sendResponse(msg.from, reportTiktok.data, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                         } else {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
                                             let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            sendResponse(msg.from, reportTiktok.data, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                         }
                                     }
                                     
@@ -349,11 +349,11 @@ client.on('message', async (msg) => {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                            sendResponse(msg.from, reportInsta.data, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                                            sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                         } else {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
                                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                            sendResponse(msg.from, reportInsta.data, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                                            sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                         }
                                     } 
                                 }
