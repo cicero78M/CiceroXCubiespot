@@ -43,6 +43,8 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       let itemByDay = [];
       let todayItems = [];
       let postItems = [];
+      
+      console.log(responseClient.data.instaAccount);
 
       let instaPostAPIResponse = await instaPostAPI(responseClient.data.instaAccount);
 
