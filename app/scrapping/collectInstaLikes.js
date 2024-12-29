@@ -38,195 +38,197 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         let hasContent = false;
         let itemByDay = [];
         let todayItems = [];
+        let postItems = [];
         
         instaPostAPI(responseClient.data.instaAccount).then(async (instaPostAPIResponse)=>{
 
           if (instaPostAPIResponse.state) {
 
-            instaPostAPIResponse.data.data.items.then(async (postItems) => {
-    
-              for (let i = 0; i < postItems.length; i++) {
-    
-                let itemDate = new Date(postItems[i].taken_at * 1000);
-    
-                if (itemDate.toLocaleDateString('id') === localDate) {
-                  hasContent = true;
-                  itemByDay.push(postItems[i]);
-                  todayItems.push(postItems[i].code);
-                }
+            postItems = await instaPostAPIResponse.data.data.items;
+            
+            console.log(postItems);
+            
+            for (let i = 0; i < postItems.length; i++) {
+  
+              let itemDate = new Date(postItems[i].taken_at * 1000);
+  
+              if (itemDate.toLocaleDateString('id') === localDate) {
+                hasContent = true;
+                itemByDay.push(postItems[i]);
+                todayItems.push(postItems[i].code);
               }
+            }
+  
+            if (hasContent) {
+  
+              console.log(clientName + " Insta Official Account Has Content");
+  
+              await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+              const officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
+
+              let shortcodeList = [];
               
-              if (hasContent) {
-    
-                console.log(clientName + " Insta Official Account Has Content");
-    
-                await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-                const officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
+              officialInstaSheet.getRows().then (async (officialInstaData)=>{
 
-                let shortcodeList = [];
+                console.log(officialInstaData);
+
+                for (let i = 0; i < officialInstaData.length; i++) {
+                  if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))) {
+                    shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
+                  }
+                }
+
+                //Check if Database Contains Shortcode Items        
+                let hasShortcode = false;
                 
-                officialInstaSheet.getRows().then (async (officialInstaData)=>{
-
-                  console.log(officialInstaData);
-
-                  for (let i = 0; i < officialInstaData.length; i++) {
-                    if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))) {
-                      shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
-                    }
+                for (let i = 0; i < itemByDay.length; i++) {
+                  if (shortcodeList.includes(itemByDay[i].code)) {
+                    hasShortcode = true;
                   }
-
-                  //Check if Database Contains Shortcode Items        
-                  let hasShortcode = false;
-                  
+                }
+    
+                let shortcodeUpdateCounter = 0;
+                let shortcodeNewCounter = 0;
+    
+                //If Database Contains Shortcode 
+                if (hasShortcode) {
+    
                   for (let i = 0; i < itemByDay.length; i++) {
-                    if (shortcodeList.includes(itemByDay[i].code)) {
-                      hasShortcode = true;
-                    }
-                  }
-      
-                  let shortcodeUpdateCounter = 0;
-                  let shortcodeNewCounter = 0;
-      
-                  //If Database Contains Shortcode 
-                  if (hasShortcode) {
-      
-                    for (let i = 0; i < itemByDay.length; i++) {
-                      for (let ii = 0; ii < officialInstaData.length; ii++) {
-                        if (officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code) {
-                          //Update Existing Content Database                
-                          officialInstaData[ii].assign({
-                            TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id,
-                            TYPE: itemByDay[i].media_name, CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count,
-                            PLAY_COUNT: itemByDay[i].play_count
-                          }); // Jabatan Divisi Value
-                          await officialInstaData[ii].save(); //save update
-                          shortcodeUpdateCounter++;
-                        } else if (!shortcodeList.includes(itemByDay[i].code)) {
-                          //Push New Content to Database  
-                          shortcodeList.push(itemByDay[i].code);
-                          officialInstaSheet.addRow({
-                            TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
-                            CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count
-                          });
-                          shortcodeNewCounter++;
-                        }
+                    for (let ii = 0; ii < officialInstaData.length; ii++) {
+                      if (officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code) {
+                        //Update Existing Content Database                
+                        officialInstaData[ii].assign({
+                          TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id,
+                          TYPE: itemByDay[i].media_name, CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count,
+                          PLAY_COUNT: itemByDay[i].play_count
+                        }); // Jabatan Divisi Value
+                        await officialInstaData[ii].save(); //save update
+                        shortcodeUpdateCounter++;
+                      } else if (!shortcodeList.includes(itemByDay[i].code)) {
+                        //Push New Content to Database  
+                        shortcodeList.push(itemByDay[i].code);
+                        officialInstaSheet.addRow({
+                          TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
+                          CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count
+                        });
+                        shortcodeNewCounter++;
                       }
                     }
-                  } else {
-                    //Push New Shortcode Content to Database
-                    for (let i = 0; i < itemByDay.length; i++) {
-                      officialInstaSheet.addRow({
-                        TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
-                        CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count,
-                        THUMBNAIL: itemByDay[i].thumbnail_url, VIDEO_URL: itemByDay[i].video_url
-                      });
-                      shortcodeNewCounter++;
-                    }
                   }
-      
-                  await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
+                } else {
+                  //Push New Shortcode Content to Database
+                  for (let i = 0; i < itemByDay.length; i++) {
+                    officialInstaSheet.addRow({
+                      TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
+                      CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count,
+                      THUMBNAIL: itemByDay[i].thumbnail_url, VIDEO_URL: itemByDay[i].video_url
+                    });
+                    shortcodeNewCounter++;
+                  }
+                }
+    
+                await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
 
-                  var newData = 0;
-                  var updateData = 0;
-      
-                  let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
-                  
-                  instaLikesUsernameSheet.getRows().then (async (instaLikesUsernameData) => {
+                var newData = 0;
+                var updateData = 0;
+    
+                let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
+                
+                instaLikesUsernameSheet.getRows().then (async (instaLikesUsernameData) => {
 
-                    for (let i = 0; i < todayItems.length; i++) {
-                      let hasShortcode = false;
-                      //code on the go
-                      for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
-                  
-                        if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
-                  
-                          hasShortcode = true;
-        
-                          const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-        
-                          instaLikesAPI(todayItems[i]).then (async (responseLikes) => {
-                            
-                            const likesItems = await responseLikes.data.data.items;
-        
-                            let newDataUsers = [];
-          
-                            for (let iii = 0; iii < fromRows.length; iii++) {
-                              if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                                if (!newDataUsers.includes(fromRows[iii])) {
-                                  newDataUsers.push(fromRows[iii]);
-                                }
-                              }
-                            }
-          
-                            for (let iii = 0; iii < likesItems.length; iii++) {
-                              if (likesItems[iii].username != undefined || likesItems[iii].username != null || likesItems[iii].username != "") {
-                                if (!newDataUsers.includes(likesItems[iii].username)) {
-                                  newDataUsers.push(likesItems[iii].username);
-                                }
-                              }
-                            }
-          
-                            await instaLikesUsernameData[ii].delete();
-                            await instaLikesUsernameSheet.addRow(newDataUsers);
-                            console.log(clientName + ' Update data ' + todayItems[i]);
-                            updateData++;
-          
-                          });
-                        }
-                      }
-                        //Final Code
-                      if (!hasShortcode) {
+                  for (let i = 0; i < todayItems.length; i++) {
+                    let hasShortcode = false;
+                    //code on the go
+                    for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
+                 
+                      if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
+                 
+                        hasShortcode = true;
       
-                        console.log(clientName+' Has No Content');
-                        //If Shortcode doesn't exist push new data
+                        const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+      
                         instaLikesAPI(todayItems[i]).then (async (responseLikes) => {
-
-                          let likesItems = responseLikes.data.data.items;
-                          let userNameList = [todayItems[i]];
-          
-                          for (let iii = 0; iii < likesItems.length; iii++) {
-                            if ('username' in likesItems[iii]) {
-                              userNameList.push(likesItems[iii].username);
+                          
+                          const likesItems = await responseLikes.data.data.items;
+      
+                          let newDataUsers = [];
+        
+                          for (let iii = 0; iii < fromRows.length; iii++) {
+                            if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
+                              if (!newDataUsers.includes(fromRows[iii])) {
+                                newDataUsers.push(fromRows[iii]);
+                              }
                             }
                           }
-                          //Add new Row
-                          
-                          await instaLikesUsernameSheet.addRow(userNameList);
-                          newData++;
-                          console.log(clientName + 'Insert new data ' + todayItems[i]);
-                        });                                  
+        
+                          for (let iii = 0; iii < likesItems.length; iii++) {
+                            if (likesItems[iii].username != undefined || likesItems[iii].username != null || likesItems[iii].username != "") {
+                              if (!newDataUsers.includes(likesItems[iii].username)) {
+                                newDataUsers.push(likesItems[iii].username);
+                              }
+                            }
+                          }
+        
+                          await instaLikesUsernameData[ii].delete();
+                          await instaLikesUsernameSheet.addRow(newDataUsers);
+                          console.log(clientName + ' Update data ' + todayItems[i]);
+                          updateData++;
+        
+                        });
                       }
                     }
-
-                  });
+                      //Final Code
+                    if (!hasShortcode) {
     
+                      console.log(clientName+' Has No Content');
+                      //If Shortcode doesn't exist push new data
+                      instaLikesAPI(todayItems[i]).then (async (responseLikes) => {
+
+                        let likesItems = responseLikes.data.data.items;
+                        let userNameList = [todayItems[i]];
+        
+                        for (let iii = 0; iii < likesItems.length; iii++) {
+                          if ('username' in likesItems[iii]) {
+                            userNameList.push(likesItems[iii].username);
+                          }
+                        }
+                        //Add new Row
+                        
+                        await instaLikesUsernameSheet.addRow(userNameList);
+                        newData++;
+                        console.log(clientName + 'Insert new data ' + todayItems[i]);
+                      });                                  
+                    }
+                  }
+
                 });
+  
+              });
 
-                let responseData = {
-                  data: clientName + '\n\nSucces Reload Insta Data : ' + todayItems.length + '\n\nNew Content : ' + newData + '\nUpdate Content : ' + updateData,
-                  state: true,
-                  code: 200
-                };
+              let responseData = {
+                data: clientName + '\n\nSucces Reload Insta Data : ' + todayItems.length + '\n\nNew Content : ' + newData + '\nUpdate Content : ' + updateData,
+                state: true,
+                code: 200
+              };
 
-                console.log(responseData.data);
-                instaOfficialDoc.delete;
-                instaLikesUsernameDoc.delete;
-                return responseData;
-    
-              } else {
-                
-                let responseData = {
-                  data: clientName + '\n\nHas No Insta Content',
-                  state: true,
-                  code: 201
-                };
-                console.log(responseData.data);
-    
-                instaOfficialDoc.delete;
-                instaLikesUsernameDoc.delete;
-                return responseData;
-              }
-            });
+              console.log(responseData.data);
+              instaOfficialDoc.delete;
+              instaLikesUsernameDoc.delete;
+              return responseData;
+  
+            } else {
+              
+              let responseData = {
+                data: clientName + '\n\nHas No Insta Content',
+                state: true,
+                code: 201
+              };
+              console.log(responseData.data);
+  
+              instaOfficialDoc.delete;
+              instaLikesUsernameDoc.delete;
+              return responseData;
+            }
   
           } else {
             let responseData = {
