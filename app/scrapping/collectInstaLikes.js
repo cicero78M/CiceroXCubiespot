@@ -76,7 +76,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
                   }
                 }
 
-                  
                 //Check if Database Contains Shortcode Items        
                 let hasShortcode = false;
                 
@@ -139,7 +138,9 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
                     let hasShortcode = false;
                     //code on the go
                     for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
+                 
                       if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
+                 
                         hasShortcode = true;
       
                         const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
@@ -197,21 +198,21 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
                       });                                  
                     }
                   }
-      
-                  let responseData = {
-                    data: clientName + '\n\nSucces Reload Insta Data : ' + todayItems.length + '\n\nNew Content : ' + newData + '\nUpdate Content : ' + updateData,
-                    state: true,
-                    code: 200
-                  };
-
-                  console.log(responseData.data);
-                  instaOfficialDoc.delete;
-                  instaLikesUsernameDoc.delete;
-                  return responseData;
 
                 });
   
               });
+
+              let responseData = {
+                data: clientName + '\n\nSucces Reload Insta Data : ' + todayItems.length + '\n\nNew Content : ' + newData + '\nUpdate Content : ' + updateData,
+                state: true,
+                code: 200
+              };
+
+              console.log(responseData.data);
+              instaOfficialDoc.delete;
+              instaLikesUsernameDoc.delete;
+              return responseData;
   
             } else {
               
