@@ -1,6 +1,6 @@
 //Google Spreadsheet
 import { readFileSync } from 'fs';
-import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
+import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { clientData } from '../database_query/clientData.js';
 
@@ -25,7 +25,7 @@ export async function reportInstaLikes(clientName) {
       let divisiResponse = await listValueData(clientName, 'DIVISI');
       let divisiList = divisiResponse.data;
 
-      let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
+      let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       let userRows = userDoc.data;
       var userAll = 0;
 
@@ -34,10 +34,12 @@ export async function reportInstaLikes(clientName) {
           userAll++;
         }
       }
+
+      console.log('OK1');
       //Collect Shortcode from Database        
       let shortcodeList = [];
 
-      const instaOfficialDoc = await _sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName);
+      const instaOfficialDoc = await sheetDoc(ciceroKey.dbKey.instaOfficialID, clientName);
       const instaOfficialRows = instaOfficialDoc.data;
 
       let shortcodeListString = '';
@@ -60,7 +62,8 @@ export async function reportInstaLikes(clientName) {
           }
         }
       }
-
+      console.log('OK2');
+      
       if (shortcodeList.length >= 1) {
 
         let instaLikesUsernameDoc = await _sheetDoc(ciceroKey.dbKey.instaLikesUsernameID, clientName);
