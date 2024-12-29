@@ -316,7 +316,7 @@ client.on('message', async (msg) => {
     
                         }
                         
-                    } else if (splittedMsg[1].toLowerCase() === 'generatealldata') {
+                    } else if (splittedMsg[1].toLowerCase() === 'allsocmed') {
                         
                         try {
                             await client.sendMessage('6281235114745@c.us', 'Generate All Data Starting...');            
