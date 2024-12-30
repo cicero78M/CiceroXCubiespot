@@ -108,12 +108,12 @@ client.on('ready', () => {
                             case 200:
                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                                 reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                sendResponse('6281235114745@c.us', reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                 break;                                           
                             case 201:
                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
                                 reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                sendResponse('6281235114745@c.us', reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                 break;
                             case 303:
                                 console.log(loadInsta.data);
@@ -133,13 +133,13 @@ client.on('ready', () => {
                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                 await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                 reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                                sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                 break;                                           
                             case 201:
                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                 await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                 reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                                sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                 break;
                             case 303:
                                 console.log(loadInsta.data);
@@ -187,7 +187,6 @@ client.on('ready', () => {
                         client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                         let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                         if(loadInsta.code === 200){
-                            
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
@@ -225,9 +224,7 @@ client.on('message', async (msg) => {
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['menu','info', 'divisilist', 'titlelist'];
     try {
-
         const contact = await msg.getContact();
-
         if (msg.isStatus){
             
             //If Msg is WA Story
@@ -276,16 +273,12 @@ client.on('message', async (msg) => {
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
-            
             if (splittedMsg.length > 1){
-
                 let chatMsg = await msg.getChat();
                 chatMsg.sendSeen();
                 chatMsg.sendStateTyping();
-
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
                 //Admin Order Data         
-            
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){//adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
                     //ClientName#pushnewuserres#linkspreadsheet
                     if (splittedMsg[1].toLowerCase() === 'pushuserres'){
@@ -338,10 +331,11 @@ client.on('message', async (msg) => {
                         }
                         
                     } else if (splittedMsg[1].toLowerCase() === 'allsocmed') {
-                        
                         try {
-                            await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');            
+                            await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');
+
                             console.log(time+' Generate All Socmed Data Starting');
+                            
                             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                             let clientRows = clientResponse.data;
                             if (clientRows.length >= 1){
@@ -368,8 +362,7 @@ client.on('message', async (msg) => {
                                             default:
                                                 break;
                                         }
-                                    }
-                                    
+                                    }           
                                     if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                         console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                         await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
@@ -401,7 +394,6 @@ client.on('message', async (msg) => {
                             console.log(time+" "+errorcronjob)
                             await client.sendMessage('6281235114745@c.us', 'Error ');
                         }
-
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
                         let response = await createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
@@ -426,7 +418,6 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'savecontact') {
                         let response = await saveContacts();
                         console.log(response);
-
                     }
                                             
                 //Operator Order Data         
@@ -547,7 +538,6 @@ client.on('message', async (msg) => {
                 } else {
                     console.log("Request Code Doesn't Exist");
                     let responseData = await infoView(splittedMsg[0].toUpperCase());
-
                     client.sendMessage(msg.from, responseData.data);
                 }
                 //if(splittedMsg[1].toLowerCase()......
@@ -558,7 +548,6 @@ client.on('message', async (msg) => {
         } //if(msg.status....
     } catch (error) {
         console.log(error); 
-
         client.sendMessage('6281235114745@c.us', 'Error on Apps');
     }//try catch
 });
@@ -586,7 +575,6 @@ function sendResponse(from, responseData, errormessage) {
 
 //Response By Client
 function sendClientResponse(clientID, supervisor, operator, group, responseData, type) {
-
     switch (responseData.code){
         case 200 || 201 :
             console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
@@ -596,24 +584,6 @@ function sendClientResponse(clientID, supervisor, operator, group, responseData,
             break;
         case 303 :
             console.log(time+" "+clientID+' FAIL '+type+' DATA');
-            client.sendMessage('6281235114745@c.us', responseData.data);
-            break;
-        default:
-            break;
-
-    }
-
-}
-
-//Response By Client
-function sendSuperviseResponse(clientID, responseData, type) {
-    switch (responseData.code){
-        case 200 || 201 :
-            console.log(time+" "+clientID+" SUCESS "+type+" DATA");
-            client.sendMessage('6281235114745@c.us', responseData.data);
-            break;
-        case 303:
-            console.log(time+" "+clientID+" FAIL "+type+" DATA");
             client.sendMessage('6281235114745@c.us', responseData.data);
             break;
         default:
