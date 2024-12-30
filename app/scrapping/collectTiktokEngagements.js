@@ -6,6 +6,7 @@ import { readFileSync } from 'fs';
 
 import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { clientData } from '../database_query/clientData.js';
+import { client } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -33,12 +34,17 @@ export async function collectTiktokComments(clientName) {
 
     let responseClient = await clientData(clientName);
     // If Client_ID exist. then get official content
+    setTimeout(() => {
+      console.log("Loading Client Data");
+    }, 1000);
 
     if (responseClient.code === 200) {
       
       console.log(`${clientName} Generated Tiktok Data`);
+      await client.sendMessage('6281235114745@c.us', `${clientName} Generated Tiktok Data`);
   
       if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
+
           //Collect Content Shortcode from Official Account
           let tiktokAccount = responseClient.data.tiktokAccount;
           let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
