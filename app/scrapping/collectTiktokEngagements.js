@@ -21,8 +21,6 @@ export async function collectTiktokComments(clientName) {
 
   console.log(`${clientName} Collect Tiktok Data`);
 
-
-
   const d = new Date();
   const localDate = d.toLocaleDateString('id');
   const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
@@ -32,8 +30,10 @@ export async function collectTiktokComments(clientName) {
   //Check Client_ID. then get async data
   
   try {
+
     let responseClient = await clientData(clientName);
     // If Client_ID exist. then get official content
+
     if (responseClient.code === 200) {
       console.log(`${clientName} Generated Tiktok Data`);
   
@@ -169,8 +169,7 @@ export async function collectTiktokComments(clientName) {
                   do {
     
                     let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-    
-    
+        
                     let commentItems = responseComments.data.comments;
     
                     for (let iii = 0; iii < commentItems.length; iii++) {
@@ -183,7 +182,7 @@ export async function collectTiktokComments(clientName) {
     
                     setTimeout(() => {
                       console.log("Update Data " + cursorNumber + " < " + total);
-                    }, 2200);
+                    }, 1100);
     
                     cursorNumber;
                     total;
@@ -232,7 +231,7 @@ export async function collectTiktokComments(clientName) {
     
                   setTimeout(() => {
                     console.log(cursorNumber + " < " + total);
-                  }, 2200);
+                  }, 1100);
     
                   cursorNumber;
                   total;
@@ -293,22 +292,26 @@ export async function collectTiktokComments(clientName) {
           return responseData;
         }
     } else {
+    
       let responseData = {
         data: responseClient.data,
         state: true,
         code: 201
       };
+    
       console.log(responseData.data);
       tiktokOfficialDoc.delete;
       tiktokCommentsUsernameDoc.delete;
       return responseData;
     }
   } catch (error) {
+    
     let responseData = {
       data: error,
       state: false,
       code: 303
     };
+    
     console.log(responseData.data);
     tiktokOfficialDoc.delete;
     tiktokCommentsUsernameDoc.delete;

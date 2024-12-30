@@ -7,20 +7,20 @@ import { clientData } from '../database_query/clientData.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function reportInstaLikes(clientName) {
+  try {
 
-  console.log("Insta Report Function Executed");
+    console.log("Insta Report Function Executed");
 
-  const d = new Date();
-  const localDate = d.toLocaleDateString('id');
-  const hours = d.toLocaleTimeString('id');
+    const d = new Date();
+    const localDate = d.toLocaleDateString('id');
+    const hours = d.toLocaleTimeString('id');
 
-  //Check Client_ID. then get async data
+    //Check Client_ID. then get async data
 
-  const clientResponse = await clientData(clientName);
+    const clientResponse = await clientData(clientName);
 
-  // If Client_ID exist. then get official content
-  if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
-    try {
+    // If Client_ID exist. then get official content
+    if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
 
       let divisiResponse = await listValueData(clientName, 'DIVISI');
       let divisiList = divisiResponse.data;
@@ -176,29 +176,30 @@ export async function reportInstaLikes(clientName) {
         return responseData;
 
       }
-    } catch (error) {
+  
+
+    } else {
 
       let responseData = {
-        data: error,
-        state: false,
-        code: 303
+        data: 'Your Client ID has Expired, Contacts Developers for more Informations',
+        state: true,
+        code: 201
       };
 
-      console.log(error);
+      console.log(responseData.data);
+      
       return responseData;
 
     }
-
-  } else {
+  } catch (error) {
 
     let responseData = {
-      data: 'Your Client ID has Expired, Contacts Developers for more Informations',
-      state: true,
-      code: 201
+      data: error,
+      state: false,
+      code: 303
     };
 
-    console.log(responseData.data);
-    
+    console.log(error);
     return responseData;
 
   }

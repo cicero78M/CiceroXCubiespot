@@ -486,15 +486,23 @@ client.on('message', async (msg) => {
                     }
 
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
-                    if (splittedMsg[1].toLowerCase() === 'menu') {
-                        let responseData = await infoView(splittedMsg[0].toUpperCase());
-                        client.sendMessage(msg.from, responseData.data);
-                    } else if (splittedMsg[1].toLowerCase() === 'divisilist') {
-                       let responseData = await propertiesView(splittedMsg[0].toUpperCase(), "DIVISI");
-                       client.sendMessage(msg.from, responseData.data);                                  
-                    } else if (splittedMsg[1].toLowerCase() === 'titlelist') {
-                        let responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
-                        client.sendMessage(msg.from, responseData.data);                                   
+                    let responseData;
+                    switch (splittedMsg[1].toLowerCase()) {
+                        case 'menu':                        
+                            responseData = await infoView(splittedMsg[0].toUpperCase());
+                            client.sendMessage(msg.from, responseData.data);
+                            break;
+
+                        case 'divisilist':                        
+                            responseData = await propertiesView(splittedMsg[0].toUpperCase(), "DIVISI");
+                            client.sendMessage(msg.from, responseData.data);  
+                            break;
+                        case 'titlelist':    
+                            let responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
+                            client.sendMessage(msg.from, responseData.data); 
+                            break;                   
+                        default:
+                            break;
                     }
 
                 //Key Order Data Not Exist         
@@ -533,30 +541,45 @@ function sendResponse(from, responseData, errormessage) {
             console.log(responseData.data);
             client.sendMessage(from, errormessage);
             break;
+        default:
+            break;
     }   
 }
 
 //Response By Client
-function sendClientResponse(clientID, supervisor, operator, group, data, type) {
-    if(data.code === 200 ||data.code === 201 ){
-        console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
-        client.sendMessage(supervisor, data.data);
-        client.sendMessage(operator, data.data);
-        client.sendMessage(group, data.data);
-        
-    } else {
-        console.log(time+" "+clientID+' FAIL '+type+' DATA');
-        client.sendMessage('6281235114745@c.us', data.data);
+function sendClientResponse(clientID, supervisor, operator, group, responseData, type) {
+
+    switch (responseData.code){
+        case 200 || 201 :
+            console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
+            client.sendMessage(supervisor, data.data);
+            client.sendMessage(operator, data.data);
+            client.sendMessage(group, data.data);
+            break;
+        case 303 :
+            console.log(time+" "+clientID+' FAIL '+type+' DATA');
+            client.sendMessage('6281235114745@c.us', data.data);
+            break;
+
+        default:
+            break;
+
     }
+
 }
 
 //Response By Client
-function sendSuperviseResponse(clientID, data, type) {
-    if(data.code === 200){
-        console.log(time+" "+clientID+" SUCESS "+type+" DATA");
-        client.sendMessage('6281235114745@c.us', data.data);
-    } else {
-        console.log(time+" "+clientID+" FAIL "+type+" DATA");
-        client.sendMessage('6281235114745@c.us', data.data);
+function sendSuperviseResponse(clientID, responseData, type) {
+    switch (responseData.code){
+        case 200 || 201 :
+            console.log(time+" "+clientID+" SUCESS "+type+" DATA");
+            client.sendMessage('6281235114745@c.us', data.data);
+            break;
+        case 303:
+            console.log(time+" "+clientID+" FAIL "+type+" DATA");
+            client.sendMessage('6281235114745@c.us', data.data);
+            break;
+        default:
+            break;
     }
 }
