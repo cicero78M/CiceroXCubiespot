@@ -152,7 +152,7 @@ client.on('ready', () => {
             }
         } catch (errorcronjob) {
             console.log(time+" "+errorcronjob)
-            await client.sendMessage('6281235114745@c.us', 'Error Cron Job Supervise ');
+            await client.sendMessage('6281235114745@c.us', 'Error Cron Job Administrator ');
         }
     });
 
