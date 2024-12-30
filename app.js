@@ -90,7 +90,7 @@ client.on('ready', () => {
         client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
     });
 
- // Reload Tiktok every hours until 22
+    // Reload Tiktok every hours until 22
     schedule('40 6-21 * * *', async () => {
         try {
             await client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');
@@ -561,13 +561,13 @@ function sendClientResponse(clientID, supervisor, operator, group, responseData,
     switch (responseData.code){
         case 200 || 201 :
             console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
-            client.sendMessage(supervisor, data.data);
-            client.sendMessage(operator, data.data);
-            client.sendMessage(group, data.data);
+            client.sendMessage(supervisor, responseData.data);
+            client.sendMessage(operator, responseData.data);
+            client.sendMessage(group, responseData.data);
             break;
         case 303 :
             console.log(time+" "+clientID+' FAIL '+type+' DATA');
-            client.sendMessage('6281235114745@c.us', data.data);
+            client.sendMessage('6281235114745@c.us', responseData.data);
             break;
 
         default:
@@ -582,11 +582,11 @@ function sendSuperviseResponse(clientID, responseData, type) {
     switch (responseData.code){
         case 200 || 201 :
             console.log(time+" "+clientID+" SUCESS "+type+" DATA");
-            client.sendMessage('6281235114745@c.us', data.data);
+            client.sendMessage('6281235114745@c.us', responseData.data);
             break;
         case 303:
             console.log(time+" "+clientID+" FAIL "+type+" DATA");
-            client.sendMessage('6281235114745@c.us', data.data);
+            client.sendMessage('6281235114745@c.us', responseData.data);
             break;
         default:
             break;
