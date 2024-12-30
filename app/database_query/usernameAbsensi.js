@@ -22,10 +22,12 @@ export async function usernameAbsensi(clientName, clientType) {
 
     for (let i = 0; i < divisiList.length; i++) {
       let divisiCounter = 0;
+      let userActive = 0;
       let userByDivisi = '';
 
       for (let ii = 0; ii < userRows.length; ii++) {            
         if (userRows[ii].get("STATUS") === 'TRUE'){
+          userActive++;
           if (divisiList[i] === userRows[ii].get('DIVISI')) {
             if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined) {
               userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
@@ -42,9 +44,9 @@ export async function usernameAbsensi(clientName, clientType) {
 
     }
 
-    let userDone = userRows.length - userCounter;
+    let userDone = userActive - userCounter;
     let responseData = {
-      data: "*" + clientName + "*\n\nInformasi Rekap Data username profile akun " + clientType + " sampai dengan\n\nWaktu Rekap : " + date + "\n\nDengan Rincian Data sbb:\n\nJumlah User : " + userRows.length + " \nJumlah User Sudah melengkapi: " + userDone + "\nJumlah User Belum melengkapi : " + userCounter + "\n\nRincian Data Username " + clientType + " :" + userString + "\n\n_System Administrator Cicero_",
+      data: "*" + clientName + "*\n\nInformasi Rekap Data username profile akun " + clientType + " sampai dengan\n\nWaktu Rekap : " + date + "\n\nDengan Rincian Data sbb:\n\nJumlah User : " + userActive + " \nJumlah User Sudah melengkapi: " + userDone + "\nJumlah User Belum melengkapi : " + userCounter + "\n\nRincian Data Username " + clientType + " :" + userString + "\n\n_System Administrator Cicero_",
       state: true,
       code: 200
     };
