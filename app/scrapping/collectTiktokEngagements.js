@@ -19,6 +19,10 @@ const googleAuth = new JWT({
 
 export async function collectTiktokComments(clientName) {
 
+  console.log(`${clientName} Collect Tiktok Data`);
+
+
+
   const d = new Date();
   const localDate = d.toLocaleDateString('id');
   const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
@@ -26,11 +30,14 @@ export async function collectTiktokComments(clientName) {
   const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
   await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
   //Check Client_ID. then get async data
-  let responseClient = await clientData(clientName);
-  // If Client_ID exist. then get official content
-  if (responseClient.code === 200) {
+  
+  try {
+    let responseClient = await clientData(clientName);
+    // If Client_ID exist. then get official content
+    if (responseClient.code === 200) {
+      console.log(`${clientName} Generated Tiktok Data`);
+  
       if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
-        try {
           //Collect Content Shortcode from Official Account
           let tiktokAccount = responseClient.data.tiktokAccount;
           let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
@@ -273,37 +280,39 @@ export async function collectTiktokComments(clientName) {
             tiktokCommentsUsernameDoc.delete;
             return responseData;
           }
-        } catch (error) {
+    
+        } else {
           let responseData = {
-            data: error,
-            state: false,
-            code: 303
+            data: 'Your Client ID has Expired, Contacts Developers for more Informations',
+            state: true,
+            code: 201
           };
           console.log(responseData.data);
           tiktokOfficialDoc.delete;
           tiktokCommentsUsernameDoc.delete;
           return responseData;
         }
-      } else {
-        let responseData = {
-          data: 'Your Client ID has Expired, Contacts Developers for more Informations',
-          state: true,
-          code: 201
-        };
-        console.log(responseData.data);
-        tiktokOfficialDoc.delete;
-        tiktokCommentsUsernameDoc.delete;
-        return responseData;
-      }
-  } else {
+    } else {
+      let responseData = {
+        data: responseClient.data,
+        state: true,
+        code: 201
+      };
+      console.log(responseData.data);
+      tiktokOfficialDoc.delete;
+      tiktokCommentsUsernameDoc.delete;
+      return responseData;
+    }
+  } catch (error) {
     let responseData = {
-      data: responseClient.data,
-      state: true,
-      code: 201
+      data: error,
+      state: false,
+      code: 303
     };
     console.log(responseData.data);
     tiktokOfficialDoc.delete;
     tiktokCommentsUsernameDoc.delete;
     return responseData;
   }
+
 }
