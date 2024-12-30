@@ -496,6 +496,7 @@ client.on('message', async (msg) => {
                     }
 
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
+                    let responseData;
                     switch (splittedMsg[1].toLowerCase()) {
                         case 'menu':                        
                             responseData = await infoView(splittedMsg[0].toUpperCase());
