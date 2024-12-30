@@ -431,122 +431,134 @@ client.on('message', async (msg) => {
                                             
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){//['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-                    //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
-                    if (splittedMsg[1].toLowerCase() === 'addnewuser'){ 
-                        //Check Between Corporate And Organizations
-                                               
-                        let responseData = await addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
-                        splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase());
-                        sendResponse(msg.from, responseData, "Error Adding New User");
 
-                    } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
-                        //Update Nama
-                        //clientName#deleteuser#id_key/NRP#newdata
-                        let responseData = await editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
-                        sendResponse(msg.from, responseData, "Error Delete User Data");
-  
-                    } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
-                        //Checking If User hasn't update Insta Profile
-                        let response = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
-                                                            
-                        if (response.code === 200){
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.data);
-                            client.sendMessage('6281235114745@c.us', '*Response Error on Insta User*');
-                        }  
-                    } else if (splittedMsg[1].toLowerCase() === 'tiktokcheck') {
-                        //Checking If User hasn't update Tiktok Profile
-                        let response = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');
-                                                            
-                        if (response.code === 200){
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);
-                        } else {
-                            console.log(response.data);
-                            client.sendMessage('6281235114745@c.us', '*Response Error on Tiktok User*');
-                        }  
+                    let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                    let clientRows = clientResponse.data;
+                    for (let i = 0; i < clientRows.length; i++){
+                        if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                            //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
+                            if (splittedMsg[1].toLowerCase() === 'addnewuser'){ 
+                                //Check Between Corporate And Organizations
+                                                    
+                                let responseData = await addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
+                                splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase());
+                                sendResponse(msg.from, responseData, "Error Adding New User");
+
+                            } else if (splittedMsg[1].toLowerCase() === 'deleteuser') {
+                                //Update Nama
+                                //clientName#deleteuser#id_key/NRP#newdata
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
+                                sendResponse(msg.from, responseData, "Error Delete User Data");
+        
+                            } else if (splittedMsg[1].toLowerCase() === 'instacheck') {
+                                //Checking If User hasn't update Insta Profile
+                                let response = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');                                       
+                                if (response.code === 200){
+                                    console.log(response.data);
+                                    client.sendMessage(msg.from, response.data);
+                                } else {
+                                    console.log(response.data);
+                                    client.sendMessage('6281235114745@c.us', '*Response Error on Insta User*');
+                                }  
+                            } else if (splittedMsg[1].toLowerCase() === 'tiktokcheck') {
+                                //Checking If User hasn't update Tiktok Profile
+                                let response = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');
+                                                                    
+                                if (response.code === 200){
+                                    console.log(response.data);
+                                    client.sendMessage(msg.from, response.data);
+                                } else {
+                                    console.log(response.data);
+                                    client.sendMessage('6281235114745@c.us', '*Response Error on Tiktok User*');
+                                }  
+                            }
+                        }
                     }
+
 
                 //User Order Data         
                 } else if (userOrder.includes(splittedMsg[1].toLowerCase())){//const userOrder =['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
-                    if (['updateinsta', 'ig', 'ig1', 'ig2','ig3', 'insta'].includes(splittedMsg[1].toLowerCase())) {
-                    //Update Insta Profile
-                    //CLientName#updateinsta/ig/#linkprofileinstagram
-                        if (splittedMsg[3].includes('instagram.com')){
-                            if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
-                                const instaLink = splittedMsg[3].split('?')[0];
-                                const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
-                                let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
-                                sendResponse(msg.from, responseData, "Error Update Insta");
-                            } else {
-                                console.log('Bukan Link Profile Instagram');
-                                client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                    let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                    let clientRows = clientResponse.data;
+                    for (let i = 0; i < clientRows.length; i++){
+                        if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                            if (['updateinsta', 'ig', 'ig1', 'ig2','ig3', 'insta'].includes(splittedMsg[1].toLowerCase())) {
+                                //Update Insta Profile
+                                //CLientName#updateinsta/ig/#linkprofileinstagram
+                                if (splittedMsg[3].includes('instagram.com')){
+                                    if (!splittedMsg[3].includes('/p/') || !splittedMsg[3].includes('/reels/') || !splittedMsg[3].includes('/video/') ){
+                                        const instaLink = splittedMsg[3].split('?')[0];
+                                        const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
+                                        let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
+                                        sendResponse(msg.from, responseData, "Error Update Insta");
+                                    } else {
+                                        console.log('Bukan Link Profile Instagram');
+                                        client.sendMessage(msg.from, 'Bukan Link Profile Instagram');
+                                    }
+                                } else {
+                                    console.log('Bukan Link Instagram');
+                                    client.sendMessage(msg.from, 'Bukan Link Instagram');
+                                }
+                            } else if (['updatetiktok', 'tiktok'].includes(splittedMsg[1].toLowerCase())) {
+                                //Update Tiktok profile
+                                //CLientName#updatetiktok/tiktok/#linkprofiletiktok
+                                if (splittedMsg[3].includes('tiktok.com')){
+                                    const tiktokLink = splittedMsg[3].split('?')[0];
+                                    const tiktokUsername = tiktokLink.split('/').pop();  
+                                    let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
+                                    sendResponse(msg.from, responseData, "Error Update Tiktok");
+                                } else {
+                                    console.log('Bukan Link Profile Tiktok');
+                                    client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
+                                }      
+                            } else if (['editdivisi', 'satfung' ].includes(splittedMsg[1].toLowerCase())) {
+                                //update Divisi Name
+                                //clientName#editdivisi/satfung#id_key/NRP#newdata
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
+                                sendResponse(msg.from, responseData, "Error Edit Satfung");
+                            } else if (['editjabatan', 'jabatan'].includes(splittedMsg[1].toLowerCase())) {
+                                //Update Jabatan
+                                //clientName#editjabatan/jabatan#id_key/NRP#newdata
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
+                                sendResponse(msg.from, responseData, "Error Edit Jabatan");
+                            } else if (['editnama', 'nama'].includes(splittedMsg[1].toLowerCase())) {
+                                //clientName#editnama/nama#id_key/NRP#newdata
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
+                                sendResponse(msg.from, responseData, "Error Edit Nama");
+                            } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
+                                //clientName#editnama/nama#id_key/NRP#newdata
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
+                                sendResponse(msg.from, responseData, "Error Edit Pangkat");
+                            } else if (splittedMsg[1].toLowerCase() === 'mydata') {
+                                let responseData = await myData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
+                                sendResponse(msg.from, responseData, "Error on Getting My Data");
                             }
-                        } else {
-                            console.log('Bukan Link Instagram');
-                            client.sendMessage(msg.from, 'Bukan Link Instagram');
                         }
-                    } else if (['updatetiktok', 'tiktok'].includes(splittedMsg[1].toLowerCase())) {
-                        //Update Tiktok profile
-                        //CLientName#updatetiktok/tiktok/#linkprofiletiktok
-                        if (splittedMsg[3].includes('tiktok.com')){
-                            const tiktokLink = splittedMsg[3].split('?')[0];
-                            const tiktokUsername = tiktokLink.split('/').pop();  
-                            let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
-                            sendResponse(msg.from, responseData, "Error Update Tiktok");
-                        } else {
-                            console.log('Bukan Link Profile Tiktok');
-                            client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
-                        }      
-                    } else if (['editdivisi', 'satfung' ].includes(splittedMsg[1].toLowerCase())) {
-                        //update Divisi Name
-                        //clientName#editdivisi/satfung#id_key/NRP#newdata
-                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
-                        sendResponse(msg.from, responseData, "Error Edit Satfung");
-                    } else if (['editjabatan', 'jabatan'].includes(splittedMsg[1].toLowerCase())) {
-                        //Update Jabatan
-                        //clientName#editjabatan/jabatan#id_key/NRP#newdata
-                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
-                        sendResponse(msg.from, responseData, "Error Edit Jabatan");
-                    } else if (['editnama', 'nama'].includes(splittedMsg[1].toLowerCase())) {
-                        //clientName#editnama/nama#id_key/NRP#newdata
-                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
-                        sendResponse(msg.from, responseData, "Error Edit Nama");
-                    } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
-                        //clientName#editnama/nama#id_key/NRP#newdata
-                        let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
-                        sendResponse(msg.from, responseData, "Error Edit Pangkat");
-                    } else if (splittedMsg[1].toLowerCase() === 'mydata') {
-                        let responseData = await myData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
-                        sendResponse(msg.from, responseData, "Error on Getting My Data");
                     }
-
+                    
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
-                    let responseData;
-                    switch (splittedMsg[1].toLowerCase()) {
-                        case 'info':
-                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-                            let clientRows = clientResponse.data;
-                            for (let i = 0; i < clientRows.length; i++){
-                                if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                    let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                    let clientRows = clientResponse.data;
+                    for (let i = 0; i < clientRows.length; i++){
+                        if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                            let responseData;
+                            switch (splittedMsg[1].toLowerCase()) {
+                                case 'info':
                                     responseData = await infoView(splittedMsg[0].toUpperCase());
                                     client.sendMessage(msg.from, responseData.data);
-                                }
+                                    break;
+                                case 'divisilist':                        
+                                    responseData = await propertiesView(splittedMsg[0].toUpperCase(), "DIVISI");
+                                    client.sendMessage(msg.from, responseData.data);  
+                                    break;
+                                case 'titlelist':    
+                                    responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
+                                    client.sendMessage(msg.from, responseData.data); 
+                                    break;                   
+                                default:
+                                    break;
                             }
-                            break;
-
-                        case 'divisilist':                        
-                            responseData = await propertiesView(splittedMsg[0].toUpperCase(), "DIVISI");
-                            client.sendMessage(msg.from, responseData.data);  
-                            break;
-                        case 'titlelist':    
-                            responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
-                            client.sendMessage(msg.from, responseData.data); 
-                            break;                   
-                        default:
-                            break;
+                        }
                     }
 
                 //Key Order Data Not Exist         
