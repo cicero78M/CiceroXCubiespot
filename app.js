@@ -346,16 +346,15 @@ client.on('message', async (msg) => {
                                         console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                         await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                         let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                        let reportInsta;
                                         switch (loadInsta.code) {
                                             case 200:
                                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                                 await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                                 reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                                                 sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                                break;
-                                           
-                                                case 201:
-                                                
+                                                break;                                           
+                                            case 201:
                                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                                 await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                                 reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
