@@ -359,7 +359,7 @@ client.on('message', async (msg) => {
                                                     sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                                     break;
                                                 case 303:
-                                                    console.log(reportInsta.data);
+                                                    console.log(reportInsta);
                                                     break;
                                                 default:
                                                     break;
