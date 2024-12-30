@@ -34,7 +34,7 @@ export async function collectTiktokComments(clientName) {
   try {
 
     let responseClient = await clientData(clientName);
-    // If Client_ID exist. then get official content
+      // If Client_ID exist. then get official content
     setTimeout(() => {
       console.log("Loading Client Data");
       client.sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
