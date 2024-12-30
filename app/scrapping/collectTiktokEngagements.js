@@ -35,6 +35,7 @@ export async function collectTiktokComments(clientName) {
     // If Client_ID exist. then get official content
 
     if (responseClient.code === 200) {
+      
       console.log(`${clientName} Generated Tiktok Data`);
   
       if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
