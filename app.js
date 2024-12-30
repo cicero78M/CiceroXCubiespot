@@ -496,7 +496,6 @@ client.on('message', async (msg) => {
                     }
 
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
-                    let responseData;
                     switch (splittedMsg[1].toLowerCase()) {
                         case 'menu':                        
                             responseData = await infoView(splittedMsg[0].toUpperCase());
@@ -508,7 +507,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, responseData.data);  
                             break;
                         case 'titlelist':    
-                            let responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
+                            responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
                             client.sendMessage(msg.from, responseData.data); 
                             break;                   
                         default:
@@ -570,7 +569,6 @@ function sendClientResponse(clientID, supervisor, operator, group, responseData,
             console.log(time+" "+clientID+' FAIL '+type+' DATA');
             client.sendMessage('6281235114745@c.us', responseData.data);
             break;
-
         default:
             break;
 

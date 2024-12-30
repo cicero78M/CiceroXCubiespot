@@ -168,8 +168,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             }
             //Final Code
             if (!hasShortcode) {
-
-              console.log(clientName+' Has No Content');
               //If Shortcode doesn't exist push new data
               let responseLikes = await instaLikesAPI(todayItems[i]);
 
@@ -195,6 +193,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             state: true,
             code: 200
           };
+
           console.log(responseData.data);
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
@@ -226,11 +225,13 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         return responseData;
       }
     } else {
+
       let responseData = {
         data: clientName + '\n\nYour Client ID has Expired, Contacts Developers for more Informations',
         state: true,
         code: 201
       };
+
       console.log(responseData.data);
       instaOfficialDoc.delete;
       instaLikesUsernameDoc.delete;
