@@ -3,13 +3,15 @@ import { readFileSync } from 'fs';
 import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { clientData } from '../database_query/clientData.js';
+import { client } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function reportInstaLikes(clientName) {
   try {
 
-    console.log("Insta Report Function Executed");
+    console.log("Reporting Insta..");
+    await client.sendMessage('6281235114745@c.us', `${clientName} Reporting Insta..`);
 
     const d = new Date();
     const localDate = d.toLocaleDateString('id');
@@ -173,6 +175,7 @@ export async function reportInstaLikes(clientName) {
         };
 
         console.log(responseData.data);
+        await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
         return responseData;
 
       }
@@ -187,8 +190,8 @@ export async function reportInstaLikes(clientName) {
       };
 
       console.log(responseData.data);
-      
-      return responseData;
+      await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+            return responseData;
 
     }
   } catch (error) {
@@ -200,7 +203,7 @@ export async function reportInstaLikes(clientName) {
     };
 
     console.log(error);
+    await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
     return responseData;
-
   }
 }
