@@ -526,9 +526,15 @@ client.on('message', async (msg) => {
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
                     let responseData;
                     switch (splittedMsg[1].toLowerCase()) {
-                        case 'info':                        
-                            responseData = await infoView(splittedMsg[0].toUpperCase());
-                            client.sendMessage(msg.from, responseData.data);
+                        case 'info':
+                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                            let clientRows = clientResponse.data;
+                            for (let i = 0; i < clientRows.length; i++){
+                                if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                                    responseData = await infoView(splittedMsg[0].toUpperCase());
+                                    client.sendMessage(msg.from, responseData.data);
+                                }
+                            }
                             break;
 
                         case 'divisilist':                        
