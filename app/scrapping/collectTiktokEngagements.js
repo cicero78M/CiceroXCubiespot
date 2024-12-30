@@ -42,12 +42,21 @@ export async function collectTiktokComments(clientName) {
           //Collect Content Shortcode from Official Account
           let tiktokAccount = responseClient.data.tiktokAccount;
           let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
-          console.log(responseInfo.data);
+
+          setTimeout(() => {
+            console.log("Loading Account Data");
+          }, 1100);
+          
           const secUid = responseInfo.data.userInfo.user.secUid;
           let cursor = 0;
           let responseContent = await tiktokPostAPI(secUid, cursor);
+
+          setTimeout(() => {
+            console.log("Loading Post Data");
+          }, 1100);
+          
           let items = [];
-    
+  
           try {
             items = await responseContent.data.data.itemList;
           } catch (e) {
