@@ -359,9 +359,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'allsocmed') {
                         try {
                             await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');
-
                             console.log(time+' Generate All Socmed Data Starting');
-                            
                             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                             let clientRows = clientResponse.data;
                             if (clientRows.length >= 1){

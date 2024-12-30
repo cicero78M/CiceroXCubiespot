@@ -167,7 +167,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
                 await instaLikesUsernameSheet.addRow(newDataUsers);
 
                 console.log(`${clientName} Update Data ${todayItems[i]}`);
-                await client.sendMessage('6281235114745@c.us', `${clientName} Update Data ${todayItems[i]}`);
+                await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
                 
                 updateData++;
               }
