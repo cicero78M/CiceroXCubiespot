@@ -33,7 +33,11 @@ export async function usernameAbsensi(clientName, clientType) {
           }
         }
       }
-      userString = userString.concat('\n\n' + divisiList[i] + ' : ' + divisiCounter + ' User\n' + userByDivisi);
+
+      if(userCounter != 0){
+        userString = userString.concat('\n\n' + divisiList[i] + ' : ' + divisiCounter + ' User\n' + userByDivisi);
+      }
+      
     }
 
     let userDone = userRows.length - userCounter;
