@@ -19,12 +19,11 @@ export async function usernameAbsensi(clientName, clientType) {
 
     let userString = '';
     let userCounter = 0;
+    let userActive = 0;
 
     for (let i = 0; i < divisiList.length; i++) {
       let divisiCounter = 0;
-      let userActive = 0;
       let userByDivisi = '';
-
       for (let ii = 0; ii < userRows.length; ii++) {            
         if (userRows[ii].get("STATUS") === 'TRUE'){
           userActive++;
@@ -41,7 +40,6 @@ export async function usernameAbsensi(clientName, clientType) {
       if(userCounter != 0){
         userString = userString.concat('\n\n' + divisiList[i] + ' : ' + divisiCounter + ' User\n' + userByDivisi);
       }
-
     }
 
     let userDone = userActive - userCounter;
@@ -50,18 +48,14 @@ export async function usernameAbsensi(clientName, clientType) {
       state: true,
       code: 200
     };
-
     console.log('Return Success');
     return responseData;
-
   } catch (error) {
-
     let responseData = {
       data: error,
       state: false,
       code: 303
     };
-
     console.log('Return Success');
     return responseData;
   }
