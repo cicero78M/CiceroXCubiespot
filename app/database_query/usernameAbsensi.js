@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 
-let date = new Date().toLocaleString;
+let date = new Date();
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -32,7 +32,6 @@ export async function usernameAbsensi(clientName, clientType) {
               divisiCounter++;
               userCounter++;
             }
-
           }
         }
       }
