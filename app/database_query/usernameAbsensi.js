@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 
-let date = new Date();
+let date = new Date().toLocaleString;
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -27,9 +27,12 @@ export async function usernameAbsensi(clientName, clientType) {
       for (let ii = 0; ii < userRows.length; ii++) {
         if (divisiList[i] === userRows[ii].get('DIVISI')) {
           if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined) {
-            userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
-            divisiCounter++;
-            userCounter++;
+            if (userRows[ii].get("STATUS") === 'TRUE'){
+              userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
+              divisiCounter++;
+              userCounter++;
+            }
+
           }
         }
       }
@@ -37,7 +40,7 @@ export async function usernameAbsensi(clientName, clientType) {
       if(userCounter != 0){
         userString = userString.concat('\n\n' + divisiList[i] + ' : ' + divisiCounter + ' User\n' + userByDivisi);
       }
-      
+
     }
 
     let userDone = userRows.length - userCounter;
