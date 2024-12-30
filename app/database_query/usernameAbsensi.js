@@ -23,7 +23,6 @@ export async function usernameAbsensi(clientName, clientType) {
     let divisiResponse = await listValueData(clientName, 'DIVISI');
     let divisiList = divisiResponse.data;
 
-
     let userString = '';
     let userCounter = 0;
 

@@ -111,7 +111,7 @@ client.on('ready', () => {
                                 sendResponse('6281235114745@c.us', reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                 break;                                           
                             case 303:
-                                console.log(loadInsta.data);
+                                console.log(loadTiktok.data);
                                 break;
                             default:
                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
@@ -198,7 +198,7 @@ client.on('ready', () => {
                                 sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
                                 break;     
                             case 303:
-                                console.log(loadTiktok.data);
+                                console.log(loadInsta.data);
                                 break;                      
                             default:
                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
