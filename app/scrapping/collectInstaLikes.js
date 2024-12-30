@@ -7,6 +7,7 @@ const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 import { instaPostAPI, instaLikesAPI } from '../socialMediaAPI/instaAPI.js';
 import { clientData } from '../database_query/clientData.js';
+import { client } from '../../app.js';
 
 
 const d = new Date();
@@ -22,18 +23,18 @@ const googleAuth = new JWT({
 
 export const collectInstaLikes = async function colectInstaLikes(clientName) {
   console.log(clientName + " Collecting Insta Likes Starting...");
-
+  await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Likes Starting...`);
   try {
 
     const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-
     let responseClient = await clientData(clientName);
 
     if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
-      
-      console.log(clientName+' Insta Post Loaded...');
-      
+
+      console.log(`${clientName} Collecting Insta Data...`);
+      await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Data...`);
+
       //Collect Content Shortcode from Official Account
       let hasContent = false;
       let itemByDay = [];
@@ -42,6 +43,9 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       
       let instaPostAPIResponse = await instaPostAPI(responseClient.data.instaAccount);
 
+      console.log(`${clientName} Collecting Insta Post Data...`);
+      await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Data...`);
+
       if (instaPostAPIResponse.state) {
 
         postItems = await instaPostAPIResponse.data.data.items;
@@ -49,7 +53,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         for (let i = 0; i < postItems.length; i++) {
 
           let itemDate = new Date(postItems[i].taken_at * 1000);
-
           if (itemDate.toLocaleDateString('id') === localDate) {
             hasContent = true;
             itemByDay.push(postItems[i]);
@@ -59,8 +62,9 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
 
         if (hasContent) {
 
-          console.log(clientName + " Insta Official Account Has Content");
-
+          console.log(`${clientName} Official Account Has Post Data...`);
+          await client.sendMessage('6281235114745@c.us', `${clientName} Official Acoount Has Post Data...`);
+    
           await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
           const officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
           const officialInstaData = await officialInstaSheet.getRows();
@@ -161,9 +165,11 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
 
                 await instaLikesUsernameData[ii].delete();
                 await instaLikesUsernameSheet.addRow(newDataUsers);
-                console.log(clientName + ' Update data ' + todayItems[i]);
-                updateData++;
 
+                console.log(`${clientName} Update Data ${todayItems[i]}`);
+                await client.sendMessage('6281235114745@c.us', `${clientName} Update Data ${todayItems[i]}`);
+                
+                updateData++;
               }
             }
             //Final Code
@@ -183,8 +189,9 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
               
               await instaLikesUsernameSheet.addRow(userNameList);
               newData++;
-              console.log(clientName + 'Insert new data ' + todayItems[i]);
 
+              console.log(`${clientName} Insert New Data ${todayItems[i]}`);
+              await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data ${todayItems[i]}`);
             }
           }
 
@@ -195,6 +202,8 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           };
 
           console.log(responseData.data);
+          await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
           return responseData;
@@ -207,7 +216,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             code: 201
           };
           console.log(responseData.data);
-
+          await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
           return responseData;
@@ -220,6 +229,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           code: 201
         };
         console.log(responseData.data);
+        await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
         instaOfficialDoc.delete;
         instaLikesUsernameDoc.delete;
         return responseData;
@@ -233,6 +243,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       };
 
       console.log(responseData.data);
+      await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
       instaOfficialDoc.delete;
       instaLikesUsernameDoc.delete;
       return responseData;
@@ -245,6 +256,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       code: 303
     };
     console.log(responseData.data);
+    await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
     return responseData;
   }
 };
