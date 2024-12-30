@@ -13,6 +13,12 @@ export async function usernameAbsensi(clientName, clientType) {
     const userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
     const userRows = userDoc.data;
 
+    for (let i = 0; i < userRows.length; i++) {            
+      if (userRows[i].get("STATUS") === 'TRUE'){
+        userActive++;
+      }
+    }
+    
     let divisiResponse = await listValueData(clientName, 'DIVISI');
     let divisiList = divisiResponse.data;
 
@@ -25,15 +31,12 @@ export async function usernameAbsensi(clientName, clientType) {
       let divisiCounter = 0;
       let userByDivisi = '';
       for (let ii = 0; ii < userRows.length; ii++) {            
-        if (userRows[ii].get("STATUS") === 'TRUE'){
-          userActive++;
           if (divisiList[i] === userRows[ii].get('DIVISI')) {
             if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined) {
               userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
               divisiCounter++;
               userCounter++;
             }
-          }
         }
       }
 
