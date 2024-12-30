@@ -191,7 +191,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
               newData++;
 
               console.log(`${clientName} Insert New Data ${todayItems[i]}`);
-              await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data ${todayItems[i]}`);
+              await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
             }
           }
 
