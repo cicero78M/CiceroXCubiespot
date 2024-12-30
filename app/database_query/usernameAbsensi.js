@@ -7,19 +7,15 @@ let date = new Date();
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function usernameAbsensi(clientName, clientType) {
-
   try {
-
     const userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
     const userRows = userDoc.data;
     let userActive = 0;
-
     for (let i = 0; i < userRows.length; i++) {            
       if (userRows[i].get("STATUS") === 'TRUE'){
         userActive++;
       }
     }
-
     let divisiResponse = await listValueData(clientName, 'DIVISI');
     let divisiList = divisiResponse.data;
 
