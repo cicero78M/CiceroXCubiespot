@@ -12,20 +12,20 @@ export async function usernameAbsensi(clientName, clientType) {
 
     const userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
     const userRows = userDoc.data;
+    let userActive = 0;
 
     for (let i = 0; i < userRows.length; i++) {            
       if (userRows[i].get("STATUS") === 'TRUE'){
         userActive++;
       }
     }
-    
+
     let divisiResponse = await listValueData(clientName, 'DIVISI');
     let divisiList = divisiResponse.data;
 
 
     let userString = '';
     let userCounter = 0;
-    let userActive = 0;
 
     for (let i = 0; i < divisiList.length; i++) {
       let divisiCounter = 0;
