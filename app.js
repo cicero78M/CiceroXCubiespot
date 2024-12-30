@@ -360,15 +360,13 @@ client.on('message', async (msg) => {
                                                 reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
                                                 sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                                 break;                                           
-                                            case 201:
+                                            case 303:
+                                                console.log(loadTiktok.data);
+                                                break;
+                                            default:
                                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
                                                 reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
                                                 sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                                break;
-                                            case 303:
-                                                console.log(loadInsta.data);
-                                                break;
-                                            default:
                                                 break;
                                         }
                                     }           
@@ -384,16 +382,14 @@ client.on('message', async (msg) => {
                                                 reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                                                 sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                                 break;                                           
-                                            case 201:
-                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                                                await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                                reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                                sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                                break;
                                             case 303:
                                                 console.log(loadInsta.data);
                                                 break;
                                             default:
+                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
+                                                await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
+                                                reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                                sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                                 break;
                                         }
                                     } 
