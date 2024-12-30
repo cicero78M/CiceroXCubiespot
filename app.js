@@ -232,7 +232,7 @@ client.on('message', async (msg) => {
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'exception', 'savecontact'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
-    const info = ['menu','info', 'divisilist', 'titlelist'];
+    const info = ['info', 'divisilist', 'titlelist'];
     try {
         const contact = await msg.getContact();
         if (msg.isStatus){
@@ -244,7 +244,6 @@ client.on('message', async (msg) => {
 
                 console.log(contact.pushname+" ===>>>> "+msg.body);
                 
-
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
 
@@ -527,7 +526,7 @@ client.on('message', async (msg) => {
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
                     let responseData;
                     switch (splittedMsg[1].toLowerCase()) {
-                        case 'menu' || 'info':                        
+                        case 'info':                        
                             responseData = await infoView(splittedMsg[0].toUpperCase());
                             client.sendMessage(msg.from, responseData.data);
                             break;
