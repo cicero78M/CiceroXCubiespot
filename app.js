@@ -87,7 +87,7 @@ client.on('ready', () => {
     //Server Check Jobs
     schedule('*/10 * * * *', async () =>  {     
         console.log(time+' '+ciceroKey.waSession+' <<<System Alive>>>');
-        await client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
+        client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
     });
 
  // Reload Tiktok every hours until 22
@@ -139,8 +139,9 @@ client.on('ready', () => {
     // Reload Tiktok every hours until 15/18/21
     schedule('00 15,18,21 * * *', async () => {
         try {
-            await client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');            
+            client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');            
             console.log(time+' Cron Job Starting');
+            
             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
             let clientRows = clientResponse.data;
             if (clientRows.length >= 1){
@@ -163,12 +164,12 @@ client.on('ready', () => {
                     
                     if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                         console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                        await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                        client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                         let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
                         if(loadInsta.code === 200){
                             
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                            await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
+                            client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
                         } else {

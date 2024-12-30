@@ -5,6 +5,7 @@ const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function clientData(clientName) {
 
+  try {
     let isClientID = false;
     let isStatus;
     let tiktokAccount;
@@ -43,17 +44,27 @@ export async function clientData(clientName) {
 
     if (!isClientID){
 
-        let responseData = {
-            data : null,
-            state : false,
-            code : 303
-          }
-          console.log(responseData.data);
+      let responseData = {
+          data : 'No Data',
+          state : true,
+          code : 201
+      }
+      console.log(responseData.data);
 
-          return responseData;
-
+      return responseData;
     }
-    
+  } catch (error) {
+
+    let responseData = {
+      data : error,
+      state : true,
+      code : 303
+    }
+    console.log(responseData.data);
+
+    return responseData;
+
+  }
 }
 
 
