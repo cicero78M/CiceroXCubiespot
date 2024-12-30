@@ -24,10 +24,10 @@ export async function usernameAbsensi(clientName, clientType) {
       let divisiCounter = 0;
       let userByDivisi = '';
 
-      for (let ii = 0; ii < userRows.length; ii++) {
-        if (divisiList[i] === userRows[ii].get('DIVISI')) {
-          if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined) {
-            if (userRows[ii].get("STATUS") === 'TRUE'){
+      for (let ii = 0; ii < userRows.length; ii++) {            
+        if (userRows[ii].get("STATUS") === 'TRUE'){
+          if (divisiList[i] === userRows[ii].get('DIVISI')) {
+            if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined) {
               userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
               divisiCounter++;
               userCounter++;
