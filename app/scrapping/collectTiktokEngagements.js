@@ -21,6 +21,7 @@ const googleAuth = new JWT({
 export async function collectTiktokComments(clientName) {
 
   console.log(`${clientName} Collect Tiktok Data`);
+  await client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Data`);
 
   const d = new Date();
   const localDate = d.toLocaleDateString('id');
@@ -36,6 +37,7 @@ export async function collectTiktokComments(clientName) {
     // If Client_ID exist. then get official content
     setTimeout(() => {
       console.log("Loading Client Data");
+      client.sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
     }, 1000);
 
     if (responseClient.code === 200) {
@@ -51,6 +53,7 @@ export async function collectTiktokComments(clientName) {
 
           setTimeout(() => {
             console.log("Loading Account Data");
+            client.sendMessage('6281235114745@c.us', `${clientName} Loading Account Data`);
           }, 1100);
           
           const secUid = responseInfo.data.userInfo.user.secUid;
@@ -59,6 +62,7 @@ export async function collectTiktokComments(clientName) {
 
           setTimeout(() => {
             console.log("Loading Post Data");
+            client.sendMessage('6281235114745@c.us', `${clientName} Loading Post Data Data`);
           }, 1100);
           
           let items = [];
@@ -185,9 +189,7 @@ export async function collectTiktokComments(clientName) {
                   do {
     
                     let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-        
                     let commentItems = responseComments.data.comments;
-    
                     for (let iii = 0; iii < commentItems.length; iii++) {
                       if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
@@ -198,6 +200,7 @@ export async function collectTiktokComments(clientName) {
     
                     setTimeout(() => {
                       console.log("Update Data " + cursorNumber + " < " + total);
+                      client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
                     }, 1100);
     
                     cursorNumber;
@@ -219,6 +222,7 @@ export async function collectTiktokComments(clientName) {
                   }
     
                   console.log(clientName + ' Update Data');
+                  
     
                   await tiktokCommentsUsernameData[ii].delete();
                   await tiktokCommentsUsernameSheet.addRow(dataCleaning);
@@ -237,8 +241,6 @@ export async function collectTiktokComments(clientName) {
                 do {
     
                   let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-    
-    
                   let commentItems = responseComments.data.comments;
     
                   for (let iii = 0; iii < commentItems.length; iii++) {
@@ -247,17 +249,15 @@ export async function collectTiktokComments(clientName) {
     
                   setTimeout(() => {
                     console.log(cursorNumber + " < " + total);
+                    client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
                   }, 1100);
     
                   cursorNumber;
                   total;
-    
                   total = responseComments.data.total + 50;
-    
                   cursorNumber = responseComments.data.cursor;
-    
                 } while (cursorNumber < total);
-    
+
                 let dataCleaning = [];
     
                 for (let iv = 0; iv < newDataUsers.length; iv++) {
@@ -268,7 +268,9 @@ export async function collectTiktokComments(clientName) {
                   }
                 }
     
-                console.log(clientName + ' Insert new data');
+                console.log(clientName + ' Insert New Content Data');
+                await client.sendMessage('6281235114745@c.us', `${clientName} Inserting New Content Data`);
+
                 await tiktokCommentsUsernameSheet.addRow(dataCleaning);
     
                 newData++;
@@ -281,6 +283,8 @@ export async function collectTiktokComments(clientName) {
               code: 200
             };
             console.log(responseData.data);
+            await client.sendMessage('6281235114745@c.us', responseData.data);
+
             tiktokOfficialDoc.delete;
             tiktokCommentsUsernameDoc.delete;
             return responseData;
@@ -291,6 +295,7 @@ export async function collectTiktokComments(clientName) {
               code: 201
             };
             console.log(responseData.data);
+            await client.sendMessage('6281235114745@c.us', responseData.data);
             tiktokOfficialDoc.delete;
             tiktokCommentsUsernameDoc.delete;
             return responseData;
@@ -303,6 +308,7 @@ export async function collectTiktokComments(clientName) {
             code: 201
           };
           console.log(responseData.data);
+          await client.sendMessage('6281235114745@c.us', responseData.data);
           tiktokOfficialDoc.delete;
           tiktokCommentsUsernameDoc.delete;
           return responseData;
@@ -316,6 +322,7 @@ export async function collectTiktokComments(clientName) {
       };
     
       console.log(responseData.data);
+      await client.sendMessage('6281235114745@c.us', responseData.data);
       tiktokOfficialDoc.delete;
       tiktokCommentsUsernameDoc.delete;
       return responseData;
@@ -329,6 +336,7 @@ export async function collectTiktokComments(clientName) {
     };
     
     console.log(responseData.data);
+    await client.sendMessage('6281235114745@c.us', responseData.data);
     tiktokOfficialDoc.delete;
     tiktokCommentsUsernameDoc.delete;
     return responseData;
