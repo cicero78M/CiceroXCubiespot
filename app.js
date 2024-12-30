@@ -161,7 +161,6 @@ client.on('ready', () => {
         try {
             client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');            
             console.log(time+' Cron Job Starting');
-            
             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
             let clientRows = clientResponse.data;
             if (clientRows.length >= 1){
@@ -171,30 +170,45 @@ client.on('ready', () => {
                         console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                         await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                         let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-                        if(loadTiktok.code === 200){
-                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
-                            let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');
-                        } else {
-                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
-                            let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');
+                        let reportTiktok;
+                        switch (loadTiktok.code) {
+                            case 200:                       
+                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
+                                reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');    
+                                break;
+                        
+                            default:
+
+                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
+                                reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');
+                           
+                                break;
                         }
+
                     }
                     
                     if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                         console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                         client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                         let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-                        if(loadInsta.code === 200){
-                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                            client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                            let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
-                        } else {
-                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
-                            let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
+                        let reportInsta;
+                        switch (loadInsta.code) {
+                            case 200:
+
+                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
+                                client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
+                                reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
+                                break;
+                        
+                            default:
+
+                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
+                                reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
+                                break;
                         }
                     } 
                 }
