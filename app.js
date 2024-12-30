@@ -203,7 +203,7 @@ client.on('message', async (msg) => {
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'exception', 'savecontact'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
-    const info = ['menu', 'divisilist', 'titlelist'];
+    const info = ['menu','info', 'divisilist', 'titlelist'];
     try {
 
         const contact = await msg.getContact();
@@ -326,19 +326,27 @@ client.on('message', async (msg) => {
                             let clientRows = clientResponse.data;
                             if (clientRows.length >= 1){
                                 for (let i = 0; i < clientRows.length; i++){
-                             
                                     if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                         console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                         await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                         let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                        if(loadTiktok.code === 200){
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
-                                            let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                        } else {
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
-                                            let reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                        let reportTiktok;
+                                        switch (loadTiktok.code) {
+                                            case 200:
+                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
+                                                reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                                sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                                break;                                           
+                                            case 201:
+                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
+                                                reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                                sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                                break;
+                                            case 303:
+                                                console.log(loadInsta.data);
+                                                break;
+                                            default:
+                                                break;
                                         }
                                     }
                                     
@@ -498,7 +506,7 @@ client.on('message', async (msg) => {
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
                     let responseData;
                     switch (splittedMsg[1].toLowerCase()) {
-                        case 'menu':                        
+                        case 'menu' || 'info':                        
                             responseData = await infoView(splittedMsg[0].toUpperCase());
                             client.sendMessage(msg.from, responseData.data);
                             break;
