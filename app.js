@@ -354,14 +354,23 @@ client.on('message', async (msg) => {
                                         } else {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
                                             let reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                            sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                                            switch (reportInsta.code){
+                                                case 200 || 201:
+                                                    sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                                                    break;
+                                                case 303:
+                                                    console.log(reportInsta.data);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                         }
                                     } 
                                 }
                             }
                         } catch (errorcronjob) {
                             console.log(time+" "+errorcronjob)
-                            await client.sendMessage('6281235114745@c.us', 'Cron Job Error');
+                            await client.sendMessage('6281235114745@c.us', 'Error ');
                         }
 
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
