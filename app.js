@@ -698,7 +698,7 @@ client.on('message', async (msg) => {
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
                                     collectFollowing(instaUsername).then(async (responseData) => {
-                                        sendResponse(msg.from, responseData, "Error Checking Following");
+                                        client.sendMessage(msg.from, responseData);
                                     });
                                 } else {
                                     client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
