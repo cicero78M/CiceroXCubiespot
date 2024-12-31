@@ -689,13 +689,25 @@ client.on('message', async (msg) => {
                 } else if (cubies.includes(splittedMsg[0].toLowerCase())){//    const cubies = ['follow', 'like', 'comment'];
                     switch (splittedMsg[0].toLowerCase()) {
                         case 'follow':
-                            if(splittedMsg[0].toLowerCase().includes('https://www.instagram.com/')){
-                                collectFollowing(msg.from, splittedMsg[0].toLowerCase()).then(async (responseData) => {
-                                    sendResponse(msg.from, responseData, "Error Checking Following");
-                                });
+
+                            if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
+
+                                if (!splittedMsg[1].includes('/p/') || !splittedMsg[1].includes('/reels/') || !splittedMsg[1].includes('/video/') ){
+
+                                    const instaLink = splittedMsg[1].split('?')[0];
+                                    const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
+
+                                    collectFollowing(msg.from, instaUsername).then(async (responseData) => {
+                                        sendResponse(msg.from, responseData, "Error Checking Following");
+                                    });
+                                } else {
+                                    client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
+                                        +"Instagram anda dan bukan Akun Private.\n\nTerimakasih.");
+                                }
+
                             } else{
-                                client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikakn link tersebut adalah link Akun Profile " 
-                                    +"Instagram anda dan tidak di Private.\n\nTerimakasih.");
+                                client.sendMessage(msg.from, "Silahkan Cek Kembali link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
+                                    +"Instagram anda dan bukan Akun Private.\n\nTerimakasih.");
                             }
                             break;
                         case 'like':
@@ -725,7 +737,6 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, responseData.data);
                         }
                     }
-
                 }
                 //if(splittedMsg[1].toLowerCase()......
             } else {
