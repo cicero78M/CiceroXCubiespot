@@ -729,7 +729,7 @@ function sendResponse(from, responseData, errormessage) {
             client.sendMessage(from, errormessage);
             break;
         default:
-            console.log(time+" "+response.data);
+            console.log(time+" "+responseData.data);
             client.sendMessage(from, responseData.data);
             break;
     }   
