@@ -18,7 +18,11 @@ export async function reportInstaLikes(clientName) {
 
     //Check Client_ID. then get async data
     const clientResponse = await clientData(clientName);
-
+    // If Client_ID exist. then get official content
+    setTimeout(() => {
+      console.log("Loading Client Data");
+      client.sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
+    }, 1000);
     // If Client_ID exist. then get official content
     if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
       let divisiResponse = await listValueData(clientName, 'DIVISI');

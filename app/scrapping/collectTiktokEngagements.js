@@ -34,6 +34,7 @@ export async function collectTiktokComments(clientName) {
   try {
 
     let responseClient = await clientData(clientName);
+    
       // If Client_ID exist. then get official content
     setTimeout(() => {
       console.log("Loading Client Data");
@@ -54,7 +55,7 @@ export async function collectTiktokComments(clientName) {
           setTimeout(() => {
             console.log("Loading Account Data");
             client.sendMessage('6281235114745@c.us', `${clientName} Loading Account Data`);
-          }, 1100);
+          }, 2000);
           
           const secUid = responseInfo.data.userInfo.user.secUid;
           let cursor = 0;
@@ -201,7 +202,7 @@ export async function collectTiktokComments(clientName) {
                     setTimeout(() => {
                       console.log("Update Data " + cursorNumber + " < " + total);
                       client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
-                    }, 1100);
+                    }, 2000);
     
                     cursorNumber;
                     total;
@@ -250,7 +251,7 @@ export async function collectTiktokComments(clientName) {
                   setTimeout(() => {
                     console.log(cursorNumber + " < " + total);
                     client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
-                  }, 1100);
+                  }, 2000);
     
                   cursorNumber;
                   total;

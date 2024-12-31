@@ -10,6 +10,11 @@ export async function reportTiktokComments(clientName) {
     const localDate = d.toLocaleDateString('id');
     const localHours = d.toLocaleTimeString('id');
     const clientResponse = await clientData(clientName);
+    // If Client_ID exist. then get official content
+    setTimeout(() => {
+      console.log("Loading Client Data");
+      client.sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
+    }, 1000);
     if (clientResponse.state) {
       // If Client_ID exist. then get official content
       if (clientResponse.data.isClientID && clientResponse.data.isStatus) {

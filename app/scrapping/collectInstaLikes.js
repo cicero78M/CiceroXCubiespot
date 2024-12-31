@@ -29,7 +29,13 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
     const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
     let responseClient = await clientData(clientName);
-
+    
+    // If Client_ID exist. then get official content
+    setTimeout(() => {
+      console.log("Loading Client Data");
+      client.sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
+    }, 1000);
+    
     if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
 
       console.log(`${clientName} Collecting Insta Data...`);
