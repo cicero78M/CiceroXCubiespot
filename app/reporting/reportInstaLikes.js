@@ -45,7 +45,7 @@ export async function reportInstaLikes(clientName) {
 
         let itemDate = new Date(instaOfficialRows[i].get('TIMESTAMP') * 1000);
 
-        if (itemDate.toLocaleDateString('id') === localDate()) {
+        if (itemDate.toLocaleDateString('id') === localDate) {
           if (!shortcodeList.includes(instaOfficialRows[i].get('SHORTCODE'))) {
 
             shortcodeList.push(instaOfficialRows[i].get('SHORTCODE'));
@@ -138,7 +138,7 @@ export async function reportInstaLikes(clientName) {
 
           responseData = {
             data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" + shortcodeListString +
-              "\n\nWaktu Rekap : " + localDate() + "\nJam : " + hours() + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               + userAll+ "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
@@ -149,7 +149,7 @@ export async function reportInstaLikes(clientName) {
 
           responseData = {
             data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " + clientName +
-              "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate() + "\nJam : " + hours() + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               + userAll + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,

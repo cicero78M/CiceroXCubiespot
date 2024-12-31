@@ -49,7 +49,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         for (let i = 0; i < postItems.length; i++) {
 
           let itemDate = new Date(postItems[i].taken_at * 1000);
-          if (itemDate.toLocaleDateString('id') === localDate()) {
+          if (itemDate.toLocaleDateString('id') === localDate) {
             hasContent = true;
             itemByDay.push(postItems[i]);
             todayItems.push(postItems[i].code);
