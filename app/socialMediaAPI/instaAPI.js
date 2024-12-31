@@ -17,7 +17,8 @@ export async function instaFollowingAPI(key, url) {
         method: 'GET',
         url: ciceroKey.instaKey.instaFollowing,
         params: {
-            username_or_id_or_url: key
+            username_or_id_or_url: key,
+            amount: '1000'
           },
         headers: headers
     };
