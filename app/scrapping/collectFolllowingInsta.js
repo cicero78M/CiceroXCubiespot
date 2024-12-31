@@ -18,16 +18,12 @@ export async function collectFollowing(from, username) {
             BIOGRAPHY:responseInfo.data.biography
         });
         console.log(responseInfo);
-
+        let data = {
+            data: responseInfo.data,
+            code: 200,
+            state: false
+        };
         
+        return data;
     });
-
-
-    let data = {
-        data: responseInfo.data,
-        code: 200,
-        state: false
-    };
-
-    return data;
 }
