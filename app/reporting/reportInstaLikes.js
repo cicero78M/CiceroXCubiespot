@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { clientData } from '../database_query/clientData.js';
-import { client } from '../../app.js';
+import { client, hours, localDate } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -12,10 +12,6 @@ export async function reportInstaLikes(clientName) {
 
     console.log("Reporting Insta..");
     await client.sendMessage('6281235114745@c.us', `${clientName} Reporting Insta..`);
-
-    const d = new Date();
-    const localDate = d.toLocaleDateString('id');
-    const hours = d.toLocaleTimeString('id');
 
     //Check Client_ID. then get async data
 
@@ -49,7 +45,7 @@ export async function reportInstaLikes(clientName) {
 
         let itemDate = new Date(instaOfficialRows[i].get('TIMESTAMP') * 1000);
 
-        if (itemDate.toLocaleDateString('id') === localDate) {
+        if (itemDate.toLocaleDateString('id') === localDate()) {
           if (!shortcodeList.includes(instaOfficialRows[i].get('SHORTCODE'))) {
 
             shortcodeList.push(instaOfficialRows[i].get('SHORTCODE'));
@@ -142,7 +138,7 @@ export async function reportInstaLikes(clientName) {
 
           responseData = {
             data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" + shortcodeListString +
-              "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              "\n\nWaktu Rekap : " + localDate() + "\nJam : " + hours() + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               + userAll+ "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
@@ -153,7 +149,7 @@ export async function reportInstaLikes(clientName) {
 
           responseData = {
             data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " + clientName +
-              "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+              "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate() + "\nJam : " + hours() + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               + userAll + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,

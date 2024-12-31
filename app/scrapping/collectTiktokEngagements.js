@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 
 import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { clientData } from '../database_query/clientData.js';
-import { client } from '../../app.js';
+import { client, localDate } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -23,8 +23,6 @@ export async function collectTiktokComments(clientName) {
   console.log(`${clientName} Collect Tiktok Data`);
   await client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Data`);
 
-  const d = new Date();
-  const localDate = d.toLocaleDateString('id');
   const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
   await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
   const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
@@ -80,7 +78,7 @@ export async function collectTiktokComments(clientName) {
           if (Array.isArray(items)) {
             for (let i = 0; i < items.length; i++) {
               let itemDate = new Date(items[i].createTime * 1000);
-              if (itemDate.toLocaleDateString('id') === localDate) {
+              if (itemDate.toLocaleDateString('id') === localDate()) {
                 hasContent = true;
                 itemByDay.push(items[i]);
                 todayItems.push(items[i].video.id);

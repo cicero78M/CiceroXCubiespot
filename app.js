@@ -32,11 +32,11 @@ import { collectFollowing } from './app/scrapping/collectFolllowingInsta.js';
  
 const port = ciceroKey.port;
 
-const d = new Date();
-const localDate = d.toLocaleDateString("en-US", {
+export const d = new Date();
+export const localDate = d.toLocaleDateString("en-US", {
     timeZone: "Asia/Jakarta"
 });
-const hours = d.toLocaleTimeString("en-US", {
+export const hours = d.toLocaleTimeString("en-US", {
     timeZone: "Asia/Jakarta"
 });
 

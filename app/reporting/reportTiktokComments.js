@@ -2,13 +2,11 @@ import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
 import { clientData } from '../database_query/clientData.js';
 import { listValueData } from '../database_query/listValueData.js';
+import { hours, localDate } from '../../app.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 export async function reportTiktokComments(clientName) {
   try {
     console.log("Report Tiktok Function Executed");
-    const d = new Date();
-    const localDate = d.toLocaleDateString('id');
-    const localHours = d.toLocaleTimeString('id');
     const clientResponse = await clientData(clientName);
     if (clientResponse.state) {
       // If Client_ID exist. then get official content
@@ -30,7 +28,7 @@ export async function reportTiktokComments(clientName) {
           let shortcodeListString = '';
           for (let i = 0; i < tiktokOfficialRows.length; i++) {
             let itemDate = new Date(tiktokOfficialRows[i].get('TIMESTAMP') * 1000);
-            if (itemDate.toLocaleDateString('id') === localDate) {
+            if (itemDate.toLocaleDateString('id') === localDate()) {
               if (!shortcodeList.includes(tiktokOfficialRows[i].get('SHORTCODE'))) {
                 shortcodeList.push(tiktokOfficialRows[i].get('SHORTCODE'));
                 shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + clientResponse.data.tiktokAccount + '/video/' + tiktokOfficialRows[i].get('SHORTCODE'));
@@ -91,7 +89,7 @@ export async function reportTiktokComments(clientName) {
             if (clientResponse.data.isClientType === "RES") {
               responseData = {
                 data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " + clientName
-                  + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+                  + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate() + "\nJam : " + hours() + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
                   + userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
                   + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
@@ -100,7 +98,7 @@ export async function reportTiktokComments(clientName) {
             } else if (clientResponse.data.isClientType === "COM") {
               responseData = {
                 data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " + tiktokAccount
-                  + " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+                  + " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate() + "\nJam : " + hours() + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
                   + userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
                   + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
