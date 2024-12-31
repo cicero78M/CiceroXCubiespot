@@ -1,11 +1,8 @@
-import { readFileSync } from "fs";
-import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
-
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+import { instaPostAPI } from "../socialMediaAPI/instaAPI.js";
 
 export async function collectFollowing(username) {
 
-    let responseData = await instaFollowingAPI(username, ciceroKey.instaKey.instaFollowing);
+    let responseData = await instaPostAPI(username);
 
     console.log(responseData);
 
