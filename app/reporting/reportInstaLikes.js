@@ -167,20 +167,15 @@ export async function reportInstaLikes(clientName) {
         return responseData;
 
       } else {
-
         let responseData = {
           data: "Tidak ada konten data untuk di olah",
           state: true,
           code: 201
         };
-
         console.log(responseData.data);
         await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
         return responseData;
-
       }
-  
-
     } else {
 
       let responseData = {

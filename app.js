@@ -156,6 +156,9 @@ client.on('ready', () => {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            setTimeout(() => {
+                                console.log("Collecting Report Data");
+                            }, 1000);
                             sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                             break;                                           
                         case 303:
@@ -165,6 +168,9 @@ client.on('ready', () => {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            setTimeout(() => {
+                                console.log("Collecting Report Data");
+                            }, 1000);
                             sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                             break;
                     }
@@ -205,6 +211,9 @@ client.on('ready', () => {
                         case 200:                       
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                            setTimeout(() => {
+                                console.log("Collecting Report Data");
+                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');    
                             break;   
                         case 303:
@@ -213,6 +222,9 @@ client.on('ready', () => {
                         default:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                            setTimeout(() => {
+                                console.log("Collecting Report Data");
+                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');
                             break;
                     }
@@ -235,6 +247,9 @@ client.on('ready', () => {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            setTimeout(() => {
+                                console.log("Collecting Report Data");
+                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
                             break;     
                         case 303:
@@ -243,6 +258,9 @@ client.on('ready', () => {
                         default:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            setTimeout(() => {
+                                console.log("Collecting Report Data");
+                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
                             break;
                     }
@@ -336,13 +354,13 @@ client.on('message', async (msg) => {
                         
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                            let response = await pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
+                            let responseData = await pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "RES");
                             
-                            if (response.code === 200){
-                                console.log(response.data);
-                                client.sendMessage(msg.from, response.data);
+                            if (responseData.code === 200){
+                                console.log(responseData.data);
+                                client.sendMessage(msg.from, responseData.data);
                             } else {
-                                console.log(response.data);
+                                console.log(responseData.data);
                             }                          
                         }  else {
                             console.log('Bukan Spreadsheet Links');
@@ -360,13 +378,13 @@ client.on('message', async (msg) => {
                             
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                            let response = await pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
+                            let responseData = await pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
                             
-                            if (response.code === 200){
-                                console.log(response.data);
-                                client.sendMessage(msg.from, response.data);
+                            if (responseData.code === 200){
+                                console.log(responseData.data);
+                                client.sendMessage(msg.from, responseData.data);
                             } else {
-                                console.log(response.data);
+                                console.log(responseData.data);
                             }                          
                         } else {
                     
@@ -403,6 +421,9 @@ client.on('message', async (msg) => {
                                         case 200:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                            setTimeout(() => {
+                                                console.log("Collecting Report Data");
+                                            }, 1000);
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;                                           
                                         case 303:
@@ -411,6 +432,9 @@ client.on('message', async (msg) => {
                                         default:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
                                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                            setTimeout(() => {
+                                                console.log("Collecting Report Data");
+                                            }, 1000);
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;
                                     }
@@ -432,6 +456,9 @@ client.on('message', async (msg) => {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                            setTimeout(() => {
+                                                console.log("Collecting Report Data");
+                                            }, 1000);
                                             sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                             break;                                           
                                         case 303:
@@ -441,6 +468,9 @@ client.on('message', async (msg) => {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                            setTimeout(() => {
+                                                console.log("Collecting Report Data");
+                                            }, 1000);
                                             sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                             break;
                                     }
@@ -493,21 +523,33 @@ client.on('message', async (msg) => {
                                     //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
                                     responseData = await addNewUser(splittedMsg[0].toUpperCase(), splittedMsg[2], splittedMsg[3].toUpperCase(), 
                                     splittedMsg[4].toUpperCase(), splittedMsg[5].toUpperCase(), splittedMsg[6].toUpperCase());
+                                    setTimeout(() => {
+                                        console.log("Collecting User Data");
+                                    }, 1000);
                                     sendResponse(msg.from, responseData, "Error Adding New User");
                                     break;
                                 case "deleteuser":
                                     //clientName#deleteuser#id_key/NRP#newdata
                                     responseData = await editProfile(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), false, msg.from.replace('@c.us', ''), "STATUS");
+                                    setTimeout(() => {
+                                        console.log("Collecting User Data");
+                                    }, 1000);
                                     sendResponse(msg.from, responseData, "Error Delete User Data");
                                     break;
                                 case "instacheck":
                                     //ClientName#instacheck
-                                    responseData = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');                                       
+                                    responseData = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'INSTA');
+                                    setTimeout(() => {
+                                        console.log("Collecting User Data");
+                                    }, 1000);                                       
                                     sendResponse(msg.from, responseData, "Error on Insta Check Data");
                                     break;
                                 case "tiktokcheck":
                                     //ClientName#tiktokcheck
-                                    responseData = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');    
+                                    responseData = await usernameAbsensi(splittedMsg[0].toUpperCase(), 'TIKTOK');  
+                                    setTimeout(() => {
+                                        console.log("Collecting User Data");
+                                    }, 1000);  
                                     sendResponse(msg.from, responseData, "Error on Tiktok Check Data");
                                     break;
                                 default:
@@ -533,6 +575,9 @@ client.on('message', async (msg) => {
                                         const instaLink = splittedMsg[3].split('?')[0];
                                         const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
                                         let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
+                                        setTimeout(() => {
+                                            console.log("Collecting User Data");
+                                        }, 1000);
                                         sendResponse(msg.from, responseData, "Error Update Insta");
                                     } else {
                                         console.log('Bukan Link Profile Instagram');
@@ -549,6 +594,9 @@ client.on('message', async (msg) => {
                                     const tiktokLink = splittedMsg[3].split('?')[0];
                                     const tiktokUsername = tiktokLink.split('/').pop();  
                                     let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], tiktokUsername, contact.number, "updatetiktokusername");
+                                    setTimeout(() => {
+                                        console.log("Collecting User Data");
+                                    }, 1000);
                                     sendResponse(msg.from, responseData, "Error Update Tiktok");
                                 } else {
                                     console.log('Bukan Link Profile Tiktok');
@@ -558,19 +606,31 @@ client.on('message', async (msg) => {
                                 //update Divisi Name
                                 //clientName#editdivisi/satfung#id_key/NRP#newdata
                                 let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
+                                setTimeout(() => {
+                                    console.log("Collecting User Data");
+                                }, 1000);
                                 sendResponse(msg.from, responseData, "Error Edit Satfung");
                             } else if (['editjabatan', 'jabatan'].includes(splittedMsg[1].toLowerCase())) {
                                 //Update Jabatan
                                 //clientName#editjabatan/jabatan#id_key/NRP#newdata
                                 let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
+                                setTimeout(() => {
+                                    console.log("Collecting User Data");
+                                }, 1000);
                                 sendResponse(msg.from, responseData, "Error Edit Jabatan");
                             } else if (['editnama', 'nama'].includes(splittedMsg[1].toLowerCase())) {
                                 //clientName#editnama/nama#id_key/NRP#newdata
                                 let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
+                                setTimeout(() => {
+                                    console.log("Collecting User Data");
+                                }, 1000);
                                 sendResponse(msg.from, responseData, "Error Edit Nama");
                             } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
                                 //clientName#editnama/nama#id_key/NRP#newdata
                                 let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
+                                setTimeout(() => {
+                                    console.log("Collecting User Data");
+                                }, 1000);
                                 sendResponse(msg.from, responseData, "Error Edit Pangkat");
                             } else if (splittedMsg[1].toLowerCase() === 'mydata') {
                                 let responseData = await myData(splittedMsg[0].toUpperCase(), splittedMsg[2]);
@@ -591,14 +651,23 @@ client.on('message', async (msg) => {
                             switch (splittedMsg[1].toLowerCase()) {
                                 case 'info':
                                     responseData = await infoView(splittedMsg[0].toUpperCase());
+                                    setTimeout(() => {
+                                        console.log("Collecting Client Data");
+                                    }, 1000);
                                     client.sendMessage(msg.from, responseData.data);
                                     break;
                                 case 'divisilist':                        
                                     responseData = await propertiesView(splittedMsg[0].toUpperCase(), "DIVISI");
+                                    setTimeout(() => {
+                                        console.log("Collecting User Data");
+                                    }, 1000);
                                     client.sendMessage(msg.from, responseData.data);  
                                     break;
                                 case 'titlelist':    
                                     responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
+                                    setTimeout(() => {
+                                        console.log("Collecting User Data");
+                                    }, 1000);
                                     client.sendMessage(msg.from, responseData.data); 
                                     break;                   
                                 default:
@@ -630,6 +699,9 @@ client.on('message', async (msg) => {
                 } else {
                     console.log("Request Code Doesn't Exist");
                     let responseData = await infoView(splittedMsg[0].toUpperCase());
+                    setTimeout(() => {
+                        console.log("Collecting User Data");
+                    }, 1000);
                     client.sendMessage(msg.from, responseData.data);
                 }
                 //if(splittedMsg[1].toLowerCase()......
