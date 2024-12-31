@@ -1,8 +1,8 @@
-import { instaPostAPI } from "../socialMediaAPI/instaAPI.js";
+import { instainfoAPI } from "../socialMediaAPI/instaAPI.js";
 
 export async function collectFollowing(username) {
 
-    let responseData = await instaPostAPI(username);
+    let responseData = await instainfoAPI(username);
 
     console.log(responseData);
 
