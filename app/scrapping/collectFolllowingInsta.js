@@ -19,11 +19,11 @@ export async function collectFollowing(from, username) {
         });
         console.log(responseInfo);
         let data = {
-            data: responseInfo.data,
+            data: "Success Load Data",
             code: 200,
             state: false
         };
-        
+
         return data;
     });
 }
