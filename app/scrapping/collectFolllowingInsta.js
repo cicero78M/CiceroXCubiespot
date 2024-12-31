@@ -11,7 +11,7 @@ export async function collectFollowing(from, username) {
     const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
 
     instaInfoAPI(username).then(async (responseInfo) => {
-        console.log(responseInfo.data);
+        console.log(responseInfo.data.data);
         instaProfileSheet.addRow({
             WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.is_private, isBUSSINESS:responseInfo.data.is_business, isVERIFIED:responseInfo.data.is_verified,
             CATEGORY:responseInfo.data.category, CONTACT:responseInfo.data.contact_phone_number, EMAIL:responseInfo.data.public_email, FULL_NAME:responseInfo.data.full_name,	
