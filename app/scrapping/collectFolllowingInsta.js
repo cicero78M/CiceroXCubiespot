@@ -1,4 +1,4 @@
-import { googleAuth } from "../database_query/sheetDoc.js";
+import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 import { instaInfoAPI } from "../socialMediaAPI/instaAPI.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
