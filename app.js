@@ -697,7 +697,7 @@ client.on('message', async (msg) => {
                                     const instaLink = splittedMsg[1].split('?')[0];
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
-                                    collectFollowing(msg.from, instaUsername).then(async (responseData) => {
+                                    collectFollowing(instaUsername).then(async (responseData) => {
                                         sendResponse(msg.from, responseData, "Error Checking Following");
                                     });
                                 } else {
