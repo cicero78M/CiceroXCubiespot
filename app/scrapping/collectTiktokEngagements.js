@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 
 import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { clientData } from '../database_query/clientData.js';
-import { client, localDate } from '../../app.js';
+import { client } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -23,6 +23,8 @@ export async function collectTiktokComments(clientName) {
   console.log(`${clientName} Collect Tiktok Data`);
   await client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Data`);
 
+  const d = new Date();
+  const localDate = d.toLocaleDateString('id');
   const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
   await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
   const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB

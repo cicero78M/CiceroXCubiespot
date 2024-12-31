@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { clientData } from '../database_query/clientData.js';
-import { client, hours, localDate } from '../../app.js';
+import { client } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
@@ -12,6 +12,10 @@ export async function reportInstaLikes(clientName) {
 
     console.log("Reporting Insta..");
     await client.sendMessage('6281235114745@c.us', `${clientName} Reporting Insta..`);
+
+    const d = new Date();
+    const localDate = d.toLocaleDateString('id');
+    const hours = d.toLocaleTimeString('id');
 
     //Check Client_ID. then get async data
 
