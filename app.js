@@ -478,7 +478,7 @@ client.on('message', async (msg) => {
                             }
                         //if Something error
                         } catch (error) {
-                            console.log(time+" "+error)
+                            console.log(error)
                             await client.sendMessage('6281235114745@c.us', 'Collect #ALLSOCMED Error');
                         }
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
