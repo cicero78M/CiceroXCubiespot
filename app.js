@@ -28,12 +28,17 @@ import { sheetDoc } from './app/database_query/sheetDoc.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
 import { addNewUser } from './app/database/addNewUser.js';
 import { updateUsername } from './app/database/updateUsername.js';
+import { collectFollowing } from './app/scrapping/collectFolllowingInsta.js';
  
 const port = ciceroKey.port;
 
 const d = new Date();
-const localDate = d.toLocaleDateString('id');
-const hours = d.toLocaleTimeString('id');
+const localDate = d.toLocaleDateString("en-US", {
+    timeZone: "Asia/Jakarta"
+});
+const hours = d.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Jakarta"
+});
 
 const time = localDate+" >> "+hours;
 
@@ -268,6 +273,7 @@ client.on('message', async (msg) => {
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
+    const cubies = ['follow', 'like', 'comment'];
     try {
         const contact = await msg.getContact();
         if (msg.isStatus){
@@ -285,7 +291,7 @@ client.on('message', async (msg) => {
                     let splittedUrl = url[0].split('/');
                     if (splittedUrl.includes("www.instagram.com")){
                     console.log('Response Sent');
-//                    client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
+                    //client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
                         
                     //   let rawLink;
                     /*  
@@ -600,6 +606,26 @@ client.on('message', async (msg) => {
                             }
                         }
                     }
+
+                } else if (cubies.includes(splittedMsg[0].toLowerCase())){//    const cubies = ['follow', 'like', 'comment'];
+                    switch (splittedMsg[0].toLowerCase()) {
+                        case 'follow':
+                            if(splittedMsg[0].toLowerCase().includes('https://www.instagram.com/')){
+                                collectFollowing(msg.from, splittedMsg[0].toLowerCase()).then(async (responseData) => {
+                                    sendResponse(msg.from, responseData, "Error Checking Following");
+                                });
+                            } else{
+                                client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikakn link tersebut adalah link Akun Profile Instagram anda dan tidak di Private.\n\nTerimakasih.");
+                            }
+                            break;
+                        case 'like':
+                            break;
+                        case 'comment':
+                            break;
+                        default:
+                            break;                    
+                    }
+
                 //Key Order Data Not Exist         
                 } else {
                     console.log("Request Code Doesn't Exist");
