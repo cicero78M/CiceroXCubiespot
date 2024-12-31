@@ -18,7 +18,6 @@ export async function collectFollowing(from, username) {
             FOLLOWER:responseInfo.data.follower_count, FOLLOWING:responseInfo.data.following_count, MEDIA_COUNT:responseInfo.data.media_count,
             BIOGRAPHY:responseInfo.data.biography
         });
-        console.log(responseInfo);
         let data = {
             data: "Success Load Data",
             code: 200,
