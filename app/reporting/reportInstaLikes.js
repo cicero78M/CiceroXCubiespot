@@ -1,4 +1,3 @@
-//Google Spreadsheet
 import { readFileSync } from 'fs';
 import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
@@ -18,12 +17,10 @@ export async function reportInstaLikes(clientName) {
     const hours = d.toLocaleTimeString('id');
 
     //Check Client_ID. then get async data
-
     const clientResponse = await clientData(clientName);
 
     // If Client_ID exist. then get official content
     if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
-
       let divisiResponse = await listValueData(clientName, 'DIVISI');
       let divisiList = divisiResponse.data;
 
@@ -139,33 +136,27 @@ export async function reportInstaLikes(clientName) {
         let responseData;
 
         if (clientResponse.data.isClientType === 'COM') {
-
           responseData = {
-            data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" + shortcodeListString +
-              "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+            data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" 
+              + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
               + userAll+ "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
               + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
             code: 200
           };
-
         } else if (clientResponse.data.isClientType === "RES") {
-
           responseData = {
-            data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " + clientName +
-              "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-              + userAll + "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
-              + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
+            data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " 
+              + clientName + "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours 
+              + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " 
+              + instaSudah + "_\n_Jumlah User Belum melaksanakan : "+ userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" 
+              + dataInsta + "\n\n_System Administrator Cicero_",
             state: true,
             code: 200
           };
-
         }
-
         console.log('Return Success');
-
         return responseData;
-
       } else {
         let responseData = {
           data: "Tidak ada konten data untuk di olah",
@@ -186,7 +177,7 @@ export async function reportInstaLikes(clientName) {
 
       console.log(responseData.data);
       await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
-            return responseData;
+      return responseData;
 
     }
   } catch (error) {

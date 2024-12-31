@@ -214,7 +214,8 @@ client.on('ready', () => {
                             setTimeout(() => {
                                 console.log("Collecting Report Data");
                             }, 1000);
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');    
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
+                                reportTiktok, ' REPORT TIKTOK');    
                             break;   
                         case 303:
                             console.log(loadTiktok.data);
@@ -225,10 +226,10 @@ client.on('ready', () => {
                             setTimeout(() => {
                                 console.log("Collecting Report Data");
                             }, 1000);
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportTiktok, ' REPORT TIKTOK');
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
+                                reportTiktok, ' REPORT TIKTOK');
                             break;
                     }
-
                 }
                 
                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
@@ -250,7 +251,8 @@ client.on('ready', () => {
                             setTimeout(() => {
                                 console.log("Collecting Report Data");
                             }, 1000);
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
+                                reportInsta, ' REPORT INSTA');
                             break;     
                         case 303:
                             console.log(loadInsta.data);
@@ -261,7 +263,8 @@ client.on('ready', () => {
                             setTimeout(() => {
                                 console.log("Collecting Report Data");
                             }, 1000);
-                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),reportInsta, ' REPORT INSTA');
+                            sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
+                                reportInsta, ' REPORT INSTA');
                             break;
                     }
                 } 
@@ -289,7 +292,8 @@ client.on('message', async (msg) => {
 
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'exception', 'savecontact'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 'insta'];
+    const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 
+        'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['follow', 'like', 'comment'];
     try {
@@ -342,7 +346,8 @@ client.on('message', async (msg) => {
                 chatMsg.sendStateTyping();
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
                 //Admin Order Data         
-                if (adminOrder.includes(splittedMsg[1].toLowerCase())){//adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
+                if (adminOrder.includes(splittedMsg[1].toLowerCase())){//adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 
+                    //'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
                     //ClientName#pushnewuserres#linkspreadsheet
                     if (splittedMsg[1].toLowerCase() === 'pushuserres'){
                         //Res Request
@@ -493,7 +498,8 @@ client.on('message', async (msg) => {
                         }                   
                     } else if (splittedMsg[1].toLowerCase() === 'exception') {
                         //clientName#editnama/nama#id_key/NRP#newdata
-                        let response = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "EXCEPTION");
+                        let response = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), 
+                            "EXCEPTION");
                         
                         if (response.code === 200){
                             console.log(response.data);
@@ -605,7 +611,8 @@ client.on('message', async (msg) => {
                             } else if (['editdivisi', 'satfung' ].includes(splittedMsg[1].toLowerCase())) {
                                 //update Divisi Name
                                 //clientName#editdivisi/satfung#id_key/NRP#newdata
-                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "DIVISI");
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), 
+                                    msg.from.replace('@c.us', ''), "DIVISI");
                                 setTimeout(() => {
                                     console.log("Collecting User Data");
                                 }, 1000);
@@ -613,21 +620,24 @@ client.on('message', async (msg) => {
                             } else if (['editjabatan', 'jabatan'].includes(splittedMsg[1].toLowerCase())) {
                                 //Update Jabatan
                                 //clientName#editjabatan/jabatan#id_key/NRP#newdata
-                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "JABATAN");
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), 
+                                    msg.from.replace('@c.us', ''), "JABATAN");
                                 setTimeout(() => {
                                     console.log("Collecting User Data");
                                 }, 1000);
                                 sendResponse(msg.from, responseData, "Error Edit Jabatan");
                             } else if (['editnama', 'nama'].includes(splittedMsg[1].toLowerCase())) {
                                 //clientName#editnama/nama#id_key/NRP#newdata
-                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "NAMA");
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), 
+                                    msg.from.replace('@c.us', ''), "NAMA");
                                 setTimeout(() => {
                                     console.log("Collecting User Data");
                                 }, 1000);
                                 sendResponse(msg.from, responseData, "Error Edit Nama");
                             } else if (['editpangkat', 'ubahpangkat', 'pangkat', 'title'].includes(splittedMsg[1].toLowerCase())) {
                                 //clientName#editnama/nama#id_key/NRP#newdata
-                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), "PANGKAT");
+                                let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), 
+                                    msg.from.replace('@c.us', ''), "PANGKAT");
                                 setTimeout(() => {
                                     console.log("Collecting User Data");
                                 }, 1000);
@@ -684,7 +694,8 @@ client.on('message', async (msg) => {
                                     sendResponse(msg.from, responseData, "Error Checking Following");
                                 });
                             } else{
-                                client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikakn link tersebut adalah link Akun Profile Instagram anda dan tidak di Private.\n\nTerimakasih.");
+                                client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikakn link tersebut adalah link Akun Profile " 
+                                    +"Instagram anda dan tidak di Private.\n\nTerimakasih.");
                             }
                             break;
                         case 'like':

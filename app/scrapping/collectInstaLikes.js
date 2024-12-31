@@ -5,7 +5,7 @@ import { JWT } from 'google-auth-library';
 import { readFileSync } from 'fs';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-import { instaPostAPI, instaLikesAPI } from '../socialMediaAPI/instaAPI.js';
+import { instaUserAPI } from '../socialMediaAPI/instaAPI.js';
 import { clientData } from '../database_query/clientData.js';
 import { client } from '../../app.js';
 
@@ -41,7 +41,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       let todayItems = [];
       let postItems = [];
       
-      let instaPostAPIResponse = await instaPostAPI(responseClient.data.instaAccount);
+      let instaPostAPIResponse = await instaUserAPI(responseClient.data.instaAccount, ciceroKey.instaKey.instahostContent);
 
       console.log(`${clientName} Collecting Insta Post Data...`);
       await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Data...`);
@@ -142,7 +142,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
 
                 const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
 
-                const responseLikes = await instaLikesAPI(todayItems[i]);
+                const responseLikes = await instaUserAPI(todayItems[i], ciceroKey.instaKey.instahostLikes);
                 const likesItems = await responseLikes.data.data.items;
 
                 let newDataUsers = [];
@@ -175,7 +175,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             //Final Code
             if (!hasShortcode) {
               //If Shortcode doesn't exist push new data
-              let responseLikes = await instaLikesAPI(todayItems[i]);
+              let responseLikes = await instaUserAPI(todayItems[i], ciceroKey.instaKey.instahostLikes);
 
               let likesItems = responseLikes.data.data.items;
               let userNameList = [todayItems[i]];

@@ -90,19 +90,20 @@ export async function reportTiktokComments(clientName) {
             let responseData;
             if (clientResponse.data.isClientType === "RES") {
               responseData = {
-                data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " + clientName
-                  + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-                  + userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
+                data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " 
+                  + clientName + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
+                  + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " 
                   + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
                 code: 200
               };
             } else if (clientResponse.data.isClientType === "COM") {
               responseData = {
-                data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " + tiktokAccount
-                  + " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-                  + userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "
-                  + userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
+                data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " 
+                  + tiktokAccount+ " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
+                  + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " 
+                  + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "+ userCounter + "_\n\nRincian Data Username Tiktok :" 
+                  + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
                 code: 200
               };
