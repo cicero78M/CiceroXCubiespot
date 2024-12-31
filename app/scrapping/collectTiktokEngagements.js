@@ -1,9 +1,7 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
-
 import { readFileSync } from 'fs';
-
 import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { clientData } from '../database_query/clientData.js';
 import { client } from '../../app.js';
