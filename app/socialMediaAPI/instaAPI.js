@@ -148,7 +148,7 @@ export async function instaPostInfoAPI(key) {
         return data;
     }
 }
-export async function instainfoAPI(key) {
+export async function instaInfoAPI(key) {
     //Insta Post API
     let options = {
         method: 'GET',
