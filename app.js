@@ -708,12 +708,24 @@ client.on('message', async (msg) => {
 
                 //Key Order Data Not Exist         
                 } else {
-                    console.log("Request Code Doesn't Exist");
-                    let responseData = await infoView(splittedMsg[0].toUpperCase());
+                    let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                    let clientRows = clientResponse.data;
+                    //Wait A Second
                     setTimeout(() => {
-                        console.log("Collecting User Data");
+                        console.log("Collecting Client Data");
                     }, 1000);
-                    client.sendMessage(msg.from, responseData.data);
+                    for (let i = 0; i < clientRows.length; i++){
+                        if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                            console.log("Request Code Doesn't Exist");
+                            let responseData = await infoView(splittedMsg[0].toUpperCase());
+                            //Wait A Second
+                            setTimeout(() => {
+                                console.log("Collecting User Data");
+                            }, 1000);
+                            client.sendMessage(msg.from, responseData.data);
+                        }
+                    }
+
                 }
                 //if(splittedMsg[1].toLowerCase()......
             } else {
