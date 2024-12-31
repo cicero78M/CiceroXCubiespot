@@ -14,8 +14,7 @@ export async function collectFollowing(from, username) {
         console.log(responseInfo.data.data);
 
         instaFollowingAPI(username).then(async (responseFollowing) => {
-            let followingList = 
-
+            console.log(responseFollowing);;
         });
 
         instaProfileSheet.addRow({
