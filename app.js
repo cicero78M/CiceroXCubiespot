@@ -178,7 +178,7 @@ client.on('ready', () => {
             }
         //If Something Error
         } catch (error) {
-            console.log(time+" "+error)
+            console.log(error)
             await client.sendMessage('6281235114745@c.us', 'Error Cron Job Administrator ');
         }
     });
@@ -268,7 +268,7 @@ client.on('ready', () => {
             }
         //If Something Error            
         } catch (error) {
-            console.log(time+" "+error)
+            console.log(error)
             await client.sendMessage('6281235114745@c.us', 'Cron Job Error');
         }
     });
