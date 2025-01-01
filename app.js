@@ -30,6 +30,7 @@ import { addNewUser } from './app/database/addNewUser.js';
 import { updateUsername } from './app/database/updateUsername.js';
 import { collectFollowing } from './app/scrapping/collectFolllowingInsta.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
+import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -169,7 +170,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 15/18/21
-    schedule('05 15,18,21 * * *', async () => {
+    schedule('00 15,18,21 * * *', async () => {
         try {
             client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');            
             console.log(time+' Cron Job Starting');
@@ -561,7 +562,6 @@ client.on('message', async (msg) => {
                             let clientRows = await clientResponse.data;
                             //Itterate Client
                             for (let i = 0; i < clientRows.length; i++){
-
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START TIKTOK SECUID DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START TIKTOK SECUID DATA');
@@ -603,10 +603,6 @@ client.on('message', async (msg) => {
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){//['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
                     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                     let clientRows = clientResponse.data;
-                    //Wait A Second
-                    setTimeout(() => {
-                        console.log("Collecting Client Data");
-                    }, 1000);
                     for (let i = 0; i < clientRows.length; i++){
                         if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
                             let responseData;
@@ -831,46 +827,7 @@ client.on('message', async (msg) => {
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {
-        console.log(error); 
+        console.log(error);
         client.sendMessage('6281235114745@c.us', 'Error on Apps');
     }//try catch
 });
-/*This Function Must be Created Here*/
-//Response By User
-function sendResponse(from, responseData, errormessage) {
-    switch (responseData.code){
-        case 200:
-            console.log(time+" SUCCESS GENERATE DATA");
-            client.sendMessage(from, responseData.data);
-            break;
-        case 303:                                
-            console.log(responseData.data);
-            client.sendMessage(from, errormessage);
-            break;
-        default:
-            console.log(time+" "+responseData.data);
-            client.sendMessage(from, responseData.data);
-            break;
-    }   
-}
-//Response By Client
-function sendClientResponse(clientID, supervisor, operator, group, responseData, type) {
-    switch (responseData.code){
-        case 200 :
-            console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
-            client.sendMessage(supervisor, responseData.data);
-            client.sendMessage(operator, responseData.data);
-            client.sendMessage(group, responseData.data);
-            break;
-        case 303 :
-            console.log(time+" "+clientID+' FAIL '+type+' DATA');
-            client.sendMessage('6281235114745@c.us', responseData.data);
-            break;
-        default:
-            console.log(time+" "+responseData.data);
-            client.sendMessage(supervisor, responseData.data);
-            client.sendMessage(operator, responseData.data);
-            client.sendMessage(group, responseData.data);
-            break;
-    }
-}
