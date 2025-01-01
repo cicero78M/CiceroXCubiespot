@@ -22,10 +22,8 @@ export async function collectTiktokComments(clientName) {
   await client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Data`);
   const d = new Date();
   const localDate = d.toLocaleDateString('id');
-  const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-  await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
-  const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-  await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
+// loads document properties and worksheets
+
   //Check Client_ID. then get async data
   
   try {
@@ -68,7 +66,8 @@ export async function collectTiktokComments(clientName) {
               }
         
               if (hasContent) {
-        
+                const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
+                await tiktokOfficialDoc.loadInfo();         
                 const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
                 const officialTiktokData = await officialTiktokSheet.getRows();
         
@@ -131,8 +130,9 @@ export async function collectTiktokComments(clientName) {
                     shortcodeNewCounter++;
                   }
                 }
-        
-                await tiktokCommentsUsernameDoc.loadInfo();
+
+                const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+                await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
                 // loads document properties and worksheets
                 let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
                 let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
@@ -143,12 +143,10 @@ export async function collectTiktokComments(clientName) {
                 for (let i = 0; i < todayItems.length; i++) {
         
                   let hasShortcode = false;
-        
-        
+      
                   //code on the go
                   for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++) {
-        
-        
+          
                     if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
                       let newDataUsers = [];
                       hasShortcode = true;
@@ -167,27 +165,29 @@ export async function collectTiktokComments(clientName) {
         
                       do {
         
-                        let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-                        let commentItems = responseComments.data.comments;
-                        for (let iii = 0; iii < commentItems.length; iii++) {
-                          if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                            if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                              newDataUsers.push(commentItems[iii].user.unique_id);
+                        tiktokCommentAPI(todayItems[i], cursorNumber).then(async (responseComments) => {
+                          let commentItems = responseComments.data.comments;
+                          for (let iii = 0; iii < commentItems.length; iii++) {
+                            if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                              if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                                newDataUsers.push(commentItems[iii].user.unique_id);
+                              }
                             }
                           }
-                        }
-        
-                        setTimeout(() => {
-                          console.log("Update Data " + cursorNumber + " < " + total);
-                          client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
-                        }, 2000);
-        
-                        cursorNumber;
-                        total;
-        
-                        total = responseComments.data.total + 50;
-                        cursorNumber = responseComments.data.cursor;
-        
+          
+                          setTimeout(() => {
+                            console.log("Update Data " + cursorNumber + " < " + total);
+                            client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
+                          }, 2000);
+          
+                          cursorNumber;
+                          total;
+          
+                          total = responseComments.data.total + 50;
+                          cursorNumber = responseComments.data.cursor;
+                          
+                        });
+
                       } while (cursorNumber < total);
         
                       let dataCleaning = [];
@@ -201,8 +201,7 @@ export async function collectTiktokComments(clientName) {
                       }
         
                       console.log(clientName + ' Update Data');
-                      
-        
+                            
                       await tiktokCommentsUsernameData[ii].delete();
                       await tiktokCommentsUsernameSheet.addRow(dataCleaning);
         
@@ -219,22 +218,24 @@ export async function collectTiktokComments(clientName) {
         
                     do {
         
-                      let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-                      let commentItems = responseComments.data.comments;
+                      tiktokCommentAPI(todayItems[i], cursorNumber).then(async (responseComments) => {
+                        let commentItems = responseComments.data.comments;
         
-                      for (let iii = 0; iii < commentItems.length; iii++) {
-                        newDataUsers.push(commentItems[iii].user.unique_id);
-                      }
-        
-                      setTimeout(() => {
-                        console.log(cursorNumber + " < " + total);
-                        client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
-                      }, 2000);
-        
-                      cursorNumber;
-                      total;
-                      total = responseComments.data.total + 50;
-                      cursorNumber = responseComments.data.cursor;
+                        for (let iii = 0; iii < commentItems.length; iii++) {
+                          newDataUsers.push(commentItems[iii].user.unique_id);
+                        }
+          
+                        setTimeout(() => {
+                          console.log(cursorNumber + " < " + total);
+                          client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
+                        }, 2000);
+          
+                        cursorNumber;
+                        total;
+                        total = responseComments.data.total + 50;
+                        cursorNumber = responseComments.data.cursor;
+                      });
+
                     } while (cursorNumber < total);
     
                     let dataCleaning = [];

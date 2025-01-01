@@ -97,7 +97,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('57 6-21 * * *', async () => {
+    schedule('3 6-21 * * *', async () => {
         try {
             //Commit if schedule Working
             await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');            
