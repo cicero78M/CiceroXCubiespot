@@ -373,7 +373,7 @@ client.on('message', async (msg) => {
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                     //Scrapping TIKTOK by Client
-                                    let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                    let loadTiktok = await collectTiktokComments(clientRows[i]);
                                     //Wait A Second
                                     setTimeout(() => {
                                         console.log("Collecting Tiktok Data");
@@ -400,18 +400,18 @@ client.on('message', async (msg) => {
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     //Scrapping Insta by Client
-                                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                    let loadInsta = await collectInstaLikes(clientRows[i]);
                                     //Proccessing Data
                                     let reportInsta;
                                     switch (loadInsta.code) {
                                         case 200:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                            reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                            reportInsta = await reportInstaLikes(clientRows[i]);
                                             setTimeout(() => {
                                                 console.log("Collecting Report Data");
                                             }, 1000);
-                                            sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                                            sendResponse(msg.from, reportInsta, clientRows[i]+' ERROR LOAD INSTA DATA');
                                             break;                                           
                                         case 303:
                                             console.log(loadInsta.data);
@@ -419,7 +419,7 @@ client.on('message', async (msg) => {
                                         default:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                            reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                                            reportInsta = await reportInstaLikes(clientRows[i]);
                                             setTimeout(() => {
                                                 console.log("Collecting Report Data");
                                             }, 1000);
@@ -448,11 +448,7 @@ client.on('message', async (msg) => {
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     //Scrapping Insta by Client
-                                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                    //Wait A Second
-                                    setTimeout(() => {
-                                        console.log("Collecting Insta Data");
-                                    }, 1000);
+                                    let loadInsta = await collectInstaLikes(clientRows[i]);
                                     //Proccessing Data
                                     let reportInsta;
                                     switch (loadInsta.code) {
