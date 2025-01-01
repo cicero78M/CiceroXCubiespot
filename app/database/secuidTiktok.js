@@ -1,6 +1,6 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { googleAuth } from '../database_query/sheetDoc.js';
+import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 import { tiktokUserInfoAPI } from '../socialMediaAPI/tiktokAPI.js';
 
 export async function setSecuid(clientValue) {
@@ -9,7 +9,7 @@ export async function setSecuid(clientValue) {
 
         const clientName = clientValue.get('CLIENT_ID');
 
-        const clientDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.clientDataID, googleAuth); //Google Auth
+        const clientDoc = new GoogleSpreadsheet(ciceroKey.dbKey.clientDataID, googleAuth); //Google Auth
         await clientDoc.loadInfo(); // loads document properties and worksheets
 
         const clientSheet = clientDoc.sheetsByTitle['ClientData'];
@@ -63,8 +63,6 @@ export async function setSecuid(clientValue) {
         };
 
         console.log(error);
-        targetDoc.delete;
-
         return responseData;
     }
 }
