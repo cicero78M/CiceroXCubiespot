@@ -99,11 +99,11 @@ export async function reportInstaLikes(clientValue) {
           for (let iv = 0; iv < notLikesList.length; iv++) {
             if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
               
-              if (clientResponse.data.isClientType === "RES") {
+              if (clientValue.get('TYPE')  === "RES") {
                 userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesList[iv].get('INSTA'));
                 divisiCounter++;
                 userCounter++;
-              } else if (clientResponse.data.isClientType === "COM") {
+              } else if (clientValue.get('TYPE')  === "COM") {
                 let name = notLikesList[iv].get('NAMA');
                 let nameUpper = name.toUpperCase();
                 userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesList[iv].get('INSTA'));
@@ -121,7 +121,7 @@ export async function reportInstaLikes(clientValue) {
         let instaSudah = userAll - notLikesList.length;
         let responseData;
 
-        if (clientResponse.data.isClientType === 'COM') {
+        if (clientValue.get('TYPE')  === 'COM') {
           responseData = {
             data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" 
               + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
@@ -130,7 +130,7 @@ export async function reportInstaLikes(clientValue) {
             state: true,
             code: 200
           };
-        } else if (clientResponse.data.isClientType === "RES") {
+        } else if (clientValue.get('TYPE')  === "RES") {
           responseData = {
             data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " 
               + clientName + "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours 
