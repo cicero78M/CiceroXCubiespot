@@ -16,7 +16,7 @@ export async function clientData(clientName) {
     let group;
 
     const clientDoc =  await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-    const clientRows = clientDoc.data;
+    const clientRows = await clientDoc.data;
     console.log(clientName);
 
         

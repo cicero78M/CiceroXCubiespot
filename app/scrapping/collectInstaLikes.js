@@ -26,8 +26,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
   await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Likes Starting...`);
   try {
 
-    const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-    const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
     let responseClient = await clientData(clientName);
     
     // If Client_ID exist. then get official content
@@ -67,11 +65,12 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         }
 
         if (hasContent) {
-
+          const instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
+          await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+          
           console.log(`${clientName} Official Account Has Post Data...`);
           await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
-    
-          await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+
           const officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
           const officialInstaData = await officialInstaSheet.getRows();
 
@@ -111,7 +110,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
                 } else if (!shortcodeList.includes(itemByDay[i].code)) {
                   //Push New Content to Database  
                   shortcodeList.push(itemByDay[i].code);
-                  officialInstaSheet.addRow({
+                  await officialInstaSheet.addRow({
                     TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
                     CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count
                   });
@@ -122,7 +121,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           } else {
             //Push New Shortcode Content to Database
             for (let i = 0; i < itemByDay.length; i++) {
-              officialInstaSheet.addRow({
+              await officialInstaSheet.addRow({
                 TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
                 CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count,
                 THUMBNAIL: itemByDay[i].thumbnail_url, VIDEO_URL: itemByDay[i].video_url
@@ -131,6 +130,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             }
           }
 
+          const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
           await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
 
           let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
@@ -183,7 +183,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
               //If Shortcode doesn't exist push new data
               let responseLikes = await instaLikesAPI(todayItems[i]);
 
-              let likesItems = responseLikes.data.data.items;
+              let likesItems = await responseLikes.data.data.items;
               let userNameList = [todayItems[i]];
 
               for (let iii = 0; iii < likesItems.length; iii++) {

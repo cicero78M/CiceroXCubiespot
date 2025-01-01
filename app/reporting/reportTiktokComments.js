@@ -22,7 +22,7 @@ export async function reportTiktokComments(clientName) {
           let divisiResponse = await listValueData(clientName, 'DIVISI');
           let divisiList = divisiResponse.data;
           let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
-          let userRows = userDoc.data;
+          let userRows = await userDoc.data;
           var userAll = 0;
           for (let i = 0; i < userRows.length; i++) {
             if (userRows[i].get('STATUS') === 'TRUE' ){
@@ -32,7 +32,7 @@ export async function reportTiktokComments(clientName) {
           //Collect Shortcode from Database        
           let shortcodeList = [];
           const tiktokOfficialDoc = await _sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName);
-          const tiktokOfficialRows = tiktokOfficialDoc.data;
+          const tiktokOfficialRows = await tiktokOfficialDoc.data;
           let shortcodeListString = '';
           for (let i = 0; i < tiktokOfficialRows.length; i++) {
             let itemDate = new Date(tiktokOfficialRows[i].get('TIMESTAMP') * 1000);
@@ -45,7 +45,7 @@ export async function reportTiktokComments(clientName) {
           }
           if (shortcodeList.length >= 1) {
             let tiktokUsernameDoc = await _sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
-            let tiktokCommentsUsernameRows = tiktokUsernameDoc.data;
+            let tiktokCommentsUsernameRows = await tiktokUsernameDoc.data;
             let userCommentData = [];
             for (let i = 0; i < shortcodeList.length; i++) {
               //code on the go

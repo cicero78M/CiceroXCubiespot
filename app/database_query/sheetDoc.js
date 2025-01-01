@@ -34,7 +34,6 @@ export async function sheetDoc(sheetID, clientName) {
     }
 
     dataDoc.delete;
-
     return response;
   
   } catch (err){
