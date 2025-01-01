@@ -499,7 +499,7 @@ client.on('message', async (msg) => {
                                     switch (loadTiktok.code) {
                                         case 200:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
-                                            reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
+                                            reportTiktok = await reportTiktokComments(clientRows[i]);
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;                                           
                                         case 303:

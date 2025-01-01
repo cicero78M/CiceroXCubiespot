@@ -21,14 +21,14 @@ const googleAuth = new JWT({
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-export const collectInstaLikes = async function colectInstaLikes(clientName) {
-  console.log(clientName + " Collecting Insta Likes Starting...");
-  await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Likes Starting...`);
+export const collectInstaLikes = async function colectInstaLikes(clientValue) {
   try {
+    const clientName = clientValue.get('CLIENT_ID');
+    const instaAccount = clientValue.get('INSTAGRAM')
 
-    let responseClient = await clientData(clientName);
-      
-    if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
+    console.log(clientName + " Collecting Insta Likes Starting...");
+    await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Likes Starting...`);
+    if (clientValue.get('STATUS') === 'TRUE') {
 
       console.log(`${clientName} Collecting Insta Data...`);
       await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Data...`);
@@ -39,7 +39,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       let todayItems = [];
       let postItems = [];
       
-      let instaPostAPIResponse = await instaPostAPI(responseClient.data.instaAccount);
+      let instaPostAPIResponse = await instaPostAPI(instaAccount);
 
       console.log(`${clientName} Collecting Insta Post Data...`);
       await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Data...`);
@@ -51,7 +51,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         for (let i = 0; i < postItems.length; i++) {
 
           let itemDate = new Date(postItems[i].taken_at * 1000);
-          if (itemDate.toLocaleDateString('id') === localDate) {
+          if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
             hasContent = true;
             itemByDay.push(postItems[i]);
             todayItems.push(postItems[i].code);
