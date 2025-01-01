@@ -83,14 +83,14 @@ export async function reportTiktokComments(clientName) {
                   userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].get('TITLE') + ' ' + notCommentList[iv].get('NAMA') + ' - ' + notCommentList[iv].get('TIKTOK'));
                   divisiCounter++;
                   userCounter++;
-                } else if (clientResponse.data.isClientType === "COM") {
+                  } else if (clientResponse.data.isClientType === "COM") {
 
-                  let name = notLikesList[iv].get('NAMA');
-                  let nameUpper = name.toUpperCase();
-                  userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].get('TIKTOK'));
-                  divisiCounter++;
-                  userCounter++;
-                }
+                    let name = notLikesList[iv].get('NAMA');
+                    let nameUpper = name.toUpperCase();
+                    userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].get('TIKTOK'));
+                    divisiCounter++;
+                    userCounter++;
+                  }
 
                 }
               }
