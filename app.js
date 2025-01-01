@@ -44,7 +44,7 @@ export const hours = d.toLocaleTimeString("en-US", {
     timeZone: "Asia/Jakarta"
 });
 
-const time = localDate+" >> "+hours;
+export const time = localDate+" >> "+hours;
 
 //Express Routing
 app.listen(port, () => {
