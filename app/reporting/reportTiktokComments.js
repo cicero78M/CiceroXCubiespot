@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
-import { localDate } from '../../app.js';
+import { hours, localDate } from '../../app.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function reportTiktokComments(clientValue) {
@@ -107,7 +107,7 @@ export async function reportTiktokComments(clientValue) {
               responseData = {
                 data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " 
                   + clientName + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
-                  + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah 
+                  + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " + tiktokSudah 
                   + "_\n_Jumlah User Belum melaksanakan : "+ userCounter + "_\n\nRincian Data Username Tiktok :" + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
                 code: 200
@@ -116,7 +116,7 @@ export async function reportTiktokComments(clientValue) {
               responseData = {
                 data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " 
                   + clientName+ " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
-                  + localHours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " 
+                  + hours + " WIB\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " 
                   + tiktokSudah + "_\n_Jumlah User Belum melaksanakan : "+ userCounter + "_\n\nRincian Data Username Tiktok :" 
                   + dataTiktok + "\n\n_System Administrator Cicero_",
                 state: true,
