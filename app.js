@@ -498,20 +498,13 @@ client.on('message', async (msg) => {
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                     //Scrapping TIKTOK by Client
-                                    let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                    //Wait A Second
-                                    setTimeout(() => {
-                                        console.log("Collecting Tiktok Data");
-                                    }, 1000);
+                                    let loadTiktok = await collectTiktokComments(clientRows[i]);
                                     //Proccessing Data
                                     let reportTiktok;
                                     switch (loadTiktok.code) {
                                         case 200:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;                                           
                                         case 303:
@@ -519,10 +512,7 @@ client.on('message', async (msg) => {
                                             break;
                                         default:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
-                                            reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
+                                            reportTiktok = await reportTiktokComments(clientRows[i]);
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;
                                     }

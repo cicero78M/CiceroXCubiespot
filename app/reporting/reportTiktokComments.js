@@ -1,19 +1,14 @@
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
-import { clientData } from '../database_query/clientData.js';
 import { listValueData } from '../database_query/listValueData.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
-export async function reportTiktokComments(clientName) {
+export async function reportTiktokComments(clientValue) {
   try {
     console.log("Report Tiktok Function Executed");
-    const d = new Date();
-    const localDate = d.toLocaleDateString('id');
-    const localHours = d.toLocaleTimeString('id');
-    const clientResponse = await clientData(clientName);
+    const clientName = clientValue.get('CLIENT_ID');
+    if (clientValue.get('STATUS') === 'TRUE') {
 
-    if (clientResponse.state) {
       // If Client_ID exist. then get official content
-      if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
           let divisiResponse = await listValueData(clientName, 'DIVISI');
           let divisiList = divisiResponse.data;
           let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
@@ -140,15 +135,7 @@ export async function reportTiktokComments(clientName) {
         console.log(responseData.data);
         return responseData;
       }
-    } else {
-      let responseData = {
-        data: 'Client Name Doesn\'t Exist',
-        state: false,
-        code: 201
-      };
-      console.log(responseData.data);
-      return responseData;
-    }
+
   } catch (error) {
     let responseData = {
       data: error,
