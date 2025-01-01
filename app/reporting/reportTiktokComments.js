@@ -3,12 +3,16 @@ import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { localDate } from '../../app.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+
 export async function reportTiktokComments(clientValue) {
+  
+  
   console.log(clientValue);
   try {
     console.log("Report Tiktok Function Executed");
 
     const clientName = clientValue.get('CLIENT_ID');
+    const tiktokAccount = clientValue.get('TIKTOK');
 
     if (clientValue.get('STATUS') === 'TRUE') {
 
@@ -33,7 +37,7 @@ export async function reportTiktokComments(clientValue) {
             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
               if (!shortcodeList.includes(tiktokOfficialRows[i].get('SHORTCODE'))) {
                 shortcodeList.push(tiktokOfficialRows[i].get('SHORTCODE'));
-                shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + clientResponse.data.tiktokAccount + '/video/' + tiktokOfficialRows[i].get('SHORTCODE'));
+                shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + tiktokAccount + '/video/' + tiktokOfficialRows[i].get('SHORTCODE'));
               }
             }
           }

@@ -532,7 +532,7 @@ client.on('message', async (msg) => {
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
                                     //Scrapping TIKTOK by Client
-                                    reportTiktok = await reportTiktokComments(clientRows[i]);
+                                    let reportTiktok = await reportTiktokComments(clientRows[i]);
                                     sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                 }           
                             }
