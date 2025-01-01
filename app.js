@@ -29,6 +29,7 @@ import { pushUserClient } from './app/database/pushUserClient.js';
 import { addNewUser } from './app/database/addNewUser.js';
 import { updateUsername } from './app/database/updateUsername.js';
 import { collectFollowing } from './app/scrapping/collectFolllowingInsta.js';
+import { setSecuid } from './app/database/secuidTiktok.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -570,7 +571,7 @@ client.on('message', async (msg) => {
                             }
                         } catch (error) {
                             console.log(error)
-                            await client.sendMessage('6281235114745@c.us', 'Collect #REPORTINSTA Error');
+                            await client.sendMessage('6281235114745@c.us', 'Collect #SECUIDERROR Error');
                         }
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
