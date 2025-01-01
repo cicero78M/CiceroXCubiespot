@@ -73,7 +73,6 @@ export async function reportInstaLikes(clientName) {
                 if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                   if (!userLikesData.includes(fromRows[iii])) {
                     userLikesData.push(fromRows[iii]);
-                    console.log(fromRows[iii]);
                   }
                 }
               }
@@ -92,6 +91,8 @@ export async function reportInstaLikes(clientName) {
                   if (userRows[iii].get('EXCEPTION') === "FALSE"){
                     UserNotLikes.push(userRows[iii].get('ID_KEY'));
                     notLikesList.push(userRows[iii]);
+                    console.log(userRows[iii]);
+
                   }
                 }
               }
