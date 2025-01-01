@@ -441,10 +441,6 @@ client.on('message', async (msg) => {
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     //Scrapping Insta by Client
                                     let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                    //Wait A Second
-                                    setTimeout(() => {
-                                        console.log("Collecting Insta Data");
-                                    }, 1000);
                                     //Proccessing Data
                                     let reportInsta;
                                     switch (loadInsta.code) {
