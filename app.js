@@ -163,7 +163,7 @@ client.on('ready', () => {
         //If Something Error
         } catch (error) {
             console.log(error)
-            await client.sendMessage('6281235114745@c.us', 'Error Cron Job Administrator ');
+            await client.sendMessage('6281235114745@c.us', 'Cron Job Hourly Error ');
         }
     });
 
@@ -233,7 +233,7 @@ client.on('ready', () => {
         //If Something Error            
         } catch (error) {
             console.log(error)
-            await client.sendMessage('6281235114745@c.us', 'Cron Job Error');
+            await client.sendMessage('6281235114745@c.us', 'Cron Job Client Report Error');
         }
     });
 });
