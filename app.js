@@ -540,6 +540,24 @@ client.on('message', async (msg) => {
                             console.log(error)
                             await client.sendMessage('6281235114745@c.us', 'Collect #ALLTIKTOK Error');
                         }
+                    } else if (splittedMsg[1].toLowerCase() === 'reportinsta') {
+
+                        //Generate All Socmed
+                        await client.sendMessage('6281235114745@c.us', 'Generate Report Insta Data Starting...');
+                        console.log(time+' Generate Report Insta Data Starting');
+                        let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                        let clientRows = await clientResponse.data;
+                        //Itterate Client
+                        for (let i = 0; i < clientRows.length; i++){
+
+                            if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                                await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                                reportInsta = await reportInstaLikes(clientRows[i]);
+                                sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
+                            } 
+                        }
+
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
                         let response = await createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());

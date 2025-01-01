@@ -1,24 +1,18 @@
 import { readFileSync } from 'fs';
 import { sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
-import { clientData } from '../database_query/clientData.js';
-import { client } from '../../app.js';
+import { client, hours, localDate } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
-export async function reportInstaLikes(clientName) {
+export async function reportInstaLikes(clientValue) {
   try {
+    const clientName = clientValue.get('CLIENT_ID');
     console.log("Reporting Insta..");
     await client.sendMessage('6281235114745@c.us', `${clientName} Reporting Insta..`);
 
-    const d = new Date();
-    const localDate = d.toLocaleDateString('id');
-    const hours = d.toLocaleTimeString('id');
-
-    //Check Client_ID. then get async data
-    const clientResponse = await clientData(clientName);
     // If Client_ID exist. then get official content
-    if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
+    if (clientValue.get('STATUS')) {
       let divisiResponse = await listValueData(clientName, 'DIVISI');
       let divisiList = divisiResponse.data;
       let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
@@ -42,7 +36,7 @@ export async function reportInstaLikes(clientName) {
 
         let itemDate = new Date(instaOfficialRows[i].get('TIMESTAMP') * 1000);
 
-        if (itemDate.toLocaleDateString('id') === localDate) {
+        if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
           if (!shortcodeList.includes(instaOfficialRows[i].get('SHORTCODE'))) {
             shortcodeList.push(instaOfficialRows[i].get('SHORTCODE'));
             if (instaOfficialRows[i].get('TYPE') === 'reel') {
