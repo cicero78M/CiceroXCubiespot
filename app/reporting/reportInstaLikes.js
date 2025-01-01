@@ -23,11 +23,10 @@ export async function reportInstaLikes(clientName) {
     if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
       let divisiResponse = await listValueData(clientName, 'DIVISI');
       let divisiList = divisiResponse.data;
-      console.log(divisiList);
       let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       let userRows = userDoc.data;
       var userAll = 0;
-
+      console.log(userRows);
       for (let i = 0; i < userRows.length; i++) {
         if (userRows[i].get('STATUS') === 'TRUE' ){
           userAll++;
@@ -48,9 +47,7 @@ export async function reportInstaLikes(clientName) {
 
         if (itemDate.toLocaleDateString('id') === localDate) {
           if (!shortcodeList.includes(instaOfficialRows[i].get('SHORTCODE'))) {
-
             shortcodeList.push(instaOfficialRows[i].get('SHORTCODE'));
-
             if (instaOfficialRows[i].get('TYPE') === 'reel') {
               shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + instaOfficialRows[i].get('SHORTCODE'));
             } else {
