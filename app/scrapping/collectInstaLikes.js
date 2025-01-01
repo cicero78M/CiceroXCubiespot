@@ -223,7 +223,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           };
           console.log(responseData.data);
           await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
-          instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
           return responseData;
         }
