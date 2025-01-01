@@ -5,9 +5,6 @@ import { hours, localDate } from '../../app.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function reportTiktokComments(clientValue) {
-  
-  
-  console.log(clientValue);
   try {
     console.log("Report Tiktok Function Executed");
 
