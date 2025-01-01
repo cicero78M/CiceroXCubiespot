@@ -208,7 +208,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           };
 
           console.log(responseData.data);
-          await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+          await client.sendMessage('6281235114745@c.us', responseData.data);
 
           instaOfficialDoc.delete;
           instaLikesUsernameDoc.delete;
@@ -222,7 +222,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
             code: 201
           };
           console.log(responseData.data);
-          await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+          await client.sendMessage('6281235114745@c.us', responseData.data);
           return responseData;
         }
 
@@ -233,7 +233,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
           code: 201
         };
         console.log(responseData.data);
-        await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+        await client.sendMessage('6281235114745@c.us',responseData.data);
         instaOfficialDoc.delete;
         instaLikesUsernameDoc.delete;
         return responseData;
@@ -247,7 +247,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       };
 
       console.log(responseData.data);
-      await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+      await client.sendMessage('6281235114745@c.us', responseData.data);
       instaOfficialDoc.delete;
       instaLikesUsernameDoc.delete;
       return responseData;
@@ -260,7 +260,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
       code: 303
     };
     console.log(responseData.data);
-    await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+    await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Error`);
     return responseData;
   }
 };
