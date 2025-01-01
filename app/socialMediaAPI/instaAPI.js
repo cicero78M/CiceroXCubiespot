@@ -11,14 +11,17 @@ const headers = {
   'x-rapidapi-host': ciceroKey.instaKey.instahostAPI
 }
 
-export async function instaFollowingAPI(key) {
+export async function instaFollowingAPI(key,pagination) {
     //Insta Post API
     let options = {
         method: 'GET',
         url: ciceroKey.instaKey.instaFollowing,
         params: {
             username_or_id_or_url: key,
-            amount: '1000'
+            amount: '100',
+            pagination_token: pagination
+
+
           },
         headers: headers
     };

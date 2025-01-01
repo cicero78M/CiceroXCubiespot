@@ -8,19 +8,46 @@ export async function collectFollowing(from, username) {
         const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
         await instaProfileDoc.loadInfo(); // loads document properties and worksheets
         const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
+        let instaProfileRows = await instaProfileSheet.getRows();
 
         instaInfoAPI(username).then(async (responseInfo) => {
             console.log(responseInfo.data.data);
             instaFollowingAPI(username).then(async (responseFollowing) => {
                 console.log(responseFollowing);
             });
+            
+            let isDataExist = false;
+            let counter = 0;
 
+            for (let i = 0; i < instaProfileRows.length; i++){
+                if(instaProfileRows[i].get("USERNAME") === username){
+                    isDataExist = true;
+                    let isFollowing = false;
+                    let pages = '';                  
+                    do {
+                        instaFollowingAPI(username, pages).then(async (responseFollowing) => {
+                            pages = responseFollowing.data.pagination_token;
+                            let items = responseFollowing.data.data.items;
+                            counter++;
+                            for (let i = 0; i < items.lenght; i++){
+                                if(items[i].username === 'cubiehome'){
+                                    isFollowing = true;
+                                    break;
+                                }
+                            }
+                        });
+                    } while (!isFollowing || responseInfo.data.data.follower_count <= counter);
+                }               
+            }            
+            
             instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.data.is_private, isBUSSINESS:responseInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,
                 CATEGORY:responseInfo.data.data.category, CONTACT:responseInfo.data.data.contact_phone_number, EMAIL:responseInfo.data.data.public_email, FULL_NAME:responseInfo.data.data.full_name,	
                 FOLLOWER:responseInfo.data.data.follower_count, FOLLOWING:responseInfo.data.data.following_count, MEDIA_COUNT:responseInfo.data.data.media_count,
-                BIOGRAPHY:responseInfo.data.data.biography
+                BIOGRAPHY:responseInfo.data.data.biography, isFOLLOWING: isFollowing
             });
+            
+            
             let responseData = {
                 data: "Success Load Data",
                 code: 200,
@@ -28,7 +55,6 @@ export async function collectFollowing(from, username) {
             };
             return responseData;
         });
-        
     } catch (error) {
         let responseData = {
             data: error,
