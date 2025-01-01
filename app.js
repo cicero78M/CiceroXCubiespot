@@ -553,7 +553,7 @@ client.on('message', async (msg) => {
                             if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                 console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                 await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                reportInsta = await reportInstaLikes(clientRows[i]);
+                                let reportInsta = await reportInstaLikes(clientRows[i]);
                                 sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                             } 
                         }
