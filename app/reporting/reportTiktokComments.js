@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
+import { localDate } from '../../app.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 export async function reportTiktokComments(clientValue) {
   console.log(clientValue);
@@ -29,7 +30,7 @@ export async function reportTiktokComments(clientValue) {
           let shortcodeListString = '';
           for (let i = 0; i < tiktokOfficialRows.length; i++) {
             let itemDate = new Date(tiktokOfficialRows[i].get('TIMESTAMP') * 1000);
-            if (itemDate.toLocaleDateString('id') === localDate) {
+            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
               if (!shortcodeList.includes(tiktokOfficialRows[i].get('SHORTCODE'))) {
                 shortcodeList.push(tiktokOfficialRows[i].get('SHORTCODE'));
                 shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + clientResponse.data.tiktokAccount + '/video/' + tiktokOfficialRows[i].get('SHORTCODE'));
