@@ -138,14 +138,14 @@ client.on('ready', () => {
                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                     //Call Scrapping Insta Likes by Client Data
-                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                    let loadInsta = await collectInstaLikes(clientRows[i]);
                     //Proccessing Data
                     let reportInsta;
                     switch (loadInsta.code) {
                         case 200:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                            reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            reportInsta = await reportInstaLikes(clientRows[i]);
                             sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                             break;                                           
                         case 303:
@@ -154,7 +154,7 @@ client.on('ready', () => {
                         default:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                            reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            reportInsta = await reportInstaLikes(clientRows[i]);
                             sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                             break;
                     }
@@ -207,14 +207,14 @@ client.on('ready', () => {
                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                     client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                     //Scrapping Insta Data
-                    let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
+                    let loadInsta = await collectInstaLikes(clientRows[i]);
                     //Processing Data
                     let reportInsta;
                     switch (loadInsta.code) {
                         case 200:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                            reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            reportInsta = await reportInstaLikes(clientRows[i]);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
                                 reportInsta, ' REPORT INSTA');
                             break;     
@@ -223,7 +223,7 @@ client.on('ready', () => {
                             break;                      
                         default:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
-                            reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
+                            reportInsta = await reportInstaLikes(clientRows[i]);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
                                 reportInsta, ' REPORT INSTA');
                             break;
