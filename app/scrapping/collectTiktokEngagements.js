@@ -44,7 +44,7 @@ export async function collectTiktokComments(clientValue) {
       if (Array.isArray(items)) {
         for (let i = 0; i < items.length; i++) {
           let itemDate = new Date(items[i].createTime * 1000);
-          if (itemDate.toLocaleDateString('id') === localDate) {
+          if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
             hasContent = true;
             itemByDay.push(items[i]);
             todayItems.push(items[i].video.id);
