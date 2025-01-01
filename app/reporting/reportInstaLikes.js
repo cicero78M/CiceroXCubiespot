@@ -26,7 +26,6 @@ export async function reportInstaLikes(clientName) {
       let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       let userRows = userDoc.data;
       var userAll = 0;
-      console.log(userRows);
       for (let i = 0; i < userRows.length; i++) {
         if (userRows[i].get('STATUS') === 'TRUE' ){
           userAll++;
@@ -74,6 +73,7 @@ export async function reportInstaLikes(clientName) {
                 if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                   if (!userLikesData.includes(fromRows[iii])) {
                     userLikesData.push(fromRows[iii]);
+                    console.log(fromRows[iii]);
                   }
                 }
               }
