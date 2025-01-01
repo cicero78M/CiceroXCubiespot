@@ -27,13 +27,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
   try {
 
     let responseClient = await clientData(clientName);
-    
-    // If Client_ID exist. then get official content
-    setTimeout(() => {
-      console.log("Loading Client Data");
-      client.sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
-    }, 1000);
-    
+      
     if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
 
       console.log(`${clientName} Collecting Insta Data...`);
@@ -234,8 +228,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
         };
         console.log(responseData.data);
         await client.sendMessage('6281235114745@c.us',responseData.data);
-        instaOfficialDoc.delete;
-        instaLikesUsernameDoc.delete;
         return responseData;
       }
     } else {
@@ -248,8 +240,6 @@ export const collectInstaLikes = async function colectInstaLikes(clientName) {
 
       console.log(responseData.data);
       await client.sendMessage('6281235114745@c.us', responseData.data);
-      instaOfficialDoc.delete;
-      instaLikesUsernameDoc.delete;
       return responseData;
     }
 

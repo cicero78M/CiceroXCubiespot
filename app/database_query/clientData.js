@@ -17,8 +17,6 @@ export async function clientData(clientName) {
 
     const clientDoc =  await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
     const clientRows = await clientDoc.data;
-    console.log(clientName);
-
         
     for (let i = 0; i < clientRows.length; i++){
       if (clientRows[i].get('CLIENT_ID') === clientName){
@@ -43,14 +41,12 @@ export async function clientData(clientName) {
     } 
 
     if (!isClientID){
-
       let responseData = {
           data : 'No Data',
           state : true,
           code : 201
       }
       console.log(responseData.data);
-
       return responseData;
     }
   } catch (error) {
