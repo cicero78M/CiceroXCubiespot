@@ -6,6 +6,7 @@ export async function reportTiktokComments(clientValue) {
   try {
     console.log("Report Tiktok Function Executed");
     const clientName = clientValue.get('CLIENT_ID');
+    
     if (clientValue.get('STATUS') === 'TRUE') {
 
       // If Client_ID exist. then get official content
