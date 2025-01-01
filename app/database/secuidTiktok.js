@@ -28,7 +28,7 @@ export async function setSecuid(clientValue) {
                 await clientRows[i].save(); //save update
 
                 let response = {
-                    message: 'Secuid State with Tiktok Account : ' + tiktokAccount + ' set SECUID to : ' + secUid,
+                    data: 'Secuid State with Tiktok Account : ' + tiktokAccount + ' set SECUID to : ' + secUid,
                     state: true,
                     code: 200
                 };
@@ -42,7 +42,7 @@ export async function setSecuid(clientValue) {
 
         if (!isClient) {
             let responseData = {
-                message: 'No Data with Client_ID : ' + clientName,
+                data: 'No Data with Client_ID : ' + clientName,
                 state: true,
                 code: 201
             };
@@ -54,7 +54,7 @@ export async function setSecuid(clientValue) {
     } catch (error) {
 
         let responseData = {
-            message: 'Data Error',
+            data: 'Data Error',
             state: false,
             code: 303
         };
