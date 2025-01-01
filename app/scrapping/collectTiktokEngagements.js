@@ -23,11 +23,6 @@ export async function collectTiktokComments(clientName) {
 
   const d = new Date();
   const localDate = d.toLocaleDateString('id');
-  const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-  await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
-  const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-  await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
-  //Check Client_ID. then get async data
   
   try {
 
@@ -47,31 +42,17 @@ export async function collectTiktokComments(clientName) {
       if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
 
           //Collect Content Shortcode from Official Account
-          let tiktokAccount = responseClient.data.tiktokAccount;
+          let tiktokAccount = await responseClient.data.tiktokAccount;
           let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
-
-          setTimeout(() => {
-            console.log("Loading Account Data");
-            client.sendMessage('6281235114745@c.us', `${clientName} Loading Account Data`);
-          }, 2000);
           
-          const secUid = responseInfo.data.userInfo.user.secUid;
+          const secUid = await responseInfo.data.userInfo.user.secUid;
           let cursor = 0;
           let responseContent = await tiktokPostAPI(secUid, cursor);
-
-          setTimeout(() => {
-            console.log("Loading Post Data");
-            client.sendMessage('6281235114745@c.us', `${clientName} Loading Post Data Data`);
-          }, 1100);
-          
+                    
           let items = [];
-  
-          try {
-            items = await responseContent.data.data.itemList;
-          } catch (e) {
-            items = await responseContent.data.itemList;
-          }
-    
+
+          items = await responseContent.data.data.itemList;
+
           let hasContent = false;
           let itemByDay = [];
           let todayItems = [];
@@ -88,7 +69,8 @@ export async function collectTiktokComments(clientName) {
           }
     
           if (hasContent) {
-    
+            const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
+            await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
             const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
             const officialTiktokData = await officialTiktokSheet.getRows();
     
@@ -151,9 +133,9 @@ export async function collectTiktokComments(clientName) {
                 shortcodeNewCounter++;
               }
             }
-    
-            await tiktokCommentsUsernameDoc.loadInfo();
-            // loads document properties and worksheets
+  
+            const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+            await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            // loads document properties and worksheets
             let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
             let tiktokCommentsUsernameData = await tiktokCommentsUsernameSheet.getRows();
     
@@ -188,7 +170,7 @@ export async function collectTiktokComments(clientName) {
                   do {
     
                     let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-                    let commentItems = responseComments.data.comments;
+                    let commentItems = await responseComments.data.comments;
                     for (let iii = 0; iii < commentItems.length; iii++) {
                       if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
@@ -205,8 +187,8 @@ export async function collectTiktokComments(clientName) {
                     cursorNumber;
                     total;
     
-                    total = responseComments.data.total + 50;
-                    cursorNumber = responseComments.data.cursor;
+                    total = await responseComments.data.total + 50;
+                    cursorNumber = await responseComments.data.cursor;
     
                   } while (cursorNumber < total);
     
@@ -240,7 +222,7 @@ export async function collectTiktokComments(clientName) {
                 do {
     
                   let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-                  let commentItems = responseComments.data.comments;
+                  let commentItems = await responseComments.data.comments;
     
                   for (let iii = 0; iii < commentItems.length; iii++) {
                     newDataUsers.push(commentItems[iii].user.unique_id);
@@ -253,8 +235,8 @@ export async function collectTiktokComments(clientName) {
     
                   cursorNumber;
                   total;
-                  total = responseComments.data.total + 50;
-                  cursorNumber = responseComments.data.cursor;
+                  total = await responseComments.data.total + 50;
+                  cursorNumber = await responseComments.data.cursor;
                 } while (cursorNumber < total);
 
                 let dataCleaning = [];
