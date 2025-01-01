@@ -22,17 +22,19 @@ export async function collectFollowing(from, username) {
                     let pages = '';                  
                     do {
                         instaFollowingAPI(username, pages).then(async (responseFollowing) => {
+
                             pages = responseFollowing.data.pagination_token;
                             let items = responseFollowing.data.data.items;
                             counter++;
                             for (let i = 0; i < items.lenght; i++){
+                                consdole.log(items[i].username);
                                 if(items[i].username === 'cubiehome'){
                                     isFollowing = true;
                                     break;
                                 }
                             }
                         });
-                    } while (!isFollowing || responseInfo.data.data.follower_count > counter);
+                    } while (responseInfo.data.data.follower_count > counter);
                 }               
             }            
             
