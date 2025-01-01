@@ -494,10 +494,6 @@ client.on('message', async (msg) => {
                             console.log(time+' Generate All Insta Data Starting');
                             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                             let clientRows = await clientResponse.data;
-                            //Wait A Second
-                            setTimeout(() => {
-                                console.log("Collecting Client Data");
-                            }, 1000);
                             //Itterate Client
                             for (let i = 0; i < clientRows.length; i++){
 
