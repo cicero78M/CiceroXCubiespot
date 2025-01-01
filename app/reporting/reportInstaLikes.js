@@ -69,13 +69,9 @@ export async function reportInstaLikes(clientName) {
           //code on the go
           for (let ii = 0; ii < instaLikesUsernameRows.length; ii++) {
             if (instaLikesUsernameRows[ii].get('SHORTCODE') === shortcodeList[i]) {
-
               const fromRows = Object.values(instaLikesUsernameRows[ii].toObject());
-
               for (let iii = 0; iii < fromRows.length; iii++) {
-
                 if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-
                   if (!userLikesData.includes(fromRows[iii])) {
                     userLikesData.push(fromRows[iii]);
                   }
@@ -84,7 +80,8 @@ export async function reportInstaLikes(clientName) {
             }
           }
         }
-
+        
+        console.log(userLikesData);
         let UserNotLikes = [];
         let notLikesList = [];
 
