@@ -18,7 +18,6 @@ export async function reportInstaLikes(clientName) {
 
     //Check Client_ID. then get async data
     const clientResponse = await clientData(clientName);
-
     // If Client_ID exist. then get official content
     if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
       let divisiResponse = await listValueData(clientName, 'DIVISI');
