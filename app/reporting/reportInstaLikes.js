@@ -95,7 +95,7 @@ export async function reportInstaLikes(clientName) {
                   }
                 }
               }
-            }          }
+            }          
         }
 
         let dataInsta = '';
