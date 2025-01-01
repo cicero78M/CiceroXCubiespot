@@ -36,7 +36,7 @@ export async function collectTiktokComments(clientName) {
       // If Client_ID exist. then get official content
     setTimeout(() => {
       console.log("Loading Client Data");
-      sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
+      client.sendMessage('6281235114745@c.us', `${clientName} Loading Client Data`);
     }, 1000);
 
     if (responseClient.code === 200) {
@@ -47,7 +47,7 @@ export async function collectTiktokComments(clientName) {
       if (responseClient.data.isClientID && responseClient.data.isStatus === 'TRUE') {
 
           //Collect Content Shortcode from Official Account
-          let tiktokAccount = await responseClient.data.tiktokAccount;
+          let tiktokAccount = responseClient.data.tiktokAccount;
           let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
 
           setTimeout(() => {
@@ -55,7 +55,7 @@ export async function collectTiktokComments(clientName) {
             client.sendMessage('6281235114745@c.us', `${clientName} Loading Account Data`);
           }, 2000);
           
-          const secUid = await responseInfo.data.userInfo.user.secUid;
+          const secUid = responseInfo.data.userInfo.user.secUid;
           let cursor = 0;
           let responseContent = await tiktokPostAPI(secUid, cursor);
 
@@ -167,7 +167,8 @@ export async function collectTiktokComments(clientName) {
     
               //code on the go
               for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++) {
-
+    
+    
                 if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
                   let newDataUsers = [];
                   hasShortcode = true;
