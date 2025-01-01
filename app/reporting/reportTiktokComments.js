@@ -3,10 +3,12 @@ import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 export async function reportTiktokComments(clientValue) {
+  console.log(clientValue);
   try {
     console.log("Report Tiktok Function Executed");
+
     const clientName = clientValue.get('CLIENT_ID');
-    
+
     if (clientValue.get('STATUS') === 'TRUE') {
 
       // If Client_ID exist. then get official content
