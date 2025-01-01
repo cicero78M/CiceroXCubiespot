@@ -11,16 +11,12 @@ export async function collectFollowing(from, username) {
         let instaProfileRows = await instaProfileSheet.getRows();
 
         instaInfoAPI(username).then(async (responseInfo) => {
-            console.log(responseInfo.data.data);
-            instaFollowingAPI(username).then(async (responseFollowing) => {
-                console.log(responseFollowing);
-            });
-            
             let isDataExist = false;
             let counter = 0;
 
             for (let i = 0; i < instaProfileRows.length; i++){
                 if(instaProfileRows[i].get("USERNAME") === username){
+                    console.log(instaProfileRows[i].get("USERNAME"));
                     isDataExist = true;
                     let isFollowing = false;
                     let pages = '';                  
@@ -36,7 +32,7 @@ export async function collectFollowing(from, username) {
                                 }
                             }
                         });
-                    } while (!isFollowing || responseInfo.data.data.follower_count <= counter);
+                    } while (!isFollowing || responseInfo.data.data.follower_count > counter);
                 }               
             }            
             
