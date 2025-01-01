@@ -3,7 +3,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { readFileSync } from 'fs';
 import { tiktokUserInfoAPI, tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
-import { client } from '../../app.js';
+import { client, localDate } from '../../app.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
