@@ -277,7 +277,6 @@ export async function collectTiktokComments(clientName) {
             };
             console.log(responseData.data);
             await client.sendMessage('6281235114745@c.us', responseData.data);
-            tiktokCommentsUsernameDoc.delete;
             return responseData;
           }
     
@@ -289,7 +288,6 @@ export async function collectTiktokComments(clientName) {
           };
           console.log(responseData.data);
           await client.sendMessage('6281235114745@c.us', responseData.data);
-          tiktokCommentsUsernameDoc.delete;
           return responseData;
         }
     } else {
@@ -302,7 +300,6 @@ export async function collectTiktokComments(clientName) {
     
       console.log(responseData.data);
       await client.sendMessage('6281235114745@c.us', responseData.data);
-      tiktokCommentsUsernameDoc.delete;
       return responseData;
     }
   } catch (error) {
@@ -315,7 +312,6 @@ export async function collectTiktokComments(clientName) {
     
     console.log(responseData.data);
     await client.sendMessage('6281235114745@c.us', responseData.data);
-    tiktokCommentsUsernameDoc.delete;
     return responseData;
   }
 
