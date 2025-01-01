@@ -85,7 +85,7 @@ export async function reportTiktokComments(clientName) {
                   userCounter++;
                   } else if (clientResponse.data.isClientType === "COM") {
 
-                    let name = notLikesList[iv].get('NAMA');
+                    let name = notCommentList[iv].get('NAMA');
                     let nameUpper = name.toUpperCase();
                     userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].get('TIKTOK'));
                     divisiCounter++;
