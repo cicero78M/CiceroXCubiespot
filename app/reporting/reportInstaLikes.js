@@ -1,9 +1,6 @@
-import { readFileSync } from 'fs';
-import { sheetDoc } from '../database_query/sheetDoc.js';
+import { ciceroKey, sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { client, hours, localDate } from '../../app.js';
-
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function reportInstaLikes(clientValue) {
   try {
@@ -98,7 +95,6 @@ export async function reportInstaLikes(clientValue) {
 
           for (let iv = 0; iv < notLikesList.length; iv++) {
             if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
-              
               if (clientValue.get('TYPE')  === "RES") {
                 userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesList[iv].get('INSTA'));
                 divisiCounter++;

@@ -1,12 +1,15 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
+import { googleAuth } from '../database_query/sheetDoc.js';
+import { tiktokUserInfoAPI } from '../socialMediaAPI/tiktokAPI.js';
 
-export async function setNewClientState(clientName, newstate) {
+export async function setSecuid(clientValue) {
 
     try {
 
-        const clientDoc = new GoogleSpreadsheet(ciceroKey.dbKey.clientDataID, googleAuth); //Google Auth
+        const clientName = clientValue.get('CLIENT_ID');
+
+        const clientDoc = new GoogleSpreadsheet(ciceroKeys.dbKey.clientDataID, googleAuth); //Google Auth
         await clientDoc.loadInfo(); // loads document properties and worksheets
 
         const clientSheet = clientDoc.sheetsByTitle['ClientData'];
@@ -16,8 +19,15 @@ export async function setNewClientState(clientName, newstate) {
 
         for (let i = 0; i < clientRows.length; i++) {
             if (clientRows[i].get('CLIENT_ID') === clientName) {
+
+                //Collect Content Shortcode from Official Account
+                let tiktokAccount = clientValue.get('TIKTOK');
+
+                let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
+                const secUid = await responseInfo.data.userInfo.user.secUid;
+
                 isClient = true;
-                clientRows[i].assign({ STATUS: newstate });; // Updae State Value
+                clientRows[i].assign({ SECUID: secUid });; // Updae State Value
                 await clientRows[i].save(); //save update
 
                 let response = {

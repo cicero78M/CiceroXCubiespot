@@ -250,11 +250,10 @@ client.on('call', async (call) => {
 });
 
 client.on('message', async (msg) => {
-
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'alltiktok', 'allinsta','reporttiktok', 'reportinsta','exception', 'savecontact'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'alltiktok', 'allinsta','reporttiktok', 'reportinsta','exception', 'savecontact','secuid'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 'ig','ig1', 'ig2','ig3', 
-        'insta'];
+    const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
+        'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['follow', 'like', 'comment'];
     try {
@@ -366,7 +365,6 @@ client.on('message', async (msg) => {
                             console.log(time+' Generate All Socmed Data Starting');
                             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                             let clientRows = await clientResponse.data;
-   
                             //Itterate Client
                             for (let i = 0; i < clientRows.length; i++){
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
@@ -395,7 +393,6 @@ client.on('message', async (msg) => {
                                             break;
                                     }
                                 }           
-
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
@@ -433,7 +430,6 @@ client.on('message', async (msg) => {
                             console.log(error)
                             await client.sendMessage('6281235114745@c.us', 'Collect #ALLSOCMED Error');
                         }
-
                     } else if (splittedMsg[1].toLowerCase() === 'allinsta') {
                         try {
                             //Generate All Socmed
@@ -443,7 +439,6 @@ client.on('message', async (msg) => {
                             let clientRows = await clientResponse.data;
                             //Itterate Client
                             for (let i = 0; i < clientRows.length; i++){
-
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
@@ -475,7 +470,6 @@ client.on('message', async (msg) => {
                             console.log(error)
                             await client.sendMessage('6281235114745@c.us', 'Collect #ALLINSTA Error');
                         }
-
                     } else if (splittedMsg[1].toLowerCase() === 'alltiktok') {
                         try {
                             //Generate All Socmed
@@ -557,8 +551,27 @@ client.on('message', async (msg) => {
                             console.log(error)
                             await client.sendMessage('6281235114745@c.us', 'Collect #REPORTINSTA Error');
                         }
+                    } else if (splittedMsg[1].toLowerCase() === 'secuid') {
+                        try {
+                            //Generate All Socmed
+                            await client.sendMessage('6281235114745@c.us', 'Generate Tiktok secUID Data Starting...');
+                            console.log(time+' Generate Tiktok secUID Data Starting');
+                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                            let clientRows = await clientResponse.data;
+                            //Itterate Client
+                            for (let i = 0; i < clientRows.length; i++){
 
-
+                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START TIKTOK SECUID DATA');
+                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START TIKTOK SECUID DATA');
+                                    let tiktokSecuid = await setSecuid(clientRows[i]);
+                                    sendResponse(msg.from, tiktokSecuid, clientRows[i].get('CLIENT_ID')+' ERROR TIKTOK SECUID DATA');
+                                } 
+                            }
+                        } catch (error) {
+                            console.log(error)
+                            await client.sendMessage('6281235114745@c.us', 'Collect #REPORTINSTA Error');
+                        }
                     } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
 
                         let response = await createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
@@ -584,8 +597,7 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'savecontact') {
                         let response = await saveContacts();
                         console.log(response);
-                    }
-                                            
+                    }                   
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){//['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
                     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
@@ -822,7 +834,6 @@ client.on('message', async (msg) => {
         client.sendMessage('6281235114745@c.us', 'Error on Apps');
     }//try catch
 });
-
 /*This Function Must be Created Here*/
 //Response By User
 function sendResponse(from, responseData, errormessage) {
@@ -841,7 +852,6 @@ function sendResponse(from, responseData, errormessage) {
             break;
     }   
 }
-
 //Response By Client
 function sendClientResponse(clientID, supervisor, operator, group, responseData, type) {
     switch (responseData.code){

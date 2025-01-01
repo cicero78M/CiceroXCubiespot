@@ -1,8 +1,6 @@
-import { readFileSync } from 'fs';
-import { sheetDoc as _sheetDoc } from '../database_query/sheetDoc.js';
+import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { hours, localDate } from '../../app.js';
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function reportTiktokComments(clientValue) {
   try {
