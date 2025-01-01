@@ -8,7 +8,6 @@ const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function reportInstaLikes(clientName) {
   try {
-
     console.log("Reporting Insta..");
     await client.sendMessage('6281235114745@c.us', `${clientName} Reporting Insta..`);
 

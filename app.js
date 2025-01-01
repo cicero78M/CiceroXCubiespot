@@ -29,9 +29,11 @@ import { pushUserClient } from './app/database/pushUserClient.js';
 import { addNewUser } from './app/database/addNewUser.js';
 import { updateUsername } from './app/database/updateUsername.js';
 import { collectFollowing } from './app/scrapping/collectFolllowingInsta.js';
- 
+
+//Routing Port 
 const port = ciceroKey.port;
 
+//Date Time
 export const d = new Date();
 export const localDate = d.toLocaleDateString("en-US", {
     timeZone: "Asia/Jakarta"
@@ -102,12 +104,8 @@ client.on('ready', () => {
             //Commit if schedule Working
             await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');            
             console.log(time+' Generate All Socmed Data Starting');
-            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-            let clientRows = await clientResponse.data;
-            //Wait A Second
-            setTimeout(() => {
-                console.log("Collecting Client Data");
-            }, 1000);
+            const clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+            const clientRows = await clientResponse.data;
             //Iterate Data By Client 
             for (let i = 0; i < clientRows.length; i++){
                 //Checking Client properties
@@ -117,10 +115,6 @@ client.on('ready', () => {
                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                     //Call Scrapping Tiktok Comment by Client Data
                     let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-                    //Wait A Second
-                    setTimeout(() => {
-                        console.log("Collecting Client Data");
-                    }, 1000);
                     //Response Processing 
                     let reportTiktok;
                     switch (loadTiktok.code) {
@@ -145,10 +139,6 @@ client.on('ready', () => {
                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                     //Call Scrapping Insta Likes by Client Data
                     let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-                    //Wait A Second
-                    setTimeout(() => {
-                        console.log("Collecting Client Data");
-                    }, 1000);
                     //Proccessing Data
                     let reportInsta;
                     switch (loadInsta.code) {
@@ -156,9 +146,6 @@ client.on('ready', () => {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                            setTimeout(() => {
-                                console.log("Collecting Report Data");
-                            }, 1000);
                             sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                             break;                                           
                         case 303:
@@ -168,9 +155,6 @@ client.on('ready', () => {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                            setTimeout(() => {
-                                console.log("Collecting Report Data");
-                            }, 1000);
                             sendResponse('6281235114745@c.us', reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                             break;
                     }
@@ -188,12 +172,9 @@ client.on('ready', () => {
         try {
             client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');            
             console.log(time+' Cron Job Starting');
-            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-            let clientRows = clientResponse.data;
-            //Wait A Second
-            setTimeout(() => {
-                console.log("Collecting Client Data");
-            }, 1000);
+            const clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+            const clientRows = clientResponse.data;
+
             //Itterate Client Data
             for (let i = 0; i < clientRows.length; i++){
             
@@ -201,19 +182,12 @@ client.on('ready', () => {
                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                     let loadTiktok = await collectTiktokComments(clientRows[i].get('CLIENT_ID'));
-                    //Wait A Second
-                    setTimeout(() => {
-                        console.log("Collecting Client Data");
-                    }, 1000);
                     //Proccessing Data            
                     let reportTiktok;
                     switch (loadTiktok.code) {
                         case 200:                       
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                            setTimeout(() => {
-                                console.log("Collecting Report Data");
-                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
                                 reportTiktok, ' REPORT TIKTOK');    
                             break;   
@@ -223,9 +197,6 @@ client.on('ready', () => {
                         default:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                            setTimeout(() => {
-                                console.log("Collecting Report Data");
-                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
                                 reportTiktok, ' REPORT TIKTOK');
                             break;
@@ -237,10 +208,6 @@ client.on('ready', () => {
                     client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                     //Scrapping Insta Data
                     let loadInsta = await collectInstaLikes(clientRows[i].get('CLIENT_ID'));
-                    //Wait A Second
-                    setTimeout(() => {
-                        console.log("Collecting Client Data");
-                    }, 1000);
                     //Processing Data
                     let reportInsta;
                     switch (loadInsta.code) {
@@ -248,9 +215,6 @@ client.on('ready', () => {
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                             client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                            setTimeout(() => {
-                                console.log("Collecting Report Data");
-                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
                                 reportInsta, ' REPORT INSTA');
                             break;     
@@ -260,9 +224,6 @@ client.on('ready', () => {
                         default:
                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                            setTimeout(() => {
-                                console.log("Collecting Report Data");
-                            }, 1000);
                             sendClientResponse(clientRows[i].get('CLIENT_ID'), clientRows[i].get('SUPERVISOR'),clientRows[i].get('OPERATOR'),clientRows[i].get('GROUP'),
                                 reportInsta, ' REPORT INSTA');
                             break;
