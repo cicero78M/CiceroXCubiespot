@@ -1,4 +1,4 @@
-import { client } from "../../app";
+import { client } from "../../app.js";
 
 //Response By User
 export function sendResponse(from, responseData, errormessage) {
