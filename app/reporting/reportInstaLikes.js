@@ -112,7 +112,9 @@ export async function reportInstaLikes(clientName) {
                 divisiCounter++;
                 userCounter++;
               } else if (clientResponse.data.isClientType === "COM") {
-                userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('NAMA') + ' - ' + notLikesList[iv].get('INSTA'));
+                let name = notLikesList[iv].get('NAMA');
+                let nameUpper = name.toUpperCase();
+                userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesList[iv].get('INSTA'));
                 divisiCounter++;
                 userCounter++;
               }

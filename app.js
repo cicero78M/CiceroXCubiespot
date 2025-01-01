@@ -405,10 +405,7 @@ client.on('message', async (msg) => {
                             console.log(time+' Generate All Socmed Data Starting');
                             let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                             let clientRows = await clientResponse.data;
-                            //Wait A Second
-                            setTimeout(() => {
-                                console.log("Collecting Client Data");
-                            }, 1000);
+   
                             //Itterate Client
                             for (let i = 0; i < clientRows.length; i++){
                                 if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
@@ -426,9 +423,6 @@ client.on('message', async (msg) => {
                                         case 200:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
                                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;                                           
                                         case 303:
@@ -437,9 +431,6 @@ client.on('message', async (msg) => {
                                         default:
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
                                             reportTiktok = await reportTiktokComments(clientRows[i].get('CLIENT_ID'));
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;
                                     }
@@ -513,9 +504,6 @@ client.on('message', async (msg) => {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
                                             sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                             break;                                           
                                         case 303:
@@ -525,9 +513,6 @@ client.on('message', async (msg) => {
                                             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
                                             await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
                                             reportInsta = await reportInstaLikes(clientRows[i].get('CLIENT_ID'));
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
                                             sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
                                             break;
                                     }
