@@ -82,11 +82,10 @@ export async function reportInstaLikes(clientName) {
         
         let UserNotLikes = [];
         let notLikesList = [];
+        if (clientResponse.data.isClientType === "RES") {
 
-        for (let iii = 0; iii < userRows.length; iii++) {
+          for (let iii = 0; iii < userRows.length; iii++) {
             if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
-              console.log(userRows[iii]);
-
               if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
                 if (userRows[iii].get('STATUS') === 'TRUE' ){
                   if (userRows[iii].get('EXCEPTION') === "FALSE"){
@@ -96,7 +95,27 @@ export async function reportInstaLikes(clientName) {
                 }
               }
             }          
-        }
+          }
+
+        } else if (clientResponse.data.isClientType === "COM") {
+
+          
+          for (let iii = 0; iii < userRows.length; iii++) {
+            if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
+              console.log(userRows[iii].get('INSTA'));
+              if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
+                if (userRows[iii].get('STATUS') === 'TRUE' ){
+                  if (userRows[iii].get('EXCEPTION') === "FALSE"){
+                    UserNotLikes.push(userRows[iii].get('ID_KEY'));
+                    notLikesList.push(userRows[iii]);
+                  }
+                }
+              }
+            }          
+          }
+
+        } 
+        
 
         let dataInsta = '';
         let userCounter = 0;
