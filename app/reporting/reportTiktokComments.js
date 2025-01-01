@@ -103,7 +103,7 @@ export async function reportTiktokComments(clientValue) {
             }
             let tiktokSudah = userAll - notCommentList.length;
             let responseData;
-            if (clientResponse.data.isClientType === "RES") {
+            if (clientValue.get('TYPE')  === "RES") {
               responseData = {
                 data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " 
                   + clientName + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
@@ -112,7 +112,7 @@ export async function reportTiktokComments(clientValue) {
                 state: true,
                 code: 200
               };
-            } else if (clientResponse.data.isClientType === "COM") {
+            } else if (clientValue.get('TYPE')  === "COM") {
               responseData = {
                 data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " 
                   + clientName+ " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
