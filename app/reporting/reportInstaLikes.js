@@ -23,7 +23,7 @@ export async function reportInstaLikes(clientName) {
     if (clientResponse.data.isClientID && clientResponse.data.isStatus) {
       let divisiResponse = await listValueData(clientName, 'DIVISI');
       let divisiList = divisiResponse.data;
-
+      console.log(divisiList);
       let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       let userRows = userDoc.data;
       var userAll = 0;
