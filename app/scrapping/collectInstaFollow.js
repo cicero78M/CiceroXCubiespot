@@ -6,8 +6,6 @@ export async function instaUserFollowing(username, from) {
         let pages ;
         let userList;
         let isFollowing = false;
-        let user_counter = 0;
-
         let instaUser = await instaUserData(from, username);
         const following_count = instaUser.data.data.data.following_count;
         console.log(following_count);
@@ -17,9 +15,10 @@ export async function instaUserFollowing(username, from) {
             let instaFollowing = await instaFollowingAPI(username, pages);
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.pagination_token;
-            console.log(pages);
+            console.log("Is Pages "+pages);
             for (let i = 0; i < userList.length; i++){
-                    if (userList[i].username = username){
+                    console.log(userList[i].username);
+                    if (userList[i].username === username){
                     isFollowing = true;
                     break;
                 }
