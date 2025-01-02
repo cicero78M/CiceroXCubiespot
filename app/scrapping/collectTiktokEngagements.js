@@ -156,6 +156,7 @@ export async function collectTiktokComments(clientValue) {
                     total =  responseComments.data.total + 50;
                     cursorNumber = responseComments.data.cursor;
                     has_more =  responseComments.data.has_more;
+                    console.log(has_more);
                   });
                   
                 }, 2000);
