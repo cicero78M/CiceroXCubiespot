@@ -132,19 +132,19 @@ export async function collectTiktokComments(clientValue) {
                 }
               }
 
-              let cursorNumber = 0;
-              let total = 0;
-              let has_more = 0;
+          
 
 
               do {
+
                 setTimeout( () => {
+
                   
                   console.log("Update Data " + cursorNumber + " < " + total);
                   client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
                   tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments => {  
                     
-                    let commentItems =  responseComments.data.comments;
+                    commentItems =  responseComments.data.comments;
                     for (let iii = 0; iii < commentItems.length; iii++) {
                       if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
