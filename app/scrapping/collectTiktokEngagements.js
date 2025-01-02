@@ -152,7 +152,7 @@ export async function collectTiktokComments(clientValue) {
                     has_more =  responseComments.data.has_more;
                     console.log(cursorNumber);
                     
-                    setTimeout(() => {
+                    await setTimeout(() => {
 
                       console.log(has_more);
                  
