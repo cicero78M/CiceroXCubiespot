@@ -140,28 +140,29 @@ export async function newCollectTiktokComments(clientValue) {
       
                     do {
       
-                        await tiktokCommentAPI(todayItems[i], cursorNumber).then (async responseComments =>{
-
-                            let commentItems = await responseComments.data.comments;
+                        await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
                             
-                            for (let iii = 0; iii < commentItems.length; iii++) {
-                              if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                                if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                                  newDataUsers.push(commentItems[iii].user.unique_id);
+                            setTimeout(() => {
+                                commentItems = responseComments.data.comments;
+                                
+                                for (let iii = 0; iii < commentItems.length; iii++) {
+                                    if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                                    if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                                        newDataUsers.push(commentItems[iii].user.unique_id);
+                                    }
+                                    }
                                 }
-                              }
-                            }
-                            total;
-                            cursorNumber;
-                            
-                            has_more = await responseComments.data.has_more;
-                            total = await responseComments.data.total;
-                            cursorNumber = await responseComments.data.cursor;
-                            setTimeout(async () => {
+                                total;
+                                cursorNumber;
+                                
+                                has_more = responseComments.data.has_more;
+                                total = responseComments.data.total;
+                                cursorNumber = responseComments.data.cursor;
                                 console.log("Update Data " + cursorNumber + " < " + total);
                                 console.log(has_more);
                                 client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
                             }, 2000);
+                        
                         });
             
                     } while (has_more === 1);
