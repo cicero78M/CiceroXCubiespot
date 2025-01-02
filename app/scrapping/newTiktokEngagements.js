@@ -139,9 +139,8 @@ export async function newCollectTiktokComments(clientValue) {
                     }
       
                     do {
-                        setTimeout(() => {
 
-                            tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
+                            await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
                             
                                 
                                 let commentItems = responseComments.data.comments;
@@ -160,14 +159,15 @@ export async function newCollectTiktokComments(clientValue) {
                                 cursorNumber = responseComments.data.cursor;
                                 console.log("Update Data " + cursorNumber + " < " + total);
                                 console.log(has_more);
-                                client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
                         
                             }). catch (response => {
                                 console.log(response);
                                 has_more = 0;
                             });
 
-                        }, 2000);
+                            setTimeout(() => {
+                                client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
+                            }, 2000);
 
                     } while (has_more === 1);
       
