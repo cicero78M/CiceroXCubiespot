@@ -1,6 +1,7 @@
 import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 import { instaFollowingAPI, instaInfoAPI } from "../socialMediaAPI/instaAPI.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { instaUserFollowing } from "./collectInstaFollow.js";
 
 export async function instaUserData(from, username) {
     try {
@@ -19,7 +20,7 @@ export async function instaUserData(from, username) {
             }               
         }
 
-        const responseFollowing = await instaFollowingAPI(username); 
+        const responseFollowing = await instaUserFollowing(username); 
         let isFollowing =  await responseFollowing.data;
         console.log(isFollowing);
 
