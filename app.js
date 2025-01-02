@@ -37,7 +37,7 @@ const port = ciceroKey.port;
 
 //Express Routing
 app.listen(port, () => {
-    console.log(time+` Cicero System Start listening on port >>> ${port}`)
+    console.log(`Cicero System Start listening on port >>> ${port}`)
 });
 
 //WWEB JS Client Constructor
@@ -48,20 +48,21 @@ export const client = new Client({
 
 });
 
+
 //WWEB Client Initializing
-console.log(time+' Initializing...');
+console.log('Initializing...');
 client.initialize();
 //WWeB Authenticate Checking
 client.on('authenthicated', (session)=>{
-    console.log(time+' '+JSON.stringify(session));
+    console.log(+JSON.stringify(session));
 });
 //WWEB If Authenticate Failure
 client.on('auth_failure', msg => {
-    console.error(time+' AUTHENTICATION FAILURE', msg);
+    console.error('AUTHENTICATION FAILURE', msg);
 });
 //WWEB If Disconected
 client.on('disconnected', (reason) => {
-    console.log(time+' Client was logged out', reason);
+    console.log('Client was logged out', reason);
 });
 //WWeb Ready
 client.on('ready', () => {
