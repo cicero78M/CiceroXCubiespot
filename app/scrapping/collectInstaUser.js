@@ -2,10 +2,9 @@ import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 import { instaInfoAPI } from "../socialMediaAPI/instaAPI.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
-export async function collectInstaUser(from, username) {
+export async function instaUserData(from, username) {
     try {
         const responseInfo = await instaInfoAPI(username);
-        
         let isDataExist = false;
 
         const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
@@ -20,6 +19,8 @@ export async function collectInstaUser(from, username) {
             }               
         }
 
+        
+
         if (!isDataExist){
 
             instaProfileSheet.addRow({
@@ -31,7 +32,7 @@ export async function collectInstaUser(from, username) {
             
             
             let responseData = {
-                data: "Success Post Data",
+                data: responseInfo,
                 code: 200,
                 state: true
             }
@@ -40,7 +41,7 @@ export async function collectInstaUser(from, username) {
         } else {
 
             let responseData = {
-                data: "Username Data Exist",
+                data: responseInfo,
                 code: 201,
                 state: true
             }

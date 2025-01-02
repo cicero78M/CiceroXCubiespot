@@ -32,6 +32,7 @@ import { collectInstaUser } from './app/scrapping/collectInstaUser.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
+import { instaUserFollowing } from './app/scrapping/instaFollow.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -807,9 +808,21 @@ client.on('message', async (msg) => {
                                     const instaLink = splittedMsg[1].split('?')[0];
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
-                                    collectInstaUser(msg.from, instaUsername).then(async (responseData) => {
+                                    instaUserFollowing(instaUsername, msg.from).then(async (responseData) => {
                                         console.log(responseData);
-                                        client.sendMessage(msg.from, responseData.data);                                    
+                                        switch (responseData.code) {
+                                            case 200:
+                                                console.log(responseData.data);
+                                                client.sendMessage(msg.from, responseData.data);   
+                                                break;
+                                            case 303:
+                                                console.log(responseData.data);
+                                                client.sendMessage(msg.from, "Error");   
+                                                break;
+                                            default:
+                                                client.sendMessage(msg.from, responseData.data);
+                                                break;                                    
+                                        }
                                     });
 
                                 } else {
