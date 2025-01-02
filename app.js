@@ -28,7 +28,7 @@ import { sheetDoc } from './app/database_query/sheetDoc.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
 import { addNewUser } from './app/database/addNewUser.js';
 import { updateUsername } from './app/database/updateUsername.js';
-import { collectFollowing } from './app/scrapping/collectFolllowingInsta.js';
+import { collectFollowing, collectInstaUser } from './app/scrapping/collectInstaUser.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
@@ -807,7 +807,7 @@ client.on('message', async (msg) => {
                                     const instaLink = splittedMsg[1].split('?')[0];
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
-                                    collectFollowing(msg.from, instaUsername).then(async (responseData) => {
+                                    collectInstaUser(msg.from, instaUsername).then(async (responseData) => {
                                         client.sendMessage(msg.from, responseData);
                                     });
                                 } else {

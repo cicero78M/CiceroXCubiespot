@@ -1,8 +1,8 @@
 import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
-import { instaFollowingAPI, instaInfoAPI } from "../socialMediaAPI/instaAPI.js";
+import { instaInfoAPI } from "../socialMediaAPI/instaAPI.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
-export async function collectFollowing(from, username) {
+export async function collectInstaUser(from, username) {
     try {
                 
         const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
