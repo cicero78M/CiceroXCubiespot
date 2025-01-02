@@ -43,7 +43,7 @@ export async function instaUserData(from, username) {
                 return responseData;
             } else {
                 let responseData = {
-                    data: `Hi, Selamat Siang ${responseInfo.data.data.full_name}\n\nSistem Kami sudah membaca bahwa kamu belum Follow Akun Instagram @cubiehome,\n\nSilahkan Follow Akun Instagram Kami untuk mendapatkan Akses ke WiFi Corner CubieHome dan tawaran menarik lainnya dari Cubie Home.\n\nhttps//www.instagram.com/cubiehome\n\nTerimakasih`,
+                    data: `Hi, Selamat Siang ${responseInfo.data.data.full_name}\n\nSistem Kami sudah membaca bahwa kamu belum Follow Akun Instagram @cubiehome,\n\nSilahkan Follow Akun Instagram Kami untuk mendapatkan Akses ke WiFi Corner CubieHome dan tawaran menarik lainnya dari Cubie Home.\n\nhttps://www.instagram.com/cubiehome\n\nTerimakasih`,
                     code: 200,
                     state: true
                 }
