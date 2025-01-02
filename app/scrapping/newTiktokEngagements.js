@@ -143,8 +143,7 @@ export async function newCollectTiktokComments(clientValue) {
                         await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
                             
                             setTimeout(() => {
-                                commentItems = responseComments.data.comments;
-                                
+                                let commentItems = responseComments.data.comments;
                                 for (let iii = 0; iii < commentItems.length; iii++) {
                                     if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
                                     if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
