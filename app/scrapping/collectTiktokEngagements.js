@@ -1,11 +1,15 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
-import { client, localDate } from '../../app.js';
+import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 
 export async function collectTiktokComments(clientValue) {
-
+  //Date Time
+  const d = new Date();
+  const localDate = d.toLocaleDateString("en-US", {
+      timeZone: "Asia/Jakarta"
+  });   
   try {    
 
     const clientName = clientValue.get('CLIENT_ID');

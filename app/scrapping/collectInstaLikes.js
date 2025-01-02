@@ -1,10 +1,15 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { instaLikesAPI, instaPostAPI } from '../socialMediaAPI/instaAPI.js';
-import { client, localDate } from '../../app.js';
+import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 
 export const collectInstaLikes = async function colectInstaLikes(clientValue) {
+  //Date Time
+  const d = new Date();
+  const localDate = d.toLocaleDateString("en-US", {
+      timeZone: "Asia/Jakarta"
+  });   
   try {
     const clientName = clientValue.get('CLIENT_ID');
     const instaAccount = clientValue.get('INSTAGRAM')
