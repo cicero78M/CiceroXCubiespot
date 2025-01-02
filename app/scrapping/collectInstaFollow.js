@@ -18,7 +18,7 @@ export async function instaUserFollowing(username, from) {
             console.log("Is Pages "+pages);
             for (let i = 0; i < userList.length; i++){
                     console.log(userList[i].username);
-                    if (userList[i].username === username){
+                    if (userList[i].username === 'cubiehome'){
                     isFollowing = true;
                     break;
                 }
