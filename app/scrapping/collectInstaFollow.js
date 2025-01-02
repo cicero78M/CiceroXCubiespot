@@ -18,6 +18,7 @@ export async function instaUserFollowing(username, from) {
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.data.pagination_token;
             for (let i = 0; i < userList.length; i++){
+                user_counter++;
                 if (userList[i].username = username){
                     isFollowing = true;
                     break;
