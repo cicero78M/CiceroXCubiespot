@@ -1,13 +1,12 @@
 import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
+import { instaFollowingAPI, instaInfoAPI } from "../socialMediaAPI/instaAPI.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
-import { client } from "../../app.js";
 
 export async function instaUserData(from, username) {
     try {
-        console.log('Start proccessing Data...');
-        client.sendMessage(from, "Silahkan Menunggu, Sistem Kami Sedang Memproses Data Anda.")
+        const responseInfo = await instaInfoAPI(username);
         let isDataExist = false;
+
         const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
         await instaProfileDoc.loadInfo(); // loads document properties and worksheets
         const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
@@ -22,10 +21,8 @@ export async function instaUserData(from, username) {
 
 
         if (!isDataExist){
-
-            let responseFollowing = await instaFollowingAPI(username);
-            let isFollowing = responseFollowing.data;
-            console.log(isFollowing);
+            const responseFollowing = await instaFollowingAPI(username); 
+            const isFollowing =  responseFollowing.data;
 
             instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.data.is_private, isBUSSINESS:responseInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,
@@ -33,7 +30,6 @@ export async function instaUserData(from, username) {
                 FOLLOWER:responseInfo.data.data.follower_count, FOLLOWING:responseInfo.data.data.following_count, MEDIA_COUNT:responseInfo.data.data.media_count,
                 BIOGRAPHY:responseInfo.data.data.biography, isFOLLOWING : isFollowing
             });
-
             if (isFollowing){
                 let responseData = {
                     data: `Hi, Selamat Siang ${responseInfo.data.data.full_name}\n\nSelamat, Sistem Kami sudah membaca bahwa kamu sudah Follow Akun Instagram @cubiehome,\n\nBerikut Login dan Password yang bisa kamu gunakan untuk mengakses Wifi Corner CubieHome\n\nUser : Username\nPassword : xxxxxx`,
