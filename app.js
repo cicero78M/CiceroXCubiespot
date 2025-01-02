@@ -28,11 +28,10 @@ import { sheetDoc } from './app/database_query/sheetDoc.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
 import { addNewUser } from './app/database/addNewUser.js';
 import { updateUsername } from './app/database/updateUsername.js';
-import { collectInstaUser } from './app/scrapping/collectInstaUser.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
-import { instaUserFollowing } from './app/scrapping/instaFollow.js';
+import { instaUserFollowing } from './app/scrapping/collectInstaFollow.js';
 
 //Routing Port 
 const port = ciceroKey.port;
