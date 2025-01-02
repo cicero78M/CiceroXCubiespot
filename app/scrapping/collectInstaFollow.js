@@ -7,9 +7,6 @@ export async function instaUserFollowing(username, from) {
         let pages ;
         let userList;
         let isFollowing = false;
-        let instaUser = await instaUserData(from, username);
-        const following_count = instaUser.data.data.data.following_count;
-        console.log(following_count);
 
         do {
             console.log("Starting...");
