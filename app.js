@@ -808,7 +808,7 @@ client.on('message', async (msg) => {
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
                                     let responseData = await instaUserData(msg.from, instaUsername);
 
-                                    sendResponse(msg.from, responseData, 'Error Load Username');
+                                    sendResponse(msg.from, responseData, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
 
                                 } else {
                                     client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
