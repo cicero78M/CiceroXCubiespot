@@ -807,9 +807,9 @@ client.on('message', async (msg) => {
                                     const instaLink = splittedMsg[1].split('?')[0];
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
-                                    collectInstaUser(msg.from, instaUsername).then(async (responseData) => {
-                                        client.sendMessage(msg.from, responseData.data);
-                                    });
+                                    const responseData = await collectInstaUser(msg.from, instaUsername);
+                                    client.sendMessage(msg.from, responseData.data);
+                                    
                                 } else {
                                     client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
                                         +"Instagram anda dan bukan Akun Private.\n\nTerimakasih.");
