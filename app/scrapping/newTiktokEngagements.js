@@ -138,10 +138,10 @@ export async function newCollectTiktokComments(clientValue) {
                       }
                     }
       
-                    function tiktokLoop(finalValue){
+                    async function tiktokLoop(finalValue){
                        if(finalValue === 1){
-                        setTimeout(()=>{
-                            tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
+                        setTimeout(async ()=>{
+                            await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
                                 let commentItems = responseComments.data.comments;
                                 for (let iii = 0; iii < commentItems.length; iii++) {
                                     if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
@@ -170,7 +170,7 @@ export async function newCollectTiktokComments(clientValue) {
                        }
                     }
 
-                    tiktokLoop(has_more);
+                    await tiktokLoop(has_more);
       
                     let dataCleaning = [];
       
