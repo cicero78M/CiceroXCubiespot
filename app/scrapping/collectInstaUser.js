@@ -37,13 +37,16 @@ export async function collectInstaUser(from, username) {
                         code: 200,
                         state: true
                     };
+
                     return responseData;
                 } else {
+
                     let responseData = {
                         data: "Username Data Exist",
                         code: 201,
                         state: true
                     };
+
                     return responseData;
                 }
             });
@@ -53,6 +56,7 @@ export async function collectInstaUser(from, username) {
             code: 303,
             state: false
         };
+        
         return responseData;
         
     }
