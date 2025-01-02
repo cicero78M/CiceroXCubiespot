@@ -138,9 +138,9 @@ export async function collectTiktokComments(clientValue) {
 
               do {
 
-                setTimeout(async () => {
+                setTimeout(() => {
 
-                  let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
+                  let responseComments = tiktokCommentAPI(todayItems[i], cursorNumber);
                 
                   let commentItems =  responseComments.data.comments;
                   for (let iii = 0; iii < commentItems.length; iii++) {
@@ -156,9 +156,7 @@ export async function collectTiktokComments(clientValue) {
                   console.log(cursorNumber);
                   
                 }, 2000);
-
                 console.log(has_more);
-
               } while (has_more === 1);
 
               let dataCleaning = [];
