@@ -36,15 +36,15 @@ import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 const port = ciceroKey.port;
 
 //Date Time
-export const d = new Date();
-export const localDate = d.toLocaleDateString("en-US", {
+export let d = new Date();
+export let localDate = d.toLocaleDateString("en-US", {
     timeZone: "Asia/Jakarta"
 });
-export const hours = d.toLocaleTimeString("en-US", {
+export let hours = d.toLocaleTimeString("en-US", {
     timeZone: "Asia/Jakarta"
 });
 
-export const time = localDate+" >> "+hours;
+export let time = localDate+" >> "+hours;
 
 //Express Routing
 app.listen(port, () => {

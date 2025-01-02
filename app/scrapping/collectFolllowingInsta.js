@@ -20,7 +20,6 @@ export async function collectFollowing(from, username) {
                     isDataExist = true;
                     let isFollowing = false;
                     let pages = '';                  
-                    do {
                         instaFollowingAPI(username, pages).then(async (responseFollowing) => {
 
                             pages = responseFollowing.data.pagination_token;
@@ -34,7 +33,6 @@ export async function collectFollowing(from, username) {
                                 }
                             }
                         });
-                    } while (responseInfo.data.data.follower_count > counter);
                 }               
             }            
             
