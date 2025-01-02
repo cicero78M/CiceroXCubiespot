@@ -54,7 +54,7 @@ export async function instaUserData(from, username) {
             data: error,
             code: 303,
             state: false
-        };
+        }
         
         return responseData;
         
