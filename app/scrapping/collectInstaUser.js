@@ -1,12 +1,13 @@
 import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
-import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { instaUserFollowing } from "./collectInstaFollow.js";
+import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
+import { client } from "../../app.js";
 
 export async function instaUserData(from, username) {
     try {
+        console.log('Start proccessing Data...');
+        client.sendMessage(from, "Silahkan Menunggu, Sistem Kami Sedang Memproses Data Anda.")
         let isDataExist = false;
-        const isFollowing = await instaFollowingAPI(username); 
         const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
         await instaProfileDoc.loadInfo(); // loads document properties and worksheets
         const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
@@ -22,7 +23,7 @@ export async function instaUserData(from, username) {
 
         if (!isDataExist){
 
-            let responseFollowing = await instaUserFollowing(username);
+            let responseFollowing = await instaFollowingAPI(username);
             let isFollowing = responseFollowing.data;
             console.log(isFollowing);
 
