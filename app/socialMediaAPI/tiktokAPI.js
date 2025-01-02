@@ -1,5 +1,5 @@
-import { ciceroKey } from '../database_query/sheetDoc';
-import { request } from './instaAPI';
+import { ciceroKey } from '../database_query/sheetDoc.js';
+import { request } from './instaAPI.js';
 
 const headers = {
   'x-cache-control': 'no-cache',
