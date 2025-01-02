@@ -1,6 +1,14 @@
 import { ciceroKey, sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
-import { client, hours, localDate } from '../../app.js';
+import { client } from '../../app.js';
+//Date Time
+const d = new Date();
+const localDate = d.toLocaleDateString("en-US", {
+    timeZone: "Asia/Jakarta"
+});
+const hours = d.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Jakarta"
+});     
 
 export async function reportInstaLikes(clientValue) {
   try {

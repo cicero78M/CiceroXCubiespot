@@ -1,6 +1,13 @@
 import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
-import { hours, localDate } from '../../app.js';
+//Date Time
+const d = new Date();
+const localDate = d.toLocaleDateString("en-US", {
+    timeZone: "Asia/Jakarta"
+});
+const hours = d.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Jakarta"
+});     
 
 export async function reportTiktokComments(clientValue) {
   try {
