@@ -18,6 +18,7 @@ export async function collectInstaUser(from, username) {
 
                 for (let i = 0; i < instaProfileRows.length; i++){
                     if(instaProfileRows[i].get("USERNAME") === username){
+                        console.log(instaProfileRows[i].get("USERNAME"));
                         isDataExist = true;               
                     }               
                 
@@ -33,10 +34,10 @@ export async function collectInstaUser(from, username) {
                     
                     
                     let responseData = {
-                        data: "Success Load Data",
+                        data: "Success Post Data",
                         code: 200,
                         state: true
-                    };
+                    }
 
                     return responseData;
                 } else {
@@ -45,7 +46,7 @@ export async function collectInstaUser(from, username) {
                         data: "Username Data Exist",
                         code: 201,
                         state: true
-                    };
+                    }
 
                     return responseData;
                 }
