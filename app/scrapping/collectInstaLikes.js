@@ -238,7 +238,7 @@ export const collectInstaLikes = async function colectInstaLikes(clientValue) {
       code: 303
     };
     console.log(responseData.data);
-    await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Error`);
+    await client.sendMessage('6281235114745@c.us', `Collecting Insta Error`);
     return responseData;
   }
 };
