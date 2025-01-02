@@ -137,27 +137,22 @@ export async function collectTiktokComments(clientValue) {
 
 
                 do {
-
-                    let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-
-                    let commentItems =  await responseComments.data.comments;
-                    for (let iii = 0; iii < commentItems.length; iii++) {
-                      if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                        if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                          newDataUsers.push(commentItems[iii].user.unique_id);
+                    setTimeout(async () => {
+                      tiktokCommentAPI(todayItems[i], cursorNumber).then( responseComments => {
+                        let commentItems = responseComments.data.comments;
+                        for (let iii = 0; iii < commentItems.length; iii++) {
+                          if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                            if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                              newDataUsers.push(commentItems[iii].user.unique_id);
+                            }
+                          }
                         }
-                      }
-                    }
-                    cursorNumber = await responseComments.data.cursor;
-                    has_more =  await responseComments.data.has_more;
-                    await console.log(cursorNumber);
-                    
-                    await setTimeout(() => {
-
-                      console.log(has_more);
-                 
+                        cursorNumber =  responseComments.data.cursor;
+                        has_more =   responseComments.data.has_more;
+                        console.log(has_more);
+                      });
                     }, 2000);
-
+                    console.log(has_more);
                 } while (has_more === 1);
 
               let dataCleaning = [];
