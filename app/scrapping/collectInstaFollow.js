@@ -13,21 +13,18 @@ export async function instaUserFollowing(username, from) {
         console.log(following_count);
 
         while (following_count >= user_counter ) {
-            console.log("Starting");
-            console.log(user_counter);
+            console.log("Starting...");
+            user_counter = user_counter+userList.length;
             let instaFollowing = await instaFollowingAPI(username, pages);
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.pagination_token;
-            console.log(userList);
             console.log(pages);
             for (let i = 0; i < userList.length; i++){
                 user_counter++;
                 if (userList[i].username = username){
                     isFollowing = true;
-                    user_counter = following_count+1;
                     break;
                 }
-
             }            
         }
 
