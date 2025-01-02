@@ -7,7 +7,9 @@ export async function instaUserFollowing(username) {
         let isFollowing = false;
 
         do {
-            console.log("Starting...");
+            setTimeout(() => {
+                console.log("Starting...");
+            }, 1000);
             let instaFollowing = await instaFollowingAPI(username, pages);
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.pagination_token;
@@ -16,8 +18,7 @@ export async function instaUserFollowing(username) {
                     if (userList[i].username === 'cubiehome'){
                     isFollowing = true;
                 }
-            }            
-
+            } 
         } while (pages != null);
             
         let responseData =  {
