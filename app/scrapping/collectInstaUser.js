@@ -4,9 +4,6 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 export async function collectInstaUser(from, username) {
     try {
-                
- 
-
         const responseInfo = await instaInfoAPI(username);
         
         let isDataExist = false;
