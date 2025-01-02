@@ -1,6 +1,7 @@
 import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
-import { instaFollowingAPI, instaInfoAPI } from "../socialMediaAPI/instaAPI.js";
+import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { instaUserFollowing } from "./collectInstaFollow.js";
 
 export async function instaUserData(from, username) {
     try {
@@ -21,7 +22,7 @@ export async function instaUserData(from, username) {
 
         if (!isDataExist){
 
-            let responseInfo = await instaUserData(username);
+            let responseInfo = await instaUserFollowing(username);
 
             instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.data.is_private, isBUSSINESS:responseInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,
