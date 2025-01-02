@@ -181,7 +181,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 15/18/21
-    schedule('00 15,18,21 * * *', async () => {
+    schedule('02 15,18,21 * * *', async () => {
         //Date Time
         const d = new Date();
         const localDate = d.toLocaleDateString("en-US", {
