@@ -138,24 +138,28 @@ export async function collectTiktokComments(clientValue) {
 
 
               do {
-                setTimeout(async () => {
+                setTimeout( () => {
+                  
                   console.log("Update Data " + cursorNumber + " < " + total);
                   client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
-                  let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-
-                  let commentItems = await responseComments.data.comments;
-                  for (let iii = 0; iii < commentItems.length; iii++) {
-                    if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                      if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                        newDataUsers.push(commentItems[iii].user.unique_id);
+                  tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments => {  
+                    
+                    let commentItems =  responseComments.data.comments;
+                    for (let iii = 0; iii < commentItems.length; iii++) {
+                      if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                        if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                          newDataUsers.push(commentItems[iii].user.unique_id);
+                        }
                       }
                     }
-                  }
-                  total = await responseComments.data.total + 50;
-                  cursorNumber = await responseComments.data.cursor;
-                  has_more = await responseComments.data.has_more;
-
+  
+                    total =  responseComments.data.total + 50;
+                    cursorNumber = responseComments.data.cursor;
+                    has_more =  responseComments.data.has_more;
+                  });
+                  
                 }, 2000);
+
               } while (has_more === 1);
 
               let dataCleaning = [];
