@@ -142,7 +142,7 @@ export async function collectTiktokComments(clientValue) {
 
                     tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments => {  
                     
-                      commentItems =  responseComments.data.comments;
+                      let commentItems =  responseComments.data.comments;
                       for (let iii = 0; iii < commentItems.length; iii++) {
                         if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
                           if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
@@ -173,8 +173,6 @@ export async function collectTiktokComments(clientValue) {
               }
 
               console.log(clientName + ' Update Data');
-              cursorNumber = 0;
-              total = 0;
 
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
