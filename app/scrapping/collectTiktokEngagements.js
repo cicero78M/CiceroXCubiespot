@@ -113,14 +113,10 @@ export async function collectTiktokComments(clientValue) {
 
         var newData = 0;
         var updateData = 0;
-
- 
+        let has_more = 0;
+        let cursorNumber = 0;
 
         for (let i = 0; i < todayItems.length; i++) {
-
-          
-          let has_more = 0;
-          let cursorNumber = 0;
 
           let hasShortcode = false;
           //code on the go
@@ -131,6 +127,7 @@ export async function collectTiktokComments(clientValue) {
               let newDataUsers = [];
               hasShortcode = true;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
+
 
               for (let iii = 0; iii < fromRows.length; iii++) {
                 if (fromRows[iii] !== undefined || fromRows[iii] !== null || fromRows[iii] !== "") {
@@ -156,6 +153,7 @@ export async function collectTiktokComments(clientValue) {
                     console.log(has_more);
                   });
                 }, 2000);
+
                 console.log(has_more);
 
               } while (has_more === 1);
@@ -171,6 +169,9 @@ export async function collectTiktokComments(clientValue) {
               }
 
               console.log(clientName + ' Update Data');
+
+              has_more = 0;
+              cursorNumber = 0;
 
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
