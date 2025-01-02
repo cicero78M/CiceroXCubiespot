@@ -132,8 +132,8 @@ export async function collectTiktokComments(clientValue) {
                 }
               }
 
-              let has_more;
-              let cursorNumber;
+              let has_more = 0;
+              let cursorNumber = 0;
 
 
               do {
