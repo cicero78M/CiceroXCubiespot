@@ -114,6 +114,9 @@ export async function collectTiktokComments(clientValue) {
         var newData = 0;
         var updateData = 0;
 
+        let has_more = 0;
+        let cursorNumber = 0;
+
         for (let i = 0; i < todayItems.length; i++) {
 
           let hasShortcode = false;
@@ -131,33 +134,27 @@ export async function collectTiktokComments(clientValue) {
                   }
                 }
               }
-
-              let has_more = 0;
-              let cursorNumber = 0;
-
-
-                do {
-                    setTimeout(async () => {
-                      tiktokCommentAPI(todayItems[i], cursorNumber).then( responseComments => {
-                        let commentItems = responseComments.data.comments;
-                        for (let iii = 0; iii < commentItems.length; iii++) {
-                          if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                            if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                              newDataUsers.push(commentItems[iii].user.unique_id);
-                            }
+              
+              do {
+                  setTimeout(async () => {
+                    tiktokCommentAPI(todayItems[i], cursorNumber).then( responseComments => {
+                      let commentItems = responseComments.data.comments;
+                      for (let iii = 0; iii < commentItems.length; iii++) {
+                        if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                          if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                            newDataUsers.push(commentItems[iii].user.unique_id);
                           }
                         }
-                        cursorNumber =  responseComments.data.cursor;
-                        has_more =   responseComments.data.has_more;
-                        console.log(has_more);
-                      });
-                    }, 2000);
-                    console.log(has_more);
-                } while (has_more === 1);
+                      }
+                      cursorNumber =  responseComments.data.cursor;
+                      has_more =   responseComments.data.has_more;
+                      console.log(has_more);
+                    });
+                  }, 2000);
+                  console.log(has_more);
+              } while (has_more === 1);
 
               let dataCleaning = [];
-              has_more = 0;
-              cursorNumber = 0;
 
               for (let iv = 0; iv < newDataUsers.length; iv++) {
                 if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined) {
