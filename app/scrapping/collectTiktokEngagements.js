@@ -39,7 +39,7 @@ export async function collectTiktokComments(clientValue) {
             }
           }
         }
-      });
+      }) .catch(response => { console.log(response)});
                 
 
 
