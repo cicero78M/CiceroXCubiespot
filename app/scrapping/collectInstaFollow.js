@@ -21,11 +21,11 @@ export async function instaUserFollowing(username, from) {
             console.log(userList);
             console.log(pages);
             for (let i = 0; i < userList.length; i++){
-                user_counter++;
                 if (userList[i].username = username){
                     isFollowing = true;
                     break;
                 }
+                user_counter++;
             }            
         }
 
