@@ -32,6 +32,7 @@ import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
 import { instaUserFollowing } from './app/scrapping/collectInstaFollow.js';
+import { instaUserData } from './app/scrapping/collectInstaUser.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -805,7 +806,8 @@ client.on('message', async (msg) => {
 
                                     const instaLink = splittedMsg[1].split('?')[0];
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
-                                    let responseData = instaUserFollowing(instaUsername, msg.from)
+                                    let responseData = instaUserData(msg.from, instaUsername);
+                                    
                                     sendResponse(msg.from, responseData, 'Error Load Username');
 
                                 } else {

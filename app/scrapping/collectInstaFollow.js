@@ -1,8 +1,6 @@
-import { client } from "../../app.js";
 import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
-import { instaUserData } from "./collectInstaUser.js";
 
-export async function instaUserFollowing(username, from) {
+export async function instaUserFollowing(username) {
     try {
         let pages ;
         let userList;
@@ -21,27 +19,14 @@ export async function instaUserFollowing(username, from) {
             }            
 
         } while (pages != null);
-
-        if(!isFollowing){
             
-            let responseData = {
-                data: "User Not Following",
-                code: 201,
-                state: true
-            }
-            console.log(responseData.data);
-            client.sendMessage(from, responseData.data);
-            return responseData;
-        } else {
-            let responseData = {
-                data: "User Following",
-                code: 200,
-                state: true
-            }
-            console.log(responseData.data);
-            client.sendMessage(from, responseData.data);
-            return responseData;
+        let responseData = {
+            data: isFollowing,
+            code: 200,
+            state: true
+
         }
+        return responseData;
     
     } catch (error) {
         let responseData = {
