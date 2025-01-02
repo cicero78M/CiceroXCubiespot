@@ -138,9 +138,9 @@ export async function newCollectTiktokComments(clientValue) {
                       }
                     }
       
-                    function tiktokLoop(finalValue){
+                    function tiktokLoop(a, b){
 
-                        if(finalValue === 1){
+                        if(a >= b ){
                             setTimeout(async ()=>{
                                 await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
                                     let commentItems = responseComments.data.comments;
@@ -168,11 +168,11 @@ export async function newCollectTiktokComments(clientValue) {
 
                             }, 2000);
 
-                            tiktokLoop(has_more);
+                            tiktokLoop(total, cursor);
                        }
                     }
 
-                    tiktokLoop(1);
+                    tiktokLoop(total, cursor);
       
                     let dataCleaning = [];
       
