@@ -20,12 +20,13 @@ export async function instaUserFollowing(username) {
 
         } while (pages != null);
             
-        let responseData = {
+        let responseData =  {
             data: isFollowing,
             code: 200,
             state: true
 
         }
+
         return responseData;
     
     } catch (error) {
