@@ -33,6 +33,7 @@ import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
 import { instaUserFollowing } from './app/scrapping/collectInstaFollow.js';
 import { instaUserData } from './app/scrapping/collectInstaUser.js';
+import { newCollectTiktokComments } from './app/scrapping/newTiktokEngagements.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -281,7 +282,7 @@ client.on('message', async (msg) => {
         timeZone: "Asia/Jakarta"
     });     
     const time = localDate+" >> "+hours;
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'alltiktok', 'allinsta','reporttiktok', 'reportinsta','exception', 'savecontact','secuid'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'alltiktok', 'allinsta','newtiktok','reporttiktok', 'reportinsta','exception', 'savecontact','secuid'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
@@ -532,6 +533,46 @@ client.on('message', async (msg) => {
                                             sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
                                             break;
                                     }
+                                }           
+                            }
+                        //if Something error
+                        } catch (error) {
+                            console.log(error)
+                            await client.sendMessage('6281235114745@c.us', 'Collect #ALLTIKTOK Error');
+                        }
+                    } else if (splittedMsg[1].toLowerCase() === 'newtiktok') {
+                        try {
+                            //Generate All Socmed
+                            await client.sendMessage('6281235114745@c.us', 'Generate All Tiktok Data Starting...');
+                            console.log(time+' Generate All Tiktok Data Starting');
+                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+                            let clientRows = await clientResponse.data;
+                            //Itterate Client
+                            for (let i = 0; i < clientRows.length; i++){
+                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
+                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
+                                    //Scrapping TIKTOK by Client
+                                    await newCollectTiktokComments(clientRows[i]).then (async  loadTiktok => {
+                                        //Proccessing Data
+                                        switch (loadTiktok.code) {
+                                            case 200:
+                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
+                                                await reportTiktokComments(clientRows[i]).then ( reportTiktok => {
+                                                    sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                                });
+                                                break;                                           
+                                            case 303:
+                                                console.log(loadTiktok.data);
+                                                break;
+                                            default:
+                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
+                                                await reportTiktokComments(clientRows[i]).then ( reportTiktok => {
+                                                    sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                                });                                                
+                                                break;
+                                        }
+                                    });
                                 }           
                             }
                         //if Something error

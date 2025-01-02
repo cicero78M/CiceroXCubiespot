@@ -11,34 +11,33 @@ export async function newCollectTiktokComments(clientValue) {
   try {    
 
     const clientName = clientValue.get('CLIENT_ID');
+    const secUid = await clientValue.get('SECUID');
+    let cursor = 0;
+    let items = [];
+    let hasContent = false;
+    let itemByDay = [];
+    let todayItems = [];
+
+
+
     console.log(`${clientName} Collect Tiktok Data`);
     await client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Data`);
 
     if (clientValue.get('STATUS') === 'TRUE') {
 
-      const secUid = await clientValue.get('SECUID');
-
-      let cursor = 0;
-      let responseContent = await tiktokPostAPI(secUid, cursor);
-                
-      let items = [];
-
-      items = await responseContent.data.data.itemList;
-
-      let hasContent = false;
-      let itemByDay = [];
-      let todayItems = [];
-
-      if (Array.isArray(items)) {
-        for (let i = 0; i < items.length; i++) {
-          let itemDate = new Date(items[i].createTime * 1000);
-          if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-            hasContent = true;
-            itemByDay.push(items[i]);
-            todayItems.push(items[i].video.id);
+      await tiktokPostAPI(secUid, cursor).then (responseContent =>{
+        items = responseContent.data.data.itemList;
+        if (Array.isArray(items)) {
+            for (let i = 0; i < items.length; i++) {
+              let itemDate = new Date(items[i].createTime * 1000);
+              if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+                hasContent = true;
+                itemByDay.push(items[i]);
+                todayItems.push(items[i].video.id);
+              }
+            }
           }
-        }
-      }
+      });                
 
       if (hasContent) {
         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
