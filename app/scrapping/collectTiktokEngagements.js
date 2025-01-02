@@ -177,7 +177,8 @@ export async function collectTiktokComments(clientValue) {
               }
 
               console.log(clientName + ' Update Data');
-              
+              cursorNumber = 0;
+              total = 0;
 
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
