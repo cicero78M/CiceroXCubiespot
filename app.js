@@ -285,7 +285,7 @@ client.on('message', async (msg) => {
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
-    const cubies = ['follow', 'like', 'comment'];
+    const cubies = ['cubiehome', 'like', 'comment'];
     try {
         const contact = await msg.getContact();
         if (msg.isStatus){
@@ -798,7 +798,7 @@ client.on('message', async (msg) => {
 
                 } else if (cubies.includes(splittedMsg[0].toLowerCase())){//    const cubies = ['follow', 'like', 'comment'];
                     switch (splittedMsg[0].toLowerCase()) {
-                        case 'follow':
+                        case 'cubiehome':
 
                             if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
 
@@ -808,20 +808,7 @@ client.on('message', async (msg) => {
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
                                     let responseData = instaUserFollowing(instaUsername, msg.from)
-                                        console.log(responseData);
-                                        switch (responseData.code) {
-                                            case 200:
-                                                console.log(responseData.data);
-                                                client.sendMessage(msg.from, responseData.data);   
-                                                break;
-                                            case 303:
-                                                console.log(responseData.data);
-                                                client.sendMessage(msg.from, "Error");   
-                                                break;
-                                            default:
-                                                client.sendMessage(msg.from, responseData.data);
-                                                break;                                    
-                                        }
+                                    sendResponse(msg.from, responseData, 'Error Load UserName');
 
                                 } else {
                                     client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
