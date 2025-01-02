@@ -162,7 +162,12 @@ export async function newCollectTiktokComments(clientValue) {
                                 client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
                             }, 2000);
                         
-                        });
+                        }). catch (
+                            response => {
+                                console.log(response);
+                                has_more = 0;
+                            }
+                        );
             
                     } while (has_more === 1);
       
