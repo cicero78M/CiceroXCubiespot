@@ -31,6 +31,7 @@ import { updateUsername } from './app/database/updateUsername.js';
 import { collectFollowing } from './app/scrapping/collectFolllowingInsta.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
+import { editProfile } from './app/database/editUserProfile.js';
 
 //Routing Port 
 const port = ciceroKey.port;
