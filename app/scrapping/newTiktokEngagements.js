@@ -167,7 +167,7 @@ export async function newCollectTiktokComments(clientValue) {
 
                             setTimeout(() => {
                                 client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
-                            }, 2000);
+                            }, 5000);
 
                     } while (has_more === 1);
       
