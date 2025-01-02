@@ -132,7 +132,8 @@ export async function collectTiktokComments(clientValue) {
                 }
               }
 
-          
+              let has_more;
+              let cursorNumber;
 
 
               do {
@@ -149,13 +150,15 @@ export async function collectTiktokComments(clientValue) {
                           }
                         }
                       }
-                      let cursorNumber = responseComments.data.cursor;
-                      let has_more =  responseComments.data.has_more;
+                      cursorNumber = responseComments.data.cursor;
+                      has_more =  responseComments.data.has_more;
                       console.log(has_more);
                       console.log(cursorNumber);
                     });
                   
                 }, 2000);
+
+                console.log(has_more);
 
               } while (has_more === 1);
 
