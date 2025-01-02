@@ -114,15 +114,20 @@ export async function collectTiktokComments(clientValue) {
         var newData = 0;
         var updateData = 0;
 
-        let has_more = 0;
-        let cursorNumber = 0;
+ 
 
         for (let i = 0; i < todayItems.length; i++) {
+
+          
+          let has_more = 0;
+          let cursorNumber = 0;
 
           let hasShortcode = false;
           //code on the go
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++) {
+
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
+              
               let newDataUsers = [];
               hasShortcode = true;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
@@ -136,22 +141,22 @@ export async function collectTiktokComments(clientValue) {
               }
               
               do {
-                  setTimeout(async () => {
-                    tiktokCommentAPI(todayItems[i], cursorNumber).then( responseComments => {
-                      let commentItems = responseComments.data.comments;
-                      for (let iii = 0; iii < commentItems.length; iii++) {
-                        if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                          if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                            newDataUsers.push(commentItems[iii].user.unique_id);
-                          }
+                setTimeout(async () => {
+                  tiktokCommentAPI(todayItems[i], cursorNumber).then( responseComments => {
+                    let commentItems = responseComments.data.comments;
+                    for (let iii = 0; iii < commentItems.length; iii++) {
+                      if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                        if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                          newDataUsers.push(commentItems[iii].user.unique_id);
                         }
                       }
-                      cursorNumber =  responseComments.data.cursor;
-                      has_more =   responseComments.data.has_more;
-                      console.log(has_more);
-                    });
-                  }, 2000);
-                  console.log(has_more);
+                    }
+                    cursorNumber =  responseComments.data.cursor;
+                    has_more =   responseComments.data.has_more;
+                    console.log(has_more);
+                  });
+                }, 2000);
+                console.log(has_more);
               } while (has_more === 1);
 
               let dataCleaning = [];
