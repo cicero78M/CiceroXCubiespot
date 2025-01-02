@@ -138,7 +138,7 @@ export async function collectTiktokComments(clientValue) {
 
               do {
 
-                setTimeout( () => {
+                setTimeout(async () => {
 
                   let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
                 
