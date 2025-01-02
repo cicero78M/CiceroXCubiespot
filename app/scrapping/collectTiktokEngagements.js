@@ -140,7 +140,7 @@ export async function collectTiktokComments(clientValue) {
 
                     let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
 
-                    let commentItems =  responseComments.data.comments;
+                    let commentItems =  await responseComments.data.comments;
                     for (let iii = 0; iii < commentItems.length; iii++) {
                       if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
@@ -148,11 +148,11 @@ export async function collectTiktokComments(clientValue) {
                         }
                       }
                     }
-                    cursorNumber = responseComments.data.cursor;
-                    has_more =  responseComments.data.has_more;
-                    console.log(cursorNumber);
+                    cursorNumber = await responseComments.data.cursor;
+                    has_more =  await responseComments.data.has_more;
+                    await console.log(cursorNumber);
                     
-                    setTimeout(() => {
+                    await setTimeout(() => {
 
                       console.log(has_more);
                  
