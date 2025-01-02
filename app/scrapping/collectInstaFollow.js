@@ -33,7 +33,7 @@ export async function instaUserFollowing(username, from) {
                 state: true
             }
             console.log(responseData.data);
-            client.sendMessage(responseData.data);
+            client.sendMessage(from, responseData.data);
             return responseData;
         } else {
             let responseData = {
@@ -42,7 +42,7 @@ export async function instaUserFollowing(username, from) {
                 state: true
             }
             console.log(responseData.data);
-            client.sendMessage(responseData.data);
+            client.sendMessage(from, responseData.data);
             return responseData;
         }
     
