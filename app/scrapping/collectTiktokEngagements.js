@@ -158,7 +158,6 @@ export async function collectTiktokComments(clientValue) {
                  
                     }, 2000);
 
-                  console.log(has_more);
                 } while (has_more === 1);
 
               let dataCleaning = [];
