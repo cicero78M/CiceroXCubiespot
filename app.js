@@ -799,7 +799,6 @@ client.on('message', async (msg) => {
                 } else if (cubies.includes(splittedMsg[0].toLowerCase())){//    const cubies = ['follow', 'like', 'comment'];
                     switch (splittedMsg[0].toLowerCase()) {
                         case 'cubiehome':
-
                             if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
 
                                 if (!splittedMsg[1].includes('/p/') || !splittedMsg[1].includes('/reels/') || !splittedMsg[1].includes('/video/') ){

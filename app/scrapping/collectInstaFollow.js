@@ -1,3 +1,4 @@
+import { client } from "../../app.js";
 import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
 import { instaUserData } from "./collectInstaUser.js";
 
@@ -21,6 +22,7 @@ export async function instaUserFollowing(username, from) {
                     isFollowing = true;
                 }
             }            
+
         } while (pages != null);
 
         if(!isFollowing){
@@ -31,8 +33,8 @@ export async function instaUserFollowing(username, from) {
                 state: true
             }
             console.log(responseData.data);
+            client.sendMessage(responseData.data);
             return responseData;
-
         } else {
             let responseData = {
                 data: "User Following",
@@ -40,6 +42,7 @@ export async function instaUserFollowing(username, from) {
                 state: true
             }
             console.log(responseData.data);
+            client.sendMessage(responseData.data);
             return responseData;
         }
     
