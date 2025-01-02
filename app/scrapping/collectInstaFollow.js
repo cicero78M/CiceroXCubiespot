@@ -24,19 +24,21 @@ export async function instaUserFollowing(username, from) {
             }            
         } while (pages != null);
 
-        if(isFollowing){
-            let responseData = {
-                data: "User Following",
-                code: 200,
-                state: true
-            };
-            return responseData;
-        } else {
+        if(!isFollowing){
             let responseData = {
                 data: "User Not Following",
                 code: 201,
                 state: true
             };
+            return responseData;
+
+        } else {
+            let responseData = {
+                data: "User Following",
+                code: 200,
+                state: true
+            };
+
             return responseData;
         }
     
