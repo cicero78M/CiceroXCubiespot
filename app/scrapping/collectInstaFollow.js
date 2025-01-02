@@ -18,6 +18,8 @@ export async function instaUserFollowing(username, from) {
             let instaFollowing = await instaFollowingAPI(username, pages);
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.data.pagination_token;
+            console.log(userList);
+            console.log(pages);
             for (let i = 0; i < userList.length; i++){
                 user_counter++;
                 if (userList[i].username = username){
@@ -26,7 +28,6 @@ export async function instaUserFollowing(username, from) {
                 }
             }            
         }
-
 
         if(isFollowing){
             let responseData = {
