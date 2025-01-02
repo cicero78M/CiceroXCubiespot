@@ -5,20 +5,20 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 export async function collectInstaUser(from, username) {
     try {
                 
-        const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
-        await instaProfileDoc.loadInfo(); // loads document properties and worksheets
-        const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
-        let instaProfileRows = await instaProfileSheet.getRows();
+ 
 
         instaInfoAPI(username).then(
             async (responseInfo) => {
                 let isDataExist = false;
 
+                const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
+                await instaProfileDoc.loadInfo(); // loads document properties and worksheets
+                const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
+                let instaProfileRows = await instaProfileSheet.getRows();
+
                 for (let i = 0; i < instaProfileRows.length; i++){
                     if(instaProfileRows[i].get("USERNAME") === username){
-                        console.log(instaProfileRows[i].get("USERNAME"));
-                        isDataExist = true;
-                        
+                        isDataExist = true;               
                     }               
                 
                 }            
