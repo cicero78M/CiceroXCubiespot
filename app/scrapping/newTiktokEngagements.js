@@ -24,6 +24,7 @@ export async function newCollectTiktokComments(clientValue) {
     var updateData = 0;
     let cursorNumber = 0;
     let total = 0;
+    let has_more = 0;
 
     let items = [];
     let itemByDay = [];
@@ -143,6 +144,7 @@ export async function newCollectTiktokComments(clientValue) {
                         await tiktokCommentAPI(todayItems[i], cursorNumber).then (async responseComments =>{
 
                             let commentItems = await responseComments.data.comments;
+                            
                             for (let iii = 0; iii < commentItems.length; iii++) {
                               if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
                                 if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
@@ -153,7 +155,8 @@ export async function newCollectTiktokComments(clientValue) {
                             total;
                             cursorNumber;
                             
-                            total = await responseComments.data.total + 50;
+                            has_more = await responseComments.data.has_more;
+                            total = await responseComments.data.total;
                             cursorNumber = await responseComments.data.cursor;
 
                             console.log("Update Data " + cursorNumber + " < " + total);
@@ -162,7 +165,7 @@ export async function newCollectTiktokComments(clientValue) {
             
                       }, 2000);
       
-                    } while (cursorNumber < total);
+                    } while (has_more === 1);
       
                     let dataCleaning = [];
       
