@@ -18,6 +18,7 @@ export async function instaUserFollowing(username, from) {
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.pagination_token;
             user_counter = user_counter+userList.length;
+            console.log(user_counter);
 
             console.log(pages);
             for (let i = 0; i < userList.length; i++){
