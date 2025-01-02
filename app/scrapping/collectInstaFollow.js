@@ -24,7 +24,6 @@ export async function instaUserFollowing(username) {
             data: isFollowing,
             code: 200,
             state: true
-
         }
 
         return responseData;

@@ -22,7 +22,9 @@ export async function instaUserData(from, username) {
 
         if (!isDataExist){
 
-            let responseInfo = await instaUserFollowing(username);
+            let responseFollowing = await instaUserFollowing(username);
+            let isFollowing = responseFollowing.data;
+            console.log(isFollowing);
 
             instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.data.is_private, isBUSSINESS:responseInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,
