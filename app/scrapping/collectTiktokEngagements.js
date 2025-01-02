@@ -21,9 +21,13 @@ export async function collectTiktokComments(clientValue) {
 
       const secUid = await clientValue.get('SECUID');
 
+      let hasContent = false;
+      let itemByDay = [];
+      let todayItems = [];
       let cursor = 0;
-      
+
       tiktokPostAPI(secUid, cursor).then ( responseContent => {
+        
         let items = responseContent.data.data.itemList;
         if (Array.isArray(items)) {
           for (let i = 0; i < items.length; i++) {
@@ -37,6 +41,7 @@ export async function collectTiktokComments(clientValue) {
         }
       });
                 
+
 
       if (hasContent) {
         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
