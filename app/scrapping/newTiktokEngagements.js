@@ -139,39 +139,40 @@ export async function newCollectTiktokComments(clientValue) {
                     }
       
                     function tiktokLoop(finalValue){
-                       if(finalValue === 1){
-                        setTimeout(async ()=>{
-                            await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
-                                let commentItems = responseComments.data.comments;
-                                for (let iii = 0; iii < commentItems.length; iii++) {
-                                    if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                                    if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                                        newDataUsers.push(commentItems[iii].user.unique_id);
-                                    }
-                                    }
-                                }
-                                total;
-                                cursorNumber;
-                                
-                                has_more = responseComments.data.has_more;
-                                total = responseComments.data.total;
-                                cursorNumber = responseComments.data.cursor;
-                                console.log("Update Data " + cursorNumber + " < " + total);
-                                client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
-                                console.log(has_more);
-                        
-                            }). catch (response => {
-                                console.log(response);
-                                has_more = 0;
-                            });
 
-                        }, 2000);
+                        if(finalValue === 1){
+                            setTimeout(async ()=>{
+                                await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
+                                    let commentItems = responseComments.data.comments;
+                                    for (let iii = 0; iii < commentItems.length; iii++) {
+                                        if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                                        if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                                            newDataUsers.push(commentItems[iii].user.unique_id);
+                                        }
+                                        }
+                                    }
+                                    total;
+                                    cursorNumber;
+                                    
+                                    has_more = responseComments.data.has_more;
+                                    total = responseComments.data.total;
+                                    cursorNumber = responseComments.data.cursor;
+                                    console.log("Update Data " + cursorNumber + " < " + total);
+                                    client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
+                                    console.log(has_more);
+                            
+                                }). catch (response => {
+                                    console.log(response);
+                                    has_more = 0;
+                                });
 
-                        tiktokLoop(has_more);
+                            }, 2000);
+
+                            tiktokLoop(has_more);
                        }
                     }
 
-                    tiktokLoop(has_more);
+                    tiktokLoop(1);
       
                     let dataCleaning = [];
       
