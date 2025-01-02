@@ -25,24 +25,21 @@ export async function instaUserFollowing(username, from) {
 
         if(!isFollowing){
             
-            console.log("User Not Following");
             let responseData = {
                 data: "User Not Following",
                 code: 201,
                 state: true
             }
-
+            console.log(responseData.data);
             return responseData;
 
         } else {
-            console.log("User Following");
-
             let responseData = {
                 data: "User Following",
                 code: 200,
                 state: true
             }
-
+            console.log(responseData.data);
             return responseData;
         }
     

@@ -808,7 +808,7 @@ client.on('message', async (msg) => {
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
                                     let responseData = instaUserFollowing(instaUsername, msg.from)
-                                    sendResponse(msg.from, responseData, 'Error Load UserName');
+                                    sendResponse(msg.from, responseData, 'Error Load Username');
 
                                 } else {
                                     client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
