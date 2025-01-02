@@ -1,4 +1,13 @@
-import { client, time } from "../../app.js";
+import { client } from "../../app.js";
+//Date Time
+const d = new Date();
+const localDate = d.toLocaleDateString("en-US", {
+    timeZone: "Asia/Jakarta"
+});
+const hours = d.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Jakarta"
+});     
+const time = localDate+" >> "+hours;
 
 //Response By User
 export function sendResponse(from, responseData, errormessage) {

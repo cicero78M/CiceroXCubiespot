@@ -35,17 +35,6 @@ import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 //Routing Port 
 const port = ciceroKey.port;
 
-//Date Time
-export let d = new Date();
-export let localDate = d.toLocaleDateString("en-US", {
-    timeZone: "Asia/Jakarta"
-});
-export let hours = d.toLocaleTimeString("en-US", {
-    timeZone: "Asia/Jakarta"
-});
-
-export let time = localDate+" >> "+hours;
-
 //Express Routing
 app.listen(port, () => {
     console.log(time+` Cicero System Start listening on port >>> ${port}`)
@@ -95,13 +84,32 @@ client.on('ready', () => {
     console.log('===============================');
 
     //Server Life Send Msg
-    schedule('*/10 * * * *', async () =>  {     
+    schedule('*/10 * * * *', async () =>  {
+                //Date Time
+        const d = new Date();
+        const localDate = d.toLocaleDateString("en-US", {
+            timeZone: "Asia/Jakarta"
+        });
+        const hours = d.toLocaleTimeString("en-US", {
+            timeZone: "Asia/Jakarta"
+        });     
+        const time = localDate+" >> "+hours;
+
         console.log(time+' '+ciceroKey.waSession+' <<<System Alive>>>');
         client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
     });
 
     // Reload Tiktok every hours until 22
     schedule('40 6-21 * * *', async () => {
+            //Date Time
+            const d = new Date();
+            const localDate = d.toLocaleDateString("en-US", {
+                timeZone: "Asia/Jakarta"
+            });
+            const hours = d.toLocaleTimeString("en-US", {
+                timeZone: "Asia/Jakarta"
+            });     
+            const time = localDate+" >> "+hours;
         try {
             //Commit if schedule Working
             await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');            
@@ -171,6 +179,15 @@ client.on('ready', () => {
 
     // Reload Tiktok every hours until 15/18/21
     schedule('00 15,18,21 * * *', async () => {
+        //Date Time
+        const d = new Date();
+        const localDate = d.toLocaleDateString("en-US", {
+            timeZone: "Asia/Jakarta"
+        });
+        const hours = d.toLocaleTimeString("en-US", {
+            timeZone: "Asia/Jakarta"
+        });     
+        const time = localDate+" >> "+hours;
         try {
             client.sendMessage('6281235114745@c.us', 'Cron Job Starting...');            
             console.log(time+' Cron Job Starting');
@@ -252,6 +269,15 @@ client.on('call', async (call) => {
 });
 
 client.on('message', async (msg) => {
+    //Date Time
+    const d = new Date();
+    const localDate = d.toLocaleDateString("en-US", {
+        timeZone: "Asia/Jakarta"
+    });
+    const hours = d.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Jakarta"
+    });     
+    const time = localDate+" >> "+hours;
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'alltiktok', 'allinsta','reporttiktok', 'reportinsta','exception', 'savecontact','secuid'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
