@@ -809,19 +809,6 @@ client.on('message', async (msg) => {
 
                                     let responseData = instaUserFollowing(instaUsername, msg.from);
                                         console.log(responseData);
-                                        switch (responseData.code) {
-                                            case 200:
-                                                console.log(responseData.data);
-                                                client.sendMessage(msg.from, responseData.data);   
-                                                break;
-                                            case 303:
-                                                console.log(responseData.data);
-                                                client.sendMessage(msg.from, "Error");   
-                                                break;
-                                            default:
-                                                client.sendMessage(msg.from, responseData.data);
-                                                break;                                    
-                                        }
 
                                 } else {
                                     client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
