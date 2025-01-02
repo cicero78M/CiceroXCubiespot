@@ -24,9 +24,8 @@ export async function instaUserFollowing(username, from) {
                 user_counter++;
                 if (userList[i].username = username){
                     isFollowing = true;
-                    break;
                     user_counter = following_count+1;
-
+                    break;
                 }
 
             }            
