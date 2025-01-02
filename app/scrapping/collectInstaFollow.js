@@ -10,8 +10,10 @@ export async function instaUserFollowing(username, from) {
 
         let instaUser = await instaUserData(from, username);
         const following_count = instaUser.data.data.data.following_count;
-        
+        console.log(following_count);
+
         while (following_count > user_counter ) {
+            console.log("Starting");
             let instaFollowing = await instaFollowingAPI(username, pages);
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.data.pagination_token;
