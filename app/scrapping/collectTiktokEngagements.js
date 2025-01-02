@@ -39,7 +39,7 @@ export async function collectTiktokComments(clientValue) {
             }
           }
         }
-
+        
         if (hasContent) {
 
           const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
