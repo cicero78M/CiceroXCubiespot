@@ -1,9 +1,5 @@
-
 import axios from 'axios';
-const { request } = axios;
-
-import { readFileSync } from 'fs';
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+export const { request } = axios;
 
 const headers = {
   'x-cache-control': 'no-cache',

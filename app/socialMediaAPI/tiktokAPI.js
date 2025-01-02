@@ -1,8 +1,5 @@
-import axios from 'axios';
-const { request } = axios;
-
-import { readFileSync } from 'fs';
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+import { ciceroKey } from '../database_query/sheetDoc';
+import { request } from './instaAPI';
 
 const headers = {
   'x-cache-control': 'no-cache',

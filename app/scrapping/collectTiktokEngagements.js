@@ -6,10 +6,11 @@ import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 
 export async function collectTiktokComments(clientValue) {
   //Date Time
-  const d = new Date();
-  const localDate = d.toLocaleDateString("en-US", {
+  let d = new Date();
+  let localDate = d.toLocaleDateString("en-US", {
       timeZone: "Asia/Jakarta"
   });   
+
   try {    
 
     const clientName = clientValue.get('CLIENT_ID');
@@ -21,26 +22,21 @@ export async function collectTiktokComments(clientValue) {
       const secUid = await clientValue.get('SECUID');
 
       let cursor = 0;
-      let responseContent = await tiktokPostAPI(secUid, cursor);
-                
-      let items = [];
-
-      items = await responseContent.data.data.itemList;
-
-      let hasContent = false;
-      let itemByDay = [];
-      let todayItems = [];
-
-      if (Array.isArray(items)) {
-        for (let i = 0; i < items.length; i++) {
-          let itemDate = new Date(items[i].createTime * 1000);
-          if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-            hasContent = true;
-            itemByDay.push(items[i]);
-            todayItems.push(items[i].video.id);
+      
+      tiktokPostAPI(secUid, cursor).then ( responseContent => {
+        let items = responseContent.data.data.itemList;
+        if (Array.isArray(items)) {
+          for (let i = 0; i < items.length; i++) {
+            let itemDate = new Date(items[i].createTime * 1000);
+            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+              hasContent = true;
+              itemByDay.push(items[i]);
+              todayItems.push(items[i].video.id);
+            }
           }
         }
-      }
+      });
+                
 
       if (hasContent) {
         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
