@@ -22,6 +22,8 @@ export async function newCollectTiktokComments(clientValue) {
     let shortcodeNewCounter = 0;
     var newData = 0;
     var updateData = 0;
+    let cursorNumber = 0;
+    let total = 0;
 
     let items = [];
     let itemByDay = [];
@@ -135,9 +137,6 @@ export async function newCollectTiktokComments(clientValue) {
                       }
                     }
       
-                    let cursorNumber = 0;
-                    let total = 0;
-      
                     do {
       
                       setTimeout(async () => {
@@ -153,6 +152,7 @@ export async function newCollectTiktokComments(clientValue) {
                             }
                             total;
                             cursorNumber;
+                            
                             total = await responseComments.data.total + 50;
                             cursorNumber = await responseComments.data.cursor;
 
@@ -175,6 +175,7 @@ export async function newCollectTiktokComments(clientValue) {
                     }
       
                     console.log(clientName + ' Update Data');
+                    
                     cursorNumber = 0;
                     total = 0;
       
