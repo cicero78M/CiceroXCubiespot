@@ -806,8 +806,8 @@ client.on('message', async (msg) => {
 
                                     const instaLink = splittedMsg[1].split('?')[0];
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
-                                    let responseData = instaUserData(msg.from, instaUsername);
-                                    
+                                    let responseData = await instaUserData(msg.from, instaUsername);
+
                                     sendResponse(msg.from, responseData, 'Error Load Username');
 
                                 } else {
