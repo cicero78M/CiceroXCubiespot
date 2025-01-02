@@ -18,11 +18,13 @@ export async function collectTiktokComments(clientValue) {
 
     if (clientValue.get('STATUS') === 'TRUE') {
 
-      const secUid = clientValue.get('SECUID');
+      const secUid = await clientValue.get('SECUID');
 
-      let items = [];
       let cursor = 0;
-      let responseContent = await tiktokPostAPI(secUid, cursor);              
+      let responseContent = await tiktokPostAPI(secUid, cursor);
+                
+      let items = [];
+
       items = await responseContent.data.data.itemList;
 
       let hasContent = false;
@@ -113,21 +115,20 @@ export async function collectTiktokComments(clientValue) {
 
         var newData = 0;
         var updateData = 0;
-        let has_more = 0;
-        let cursorNumber = 0;
 
         for (let i = 0; i < todayItems.length; i++) {
 
           let hasShortcode = false;
+
+
           //code on the go
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++) {
 
+
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
-              
               let newDataUsers = [];
               hasShortcode = true;
               const fromRows = Object.values(tiktokCommentsUsernameData[ii].toObject());
-
 
               for (let iii = 0; iii < fromRows.length; iii++) {
                 if (fromRows[iii] !== undefined || fromRows[iii] !== null || fromRows[iii] !== "") {
@@ -136,27 +137,34 @@ export async function collectTiktokComments(clientValue) {
                   }
                 }
               }
-              
+
+              let cursorNumber = 0;
+              let total = 0;
+
               do {
-                setTimeout(() => {
-                  tiktokCommentAPI(todayItems[i], cursorNumber).then( responseComments => {
-                    let commentItems = responseComments.data.comments;
-                    for (let iii = 0; iii < commentItems.length; iii++) {
-                      if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                        if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                          newDataUsers.push(commentItems[iii].user.unique_id);
-                        }
-                      }
+
+                let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
+                let commentItems = await responseComments.data.comments;
+                for (let iii = 0; iii < commentItems.length; iii++) {
+                  if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
+                    if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
+                      newDataUsers.push(commentItems[iii].user.unique_id);
                     }
-                    cursorNumber =  responseComments.data.cursor;
-                    has_more =   responseComments.data.has_more;
-                    console.log(has_more);
-                  });
+                  }
+                }
+
+                setTimeout(() => {
+                  console.log("Update Data " + cursorNumber + " < " + total);
+                  client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
                 }, 2000);
 
-                console.log(has_more);
+                cursorNumber;
+                total;
 
-              } while (has_more === 1);
+                total = await responseComments.data.total + 50;
+                cursorNumber = await responseComments.data.cursor;
+
+              } while (cursorNumber < total);
 
               let dataCleaning = [];
 
@@ -169,9 +177,8 @@ export async function collectTiktokComments(clientValue) {
               }
 
               console.log(clientName + ' Update Data');
-
-              has_more = 0;
               cursorNumber = 0;
+              total = 0;
 
               await tiktokCommentsUsernameData[ii].delete();
               await tiktokCommentsUsernameSheet.addRow(dataCleaning);
