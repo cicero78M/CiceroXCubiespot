@@ -7,6 +7,8 @@ export async function instaUserData(from, username) {
         const responseInfo = await instaInfoAPI(username);
         let isDataExist = false;
 
+        const isFollowing = await instaFollowingAPI(username); 
+
         const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
         await instaProfileDoc.loadInfo(); // loads document properties and worksheets
         const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
@@ -19,7 +21,6 @@ export async function instaUserData(from, username) {
             }               
         }
 
-        const isFollowing = await instaFollowingAPI(username); 
 
         if (!isDataExist){
             instaProfileSheet.addRow({
@@ -28,6 +29,7 @@ export async function instaUserData(from, username) {
                 FOLLOWER:responseInfo.data.data.follower_count, FOLLOWING:responseInfo.data.data.following_count, MEDIA_COUNT:responseInfo.data.data.media_count,
                 BIOGRAPHY:responseInfo.data.data.biography, isFollowing : isFollowing
             });
+            
             if (isFollowing){
                 let responseData = {
                     data: `Hi, Selamat Siang ${responseInfo.data.data.full_name}\n\nSelamat, Sistem Kami sudah membaca bahwa kamu sudah Follow Akun Instagram @cubiehome,\n\nBerikut Login dan Password yang bisa kamu gunakan untuk mengakses Wifi Corner CubieHome\n\nUser : Username\nPassword : xxxxxx`,
