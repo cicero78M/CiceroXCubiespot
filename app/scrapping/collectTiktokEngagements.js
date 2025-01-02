@@ -18,13 +18,11 @@ export async function collectTiktokComments(clientValue) {
 
     if (clientValue.get('STATUS') === 'TRUE') {
 
-      const secUid = await clientValue.get('SECUID');
+      const secUid = clientValue.get('SECUID');
 
       let items = [];
       let cursor = 0;
-      let responseContent = await tiktokPostAPI(secUid, cursor);
-      console.log(responseContent);
-              
+      let responseContent = await tiktokPostAPI(secUid, cursor);              
       items = await responseContent.data.data.itemList;
 
       let hasContent = false;
@@ -119,12 +117,8 @@ export async function collectTiktokComments(clientValue) {
         for (let i = 0; i < todayItems.length; i++) {
 
           let hasShortcode = false;
-
-
           //code on the go
           for (let ii = 0; ii < tiktokCommentsUsernameData.length; ii++) {
-
-
             if (tiktokCommentsUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
               let newDataUsers = [];
               hasShortcode = true;
@@ -140,9 +134,10 @@ export async function collectTiktokComments(clientValue) {
 
               let cursorNumber = 0;
               let total = 0;
+              let has_more = 0;
+
 
               do {
-
                 let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
                 let commentItems = await responseComments.data.comments;
                 for (let iii = 0; iii < commentItems.length; iii++) {
@@ -158,13 +153,11 @@ export async function collectTiktokComments(clientValue) {
                   client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
                 }, 2000);
 
-                cursorNumber;
-                total;
-
                 total = await responseComments.data.total + 50;
                 cursorNumber = await responseComments.data.cursor;
+                has_more = await responseComments.data.has_more;
 
-              } while (cursorNumber < total);
+              } while (has_more === 1);
 
               let dataCleaning = [];
 
