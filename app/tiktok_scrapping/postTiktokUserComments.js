@@ -30,8 +30,8 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
         }
 
     });  
-    
-    console.log(clientName + ' Update Data');
+
+    console.log(newDataUsers);
 
     let custom = await tiktokCommentsUsernameSheet.addRow(newDataUsers);
 
