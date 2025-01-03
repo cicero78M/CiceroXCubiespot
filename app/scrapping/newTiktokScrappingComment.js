@@ -32,34 +32,29 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
     
             } else {
 
-                console.log(responseComments.data.data.cursor );
+                console.log(responseComments.data.cursor );
 
-                if(responseComments.data.data.total > 400){
-                    if (responseComments.data.data.cursor < responseComments.data.data.total){
+                if(responseComments.data.total > 400){
+                    
+                    if (responseComments.data.cursor < responseComments.data.total){
                         setTimeout(() => {
                             console.log('next data');
                             getLikesTiktok(todayItems, responseComments.data.cursor);
-        
                         }, 2000);
                     } else {
-
                         let data = {
                             code : 200,
                             status : true,
-                            newDataUsers : newDataUsers
+                            userlist : newDataUsers
                         }
-                        return data;
-
+                        return data;                   
                     }
-
- 
-
                 } else {
     
                     let data = {
                         code : 200,
                         status : true,
-                        newDataUsers : newDataUsers
+                        userlist : newDataUsers
                     }
                     return data;
                 }
@@ -71,7 +66,7 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
         let data = {
             code : 204,
             status : false,
-            newDataUsers : null
+            userlist : null
 
         }
         return data;    
