@@ -21,7 +21,7 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
             if (responseComments.data.has_more === 1){    
 
-                console.log(responseComments.data.has_more );
+                console.log(responseComments.data.data.cursor );
 
                 setTimeout(() => {
                     console.log('next data');
@@ -31,13 +31,38 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
     
             } else {
+
+                console.log(responseComments.data.data.cursor );
+
+                if(responseComments.data.data.total > 400){
+                    if (responseComments.data.data.cursor < responseComments.data.data.total){
+                        setTimeout(() => {
+                            console.log('next data');
+                            getLikesTiktok(todayItems, responseComments.data.cursor);
+        
+                        }, 2000);
+                    } else {
+
+                        let data = {
+                            code : 200,
+                            status : true,
+                            newDataUsers : newDataUsers
+                        }
+                        return data;
+
+                    }
+
+ 
+
+                } else {
     
-                let data = {
-                    code : 200,
-                    status : true,
-                    newDataUsers : newDataUsers
+                    let data = {
+                        code : 200,
+                        status : true,
+                        newDataUsers : newDataUsers
+                    }
+                    return data;
                 }
-                return data;
             }
     
     }). catch (response => {
