@@ -3,6 +3,8 @@ import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 
 export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
+    console.log("Exec POst DAta");
+
     let dataCleaning = [];
     let hasShortcode = false;
 
@@ -11,7 +13,10 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
     let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
     tiktokCommentsUsernameSheet.getRows().then (response =>{
 
+        console.log(response);
+
         for (let ii = 0; ii < response.length; ii++) {
+            
             if (response[ii].get('SHORTCODE') === items) {
                 hasShortcode = true;
                 const fromRows = Object.values(response[ii].toObject());
