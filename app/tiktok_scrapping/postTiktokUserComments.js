@@ -28,11 +28,12 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
       
                 console.log(clientName + ' Update Data');
 
-                response[ii].assign(newDataUsers);
-                let custom = await response[ii].save(); //save update
+                let custom = await tiktokCommentsUsernameSheet.addRow(newDataUsers);
+
+                console.log(custom);
 
                 tiktokCommentsUsernameSheet.delete;
-                console.log(custom);
+
             }
         }
     });  
