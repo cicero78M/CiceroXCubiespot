@@ -8,7 +8,6 @@ export async function getTiktokComments(todayItems, cursorNumber) {
 
     async function forLoopGetComments(todayItems, cursorNumber) {
         await tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
-
             let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
@@ -21,13 +20,13 @@ export async function getTiktokComments(todayItems, cursorNumber) {
             if (responseComments.data.has_more === 1){    
                 console.log(responseComments.data.cursor );
                 setTimeout(async() => {
-                    console.log('next data');
+//                    console.log('next data');
                     await forLoopGetComments(todayItems, responseComments.data.cursor);
     
                 }, 2000);
     
             } else {
-                console.log(responseComments.data.cursor );
+//                console.log(responseComments.data.cursor );
                 if(responseComments.data.total > 400){
                     if (responseComments.data.cursor < responseComments.data.total){
                         setTimeout(async () => {
@@ -35,6 +34,13 @@ export async function getTiktokComments(todayItems, cursorNumber) {
                             await forLoopGetComments(todayItems, responseComments.data.cursor);
                         }, 2000);
                     } 
+                } else {
+                    let data = {
+                        code : 200,
+                        status : true,
+                        userlist : newDataUsers
+                    }
+                    return data;
                 }
             }
         
@@ -44,13 +50,5 @@ export async function getTiktokComments(todayItems, cursorNumber) {
     }
 
     await forLoopGetComments(todayItems, cursorNumber);
-
-    let data = {
-        code : 200,
-        status : true,
-        userlist : newDataUsers
-    }
-
-    return data;
 
 }
