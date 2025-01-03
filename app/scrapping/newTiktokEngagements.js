@@ -145,6 +145,7 @@ export async function newCollectTiktokComments(clientValue) {
               let response = await getLikesTiktok(todayItems[i], cursorNumber);
 
                 console.log(response);
+                
                 newDataUsers = newDataUsers.concat(response.userList);
                 let dataCleaning = [];
 

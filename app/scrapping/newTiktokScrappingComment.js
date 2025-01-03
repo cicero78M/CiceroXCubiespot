@@ -6,53 +6,53 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
     let newDataUsers = [];    
 
-    await tiktokCommentAPI(todayItems, cursorNumber).then ( async responseComments =>{
+    await tiktokCommentAPI(todayItems, cursorNumber).then ( responseComments =>{
 
-            let commentItems = await responseComments.data.comments;
-            for (let ii = 0; ii < commentItems.length; ii++) {
-                if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
-                    if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
-                        newDataUsers.push(commentItems[ii].user.unique_id);
-                    }
+        let commentItems = responseComments.data.comments;
+        for (let ii = 0; ii < commentItems.length; ii++) {
+            if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
+                if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
+                    newDataUsers.push(commentItems[ii].user.unique_id);
                 }
             }
-                console.log ('Time Skip');
-            if (responseComments.data.has_more === 1){    
+        }
 
-                console.log(responseComments.data.cursor );
+        if (responseComments.data.has_more === 1){    
 
-                setTimeout(() => {
-                    console.log('next data');
-                    getLikesTiktok(todayItems, responseComments.data.cursor);
+            console.log(responseComments.data.cursor );
 
-                }, 2000);
+            setTimeout(async () => {
+                console.log('next data');
+                await getLikesTiktok(todayItems, responseComments.data.cursor);
 
-    
-            } else {
-                console.log(responseComments.data.cursor );
-                if(responseComments.data.total > 400){
-                    if (responseComments.data.cursor < responseComments.data.total){
-                        setTimeout(() => {
-                            console.log('next data');
-                            getLikesTiktok(todayItems, responseComments.data.cursor);
-                        }, 2000);
-                    } else {
-                        let data = {
-                            code : 200,
-                            status : true,
-                            userlist : newDataUsers
-                        }
-                        return data;                   
-                    }
+            }, 2000);
+
+
+        } else {
+            console.log(responseComments.data.cursor );
+            if(responseComments.data.total > 400){
+                if (responseComments.data.cursor < responseComments.data.total){
+                    setTimeout(async () => {
+                        console.log('next data');
+                        await getLikesTiktok(todayItems, responseComments.data.cursor);
+                    }, 2000);
                 } else {
                     let data = {
                         code : 200,
                         status : true,
                         userlist : newDataUsers
                     }
-                    return data;
+                    return data;                   
                 }
+            } else {
+                let data = {
+                    code : 200,
+                    status : true,
+                    userlist : newDataUsers
+                }
+                return data;
             }
+        }
     
     }). catch (response => {
         console.log(response);
