@@ -1,5 +1,5 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../database_query/sheetDoc";
+import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 
 export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
