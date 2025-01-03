@@ -37,7 +37,6 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
                 response[ii].delete();
                 tiktokCommentsUsernameSheet.addRow(dataCleaning);
-                updateData++; 
                 
                 console.log("done");
             }
