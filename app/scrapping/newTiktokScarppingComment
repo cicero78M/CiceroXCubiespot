@@ -8,6 +8,7 @@ export function getLikesTiktok(todayItems, cursor_number) {
     tiktokCommentAPI(todayItems, cursor_number).then ( responseComments =>{
 
         setTimeout(() => {
+
             let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[i].user.unique_id != "") {
@@ -16,14 +17,18 @@ export function getLikesTiktok(todayItems, cursor_number) {
                     }
                 }
             }
+
             has_more = responseComments.data.has_more;
             cursor_number = responseComments.data.cursor;
-        }, 2000);
 
+        }, 2000);
                 
         if (has_more === 1){    
-            getLikesTiktok(todayItems, cursor_number)
+
+            getLikesTiktok(todayItems, cursor_number);
+
         } else {
+
             let data = {
                 code : 200,
                 status : true,
