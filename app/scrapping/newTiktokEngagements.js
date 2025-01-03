@@ -142,7 +142,7 @@ export async function newCollectTiktokComments(clientValue) {
               let cursorNumber = 0;
               let total = 0;
 
-              getLikesTiktok(todayItems[i], cursorNumber).then( response => {
+              let response = getLikesTiktok(todayItems[i], cursorNumber);
 
                 console.log(response);
                 newDataUsers = newDataUsers.concat(response.userList);
@@ -164,9 +164,7 @@ export async function newCollectTiktokComments(clientValue) {
                 tiktokCommentsUsernameSheet.addRow(dataCleaning);
 
                 updateData++;
-              }).catch( response => {
-                console.log(response);
-              });
+              
 
 
             }
