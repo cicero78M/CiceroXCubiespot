@@ -9,7 +9,7 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
     await tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
         console.log("Exec");
 
-            let commentItems = responseComments.data.comments;
+            let commentItems = await responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[i].user.unique_id != "") {
                     if (!newDataUsers.includes(commentItems[i].user.unique_id)) {
