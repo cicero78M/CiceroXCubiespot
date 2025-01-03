@@ -1,11 +1,11 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
-export async function getLikesTiktok(todayItems, cursor_number) {
+export async function getLikesTiktok(todayItems, cursorNumber) {
     let newDataUsers = [];
     let has_more = 0;
     let cursor_number = 0;
     
-    tiktokCommentAPI(todayItems, cursor_number).then (responseComments =>{
+    tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
 
         setTimeout(() => {
 
