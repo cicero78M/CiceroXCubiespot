@@ -3,6 +3,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
+import { getLikesTiktok } from './newTiktokScarppingComment.js';
 
 export async function newCollectTiktokComments(clientValue) {
   //Date Time
@@ -23,8 +24,6 @@ export async function newCollectTiktokComments(clientValue) {
     var newData = 0;
     var updateData = 0;
     let cursorNumber = 0;
-    let total = 0;
-    let has_more = 0;
 
     let items = [];
     let itemByDay = [];
@@ -137,42 +136,13 @@ export async function newCollectTiktokComments(clientValue) {
                         }
                       }
                     }
-                    
-                    tiktokLoop(total, cursor);
-      
-                    function tiktokLoop(a, b){
-
-                        if(a >= b ){
-                            setTimeout(async ()=>{
-                                await tiktokCommentAPI(todayItems[i], cursorNumber).then ( responseComments =>{
-                                    let commentItems = responseComments.data.comments;
-                                    for (let iii = 0; iii < commentItems.length; iii++) {
-                                        if (commentItems[iii].user.unique_id != undefined || commentItems[iii].user.unique_id != null || commentItems[iii].user.unique_id != "") {
-                                        if (!newDataUsers.includes(commentItems[iii].user.unique_id)) {
-                                            newDataUsers.push(commentItems[iii].user.unique_id);
-                                        }
-                                        }
-                                    }
-                                    total;
-                                    cursorNumber;
-                                    
-                                    has_more = responseComments.data.has_more;
-                                    total = responseComments.data.total;
-                                    cursorNumber = responseComments.data.cursor;
-                                    console.log("Update Data " + cursorNumber + " < " + total);
-                                    client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
-                                    console.log(has_more);
-                            
-                                }). catch (response => {
-                                    console.log(response);
-                                    has_more = 0;
-                                });
-
-                            }, 2000);
-                       }
-                    }
-
-      
+                  
+                    getLikesTiktok(todayItems[i], cursorNumber).then ( responseComments =>{
+                      if(responseComments.status === true){
+                        newDataUsers = newDataUsers.concat(responseComments.newDataUsers);                                
+                      }
+                    });
+                  
                     let dataCleaning = [];
       
                     for (let iv = 0; iv < newDataUsers.length; iv++) {
@@ -184,10 +154,7 @@ export async function newCollectTiktokComments(clientValue) {
                     }
       
                     console.log(clientName + ' Update Data');
-                    
-                    cursorNumber = 0;
-                    total = 0;
-      
+                
                     await tiktokCommentsUsernameData[ii].delete();
                     await tiktokCommentsUsernameSheet.addRow(dataCleaning);
       
@@ -200,28 +167,12 @@ export async function newCollectTiktokComments(clientValue) {
                   //If Shortcode doesn't exist push new data
                   let cursorNumber = 0;
                   let newDataUsers = [todayItems[i]];
-                  let total = 0;
-      
-                  do {
-      
-                    let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-                    let commentItems = await responseComments.data.comments;
-      
-                    for (let iii = 0; iii < commentItems.length; iii++) {
-                      newDataUsers.push(commentItems[iii].user.unique_id);
+                  
+                  getLikesTiktok(todayItems[i], cursorNumber).then ( responseComments =>{
+                    if(responseComments.status === true){
+                      newDataUsers = newDataUsers.concat(responseComments.newDataUsers);                                
                     }
-      
-                    setTimeout(() => {
-                      console.log(cursorNumber + " < " + total);
-                      client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
-                    }, 2000);
-      
-                    cursorNumber;
-                    total;
-                    total = await responseComments.data.total + 50;
-                    cursorNumber = await responseComments.data.cursor;
-                  } while (cursorNumber < total);
-      
+                  });
                   let dataCleaning = [];
       
                   for (let iv = 0; iv < newDataUsers.length; iv++) {
