@@ -153,10 +153,8 @@ export async function collectTiktokComments(clientValue) {
                   }
                 }
 
-                setTimeout(() => {
-                  console.log("Update Data " + cursorNumber + " < " + total);
-                  client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
-                }, 2000);
+                console.log("Update Data " + cursorNumber + " < " + total);
+                await client.sendMessage('6281235114745@c.us', "Update Data " + cursorNumber + " < " + total);
 
                 cursorNumber;
                 total;
@@ -203,15 +201,14 @@ export async function collectTiktokComments(clientValue) {
                 newDataUsers.push(commentItems[iii].user.unique_id);
               }
 
-              setTimeout(() => {
-                console.log(cursorNumber + " < " + total);
-                client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
-              }, 2000);
+              console.log(cursorNumber + " < " + total);
+              await client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
 
               cursorNumber;
               total;
               total = await responseComments.data.total + 50;
               cursorNumber = await responseComments.data.cursor;
+
             } while (cursorNumber < total);
 
             let dataCleaning = [];
