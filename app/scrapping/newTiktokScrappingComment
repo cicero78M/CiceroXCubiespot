@@ -1,13 +1,11 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
-export async function getLikesTiktok(todayItems, cursorNumber) {
+export function getLikesTiktok(todayItems, cursorNumber) {
     let newDataUsers = [];    
     tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
         console.log("Exec");
 
-        setTimeout(() => {
-
-            let commentItems = responseComments.data.comments;
+            let commentItems = responseComments.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[i].user.unique_id != "") {
                     if (!newDataUsers.includes(commentItems[i].user.unique_id)) {
@@ -16,22 +14,29 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
                 }
             }
 
-        }, 2000);
+            setTimeout(() => {
+                console.log ('Time Skip');
+            }, 2000);
+
+
+
+            if (responseComments.has_more === 1){    
+                console.log(responseComments.has_more );
+                getLikesTiktok(todayItems, responseComments.cursor);
+    
+            } else {
+    
+                let data = {
+                    code : 200,
+                    status : true,
+                    newDataUsers : newDataUsers
+                }
                 
-        if (responseComments.data.has_more === 1){    
-            console.log(responseComments.data.has_more );
-            getLikesTiktok(todayItems, responseComments.data.cursor);
-
-        } else {
-
-            let data = {
-                code : 200,
-                status : true,
-                newDataUsers : newDataUsers
+                return data;
             }
-            
-            return data;
-        }
+    
+
+                
 
     }). catch (response => {
         console.log(response);
