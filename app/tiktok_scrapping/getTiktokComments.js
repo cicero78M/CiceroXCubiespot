@@ -29,7 +29,6 @@ export async function getTiktokComments(clientName, todayItems) {
                     }
                 }
     
-                if (switchNumber = 0){
                     console.log("Find");
                     if (response.data.has_more === 1){    
                         console.log("has more");
@@ -49,7 +48,6 @@ export async function getTiktokComments(clientName, todayItems) {
                                     forLoopGetComments(items, response.data.cursor);
                                 }, 2000);
                             } else {
-                                switchNumber = 1;
                                 postTiktokUserComments(clientName, items, newDataUsers)
                             }
                         } else {
@@ -59,9 +57,6 @@ export async function getTiktokComments(clientName, todayItems) {
                             }, 2000);                    
                         }
                     }
-                } else {
-                    postTiktokUserComments(clientName, items, newDataUsers);
-                }
                     
             }). catch (response => {
                 console.log(response);
