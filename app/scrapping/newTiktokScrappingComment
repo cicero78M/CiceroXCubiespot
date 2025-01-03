@@ -1,10 +1,7 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
 export async function getLikesTiktok(todayItems, cursorNumber) {
-    let newDataUsers = [];
-    let has_more = 0;
-    let cursor_number = 0;
-    
+    let newDataUsers = [];    
     tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
         console.log("Exec");
 
@@ -19,15 +16,11 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
                 }
             }
 
-            has_more = responseComments.data.has_more;
-            cursor_number = responseComments.data.cursor;
-
         }, 2000);
                 
-        if (has_more === 1){    
-            console.log(has_more);
-
-            getLikesTiktok(todayItems, cursor_number);
+        if (responseComments.data.has_more === 1){    
+            console.log(responseComments.data.has_more );
+            getLikesTiktok(todayItems, responseComments.data.cursor);
 
         } else {
 
