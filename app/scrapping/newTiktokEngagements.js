@@ -143,31 +143,29 @@ export async function newCollectTiktokComments(clientValue) {
               let total = 0;
 
               await getLikesTiktok(todayItems[i], cursorNumber).then(response => {
-                console.log(response.newDataUsers);
+                newDataUsers = newDataUsers.concat(response.newDataUsers);
+                let dataCleaning = [];
 
+                for (let iv = 0; iv < newDataUsers.length; iv++) {
+                  if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined) {
+                    if (!dataCleaning.includes(newDataUsers[iv])) {
+                      dataCleaning.push(newDataUsers[iv]);
+                    }
+                  }
+                }
+
+                console.log(clientName + ' Update Data');
+                cursorNumber = 0;
+                total = 0;
+
+                tiktokCommentsUsernameData[ii].delete();
+                tiktokCommentsUsernameSheet.addRow(dataCleaning);
+
+                updateData++;
               }).catch( response => {
                 console.log(response);
               });
 
-
-              let dataCleaning = [];
-
-              for (let iv = 0; iv < newDataUsers.length; iv++) {
-                if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined) {
-                  if (!dataCleaning.includes(newDataUsers[iv])) {
-                    dataCleaning.push(newDataUsers[iv]);
-                  }
-                }
-              }
-
-              console.log(clientName + ' Update Data');
-              cursorNumber = 0;
-              total = 0;
-
-              await tiktokCommentsUsernameData[ii].delete();
-              await tiktokCommentsUsernameSheet.addRow(dataCleaning);
-
-              updateData++;
 
             }
           }
