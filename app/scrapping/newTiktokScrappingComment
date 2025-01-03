@@ -37,9 +37,6 @@ export function getLikesTiktok(todayItems, cursorNumber) {
                 return data;
             }
     
-
-                
-
     }). catch (response => {
         console.log(response);
 
