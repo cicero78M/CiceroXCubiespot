@@ -111,6 +111,9 @@ export async function newCollectTiktokComments(clientValue) {
 
         getTiktokComments(clientName, todayItems);
 
+        officialTiktokSheet.delete;
+
+
       } else {
         let responseData = {
           data: clientName + ' Tiktok Account Has No Content',

@@ -8,6 +8,7 @@ export async function getTiktokComments(clientName, todayItems) {
     let newDataUsers = [];    
     
     for (let i = 0; i < todayItems.length; i++) {
+        newDataUsers.push(todayItems);
 
         forLoopGetComments(todayItems[i], cursorNumber);   
 
@@ -18,7 +19,6 @@ export async function getTiktokComments(clientName, todayItems) {
 
                 let commentItems = response.data.comments;
                 for (let ii = 0; ii < commentItems.length; ii++) {
-                    console.log(commentItems[ii].user.unique_id);
                     if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
                             newDataUsers.push(commentItems[ii].user.unique_id);

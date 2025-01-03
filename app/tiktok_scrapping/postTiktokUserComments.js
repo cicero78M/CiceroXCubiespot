@@ -3,7 +3,7 @@ import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 
 export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
-    console.log("Exec POst DAta");
+    console.log(newDataUsers);
 
     let hasShortcode = false;
 
@@ -12,8 +12,6 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
     let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
     tiktokCommentsUsernameSheet.getRows().then (async response =>{
 
-        console.log(response);
-
         for (let ii = 0; ii < response.length; ii++) {
 
             if (response[ii].get('SHORTCODE') === items) {
@@ -21,7 +19,7 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                 const fromRows = Object.values(response[ii].toObject());
 
                 for (let iii = 0; iii < fromRows.length; iii++) {
-                    if (fromRows[iii] !== undefined || fromRows[iii] !== null || fromRows[iii] !== "") {
+                    if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                         if (!newDataUsers.includes(fromRows[iii])) {
                             newDataUsers.push(fromRows[iii]);
                         }
@@ -31,7 +29,10 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                 console.log(clientName + ' Update Data');
 
                 response[ii].assign(newDataUsers);
-                response[ii].save(); //save update
+                await response[ii].save(); //save update
+
+                tiktokCommentsUsernameSheet.delete;
+
 
                 console.log("Done");
             }
