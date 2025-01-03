@@ -1,4 +1,5 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
+import { postTiktokUserComments } from "./postTiktokUserComments.js";
 
 export async function getTiktokComments(clientName, todayItems) {
 
