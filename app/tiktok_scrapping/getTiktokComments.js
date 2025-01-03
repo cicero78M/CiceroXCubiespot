@@ -24,14 +24,15 @@ export async function getTiktokComments(clientName, todayItems) {
                     console.log(commentItems[ii].user.unique_id);
                     if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
-                            console.log("OK");
                             newDataUsers.push(commentItems[ii].user.unique_id);
                         }
                     }
                 }
     
                 if (switchNumber = 0){
+                    console.log("Find");
                     if (response.data.has_more === 1){    
+                        console.log("has more");
                         console.log(response.data.cursor );
                         setTimeout(async() => {
                             console.log('next data');
