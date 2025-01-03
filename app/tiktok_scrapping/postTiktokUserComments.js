@@ -31,8 +31,9 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                 console.log(clientName + ' Update Data');
 
                 response[ii].assign(newDataUsers);
-                                
-                console.log(custom);
+                response[ii].save(); //save update
+
+                console.log("Done");
             }
         }
     });  
