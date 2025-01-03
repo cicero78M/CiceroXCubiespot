@@ -14,8 +14,8 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
             let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
-                    if (!newDataUsers.includes(commentItems[i].user.unique_id)) {
-                        newDataUsers.push(commentItems[i].user.unique_id);
+                    if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
+                        newDataUsers.push(commentItems[ii].user.unique_id);
                     }
                 }
             }
