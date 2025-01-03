@@ -25,17 +25,25 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                         }
                     }
                 }
+
+                console.log(newDataUsers);
+
+                response[ii].assign(newDataUsers)
+                .then(response =>{
+                    console.log(response);
+                })
+                .catch(response =>{
+                    console.log(response);
+                });
+
+                response[ii].save();
     
             }
         }
 
     });  
 
-    console.log(newDataUsers);
-
-    await tiktokCommentsUsernameSheet.addRow(newDataUsers).then(response =>{
-        console.log(response);
-    });
+ 
 
     tiktokCommentsUsernameDoc.delete;
 
