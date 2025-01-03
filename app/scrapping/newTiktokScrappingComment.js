@@ -6,9 +6,9 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
     let newDataUsers = [];    
 
-    tiktokCommentAPI(todayItems, cursorNumber).then ( responseComments =>{
+    await tiktokCommentAPI(todayItems, cursorNumber).then ( async responseComments =>{
 
-            let commentItems = responseComments.data.comments;
+            let commentItems = await responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
                     if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
@@ -16,9 +16,7 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
                     }
                 }
             }
-
                 console.log ('Time Skip');
-
             if (responseComments.data.has_more === 1){    
 
                 console.log(responseComments.data.cursor );
@@ -31,11 +29,8 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
     
             } else {
-
                 console.log(responseComments.data.cursor );
-
                 if(responseComments.data.total > 400){
-                    
                     if (responseComments.data.cursor < responseComments.data.total){
                         setTimeout(() => {
                             console.log('next data');
@@ -50,7 +45,6 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
                         return data;                   
                     }
                 } else {
-    
                     let data = {
                         code : 200,
                         status : true,
@@ -71,5 +65,4 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
         }
         return data;    
     });
-
 }
