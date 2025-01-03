@@ -1,6 +1,6 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
-export function getLikesTiktok(todayItems, cursor_number ) {
+export function getLikesTiktok(todayItems, cursor_number) {
     let newDataUsers = [];
     let has_more = 0;
     let cursor_number = 0;
