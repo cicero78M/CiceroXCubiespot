@@ -6,7 +6,7 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
     let newDataUsers = [];    
 
-    await tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
+    await tiktokCommentAPI(todayItems, cursorNumber).then (async responseComments =>{
         console.log("Exec");
 
             let commentItems = await responseComments.data.comments;
