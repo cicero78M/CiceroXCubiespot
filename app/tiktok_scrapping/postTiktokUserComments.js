@@ -25,16 +25,16 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                         }
                     }
                 }
-      
-                console.log(clientName + ' Update Data');
-
-                let custom = await tiktokCommentsUsernameSheet.addRow(newDataUsers);
-
-                console.log(custom);
-
-                tiktokCommentsUsernameDoc.delete;
-
+    
             }
         }
+        console.log(clientName + ' Update Data');
+
+        let custom = await tiktokCommentsUsernameSheet.addRow(newDataUsers);
+
+        console.log(custom);
+
+        tiktokCommentsUsernameDoc.delete;
+
     });  
 }
