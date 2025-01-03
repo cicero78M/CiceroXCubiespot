@@ -3,7 +3,6 @@ import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 export async function getLikesTiktok(todayItems, cursorNumber) {
 
     console.log('Exec 1');
-    setTimeout(() => {
 
     let newDataUsers = [];    
     tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
@@ -24,7 +23,12 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
             if (responseComments.has_more === 1){    
                 console.log(responseComments.has_more );
-                getLikesTiktok(todayItems, responseComments.cursor);
+                setTimeout(() => {
+                    console.log('next data');
+                    getLikesTiktok(todayItems, responseComments.cursor);
+
+                }, 2000);
+
     
             } else {
     
@@ -47,6 +51,5 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
         }
         return data;    
     });
-}, 2000);
 
 }
