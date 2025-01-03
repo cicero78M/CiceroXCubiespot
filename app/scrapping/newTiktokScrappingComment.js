@@ -21,7 +21,7 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
             if (responseComments.data.has_more === 1){    
 
-                console.log(responseComments.data.data.cursor );
+                console.log(responseComments.data.cursor );
 
                 setTimeout(() => {
                     console.log('next data');
