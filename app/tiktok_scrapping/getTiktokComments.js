@@ -34,21 +34,10 @@ export async function getTiktokComments(todayItems, cursorNumber) {
                             forLoopGetComments(todayItems, responseComments.data.cursor);
                         }, 2000);
                     } else {
-                        let data = {
-                            code : 200,
-                            status : true,
-                            userlist : newDataUsers
-                        }
-                        return data;
+                        console.log(newDataUsers.length);
                     }
                 } else {
-                    let data = {
-                        code : 200,
-                        status : true,
-                        userlist : newDataUsers
-                    }
-
-                    return data;
+                    console.log(newDataUsers.length);
                 }
             }
         

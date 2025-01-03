@@ -141,31 +141,31 @@ export async function newCollectTiktokComments(clientValue) {
 
               let cursorNumber = 0;
 
-              await getTiktokComments(todayItems[i], cursorNumber).then (response =>{
+              getTiktokComments(todayItems[i], cursorNumber);
 
-                console.log(response);
+                // console.log(response);
                 
-                newDataUsers = newDataUsers.concat(response.userlist);
-                let dataCleaning = [];
+                // newDataUsers = newDataUsers.concat(response.userlist);
+                // let dataCleaning = [];
 
-                for (let iv = 0; iv < newDataUsers.length; iv++) {
-                  if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined) {
-                    if (!dataCleaning.includes(newDataUsers[iv])) {
-                      dataCleaning.push(newDataUsers[iv]);
-                    }
-                  }
-                }
+                // for (let iv = 0; iv < newDataUsers.length; iv++) {
+                //   if (newDataUsers[iv] != '' || newDataUsers[iv] != null || newDataUsers[iv] != undefined) {
+                //     if (!dataCleaning.includes(newDataUsers[iv])) {
+                //       dataCleaning.push(newDataUsers[iv]);
+                //     }
+                //   }
+                // }
 
-              });
+              
 
 
 
-                console.log(clientName + ' Update Data');
-                cursorNumber = 0;
-                total = 0;
+                // console.log(clientName + ' Update Data');
+                // cursorNumber = 0;
+                // total = 0;
 
-                tiktokCommentsUsernameData[ii].delete();
-                tiktokCommentsUsernameSheet.addRow(dataCleaning);
+                // tiktokCommentsUsernameData[ii].delete();
+                // tiktokCommentsUsernameSheet.addRow(dataCleaning);
 
                 updateData++;
               
