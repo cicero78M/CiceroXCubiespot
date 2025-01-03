@@ -138,8 +138,8 @@ export async function newCollectTiktokComments(clientValue) {
                     }
                   
                     getLikesTiktok(todayItems[i], cursorNumber).then ( responseComments =>{
-                      if(responseComments.status === true){
-                        newDataUsers = newDataUsers.concat(responseComments.newDataUsers);                                
+                      if(responseComments.data.status === true){
+                        newDataUsers = newDataUsers.concat(responseComments.data.newDataUsers);                                
                       }
                     });
                   
@@ -169,8 +169,8 @@ export async function newCollectTiktokComments(clientValue) {
                   let newDataUsers = [todayItems[i]];
                   
                   getLikesTiktok(todayItems[i], cursorNumber).then ( responseComments =>{
-                    if(responseComments.status === true){
-                      newDataUsers = newDataUsers.concat(responseComments.newDataUsers);                                
+                    if(responseComments.data.status === true){
+                      newDataUsers = newDataUsers.concat(responseComments.data.newDataUsers);                                
                     }
                   });
                   let dataCleaning = [];
