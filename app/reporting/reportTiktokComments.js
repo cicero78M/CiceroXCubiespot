@@ -1,11 +1,11 @@
 import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 //Date Time
-const d = new Date();
-const localDate = d.toLocaleDateString("en-US", {
+let d = new Date();
+let localDate = d.toLocaleDateString("en-US", {
     timeZone: "Asia/Jakarta"
 });
-const hours = d.toLocaleTimeString("en-US", {
+let hours = d.toLocaleTimeString("en-US", {
     timeZone: "Asia/Jakarta"
 });     
 

@@ -137,6 +137,8 @@ export async function newCollectTiktokComments(clientValue) {
                         }
                       }
                     }
+                    
+                    tiktokLoop(total, cursor);
       
                     function tiktokLoop(a, b){
 
@@ -167,12 +169,9 @@ export async function newCollectTiktokComments(clientValue) {
                                 });
 
                             }, 2000);
-
-                            tiktokLoop(total, cursor);
                        }
                     }
 
-                    tiktokLoop(total, cursor);
       
                     let dataCleaning = [];
       
