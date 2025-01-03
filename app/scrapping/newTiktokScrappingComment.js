@@ -1,12 +1,12 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
-export async function getLikesTiktok(todayItems, cursorNumber) {
+export function getLikesTiktok(todayItems, cursorNumber) {
 
     console.log('Exec 1');
 
     let newDataUsers = [];    
 
-    await tiktokCommentAPI(todayItems, cursorNumber).then ( responseComments =>{
+    tiktokCommentAPI(todayItems, cursorNumber).then ( responseComments =>{
 
             let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
