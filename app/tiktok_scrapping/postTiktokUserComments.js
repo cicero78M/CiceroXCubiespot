@@ -33,9 +33,9 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
     console.log(newDataUsers);
 
-    let custom = await tiktokCommentsUsernameSheet.addRow(newDataUsers);
-
-    console.log(custom);
+    await tiktokCommentsUsernameSheet.addRow(newDataUsers).then(response =>{
+        console.log(response);
+    });
 
     tiktokCommentsUsernameDoc.delete;
 
