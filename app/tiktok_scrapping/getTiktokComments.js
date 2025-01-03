@@ -5,7 +5,6 @@ export async function getTiktokComments(clientName, todayItems) {
 
     console.log('Exec Get Tiktok Comments');
     let cursorNumber = 0;
-    let switchNumber = 0;
     let newDataUsers = [];    
     
     for (let i = 0; i < todayItems.length; i++) {
@@ -16,10 +15,8 @@ export async function getTiktokComments(clientName, todayItems) {
 
             console.log(items);
             tiktokCommentAPI(items, cursorNumber).then (response =>{
-                console.log(response);
 
                 let commentItems = response.data.comments;
-                console.log(commentItems);
                 for (let ii = 0; ii < commentItems.length; ii++) {
                     console.log(commentItems[ii].user.unique_id);
                     if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
