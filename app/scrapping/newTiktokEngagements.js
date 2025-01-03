@@ -143,7 +143,7 @@ export async function newCollectTiktokComments(clientValue) {
               let total = 0;
 
               await getLikesTiktok(todayItems, cursorNumber).then(response => {
-                newDataUsers = newDataUsers.concat(response.newDataUsers);
+                newDataUsers = newDataUsers.concat(response.data.newDataUsers);
               }).catch( response => {
                 console.log(response);
               });
@@ -175,7 +175,6 @@ export async function newCollectTiktokComments(clientValue) {
             //If Shortcode doesn't exist push new data
             let cursorNumber = 0;
             let newDataUsers = [todayItems[i]];
-            let total = 0;
 
             await getLikesTiktok(todayItems, cursorNumber).then(response => {
               newDataUsers = newDataUsers.concat(response.newDataUsers);
