@@ -1,17 +1,19 @@
 import { ciceroKey, sheetDoc } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
 import { client } from '../../app.js';
-//Date Time
-let d = new Date();
-let localDate = d.toLocaleDateString("en-US", {
-    timeZone: "Asia/Jakarta"
-});
-let hours = d.toLocaleTimeString("en-US", {
-    timeZone: "Asia/Jakarta"
-});     
 
 export async function reportInstaLikes(clientValue) {
   try {
+
+    //Date Time
+    let d = new Date();
+    let localDate = d.toLocaleDateString("en-US", {
+        timeZone: "Asia/Jakarta"
+    });
+    let hours = d.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Jakarta"
+    });     
+
     const clientName = clientValue.get('CLIENT_ID');
     console.log("Reporting Insta..");
     await client.sendMessage('6281235114745@c.us', `${clientName} Reporting Insta..`);

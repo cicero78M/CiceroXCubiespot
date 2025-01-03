@@ -6,8 +6,8 @@ import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 
 export async function collectTiktokComments(clientValue) {
   //Date Time
-  const d = new Date();
-  const localDate = d.toLocaleDateString("en-US", {
+  let d = new Date();
+  let localDate = d.toLocaleDateString("en-US", {
       timeZone: "Asia/Jakarta"
   });   
   try {    

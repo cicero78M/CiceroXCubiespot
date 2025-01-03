@@ -1,16 +1,17 @@
 import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
-//Date Time
-let d = new Date();
-let localDate = d.toLocaleDateString("en-US", {
-    timeZone: "Asia/Jakarta"
-});
-let hours = d.toLocaleTimeString("en-US", {
-    timeZone: "Asia/Jakarta"
-});     
+    
 
 export async function reportTiktokComments(clientValue) {
   try {
+        //Date Time
+    let d = new Date();
+    let localDate = d.toLocaleDateString("en-US", {
+        timeZone: "Asia/Jakarta"
+    });
+    let hours = d.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Jakarta"
+    }); 
     console.log("Report Tiktok Function Executed");
 
     const clientName = clientValue.get('CLIENT_ID');

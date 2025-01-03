@@ -31,7 +31,6 @@ import { updateUsername } from './app/database/updateUsername.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
-import { instaUserFollowing } from './app/scrapping/collectInstaFollow.js';
 import { instaUserData } from './app/scrapping/collectInstaUser.js';
 import { newCollectTiktokComments } from './app/scrapping/newTiktokEngagements.js';
 
