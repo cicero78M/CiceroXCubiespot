@@ -1,6 +1,6 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
-export async function getLikesTiktok(todayItems, cursorNumber) {
+export function getLikesTiktok(todayItems, cursorNumber) {
 
     console.log('Exec 1');
 
