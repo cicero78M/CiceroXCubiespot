@@ -32,7 +32,7 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
                 console.log(custom);
 
-                tiktokCommentsUsernameSheet.delete;
+                tiktokCommentsUsernameDoc.delete;
 
             }
         }
