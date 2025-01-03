@@ -1,12 +1,12 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
-export function getTiktokComments(todayItems, cursorNumber) {
+export async function getTiktokComments(todayItems, cursorNumber) {
 
     console.log('Exec 1');
 
     let newDataUsers = [];    
 
-    function forLoopGetComments(todayItems, cursorNumber) {
+    async function forLoopGetComments(todayItems, cursorNumber) {
         tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
             let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
@@ -47,6 +47,7 @@ export function getTiktokComments(todayItems, cursorNumber) {
                         status : true,
                         userlist : newDataUsers
                     }
+
                     return data;
                 }
             }
@@ -56,5 +57,5 @@ export function getTiktokComments(todayItems, cursorNumber) {
         });
     }
 
-    forLoopGetComments(todayItems, cursorNumber);
+    await forLoopGetComments(todayItems, cursorNumber);
 }
