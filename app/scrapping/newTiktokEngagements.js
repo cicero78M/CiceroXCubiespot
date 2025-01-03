@@ -3,7 +3,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { tiktokPostAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
-import { getLikesTiktok } from './newTiktokScarppingComment.js';
+import { getLikesTiktok } from './newTiktokScrappingComment';
 
 export async function newCollectTiktokComments(clientValue) {
   //Date Time
