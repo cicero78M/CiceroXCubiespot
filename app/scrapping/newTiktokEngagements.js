@@ -181,6 +181,7 @@ export async function newCollectTiktokComments(clientValue) {
 
             await getLikesTiktok(todayItems, cursorNumber).then(response => {
               newDataUsers = newDataUsers.concat(response.newDataUsers);
+
             }).catch( response => {
               console.log(response);
             });

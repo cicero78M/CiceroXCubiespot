@@ -1,13 +1,13 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
-export async function getTiktokComments(todayItems, cursorNumber) {
+export function getTiktokComments(todayItems, cursorNumber) {
 
     console.log('Exec 1');
 
     let newDataUsers = [];    
 
-    async function forLoopGetComments(todayItems, cursorNumber) {
-        await tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
+    function forLoopGetComments(todayItems, cursorNumber) {
+        tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
             let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
@@ -21,7 +21,7 @@ export async function getTiktokComments(todayItems, cursorNumber) {
                 console.log(responseComments.data.cursor );
                 setTimeout(async() => {
 //                    console.log('next data');
-                    await forLoopGetComments(todayItems, responseComments.data.cursor);
+                    forLoopGetComments(todayItems, responseComments.data.cursor);
     
                 }, 2000);
     
@@ -31,7 +31,7 @@ export async function getTiktokComments(todayItems, cursorNumber) {
                     if (responseComments.data.cursor < responseComments.data.total){
                         setTimeout(async () => {
                             console.log('next data');
-                            await forLoopGetComments(todayItems, responseComments.data.cursor);
+                            forLoopGetComments(todayItems, responseComments.data.cursor);
                         }, 2000);
                     } else {
                         let data = {
@@ -56,6 +56,5 @@ export async function getTiktokComments(todayItems, cursorNumber) {
         });
     }
 
-    await forLoopGetComments(todayItems, cursorNumber);
-
+    forLoopGetComments(todayItems, cursorNumber);
 }
