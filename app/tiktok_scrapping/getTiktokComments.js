@@ -17,7 +17,9 @@ export async function getTiktokComments(clientName, todayItems) {
             console.log(items);
             tiktokCommentAPI(items, cursorNumber).then (response =>{
                 console.log(response);
+
                 let commentItems = response.data.comments;
+                console.log(commentItems);
                 for (let ii = 0; ii < commentItems.length; ii++) {
                     if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
