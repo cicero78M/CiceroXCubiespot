@@ -140,6 +140,7 @@ export async function newCollectTiktokComments(clientValue) {
 
               let cursorNumber = 0;
               let total = 0;
+              let has_more = 0;
 
               do {
 
@@ -161,8 +162,9 @@ export async function newCollectTiktokComments(clientValue) {
 
                 total = await responseComments.data.total + 50;
                 cursorNumber = await responseComments.data.cursor;
+                has_more = await responseComments.data.has_more;
 
-              } while (cursorNumber < total);
+              } while (has_more === 1);
 
               let dataCleaning = [];
 
@@ -191,6 +193,8 @@ export async function newCollectTiktokComments(clientValue) {
             let cursorNumber = 0;
             let newDataUsers = [todayItems[i]];
             let total = 0;
+            let has_more = 0;
+
 
             do {
 
@@ -208,7 +212,9 @@ export async function newCollectTiktokComments(clientValue) {
               total;
               total = await responseComments.data.total + 50;
               cursorNumber = await responseComments.data.cursor;
-            } while (cursorNumber < total);
+              has_more = await responseComments.data.has_more;
+
+            } while (has_more === 1);
 
             let dataCleaning = [];
 
