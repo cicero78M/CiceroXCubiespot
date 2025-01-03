@@ -8,9 +8,6 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
     await tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
 
-
-        console.log(responseComments);
-
             let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
@@ -22,11 +19,10 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
                 console.log ('Time Skip');
 
-
-
             if (responseComments.data.has_more === 1){    
 
                 console.log(responseComments.data.has_more );
+
                 setTimeout(() => {
                     console.log('next data');
                     getLikesTiktok(todayItems, responseComments.data.cursor);
