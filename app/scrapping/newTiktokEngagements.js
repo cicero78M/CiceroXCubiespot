@@ -164,6 +164,11 @@ export async function newCollectTiktokComments(clientValue) {
                 cursorNumber = await responseComments.data.cursor;
                 has_more = await responseComments.data.has_more;
 
+                setInterval(() => {
+                  console.log('interval');
+                  
+                }, 2000);
+
               } while (has_more === 1);
 
               let dataCleaning = [];
