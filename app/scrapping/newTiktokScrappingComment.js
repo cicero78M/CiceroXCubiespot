@@ -3,9 +3,10 @@ import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 export async function getLikesTiktok(todayItems, cursorNumber) {
 
     console.log('Exec 1');
+    setTimeout(() => {
 
     let newDataUsers = [];    
-    await tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
+    tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
         console.log("Exec");
 
             let commentItems = responseComments.comments;
@@ -17,9 +18,7 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
                 }
             }
 
-            setTimeout(() => {
                 console.log ('Time Skip');
-            }, 2000);
 
 
 
@@ -48,4 +47,6 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
         }
         return data;    
     });
+}, 2000);
+
 }

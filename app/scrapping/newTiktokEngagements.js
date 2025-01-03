@@ -3,6 +3,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
+import { getLikesTiktok } from './newTiktokScrappingComment.js';
 
 export async function newCollectTiktokComments(clientValue) {
   //Date Time
@@ -140,29 +141,13 @@ export async function newCollectTiktokComments(clientValue) {
 
               let cursorNumber = 0;
               let total = 0;
-              let has_more = 0;
 
-              do {
-                console.log(cursorNumber + " < " + total);
+              await getLikesTiktok(todayItems, cursorNumber).then(response => {
+                newDataUsers = newDataUsers.concat(response.newDataUsers);
+              }).catch( response => {
+                console.log(response);
+              });
 
-
-                  let responseComments = await tiktokCommentAPI(todayItems[i], cursorNumber);
-                  let commentItems = await responseComments.data.comments;
-  
-                  for (let iii = 0; iii < commentItems.length; iii++) {
-                    newDataUsers.push(commentItems[iii].user.unique_id);
-                  }
-  
-                  await client.sendMessage('6281235114745@c.us', cursorNumber + " < " + total);
-  
-                  cursorNumber;
-                  total;
-  
-                  total = await responseComments.data.total + 50;
-                  cursorNumber = await responseComments.data.cursor;
-                  has_more = await responseComments.data.has_more;
-
-                } while (cursorNumber < total);
 
               let dataCleaning = [];
 
