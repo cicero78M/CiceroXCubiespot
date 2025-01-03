@@ -552,26 +552,27 @@ client.on('message', async (msg) => {
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                     //Scrapping TIKTOK by Client
-                                    await newCollectTiktokComments(clientRows[i]).then (async  loadTiktok => {
-                                        //Proccessing Data
-                                        switch (loadTiktok.code) {
-                                            case 200:
-                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
-                                                await reportTiktokComments(clientRows[i]).then ( reportTiktok => {
-                                                    sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                                });
-                                                break;                                           
-                                            case 303:
-                                                console.log(loadTiktok.data);
-                                                break;
-                                            default:
-                                                console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
-                                                await reportTiktokComments(clientRows[i]).then ( reportTiktok => {
-                                                    sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                                });                                                
-                                                break;
-                                        }
-                                    });
+                                    newCollectTiktokComments(clientRows[i]);
+                                    //.then (async  loadTiktok => {
+                                    //     //Proccessing Data
+                                    //     switch (loadTiktok.code) {
+                                    //         case 200:
+                                    //             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
+                                    //             await reportTiktokComments(clientRows[i]).then ( reportTiktok => {
+                                    //                 sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                    //             });
+                                    //             break;                                           
+                                    //         case 303:
+                                    //             console.log(loadTiktok.data);
+                                    //             break;
+                                    //         default:
+                                    //             console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
+                                    //             await reportTiktokComments(clientRows[i]).then ( reportTiktok => {
+                                    //                 sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
+                                    //             });                                                
+                                    //             break;
+                                    //     }
+                                    // });
                                 }           
                             }
                         //if Something error
