@@ -137,9 +137,11 @@ export async function newCollectTiktokComments(clientValue) {
                       }
                     }
                   
-                    getLikesTiktok(todayItems[i], cursorNumber).then ( responseComments =>{
-                      if(responseComments.data.status === true){
-                        newDataUsers = newDataUsers.concat(responseComments.data.newDataUsers);                                
+  
+                    await getLikesTiktok(todayItems[i], cursorNumber).then ( responseComments =>{
+                      console.log('Exec likes');
+                      if(responseComments.status === true){
+                        newDataUsers = newDataUsers.concat(responseComments.newDataUsers);                                
                       }
                     });
                   
