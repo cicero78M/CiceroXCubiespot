@@ -6,10 +6,10 @@ export async function getLikesTiktok(todayItems, cursorNumber) {
 
     let newDataUsers = [];    
 
-    await tiktokCommentAPI(todayItems, cursorNumber).then (async responseComments =>{
+    await tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
         console.log("Exec");
 
-            let commentItems = await responseComments.data.comments;
+            let commentItems = responseComments.data.comments;
             for (let ii = 0; ii < commentItems.length; ii++) {
                 if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[i].user.unique_id != "") {
                     if (!newDataUsers.includes(commentItems[i].user.unique_id)) {
