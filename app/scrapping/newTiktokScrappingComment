@@ -1,6 +1,9 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
 export function getLikesTiktok(todayItems, cursorNumber) {
+
+    console.log('Exec 1');
+
     let newDataUsers = [];    
     tiktokCommentAPI(todayItems, cursorNumber).then (responseComments =>{
         console.log("Exec");
@@ -31,7 +34,6 @@ export function getLikesTiktok(todayItems, cursorNumber) {
                     status : true,
                     newDataUsers : newDataUsers
                 }
-                
                 return data;
             }
     
