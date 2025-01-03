@@ -4,7 +4,7 @@ import { tiktokPostAPI, tiktokCommentAPI } from '../socialMediaAPI/tiktokAPI.js'
 import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 
-export async function collectTiktokComments(clientValue) {
+export async function newCollectTiktokComments(clientValue) {
   //Date Time
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {
