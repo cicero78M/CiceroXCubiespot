@@ -3,13 +3,16 @@ import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 
 export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
-    console.log(newDataUsers);
-
-    let hasShortcode = false;
-
+    
     const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
     await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
     let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
+
+    let hasShortcode = false;
+
+
+
+
     await tiktokCommentsUsernameSheet.getRows().then ( response =>{
 
         for (let ii = 0; ii < response.length; ii++) {
@@ -25,8 +28,13 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                         }
                     }
                 }
-                console.log(newDataUsers[0]);
             }
         }
-    });  
+        
+        return new Promise((resolve) => { 
+            resolve (newDataUsers[0]);
+        });          
+    
+    });
+
 }
