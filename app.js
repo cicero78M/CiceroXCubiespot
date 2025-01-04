@@ -895,48 +895,48 @@ client.on('message', async (msg) => {
                             break;
                         case 'newreporttiktok':
 
-                        console.log("Execute NewAllTiktok ")
+                            console.log("Execute NewAllTiktok ")
 
-                        await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
-                            async response =>{
+                            await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
+                                async response =>{
 
-                                for (let i = 0; i < response.length; i++){
-                                    if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                        
-                                        console.log(time+" "+response[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
-                                        client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
-                                        
-                                        await newReportTiktok(response[i]).then(
-                                            data => {
-                                                client.sendMessage(msg.from, data.data);
-                                        }).catch(                
-                                            data => {
-                                                console.error(response[i].get('CLIENT_ID')+' '+data);
-                                                switch (data.code) {
-                                                    case 303:
-                                                        console.log(data.data);
-                                                        client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR REPORT TIKTOK POST');
-                                                        break;
-                                                    default:
-                                                        client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
-                                                        break;
-                                                }
-                                        });
-    
-                                    }           
-                                }
-                                        
+                                    for (let i = 0; i < response.length; i++){
+                                        if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                            
+                                            console.log(time+" "+response[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
+                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
+                                            
+                                            await newReportTiktok(response[i]).then(
+                                                data => {
+                                                    client.sendMessage(msg.from, data.data);
+                                            }).catch(                
+                                                data => {
+                                                    console.error(response[i].get('CLIENT_ID')+' '+data);
+                                                    switch (data.code) {
+                                                        case 303:
+                                                            console.log(data.data);
+                                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR REPORT TIKTOK POST');
+                                                            break;
+                                                        default:
+                                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
+                                                            break;
+                                                    }
+                                            });
+        
+                                        }           
+                                    }
+                                            
 
-                            }). catch (
-                                error =>{
-                                    console.error(error);
-                                    client.sendMessage('6281235114745@c.us', 'Error on New RFeportTiktok');
-                                }
-                            )
+                                }). catch (
+                                    error =>{
+                                        console.error(error);
+                                        client.sendMessage('6281235114745@c.us', 'Error on New RFeportTiktok');
+                                    }
+                                )
 
-                            break;
+                                break;
 
-                        default:
+                            default:
                             break;                    
                     }
                 //Key Order Data Not Exist         
