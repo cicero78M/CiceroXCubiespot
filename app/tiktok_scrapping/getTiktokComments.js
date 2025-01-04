@@ -1,16 +1,16 @@
 import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
-import { postTiktokUserComments } from "./postTiktokUserComments.js";
 
-export async function getTiktokComments(clientName, todayItems) {
+export async function getTiktokComments(items) {
 
     console.log('Exec Get Tiktok Comments');
-    let cursorNumber = 0;
     let newDataUsers = [];    
-    
-    for (let i = 0; i < todayItems.length; i++) {
-        newDataUsers.push(todayItems);
+    newDataUsers.push(items);
 
-        forLoopGetComments(todayItems[i], cursorNumber);   
+    return new Promise((resolve, rejected) =>{
+
+        let cursorNumber = 0;
+
+        forLoopGetComments(items, cursorNumber);
 
         async function forLoopGetComments(items, cursorNumber) {
 
@@ -26,38 +26,40 @@ export async function getTiktokComments(clientName, todayItems) {
                     }
                 }
     
-                    console.log("Find");
-                    if (response.data.has_more === 1){    
-                        console.log("has more");
-                        console.log(response.data.cursor );
-                        setTimeout(async() => {
-                            console.log('next data');
-                            forLoopGetComments(items, response.data.cursor);
-            
-                        }, 2000);
-            
-                    } else {
-                        console.log(response.data.cursor );
-                        if(response.data.total > 400){
-                            if (response.data.cursor < response.data.total){
-                                setTimeout(async () => {
-                                    console.log('next data');
-                                    forLoopGetComments(items, response.data.cursor);
-                                }, 2000);
-                            } else {
-                                postTiktokUserComments(clientName, items, newDataUsers)
-                            }
-                        } else {
+                console.log("Find");
+                if (response.data.has_more === 1){    
+                    console.log("has more");
+                    console.log(response.data.cursor );
+                    setTimeout(async() => {
+                        console.log('next data');
+                        forLoopGetComments(items, response.data.cursor);
+        
+                    }, 2000);
+        
+                } else {
+                    console.log(response.data.cursor );
+                    if(response.data.total > 400){
+                        if (response.data.cursor < response.data.total){
                             setTimeout(async () => {
                                 console.log('next data');
                                 forLoopGetComments(items, response.data.cursor);
-                            }, 2000);                    
+                            }, 2000);
+                        } else {
+
+                            resolve (newDataUsers);
                         }
+                    } else {
+                        setTimeout(async () => {
+                            console.log('next data');
+                            forLoopGetComments(items, response.data.cursor);
+                        }, 2000);                    
                     }
+                }
                     
             }). catch (response => {
-                console.log(response);
+                rejected (response);
             });
         }
-    }
+
+    });   
 }
