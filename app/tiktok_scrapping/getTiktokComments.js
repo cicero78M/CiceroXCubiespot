@@ -36,7 +36,7 @@ export async function getTiktokComments(items) {
                         console.log('next data');
                         forLoopGetComments(items, response.data.cursor);
         
-                    }, 2000);
+                    }, 1200);
     
                 } else {
     
@@ -48,7 +48,7 @@ export async function getTiktokComments(items) {
                             setTimeout(async () => {
                                 console.log('next data');
                                 forLoopGetComments(items, response.data.cursor);
-                            }, 2000);
+                            }, 1200);
                         } else {
                             let data = {
                                 data: newDataUsers,
@@ -63,7 +63,7 @@ export async function getTiktokComments(items) {
                         setTimeout(async () => {
                             console.log('next data');
                             forLoopGetComments(items, response.data.cursor);
-                        }, 2000);                    
+                        }, 1200);                    
                     }
                 }
             }). catch (error => {
