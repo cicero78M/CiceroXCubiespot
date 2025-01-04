@@ -886,8 +886,6 @@ client.on('message', async (msg) => {
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                                 async response =>{
 
-                                    console.log(response);
-
                                     for (let i = 0; i < response.length; i++){
                                         if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                             
