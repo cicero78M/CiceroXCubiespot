@@ -30,9 +30,7 @@ export async function postTiktokUserComments(clientName, items, data) {
 
 
                     response[ii].assign(response);
-                    await response[ii].save().then(
-                        response =>{console.log(response)}
-                    );
+                    await response[ii].save();
                     
                     
                     resolve (data.length);   
