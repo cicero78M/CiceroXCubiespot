@@ -110,16 +110,15 @@ export async function newCollectTiktokComments(clientValue) {
             shortcodeNewCounter++;
           }
         }
+
         for (let i = 0; i < todayItems.length; i++) {
 
           await getTiktokComments(todayItems[i])
           
           .then (async response =>{
 
-            await postTiktokUserComments(clientName, todayItems[i], response).then(response =>{
-              
-              console.log(response);
-            
+            await postTiktokUserComments(clientName, todayItems[i], response).then(output =>{
+              console.log(output);            
             })
           })          
           .catch(response =>{

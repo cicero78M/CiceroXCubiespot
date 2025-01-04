@@ -28,7 +28,6 @@ export async function getTiktokComments(items) {
                     }
                 }
     
-                console.log("Find");
                 if (response.data.has_more === 1){    
                     console.log("has more");
                     console.log(response.data.cursor );
