@@ -30,7 +30,7 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                         code: 200
                         };
              
-                        resolve (data);                \
+                        resolve (data);                
                 }
             }
         });
