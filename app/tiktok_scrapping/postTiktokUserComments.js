@@ -29,7 +29,7 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
               //      await response[ii].assign(newDataUsers)
                     
                     
-                    resolve (newDataUsers[0]);   
+                    resolve (newDataUsers.length);   
                 }
             }
         });
