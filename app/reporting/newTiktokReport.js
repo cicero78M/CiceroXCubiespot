@@ -1,34 +1,53 @@
 import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
 import { listValueData } from '../database_query/listValueData.js';
+import { newListValueData } from '../database/new_query/dataList_query.js';
+import { newRowsData } from '../database/new_query/sheet_query.js';
   
 export async function reportTiktokComments(clientValue) {
+
+
     try {
+
+        console.log("Report Tiktok Function Executed");
+
           //Date Time
-      let d = new Date();
-      let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-      let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"}); 
-      console.log("Report Tiktok Function Executed");
+        let d = new Date();
+        let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+        let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"}); 
 
-      const clientName = clientValue.get('CLIENT_ID');
-      const tiktokAccount = clientValue.get('TIKTOK');
+        let userAll = 0;
+        let divisiList;
+        let userRows;
+        let shortcodeList = [];
 
-      if (clientValue.get('STATUS') === 'TRUE') {
 
-        // If Client_ID exist. then get official content
-            let divisiResponse = await listValueData(clientName, 'DIVISI');
-            let divisiList = await divisiResponse.data;
-            let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
-            let userRows =  await userDoc.data;
-            var userAll = 0;
+        const clientName = clientValue.get('CLIENT_ID');
+        const tiktokAccount = clientValue.get('TIKTOK');
 
-            for (let i = 0; i < userRows.length; i++) {
-              if (userRows[i].get('STATUS') === 'TRUE' ){
-                userAll++;
-              }
-            }
+        if (clientValue.get('STATUS') === 'TRUE') {
+
+            // If Client_ID exist. then get official content
+            await newListValueData(clientName, 'DIVISI').then(
+                response =>{
+                    divisiList =  response.data;
+                }
+            )
+
+            await newRowsData(ciceroKey.dbKey.userDataID, clientName).then( 
+                response => {    
+                    userRows = response;   
+                    
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i].get('STATUS') === 'TRUE' ){
+                          userAll++;
+                        }
+                    } 
+            });
+
+
+
             //Collect Shortcode from Database        
-            let shortcodeList = [];
-            const tiktokOfficialDoc = await _sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName);
+            const tiktokOfficialDoc = await _sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName).
             const tiktokOfficialRows = await tiktokOfficialDoc.data;
             let shortcodeListString = '';
             for (let i = 0; i < tiktokOfficialRows.length; i++) {
@@ -81,19 +100,16 @@ export async function reportTiktokComments(clientValue) {
                 for (let iv = 0; iv < notCommentList.length; iv++) {
                   if (divisiList[iii] === notCommentList[iv].get('DIVISI')) {
                     if (clientValue.get('TYPE') === "RES") {
-
-                    userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].get('TITLE') + ' ' + notCommentList[iv].get('NAMA') + ' - ' + notCommentList[iv].get('TIKTOK'));
-                    divisiCounter++;
-                    userCounter++;
+                        userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].get('TITLE') + ' ' + notCommentList[iv].get('NAMA') + ' - ' + notCommentList[iv].get('TIKTOK'));
+                        divisiCounter++;
+                        userCounter++;
                     } else if (clientValue.get('TYPE')  === "COM") {
-
                       let name = notCommentList[iv].get('NAMA');
                       let nameUpper = name.toUpperCase();
                       userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].get('TIKTOK'));
                       divisiCounter++;
                       userCounter++;
                     }
-
                   }
                 }
                 if (divisiCounter != 0) {
@@ -142,7 +158,6 @@ export async function reportTiktokComments(clientValue) {
           console.log(responseData.data);
           return responseData;
         }
-
     } catch (error) {
       let responseData = {
         data: error,
@@ -152,6 +167,4 @@ export async function reportTiktokComments(clientValue) {
       console.log(responseData.data);
       return responseData;
     }
-    
-
 }
