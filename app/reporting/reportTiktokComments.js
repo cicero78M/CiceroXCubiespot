@@ -15,11 +15,12 @@ export async function reportTiktokComments(clientValue) {
       if (clientValue.get('STATUS') === 'TRUE') {
 
         // If Client_ID exist. then get official content
-            let divisiResponse = listValueData(clientName, 'DIVISI');
+            let divisiResponse = await listValueData(clientName, 'DIVISI');
             let divisiList = divisiResponse.data;
-            let userDoc = _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
+            let userDoc = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
             let userRows =  userDoc.data;
             var userAll = 0;
+
             for (let i = 0; i < userRows.length; i++) {
               if (userRows[i].get('STATUS') === 'TRUE' ){
                 userAll++;
