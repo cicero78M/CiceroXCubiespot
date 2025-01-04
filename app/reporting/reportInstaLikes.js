@@ -116,7 +116,7 @@ export async function reportInstaLikes(clientValue) {
               
             let notLikesName;
             if (notLikesList[iv].get('INSTA') === undefined){
-              notLikesName = "Belum Input Username Instagram";
+              notLikesName = "Belum Input";
             } else {
               notLikesName = notLikesList[iv].get('INSTA');
             }
