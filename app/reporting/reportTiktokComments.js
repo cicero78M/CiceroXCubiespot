@@ -2,8 +2,6 @@ import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js'
 import { listValueData } from '../database_query/listValueData.js';
   
 export async function reportTiktokComments(clientValue) {
-  return new Promise((resolve, reject) => {
-
     try {
           //Date Time
       let d = new Date();
@@ -126,7 +124,7 @@ export async function reportTiktokComments(clientValue) {
                 };
               }
               console.log('Return Success');
-              resolve (responseData);
+              return responseData;
             } else {
               let responseData = {
                 data: 'Tidak ada Konten Data untuk di Olah',
@@ -134,7 +132,7 @@ export async function reportTiktokComments(clientValue) {
                 code: 201
               };
               console.log(responseData.data);
-              resolve (responseData);
+              return responseData;
             }
         } else {
           let responseData = {
@@ -143,7 +141,7 @@ export async function reportTiktokComments(clientValue) {
             code: 201
           };
           console.log(responseData.data);
-          resolve (responseData);
+          return responseData;
         }
 
     } catch (error) {
@@ -153,9 +151,8 @@ export async function reportTiktokComments(clientValue) {
         code: 303
       };
       console.log(responseData.data);
-      reject (responseData);
+      return responseData;
     }
     
-  });
 
 }

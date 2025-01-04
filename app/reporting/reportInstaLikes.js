@@ -84,6 +84,8 @@ export async function reportInstaLikes(clientValue) {
 
         for (let i = 0; i < userRows.length; i++) {     
           if (userRows[i].get('INSTA') != undefined || userRows[i].get('INSTA') != null || userRows[i].get('INSTA') != ""){
+
+            if(userRows[i].get('ID_KEY') === ){}
             if (!userLikesData.includes(userRows[i].get('INSTA'))) {
               if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
                 if (userRows[i].get('STATUS') === 'TRUE' ){
@@ -99,7 +101,6 @@ export async function reportInstaLikes(clientValue) {
           } else {
 
             console.log(userRows[i]);
-            
             UserNotLikes.push(userRows[i].get('ID_KEY'));
             notLikesList.push(userRows[i]);
           }
