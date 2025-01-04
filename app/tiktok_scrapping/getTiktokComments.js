@@ -14,6 +14,7 @@ export async function getTiktokComments(items) {
         forLoopGetComments(items, cursorNumber);
     
         async function forLoopGetComments(items, cursorNumber) {
+            
             console.log(items);
     
             await tiktokCommentAPI(items, cursorNumber).then ( response =>{
