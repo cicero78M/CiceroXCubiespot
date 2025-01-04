@@ -84,8 +84,8 @@ export async function reportInstaLikes(clientValue) {
         let notLikesList = [];
 
         for (let i = 0; i < userRows.length; i++) {
-          if(userRows[i].get('ID_KEY') === 81100283){
-            console.log(userRows[i]);
+          if(userRows[i].get('ID_KEY') === "81100283"){
+            console.log(userRows[i].get('ID_KEY'));
           }
           
           if (userRows[i].get('INSTA') != undefined){
