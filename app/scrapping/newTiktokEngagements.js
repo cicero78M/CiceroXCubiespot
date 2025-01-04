@@ -4,6 +4,7 @@ import { tiktokPostAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 import { getTiktokComments } from '../tiktok_scrapping/getTiktokComments.js';
+import { postTiktokUserComments } from '../tiktok_scrapping/postTiktokUserComments.js';
 
 export async function newCollectTiktokComments(clientValue) {
   //Date Time
@@ -160,5 +161,4 @@ export async function newCollectTiktokComments(clientValue) {
     await client.sendMessage('6281235114745@c.us', responseData.data);
     return responseData;
   }
-
 }
