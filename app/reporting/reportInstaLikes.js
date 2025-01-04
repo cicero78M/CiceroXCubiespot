@@ -86,13 +86,10 @@ export async function reportInstaLikes(clientValue) {
           if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
             if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
               if (userRows[iii].get('STATUS') === 'TRUE' ){
-                if (userRows[iii].get('INSTA') != ""){
-                  if (userRows[iii].get('EXCEPTION') === "FALSE"){
-                    UserNotLikes.push(userRows[iii].get('ID_KEY'));
-                    notLikesList.push(userRows[iii]);
-                  }
-                }
-                
+                if (userRows[iii].get('EXCEPTION') === "FALSE"){
+                  UserNotLikes.push(userRows[iii].get('ID_KEY'));
+                  notLikesList.push(userRows[iii]);
+                }                
               }
             }
           }          
@@ -115,7 +112,15 @@ export async function reportInstaLikes(clientValue) {
               } else if (clientValue.get('TYPE')  === "COM") {
                 let name = notLikesList[iv].get('NAMA');
                 let nameUpper = name.toUpperCase();
-                userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesList[iv].get('INSTA'));
+                let notLikesName;
+                if (notLikesList[iv].get('INSTA') === undefined){
+                  notLikesName = "Belum Input Username Instagram";
+                } else {
+                  notLikesName = notLikesList[iv].get('INSTA');
+                }
+
+                userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesName);
+                
                 divisiCounter++;
                 userCounter++;
               }
