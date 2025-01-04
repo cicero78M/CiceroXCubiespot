@@ -801,12 +801,15 @@ client.on('message', async (msg) => {
                         }
                     }
                 } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
+
                     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                     let clientRows = clientResponse.data;
+
                     //Wait A Second
                     setTimeout(() => {
                         console.log("Collecting Client Data");
                     }, 1000);
+
                     for (let i = 0; i < clientRows.length; i++){
                         if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
                             let responseData;

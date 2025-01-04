@@ -86,13 +86,16 @@ export async function reportInstaLikes(clientValue) {
           if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
             if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
               if (userRows[iii].get('STATUS') === 'TRUE' ){
-                if (userRows[iii].get('EXCEPTION') === "FALSE"){
-                  UserNotLikes.push(userRows[iii].get('ID_KEY'));
-                  notLikesList.push(userRows[iii]);
+                if (userRows[iii].get('INSTA') === ""){
+                  if (userRows[iii].get('EXCEPTION') === "FALSE"){
+                    UserNotLikes.push(userRows[iii].get('ID_KEY'));
+                    notLikesList.push(userRows[iii]);
+                  }
                 }
+                
               }
             }
-            }          
+          }          
         }
 
         let dataInsta = '';
