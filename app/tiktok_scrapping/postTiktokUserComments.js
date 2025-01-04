@@ -17,7 +17,8 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                 if (response[ii].get('SHORTCODE') === items) {
                     hasShortcode = true;
                     const fromRows = Object.values(response[ii].toObject());
-
+                    
+                    console.log(fromRows);
                     for (let iii = 0; iii < fromRows.length; iii++) {
                         if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                             if (!newDataUsers.includes(fromRows[iii])) {
