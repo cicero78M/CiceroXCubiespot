@@ -115,7 +115,9 @@ export async function newCollectTiktokComments(clientValue) {
           await getTiktokComments(todayItems[i])
           .then (async response =>{
             await postTiktokUserComments(clientName, todayItems[i], response).then(response =>{
+              
               console.log(response);
+            
             })
           })          
           .catch(response =>{

@@ -10,7 +10,7 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
         await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
         let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
 
-        await tiktokCommentsUsernameSheet.getRows().then ( response =>{
+        await tiktokCommentsUsernameSheet.getRows().then ( async response =>{
 
             for (let ii = 0; ii < response.length; ii++) {
 
@@ -25,6 +25,9 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                             }
                         }
                     }
+
+              //      await response[ii].assign(newDataUsers)
+                    
                     
                     resolve (newDataUsers[0]);   
                 }
