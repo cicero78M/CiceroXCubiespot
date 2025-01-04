@@ -18,7 +18,6 @@ export async function tiktokItemsBridges(clientName, items) {
                     }).catch(error => reject (error));
             }
             
-            
         } catch (error) {
             let data = {
                 data: error,
