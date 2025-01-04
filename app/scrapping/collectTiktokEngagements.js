@@ -7,9 +7,8 @@ import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 export async function collectTiktokComments(clientValue) {
   //Date Time
   let d = new Date();
-  let localDate = d.toLocaleDateString("en-US", {
-      timeZone: "Asia/Jakarta"
-  });   
+  let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
+
   try {    
 
     const clientName = clientValue.get('CLIENT_ID');
@@ -43,6 +42,7 @@ export async function collectTiktokComments(clientValue) {
       }
 
       if (hasContent) {
+        
         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
         await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
         const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];

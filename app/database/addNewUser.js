@@ -72,6 +72,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
 
       console.log('Return Divisi Tidak Terdaftar');
       userDoc.delete;
+      
       return responseData;
     }
   } catch (error) {
