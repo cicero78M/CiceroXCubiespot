@@ -20,7 +20,6 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
   try {
 
     const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth); //Google Auth
-
     await userDoc.loadInfo(); // loads document properties and worksheets
     const userSheet = userDoc.sheetsByTitle[clientName];
 
@@ -48,7 +47,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       if (!idKeyList.includes(idKey)) {
 
         //Get Target Sheet Documents by Title
-        sheetTarget.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true });
+        userSheet.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true });
           
         let responseMyData = await myData(clientName, idKey);
           
