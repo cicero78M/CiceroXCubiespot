@@ -14,6 +14,8 @@ export const googleAuth = new JWT({
 
 export async function newRowsData(sheetID, clientName) {
 
+    console.log("newRowsData Checked");
+
     const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
     await dataDoc.loadInfo(); // loads document properties and worksheets
 
