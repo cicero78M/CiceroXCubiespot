@@ -2,8 +2,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { tiktokPostAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { client } from '../../app.js';
-import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
-import { tiktokItemsBridges } from './tiktokItemBridges.js';
+import { ciceroKey, googleAuth } from '../database/new_query/sheet_query.js';
 
 
 export async function getTiktokPost(clientValue) {

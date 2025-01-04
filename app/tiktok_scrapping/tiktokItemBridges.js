@@ -1,5 +1,5 @@
-import { getTiktokComments } from "./getTiktokComments";
-import { postTiktokUserComments } from "./postTiktokUserComments";
+import { getTiktokComments } from "./getTiktokComments.js";
+import { postTiktokUserComments } from "./postTiktokUserComments.js";
 
 export async function tiktokItemsBridges(clientName, items) {
     
