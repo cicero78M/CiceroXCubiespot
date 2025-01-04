@@ -44,6 +44,7 @@ export async function newCollectTiktokComments(clientValue) {
       }
 
       if (hasContent) {
+
         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
         await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
         const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
@@ -108,16 +109,20 @@ export async function newCollectTiktokComments(clientValue) {
             shortcodeNewCounter++;
           }
         }
+        for (let i = 0; i < todayItems.length; i++) {
 
-        getTiktokComments(clientName, todayItems[i])
+          getTiktokComments(clientName, todayItems[i])
 
-        .then (response =>{
-          console.log(response);
-        })
+          .then (response =>{
+            console.log(response);
+          })
+          
+          .catch(response =>{
+            console.error(response)
+          });
         
-        .catch(response =>{
-          console.error(response)
-        });
+        }
+        
 
         officialTiktokSheet.delete;
 
