@@ -6,6 +6,7 @@ let hasShortcode = false;
 export async function postTiktokUserComments(clientName, items, userdata) {
 
     console.log("Post Data Username Tiktok Engagement" );
+    client.sendMessage('6281235114745@c.us', "Post Data Username Tiktok Engagement");
 
     return new Promise(async (resolve, reject) => { 
         try {

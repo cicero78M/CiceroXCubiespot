@@ -1,6 +1,7 @@
 import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
 import { newListValueData } from '../database/new_query/dataList_query.js';
 import { newRowsData } from '../database/new_query/sheet_query.js';
+import { client } from '../../app.js';
   
 export async function newReportTiktok(clientValue) {
 
@@ -8,7 +9,9 @@ export async function newReportTiktok(clientValue) {
         
         try {
 
-            console.log("Report Tiktok Function Executed");
+            console.log("Execute Report Tiktok");
+            client.sendMessage('6281235114745@c.us', "Execute Report Tiktok");
+            
 
             //Date Time
             let d = new Date();
@@ -126,7 +129,7 @@ export async function newReportTiktok(clientValue) {
                                 }
                             }
                         }
-                        
+
                         if (divisiCounter != 0) {
                             dataTiktok = dataTiktok.concat('\n\n*' + divisiList[iii] + '* : ' + divisiCounter + ' User\n' + userByDivisi);
                         }

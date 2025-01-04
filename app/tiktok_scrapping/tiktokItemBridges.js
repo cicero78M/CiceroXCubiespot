@@ -1,3 +1,4 @@
+import { client } from "../../app.js";
 import { newReportTiktok } from "../reporting/newTiktokReport.js";
 import { getTiktokComments } from "./getTiktokComments.js";
 import { postTiktokUserComments } from "./postTiktokUserComments.js";
@@ -5,13 +6,13 @@ import { postTiktokUserComments } from "./postTiktokUserComments.js";
 export async function tiktokItemsBridges(clientValue, items) {
 
     console.log("Execute Bridging");
-    
+    client.sendMessage('6281235114745@c.us', "Execute Bridging");
+
     return new Promise(async (resolve, reject) => {
         try {        
             for (let i = 0; i < items.length; i++) {
                 await getTiktokComments(items[i])
                 .then (async response =>{
-                    console.log(response.data);
                     await postTiktokUserComments(clientValue.get('CLIENT_ID'), items[i], response.data)
                     .then(data => console.log(data))
                     .catch(error => reject (error));               
@@ -36,5 +37,3 @@ export async function tiktokItemsBridges(clientValue, items) {
         }
     });
 }
-        
-        

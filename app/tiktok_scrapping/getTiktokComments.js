@@ -2,7 +2,8 @@ import { tiktokCommentAPI } from "../socialMediaAPI/tiktokAPI.js";
 
 export async function getTiktokComments(items) {
 
-    console.log('Exec Generate Tiktok Comments');
+    console.log('Execute Generate Tiktok Comments');
+    client.sendMessage('6281235114745@c.us', "Execute Generate Tiktok Comments");
 
     let cursorNumber = 0;
 

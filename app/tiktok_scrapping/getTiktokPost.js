@@ -9,8 +9,8 @@ export async function getTiktokPost(clientValue) {
     const clientName = clientValue.get('CLIENT_ID');
     const secUid = clientValue.get('SECUID');
 
-    console.log(`${clientName} Collect Tiktok Post Data`);
-    client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Post Data`);
+    console.log(`${clientName} Execute Tiktok Post Data`);
+    client.sendMessage('6281235114745@c.us', "Execute Tiktok Post Data");
 
     //Date Time
     let d = new Date();

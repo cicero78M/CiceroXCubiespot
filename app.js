@@ -838,7 +838,7 @@ client.on('message', async (msg) => {
                             break;                    
                     }
 
-                } else if (newAdminOrder.includes(splittedMsg[1].toLowerCase())){//     const newAdminOrder = ["newalltiktok"];
+                } else if (newAdminOrder.includes(splittedMsg[1].toLowerCase())){//     const newAdminOrder = ["newalltiktok", "newreporttiktok"];
                     switch (splittedMsg[1].toLowerCase()) {
                         case 'newalltiktok':
 
@@ -932,8 +932,7 @@ client.on('message', async (msg) => {
                                 )
 
                                 break;
-
-                            default:
+                        default:
                             break;                    
                     }
                 //Key Order Data Not Exist         
