@@ -111,7 +111,7 @@ export async function newCollectTiktokComments(clientValue) {
         }
         for (let i = 0; i < todayItems.length; i++) {
 
-          getTiktokComments(todayItems[i])
+          await getTiktokComments(todayItems[i])
 
           .then (response =>{
             console.log(response);

@@ -101,9 +101,6 @@ export async function getTiktokPost(clientValue) {
                                         shortcodeNewCounter++;
                                     }
                                 }
-
-                                
-                
                             });  
 
                         } else {
