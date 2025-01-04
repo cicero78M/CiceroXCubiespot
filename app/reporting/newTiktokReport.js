@@ -20,7 +20,6 @@ export async function newReportTiktok(clientValue) {
             let divisiCounter = 0;
 
             let userByDivisi;
-            let divisiList;
             let userRows;
             let dataTiktok;
             let responseData;
@@ -29,7 +28,7 @@ export async function newReportTiktok(clientValue) {
             let tiktokSudah;
             let shortcodeListString = '';
 
-
+            let divisiList = [];
             let fromRows = [];
             let shortcodeList = [];
             let userCommentData = [];
@@ -43,7 +42,7 @@ export async function newReportTiktok(clientValue) {
                 
                 await newListValueData(clientName, 'DIVISI').then(
                     response =>{
-                        divisiList =  response.data;
+                        divisiList = response;
                     }
                 )
 
