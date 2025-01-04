@@ -23,6 +23,7 @@ export async function usernameAbsensi(clientName, clientType) {
     let userCounter = 0;
 
     for (let i = 0; i < divisiList.length; i++) {
+      
       let divisiCounter = 0;
       let userByDivisi = '';
       for (let ii = 0; ii < userRows.length; ii++) {            
@@ -35,7 +36,7 @@ export async function usernameAbsensi(clientName, clientType) {
         }
       }
 
-      if(userCounter != 0){
+      if(divisiCounter != 0){
         userString = userString.concat('\n\n' + divisiList[i] + ' : ' + divisiCounter + ' User\n' + userByDivisi);
       }
     }
