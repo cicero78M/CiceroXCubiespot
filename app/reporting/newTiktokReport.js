@@ -20,14 +20,14 @@ export async function newReportTiktok(clientValue) {
             let divisiCounter = 0;
 
             let userRows;
-            let dataTiktok;
             let responseData;
             let name;
             let nameUpper;
             let tiktokSudah;
+
             let shortcodeListString = '';
             let userByDivisi = '';
-
+            let dataTiktok = '';
 
             let divisiList = [];
             let fromRows = [];
@@ -126,6 +126,7 @@ export async function newReportTiktok(clientValue) {
                                 }
                             }
                         }
+                        
                         if (divisiCounter != 0) {
                             dataTiktok = dataTiktok.concat('\n\n*' + divisiList[iii] + '* : ' + divisiCounter + ' User\n' + userByDivisi);
                         }
