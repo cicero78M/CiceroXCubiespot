@@ -32,7 +32,7 @@ export async function getTiktokPost(clientValue) {
     
             if (clientValue.get('STATUS') === 'TRUE') {
 
-                await tiktokPostAPI(secUid, cursor).then( response =>{
+                await tiktokPostAPI(secUid, cursor).then( async response =>{
                     items =  response.data.data.itemList;
 
                     for (let i = 0; i < items.length; i++) {
@@ -48,9 +48,9 @@ export async function getTiktokPost(clientValue) {
                     if (hasContent) {
 
                         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-                        tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
+                        await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
                         const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
-                        officialTiktokSheet.getRows().then(response =>{
+                        await officialTiktokSheet.getRows().then(response =>{
 
                             for (let i = 0; i < response.length; i++) {
                                 if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
