@@ -26,7 +26,6 @@ export async function reportInstaLikes(clientValue) {
       let userRows = userDoc.data;
       var userAll = 0;
       for (let i = 0; i < userRows.length; i++) {
-
         if (userRows[i].get('STATUS') === 'TRUE' ){
           userAll++;
         }
@@ -83,16 +82,10 @@ export async function reportInstaLikes(clientValue) {
         let UserNotLikes = [];
         let notLikesList = [];
 
-        for (let i = 0; i < userRows.length; i++) {
-          if(userRows[i].get('ID_KEY') === "81100283"){
-            console.log(userRows[i].get('ID_KEY'));
-          }
-          
+        for (let i = 0; i < userRows.length; i++) {     
           if (userRows[i].get('INSTA') !== undefined || userRows[i].get('INSTA') !== null || userRows[i].get('INSTA') !== ""){
             if (!userLikesData.includes(userRows[i].get('INSTA'))) {
               if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
-                
-
                 if (userRows[i].get('STATUS') === 'TRUE' ){
                   if (userRows[i].get('EXCEPTION') === "FALSE"){
                     UserNotLikes.push(userRows[i].get('ID_KEY'));
