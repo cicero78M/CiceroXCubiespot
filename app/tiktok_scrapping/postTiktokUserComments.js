@@ -32,11 +32,7 @@ export async function postTiktokUserComments(clientName, items, data) {
                     
                     await tiktokCommentsUsernameSheet.addRow(data);
 
-                    await tiktokCommentsUsernameDoc.delete();
-                    
                     resolve (data);   
-
-
 
                 }
             }
