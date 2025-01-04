@@ -3,12 +3,10 @@ import { getTiktokComments } from "./getTiktokComments.js";
 import { postTiktokUserComments } from "./postTiktokUserComments.js";
 
 export async function tiktokItemsBridges(clientValue, items) {
-
     console.log("Execute Bridging");
-    
     return new Promise(async (resolve, reject) => {
-    
         try {
+            
             for (let i = 0; i < items.length; i++) {
                 await getTiktokComments(items[i])
                 .then (async response =>{
@@ -27,9 +25,7 @@ export async function tiktokItemsBridges(clientValue, items) {
                 data => {
                     reject (data)
             });
-
-
-            
+        
         } catch (error) {
             let data = {
                 data: error,
