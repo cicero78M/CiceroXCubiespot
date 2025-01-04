@@ -27,15 +27,13 @@ export async function getTiktokPost(clientValue) {
     
             const clientName = clientValue.get('CLIENT_ID');
             const secUid = clientValue.get('SECUID');
-    
             console.log(`${clientName} Collect Tiktok Post Data`);
             client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Post Data`);
     
             if (clientValue.get('STATUS') === 'TRUE') {
                 await tiktokPostAPI(secUid, cursor).then(async  response =>{
-    
                     items = await response.data.data.itemList;
-    
+                    console.log(items);
                     if (Array.isArray(items)) {
                         for (let i = 0; i < items.length; i++) {
                             let itemDate = new Date(items[i].createTime * 1000);
@@ -110,6 +108,7 @@ export async function getTiktokPost(clientValue) {
                                 }
 
                                 resolve (data);
+                     
                             } else {
                                 let data = {
                                         data: clientName + ' Tiktok Account Has No Content',
