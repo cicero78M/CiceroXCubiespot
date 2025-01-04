@@ -880,55 +880,59 @@ client.on('message', async (msg) => {
                     switch (splittedMsg[0].toLowerCase()) {
                         case 'newalltiktok':
 
-                        await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData')
-                        
-                        .then( 
-                            response =>{
+                            console.log("Execute NewAllTiktok ")
 
-                                for (let i = 0; i < response.length; i++){
-                                    if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                        console.log(time+" "+response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                                        client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                                        
-                                        getTiktokPost(clientRows[i]).then(
-                                            data => {
-                                                console.log(data);
-                                                tiktokItemsBridges(data[i].get('CLIENT_ID'), data).then(
-                                                    data =>{
-                                                        console.log(data);
-                                                    }
-                                                ).catch(
-                                                    data =>{
-                                                        console.log(data);
-
-                                                    }
-                                                );
-                                            }
-                                        ).catch(
-                                            data => {
-                                                console.error(response[i].get('CLIENT_ID')+' '+data);
-
-                                                switch (data.code) {
-                                                    case 303:
-                                                        client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR GET TIKTOK POST');
-                                                        break;
-                                                    default:
-                                                        client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
-                                                        break;
-                                                }
-                                            }
-                                        );
-                
-                                    }           
-                                }
+                            await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData')
                             
+                            .then( 
+                                response =>{
+                                    console.log(response);
 
-                        }). catch (
-                            error =>{
-                                console.error(error);
-                                client.sendMessage('6281235114745@c.us', 'Error on All New Tiktok');
-                            }
-                        )
+                                    for (let i = 0; i < response.length; i++){
+                                        if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                            
+                                            console.log(time+" "+response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
+                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
+                                            
+                                            getTiktokPost(clientRows[i]).then(
+                                                data => {
+                                                    console.log(data);
+                                                    tiktokItemsBridges(data[i].get('CLIENT_ID'), data).then(
+                                                        data =>{
+                                                            console.log(data);
+                                                        }
+                                                    ).catch(
+                                                        data =>{
+                                                            console.log(data);
+
+                                                        }
+                                                    );
+                                                }
+                                            ).catch(
+                                                data => {
+                                                    console.error(response[i].get('CLIENT_ID')+' '+data);
+
+                                                    switch (data.code) {
+                                                        case 303:
+                                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR GET TIKTOK POST');
+                                                            break;
+                                                        default:
+                                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
+                                                            break;
+                                                    }
+                                                }
+                                            );
+                    
+                                        }           
+                                    }
+                                
+
+                            }). catch (
+                                error =>{
+                                    console.error(error);
+                                    client.sendMessage('6281235114745@c.us', 'Error on All New Tiktok');
+                                }
+                            )
                         
 
   
