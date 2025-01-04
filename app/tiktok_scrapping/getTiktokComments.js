@@ -5,7 +5,7 @@ export async function getTiktokComments(items) {
     console.log('Exec Get Tiktok Comments');
     let newDataUsers = [];    
     newDataUsers.push(items);
-
+    console.log(newDataUsers);
     return new Promise((resolve, rejected) =>{
 
         let cursorNumber = 0;
