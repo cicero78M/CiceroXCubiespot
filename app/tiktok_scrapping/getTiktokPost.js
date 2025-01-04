@@ -31,8 +31,9 @@ export async function getTiktokPost(clientValue) {
             client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Post Data`);
     
             if (clientValue.get('STATUS') === 'TRUE') {
-                await tiktokPostAPI(secUid, cursor).then(async  response =>{
-                    items = await response.data.data.itemList;
+
+                await tiktokPostAPI(secUid, cursor).then( response =>{
+                    items =  response.data.data.itemList;
                     console.log(items);
 
                     for (let i = 0; i < items.length; i++) {
@@ -53,7 +54,7 @@ export async function getTiktokPost(clientValue) {
                         if (hasContent) {
 
                             const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-                            await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
+                            tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
                             const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
                             officialTiktokSheet.getRows().then(response =>{
 
@@ -118,7 +119,7 @@ export async function getTiktokPost(clientValue) {
                             }).catch(
                                 response =>{
                                     let data = {
-                                        data: clientName + ' '+response,
+                                        data: response,
                                         state: true,
                                         code: 303
                                     };
@@ -131,7 +132,7 @@ export async function getTiktokPost(clientValue) {
                     
                         } else {
                             let data = {
-                                    data: clientName + ' Tiktok Account Has No Content',
+                                    data: ' Tiktok Account Has No Content',
                                     state: true,
                                     code: 201
                             };
