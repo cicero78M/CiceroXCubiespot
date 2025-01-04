@@ -39,8 +39,11 @@ export async function getTiktokPost(clientValue) {
                 
                         let itemDate = new Date(items[i].createTime * 1000);
                         
-                        console.log(itemDate);                
+                        console.log(itemDate);   
+
                         if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+
+                            console.log(items[i].video.id);
                 
                             hasContent = true;
                             itemByDay.push(items[i]);
