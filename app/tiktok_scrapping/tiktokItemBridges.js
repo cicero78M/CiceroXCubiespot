@@ -1,7 +1,8 @@
+import { newReportTiktok } from "../reporting/newTiktokReport.js";
 import { getTiktokComments } from "./getTiktokComments.js";
 import { postTiktokUserComments } from "./postTiktokUserComments.js";
 
-export async function tiktokItemsBridges(clientName, items) {
+export async function tiktokItemsBridges(clientValue, items) {
 
     console.log("Execute Bridging");
     
@@ -12,14 +13,22 @@ export async function tiktokItemsBridges(clientName, items) {
                 await getTiktokComments(items[i])
                 .then (async response =>{
                     console.log(response.data);
-                    await postTiktokUserComments(clientName, items[i], response.data)
+                    await postTiktokUserComments(clientValue.get('CLIENT_ID'), items[i], response.data)
                     .then(data => console.log(data))
                     .catch(error => reject (error));
                             
                 }).catch(error => reject (error));
             }
 
-            
+            await newReportTiktok(clientValue).then(
+                data => {
+                    resolve (data)
+            }).catch(                
+                data => {
+                    reject (data)
+            });
+
+
             
         } catch (error) {
             let data = {

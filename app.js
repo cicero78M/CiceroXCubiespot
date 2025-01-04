@@ -893,21 +893,16 @@ client.on('message', async (msg) => {
                                             client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                             
                                             await getTiktokPost(response[i]).then(
-
                                                 data => {
-
                                                     console.log(data);
-
-                                                    tiktokItemsBridges(response[i].get('CLIENT_ID'), data.data).then(
+                                                    tiktokItemsBridges(response[i], data.data).then(
                                                         data =>{
-
                                                             console.log(time+" "+response[i].get('CLIENT_ID')+' START BRIDGING TIKTOK DATA');
                                                             console.log(data.data);
                                                         }
                                                     ).catch(
                                                         data =>{
                                                             console.log(data);
-
                                                         }
                                                     );
                                                 }
