@@ -289,8 +289,8 @@ client.on('message', async (msg) => {
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['cubiehome', 'like', 'comment'];
-
     const newAdminOrder = ["newalltiktok"];
+
     try {
         const contact = await msg.getContact();
         if (msg.isStatus){
@@ -882,10 +882,9 @@ client.on('message', async (msg) => {
 
                             console.log("Execute NewAllTiktok ")
 
-                            await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData')
-                            
-                            .then( 
+                            await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                                 response =>{
+
                                     console.log(response);
 
                                     for (let i = 0; i < response.length; i++){
