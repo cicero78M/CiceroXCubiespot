@@ -83,7 +83,7 @@ export async function reportInstaLikes(clientValue) {
         let notLikesList = [];
 
         for (let iii = 0; iii < userRows.length; iii++) {
-          if (notLikesList[iii].get('INSTA') != undefined){
+          if (userRows[iii].get('INSTA') != undefined){
             if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
               if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
                 if (userRows[iii].get('STATUS') === 'TRUE' ){
@@ -197,7 +197,7 @@ export async function reportInstaLikes(clientValue) {
     };
 
     console.log(error);
-    await client.sendMessage('6281235114745@c.us', `${clientName} ${responseData.data}`);
+    await client.sendMessage('6281235114745@c.us', `${clientName} Get Report Insta Error`);
     return responseData;
   }
 }
