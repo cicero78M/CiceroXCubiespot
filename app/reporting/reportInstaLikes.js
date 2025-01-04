@@ -83,6 +83,11 @@ export async function reportInstaLikes(clientValue) {
         let notLikesList = [];
 
         for (let iii = 0; iii < userRows.length; iii++) {
+          
+          if (userRows[iii].get('ID_KEY') === 81100283){
+            console.log("Username exist");
+          }
+
           if (userRows[iii].get('INSTA') != undefined){
             if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
               if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
@@ -96,6 +101,7 @@ export async function reportInstaLikes(clientValue) {
             }          
 
           } else {
+
             UserNotLikes.push(userRows[iii].get('ID_KEY'));
             notLikesList.push(userRows[iii]);
           }
@@ -115,11 +121,12 @@ export async function reportInstaLikes(clientValue) {
             if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
               
             let notLikesName;
-            if (notLikesList[iv].get('INSTA') === undefined){
-              notLikesName = "Belum Input";
-            } else {
-              notLikesName = notLikesList[iv].get('INSTA');
-            }
+
+              if (notLikesList[iv].get('INSTA') === undefined){
+                notLikesName = "Belum Input";
+              } else {
+                notLikesName = notLikesList[iv].get('INSTA');
+              }
 
               if (clientValue.get('TYPE')  === "RES") {
                 userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesName);
