@@ -25,12 +25,8 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                         }
                     }
                 }
-
                 console.log(newDataUsers[0]);
-    
             }
         }
-
     });  
-
 }
