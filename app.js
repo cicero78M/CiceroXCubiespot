@@ -896,7 +896,7 @@ client.on('message', async (msg) => {
 
                                                 data => {
 
-                                                    tiktokItemsBridges(data[i].get('CLIENT_ID'), data).then(
+                                                    tiktokItemsBridges(response[i].get('CLIENT_ID'), data).then(
                                                         
                                                         data =>{
                                                             console.log(data);
