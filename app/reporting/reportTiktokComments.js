@@ -28,7 +28,7 @@ export async function reportTiktokComments(clientValue) {
             }
             //Collect Shortcode from Database        
             let shortcodeList = [];
-            const tiktokOfficialDoc = _sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName).then (
+            const tiktokOfficialDoc = await _sheetDoc(ciceroKey.dbKey.tiktokOfficialID, clientName).then (
               
             )
             const tiktokOfficialRows = tiktokOfficialDoc.data;
@@ -43,7 +43,7 @@ export async function reportTiktokComments(clientValue) {
               }
             }
             if (shortcodeList.length >= 1) {
-              let tiktokUsernameDoc =  _sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
+              let tiktokUsernameDoc =  await _sheetDoc(ciceroKey.dbKey.tiktokCommentUsernameID, clientName);
               let tiktokCommentsUsernameRows = tiktokUsernameDoc.data;
               let userCommentData = [];
               for (let i = 0; i < shortcodeList.length; i++) {
