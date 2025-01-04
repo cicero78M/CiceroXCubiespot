@@ -902,7 +902,7 @@ client.on('message', async (msg) => {
                                                         data =>{
 
                                                             console.log(time+" "+response[i].get('CLIENT_ID')+' START BRIDGING TIKTOK DATA');
-                                                            console.log(data);
+                                                            console.log(data.data);
                                                         }
                                                     ).catch(
                                                         data =>{
