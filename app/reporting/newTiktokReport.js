@@ -19,7 +19,6 @@ export async function newReportTiktok(clientValue) {
             let userCounter = 0;
             let divisiCounter = 0;
 
-            let userByDivisi;
             let userRows;
             let dataTiktok;
             let responseData;
@@ -27,6 +26,8 @@ export async function newReportTiktok(clientValue) {
             let nameUpper;
             let tiktokSudah;
             let shortcodeListString = '';
+            let userByDivisi = '';
+
 
             let divisiList = [];
             let fromRows = [];
@@ -107,7 +108,7 @@ export async function newReportTiktok(clientValue) {
                     for (let iii = 0; iii < divisiList.length; iii++) {
 
                         divisiCounter = 0;
-                        userByDivisi;
+                        userByDivisi = '';
                         
                         for (let iv = 0; iv < notCommentList.length; iv++) {
                             if (divisiList[iii] === notCommentList[iv].get('DIVISI')) {
