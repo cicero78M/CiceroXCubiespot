@@ -24,9 +24,9 @@ export async function reportInstaLikes(clientValue) {
       let divisiList = divisiResponse.data;
       let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       let userRows = userDoc.data;
-      console.log(userRows);
       var userAll = 0;
       for (let i = 0; i < userRows.length; i++) {
+        
         if (userRows[i].get('STATUS') === 'TRUE' ){
           userAll++;
         }
@@ -83,14 +83,18 @@ export async function reportInstaLikes(clientValue) {
         let UserNotLikes = [];
         let notLikesList = [];
 
-        for (let iii = 0; iii < userRows.length; iii++) {
-          if (userRows[iii].get('INSTA') != undefined){
-            if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
-              if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
-                if (userRows[iii].get('STATUS') === 'TRUE' ){
-                  if (userRows[iii].get('EXCEPTION') === "FALSE"){
-                    UserNotLikes.push(userRows[iii].get('ID_KEY'));
-                    notLikesList.push(userRows[iii]);
+        for (let i = 0; i < userRows.length; i++) {
+          if(userRows[i].get('ID_KEY') === 81100283){
+            console.log(userRows[i]);
+          }
+          
+          if (userRows[i].get('INSTA') != undefined){
+            if (!userLikesData.includes(userRows[i].get('INSTA'))) {
+              if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
+                if (userRows[i].get('STATUS') === 'TRUE' ){
+                  if (userRows[i].get('EXCEPTION') === "FALSE"){
+                    UserNotLikes.push(userRows[i].get('ID_KEY'));
+                    notLikesList.push(userRows[i]);
                   }                
                 }
               }
@@ -98,8 +102,8 @@ export async function reportInstaLikes(clientValue) {
 
           } else {
 
-            UserNotLikes.push(userRows[iii].get('ID_KEY'));
-            notLikesList.push(userRows[iii]);
+            UserNotLikes.push(userRows[i].get('ID_KEY'));
+            notLikesList.push(userRows[i]);
           }
         }
 
