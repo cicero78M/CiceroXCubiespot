@@ -91,6 +91,7 @@ export async function reportInstaLikes(clientValue) {
           if (userRows[i].get('INSTA') !== undefined || userRows[i].get('INSTA') !== null || userRows[i].get('INSTA') !== ""){
             if (!userLikesData.includes(userRows[i].get('INSTA'))) {
               if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
+                
 
                 if (userRows[i].get('STATUS') === 'TRUE' ){
                   if (userRows[i].get('EXCEPTION') === "FALSE"){
@@ -102,6 +103,10 @@ export async function reportInstaLikes(clientValue) {
             }          
 
           } else {
+
+            if(userRows[i].get('ID_KEY') === "81100283"){
+              console.log(userRows[i].get('ID_KEY'));
+            }
 
             UserNotLikes.push(userRows[i].get('ID_KEY'));
             notLikesList.push(userRows[i]);
@@ -123,7 +128,7 @@ export async function reportInstaLikes(clientValue) {
               
             let notLikesName;
 
-              if (notLikesList[iv].get('INSTA') === undefined){
+              if (notLikesList[iv].get('INSTA') === undefined|| notLikesList[iv].get('INSTA') !== null || notLikesList[iv].get('INSTA') !== ""){
                 notLikesName = "Belum Input";
               } else {
                 notLikesName = notLikesList[iv].get('INSTA');
