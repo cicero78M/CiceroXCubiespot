@@ -914,6 +914,7 @@ client.on('message', async (msg) => {
 
                                                     switch (data.code) {
                                                         case 303:
+                                                            console.log(data.data);
                                                             client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR GET TIKTOK POST');
                                                             break;
                                                         default:

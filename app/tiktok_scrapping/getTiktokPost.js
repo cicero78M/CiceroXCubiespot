@@ -110,6 +110,7 @@ export async function getTiktokPost(clientValue) {
                             }
 
                             resolve (data);
+                            
                         }).catch(
                             response =>{
                                 let data = {
