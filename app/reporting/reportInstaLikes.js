@@ -24,6 +24,7 @@ export async function reportInstaLikes(clientValue) {
       let divisiList = divisiResponse.data;
       let userDoc = await sheetDoc(ciceroKey.dbKey.userDataID, clientName);
       let userRows = userDoc.data;
+      console.log(userRows);
       var userAll = 0;
       for (let i = 0; i < userRows.length; i++) {
         if (userRows[i].get('STATUS') === 'TRUE' ){
@@ -83,11 +84,6 @@ export async function reportInstaLikes(clientValue) {
         let notLikesList = [];
 
         for (let iii = 0; iii < userRows.length; iii++) {
-          
-          if (userRows[iii].get('ID_KEY') === 81100283){
-            console.log("Username exist");
-          }
-
           if (userRows[iii].get('INSTA') != undefined){
             if (!userLikesData.includes(userRows[iii].get('INSTA'))) {
               if (!UserNotLikes.includes(userRows[iii].get('ID_KEY'))) {
