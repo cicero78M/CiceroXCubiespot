@@ -50,7 +50,7 @@ export async function getTiktokPost(clientValue) {
                         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
                         await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
                         const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
-                        await officialTiktokSheet.getRows().then(response =>{
+                        await officialTiktokSheet.getRows().then(async response =>{
 
                             for (let i = 0; i < response.length; i++) {
                                 if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
@@ -74,11 +74,11 @@ export async function getTiktokPost(clientValue) {
                                                 LIKE_COUNT: itemByDay[i].statsV2.diggCount, PLAY_COUNT: itemByDay[i].statsV2.playCount, COLLECT_COUNT: itemByDay[i].statsV2.collectCount,
                                                 SHARE_COUNT: itemByDay[i].statsV2.shareCount, REPOST_COUNT: itemByDay[i].statsV2.repostCount
                                             }); // Jabatan Divisi Value
-                                            response[ii].save(); //save update
+                                            await response[ii].save(); //save update
                                             shortcodeUpdateCounter++;
                                         } else if (!shortcodeList.includes(itemByDay[i].video.id)) {
                                             shortcodeList.push(itemByDay[i].video.id);   
-                                            officialTiktokSheet.addRow({
+                                            await officialTiktokSheet.addRow({
                                                 TIMESTAMP: itemByDay[i].createTime, USER_ACCOUNT: itemByDay[i].author.uniqueId,
                                                 SHORTCODE: itemByDay[i].video.id, ID: itemByDay[i].id, CAPTION: itemByDay[i].desc, COMMENT_COUNT: itemByDay[i].statsV2.commentCount,
                                                 LIKE_COUNT: itemByDay[i].statsV2.diggCount, PLAY_COUNT: itemByDay[i].statsV2.playCount, COLLECT_COUNT: itemByDay[i].statsV2.collectCount,
@@ -92,7 +92,7 @@ export async function getTiktokPost(clientValue) {
                             } else {
                                 //Push New Shortcode Content to Database
                                 for (let i = 0; i < itemByDay.length; i++) {
-                                    officialTiktokSheet.addRow({
+                                    await officialTiktokSheet.addRow({
                                         TIMESTAMP: itemByDay[i].createTime, USER_ACCOUNT: itemByDay[i].author.uniqueId,
                                         SHORTCODE: itemByDay[i].video.id, ID: itemByDay[i].id, CAPTION: itemByDay[i].desc, COMMENT_COUNT: itemByDay[i].statsV2.commentCount,
                                         LIKE_COUNT: itemByDay[i].statsV2.diggCount, PLAY_COUNT: itemByDay[i].statsV2.playCount, COLLECT_COUNT: itemByDay[i].statsV2.collectCount,
