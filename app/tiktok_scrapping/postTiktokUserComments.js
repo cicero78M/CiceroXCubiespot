@@ -3,8 +3,6 @@ import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
 
 export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
-    
-
     console.log(newDataUsers);
 
     let hasShortcode = false;
@@ -28,25 +26,11 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                     }
                 }
 
-                console.log(newDataUsers);
-
-                response[ii].assign(newDataUsers)
-                .then(response =>{
-                    console.log(response);
-                })
-                .catch(response =>{
-                    console.log(response);
-                });
-
-                response[ii].save();
+                console.log(newDataUsers[0]);
     
             }
         }
 
     });  
-
- 
-
-    tiktokCommentsUsernameDoc.delete;
 
 }
