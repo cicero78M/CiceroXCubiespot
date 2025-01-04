@@ -877,7 +877,7 @@ client.on('message', async (msg) => {
                     }
 
                 } else if (newAdminOrder.includes(splittedMsg[1].toLowerCase())){//     const newAdminOrder = ["newalltiktok"];
-                    switch (splittedMsg[0].toLowerCase()) {
+                    switch (splittedMsg[1].toLowerCase()) {
                         case 'newalltiktok':
 
                             console.log("Execute NewAllTiktok ")
