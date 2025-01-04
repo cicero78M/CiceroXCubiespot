@@ -156,38 +156,31 @@ export async function newReportTiktok(clientValue) {
                     console.log('Return Success');
                     resolve (responseData);
                 } else {
-                let responseData = {
-                    data: 'Tidak ada Konten Data untuk di Olah',
-                    state: true,
-                    code: 201
-                };
-                console.log(responseData.data);
-                reject (responseData);
+                    let responseData = {
+                        data: 'Tidak ada Konten Data untuk di Olah',
+                        state: true,
+                        code: 201
+                    };
+                    console.log(responseData.data);
+                    reject (responseData);
                 }
-            } else {
-            
+            } else {   
                 let responseData = {
                     data: 'Your Client ID has Expired, Contacts Developers for more Informations',
                     state: true,
                     code: 201
                 };
-            
-                console.log(responseData.data);
-                
+                console.log(responseData.data);               
                 reject (responseData);
-            
             }
         } catch (error) {
-            
             let responseData = {
                 data: error,
                 state: false,
                 code: 303
             };
-
             console.log(responseData.data);
             reject (responseData);
         }
-        
     });
 }
