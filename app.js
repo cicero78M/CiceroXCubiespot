@@ -35,6 +35,7 @@ import { instaUserData } from './app/scrapping/collectInstaUser.js';
 import { newCollectTiktokComments } from './app/scrapping/newTiktokEngagements.js';
 import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/tiktok_scrapping/tiktokItemBridges.js';
+import { getTiktokPost } from './app/tiktok_scrapping/getTiktokPost.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -883,7 +884,7 @@ client.on('message', async (msg) => {
                             console.log("Execute NewAllTiktok ")
 
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
-                                response =>{
+                                async response =>{
 
                                     console.log(response);
 
@@ -893,7 +894,7 @@ client.on('message', async (msg) => {
                                             console.log(time+" "+response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                             client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                                             
-                                            getTiktokPost(clientRows[i]).then(
+                                            await getTiktokPost(clientRows[i]).then(
                                                 data => {
                                                     console.log(data);
                                                     tiktokItemsBridges(data[i].get('CLIENT_ID'), data).then(
