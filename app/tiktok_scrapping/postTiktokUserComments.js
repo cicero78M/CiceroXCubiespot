@@ -5,23 +5,24 @@ let hasShortcode = false;
 
 export async function postTiktokUserComments(clientName, items, userdata) {
 
-    return new Promise(async (resolve) => { 
-        
-        try {
+    console.log("Post Data Username Tiktok Engagement" );
 
+    return new Promise(async (resolve, reject) => { 
+        try {
+            
             const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
             await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
             let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
+            
             await tiktokCommentsUsernameSheet.getRows().then ( async response =>{
                 for (let ii = 0; ii < response.length; ii++) {
                     if (response[ii].get('SHORTCODE') === items) {
                         hasShortcode = true;
                         const fromRows = Object.values(response[ii].toObject());
-                        console.log(fromRows);
 
                         for (let iii = 0; iii < fromRows.length; iii++) {
                             if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                                
+
                                 if (!userdata.includes(fromRows[iii])) {
                                     userdata.push(fromRows[iii]);
                                 }
@@ -36,23 +37,18 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                                 state: true,
                                 code: 200
                             };
-                 
                         resolve (data);                
                     }
                 }
             });
             
         } catch (error) {
-
-            console.log(error);
             let data = {
                     data: error,
                     state: true,
-                    code: 200
+                    code: 300
                 };
-        
-            resolve (data);
+            reject (data);
         }
-
     }); 
 }

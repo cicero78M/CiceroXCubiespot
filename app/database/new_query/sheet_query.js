@@ -14,13 +14,9 @@ export const googleAuth = new JWT({
 
 export async function newRowsData(sheetID, clientName) {
 
-    console.log("newRowsData Checked");
-
     const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
     await dataDoc.loadInfo(); // loads document properties and worksheets
-
     return new Promise(async (resolve, reject) => {
-
         const sheetTitle = dataDoc.sheetsByTitle[clientName];
         await sheetTitle.getRows()
         .then( response => {
@@ -28,6 +24,5 @@ export async function newRowsData(sheetID, clientName) {
         }).catch( response =>{
             reject (response);
         });
-    
     });
 }

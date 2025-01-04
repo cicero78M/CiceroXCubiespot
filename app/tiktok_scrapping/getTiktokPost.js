@@ -4,13 +4,19 @@ import { tiktokPostAPI } from '../socialMediaAPI/tiktokAPI.js';
 import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database/new_query/sheet_query.js';
 
-
 export async function getTiktokPost(clientValue) {
+
+    const clientName = clientValue.get('CLIENT_ID');
+    const secUid = clientValue.get('SECUID');
+
+    console.log(`${clientName} Collect Tiktok Post Data`);
+    client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Post Data`);
+
     //Date Time
     let d = new Date();
     let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
+    
     return new Promise(async (resolve, reject) => {
-
         try {
 
             let cursor = 0;
@@ -24,15 +30,11 @@ export async function getTiktokPost(clientValue) {
             
             let hasContent = false;
             let hasShortcode = false;
-    
-            const clientName = clientValue.get('CLIENT_ID');
-            const secUid = clientValue.get('SECUID');
-            console.log(`${clientName} Collect Tiktok Post Data`);
-            client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Post Data`);
-    
+        
             if (clientValue.get('STATUS') === 'TRUE') {
 
                 await tiktokPostAPI(secUid, cursor).then( async response =>{
+    
                     items =  response.data.data.itemList;
 
                     for (let i = 0; i < items.length; i++) {
@@ -46,12 +48,10 @@ export async function getTiktokPost(clientValue) {
                     }
 
                     if (hasContent) {
-
                         const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
                         await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
                         const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
                         await officialTiktokSheet.getRows().then(async response =>{
-
                             for (let i = 0; i < response.length; i++) {
                                 if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
                                     shortcodeList.push(response[i].get('SHORTCODE'));
@@ -102,15 +102,12 @@ export async function getTiktokPost(clientValue) {
                                 }
                             }
 
-                                
                             let data = {
                                 data:todayItems,
                                 state: true,
                                 code: 200
                             }
-
                             resolve (data);
-                            
                         }).catch(
                             response =>{
                                 let data = {
@@ -119,9 +116,7 @@ export async function getTiktokPost(clientValue) {
                                     code: 303
                                 };
                                 reject (data);
-
                             }
-
                         );
 
                 
@@ -133,7 +128,6 @@ export async function getTiktokPost(clientValue) {
                         };
                         reject (data);
                     }
-                    
                 });
             } else {
                 let data = {

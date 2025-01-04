@@ -855,11 +855,10 @@ client.on('message', async (msg) => {
                                             
                                             await getTiktokPost(response[i]).then(
                                                 data => {
-                                                    console.log(data);
                                                     tiktokItemsBridges(response[i], data.data).then(
                                                         data =>{
-                                                            console.log(time+" "+response[i].get('CLIENT_ID')+' START BRIDGING TIKTOK DATA');
-                                                            console.log(data.data);
+                                                            client.sendMessage(msg.from, data.data);
+                                                            console.log("Success Report Data");
                                                         }
                                                     ).catch(
                                                         data =>{
@@ -869,8 +868,6 @@ client.on('message', async (msg) => {
                                                 }
                                             ).catch(
                                                 data => {
-                                                    console.error(response[i].get('CLIENT_ID')+' '+data);
-
                                                     switch (data.code) {
                                                         case 303:
                                                             console.log(data.data);
@@ -912,7 +909,6 @@ client.on('message', async (msg) => {
                                                     client.sendMessage(msg.from, data.data);
                                             }).catch(                
                                                 data => {
-                                                    console.error(response[i].get('CLIENT_ID')+' '+data);
                                                     switch (data.code) {
                                                         case 303:
                                                             console.log(data.data);
