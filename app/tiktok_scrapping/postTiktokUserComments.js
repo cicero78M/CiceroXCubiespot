@@ -28,13 +28,15 @@ export async function postTiktokUserComments(clientName, items, data) {
                         }
                     }
 
-
-                    response[ii].assign(data);
-                    await response[ii].save();
+                    await response[ii].delete();
+                    await tiktokCommentsUsernameSheet.addRow(data);   
                     
                     resolve (data.length);   
+
                 }
             }
         });
+
+
     }); 
 }
