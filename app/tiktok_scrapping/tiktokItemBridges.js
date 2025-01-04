@@ -11,8 +11,8 @@ export async function tiktokItemsBridges(clientName, items) {
             for (let i = 0; i < items.length; i++) {
                 await getTiktokComments(items[i])
                     .then (async response =>{
-                        console.log(response);
-                        await postTiktokUserComments(clientName, items[i], response)
+                        console.log(response.data);
+                        await postTiktokUserComments(clientName, items[i], response.data)
                             .then(data => resolve(data))
                             .catch(error => reject (error));
                     }).catch(error => reject (error));
