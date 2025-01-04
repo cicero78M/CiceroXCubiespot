@@ -47,7 +47,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       if (!idKeyList.includes(idKey)) {
 
         //Get Target Sheet Documents by Title
-        userSheet.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true });
+        userSheet.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true, EXCEPTIONS: false });
           
         let responseMyData = await myData(clientName, idKey);
           
