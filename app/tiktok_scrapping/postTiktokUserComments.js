@@ -5,6 +5,7 @@ let hasShortcode = false;
 
 export async function postTiktokUserComments(clientName, items, userdata) {
     return new Promise(async (resolve) => { 
+        
         const tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
         await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
         let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
@@ -25,12 +26,12 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                     await tiktokCommentsUsernameSheet.addRow(userdata);
              
                     let data = {
-                            data: userdata,
+                            data: `${clientName} Adding Tiktok Username to ${items}`,
                             state: true,
                             code: 200
                         };
              
-                        resolve (data);                
+                    resolve (data);                
                 }
             }
         });

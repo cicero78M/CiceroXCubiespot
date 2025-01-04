@@ -9,11 +9,8 @@ import { tiktokItemsBridges } from './tiktokItemBridges.js';
 export async function getTiktokPost(clientValue) {
     //Date Time
     let d = new Date();
-    let localDate = d.toLocaleDateString("en-US", {
-        timeZone: "Asia/Jakarta"
-    });   
-
-    return new Promise((resolve, reject) => {
+    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
+    return new Promise(async (resolve, reject) => {
 
         try {
 
@@ -29,17 +26,17 @@ export async function getTiktokPost(clientValue) {
             let hasContent = false;
             let hasShortcode = false;
     
-                
             const clientName = clientValue.get('CLIENT_ID');
             const secUid = clientValue.get('SECUID');
     
             console.log(`${clientName} Collect Tiktok Post Data`);
             client.sendMessage('6281235114745@c.us', `${clientName} Collect Tiktok Post Data`);
     
-    
             if (clientValue.get('STATUS') === 'TRUE') {
-                tiktokPostAPI(secUid, cursor).then(async  response =>{
+                await tiktokPostAPI(secUid, cursor).then(async  response =>{
+    
                     items = await response.data.data.itemList;
+    
                     if (Array.isArray(items)) {
                         for (let i = 0; i < items.length; i++) {
                             let itemDate = new Date(items[i].createTime * 1000);
@@ -107,45 +104,39 @@ export async function getTiktokPost(clientValue) {
                                     }
                                 });
 
-                                tiktokItemsBridges(clientName);
-                                
+                                let data = {
+                                    data:todayItems,
+                                    state: true,
+                                    code: 200
+                                }
+
+                                resolve (data);
                             } else {
-    
-                                let responseData = {
+                                let data = {
                                         data: clientName + ' Tiktok Account Has No Content',
                                         state: true,
                                         code: 201
                                 };
-    
-                                console.log(responseData.data);
-                                await client.sendMessage('6281235114745@c.us', responseData.data);
-
-                                resolve(responseData);
-                            
+                                reject (data);
                             }
                         }
                     }
-     
                 });
-                        
-    
-            
             } else {
-     
-                let responseData = {
+                let data = {
                         data: 'Your Client ID has Expired, Contacts Developers for more Informations',
                         state: true,
                         code: 201
                     };
-                console.log(responseData.data);
-    
-                client.sendMessage('6281235114745@c.us', responseData.data);
-    
-                resolve(responseData);
+                reject (data);
             }
-           
         } catch (error) {
-            reject(error);        
+            let data = {
+                data: error,
+                state: false,
+                code: 303
+            };
+            reject(data);        
         }
     });
 }

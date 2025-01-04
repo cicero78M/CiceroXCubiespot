@@ -1,12 +1,4 @@
-/*******************************************************************************
- * 
- * This Function Create a new User Data Base Sheet Name and Properties / Headers.
- * As a Child of Create Client Function
- * 
- */
-
 import { readFileSync } from 'fs';
-
 const ciceroKeys = JSON.parse (readFileSync('ciceroKey.json'));
 
 //Google Spreadsheet
