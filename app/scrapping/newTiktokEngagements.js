@@ -109,10 +109,12 @@ export async function newCollectTiktokComments(clientValue) {
           }
         }
 
-        getTiktokComments(clientName, todayItems)
+        getTiktokComments(clientName, todayItems[i])
+
         .then (response =>{
           console.log(response);
         })
+        
         .catch(response =>{
           console.error(response)
         });
