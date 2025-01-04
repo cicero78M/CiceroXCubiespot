@@ -10,9 +10,6 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
 
     let hasShortcode = false;
 
-
-
-
     await tiktokCommentsUsernameSheet.getRows().then ( response =>{
 
         for (let ii = 0; ii < response.length; ii++) {
@@ -28,13 +25,15 @@ export async function postTiktokUserComments(clientName, items, newDataUsers) {
                         }
                     }
                 }
+
+                return new Promise((resolve) => { 
+                    resolve (newDataUsers);
+                });          
+            
             }
         }
         
-        return new Promise((resolve) => { 
-            resolve (newDataUsers[0]);
-        });          
-    
+
     });
 
 }
