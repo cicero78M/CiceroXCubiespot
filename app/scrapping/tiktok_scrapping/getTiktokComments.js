@@ -18,7 +18,8 @@ export async function getTiktokComments(items) {
         async function forLoopGetComments(items, cursorNumber) {    
             await tiktokCommentAPI(items, cursorNumber).then ( response =>{
 
-                const total = response.data.total;
+                const total = response.data.total+50;
+                console.log(total);
 
                 let commentItems = response.data.comments;
     

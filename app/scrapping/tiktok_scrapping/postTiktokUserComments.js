@@ -27,21 +27,15 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                         const fromRows = Object.values(response[ii].toObject());
 
                         for (let iii = 0; iii < fromRows.length; iii++) {
-                            
                             if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-    
                                 if (!userdata.includes(fromRows[iii])) {
                                     userdata.push(fromRows[iii]);
                                 }
                             }
-            
                         }
-
                         await response[ii].delete();
                         await tiktokCommentsUsernameSheet.addRow(userdata);
-
                     }
-
                 }
 
                 if(!hasShortcode){
