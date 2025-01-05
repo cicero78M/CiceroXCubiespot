@@ -41,8 +41,8 @@ export async function newReportInsta(clientValue) {
             )
         
             await newRowsData(ciceroKey.dbKey.userDataID, clientName).then( 
-                response => {    
-                    userRows = response;                           
+                async response => {    
+                    userRows = await response;                           
                     for (let i = 0; i < response.length; i++) {
                         if (response[i].get('STATUS') === 'TRUE' ){
                             userAll++;
@@ -76,11 +76,13 @@ export async function newReportInsta(clientValue) {
                             await newRowsData(ciceroKey.dbKey.instaLikesUsernameID, clientName).then( 
                                 async response => {    
                                     userLikesData = await response;                        
+                                    console.log(userLikesData.length);
                                     for (let i = 0; i < shortcodeList.length; i++) {
                                         //code on the go
                                         for (let ii = 0; ii < officialRows.length; ii++) {
                                             if (officialRows[ii].get('SHORTCODE') === shortcodeList[i]) {
                                                 const fromRows = Object.values(officialRows[ii].toObject());
+                                     
                                                 for (let iii = 0; iii < fromRows.length; iii++) {
                                                     if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                                                         if (!userLikesData.includes(fromRows[iii])) {
