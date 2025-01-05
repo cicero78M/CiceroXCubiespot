@@ -378,7 +378,7 @@ client.on('message', async (msg) => {
     const hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
     const time = localDate+" >> "+hours;
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', , 'allinsta', 'reportinsta','exception', 'savecontact','secuid'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'exception', 'savecontact','secuid'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
@@ -488,140 +488,6 @@ client.on('message', async (msg) => {
     
                         }
                         
-                    } else if (splittedMsg[1].toLowerCase() === 'allsocmed') {
-                        try {
-                            //Generate All Socmed
-                            await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');
-                            console.log(time+' Generate All Socmed Data Starting');
-                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-                            let clientRows = await clientResponse.data;
-                            //Itterate Client
-                            for (let i = 0; i < clientRows.length; i++){
-                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                                    //Scrapping TIKTOK by Client
-                                    let loadTiktok = await collectTiktokComments(clientRows[i]);
-                                    //Wait A Second
-                                    setTimeout(() => {
-                                        console.log("Collecting Tiktok Data");
-                                    }, 1000);
-                                    //Proccessing Data
-                                    let reportTiktok;
-                                    switch (loadTiktok.code) {
-                                        case 200:
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');            
-                                            reportTiktok = await reportTiktokComments(clientRows[i]);
-                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                            break;                                           
-                                        case 303:
-                                            console.log(loadTiktok.data);
-                                            break;
-                                        default:
-                                            reportTiktok = await reportTiktokComments(clientRows[i]);
-                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                            break;
-                                    }
-                                }           
-                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
-                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                    //Scrapping Insta by Client
-                                    let loadInsta = await collectInstaLikes(clientRows[i]);
-                                    //Proccessing Data
-                                    let reportInsta;
-                                    switch (loadInsta.code) {
-                                        case 200:
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                                            await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                            reportInsta = await reportInstaLikes(clientRows[i]);
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
-                                            sendResponse(msg.from, reportInsta, clientRows[i]+' ERROR LOAD INSTA DATA');
-                                            break;                                           
-                                        case 303:
-                                            console.log(loadInsta.data);
-                                            break;
-                                        default:
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                                            await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                            reportInsta = await reportInstaLikes(clientRows[i]);
-                                            setTimeout(() => {
-                                                console.log("Collecting Report Data");
-                                            }, 1000);
-                                            sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                            break;
-                                    }
-                                } 
-                            }
-                        //if Something error
-                        } catch (error) {
-                            console.log(error)
-                            await client.sendMessage('6281235114745@c.us', 'Collect #ALLSOCMED Error');
-                        }
-                    } else if (splittedMsg[1].toLowerCase() === 'allinsta') {
-                        try {
-                            //Generate All Socmed
-                            await client.sendMessage('6281235114745@c.us', 'Generate All Insta Data Starting...');
-                            console.log(time+' Generate All Insta Data Starting');
-                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-                            let clientRows = await clientResponse.data;
-                            //Itterate Client
-                            for (let i = 0; i < clientRows.length; i++){
-                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
-                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                    //Scrapping Insta by Client
-                                    let loadInsta = await collectInstaLikes(clientRows[i]);
-                                    //Proccessing Data
-                                    let reportInsta;
-                                    switch (loadInsta.code) {
-                                        case 200:
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                                            await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                            reportInsta = await reportInstaLikes(clientRows[i]);
-                                            sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                            break;                                           
-                                        case 303:
-                                            console.log(loadInsta.data);
-                                            break;
-                                        default:
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                                            await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                            reportInsta = await reportInstaLikes(clientRows[i]);
-                                            sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                            break;
-                                    }
-                                } 
-                            }
-                        //if Something error
-                        } catch (error) {
-                            console.log(error)
-                            await client.sendMessage('6281235114745@c.us', 'Collect #ALLINSTA Error');
-                        }
-              
-                    } else if (splittedMsg[1].toLowerCase() === 'reportinsta') {
-                        try {
-                            //Generate All Socmed
-                            await client.sendMessage('6281235114745@c.us', 'Generate Report Insta Data Starting...');
-                            console.log(time+' Generate Report Insta Data Starting');
-                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-                            let clientRows = await clientResponse.data;
-                            //Itterate Client
-                            for (let i = 0; i < clientRows.length; i++){
-
-                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('INSTA_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
-                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                    let reportInsta = await reportInstaLikes(clientRows[i]);
-                                    sendResponse(msg.from, reportInsta, clientRows[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                } 
-                            }
-                        } catch (error) {
-                            console.log(error)
-                            await client.sendMessage('6281235114745@c.us', 'Collect #REPORTINSTA Error');
-                        }
                     } else if (splittedMsg[1].toLowerCase() === 'secuid') {
                         try {
                             //Generate All Socmed
@@ -920,6 +786,7 @@ client.on('message', async (msg) => {
                                 }
                             )  
                             break;
+
                         case 'newreporttiktok':
 
                             console.log("Execute New Report Tiktok ")
@@ -1063,7 +930,6 @@ client.on('message', async (msg) => {
                             break
 
                         default:
-
                             break;                    
                     }
                 //Key Order Data Not Exist         
