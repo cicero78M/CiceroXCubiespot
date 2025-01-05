@@ -903,10 +903,9 @@ client.on('message', async (msg) => {
                                                     await getInstaLikes(instaPostData).then(
                                                         async instaLikesData =>{
                                                             console.log(instaLikesData.data);
-
-                                                            client.sendMessage(msg.from, instaLikesData.data);
-                                                            
+                                                            client.sendMessage(msg.from, instaLikesData.data);                        
                                                             await newReportInsta(clientData[i]).then(
+                                                                console.log(data);
                                                                 data => {
                                                                     client.sendMessage(msg.from, data.data);
                                                             }).catch(                
