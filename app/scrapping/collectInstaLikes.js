@@ -4,7 +4,7 @@ import { instaLikesAPI, instaPostAPI } from '../socialMediaAPI/instaAPI.js';
 import { client } from '../../app.js';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
 
-export async function colectInstaLikes(clientValue) {
+export async function collectInstaLikes(clientValue) {
   //Date Time
   const d = new Date();
   const localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});  
