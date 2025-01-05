@@ -35,23 +35,18 @@ import { newReportTiktok } from './app/reporting/newTiktokReport.js';
 import { newReportInsta } from './app/reporting/newInstaReport.js';
 import { getInstaPost } from './app/scrapping/insta_scrapping/getInstaPost.js';
 import { getInstaLikes } from './app/scrapping/insta_scrapping/getInstaLikes.js';
-
 //Routing Port 
 const port = ciceroKey.port;
-
 //Express Routing
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
 });
-
 //WWEB JS Client Constructor
 export const client = new Client({
     authStrategy: new LocalAuth({
         clientId: ciceroKey.waSession,
     }),
-
 });
-
 //WWEB Client Initializing
 console.log('Initializing...');
 client.initialize();
@@ -143,7 +138,6 @@ client.on('ready', () => {
                                         );
                                         break;
                                     }
-
                                 }
                             ).catch(
                                 data => {
@@ -180,8 +174,7 @@ client.on('ready', () => {
                                             async data => {
                                                 sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA LIKES');
                                             }
-                                        ); 
-                                        
+                                        );                                         
                                         break;
                                     }
                                 }

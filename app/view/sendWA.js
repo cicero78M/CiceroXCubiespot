@@ -1,16 +1,17 @@
 import { client } from "../../app.js";
-//Date Time
-const d = new Date();
-const localDate = d.toLocaleDateString("en-US", {
-    timeZone: "Asia/Jakarta"
-});
-const hours = d.toLocaleTimeString("en-US", {
-    timeZone: "Asia/Jakarta"
-});     
-const time = localDate+" >> "+hours;
+
 
 //Response By User
 export function sendResponse(from, responseData, errormessage) {
+    //Date Time
+let d = new Date();
+let localDate = d.toLocaleDateString("en-US", {
+    timeZone: "Asia/Jakarta"
+});
+let hours = d.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Jakarta"
+});     
+let time = localDate+" >> "+hours;
     switch (responseData.code){
         case 200:
             console.log(time+" SUCCESS GENERATE DATA");
@@ -28,6 +29,15 @@ export function sendResponse(from, responseData, errormessage) {
 }
 //Response By Client
 export function sendClientResponse(clientID, supervisor, operator, group, responseData, type) {
+    //Date Time
+let d = new Date();
+let localDate = d.toLocaleDateString("en-US", {
+    timeZone: "Asia/Jakarta"
+});
+let hours = d.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Jakarta"
+});     
+let time = localDate+" >> "+hours;
     switch (responseData.code){
         case 200 :
             console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
