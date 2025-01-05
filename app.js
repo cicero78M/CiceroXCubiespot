@@ -902,22 +902,22 @@ client.on('message', async (msg) => {
                                                     console.log(instaPostData);
                                                     await getInstaLikes(instaPostData).then(
                                                         async instaLikesData =>{
-                                                            console.log(instaLikesData);
+                                                            console.log(instaLikesData.data);
+
                                                             client.sendMessage(msg.from, instaLikesData.data);
+                                                            
                                                             await newReportInsta(clientData[i]).then(
-                                                                async instaReportData => {
-                                                                    await client.sendMessage(msg.from, instaReportData.data);
+                                                                data => {
+                                                                    client.sendMessage(msg.from, data.data);
                                                             }).catch(                
-                                                                async error => {
-                                                                    switch (error.code) {
+                                                                data => {
+                                                                    switch (data.code) {
                                                                         case 303:
-                                                                            console.log(error.data);
-                                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
+                                                                            console.log(data.data);
+                                                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
                                                                             break;
                                                                         default:
-                                                                            console.log(error.data);
-
-                                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+error.data);
+                                                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
                                                                             break;
                                                                     }
                                                             });

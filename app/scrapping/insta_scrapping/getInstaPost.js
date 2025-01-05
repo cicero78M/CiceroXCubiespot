@@ -113,7 +113,9 @@ export async function getInstaPost(clientValue) {
             };
 
             instaOfficialDoc.delete;
+            
             resolve (data);
+
           } else {
             let data = {
               data: 'Official Account Has No Insta Content for Today',
