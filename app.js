@@ -108,7 +108,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('40 6-21 * * *', async () => {
+    schedule('30 6-21 * * *', async () => {
             //Date Time
             let d = new Date();
             let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -232,7 +232,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('00 15,18,21 * * *', async () => {
+    schedule('08 15,18,21 * * *', async () => {
         //Date Time
         let d = new Date();
         let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -256,7 +256,7 @@ client.on('ready', () => {
                                 async data => {
                                     await tiktokItemsBridges(clientData[i], data.data).then(
                                         data =>{
-                                            sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'),data.data, ' ERROR REPORT TIKTOK');                                            
+                                            sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'),data.data, 'REPORT TIKTOK');                                            
                                             console.log("Report Tiktok SUCCESS!!!");
                                         }
                                     ).catch(
@@ -292,9 +292,10 @@ client.on('ready', () => {
                                         async instaLikesData =>{
                                             console.log(instaLikesData.data);
                                             await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
+
                                             await newReportInsta(clientData[i]).then(
                                                 async data => {
-                                                    sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'),data.data, 'ERROR REPORT INSTA');    
+                                                    sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data.data, 'REPORT INSTA');    
                                                     console.log("Report Insta SUCCESS!!!");
                                         
                                                 }).catch(                
