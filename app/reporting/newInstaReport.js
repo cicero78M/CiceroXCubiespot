@@ -100,7 +100,6 @@ export async function newReportInsta(clientValue) {
                                     if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
                                         if (userRows[i].get('STATUS') === 'TRUE' ){
                                             if (userRows[i].get('EXCEPTION') === "FALSE"){
-                                                console.log(userRows[i].get('INSTA'));
                                                 UserNotLikes.push(userRows[i].get('ID_KEY'));
                                                 notLikesList.push(userRows[i]);
                                             }                
