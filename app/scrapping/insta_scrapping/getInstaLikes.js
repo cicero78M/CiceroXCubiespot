@@ -33,17 +33,17 @@ export async function getInstaLikes(todayItems, clientValue ) {
               hasShortcode = true;
         
               const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-            
-              await instaLikesAPI(todayItems[i]).then(async response =>{
-                const likesItems = await response.data.data.items;
-                for (let iii = 0; iii < fromRows.length; iii++) {
-                  if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                    if (!newDataUsers.includes(fromRows[iii])) {
-                      newDataUsers.push(fromRows[iii]);
-                    }
+
+              for (let iii = 0; iii < fromRows.length; iii++) {
+                if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
+                  if (!newDataUsers.includes(fromRows[iii])) {
+                    newDataUsers.push(fromRows[iii]);
                   }
                 }
-                
+              }
+          
+              await instaLikesAPI(todayItems[i]).then(async response =>{
+                const likesItems = await response.data.data.items;
                 for (let iii = 0; iii < likesItems.length; iii++) {
                   if (likesItems[iii].username != undefined || likesItems[iii].username != null || likesItems[iii].username != "") {
                     if (!newDataUsers.includes(likesItems[iii].username)) {
@@ -59,6 +59,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
                     state: false,
                     code: 303
                   };
+
                   reject (data);
                 }
               );
