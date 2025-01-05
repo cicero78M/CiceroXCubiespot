@@ -13,6 +13,7 @@ export async function newReportInsta(clientValue) {
 
     let userCounter = 0;
     let divisiCounter = 0;
+    let userAll = 0;
 
     let shortcodeList = [];
     let divisiList = [];
