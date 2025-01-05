@@ -132,7 +132,7 @@ client.on('ready', () => {
                                 async data => {
                                     await tiktokItemsBridges(response[i], data.data).then(
                                         data =>{
-                                            client.sendMessage(msg.from, data.data);
+                                            client.sendMessage('6281235114745@c.us', data.data);
                                             console.log("Success Report Data");
                                         }
                                     ).catch(
