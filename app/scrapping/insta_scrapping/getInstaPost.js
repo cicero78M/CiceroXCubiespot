@@ -1,4 +1,5 @@
 import { client } from "../../../app.js";
+import { instaPostAPI } from "../../socialMediaAPI/instaAPI.js";
 
 export async function getInstaPost(clientValue) {
   //Date Time
@@ -117,7 +118,7 @@ export async function getInstaPost(clientValue) {
               state: true,
               code: 201
             };
-            resolve (data);
+            reject (data);
           }
         }).catch(error =>{
           let data = {
