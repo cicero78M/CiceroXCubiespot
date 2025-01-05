@@ -1,6 +1,7 @@
 import { client } from "../../../app.js";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaPostAPI } from "../../socialMediaAPI/instaAPI.js";
+import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 export async function getInstaPost(clientValue) {
   //Date Time
@@ -15,7 +16,7 @@ export async function getInstaPost(clientValue) {
 
   let shortcodeUpdateCounter = 0;
   let shortcodeNewCounter = 0;
-  
+
   let itemByDay = [];
   let todayItems = [];
   let postItems = [];
