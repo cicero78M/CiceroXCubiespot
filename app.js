@@ -925,10 +925,10 @@ client.on('message', async (msg) => {
                                                     switch (data.code) {
                                                         case 303:
                                                             console.log(data.data);
-                                                            await client.sendMessage('6281235114745@c.us', data[i].get('CLIENT_ID')+' ERROR GET INSTA POST');
+                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA POST');
                                                             break;
                                                         default:
-                                                            await client.sendMessage('6281235114745@c.us', data[i].get('CLIENT_ID')+' '+data.data);
+                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
                                                             break;
                                                     }
                                                 }
