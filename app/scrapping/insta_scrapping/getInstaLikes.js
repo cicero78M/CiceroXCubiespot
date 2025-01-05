@@ -5,19 +5,21 @@ import { client } from '../../../app.js';
 
 export async function getInstaLikes(todayItems, clientValue ) {
 
-    console.log("Execute Insta Likes");
+    console.log("Generate Username Insta Likes");
 
+    const clientName = clientValue.get('CLIENT_ID');
+
+    var newData = 0;
+    var updateData = 0;
+
+    let newDataUsers = [];
+
+    let hasShortcode = false;
     
     return new Promise(async (resolve, reject) => {
       
       try { 
 
-        const clientName = clientValue.get('CLIENT_ID');
-
-        var newData = 0;
-        var updateData = 0;
-
-        let newDataUsers = [];
 
         const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
         await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
@@ -25,21 +27,14 @@ export async function getInstaLikes(todayItems, clientValue ) {
         let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
         for (let i = 0; i < todayItems.length; i++) {
-
-          console.log("execute "+todayItems[i]);
-
-          let hasShortcode = false;
-          //code on the go
+          
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
             if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
               hasShortcode = true;
         
               const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
-
               await instaLikesAPI(todayItems[i]).then(async response =>{
-               
                 const likesItems = await response.data.data.items;
-          
                 for (let iii = 0; iii < fromRows.length; iii++) {
                   if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                     if (!newDataUsers.includes(fromRows[iii])) {
@@ -61,8 +56,8 @@ export async function getInstaLikes(todayItems, clientValue ) {
           
                 console.log(`${clientName} Update Data ${todayItems[i]}`);
                 await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
-                updateData++;
 
+                updateData++;
               }).catch(
                 error =>{
                   let data = {
@@ -87,8 +82,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
                   userNameList.push(likesItems[iii].username);
                 }
               }
-              //Add new Row
-              
+              //Add new Row              
               await instaLikesUsernameSheet.addRow(userNameList);
           
               console.log(`${clientName} Insert New Data ${todayItems[i]}`);

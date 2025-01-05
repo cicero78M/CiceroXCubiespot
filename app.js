@@ -894,7 +894,6 @@ client.on('message', async (msg) => {
                                 async clientData =>{
                                     for (let i = 0; i < clientData.length; i++){
                                         if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                            
                                             console.log(time+" "+clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                             client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                              await getInstaPost(clientData[i]).then(
@@ -905,21 +904,21 @@ client.on('message', async (msg) => {
                                                     await getInstaLikes(instaPostData.data, clientData[i]).then(
                                                         async instaLikesData =>{
                                                             console.log(instaLikesData.data);
-                                                            client.sendMessage(msg.from, instaLikesData.data); 
+                                                            await client.sendMessage(msg.from, instaLikesData.data); 
 
                                                             await newReportInsta(clientData[i]).then(
-                                                                data => {
+                                                                async data => {
                                                                     console.log(data);
-                                                                    client.sendMessage(msg.from, data.data);
+                                                                    await client.sendMessage(msg.from, data.data);
                                                             }).catch(                
-                                                                data => {
+                                                                async data => {
                                                                     switch (data.code) {
                                                                         case 303:
                                                                             console.log(data.data);
-                                                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
+                                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
                                                                             break;
                                                                         default:
-                                                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
+                                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
                                                                             break;
                                                                     }
                                                             });
@@ -957,9 +956,9 @@ client.on('message', async (msg) => {
                                         }           
                                     }
                             }). catch (
-                                error =>{
+                                async error =>{
                                     console.error(error);
-                                    client.sendMessage('6281235114745@c.us', 'Error on All New Insta');
+                                    await client.sendMessage('6281235114745@c.us', 'Error on All New Insta');
                                 }
                             )  
 
@@ -975,31 +974,32 @@ client.on('message', async (msg) => {
                                             console.log(time+" "+response[i].get('CLIENT_ID')+' START REPORT INSTA DATA');
                                             client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START REPORT INSTA DATA');
                                             await newReportInsta(response[i]).then(
-                                                data => {
-                                                    client.sendMessage(msg.from, data.data);
+                                                async data => {
+                                                    await client.sendMessage(msg.from, data.data);
                                             }).catch(                
-                                                data => {
+                                                async data => {
                                                     switch (data.code) {
                                                         case 303:
                                                             console.log(data.data);
-                                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
+                                                            await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
                                                             break;
                                                         default:
-                                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
+                                                            await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
                                                             break;
                                                     }
                                             });
                                         }           
                                     }
                             }). catch (
-                                error =>{
+                                async error =>{
                                     console.error(error);
-                                    client.sendMessage('6281235114745@c.us', 'Error on New Report Insta');
+                                    await client.sendMessage('6281235114745@c.us', 'Error on New Report Insta');
                                 }
                             )
                             break
 
                         default:
+
                             break;                    
                     }
                 //Key Order Data Not Exist         
