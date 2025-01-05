@@ -4,6 +4,8 @@ import { instaLikesAPI } from '../../socialMediaAPI/instaAPI.js';
 
 export async function getInstaLikes(todayItems, clientValue ) {
 
+    console.log("Execute Insta Likes");
+
     const clientName = clientValue.get('CLIENT_ID');
     
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
@@ -17,7 +19,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
     let newDataUsers = [];
 
     return new Promise(async (resolve, reject) => {
-
       try { 
         for (let i = 0; i < todayItems.length; i++) {
           let hasShortcode = false;
