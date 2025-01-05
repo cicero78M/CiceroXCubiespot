@@ -7,6 +7,7 @@ export async function getTiktokComments(items) {
     client.sendMessage('6281235114745@c.us', "Execute Generate Tiktok Comments");
 
     let cursorNumber = 0;
+    let total = 0;
 
     let newDataUsers = [];    
     
@@ -35,8 +36,12 @@ export async function getTiktokComments(items) {
                     }, 1200);
 
                 } else {    
-                    if(response.data.total > 400){
-                        if (response.data.cursor < response.data.total){
+
+                    total = response.data.total+50;
+
+                    if(total > 400){
+
+                        if (response.data.cursor < total){
                             setTimeout(async () => {
                                 console.log('next data '+response.data.cursor);
                                 forLoopGetComments(items, response.data.cursor);
@@ -49,7 +54,6 @@ export async function getTiktokComments(items) {
                               };
                             resolve (data);                        }
                     } else {
-    
                         setTimeout(async () => {
                             console.log('next data over 400 '+response.data.cursor);
                             forLoopGetComments(items, response.data.cursor);
