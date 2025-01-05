@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ciceroKey } from '../database/new_query/sheet_query';
+import { ciceroKey } from '../database/new_query/sheet_query.js';
 
 export const { request } = axios;
 
