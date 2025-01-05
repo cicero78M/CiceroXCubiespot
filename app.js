@@ -229,7 +229,9 @@ client.on('ready', () => {
                                     await tiktokItemsBridges(response[i], data.data).then(
                                         data =>{
                                             client.sendMessage(msg.from, data.data);
-                                            console.log("Success Report Data");
+                                            sendClientResponse(response[i].get('CLIENT_ID'), response[i].get('SUPERVISOR'),response[i].get('OPERATOR'),response[i].get('GROUP'),
+                                            data.data, ' REPORT INSTA');
+
                                         }
                                     ).catch(
                                         data =>{
@@ -885,7 +887,7 @@ client.on('message', async (msg) => {
                             )
                             break;
 
-                        case 'newreportinsta':
+                        case 'newallinsta':
 
                             console.log("Execute New All Insta ")
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
