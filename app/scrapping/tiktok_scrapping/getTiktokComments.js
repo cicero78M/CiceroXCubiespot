@@ -7,6 +7,7 @@ export async function getTiktokComments(items) {
     client.sendMessage('6281235114745@c.us', "Execute Generate Tiktok Comments");
 
     let cursorNumber = 0;
+    let switchPoint = 0;
 
     let newDataUsers = [];    
     
@@ -42,12 +43,22 @@ export async function getTiktokComments(items) {
                     }, 1200);
                 } else {    
                     if(total === response.data.cursor){
-                        let data = {
-                            data: newDataUsers,
-                            state: true,
-                            code: 200
-                          };
-                        resolve (data); 
+                        if (switchPoint === 0){
+
+                            switchPoint = 1;
+                            setTimeout(async () => {
+                                console.log('next data '+response.data.cursor);
+                                forLoopGetComments(items, response.data.cursor);
+                            }, 1200);
+
+                        } else {
+                            let data = {
+                                data: newDataUsers,
+                                state: true,
+                                code: 200
+                            };
+                            resolve (data); 
+                        }
                     } else {
                         if(total > 400){
                             if (dataUser != 0){
