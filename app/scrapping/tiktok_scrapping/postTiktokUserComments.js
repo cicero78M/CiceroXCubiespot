@@ -33,7 +33,6 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                     if (response[ii].get('SHORTCODE') === items) {
                         
                         hasShortcode = true;                        
-
                         await response[ii].delete();
                         await tiktokCommentsUsernameSheet.addRow(userdata);
             
@@ -43,7 +42,6 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                         await tiktokCommentsUsernameSheet.addRow(userdata);                        
                     }
 
-                    
                     let data = {
                         data: `${clientName} Adding Tiktok Username to ${items}`,
                         state: true,
