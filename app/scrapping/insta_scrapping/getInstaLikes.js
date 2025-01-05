@@ -29,6 +29,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
         for (let i = 0; i < todayItems.length; i++) {
           
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
+            
             if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
               hasShortcode = true;
         
@@ -64,14 +65,15 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 }
               );
 
-              await instaLikesUsernameData[ii].delete();
-              await instaLikesUsernameSheet.addRow(newDataUsers);
-        
-              console.log(`${clientName} Update Data ${todayItems[i]}`);
-              await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
-    
-              updateData++;
             }
+
+            await instaLikesUsernameData[ii].delete();
+            await instaLikesUsernameSheet.addRow(newDataUsers);
+      
+            console.log(`${clientName} Update Data ${todayItems[i]}`);
+            await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+  
+            updateData++;
           }
 
           //Final Code
