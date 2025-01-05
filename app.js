@@ -932,6 +932,7 @@ client.on('message', async (msg) => {
                                                                     await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA LIKES');
                                                                     break;
                                                                 default:
+                                                                    console.log(data);
                                                                     await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
                                                                     break;
                                                             }
@@ -946,6 +947,8 @@ client.on('message', async (msg) => {
                                                             await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA POST');
                                                             break;
                                                         default:
+                                                            console.log(data);
+
                                                             await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
                                                             break;
                                                     }
