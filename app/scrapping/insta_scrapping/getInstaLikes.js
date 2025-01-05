@@ -6,22 +6,26 @@ export async function getInstaLikes(todayItems, clientValue ) {
 
     console.log("Execute Insta Likes");
 
-    const clientName = clientValue.get('CLIENT_ID');
-    const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-    await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-    let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
-    let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
-
-    var newData = 0;
-    var updateData = 0;
-
-    let newDataUsers = [];
-
+    
     return new Promise(async (resolve, reject) => {
+      
       try { 
+
+        const clientName = clientValue.get('CLIENT_ID');
+        const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+        await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
+        let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
+        let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
+
+        var newData = 0;
+        var updateData = 0;
+
+        let newDataUsers = [];
+
         for (let i = 0; i < todayItems.length; i++) {
 
           console.log("execute "+todayItems[i]);
+          
           let hasShortcode = false;
           //code on the go
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
@@ -98,6 +102,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 reject (data);
               }
             );
+
             let data = {
               data: 'Succes Reload Insta Data : ' + todayItems.length + '\n\nNew Content : ' + newData + '\nUpdate Content : ' + updateData,
               state: true,
