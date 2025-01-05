@@ -54,7 +54,7 @@ export async function newReportInsta(clientValue) {
             if (clientValue.get('STATUS')) {
         
                 await newRowsData(ciceroKey.dbKey.instaOfficialID, clientName).then( 
-                    response => {    
+                    async response => {    
                         for (let i = 0; i < response.length; i++) {
                             let itemDate = new Date(response[i].get('TIMESTAMP') * 1000);
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
@@ -178,7 +178,7 @@ export async function newReportInsta(clientValue) {
                             };
                             reject (data);
                         }
-                        
+
                 }).catch (
                     error =>{
                         data = {
