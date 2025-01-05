@@ -232,7 +232,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('18 15,18,21 * * *', async () => {
+    schedule('00 15,18,21 * * *', async () => {
         //Date Time
         let d = new Date();
         let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
