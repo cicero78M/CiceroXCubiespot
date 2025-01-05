@@ -7,7 +7,6 @@ export async function getTiktokComments(items) {
     client.sendMessage('6281235114745@c.us', "Execute Generate Tiktok Comments");
 
     let cursorNumber = 0;
-    let total = 0;
 
     let newDataUsers = [];    
     
@@ -19,7 +18,7 @@ export async function getTiktokComments(items) {
         async function forLoopGetComments(items, cursorNumber) {    
             await tiktokCommentAPI(items, cursorNumber).then ( response =>{
 
-                total = response.data.total+100;
+                const total = response.data.total+100;
 
                 let commentItems = response.data.comments;
     
