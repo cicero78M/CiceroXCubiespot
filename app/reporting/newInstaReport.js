@@ -94,8 +94,6 @@ export async function newReportInsta(clientValue) {
                                     } 
                             });
                     
-                    
-
                             for (let i = 0; i < userRows.length; i++) {     
                                 if (!userLikesData.includes(userRows[i].get('INSTA'))) {
                                     if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {

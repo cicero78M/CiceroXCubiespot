@@ -127,8 +127,8 @@ client.on('ready', () => {
                             client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                             
                             await getTiktokPost(response[i]).then(
-                                data => {
-                                    tiktokItemsBridges(response[i], data.data).then(
+                                async data => {
+                                    await tiktokItemsBridges(response[i], data.data).then(
                                         data =>{
                                             client.sendMessage(msg.from, data.data);
                                             console.log("Success Report Data");
@@ -223,8 +223,8 @@ client.on('ready', () => {
                             client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                             
                             await getTiktokPost(response[i]).then(
-                                data => {
-                                    tiktokItemsBridges(response[i], data.data).then(
+                                async data => {
+                                    await tiktokItemsBridges(response[i], data.data).then(
                                         data =>{
                                             client.sendMessage(msg.from, data.data);
                                             console.log("Success Report Data");
@@ -915,7 +915,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break
-                            
+
                         default:
                             break;                    
                     }
