@@ -18,7 +18,7 @@ export async function getTiktokComments(items) {
         async function forLoopGetComments(items, cursorNumber) {    
             await tiktokCommentAPI(items, cursorNumber).then ( response =>{
 
-                const total = response.data.total+50;
+                const total = response.data.total+100;
                 console.log(total);
 
                 let commentItems = response.data.comments;
@@ -36,11 +36,9 @@ export async function getTiktokComments(items) {
                         console.log('next data '+response.data.cursor);
                         forLoopGetComments(items, response.data.cursor);
                     }, 1200);
-
                 } else {    
 
                     if(total > 400){
-
                         if (response.data.cursor < total){
                             setTimeout(async () => {
                                 console.log('next data '+response.data.cursor);
