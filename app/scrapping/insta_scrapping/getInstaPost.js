@@ -111,8 +111,8 @@ export async function getInstaPost(clientValue) {
               state: true,
               code: 200
             };
+
             instaOfficialDoc.delete;
-            instaLikesUsernameDoc.delete;
             resolve (data);
           } else {
             let data = {

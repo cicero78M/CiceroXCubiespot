@@ -98,6 +98,8 @@ export async function getInstaLikes(todayItems) {
               state: true,
               code: 200
             };
+
+            instaLikesUsernameDoc.delete;
             resolve(data);
           }
         }
