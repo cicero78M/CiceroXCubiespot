@@ -897,7 +897,7 @@ client.on('message', async (msg) => {
                                             
                                             console.log(time+" "+clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                             client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                                             await getInstaPost(data[i]).then(
+                                             await getInstaPost(clientData[i]).then(
                                                 async instaPostData =>{
                                                     await getInstaLikes(instaPostData).then(
                                                         async instaLikesData =>{
