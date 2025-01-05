@@ -18,31 +18,43 @@ export async function postTiktokUserComments(clientName, items, userdata) {
             
             await tiktokCommentsUsernameSheet.getRows().then ( async response =>{
                 for (let ii = 0; ii < response.length; ii++) {
-                    if (response[ii].get('SHORTCODE') === items) {
-                        hasShortcode = true;
-                        const fromRows = Object.values(response[ii].toObject());
 
-                        for (let iii = 0; iii < fromRows.length; iii++) {
-                            if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
+                    const fromRows = Object.values(response[ii].toObject());
 
-                                if (!userdata.includes(fromRows[iii])) {
-                                    userdata.push(fromRows[iii]);
-                                }
+                    for (let iii = 0; iii < fromRows.length; iii++) {
+                        if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
+
+                            if (!userdata.includes(fromRows[iii])) {
+                                userdata.push(fromRows[iii]);
                             }
                         }
+                    }
+
+                    if (response[ii].get('SHORTCODE') === items) {
+                        
+                        hasShortcode = true;                        
 
                         await response[ii].delete();
                         await tiktokCommentsUsernameSheet.addRow(userdata);
-                 
-                        let data = {
-                                data: `${clientName} Adding Tiktok Username to ${items}`,
-                                state: true,
-                                code: 200
-                            };
-                        resolve (data);                
+            
                     }
+
+                    if(!hasShortcode){
+                        await tiktokCommentsUsernameSheet.addRow(userdata);                        
+                    }
+
+                    
+                    let data = {
+                        data: `${clientName} Adding Tiktok Username to ${items}`,
+                        state: true,
+                        code: 200
+                    };
+
+                    resolve (data);  
                 }
             });
+
+
             
         } catch (error) {
             let data = {
