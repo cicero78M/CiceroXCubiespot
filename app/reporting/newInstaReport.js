@@ -56,16 +56,17 @@ export async function newReportInsta(clientValue) {
                 await newRowsData(ciceroKey.dbKey.instaOfficialID, clientName).then( 
                     async response => {    
 
-                        const officialRows = response;
-                        for (let i = 0; i < response.length; i++) {
-                            let itemDate = new Date(response[i].get('TIMESTAMP') * 1000);
+                        const officialRows = await response;
+
+                        for (let i = 0; i < officialRows.length; i++) {
+                            let itemDate = new Date(officialRows[i].get('TIMESTAMP') * 1000);
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-                                if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
-                                    shortcodeList.push(response[i].get('SHORTCODE'));
-                                    if (response[i].get('TYPE') === 'reel') {
-                                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + response[i].get('SHORTCODE'));
+                                if (!shortcodeList.includes(officialRows[i].get('SHORTCODE'))) {
+                                    shortcodeList.push(officialRows[i].get('SHORTCODE'));
+                                    if (officialRows[i].get('TYPE') === 'reel') {
+                                        shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + officialRows[i].get('SHORTCODE'));
                                     } else {
-                                       shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + response[i].get('SHORTCODE'));
+                                       shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + officialRows[i].get('SHORTCODE'));
                                     }
                                 }
                             }
@@ -95,12 +96,6 @@ export async function newReportInsta(clientValue) {
                     
                     
                             for (let i = 0; i < userRows.length; i++) {     
-                                if (userRows[i].get('INSTA') === undefined || userRows[i].get('INSTA') === null || userRows[i].get('INSTA') === ""){
-                                    if(userRows[i].get('ID_EY') === "81100283"){
-                                    console.log(userRows[i])
-                                    }
-                                }
-                    
                                 if (!userLikesData.includes(userRows[i].get('INSTA'))) {
                                     if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
                                         if (userRows[i].get('STATUS') === 'TRUE' ){
