@@ -35,7 +35,7 @@ import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktokItemBridges.js';
 import { getTiktokPost } from './app/scrapping/tiktok_scrapping/getTiktokPost.js';
 import { newReportTiktok } from './app/reporting/newTiktokReport.js';
-import { colectInstaLikes, collectInstaLikes } from './app/scrapping/collectInstaLikes.js';
+import { collectInstaLikes } from './app/scrapping/collectInstaLikes.js';
 
 //Routing Port 
 const port = ciceroKey.port;
