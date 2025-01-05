@@ -53,7 +53,6 @@ export const client = new Client({
 
 });
 
-
 //WWEB Client Initializing
 console.log('Initializing...');
 client.initialize();
@@ -306,7 +305,7 @@ client.on('message', async (msg) => {
     const hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
     const time = localDate+" >> "+hours;
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'alltiktok', 'allinsta','newtiktok','reporttiktok', 'reportinsta','exception', 'savecontact','secuid'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', , 'allinsta', 'reportinsta','exception', 'savecontact','secuid'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
@@ -528,67 +527,7 @@ client.on('message', async (msg) => {
                             console.log(error)
                             await client.sendMessage('6281235114745@c.us', 'Collect #ALLINSTA Error');
                         }
-                    } else if (splittedMsg[1].toLowerCase() === 'alltiktok') {
-                        try {
-                            //Generate All Socmed
-                            await client.sendMessage('6281235114745@c.us', 'Generate All Tiktok Data Starting...');
-                            console.log(time+' Generate All Tiktok Data Starting');
-                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-                            let clientRows = await clientResponse.data;
-                            //Itterate Client
-                            for (let i = 0; i < clientRows.length; i++){
-                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                                    //Scrapping TIKTOK by Client
-                                    let loadTiktok = await collectTiktokComments(clientRows[i]);
-                                    //Proccessing Data
-                                    let reportTiktok;
-                                    switch (loadTiktok.code) {
-                                        case 200:
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' SUCCESS LOAD TIKTOK DATA');
-                                            reportTiktok = await reportTiktokComments(clientRows[i]);
-                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                            break;                                           
-                                        case 303:
-                                            console.log(loadTiktok.data);
-                                            break;
-                                        default:
-                                            console.log(time+" "+clientRows[i].get('CLIENT_ID')+' TRY REPORT TIKTOK DATA');
-                                            reportTiktok = await reportTiktokComments(clientRows[i]);
-                                            sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                            break;
-                                    }
-                                }           
-                            }
-                        //if Something error
-                        } catch (error) {
-                            console.log(error)
-                            await client.sendMessage('6281235114745@c.us', 'Collect #ALLTIKTOK Error');
-                        }
-
-                    } else if (splittedMsg[1].toLowerCase() === 'reporttiktok') {
-                        try {
-                            //Generate All Socmed
-                            await client.sendMessage('6281235114745@c.us', 'Generate Report Tiktok Data Starting...');
-                            console.log(time+' Generate Report Tiktok Data Starting');
-                            let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-                            let clientRows = await clientResponse.data;
-                            //Itterate Client
-                            for (let i = 0; i < clientRows.length; i++){
-                                if (clientRows[i].get('STATUS') === "TRUE" && clientRows[i].get('TIKTOK_STATE') === "TRUE" && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                    console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
-                                    await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
-                                    //Scrapping TIKTOK by Client
-                                    let reportTiktok = await reportTiktokComments(clientRows[i]);
-                                    sendResponse(msg.from, reportTiktok, clientRows[i].get('CLIENT_ID')+' ERROR LOAD TIKTOK DATA');
-                                }           
-                            }
-                        //if Something error
-                        } catch (error) {
-                            console.log(error)
-                            await client.sendMessage('6281235114745@c.us', 'Collect #REPORTTIKTOK Error');
-                        }
+              
                     } else if (splittedMsg[1].toLowerCase() === 'reportinsta') {
                         try {
                             //Generate All Socmed
@@ -867,7 +806,6 @@ client.on('message', async (msg) => {
 
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                                 async response =>{
-
                                     for (let i = 0; i < response.length; i++){
                                         if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                             
@@ -899,12 +837,9 @@ client.on('message', async (msg) => {
                                                             break;
                                                     }
                                                 }
-                                            );
-                    
+                                            );   
                                         }           
                                     }
-                                
-
                             }). catch (
                                 error =>{
                                     console.error(error);
@@ -918,13 +853,10 @@ client.on('message', async (msg) => {
 
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                                 async response =>{
-
                                     for (let i = 0; i < response.length; i++){
                                         if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                            
                                             console.log(time+" "+response[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
                                             client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START REPORT TIKTOK DATA');
-                                            
                                             await newReportTiktok(response[i]).then(
                                                 data => {
                                                     client.sendMessage(msg.from, data.data);
@@ -940,19 +872,15 @@ client.on('message', async (msg) => {
                                                             break;
                                                     }
                                             });
-        
                                         }           
                                     }
-                                            
-
-                                }). catch (
-                                    error =>{
-                                        console.error(error);
-                                        client.sendMessage('6281235114745@c.us', 'Error on New RFeportTiktok');
-                                    }
-                                )
-
-                                break;
+                            }). catch (
+                                error =>{
+                                    console.error(error);
+                                    client.sendMessage('6281235114745@c.us', 'Error on New RFeportTiktok');
+                                }
+                            )
+                            break;
                         default:
                             break;                    
                     }
