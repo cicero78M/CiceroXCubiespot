@@ -19,12 +19,12 @@ export async function postTiktokUserComments(clientName, items, userdata) {
             await tiktokCommentsUsernameSheet.getRows().then ( async response =>{
                 for (let ii = 0; ii < response.length; ii++) {
 
-                    }
-
+                    
                     if (response[ii].get('SHORTCODE') === items) {
                         const fromRows = Object.values(response[ii].toObject());
 
                         for (let iii = 0; iii < fromRows.length; iii++) {
+                            
                             if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
     
                                 if (!userdata.includes(fromRows[iii])) {
@@ -32,11 +32,14 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                                 }
                             }
                             
-                        hasShortcode = true;                        
-                        await response[ii].delete();
-                        await tiktokCommentsUsernameSheet.addRow(userdata);
+                            hasShortcode = true;                        
+                            await response[ii].delete();
+                            await tiktokCommentsUsernameSheet.addRow(userdata);
             
+                        }
+
                     }
+
                 }
 
                 if(!hasShortcode){
