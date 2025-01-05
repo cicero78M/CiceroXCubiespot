@@ -80,7 +80,6 @@ export async function getTiktokComments(items) {
                             }, 1200);                    
                         }
                     }
- 
                 }
             }). catch (error => {
                 let data = {

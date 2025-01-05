@@ -36,8 +36,8 @@ export function sendClientResponse(clientID, supervisor, operator, group, respon
             client.sendMessage(group, responseData.data);
             break;
         case 303 :
-            console.log(time+" "+clientID+' FAIL '+type+' DATA');
-            client.sendMessage('6281235114745@c.us', responseData.data);
+            console.log(responseData.data);
+            client.sendMessage('6281235114745@c.us', time+" "+clientID+' FAIL '+type+' DATA');
             break;
         default:
             console.log(time+" "+responseData.data);

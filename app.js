@@ -133,22 +133,14 @@ client.on('ready', () => {
                                         }
                                     ).catch(
                                         data =>{
-                                            console.log(data);
+                                            sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK BRIDGES');
                                         }
                                     );
                                 }
- 
                             ).catch(
                                 data => {
-                                    switch (data.code) {
-                                        case 303:
-                                            console.log(data.data);
-                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET TIKTOK POST');
-                                            break;
-                                        default:
-                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                            break;
-                                    }
+                                    sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK POST');
+
                                 }
                             );
     
@@ -170,45 +162,18 @@ client.on('ready', () => {
                                                     await client.sendMessage('6281235114745@c.us', data.data);
                                             }).catch(                
                                                 async data => {
-                                                    switch (data.code) {
-                                                        case 303:
-                                                            console.log(data.data);
-                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
-                                                            console.log("Report Tiktok Success");
-                                                            break;
-                                                        default:
-                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                                            break;
-                                                    }
+                                                    sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA REPORT');
                                             });
                                         }
                                     ).catch(
                                         async data => {
-                                            switch (data.code) {
-                                                case 303:
-                                                    console.log(data.data);
-                                                    await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA LIKES');
-                                                    break;
-                                                default:
-                                                    console.log(data);
-                                                    await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                                    break;
-                                            }
+                                            sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA LIKES');
                                         }
                                     ); 
                                 }
                             ).catch(
                                 async data => {
-                                    switch (data.code) {
-                                        case 303:
-                                            console.log(data.data);
-                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA POST');
-                                            break;
-                                        default:
-                                            console.log(data);
-                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                            break;
-                                    }
+                                    sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA POST');
                                 }
                             );   
                         }  
@@ -252,28 +217,19 @@ client.on('ready', () => {
                                 async data => {
                                     await tiktokItemsBridges(clientData[i], data.data).then(
                                         async data =>{
-
                                             sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT TIKTOK');                                            
-                                            console.log("Report Tiktok SUCCESS!!!");
                                         }
                                     ).catch(
                                         data =>{
-                                            console.log(data);
+                                            sendResponse('6281235114745@c.us', data, ' ERROR TIKTOK BRIDGES');
                                         }
                                     );
                                 }
  
                             ).catch(
                                 data => {
-                                    switch (data.code) {
-                                        case 303:
-                                            console.log(data.data);
-                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET TIKTOK POST');
-                                            break;
-                                        default:
-                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                            break;
-                                    }
+                                    sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK POST');
+
                                 }
                             );
     
@@ -288,6 +244,7 @@ client.on('ready', () => {
                                     await getInstaLikes(instaPostData.data, clientData[i]).then(
                                         async instaLikesData =>{
                                             console.log(instaLikesData.data);
+                                            
                                             await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
 
                                             await newReportInsta(clientData[i]).then(
@@ -297,44 +254,19 @@ client.on('ready', () => {
                                         
                                                 }).catch(                
                                                     async data => {
-                                                        switch (data.code) {
-                                                            case 303:
-                                                                console.log(data.data);
-                                                                await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
-                                                                break;
-                                                            default:
-                                                                await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                                                break;
-                                                        }
+                                                        sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA REPORT');
+
                                             });
                                         }
                                     ).catch(
                                         async data => {
-                                            switch (data.code) {
-                                                case 303:
-                                                    console.log(data.data);
-                                                    await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA LIKES');
-                                                    break;
-                                                default:
-                                                    console.log(data);
-                                                    await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                                    break;
-                                            }
+                                            sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA LIKES');
                                         }
                                     ); 
                                 }
                             ).catch(
                                 async data => {
-                                    switch (data.code) {
-                                        case 303:
-                                            console.log(data.data);
-                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA POST');
-                                            break;
-                                        default:
-                                            console.log(data);
-                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
-                                            break;
-                                    }
+                                    sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA POST');
                                 }
                             );   
                         }  

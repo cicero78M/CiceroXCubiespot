@@ -60,18 +60,16 @@ export async function getInstaPost(clientValue) {
                 shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
               }
             }
-  
             //Check if Database Contains Shortcode Items        
             let hasShortcode = false;
+            
             for (let i = 0; i < itemByDay.length; i++) {
               if (shortcodeList.includes(itemByDay[i].code)) {
                 hasShortcode = true;
               }
             }
-  
             //If Database Contains Shortcode 
             if (hasShortcode) {
-
               for (let i = 0; i < itemByDay.length; i++) {
                 for (let ii = 0; ii < officialInstaData.length; ii++) {
                   if (officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code) {
@@ -105,17 +103,13 @@ export async function getInstaPost(clientValue) {
                 shortcodeNewCounter++;
               }
             }
-            
             let data = {
               data: todayItems,
               state: true,
               code: 200
             };
-
             instaOfficialDoc.delete;
-            
             resolve (data);
-
           } else {
             let data = {
               data: 'Official Account Has No Insta Content for Today',
