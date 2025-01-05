@@ -21,7 +21,8 @@ export async function getTiktokComments(items) {
             let dataUser = 0;
             await tiktokCommentAPI(items, cursorNumber).then ( response =>{
 
-                const total = response.data.total;
+                const total = response.data.total+100;
+                console.log(total);
 
                 let commentItems = response.data.comments;
     
@@ -40,25 +41,35 @@ export async function getTiktokComments(items) {
                         forLoopGetComments(items, response.data.cursor);
                     }, 1200);
                 } else {    
-                    if(total > 400){
-                        if (dataUser != 0){
-                            setTimeout(async () => {
-                                console.log('next data '+response.data.cursor);
-                                forLoopGetComments(items, response.data.cursor);
-                            }, 1200);
-                        } else {
-                            let data = {
-                                data: newDataUsers,
-                                state: true,
-                                code: 200
-                              };
-                            resolve (data);                        }
+                    if(total === response.data.cursor){
+                        let data = {
+                            data: newDataUsers,
+                            state: true,
+                            code: 200
+                          };
+                        resolve (data); 
                     } else {
-                        setTimeout(async () => {
-                            console.log('next data over 400 '+response.data.cursor);
-                            forLoopGetComments(items, response.data.cursor);
-                        }, 1200);                    
+                        if(total > 400){
+                            if (dataUser != 0){
+                                setTimeout(async () => {
+                                    console.log('next data '+response.data.cursor);
+                                    forLoopGetComments(items, response.data.cursor);
+                                }, 1200);
+                            } else {
+                                let data = {
+                                    data: newDataUsers,
+                                    state: true,
+                                    code: 200
+                                  };
+                                resolve (data);                        }
+                        } else {
+                            setTimeout(async () => {
+                                console.log('next data over 400 '+response.data.cursor);
+                                forLoopGetComments(items, response.data.cursor);
+                            }, 1200);                    
+                        }
                     }
+ 
                 }
             }). catch (error => {
                 let data = {
