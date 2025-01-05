@@ -37,6 +37,8 @@ import { getTiktokPost } from './app/scrapping/tiktok_scrapping/getTiktokPost.js
 import { newReportTiktok } from './app/reporting/newTiktokReport.js';
 import { collectInstaLikes } from './app/scrapping/collectInstaLikes.js';
 import { newReportInsta } from './app/reporting/newInstaReport.js';
+import { getInstaPost } from './app/scrapping/insta_scrapping/getInstaPost.js';
+import { getInstaLikes } from './app/scrapping/insta_scrapping/getInstaLikes.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -803,7 +805,7 @@ client.on('message', async (msg) => {
                     switch (splittedMsg[1].toLowerCase()) {
                         case 'newalltiktok':
 
-                            console.log("Execute NewAllTiktok ")
+                            console.log("Execute New All Tiktok")
 
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                                 async response =>{
@@ -882,6 +884,64 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
+
+                        case 'newreportinsta':
+
+                            console.log("Execute New All Insta ")
+                            await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
+                                async data =>{
+                                    for (let i = 0; i < data.length; i++){
+                                        if (data[i].get('STATUS') === "TRUE" && data[i].get('INSTA_STATE') === "TRUE" && data[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                            
+                                            console.log(time+" "+data[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                                            client.sendMessage('6281235114745@c.us', data[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                                             await getInstaPost(response[i]).then(
+                                                async data =>{
+                                                    await getInstaLikes(data).then(
+                                                        async data =>{
+                                                            client.sendMessage(msg.from, data.data);
+                                                            await newReportInsta(response[i]).then(
+                                                                async data => {
+                                                                    await client.sendMessage(msg.from, data.data);
+                                                            }).catch(                
+                                                                async data => {
+                                                                    switch (data.code) {
+                                                                        case 303:
+                                                                            console.log(data.data);
+                                                                            await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
+                                                                            break;
+                                                                        default:
+                                                                            await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
+                                                                            break;
+                                                                    }
+                                                            });
+                                                        }
+                                                    ).catch(); 
+                                                }
+                                            ).catch(
+                                                async data => {
+                                                    switch (data.code) {
+                                                        case 303:
+                                                            console.log(data.data);
+                                                            await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR GET INSTA POST');
+                                                            break;
+                                                        default:
+                                                            await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
+                                                            break;
+                                                    }
+                                                }
+                                            );   
+                                        }           
+                                    }
+                            }). catch (
+                                error =>{
+                                    console.error(error);
+                                    client.sendMessage('6281235114745@c.us', 'Error on All New Insta');
+                                }
+                            )  
+
+                            break;
+
                         case 'newreportinsta':
                             
                             console.log("Execute New Report Insta ")
