@@ -121,16 +121,16 @@ client.on('ready', () => {
             console.log(time+' Generate All Socmed Data Starting');
 
             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
-                async response =>{
-                    for (let i = 0; i < response.length; i++){
-                        if (response[i].get('STATUS') === "TRUE" && response[i].get('TIKTOK_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                async clientData =>{
+                    for (let i = 0; i < clientData.length; i++){
+                        if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('TIKTOK_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
                             
-                            console.log(time+" "+response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
+                            console.log(time+" "+clientData[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
+                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                             
-                            await getTiktokPost(response[i]).then(
+                            await getTiktokPost(clientData[i]).then(
                                 async data => {
-                                    await tiktokItemsBridges(response[i], data.data).then(
+                                    await tiktokItemsBridges(clientData[i], data.data).then(
                                         data =>{
                                             client.sendMessage('6281235114745@c.us', data.data);
                                             console.log("Success Report Data");
@@ -147,47 +147,75 @@ client.on('ready', () => {
                                     switch (data.code) {
                                         case 303:
                                             console.log(data.data);
-                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' ERROR GET TIKTOK POST');
+                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET TIKTOK POST');
                                             break;
                                         default:
-                                            client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' '+data.data);
+                                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
                                             break;
                                     }
                                 }
                             );
     
                         }         
-                        
-                        //Checking Client properties                
-                        if (response[i].get('STATUS') === "TRUE" && response[i].get('INSTA_STATE') === "TRUE" && response[i].get('TYPE') === ciceroKey.ciceroClientType) {         
-                            console.log(time+" "+response[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                            await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
-                            
-                            //Call Scrapping Insta Likes by Client Data
-                            let loadInsta = await collectInstaLikes(response[i]);
-                            //Proccessing Data
-                            let reportInsta;
-                            switch (loadInsta.code) {
-                                case 200:
-                                    console.log(time+" "+response[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                                    await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                    reportInsta = await reportInstaLikes(response[i]);
-                                    sendResponse('6281235114745@c.us', reportInsta, response[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                    break;                                           
-                                case 303:
-                                    console.log(loadInsta.data);
-                                    break;
-                                default:
-                                    console.log(time+" "+response[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');
-                                    await client.sendMessage('6281235114745@c.us', response[i].get('CLIENT_ID')+' SUCCESS LOAD INSTA DATA');                        
-                                    reportInsta = await reportInstaLikes(response[i]);
-                                    sendResponse('6281235114745@c.us', reportInsta, response[i].get('CLIENT_ID')+' ERROR LOAD INSTA DATA');
-                                    break;
-                            }
-                        }
-                    }
-                
 
+                        if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                            console.log(time+" "+clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
+                             await getInstaPost(clientData[i]).then(
+                                async instaPostData =>{
+                                    console.log(instaPostData);
+                                    await getInstaLikes(instaPostData.data, clientData[i]).then(
+                                        async instaLikesData =>{
+                                            console.log(instaLikesData.data);
+                                            await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
+                                            await newReportInsta(clientData[i]).then(
+                                                async data => {
+                                                    console.log("Report Success!!!");
+                                                    await client.sendMessage('6281235114745@c.us', data.data);
+                                            }).catch(                
+                                                async data => {
+                                                    switch (data.code) {
+                                                        case 303:
+                                                            console.log(data.data);
+                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR REPORT INSTA POST');
+                                                            break;
+                                                        default:
+                                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
+                                                            break;
+                                                    }
+                                            });
+                                        }
+                                    ).catch(
+                                        async data => {
+                                            switch (data.code) {
+                                                case 303:
+                                                    console.log(data.data);
+                                                    await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA LIKES');
+                                                    break;
+                                                default:
+                                                    console.log(data);
+                                                    await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
+                                                    break;
+                                            }
+                                        }
+                                    ); 
+                                }
+                            ).catch(
+                                async data => {
+                                    switch (data.code) {
+                                        case 303:
+                                            console.log(data.data);
+                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' ERROR GET INSTA POST');
+                                            break;
+                                        default:
+                                            console.log(data);
+                                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
+                                            break;
+                                    }
+                                }
+                            );   
+                        }  
+                    }
             }). catch (
                 error =>{
                     console.error(error);
@@ -898,9 +926,7 @@ client.on('message', async (msg) => {
                                             client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                              await getInstaPost(clientData[i]).then(
                                                 async instaPostData =>{
-                                                    
                                                     console.log(instaPostData);
-                                                    
                                                     await getInstaLikes(instaPostData.data, clientData[i]).then(
                                                         async instaLikesData =>{
                                                             console.log(instaLikesData.data);
@@ -946,7 +972,6 @@ client.on('message', async (msg) => {
                                                             break;
                                                         default:
                                                             console.log(data);
-
                                                             await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' '+data.data);
                                                             break;
                                                     }
