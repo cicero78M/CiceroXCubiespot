@@ -33,6 +33,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
               hasShortcode = true;
         
               const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+            
               await instaLikesAPI(todayItems[i]).then(async response =>{
                 const likesItems = await response.data.data.items;
                 for (let iii = 0; iii < fromRows.length; iii++) {
@@ -50,14 +51,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
                     }
                   }
                 }
-          
-                await instaLikesUsernameData[ii].delete();
-                await instaLikesUsernameSheet.addRow(newDataUsers);
-          
-                console.log(`${clientName} Update Data ${todayItems[i]}`);
-                await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
-
-                updateData++;
+              
               }).catch(
                 error =>{
                   let data = {
@@ -69,6 +63,14 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 }
               );
             }
+
+            await instaLikesUsernameData[ii].delete();
+            await instaLikesUsernameSheet.addRow(newDataUsers);
+      
+            console.log(`${clientName} Update Data ${todayItems[i]}`);
+            await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+
+            updateData++;
           }
           //Final Code
           if (!hasShortcode) {
@@ -88,6 +90,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
               console.log(`${clientName} Insert New Data ${todayItems[i]}`);
               await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
               newData++;
+
             }).catch(
               error =>{
                 let data = {
