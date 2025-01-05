@@ -19,9 +19,6 @@ import { saveContacts } from './app/database/saveContact.js';
 import { myData } from './app/database_query/myData.js';
 import { infoView } from './app/view/infoView.js';
 import { propertiesView } from './app/view/propertiesView.js';
-import { reportInstaLikes } from './app/reporting/reportInstaLikes.js';
-import { collectTiktokComments } from './app/scrapping/collectTiktokEngagements.js';
-import { reportTiktokComments } from './app/reporting/reportTiktokComments.js';
 import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
 import { sheetDoc } from './app/database_query/sheetDoc.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
@@ -35,7 +32,6 @@ import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktokItemBridges.js';
 import { getTiktokPost } from './app/scrapping/tiktok_scrapping/getTiktokPost.js';
 import { newReportTiktok } from './app/reporting/newTiktokReport.js';
-import { collectInstaLikes } from './app/scrapping/collectInstaLikes.js';
 import { newReportInsta } from './app/reporting/newInstaReport.js';
 import { getInstaPost } from './app/scrapping/insta_scrapping/getInstaPost.js';
 import { getInstaLikes } from './app/scrapping/insta_scrapping/getInstaLikes.js';
@@ -588,7 +584,7 @@ client.on('message', async (msg) => {
                     });
 
                 //User Order Data         
-                } else if (userOrder.includes(splittedMsg[1].toLowerCase())){//const userOrder =['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
+                } else if (userOrder.includes(splittedMsg[1].toLowerCase())){//const userOrder = ['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
 
                     await newRowsData(ciceroKey.dbKey.clientDataID, clientName).then( 
                         async clientRows => {    
