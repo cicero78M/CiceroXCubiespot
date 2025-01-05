@@ -68,117 +68,129 @@ export async function newReportInsta(clientValue) {
                                 }
                             }
                         }
-                });
-        
-              if (shortcodeList.length >= 1) {    
-                await newRowsData(ciceroKey.dbKey.instaLikesUsernameID, clientName).then( 
-                    response => {    
-                        userLikesData = response;                        
-                        for (let i = 0; i < shortcodeList.length; i++) {
-                            //code on the go
-                            for (let ii = 0; ii < response.length; ii++) {
-                                if (response[ii].get('SHORTCODE') === shortcodeList[i]) {
-                                    const fromRows = Object.values(response[ii].toObject());
-                                    for (let iii = 0; iii < fromRows.length; iii++) {
-                                        if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                                            if (!userLikesData.includes(fromRows[iii])) {
-                                               userLikesData.push(fromRows[iii]);
+
+                        if (shortcodeList.length >= 1) {    
+                            await newRowsData(ciceroKey.dbKey.instaLikesUsernameID, clientName).then( 
+                                response => {    
+                                    userLikesData = response;                        
+                                    for (let i = 0; i < shortcodeList.length; i++) {
+                                        //code on the go
+                                        for (let ii = 0; ii < response.length; ii++) {
+                                            if (response[ii].get('SHORTCODE') === shortcodeList[i]) {
+                                                const fromRows = Object.values(response[ii].toObject());
+                                                for (let iii = 0; iii < fromRows.length; iii++) {
+                                                    if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
+                                                        if (!userLikesData.includes(fromRows[iii])) {
+                                                           userLikesData.push(fromRows[iii]);
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
+                                    } 
+                            });
+                    
+                    
+                    
+                            for (let i = 0; i < userRows.length; i++) {     
+                                if (userRows[i].get('INSTA') === undefined || userRows[i].get('INSTA') === null || userRows[i].get('INSTA') === ""){
+                                    if(userRows[i].get('ID_EY') === "81100283"){
+                                    console.log(userRows[i])
                                     }
                                 }
+                    
+                                if (!userLikesData.includes(userRows[i].get('INSTA'))) {
+                                    if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
+                                        if (userRows[i].get('STATUS') === 'TRUE' ){
+                                            if (userRows[i].get('EXCEPTION') === "FALSE"){
+                                                console.log(userRows[i].get('INSTA'));
+                                                UserNotLikes.push(userRows[i].get('ID_KEY'));
+                                                notLikesList.push(userRows[i]);
+                                            }                
+                                        }
+                                    }
+                                }          
                             }
-                        } 
-                });
-        
-        
-        
-                for (let i = 0; i < userRows.length; i++) {     
-                    if (userRows[i].get('INSTA') === undefined || userRows[i].get('INSTA') === null || userRows[i].get('INSTA') === ""){
-                        if(userRows[i].get('ID_EY') === "81100283"){
-                        console.log(userRows[i])
-                        }
-                    }
-        
-                    if (!userLikesData.includes(userRows[i].get('INSTA'))) {
-                        if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
-                            if (userRows[i].get('STATUS') === 'TRUE' ){
-                                if (userRows[i].get('EXCEPTION') === "FALSE"){
-                                    console.log(userRows[i].get('INSTA'));
-                                    UserNotLikes.push(userRows[i].get('ID_KEY'));
-                                    notLikesList.push(userRows[i]);
-                                }                
+                    
+                    
+                            for (let iii = 0; iii < divisiList.length; iii++) {
+                    
+                              divisiCounter = 0;
+                              userByDivisi = '';
+                    
+                              for (let iv = 0; iv < notLikesList.length; iv++) {
+                    
+                                if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
+                                  
+                                  if (notLikesList[iv].get('INSTA') === undefined|| notLikesList[iv].get('INSTA') === null || notLikesList[iv].get('INSTA') === ""){
+                                    notLikesName = "Belum Input";
+                                  } else {
+                                    notLikesName = notLikesList[iv].get('INSTA');
+                                  }
+                    
+                                  if (clientValue.get('TYPE')  === "RES") {
+                                    userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesName);
+                                    divisiCounter++;
+                                    userCounter++;
+                                  } else if (clientValue.get('TYPE')  === "COM") {
+                                    name = notLikesList[iv].get('NAMA');
+                                    nameUpper = name.toUpperCase();
+                                    userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesName);
+                                    divisiCounter++;
+                                    userCounter++;
+                                  }
+                                }
+                              }
+                    
+                              if (divisiCounter != 0) {
+                                dataInsta = dataInsta.concat('\n\n*' + divisiList[iii] + '* : ' + divisiCounter + ' User\n' + userByDivisi);
+                              }
                             }
+                    
+                            let instaSudah = userAll - notLikesList.length;
+                    
+                            if (clientValue.get('TYPE')  === 'COM') {
+                              data = {
+                                data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" 
+                                  + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + "\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
+                                  + userAll+ "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
+                                  + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
+                                state: true,
+                                code: 200
+                              };
+                            } else if (clientValue.get('TYPE')  === "RES") {
+                              data = {
+                                data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " 
+                                  + clientName + "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours 
+                                  + "\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " 
+                                  + instaSudah + "_\n_Jumlah User Belum melaksanakan : "+ userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" 
+                                  + dataInsta + "\n\n_System Administrator Cicero_",
+                                state: true,
+                                code: 200
+                              };
+                            }
+                            resolve (data);
+                        } else {
+                            data = {
+                              data: "Tidak ada konten data untuk di olah",
+                              state: true,
+                              code: 201
+                            };
+                            reject (data);
                         }
-                    }          
-                }
-        
-        
-                for (let iii = 0; iii < divisiList.length; iii++) {
-        
-                  divisiCounter = 0;
-                  userByDivisi = '';
-        
-                  for (let iv = 0; iv < notLikesList.length; iv++) {
-        
-                    if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
-                      
-                      if (notLikesList[iv].get('INSTA') === undefined|| notLikesList[iv].get('INSTA') === null || notLikesList[iv].get('INSTA') === ""){
-                        notLikesName = "Belum Input";
-                      } else {
-                        notLikesName = notLikesList[iv].get('INSTA');
-                      }
-        
-                      if (clientValue.get('TYPE')  === "RES") {
-                        userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesName);
-                        divisiCounter++;
-                        userCounter++;
-                      } else if (clientValue.get('TYPE')  === "COM") {
-                        name = notLikesList[iv].get('NAMA');
-                        nameUpper = name.toUpperCase();
-                        userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesName);
-                        divisiCounter++;
-                        userCounter++;
-                      }
+                        
+                }).catch (
+                    error =>{
+                        data = {
+                            data: error,
+                            state: false,
+                            code: 303
+                        };
+                        reject (data);
                     }
-                  }
+                );
         
-                  if (divisiCounter != 0) {
-                    dataInsta = dataInsta.concat('\n\n*' + divisiList[iii] + '* : ' + divisiCounter + ' User\n' + userByDivisi);
-                  }
-                }
-        
-                let instaSudah = userAll - notLikesList.length;
-        
-                if (clientValue.get('TYPE')  === 'COM') {
-                  data = {
-                    data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" 
-                      + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + "\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
-                      + userAll+ "_\n_Jumlah User Sudah melaksanakan: " + instaSudah + "_\n_Jumlah User Belum melaksanakan : "
-                      + userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" + dataInsta + "\n\n_System Administrator Cicero_",
-                    state: true,
-                    code: 200
-                  };
-                } else if (clientValue.get('TYPE')  === "RES") {
-                  data = {
-                    data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " 
-                      + clientName + "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours 
-                      + "\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "+ userAll + "_\n_Jumlah User Sudah melaksanakan: " 
-                      + instaSudah + "_\n_Jumlah User Belum melaksanakan : "+ userCounter + "_\n\n*Rincian Yang Belum Melaksanakan :*" 
-                      + dataInsta + "\n\n_System Administrator Cicero_",
-                    state: true,
-                    code: 200
-                  };
-                }
-                resolve (data);
-            } else {
-                data = {
-                  data: "Tidak ada konten data untuk di olah",
-                  state: true,
-                  code: 201
-                };
-                reject (data);
-              }
+
             } else {
         
               data = {
