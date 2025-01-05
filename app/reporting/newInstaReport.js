@@ -8,6 +8,8 @@ export async function newReportInsta(clientValue) {
     let d = new Date();
     let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
     let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});   
+        
+    const clientName = clientValue.get('CLIENT_ID');
 
     let userCounter = 0;
     let divisiCounter = 0;

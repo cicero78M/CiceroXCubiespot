@@ -6,7 +6,7 @@ export async function getInstaPost(clientValue) {
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
 
   const clientName = clientValue.get('CLIENT_ID');
-  const instaAccount = clientValue.get('INSTAGRAM')
+  const instaAccount = clientValue.get('INSTAGRAM');
 
   console.log(clientName + " Collecting Insta Post Starting...");
   await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Starting...`);
