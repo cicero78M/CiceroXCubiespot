@@ -203,7 +203,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 15/18/21
-    schedule('00 15,18,21 * * *', async () => {
+    schedule('04 15,18,21 * * *', async () => {
         //Date Time
         const d = new Date();
         const localDate = d.toLocaleDateString("en-US", {
@@ -266,7 +266,7 @@ client.on('ready', () => {
                                 break;                      
                             default:
                                 console.log(time+" "+response[i].get('CLIENT_ID')+' FAIL LOAD REPORT DATA');
-                                reportInsta = await reportInstaLikes(clientRows[i]);
+                                reportInsta = await reportInstaLikes(response[i]);
                                 sendClientResponse(response[i].get('CLIENT_ID'), response[i].get('SUPERVISOR'),response[i].get('OPERATOR'),response[i].get('GROUP'),
                                     reportInsta, ' REPORT INSTA');
                                 break;
