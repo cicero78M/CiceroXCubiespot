@@ -4,30 +4,31 @@ import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 
 export async function newReportInsta(clientValue) {
 
+    //Date Time
+    let d = new Date();
+    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+    let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});   
+
+    let userCounter = 0;
+    let divisiCounter = 0;
+
+    let shortcodeList = [];
+    let divisiList = [];
+    let userLikesData = [];
+    let UserNotLikes = [];
+    let notLikesList = [];
+
+    let notLikesName;
+    let name;
+    let nameUpper;
+    let data;
+    
+    let dataInsta = '';
+    let shortcodeListString = '';
+    let userByDivisi = '';
+
     return new Promise(async (resolve, reject) => {
         try {
-
-            let userCounter = 0;
-            let divisiCounter = 0;
-            let shortcodeList = [];
-            let divisiList = [];
-            let userLikesData = [];
-            let UserNotLikes = [];
-            let notLikesList = [];
-        
-            let notLikesName;
-            let name;
-            let nameUpper;
-            let data;
-            
-            let dataInsta = '';
-            let shortcodeListString = '';
-            let userByDivisi = '';
-        
-            //Date Time
-            let d = new Date();
-            let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-            let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
         
             await newListValueData(clientName, 'DIVISI').then(
                 response =>{
@@ -50,11 +51,8 @@ export async function newReportInsta(clientValue) {
         
                 await newRowsData(ciceroKey.dbKey.instaOfficialID, clientName).then( 
                     response => {    
-                        
                         for (let i = 0; i < response.length; i++) {
-        
                             let itemDate = new Date(response[i].get('TIMESTAMP') * 1000);
-        
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
                                 if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
                                     shortcodeList.push(response[i].get('SHORTCODE'));
@@ -68,10 +66,7 @@ export async function newReportInsta(clientValue) {
                         }
                 });
         
-        
-        
-              if (shortcodeList.length >= 1) {
-        
+              if (shortcodeList.length >= 1) {    
                 await newRowsData(ciceroKey.dbKey.instaLikesUsernameID, clientName).then( 
                     response => {    
                         userLikesData = response;                        
@@ -171,7 +166,6 @@ export async function newReportInsta(clientValue) {
                     code: 200
                   };
                 }
-
                 resolve (data);
             } else {
                 data = {
@@ -179,7 +173,7 @@ export async function newReportInsta(clientValue) {
                   state: true,
                   code: 201
                 };
-                resolve (data);
+                reject (data);
               }
             } else {
         
@@ -189,21 +183,16 @@ export async function newReportInsta(clientValue) {
                 code: 201
               };
         
-              resolve (data);
+              reject (data);
         
             }
           } catch (error) {
-        
             data = {
               data: error,
               state: false,
               code: 303
             };
-        
-            resolve (data);
-          }
-        
-    })
-
-
+            reject (data);
+          } 
+    });
 }
