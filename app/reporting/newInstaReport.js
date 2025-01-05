@@ -21,7 +21,8 @@ export async function newReportInsta(clientValue) {
     let userLikesData = [];
     let UserNotLikes = [];
     let notLikesList = [];
-
+    let instaLikesUsernameData =[];
+    
     let notLikesName;
     let name;
     let nameUpper;
@@ -74,13 +75,12 @@ export async function newReportInsta(clientValue) {
                         if (shortcodeList.length >= 1) {    
                             await newRowsData(ciceroKey.dbKey.instaLikesUsernameID, clientName).then( 
                                 async response => {    
-                                    userLikesData = await response;                        
-                                    console.log(userLikesData.length);
+                                    instaLikesUsernameData = await response;                        
                                     for (let i = 0; i < shortcodeList.length; i++) {
                                         //code on the go
-                                        for (let ii = 0; ii < userLikesData.length; ii++) {
-                                            if (userLikesData[ii].get('SHORTCODE') === shortcodeList[i]) {
-                                                const fromRows = Object.values(userLikesData[ii].toObject());
+                                        for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
+                                            if (instaLikesUsernameData[ii].get('SHORTCODE') === shortcodeList[i]) {
+                                                const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
                                      
                                                 for (let iii = 0; iii < fromRows.length; iii++) {
                                                     if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
@@ -95,7 +95,6 @@ export async function newReportInsta(clientValue) {
                             });
                     
                     
-                            console.log(userLikesData.length);
 
                             for (let i = 0; i < userRows.length; i++) {     
                                 if (!userLikesData.includes(userRows[i].get('INSTA'))) {
