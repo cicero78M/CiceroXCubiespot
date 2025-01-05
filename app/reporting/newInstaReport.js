@@ -55,6 +55,8 @@ export async function newReportInsta(clientValue) {
         
                 await newRowsData(ciceroKey.dbKey.instaOfficialID, clientName).then( 
                     async response => {    
+
+                        const officialRows = response;
                         for (let i = 0; i < response.length; i++) {
                             let itemDate = new Date(response[i].get('TIMESTAMP') * 1000);
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
@@ -75,9 +77,9 @@ export async function newReportInsta(clientValue) {
                                     userLikesData = response;                        
                                     for (let i = 0; i < shortcodeList.length; i++) {
                                         //code on the go
-                                        for (let ii = 0; ii < response.length; ii++) {
-                                            if (response[ii].get('SHORTCODE') === shortcodeList[i]) {
-                                                const fromRows = Object.values(response[ii].toObject());
+                                        for (let ii = 0; ii < officialRows.length; ii++) {
+                                            if (officialRows[ii].get('SHORTCODE') === shortcodeList[i]) {
+                                                const fromRows = Object.values(officialRows[ii].toObject());
                                                 for (let iii = 0; iii < fromRows.length; iii++) {
                                                     if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
                                                         if (!userLikesData.includes(fromRows[iii])) {
