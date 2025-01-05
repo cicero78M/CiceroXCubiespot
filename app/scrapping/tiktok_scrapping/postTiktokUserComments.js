@@ -1,5 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../database_query/sheetDoc.js";
+import { client } from "../../../app.js";
+import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 
 let hasShortcode = false;
 
@@ -47,7 +48,7 @@ export async function postTiktokUserComments(clientName, items, userdata) {
             let data = {
                     data: error,
                     state: true,
-                    code: 300
+                    code: 303
                 };
             reject (data);
         }

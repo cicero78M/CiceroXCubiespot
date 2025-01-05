@@ -1,12 +1,12 @@
-import { client } from "../../app.js";
-import { newReportTiktok } from "../reporting/newTiktokReport.js";
+import { client } from "../../../app.js";
+import { newReportTiktok } from "../../reporting/newTiktokReport.js";
 import { getTiktokComments } from "./getTiktokComments.js";
 import { postTiktokUserComments } from "./postTiktokUserComments.js";
 
 export async function tiktokItemsBridges(clientValue, items) {
 
-    console.log("Execute Bridging");
-    client.sendMessage('6281235114745@c.us', "Execute Bridging");
+    console.log("Execute Tiktok Bridging");
+    client.sendMessage('6281235114745@c.us', "Execute Tiktok Bridging");
 
     return new Promise(async (resolve, reject) => {
         try {        

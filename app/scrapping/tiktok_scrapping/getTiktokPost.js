@@ -1,8 +1,8 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { tiktokPostAPI } from '../socialMediaAPI/tiktokAPI.js';
-import { client } from '../../app.js';
-import { ciceroKey, googleAuth } from '../database/new_query/sheet_query.js';
+import { tiktokPostAPI } from '../../socialMediaAPI/tiktokAPI.js';
+import { client } from '../../../app.js';
+import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
 
 export async function getTiktokPost(clientValue) {
 
@@ -108,6 +108,7 @@ export async function getTiktokPost(clientValue) {
                                 code: 200
                             }
                             resolve (data);
+ 
                         }).catch(
                             response =>{
                                 let data = {
@@ -122,12 +123,19 @@ export async function getTiktokPost(clientValue) {
                 
                     } else {
                         let data = {
-                                data: ' Tiktok Account Has No Content',
+                                data: ' Tiktok Official Account Has No Content',
                                 state: true,
                                 code: 201
                         };
                         reject (data);
                     }
+                }).catch(error => {
+                    let data = {
+                        data: error,
+                        state: false,
+                        code: 303
+                    };
+                    reject(data);   
                 });
             } else {
                 let data = {

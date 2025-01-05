@@ -1,4 +1,4 @@
-import { ciceroKey } from '../database_query/sheetDoc.js';
+import { ciceroKey } from '../database/new_query/sheet_query.js';
 import { request } from './instaAPI.js';
 
 const headers = {
@@ -17,27 +17,24 @@ export async function tiktokUserInfoAPI(key) {
     headers: headers
   };
 
-  try {
-
-    let response = await request(options);
-
-    let data = {
-      data: response.data,
-      code: 200,
-      state: true
-    };
-
-    return data;
-
-  } catch (error) {
-    let data = {
-      data: error,
-      code: 303,
-      state: false
-    };
-
-    return data;
-  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response = await request(options);
+      let data = {
+        data: response.data,
+        code: 200,
+        state: true
+      };
+      resolve (data);
+    } catch (error) {
+      let data = {
+        data: error,
+        code: 303,
+        state: false
+      };
+      reject (data);
+    }
+  });
 }
 export async function tiktokPostAPI(key, cursors) {
   //Tiktok Post API
@@ -51,29 +48,24 @@ export async function tiktokPostAPI(key, cursors) {
     },
     headers: headers
   };
-
-  try {
-
-
-    let response = await request(options);
-
-    let data = {
-      data: response.data,
-      code: 200,
-      state: true
-    };
-
-    return data;
-
-  } catch (error) {
-    let data = {
-      data: error,
-      code: 303,
-      state: false
-    };
-
-    return data;
-  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response = await request(options);
+      let data = {
+        data: response.data,
+        code: 200,
+        state: true
+      };
+      resolve (data);
+    } catch (error) {
+      let data = {
+        data: error,
+        code: 303,
+        state: false
+      };
+      reject (data);
+    }
+  });
 }
 export async function tiktokCommentAPI(key, cursors) {
   //Insta Likes API
@@ -87,26 +79,28 @@ export async function tiktokCommentAPI(key, cursors) {
     },
     headers: headers
   };
+  return new Promise(async (resolve, reject) => {
+    try {
 
-  try {
+      let response = await request(options);
 
-    let response = await request(options);
+      let data = {
+        data: response.data,
+        code: 200,
+        state: true
+      };
 
-    let data = {
-      data: response.data,
-      code: 200,
-      state: true
-    };
+      resolve (data);
 
-    return data;
+    } catch (error) {
+      let data = {
+        data: error,
+        code: 303,
+        state: false
+      };
 
-  } catch (error) {
-    let data = {
-      data: error,
-      code: 303,
-      state: false
-    };
+      reject (data);
+    }  
+  });
 
-    return data;
-  }
 }

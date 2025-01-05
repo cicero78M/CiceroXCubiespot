@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ciceroKey } from '../database_query/sheetDoc.js';
+import { ciceroKey } from '../database/new_query/sheet_query';
 
 export const { request } = axios;
 
@@ -23,29 +23,25 @@ export async function instaFollowingAPI(key,pagination) {
           },
         headers: headers
     };
-
-    try {
-
-        let response = await request(options);
-
-        let data = {
-            data: response.data,
-            code: 200,
-            state: true
-        };
-
-
-        return data;
-    } catch (error) {
-        let data = {
-            data: error,
-            code: 303,
-            state: false
-        };
-
-
-        return data;
-    }
+    return new Promise(async(resolve, reject) => {
+        try {
+            let response = await request(options);
+            let data = {
+                data: response.data,
+                code: 200,
+                state: true
+            };
+    
+            resolve (data);
+        } catch (error) {
+            let data = {
+                data: error,
+                code: 303,
+                state: false
+            };
+            reject (data);
+        }
+    });
 }
 export async function instaLikesAPI(key) {
     //Insta Likes API
@@ -58,27 +54,25 @@ export async function instaLikesAPI(key) {
         headers: headers
     };
 
-    try {
-        let response = await request(options);
-
-        let data = {
-            data: response.data,
-            code: 200,
-            state: true
-        };
-
-        return data;
-
-    } catch (error) {
-
-        let data = {
-            data: error,
-            code: 303,
-            state: false
-        };
-
-        return data;
-    }
+    return new Promise(async(resolve, reject) => {
+        try {
+            let response = await request(options);
+            let data = {
+                data: response.data,
+                code: 200,
+                state: true
+            };
+    
+            resolve (data);
+        } catch (error) {
+            let data = {
+                data: error,
+                code: 303,
+                state: false
+            };
+            reject (data);
+        }
+    });
 }
 export async function instaPostAPI(key) {
     //Insta Post API
@@ -91,28 +85,25 @@ export async function instaPostAPI(key) {
         headers: headers
     };
 
-    try {
-        let response = await request(options);
-
-        let data = {
-            data: response.data,
-            code: 200,
-            state: true
-        };
-
-
-        return data;
-
-    } catch (error) {
-        let data = {
-            data: error,
-            code: 303,
-            state: false
-        };
-
-
-        return data;
-    }
+    return new Promise(async(resolve, reject) => {
+        try {
+            let response = await request(options);
+            let data = {
+                data: response.data,
+                code: 200,
+                state: true
+            };
+    
+            resolve (data);
+        } catch (error) {
+            let data = {
+                data: error,
+                code: 303,
+                state: false
+            };
+            reject (data);
+        }
+    });
 }
 export async function instaPostInfoAPI(key) {
     //Insta Post API
@@ -126,28 +117,25 @@ export async function instaPostInfoAPI(key) {
         headers: headers
     };
 
-    try {
-
-        let response = await request(options);
-
-        let data = {
-            data: response.data,
-            code: 200,
-            state: true
-        };
-
-
-        return data;
-    } catch (error) {
-        let data = {
-            data: error,
-            code: 303,
-            state: false
-        };
-
-
-        return data;
-    }
+    return new Promise(async(resolve, reject) => {
+        try {
+            let response = await request(options);
+            let data = {
+                data: response.data,
+                code: 200,
+                state: true
+            };
+    
+            resolve (data);
+        } catch (error) {
+            let data = {
+                data: error,
+                code: 303,
+                state: false
+            };
+            reject (data);
+        }
+    });
 }
 export async function instaInfoAPI(key) {
     //Insta Post API
@@ -160,26 +148,23 @@ export async function instaInfoAPI(key) {
         headers: headers
     };
 
-    try {
-        let response = await request(options);
-
-        let data = {
-            data: response.data,
-            code: 200,
-            state: true
-        };
-
-
-        return data;
-
-    } catch (error) {
-        let data = {
-            data: error,
-            code: 303,
-            state: false
-        };
-
-
-        return data;
-    }
+    return new Promise(async(resolve, reject) => {
+        try {
+            let response = await request(options);
+            let data = {
+                data: response.data,
+                code: 200,
+                state: true
+            };
+    
+            resolve (data);
+        } catch (error) {
+            let data = {
+                data: error,
+                code: 303,
+                state: false
+            };
+            reject (data);
+        }
+    });
 }

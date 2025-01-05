@@ -33,8 +33,8 @@ import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
 import { instaUserData } from './app/scrapping/collectInstaUser.js';
 import { newRowsData } from './app/database/new_query/sheet_query.js';
-import { tiktokItemsBridges } from './app/tiktok_scrapping/tiktokItemBridges.js';
-import { getTiktokPost } from './app/tiktok_scrapping/getTiktokPost.js';
+import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktokItemBridges.js';
+import { getTiktokPost } from './app/scrapping/tiktok_scrapping/getTiktokPost.js';
 import { newReportTiktok } from './app/reporting/newTiktokReport.js';
 
 //Routing Port 
@@ -277,6 +277,7 @@ client.on('ready', () => {
             await client.sendMessage('6281235114745@c.us', 'Cron Job Client Report Error');
         }
     });
+
 });
 
 client.on('qr', qr => {
@@ -293,20 +294,17 @@ client.on('call', async (call) => {
 client.on('message', async (msg) => {
     //Date Time
     const d = new Date();
-    const localDate = d.toLocaleDateString("en-US", {
-        timeZone: "Asia/Jakarta"
-    });
-    const hours = d.toLocaleTimeString("en-US", {
-        timeZone: "Asia/Jakarta"
-    });     
+    const localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta" });
+    const hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
     const time = localDate+" >> "+hours;
+
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'allsocmed', 'alltiktok', 'allinsta','newtiktok','reporttiktok', 'reportinsta','exception', 'savecontact','secuid'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['cubiehome', 'like', 'comment'];
-    const newAdminOrder = ["newalltiktok", "newreporttiktok"];
+    const newAdminOrder = ["newalltiktok", "newreporttiktok", "newallinsta", "newreportinsta"];
 
     try {
         const contact = await msg.getContact();
