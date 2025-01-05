@@ -37,7 +37,9 @@ export async function getTiktokComments(items) {
 
                 } else {    
 
-                    total = response.data.total+50;
+                    total = response.data.total+100;
+
+                    console.log(total)
 
                     if(total > 400){
 
