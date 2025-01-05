@@ -905,10 +905,9 @@ client.on('message', async (msg) => {
                                                         async instaLikesData =>{
                                                             console.log(instaLikesData.data);
                                                             await client.sendMessage(msg.from, instaLikesData.data); 
-
                                                             await newReportInsta(clientData[i]).then(
                                                                 async data => {
-                                                                    console.log(data);
+                                                                    console.log("Report Success!!!");
                                                                     await client.sendMessage(msg.from, data.data);
                                                             }).catch(                
                                                                 async data => {
