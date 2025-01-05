@@ -106,17 +106,18 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 reject (data);
               }
             );
-
-            let data = {
-              data: 'Succes Reload Insta Data : ' + todayItems.length + '\n\nNew Content : ' + newData + '\nUpdate Content : ' + updateData,
-              state: true,
-              code: 200
-            };
-
-            instaLikesUsernameDoc.delete;
-            resolve(data);
           }
         }
+
+        let data = {
+          data: 'Succes Reload Insta Data : ' + todayItems.length + '\n\nNew Content : ' + newData + '\nUpdate Content : ' + updateData,
+          state: true,
+          code: 200
+        };
+
+        instaLikesUsernameDoc.delete;
+        resolve(data);
+        
       } catch (error) {
         let data = {
           data: error,
