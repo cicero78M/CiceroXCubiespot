@@ -15,7 +15,10 @@ export async function getTiktokComments(items) {
     return new Promise((resolve, reject) =>{
         
         forLoopGetComments(items, cursorNumber);
+
         async function forLoopGetComments(items, cursorNumber) {    
+
+            let dataUser = 0;
             await tiktokCommentAPI(items, cursorNumber).then ( response =>{
 
                 const total = response.data.total+50;
@@ -27,6 +30,7 @@ export async function getTiktokComments(items) {
                     if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
                             newDataUsers.push(commentItems[ii].user.unique_id);
+                            dataUser++
                         }
                     }
                 }
@@ -38,7 +42,7 @@ export async function getTiktokComments(items) {
                     }, 1200);
                 } else {    
                     if(total > 400){
-                        if (response.data.cursor < total){
+                        if (dataUser != 0){
                             setTimeout(async () => {
                                 console.log('next data '+response.data.cursor);
                                 forLoopGetComments(items, response.data.cursor);
