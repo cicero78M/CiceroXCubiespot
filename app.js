@@ -232,7 +232,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('08 15,18,21 * * *', async () => {
+    schedule('14 15,18,21 * * *', async () => {
         //Date Time
         let d = new Date();
         let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -255,8 +255,10 @@ client.on('ready', () => {
                             await getTiktokPost(clientData[i]).then(
                                 async data => {
                                     await tiktokItemsBridges(clientData[i], data.data).then(
-                                        data =>{
-                                            sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'),data.data, 'REPORT TIKTOK');                                            
+                                        async data =>{
+
+                                            console.log(data);
+//                                            sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data.data, 'REPORT TIKTOK');                                            
                                             console.log("Report Tiktok SUCCESS!!!");
                                         }
                                     ).catch(
@@ -295,7 +297,8 @@ client.on('ready', () => {
 
                                             await newReportInsta(clientData[i]).then(
                                                 async data => {
-                                                    sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data.data, 'REPORT INSTA');    
+                                                    console.log(data);
+//                                                    sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data.data, 'REPORT INSTA');    
                                                     console.log("Report Insta SUCCESS!!!");
                                         
                                                 }).catch(                
