@@ -35,6 +35,7 @@ import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktokItemBridges.js';
 import { getTiktokPost } from './app/scrapping/tiktok_scrapping/getTiktokPost.js';
 import { newReportTiktok } from './app/reporting/newTiktokReport.js';
+import { colectInstaLikes } from './app/scrapping/collectInstaLikes.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -499,7 +500,7 @@ client.on('message', async (msg) => {
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     await client.sendMessage('6281235114745@c.us', clientRows[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                                     //Scrapping Insta by Client
-                                    let loadInsta = await collectInstaLikes(clientRows[i]);
+                                    let loadInsta = await colectInstaLikes(clientRows[i]);
                                     //Proccessing Data
                                     let reportInsta;
                                     switch (loadInsta.code) {
