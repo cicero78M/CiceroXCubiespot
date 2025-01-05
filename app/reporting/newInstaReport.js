@@ -35,16 +35,16 @@ export async function newReportInsta(clientValue) {
         try {
         
             await newListValueData(clientName, 'DIVISI').then(
-                response =>{
-                    divisiList = response;
+                async response =>{
+                    divisiList = await response;
                 }
             )
         
             await newRowsData(ciceroKey.dbKey.userDataID, clientName).then( 
                 async response => {    
                     userRows = await response;                           
-                    for (let i = 0; i < response.length; i++) {
-                        if (response[i].get('STATUS') === 'TRUE' ){
+                    for (let i = 0; i < userRows.length; i++) {
+                        if (userRows[i].get('STATUS') === 'TRUE' ){
                             userAll++;
                         }
                     } 
@@ -55,7 +55,6 @@ export async function newReportInsta(clientValue) {
         
                 await newRowsData(ciceroKey.dbKey.instaOfficialID, clientName).then( 
                     async response => {    
-
                         const officialRows = await response;
 
                         for (let i = 0; i < officialRows.length; i++) {
@@ -79,9 +78,9 @@ export async function newReportInsta(clientValue) {
                                     console.log(userLikesData.length);
                                     for (let i = 0; i < shortcodeList.length; i++) {
                                         //code on the go
-                                        for (let ii = 0; ii < officialRows.length; ii++) {
-                                            if (officialRows[ii].get('SHORTCODE') === shortcodeList[i]) {
-                                                const fromRows = Object.values(officialRows[ii].toObject());
+                                        for (let ii = 0; ii < userLikesData.length; ii++) {
+                                            if (userLikesData[ii].get('SHORTCODE') === shortcodeList[i]) {
+                                                const fromRows = Object.values(userLikesData[ii].toObject());
                                      
                                                 for (let iii = 0; iii < fromRows.length; iii++) {
                                                     if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
@@ -96,7 +95,8 @@ export async function newReportInsta(clientValue) {
                             });
                     
                     
-                    
+                            console.log(userLikesData.length);
+
                             for (let i = 0; i < userRows.length; i++) {     
                                 if (!userLikesData.includes(userRows[i].get('INSTA'))) {
                                     if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
