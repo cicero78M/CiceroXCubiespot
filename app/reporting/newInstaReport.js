@@ -16,6 +16,7 @@ export async function newReportInsta(clientValue) {
 
     let shortcodeList = [];
     let divisiList = [];
+    let userRows =[];
     let userLikesData = [];
     let UserNotLikes = [];
     let notLikesList = [];
