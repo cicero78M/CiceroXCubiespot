@@ -19,7 +19,6 @@ import { saveContacts } from './app/database/saveContact.js';
 import { myData } from './app/database_query/myData.js';
 import { infoView } from './app/view/infoView.js';
 import { propertiesView } from './app/view/propertiesView.js';
-import { collectInstaLikes } from './app/scrapping/collectInstaLikes.js';
 import { reportInstaLikes } from './app/reporting/reportInstaLikes.js';
 import { collectTiktokComments } from './app/scrapping/collectTiktokEngagements.js';
 import { reportTiktokComments } from './app/reporting/reportTiktokComments.js';
