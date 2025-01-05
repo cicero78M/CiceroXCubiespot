@@ -33,6 +33,7 @@ export async function getTiktokComments(items) {
                         console.log('next data '+response.data.cursor);
                         forLoopGetComments(items, response.data.cursor);
                     }, 1200);
+
                 } else {    
                     if(response.data.total > 400){
                         if (response.data.cursor < response.data.total){
@@ -50,7 +51,7 @@ export async function getTiktokComments(items) {
                     } else {
     
                         setTimeout(async () => {
-                            console.log('next data '+response.data.cursor);
+                            console.log('next data over 400 '+response.data.cursor);
                             forLoopGetComments(items, response.data.cursor);
                         }, 1200);                    
                     }
