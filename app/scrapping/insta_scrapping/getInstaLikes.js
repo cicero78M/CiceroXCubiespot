@@ -12,20 +12,21 @@ export async function getInstaLikes(todayItems, clientValue ) {
       try { 
 
         const clientName = clientValue.get('CLIENT_ID');
-        const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-        await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-        let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
-        let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
         var newData = 0;
         var updateData = 0;
 
         let newDataUsers = [];
 
+        const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+        await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
+        let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
+        let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
+
         for (let i = 0; i < todayItems.length; i++) {
 
           console.log("execute "+todayItems[i]);
-          
+
           let hasShortcode = false;
           //code on the go
           for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
