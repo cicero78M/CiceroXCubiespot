@@ -74,8 +74,8 @@ export async function newReportInsta(clientValue) {
 
                         if (shortcodeList.length >= 1) {    
                             await newRowsData(ciceroKey.dbKey.instaLikesUsernameID, clientName).then( 
-                                response => {    
-                                    userLikesData = response;                        
+                                async response => {    
+                                    userLikesData = await response;                        
                                     for (let i = 0; i < shortcodeList.length; i++) {
                                         //code on the go
                                         for (let ii = 0; ii < officialRows.length; ii++) {
