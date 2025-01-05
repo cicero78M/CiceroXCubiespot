@@ -126,24 +126,30 @@ client.on('ready', () => {
                             
                             await getTiktokPost(clientData[i]).then(
                                 async data => {
-                                    await tiktokItemsBridges(clientData[i], data.data).then(
-                                        data =>{
-                                            client.sendMessage('6281235114745@c.us', data.data);
-                                            console.log("Report Tiktok Success");
-                                        }
-                                    ).catch(
-                                        data =>{
-                                            sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK BRIDGES');
-                                        }
-                                    );
+                                    switch (data.code){
+                                    case 201:
+                                        client.sendMessage('6281235114745@c.us', data.data);
+                                        break;
+                                    default:
+                                        await tiktokItemsBridges(clientData[i], data.data).then(
+                                            data =>{
+                                                client.sendMessage('6281235114745@c.us', data.data);
+                                                console.log("Report Tiktok Success");
+                                            }
+                                        ).catch(
+                                            data =>{
+                                                sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK BRIDGES');
+                                            }
+                                        );
+                                        break;
+                                    }
+
                                 }
                             ).catch(
                                 data => {
                                     sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK POST');
-
                                 }
                             );
-    
                         }         
 
                         if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
@@ -151,25 +157,33 @@ client.on('ready', () => {
                             client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                              await getInstaPost(clientData[i]).then(
                                 async instaPostData =>{
-                                    console.log(instaPostData);
-                                    await getInstaLikes(instaPostData.data, clientData[i]).then(
-                                        async instaLikesData =>{
-                                            console.log(instaLikesData.data);
-                                            await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
-                                            await newReportInsta(clientData[i]).then(
-                                                async data => {
-                                                    console.log("Report Success!!!");
-                                                    await client.sendMessage('6281235114745@c.us', data.data);
-                                            }).catch(                
-                                                async data => {
-                                                    sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA REPORT');
-                                            });
-                                        }
-                                    ).catch(
-                                        async data => {
-                                            sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA LIKES');
-                                        }
-                                    ); 
+                                    switch (instaPostData.code){
+                                    case 201:
+                                        await client.sendMessage('6281235114745@c.us', instaPostData.data);
+                                        break;
+                                    default:
+                                        console.log(instaPostData);
+                                        await getInstaLikes(instaPostData.data, clientData[i]).then(
+                                            async instaLikesData =>{
+                                                console.log(instaLikesData.data);
+                                                await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
+                                                await newReportInsta(clientData[i]).then(
+                                                    async data => {
+                                                        console.log("Report Success!!!");
+                                                        await client.sendMessage('6281235114745@c.us', data.data);
+                                                }).catch(                
+                                                    async data => {
+                                                        sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA REPORT');
+                                                });
+                                            }
+                                        ).catch(
+                                            async data => {
+                                                sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA LIKES');
+                                            }
+                                        ); 
+                                        
+                                        break;
+                                    }
                                 }
                             ).catch(
                                 async data => {
@@ -215,15 +229,24 @@ client.on('ready', () => {
                             
                             await getTiktokPost(clientData[i]).then(
                                 async data => {
-                                    await tiktokItemsBridges(clientData[i], data.data).then(
-                                        async data =>{
-                                            sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT TIKTOK');                                            
-                                        }
-                                    ).catch(
-                                        data =>{
-                                            sendResponse('6281235114745@c.us', data, ' ERROR TIKTOK BRIDGES');
-                                        }
-                                    );
+                                    switch (data.code){
+                                    case 201:
+                                        sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT TIKTOK');                                            
+                                        break;
+                                    default:
+                                        await tiktokItemsBridges(clientData[i], data.data).then(
+                                            async data =>{
+                                                sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT TIKTOK');                                            
+                                            }
+                                        ).catch(
+                                            data =>{
+                                                sendResponse('6281235114745@c.us', data, ' ERROR TIKTOK BRIDGES');
+                                            }
+                                        );
+                                        break;
+                                    }
+                                    
+
                                 }
  
                             ).catch(
@@ -240,29 +263,38 @@ client.on('ready', () => {
                             client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                              await getInstaPost(clientData[i]).then(
                                 async instaPostData =>{
-                                    console.log(instaPostData);
-                                    await getInstaLikes(instaPostData.data, clientData[i]).then(
-                                        async instaLikesData =>{
-                                            console.log(instaLikesData.data);
-                                            
-                                            await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
 
-                                            await newReportInsta(clientData[i]).then(
+                                    switch (instaPostData.code){
+                                        case 201:
+                                            sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), instaPostData, 'REPORT INSTA');    
+                                            break;
+                                        default:
+                                            console.log(instaPostData);
+                                            await getInstaLikes(instaPostData.data, clientData[i]).then(
+                                                async instaLikesData =>{
+                                                    console.log(instaLikesData.data);
+                                                    
+                                                    await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
+        
+                                                    await newReportInsta(clientData[i]).then(
+                                                        async data => {
+                                                            sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT INSTA');    
+                                                            console.log("Report Insta SUCCESS!!!");
+                                                
+                                                        }).catch(                
+                                                            async data => {
+                                                                sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA REPORT');
+        
+                                                    });
+                                                }
+                                            ).catch(
                                                 async data => {
-                                                    sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT INSTA');    
-                                                    console.log("Report Insta SUCCESS!!!");
-                                        
-                                                }).catch(                
-                                                    async data => {
-                                                        sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA REPORT');
+                                                    sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA LIKES');
+                                                }
+                                            ); 
+                                            break;
+                                        }
 
-                                            });
-                                        }
-                                    ).catch(
-                                        async data => {
-                                            sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA LIKES');
-                                        }
-                                    ); 
                                 }
                             ).catch(
                                 async data => {

@@ -116,7 +116,7 @@ export async function getInstaPost(clientValue) {
               state: true,
               code: 201
             };
-            reject (data);
+            resolve (data);
           }
         }).catch(error =>{
           let data = {
