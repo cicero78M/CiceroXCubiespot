@@ -902,7 +902,7 @@ client.on('message', async (msg) => {
                                                     
                                                     console.log(instaPostData);
                                                     
-                                                    await getInstaLikes(instaPostData).then(
+                                                    await getInstaLikes(instaPostData, clientData[i]).then(
                                                         async instaLikesData =>{
                                                             console.log(instaLikesData.data);
                                                             client.sendMessage(msg.from, instaLikesData.data); 

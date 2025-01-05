@@ -2,8 +2,10 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
 import { instaLikesAPI } from '../../socialMediaAPI/instaAPI.js';
 
-export async function getInstaLikes(todayItems) {
+export async function getInstaLikes(todayItems, clientValue ) {
 
+    const clientName = clientValue.get('CLIENT_ID');
+    
     const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
     await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
     let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
