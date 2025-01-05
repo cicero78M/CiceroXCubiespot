@@ -62,16 +62,17 @@ export async function getInstaLikes(todayItems, clientValue ) {
                   reject (data);
                 }
               );
+
+              await instaLikesUsernameData[ii].delete();
+              await instaLikesUsernameSheet.addRow(newDataUsers);
+        
+              console.log(`${clientName} Update Data ${todayItems[i]}`);
+              await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+    
+              updateData++;
             }
-
-            await instaLikesUsernameData[ii].delete();
-            await instaLikesUsernameSheet.addRow(newDataUsers);
-      
-            console.log(`${clientName} Update Data ${todayItems[i]}`);
-            await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
-
-            updateData++;
           }
+
           //Final Code
           if (!hasShortcode) {
             //If Shortcode doesn't exist push new data
