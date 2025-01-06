@@ -23,7 +23,9 @@ export async function createClientID(clientName, type) {
             const sheetRows = await sheetName.getRows();    
 
             if (typeList.includes(type)) {
+
                 let isExist = false;
+                
                 for (let i = 0; i < sheetRows.length; i++) {
                     if (sheetRows[i].get('CLIENT_ID') === clientName) {
                         isExist = true;
@@ -38,6 +40,7 @@ export async function createClientID(clientName, type) {
                     };
                     reject (response);
                 } else {
+                    
                     await clientSheet.addRow({ CLIENT_ID: clientName, TYPE: type, STATUS: true });
                     response = {
                         data: `${clientName} Created, Client Type :  ${type},  Status : TRUE`,
