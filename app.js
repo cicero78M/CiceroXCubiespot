@@ -486,7 +486,7 @@ client.on('message', async (msg) => {
                     }                   
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){   //['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-                    await newRowsData(ciceroKey.dbKey.clientDataID, splittedMsg[0].toUpperCase()).then( 
+                    await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                         async clientRows => {             
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){

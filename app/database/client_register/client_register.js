@@ -8,17 +8,18 @@ export async function clientRegister(clientName, type) {
     return new Promise(async (resolve, reject) => {
         
         createClientID(clientName, type).then(
-            data => {
+            async data => {
                 console.log(data);
+
                     headerValues = ['TIMESTAMP', 'USER_ACCOUNT', 'SHORTCODE', 'ID', 'TYPE', 'CAPTION',
                         'COMMENT_COUNT', 'LIKE_COUNT', 'PLAY_COUNT'];
 
-                    createDataSheet(clientName, ciceroKey.dbKey.instaOfficialID, headerValues, "INSTA OFFICIAL").then(
-                        data =>{
+                    await createDataSheet(clientName, ciceroKey.dbKey.instaOfficialID, headerValues, "INSTA OFFICIAL").then(
+                        async data =>{
                             console.log(data)
-                            headerValues = 
+                            let headerValues = ['SHORTCODE'];
 
-                            createDataSheet(clientName, ciceroKey.dbKey.instaOfficialID, headerValues, "INSTA OFFICIAL").then(
+                            await createDataSheet(clientName, ciceroKey.dbKey.instaOfficialID, headerValues, "INSTA USERNAME DATA").then(
                                 data =>{
                                     console.log(data)
                                 }).catch(

@@ -14,8 +14,7 @@ export async function createDataSheet(clientName, sheetID, headerValues, sheetID
         try {
 
             const instaOfficialDoc = new GoogleSpreadsheet(sheetID, googleAuth); //Google Authentication for InstaOfficial DB            
-            await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-    
+            await instaOfficialDoc.loadInfo(); // loads document properties and worksheets    
             await instaOfficialDoc.addSheet({
                 title: clientName, headerValues: headerValues
             });
