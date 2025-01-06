@@ -36,6 +36,7 @@ import { newReportInsta } from './app/reporting/insta_report.js';
 import { getInstaPost } from './app/scrapping/insta_scrapping/generate_insta_post.js';
 import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_likes.js';
 import { clientRegister } from './app/database/client_register/client_register.js';
+import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -107,7 +108,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('40 6-21 * * *', async () => {
+    schedule('30 6-21 * * *', async () => {
             //Date Time
             let d = new Date();
             let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -208,7 +209,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('5 15,18,21 * * *', async () => {
+    schedule('0 15,18,21 * * *', async () => {
         //Date Time
         let d = new Date();
         let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -333,8 +334,8 @@ client.on('message', async (msg) => {
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
-    const cubies = ['cubiehome', 'like', 'comment'];
-    const generateSocmed = ["newalltiktok", "newreporttiktok", "newallinsta", "newreportinsta"];
+    const cubies = ['cubiehome', 'likes', 'comment',];
+    const generateSocmed = ["newalltiktok", "newreporttiktok", "newallinsta", "newreportinsta", "follow"];
 
     try {
         const contact = await msg.getContact();
@@ -615,8 +616,8 @@ client.on('message', async (msg) => {
                                     }
                                 }
                             }
-        
-                    });
+                        }
+                    );
 
                 } else if (info.includes(splittedMsg[1].toLowerCase())){    //const info = ['menu', 'divisilist', 'titlelist'];
 
@@ -682,7 +683,7 @@ client.on('message', async (msg) => {
                             }
                             break;
 
-                        case 'like':
+                        case 'likes':
                             break;
 
                         case 'comment':
@@ -883,6 +884,22 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break
+
+                        case 'follow':
+                            console.log("Execute New All Insta ");
+                            await instaClientInfo().then(
+                                async response =>{
+                                    console.log(response.data);
+                                    client.sendMessage(msg.from, response.data);
+                                }
+                            ).catch(
+                                async error =>{
+                                    console.error(error);
+                                    client.sendMessage(msg.from, "Follow Error");
+                                }
+                            );
+
+                            break;
 
                         default:
                             break;                    
