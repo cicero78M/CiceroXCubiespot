@@ -40,10 +40,10 @@ export async function createClientID(clientName, type) {
                         code: 201
                     };
                     reject (response);
-                    
+
                 } else {
                     
-                    await clientSheet.addRow({ CLIENT_ID: clientName, TYPE: type, STATUS: true });
+                    await sheetName.addRow({ CLIENT_ID: clientName, TYPE: type, STATUS: true });
                     response = {
                         data: `${clientName} Created, Client Type :  ${type},  Status : TRUE`,
                         state: true,
