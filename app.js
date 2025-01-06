@@ -215,7 +215,6 @@ client.on('ready', () => {
         let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
         let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
         let time = localDate+" >> "+hours;
-
         try {
             //Commit if schedule Working
             await client.sendMessage('6281235114745@c.us', 'Generate All Socmed Data Starting...');            
