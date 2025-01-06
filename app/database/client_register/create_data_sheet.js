@@ -5,7 +5,7 @@
  * 
  */
 
-export async function createDataSheet(clientName, sheetID, headerValues, sheetID) {
+export async function createDataSheet(clientName, sheetID, headerValues, sheetName) {
 
     let response;
 
@@ -20,7 +20,7 @@ export async function createDataSheet(clientName, sheetID, headerValues, sheetID
             });
     
             response = {
-                data: 'Create Data Sheet ' + sheetID,
+                data: 'Create Data Sheet ' + sheetName,
                 state: true,
                 code: 200
             };
