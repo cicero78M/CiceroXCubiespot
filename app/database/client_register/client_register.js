@@ -18,7 +18,7 @@ export async function clientRegister(clientName, type) {
                     //Create User Data
                     headerValuesUser = ['ID_KEY', 'NAMA', 'TITLE', 'DIVISI', 'JABATAN', 'STATUS', 'WHATSAPP', 'INSTA', 'TIKTOK', 'EXCEPTION'];
 
-                    await createDataSheet(clientName, ciceroKey.dbKey.tiktokCommentUsernameID, headerValuesUser, "USER DATA").then(
+                    await createDataSheet(clientName, ciceroKey.dbKey.userDataID, headerValuesUser, "USER DATA").then(
                         async data =>{
                             console.log(data)
                             await client.sendMessage('6281235114745@c.us', data.data);
