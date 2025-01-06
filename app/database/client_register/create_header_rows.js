@@ -33,22 +33,14 @@ export async function createSheetHeader(clientName, sheetID) {
                 state: true,
                 code: 200
             };
-    
             resolve (response);
-    
         } catch (error) {
-    
             response = {
                 data: error,
                 state: false,
                 code: 303
             };
-    
             reject (response);
-        }
-        
-    })
-
-
-
+        } 
+    });
 }
