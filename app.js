@@ -107,7 +107,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('30 6-21 * * *', async () => {
+    schedule('40 6-21 * * *', async () => {
             //Date Time
             let d = new Date();
             let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -208,7 +208,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('00 15,18,21 * * *', async () => {
+    schedule('5 15,18,21 * * *', async () => {
         //Date Time
         let d = new Date();
         let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
