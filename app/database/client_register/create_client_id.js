@@ -5,7 +5,7 @@
  * 
  */
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../new_query/sheet_query";
+import { ciceroKey, googleAuth } from "../new_query/sheet_query.js";
 
 export async function createClientID(clientName, type) {
 

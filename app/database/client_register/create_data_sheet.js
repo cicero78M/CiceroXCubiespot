@@ -5,6 +5,9 @@
  * 
  */
 
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import { googleAuth } from "../new_query/sheet_query";
+
 export async function createDataSheet(clientName, sheetID, headerValues, sheetName) {
 
     let response;

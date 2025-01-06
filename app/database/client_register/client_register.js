@@ -1,6 +1,6 @@
-import { ciceroKey } from "../new_query/sheet_query";
-import { createClientID } from "./create_client_id";
-import { createDataSheet } from "./create_data_sheet";
+import { ciceroKey } from "../new_query/sheet_query.js";
+import { createClientID } from "./create_client_id.js";
+import { createDataSheet } from "./create_data_sheet.js";
 
 export async function clientRegister(clientName, type) {
     
