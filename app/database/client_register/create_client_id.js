@@ -32,6 +32,7 @@ export async function createClientID(clientName, type) {
                         data = sheetRows[i];
                     }
                 }
+
                 if (isExist) {
                     response = {
                         data: `${data.get("CLIENT_ID")} is Exist}, Client Type :  ${data.get("TYPE")},  Status : ${data.get("STATUS")}`,
@@ -39,6 +40,7 @@ export async function createClientID(clientName, type) {
                         code: 201
                     };
                     reject (response);
+                    
                 } else {
                     
                     await clientSheet.addRow({ CLIENT_ID: clientName, TYPE: type, STATUS: true });
@@ -49,6 +51,7 @@ export async function createClientID(clientName, type) {
                     };
                     resolve (response);
                 }
+
             } else {
                 response = {
                     data: `Creating Client Fail, the system received "RES" / "COM" type only`,
