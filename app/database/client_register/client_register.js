@@ -80,8 +80,7 @@ export async function clientRegister(clientName, type) {
                         }).catch(
                             data => reject (data));
 
-        }).catch (
-            data => reject (data));
+        })
 }
 
 
