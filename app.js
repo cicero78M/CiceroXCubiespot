@@ -93,14 +93,14 @@ client.on('ready', () => {
     //Server Life Send Msg
     schedule('*/10 * * * *', async () =>  {
                 //Date Time
-        const d = new Date();
-        const localDate = d.toLocaleDateString("en-US", {
+        let d = new Date();
+        let localDate = d.toLocaleDateString("en-US", {
             timeZone: "Asia/Jakarta"
         });
-        const hours = d.toLocaleTimeString("en-US", {
+        let hours = d.toLocaleTimeString("en-US", {
             timeZone: "Asia/Jakarta"
         });     
-        const time = localDate+" >> "+hours;
+        let time = localDate+" >> "+hours;
 
         console.log(time+' '+ciceroKey.waSession+' <<<System Alive>>>');
         client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');

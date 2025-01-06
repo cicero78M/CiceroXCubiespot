@@ -6,10 +6,7 @@ export async function instaUserFollowing(username) {
         let userList;
         let isFollowing = false;
 
-        do {
-            setTimeout(() => {
-                console.log("Starting...");
-            }, 1000);            
+        do {            
             let instaFollowing = await instaFollowingAPI(username, pages);
             userList = await instaFollowing.data.data.items;
             pages = await instaFollowing.data.pagination_token;
