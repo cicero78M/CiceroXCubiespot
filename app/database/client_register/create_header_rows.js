@@ -4,7 +4,6 @@
  * As a Child of Create Client Function
  * 
  */
-
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { googleAuth } from "../new_query/sheet_query.js";
 
