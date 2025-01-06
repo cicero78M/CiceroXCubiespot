@@ -32,9 +32,8 @@ export async function clientRegister(clientName, type) {
 
                                 }).catch(
                                     data => reject (data));
-                        }).catch(
-                            data => reject (data));
 
+                                    
                     //Create Tiktok Data
                     headerValuesTiktok = ['TIMESTAMP', 'USER_ACCOUNT', 'ID', 'COMMENT_COUNT',
                         'LIKE_COUNT', 'PLAY_COUNT', 'SHARE_COUNT', 'REPOST_COUNT'];
@@ -60,7 +59,11 @@ export async function clientRegister(clientName, type) {
                         code: 200
                     };
                     resolve (response);
-        });
+                        }).catch(
+                            data => reject (data));
+
+        }).catch (
+            data => reject (data));
 }
 
 
