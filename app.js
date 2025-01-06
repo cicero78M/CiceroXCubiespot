@@ -328,7 +328,7 @@ client.on('message', async (msg) => {
     const hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
     const time = localDate+" >> "+hours;
 
-    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'exception', 'savecontact','secuid'];
+    const adminOrder =['pushuserres', 'pushusercom','clientstate', 'exception', 'savecontact','secuid', 'register'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
     const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
