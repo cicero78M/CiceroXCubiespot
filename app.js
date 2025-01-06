@@ -540,7 +540,7 @@ client.on('message', async (msg) => {
                 //User Order Data         
                 } else if (userOrder.includes(splittedMsg[1].toLowerCase())){   //const userOrder = ['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
 
-                    await newRowsData(ciceroKey.dbKey.clientDataID, splittedMsg[0].toUpperCase()).then( 
+                    await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                         async clientRows => {    
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
@@ -621,7 +621,7 @@ client.on('message', async (msg) => {
 
                 } else if (info.includes(splittedMsg[1].toLowerCase())){    //const info = ['menu', 'divisilist', 'titlelist'];
 
-                    await newRowsData(ciceroKey.dbKey.clientDataID, splittedMsg[0].toUpperCase()).then( 
+                    await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                         async clientRows => {    
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
