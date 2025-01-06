@@ -60,8 +60,7 @@ export async function clientRegister(clientName, type) {
                         code: 200
                     };
                     resolve (response);
-            }).catch(
-            data => {reject (data);});
+        });
 }
 
 

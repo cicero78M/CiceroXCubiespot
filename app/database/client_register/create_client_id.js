@@ -34,7 +34,7 @@ export async function createClientID(clientName, type) {
                     response = {
                         data: `${data.get("CLIENT_ID")} is Exist}, Client Type :  ${data.get("TYPE")},  Status : ${data.get("STATUS")}`,
                         state: true,
-                        code: 210
+                        code: 201
                     };
                     reject (response);
                 } else {
@@ -50,7 +50,7 @@ export async function createClientID(clientName, type) {
                 response = {
                     data: `Creating Client Fail, the system received "RES" / "COM" type only`,
                     state: true,
-                    code: 211
+                    code: 201
                 };
                 reject (response);
             }
