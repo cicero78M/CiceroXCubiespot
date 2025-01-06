@@ -42,7 +42,9 @@ export async function clientRegister(clientName, type) {
                                              console.log(data);
                                              await client.sendMessage('6281235114745@c.us', data.data);
                                          }).catch(
-                                             data => reject (data));
+                                            data => {reject (data);
+                                                console.log(data)
+                                            });
                                     }).catch(
                                         data => reject (data));
 
