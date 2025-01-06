@@ -16,11 +16,13 @@ export async function newRowsData(sheetID, clientName) {
 
 
     return new Promise(async (resolve, reject) => {
-        const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
+        let dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
         await dataDoc.loadInfo(); // loads document properties and worksheets
-        const sheetData = dataDoc.sheetsByTitle[clientName];
-        await sheetData.getRows().then( async response => {
-            resolve (response);
+        let sheetData = dataDoc.sheetsByTitle[clientName];
+        let sheetRows = await sheetData.getRows();
+
+            resolve (sheetRows);
+            
         }).catch( response =>{
             reject (response);
         });
