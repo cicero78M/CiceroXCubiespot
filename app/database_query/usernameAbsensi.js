@@ -29,9 +29,21 @@ export async function usernameAbsensi(clientName, clientType) {
       for (let ii = 0; ii < userRows.length; ii++) {            
           if (divisiList[i] === userRows[ii].get('DIVISI')) {
             if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined ||userRows[ii].get(clientType) === "" ) {
-              userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
-              divisiCounter++;
-              userCounter++;
+
+              if (clientType === "RES"){
+
+                userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
+                divisiCounter++;
+                userCounter++;
+
+              } else {
+
+                userByDivisi = userByDivisi.concat('\n'+ userRows[ii].get('NAMA'));
+                divisiCounter++;
+                userCounter++;
+                                
+              }
+
             }
         }
       }
