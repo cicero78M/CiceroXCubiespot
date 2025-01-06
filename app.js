@@ -334,7 +334,7 @@ client.on('message', async (msg) => {
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['cubiehome', 'like', 'comment'];
-    const newAdminOrder = ["newalltiktok", "newreporttiktok", "newallinsta", "newreportinsta"];
+    const generateSocmed = ["newalltiktok", "newreporttiktok", "newallinsta", "newreportinsta"];
 
     try {
         const contact = await msg.getContact();
@@ -438,7 +438,7 @@ client.on('message', async (msg) => {
                             client.sendMessage(msg.from, 'Bukan Spreadsheet Links');
     
                         }
-                        
+
                     } else if (splittedMsg[1].toLowerCase() === 'secuid') {
                         try {
                             //Generate All Socmed
@@ -692,7 +692,7 @@ client.on('message', async (msg) => {
                             break;                    
                     }
 
-                } else if (newAdminOrder.includes(splittedMsg[1].toLowerCase())){   //const newAdminOrder = ["newalltiktok", "newreporttiktok"];
+                } else if (generateSocmed.includes(splittedMsg[1].toLowerCase())){   //const newAdminOrder = ["newalltiktok", "newreporttiktok"];
                     switch (splittedMsg[1].toLowerCase()) {
                         case 'newalltiktok':
 
