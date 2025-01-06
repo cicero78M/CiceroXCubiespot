@@ -16,6 +16,7 @@ export async function clientRegister(clientName, type) {
                     createDataSheet(clientName, ciceroKey.dbKey.instaOfficialID, headerValues, "INSTA OFFICIAL").then(
                         data =>{
                             console.log(data)
+                            headerValues = 
 
                             createDataSheet(clientName, ciceroKey.dbKey.instaOfficialID, headerValues, "INSTA OFFICIAL").then(
                                 data =>{

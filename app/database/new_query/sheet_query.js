@@ -14,12 +14,12 @@ export const googleAuth = new JWT({
 
 export async function newRowsData(sheetID, clientName) {
 
-    const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
-    await dataDoc.loadInfo(); // loads document properties and worksheets
+
     return new Promise(async (resolve, reject) => {
+        const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
+        await dataDoc.loadInfo(); // loads document properties and worksheets
         const sheetTitle = dataDoc.sheetsByTitle[clientName];
-        await sheetTitle.getRows()
-        .then( response => {
+        await sheetTitle.getRows().then( async response => {
             resolve (response);
         }).catch( response =>{
             reject (response);
