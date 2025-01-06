@@ -93,7 +93,7 @@ client.on('ready', () => {
 
     //Server Life Send Msg
     schedule('*/10 * * * *', async () =>  {
-                //Date Time
+        //Date Time
         let d = new Date();
         let localDate = d.toLocaleDateString("en-US", {
             timeZone: "Asia/Jakarta"
