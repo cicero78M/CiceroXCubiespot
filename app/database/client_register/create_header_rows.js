@@ -17,7 +17,7 @@ export async function createSheetHeader(clientName, sheetID) {
 
             const instaLikesUsernameDoc = new GoogleSpreadsheet(sheetID, googleAuth); //Google Authentication for instaLikes Username DB
             await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets 
-            let instaLikesUsernameSheet = await instaLikesUsernameDoc.addSheet({ title: clientName });
+            const instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
             await instaLikesUsernameSheet.resize({ rowCount: 1000, columnCount: 1501 });
     
             let headersRows = ['SHORTCODE'];
