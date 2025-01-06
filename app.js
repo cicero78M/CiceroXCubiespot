@@ -35,6 +35,7 @@ import { newReportTiktok } from './app/reporting/tiktok_report.js';
 import { newReportInsta } from './app/reporting/insta_report.js';
 import { getInstaPost } from './app/scrapping/insta_scrapping/generate_insta_post.js';
 import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_likes.js';
+import { clientRegister } from './app/database/client_register/client_register.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -458,16 +459,14 @@ client.on('message', async (msg) => {
                             console.log(error)
                             await client.sendMessage('6281235114745@c.us', 'Collect #SECUIDERROR Error');
                         }
-                    } else if (splittedMsg[1].toLowerCase() === 'createClientData'){
+                    } else if (splittedMsg[1].toLowerCase() === 'register'){
 
-                        let response = await createClient(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
-
-                        for (let i = 0; i < response.length; i++){
-
-                            console.log(response[i].data);
-                            client.sendMessage(msg.from, response[i].data);
-
-                        }                   
+                        await clientRegister(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase()).then(
+                            async data => client.sendMessage('6281235114745@c.us', data.data)
+                        ).catch(
+                            async error => console.error(error)
+                        );
+                        
                     } else if (splittedMsg[1].toLowerCase() === 'exception') {
                         //clientName#editnama/nama#id_key/NRP#newdata
                         let response = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), msg.from.replace('@c.us', ''), 
