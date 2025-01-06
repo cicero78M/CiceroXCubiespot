@@ -1,4 +1,4 @@
-import { instaFollowingAPI } from "../socialMediaAPI/instaAPI.js";
+import { instaFollowingAPI } from "../socialMediaAPI/insta_API.js";
 
 export async function instaUserFollowing(username) {
     try {

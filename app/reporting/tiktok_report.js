@@ -1,5 +1,5 @@
 import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
-import { newListValueData } from '../database/new_query/dataList_query.js';
+import { newListValueData } from '../database/new_query/data_list_query.js';
 import { newRowsData } from '../database/new_query/sheet_query.js';
 import { client } from '../../app.js';
   

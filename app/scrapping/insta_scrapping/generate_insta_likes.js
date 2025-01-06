@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
-import { instaLikesAPI } from '../../socialMediaAPI/instaAPI.js';
+import { instaLikesAPI } from '../../socialMediaAPI/insta_API.js';
 import { client } from '../../../app.js';
 
 export async function getInstaLikes(todayItems, clientValue ) {

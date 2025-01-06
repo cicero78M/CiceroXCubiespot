@@ -1,5 +1,5 @@
 import { ciceroKey } from '../database/new_query/sheet_query.js';
-import { request } from './instaAPI.js';
+import { request } from './insta_API.js';
 
 const headers = {
   'x-cache-control': 'no-cache',

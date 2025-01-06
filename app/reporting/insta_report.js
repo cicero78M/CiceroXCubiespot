@@ -1,5 +1,5 @@
 
-import { newListValueData } from '../database/new_query/dataList_query.js';
+import { newListValueData } from '../database/new_query/data_list_query.js';
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 
 export async function newReportInsta(clientValue) {

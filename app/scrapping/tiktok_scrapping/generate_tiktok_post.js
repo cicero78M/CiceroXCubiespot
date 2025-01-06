@@ -1,6 +1,6 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { tiktokPostAPI } from '../../socialMediaAPI/tiktokAPI.js';
+import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
 import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
 

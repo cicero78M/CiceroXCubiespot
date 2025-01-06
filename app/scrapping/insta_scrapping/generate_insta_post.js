@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { client } from "../../../app.js";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
-import { instaPostAPI } from "../../socialMediaAPI/instaAPI.js";
+import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
 
 export async function getInstaPost(clientValue) {
   //Date Time

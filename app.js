@@ -17,8 +17,8 @@ import { schedule } from 'node-cron';
 
 import { saveContacts } from './app/database/saveContact.js';
 import { myData } from './app/database_query/myData.js';
-import { infoView } from './app/view/infoView.js';
-import { propertiesView } from './app/view/propertiesView.js';
+import { infoView } from './app/view/info_view.js';
+import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
 import { sheetDoc } from './app/database_query/sheetDoc.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
@@ -29,35 +29,42 @@ import { sendClientResponse, sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
 import { instaUserData } from './app/scrapping/collectInstaUser.js';
 import { newRowsData } from './app/database/new_query/sheet_query.js';
-import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktokItemBridges.js';
-import { getTiktokPost } from './app/scrapping/tiktok_scrapping/getTiktokPost.js';
-import { newReportTiktok } from './app/reporting/newTiktokReport.js';
-import { newReportInsta } from './app/reporting/newInstaReport.js';
-import { getInstaPost } from './app/scrapping/insta_scrapping/getInstaPost.js';
-import { getInstaLikes } from './app/scrapping/insta_scrapping/getInstaLikes.js';
+import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktok_items_bridge.js';
+import { getTiktokPost } from './app/scrapping/tiktok_scrapping/generate_tiktok_post.js';
+import { newReportTiktok } from './app/reporting/tiktok_report.js';
+import { newReportInsta } from './app/reporting/insta_report.js';
+import { getInstaPost } from './app/scrapping/insta_scrapping/generate_insta_post.js';
+import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_likes.js';
+
 //Routing Port 
 const port = ciceroKey.port;
+
 //Express Routing
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
 });
+
 //WWEB JS Client Constructor
 export const client = new Client({
     authStrategy: new LocalAuth({
         clientId: ciceroKey.waSession,
     }),
 });
+
 //WWEB Client Initializing
 console.log('Initializing...');
 client.initialize();
+
 //WWeB Authenticate Checking
 client.on('authenthicated', (session)=>{
     console.log(+JSON.stringify(session));
 });
+
 //WWEB If Authenticate Failure
 client.on('auth_failure', msg => {
     console.error('AUTHENTICATION FAILURE', msg);
 });
+
 //WWEB If Disconected
 client.on('disconnected', (reason) => {
     console.log('Client was logged out', reason);
@@ -216,9 +223,9 @@ client.on('ready', () => {
                 async clientData =>{
                     for (let i = 0; i < clientData.length; i++){
                         if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('TIKTOK_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                            
+
                             console.log(time+" "+clientData[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
-                            client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
+                            await client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD TIKTOK DATA');
                             
                             await getTiktokPost(clientData[i]).then(
                                 async data => {
@@ -238,17 +245,13 @@ client.on('ready', () => {
                                         );
                                         break;
                                     }
-                                    
-
                                 }
- 
                             ).catch(
                                 data => {
                                     sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK POST');
 
                                 }
                             );
-    
                         }         
 
                         if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
@@ -256,7 +259,6 @@ client.on('ready', () => {
                             client.sendMessage('6281235114745@c.us', clientData[i].get('CLIENT_ID')+' START LOAD INSTA DATA');
                              await getInstaPost(clientData[i]).then(
                                 async instaPostData =>{
-
                                     switch (instaPostData.code){
                                         case 201:
                                             sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), instaPostData, 'REPORT INSTA');    
@@ -266,18 +268,14 @@ client.on('ready', () => {
                                             await getInstaLikes(instaPostData.data, clientData[i]).then(
                                                 async instaLikesData =>{
                                                     console.log(instaLikesData.data);
-                                                    
                                                     await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
-        
                                                     await newReportInsta(clientData[i]).then(
                                                         async data => {
                                                             sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT INSTA');    
                                                             console.log("Report Insta SUCCESS!!!");
-                                                
                                                         }).catch(                
                                                             async data => {
                                                                 sendResponse('6281235114745@c.us', data, ' ERROR GET INSTA REPORT');
-        
                                                     });
                                                 }
                                             ).catch(
@@ -286,8 +284,7 @@ client.on('ready', () => {
                                                 }
                                             ); 
                                             break;
-                                        }
-
+                                    }
                                 }
                             ).catch(
                                 async data => {
@@ -309,7 +306,6 @@ client.on('ready', () => {
             await client.sendMessage('6281235114745@c.us', 'Cron Job Hourly Error ');
         }
     });
-
 
 });
 
@@ -389,7 +385,8 @@ client.on('message', async (msg) => {
                 chatMsg.sendStateTyping();
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
                 //Admin Order Data         
-                if (adminOrder.includes(splittedMsg[1].toLowerCase())){//adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 
+                if (adminOrder.includes(splittedMsg[1].toLowerCase())){ 
+                    //adminOrder =['pushuserres', 'pushusercom','clientstate', 'reloadinstalikes', 'reloadtiktokcomments', 
                     //'reloadstorysharing', 'reloadallinsta', 'reloadalltiktok', 'reportinstalikes', 'reporttiktokcomments', 'reportwastory'];
                     //ClientName#pushnewuserres#linkspreadsheet
                     if (splittedMsg[1].toLowerCase() === 'pushuserres'){
@@ -488,8 +485,8 @@ client.on('message', async (msg) => {
                         console.log(response);
                     }                   
                 //Operator Order Data         
-                } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){//['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-                    await newRowsData(ciceroKey.dbKey.clientDataID, clientName).then( 
+                } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){   //['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
+                    await newRowsData(ciceroKey.dbKey.clientDataID, splittedMsg[0].toUpperCase()).then( 
                         async clientRows => {             
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
@@ -541,11 +538,10 @@ client.on('message', async (msg) => {
                     });
 
                 //User Order Data         
-                } else if (userOrder.includes(splittedMsg[1].toLowerCase())){//const userOrder = ['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
+                } else if (userOrder.includes(splittedMsg[1].toLowerCase())){   //const userOrder = ['menu', 'mydata','editnama', 'editdivisi', 'editjabatan', 'updateinsta', 'updatetiktok', 'ig', 'tiktok', 'jabatan']
 
-                    await newRowsData(ciceroKey.dbKey.clientDataID, clientName).then( 
+                    await newRowsData(ciceroKey.dbKey.clientDataID, splittedMsg[0].toUpperCase()).then( 
                         async clientRows => {    
-
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
                                     if (['updateinsta', 'ig', 'ig1', 'ig2','ig3', 'insta'].includes(splittedMsg[1].toLowerCase())) {
@@ -556,9 +552,6 @@ client.on('message', async (msg) => {
                                                 const instaLink = splittedMsg[3].split('?')[0];
                                                 const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
                                                 let responseData = await updateUsername(splittedMsg[0].toUpperCase(), splittedMsg[2], instaUsername, contact.number, "updateinstausername");
-                                                setTimeout(() => {
-                                                    console.log("Collecting User Data");
-                                                }, 1000);
                                                 sendResponse(msg.from, responseData, "Error Update Insta");
                                             } else {
                                                 console.log('Bukan Link Profile Instagram');
@@ -626,10 +619,9 @@ client.on('message', async (msg) => {
         
                     });
 
+                } else if (info.includes(splittedMsg[1].toLowerCase())){    //const info = ['menu', 'divisilist', 'titlelist'];
 
-                } else if (info.includes(splittedMsg[1].toLowerCase())){//    const info = ['menu', 'divisilist', 'titlelist'];
-
-                    await newRowsData(ciceroKey.dbKey.clientDataID, clientName).then( 
+                    await newRowsData(ciceroKey.dbKey.clientDataID, splittedMsg[0].toUpperCase()).then( 
                         async clientRows => {    
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
@@ -642,6 +634,7 @@ client.on('message', async (msg) => {
                                             }, 1000);
                                             client.sendMessage(msg.from, responseData.data);
                                             break;
+
                                         case 'divisilist':                        
                                             responseData = await propertiesView(splittedMsg[0].toUpperCase(), "DIVISI");
                                             setTimeout(() => {
@@ -649,13 +642,15 @@ client.on('message', async (msg) => {
                                             }, 1000);
                                             client.sendMessage(msg.from, responseData.data);  
                                             break;
+
                                         case 'titlelist':    
                                             responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
                                             setTimeout(() => {
                                                 console.log("Collecting User Data");
                                             }, 1000);
                                             client.sendMessage(msg.from, responseData.data); 
-                                            break;                   
+                                            break;
+
                                         default:
                                             break;
                                     }
@@ -664,7 +659,7 @@ client.on('message', async (msg) => {
         
                     });
 
-                } else if (cubies.includes(splittedMsg[0].toLowerCase())){//    const cubies = ['follow', 'like', 'comment'];
+                } else if (cubies.includes(splittedMsg[0].toLowerCase())){  //const cubies = ['follow', 'like', 'comment'];
                     switch (splittedMsg[0].toLowerCase()) {
                         case 'cubiehome':
                             if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
@@ -687,15 +682,18 @@ client.on('message', async (msg) => {
                                     +"Instagram anda dan bukan Akun Private.\n\nTerimakasih.");
                             }
                             break;
+
                         case 'like':
                             break;
+
                         case 'comment':
                             break;
+
                         default:
                             break;                    
                     }
 
-                } else if (newAdminOrder.includes(splittedMsg[1].toLowerCase())){//     const newAdminOrder = ["newalltiktok", "newreporttiktok"];
+                } else if (newAdminOrder.includes(splittedMsg[1].toLowerCase())){   //const newAdminOrder = ["newalltiktok", "newreporttiktok"];
                     switch (splittedMsg[1].toLowerCase()) {
                         case 'newalltiktok':
 
@@ -894,10 +892,7 @@ client.on('message', async (msg) => {
                 } else {
                     let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
                     let clientRows = clientResponse.data;
-                    //Wait A Second
-                    setTimeout(() => {
-                        console.log("Collecting Client Data");
-                    }, 1000);
+
                     for (let i = 0; i < clientRows.length; i++){
                         if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
                             console.log("Request Code Doesn't Exist");

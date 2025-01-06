@@ -1,7 +1,7 @@
 import { client } from "../../../app.js";
-import { newReportTiktok } from "../../reporting/newTiktokReport.js";
-import { getTiktokComments } from "./getTiktokComments.js";
-import { postTiktokUserComments } from "./postTiktokUserComments.js";
+import { newReportTiktok } from "../../reporting/tiktok_report.js";
+import { getTiktokComments } from "./generate_tiktok_comments.js";
+import { postTiktokUserComments } from "./post_username_comment_tiktok_data.js";
 
 export async function tiktokItemsBridges(clientValue, items) {
 

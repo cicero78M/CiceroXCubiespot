@@ -1,7 +1,7 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
-import { tiktokUserInfoAPI } from '../socialMediaAPI/tiktokAPI.js';
+import { tiktokUserInfoAPI } from '../socialMediaAPI/tiktok_API.js';
 
 export async function setSecuid(clientValue) {
 
