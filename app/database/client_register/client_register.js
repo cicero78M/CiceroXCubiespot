@@ -8,7 +8,6 @@ export async function clientRegister(clientName, type) {
     let headerValuesInsta = [];
     let headerValuesTiktok = [];
     return new Promise(async (resolve, reject) => {
-        
         createClientID(clientName, type).then(
             async data => {
                 console.log(data);
@@ -61,9 +60,8 @@ export async function clientRegister(clientName, type) {
                         code: 200
                     };
                     resolve (response);
-            }
-        ).catch(
-            data => reject (data));
+            }).catch(
+            data => {reject (data);});
 }
 
 

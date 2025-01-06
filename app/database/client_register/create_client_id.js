@@ -20,7 +20,6 @@ export async function createClientID(clientName, type) {
             const sheetDoc = new GoogleSpreadsheet(ciceroKey.dbKey.clientDataID, googleAuth); //Google Auth
             await sheetDoc.loadInfo();
             const sheetName = sheetDoc.sheetsByTitle['ClientData'];
-            await sheetName.resize({ rowCount: 1000, columnCount: 1501 });
             const sheetRows = await sheetName.getRows();    
 
             if (typeList.includes(type)) {
