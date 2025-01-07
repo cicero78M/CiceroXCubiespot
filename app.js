@@ -753,7 +753,7 @@ client.on('message', async (msg) => {
                                                 ).catch(
                                                     error => {
                                                   //      console.error(error);
-                                                        client.sendMessage(msg.from, "Insta User Following Error");
+                                                        client.sendMessage(msg.from, "Post Insta User Following Error");
                                                     }                                                    
                                                 );
                                             }
