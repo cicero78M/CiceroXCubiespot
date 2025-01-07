@@ -10,7 +10,8 @@ export async function instaUserFollowing(clientName, username, pages) {
                 async response => {
 
                     let pagination = response.data.data.pagination_token;
-
+                    
+                    console.log(pagination);
                     if(response.data.data.pagination_token != null){
 
                         await postInstaFollowersOfficial(clientName, response.data.data.items).then(
