@@ -12,7 +12,7 @@ export async function instaUserFollowing(clientName, username, pages, array) {
                     async response => {
 
                         let pagination = response.data.pagination_token;
-                        let total = response.data.data.total ;
+                        let total = response.data.data.count ;
 
                         let followersList = await array.concat(response.data.data.items);
 
@@ -20,7 +20,7 @@ export async function instaUserFollowing(clientName, username, pages, array) {
 
                         console.log(total);
 
-                        let arrayLenght = Array.isArray(followersList).lenght;
+                        let arrayLenght = followersList.lenght;
 
                         console.log(arrayLenght);
 
