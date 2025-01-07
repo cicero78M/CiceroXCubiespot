@@ -109,8 +109,8 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('2 6-21 * * *', async () => {
-        schedullerAllSocmed("daily");
+    schedule('30 6-21 * * *', async () => {
+        schedullerAllSocmed("routine");
     });
 
     // Reload Tiktok every hours until 22
@@ -144,7 +144,7 @@ client.on('message', async (msg) => {
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['cubiehome', 'likes', 'comment',];
-    const generateSocmed = ["newalltiktok", "newreporttiktok", "newallinsta", "newreportinsta", "follow"];
+    const generateSocmed = ["allsocmed","alltiktok", "reporttiktok", "allinsta", "reportinsta", "follow"];
 
     try {
         const contact = await msg.getContact();
@@ -343,7 +343,6 @@ client.on('message', async (msg) => {
                                     }
                                 }
                             }
-        
                     });
 
                 //User Order Data         
@@ -504,7 +503,15 @@ client.on('message', async (msg) => {
 
                 } else if (generateSocmed.includes(splittedMsg[1].toLowerCase())){   //const newAdminOrder = ["newalltiktok", "newreporttiktok"];
                     switch (splittedMsg[1].toLowerCase()) {
-                        case 'newalltiktok':
+                        case 'allsocmed':
+                            if(splittedMsg[1].toLowerCase() === 'report'){
+                                await schedullerAllSocmed("report");
+                            } else {
+                                await schedullerAllSocmed("daily");
+                            }
+                            break;
+
+                        case 'alltiktok':
 
                             console.log("Execute New All Tiktok")
 
@@ -552,7 +559,7 @@ client.on('message', async (msg) => {
                             )  
                             break;
 
-                        case 'newreporttiktok':
+                        case 'reporttiktok':
 
                             console.log("Execute New Report Tiktok ")
 
@@ -587,7 +594,7 @@ client.on('message', async (msg) => {
                             )
                             break;
 
-                        case 'newallinsta':
+                        case 'allinsta':
 
                             console.log("Execute New All Insta ")
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
@@ -660,7 +667,7 @@ client.on('message', async (msg) => {
 
                             break;
 
-                        case 'newreportinsta':
+                        case 'reportinsta':
                             
                             console.log("Execute New Report Insta ")
                             await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
