@@ -16,7 +16,10 @@ export async function instaUserFollowing(clientName, username, pages, array) {
 
                         let followersList = array.concat(response.data.data.items);
 
+                        console.log(followersList.lenght);
+
                         if(total > followersList.lenght){
+
                             console.log("Under Total");
                             setTimeout(async () => {
                                 await instaUserFollowing(clientName, username, pagination, followersList);
