@@ -1,5 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
+import { instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
 
 
 export async function instaClientInfo(clietName, username) {
@@ -12,7 +13,7 @@ export async function instaClientInfo(clietName, username) {
             const instaClientSheet = instaClientDoc.sheetsByTitle["PROFILE"];
             let instaClientRows = await instaClientSheet.getRows();
 
-            instaInfoAPI(username).then (
+            await instaInfoAPI(username).then (
                 async responseInstaInfo =>{
                     isDataExist = false;   
 
