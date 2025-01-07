@@ -10,6 +10,7 @@ const headers = {
 }
 
 export async function instaFollowingAPI(key,pagination) {
+
     //Insta Post API
     let options = {
         method: 'GET',
@@ -18,21 +19,20 @@ export async function instaFollowingAPI(key,pagination) {
             username_or_id_or_url: key,
             amount: '100',
             pagination_token: pagination
-
-
           },
         headers: headers
     };
+
     return new Promise(async(resolve, reject) => {
         try {
             let response = await request(options);
             let data = {
-                data: response.data,
+                data: response,
                 code: 200,
                 state: true
             };
-    
             resolve (data);
+
         } catch (error) {
             let data = {
                 data: error,
@@ -158,7 +158,7 @@ export async function instaInfoAPI(key) {
             };
     
             resolve (data);
-            
+
         } catch (error) {
             let data = {
                 data: error,
