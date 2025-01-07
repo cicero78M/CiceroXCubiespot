@@ -58,6 +58,13 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                   code: 200
                 };
 
+                let divisiList = await propertiesView(clientName, "DIVISI");
+                setTimeout(() => {
+                    console.log("Collecting User Data");
+                }, 1000);
+
+                client.sendMessage(phone+'@c.us', divisiList.data);
+
                 console.log('Return Success');
 
                 userDoc.delete;
