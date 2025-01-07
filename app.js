@@ -714,7 +714,7 @@ client.on('message', async (msg) => {
                                                     client.sendMessage(msg.from, response.data)
 
                                                 }
-                                                
+
                                             ).catch(
                                                 async error =>{
                                                     console.error(error);
