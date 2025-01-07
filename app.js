@@ -142,7 +142,7 @@ client.on('message', async (msg) => {
 
     const adminOrder =['pushuserres', 'pushusercom','clientstate', 'exception', 'savecontact','secuid', 'register'];
     const operatorOrder = ['addnewuser', 'deleteuser', 'instacheck', 'tiktokcheck'];
-    const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editjabatan',  'pangkat', 'title','tiktok', 'jabatan', 
+    const userOrder =['mydata', 'updateinsta', 'updatetiktok','editnama','nama', 'editdivisi', 'editsatfung',  'editjabatan', 'editpangkat', 'pangkat', 'title','tiktok', 'jabatan', 
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['cubiehome', 'likes', 'comment',];
@@ -386,7 +386,7 @@ client.on('message', async (msg) => {
                                             console.log('Bukan Link Profile Tiktok');
                                             client.sendMessage(msg.from, 'Bukan Link Profile Tiktok');
                                         }      
-                                    } else if (['editdivisi', 'satfung' ].includes(splittedMsg[1].toLowerCase())) {
+                                    } else if (['editdivisi', 'editsatfung','satfung' ].includes(splittedMsg[1].toLowerCase())) {
                                         //update Divisi Name
                                         //clientName#editdivisi/satfung#id_key/NRP#newdata
                                         let responseData = await editProfile(splittedMsg[0].toUpperCase(),splittedMsg[2].toLowerCase(), splittedMsg[3].toUpperCase(), 
