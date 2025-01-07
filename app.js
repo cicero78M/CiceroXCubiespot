@@ -752,14 +752,14 @@ client.on('message', async (msg) => {
 
                                                 ).catch(
                                                     error => {
-                                                        console.error(error);
+                                                  //      console.error(error);
                                                         client.sendMessage(msg.from, "Insta User Following Error");
                                                     }                                                    
                                                 );
                                             }
                                         ).catch(
                                             error => {
-                                                console.error(error);
+                                                // console.error(error);
                                                 client.sendMessage(msg.from, "Insta User Following Error")
                                             }
                                         );
