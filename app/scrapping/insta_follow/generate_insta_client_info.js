@@ -15,6 +15,7 @@ export async function instaClientInfo(clietName, username) {
 
             await instaInfoAPI(username).then (
                 async responseInstaInfo =>{
+                    
                     let isDataExist = false;   
 
                     for (let i = 0; i < instaClientRows.length; i++){
@@ -55,6 +56,7 @@ export async function instaClientInfo(clietName, username) {
                 }
             );
         } catch (error) {
+ 
             let data = {
                 data: error,
                 code: 303,

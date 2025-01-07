@@ -38,16 +38,15 @@ export async function getTiktokComments(items) {
     
                 if (response.data.has_more === 1){    
                     setTimeout(async() => {
-                        console.log('next data '+response.data.cursor);
+                        console.log('next data normal '+response.data.cursor);
                         forLoopGetComments(items, response.data.cursor);
                     }, 1200);
                 } else {    
                     if(total === response.data.cursor){
                         if (switchPoint === 0){
-
                             switchPoint = 1;
                             setTimeout(async () => {
-                                console.log('next data normal'+response.data.cursor);
+                                console.log('next data switch point triggering '+response.data.cursor);
                                 forLoopGetComments(items, response.data.cursor);
                             }, 1200);
 
@@ -63,7 +62,7 @@ export async function getTiktokComments(items) {
                         if(total > 400){
                             if (dataUser != 0){
                                 setTimeout(async () => {
-                                    console.log('next data not equals zero'+response.data.cursor);
+                                    console.log('next data not equals zero '+response.data.cursor);
                                     forLoopGetComments(items, response.data.cursor);
                                 }, 1200);
                             } else {
