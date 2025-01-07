@@ -8,7 +8,40 @@ const headers = {
   'x-rapidapi-key': ciceroKey.instaKey.instakeyAPI,
   'x-rapidapi-host': ciceroKey.instaKey.instahostAPI
 }
+export async function instaFollowersAPI(key,pagination) {
 
+    //Insta Post API
+    let options = {
+        method: 'GET',
+        url: ciceroKey.instaKey.instaFollowers,
+        params: {
+            username_or_id_or_url: key,
+            amount: '50',
+            pagination_token: pagination
+          },
+        headers: headers
+    };
+
+    return new Promise(async(resolve, reject) => {
+        try {
+            let response = await request(options);
+            let data = {
+                data: response,
+                code: 200,
+                state: true
+            };
+            resolve (data);
+
+        } catch (error) {
+            let data = {
+                data: error,
+                code: 303,
+                state: false
+            };
+            reject (data);
+        }
+    });
+}
 export async function instaFollowingAPI(key,pagination) {
 
     //Insta Post API

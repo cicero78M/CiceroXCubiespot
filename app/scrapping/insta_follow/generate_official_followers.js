@@ -1,9 +1,9 @@
-import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
+import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 
 export async function instaUserFollowing(username, pages, array) {
     return new Promise(async (resolve, reject) => {
         try {
-            await instaFollowingAPI(username, pages).then(
+            await instaFollowersAPI(username, pages).then(
                 async response => {
                     let childrenArray = array.concat(response.data.data.items);
                     if(response.data.pagination_token != null){
