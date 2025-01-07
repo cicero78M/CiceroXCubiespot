@@ -11,18 +11,26 @@ export async function instaUserFollowing(username, pages, array) {
                     console.log(response);
 
                     let childrenArray = array.concat(response.data.data.items);
-                    if(response.data.pagination_token != null){
-                        setTimeout(() => {
-                            instaUserFollowing(username, response.data.pagination_token, childrenArray);
-                        }, 2000);
-                    } else {
-                        let responseData =  {
-                            data: childrenArray,
-                            code: 200,
-                            state: true
-                        }                
-                        resolve (responseData);
-                    }
+
+                    let responseData =  {
+                        data: childrenArray,
+                        code: 200,
+                        state: true
+                    }                
+                    resolve (responseData);
+                    
+                    // if(response.data.pagination_token != null){
+                    //     setTimeout(() => {
+                    //         instaUserFollowing(username, response.data.pagination_token, childrenArray);
+                    //     }, 2000);
+                    // } else {
+                    //     let responseData =  {
+                    //         data: childrenArray,
+                    //         code: 200,
+                    //         state: true
+                    //     }                
+                    //     resolve (responseData);
+                    // }
                 }
             );
         } catch (error) {
