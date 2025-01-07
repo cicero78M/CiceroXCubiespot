@@ -23,6 +23,15 @@ export async function instaUserFollowing(clientName, username, pages) {
                         await instaUserFollowing(clientName, username, pagination);
 
                     } else {
+                        
+                        console.log("Execute");
+                        await postInstaFollowersOfficial(clientName, response.data.data.items).then(
+                            async response => {
+                                console.log(response.data);
+                                client.sendMessage(msg.from, response.data);                          
+                            }
+                        );
+
                         let responseData =  {
                             data: "Insta Follower API Done!!",
                             code: 200,
