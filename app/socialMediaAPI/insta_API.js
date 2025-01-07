@@ -4,11 +4,12 @@ import { ciceroKey } from '../database/new_query/sheet_query.js';
 export const { request } = axios;
 
 const headers = {
-  'x-cache-control': 'no-cache',
   'x-rapidapi-key': ciceroKey.instaKey.instakeyAPI,
   'x-rapidapi-host': ciceroKey.instaKey.instahostAPI
 }
 export async function instaFollowersAPI(key,pagination) {
+
+    console.log("Insta Followers API Start");
 
     //Insta Post API
     let options = {
@@ -24,6 +25,7 @@ export async function instaFollowersAPI(key,pagination) {
     return new Promise(async(resolve, reject) => {
         try {
             let response = await request(options);
+
             console.log(response.data);
 
             let data = {

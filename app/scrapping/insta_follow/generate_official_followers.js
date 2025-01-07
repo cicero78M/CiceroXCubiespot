@@ -7,6 +7,9 @@ export async function instaUserFollowing(username, pages, array) {
         try {
             await instaFollowersAPI(username, pages).then(
                 async response => {
+
+                    console.log(response);
+
                     let childrenArray = array.concat(response.data.data.items);
                     if(response.data.pagination_token != null){
                         setTimeout(() => {
