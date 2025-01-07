@@ -16,17 +16,17 @@ export async function instaClientInfo(clietName, username) {
             await instaInfoAPI(username).then (
                 async responseInstaInfo =>{
 
-                    console.log(responseInstaInfo.data);
-
                     let isDataExist = false;   
 
                     for (let i = 0; i < instaClientRows.length; i++){
                         if(instaClientRows[i].get("USERNAME") === username){
                             isDataExist = true;   
                             instaClientRows[i].assign({
-                                CLIENT_ID: clietName, USERNAME: username, isPRIVATE:responseInstaInfo.data.data.is_private, isBUSSINESS:responseInstaInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,
-                                CATEGORY:responseInstaInfo.data.data.category, CONTACT:responseInstaInfo.data.data.contact_phone_number, EMAIL:responseInstaInfo.data.data.public_email, FULL_NAME:responseInfo.data.data.full_name,	
-                                FOLLOWER:responseInstaInfo.data.data.follower_count, FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
+                                CLIENT_ID: clietName, USERNAME: username, isPRIVATE:responseInstaInfo.data.data.is_private, isBUSSINESS:responseInstaInfo.data.data.is_business, 
+                                isVERIFIED:responseInstaInfo.data.data.is_verified, CATEGORY:responseInstaInfo.data.data.category, 
+                                CONTACT:responseInstaInfo.data.data.contact_phone_number, EMAIL:responseInstaInfo.data.data.public_email, 
+                                FULL_NAME:responseInstaInfo.data.data.full_name, FOLLOWER:responseInstaInfo.data.data.follower_count, 
+                                FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
                                 BIOGRAPHY:responseInstaInfo.data.data.biography
                             });
 
@@ -44,9 +44,11 @@ export async function instaClientInfo(clietName, username) {
 
                     if (!isDataExist){
                         instaClientSheet.addRow({
-                            CLIENT_ID: clietName, USERNAME: username, isPRIVATE:responseInstaInfo.data.data.is_private, isBUSSINESS:responseInstaInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,
-                            CATEGORY:responseInstaInfo.data.data.category, CONTACT:responseInstaInfo.data.data.contact_phone_number, EMAIL:responseInstaInfo.data.data.public_email, FULL_NAME:responseInfo.data.data.full_name,	
-                            FOLLOWER:responseInstaInfo.data.data.follower_count, FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
+                            CLIENT_ID: clietName, USERNAME: username, isPRIVATE:responseInstaInfo.data.data.is_private, isBUSSINESS:responseInstaInfo.data.data.is_business, 
+                            isVERIFIED:responseInstaInfo.data.data.is_verified, CATEGORY:responseInstaInfo.data.data.category, 
+                            CONTACT:responseInstaInfo.data.data.contact_phone_number, EMAIL:responseInstaInfo.data.data.public_email, 
+                            FULL_NAME:responseInfo.data.data.full_name,	FOLLOWER:responseInstaInfo.data.data.follower_count, 
+                            FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
                             BIOGRAPHY:responseInstaInfo.data.data.biography
                         });
                         let data = {
