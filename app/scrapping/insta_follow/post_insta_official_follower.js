@@ -7,8 +7,6 @@ export async function postInstaFollowersOfficial(clientName, array) {
     console.log("Post Data Username Tiktok Engagement" );
     client.sendMessage('6281235114745@c.us', "Post Data Username Tiktok Engagement");
     console.log(array);
-
-    return new Promise(async (resolve, reject) => { 
         try {
 
             let userdata =[]; 
@@ -41,7 +39,7 @@ export async function postInstaFollowersOfficial(clientName, array) {
                         state: true
                     };
             
-                    resolve (data);
+                    console.log (data.data);
                 }
             );
             
@@ -51,7 +49,6 @@ export async function postInstaFollowersOfficial(clientName, array) {
                     state: true,
                     code: 303
                 };
-            reject (data);
-        }
-    }); 
+                console.log (data.data);
+            }
 }
