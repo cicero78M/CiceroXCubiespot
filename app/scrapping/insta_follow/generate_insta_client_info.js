@@ -15,7 +15,7 @@ export async function instaClientInfo(clietName, username) {
 
             await instaInfoAPI(username).then (
                 async responseInstaInfo =>{
-                    isDataExist = false;   
+                    let isDataExist = false;   
 
                     for (let i = 0; i < instaClientRows.length; i++){
                         if(instaClientRows[i].get("USERNAME") === username){

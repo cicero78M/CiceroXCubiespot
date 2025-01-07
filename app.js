@@ -716,10 +716,8 @@ client.on('message', async (msg) => {
                                                 }
                                             ).catch(
                                                 async error =>{
-
                                                     console.error(error);
                                                     client.sendMessage(msg.from, "Collect Insta Info Error")
-
                                                 }
                                             );
                                         }
