@@ -9,9 +9,9 @@ export async function getInstaLikes(todayItems, clientValue ) {
 
     const clientName = clientValue.get('CLIENT_ID');
 
-    var newData = 0;
-    var updateData = 0;
-
+    let newData = 0;
+    let updateData = 0;
+    let switchPoint = 0;
     let newDataUsers = [];
 
     let hasShortcode = false;
@@ -66,9 +66,27 @@ export async function getInstaLikes(todayItems, clientValue ) {
                   reject (data);
                 }
               );
+
+
               await instaLikesUsernameData[ii].delete();
-              await instaLikesUsernameSheet.addRow(newDataUsers);
+              
         
+              async function postData(listdata) {
+                await instaLikesUsernameSheet.addRow(listdata).catch(
+                  async response =>{
+                    setTimeout(async () => {
+                      if(switchPoint < 2){
+                        console.error(response.code);
+                        await postData(listdata);
+                        switchPoint++
+                      }                    
+                    }, 2000);
+                  }                
+                );  
+              }
+
+              await postData(newDataUsers);
+
               console.log(`${clientName} Update Data ${todayItems[i]}`);
               await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
     
@@ -90,7 +108,21 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 }
               }
               //Add new Row              
-              await instaLikesUsernameSheet.addRow(userNameList);
+              async function postData(listdata) {
+                await instaLikesUsernameSheet.addRow(listdata).catch(
+                  async response =>{
+                    setTimeout(async () => {
+                      if(switchPoint < 2){
+                        console.error(response.code);
+                        await postData(listdata);
+                        switchPoint++
+                      }                    
+                    }, 2000);
+                  }                
+                );  
+              }
+
+              await postData(userNameList);
           
               console.log(`${clientName} Insert New Data ${todayItems[i]}`);
               await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
