@@ -17,15 +17,25 @@ const headersnocache = {
 export async function instaFollowersAPI(key,pagination) {
 
     console.log("Insta Followers API Start");
+    let parameters;
+
+    if (pagination === ""){
+        parameters = {
+            username_or_id_or_url: key,
+        }
+    } else {
+        parameters = {
+            username_or_id_or_url: key,
+            pagination_token: pagination
+        }
+    }
 
     //Insta Post API
     let options = {
         method: 'GET',
         url: ciceroKey.instaKey.instaFollowers,
-        params: {
-            username_or_id_or_url: key,
-            pagination_token: pagination
-          },
+        
+        params: parameters,
         headers: headersnocache
     };
 
