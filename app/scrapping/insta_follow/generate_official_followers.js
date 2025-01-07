@@ -14,8 +14,7 @@ export async function instaUserFollowing(clientName, username, pages) {
 
                     await postInstaFollowersOfficial(clientName, response.data.data.items).then(
                         async response => {
-                            console.log(response.data);
-                            client.sendMessage(msg.from, response.data);                          
+                            console.log(response);
                         });
 
                     if(pagination != null){
