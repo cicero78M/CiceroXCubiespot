@@ -14,15 +14,13 @@ export async function instaUserFollowing(clientName, username, pages) {
 
                     if(pagination != null){
                         console.log("Execute");
-                        await postInstaFollowersOfficial(clientName, response.data.items).then(
+                        await postInstaFollowersOfficial(clientName, response.data.data.items).then(
                                 async response => {
                                     console.log(response.data);
-                                    client.sendMessage(msg.from, response.data);
-
-                          
+                                    client.sendMessage(msg.from, response.data);                          
                                 });
 
-                        instaUserFollowing(clientName, username, pagination);
+                        await instaUserFollowing(clientName, username, pagination);
 
                     } else {
                         let responseData =  {
