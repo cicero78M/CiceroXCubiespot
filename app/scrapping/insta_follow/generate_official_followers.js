@@ -20,10 +20,6 @@ export async function instaUserFollowing(clientName, username, pages, arrayData,
 
                         console.log(totalValue);
 
-                        let arrayLenght = followersList.lenght;
-
-                        console.log(arrayLenght);
-
                         if(totalData > totalValue){
 
                             console.log("Under Total");

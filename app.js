@@ -734,7 +734,7 @@ client.on('message', async (msg) => {
 
                         console.log("Execute Insta Followers");
                         let arrayData = [];
-                        let total = 0;
+                        let countData = 0;
                         await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
                             async clientData =>{
                                 for (let i = 0; i < clientData.length; i++){
@@ -742,7 +742,8 @@ client.on('message', async (msg) => {
                                     if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                         await instaClientInfo(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM')). then (
                                             async response =>{
-                                                await instaUserFollowing(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM'), pages, arrayData, total, response.data).then(
+                                                console.log(response);
+                                                await instaUserFollowing(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM'), pages, arrayData, countData, response.data).then(
                                                     async response => {
                                                         console.log(response.data);
                                                     }
