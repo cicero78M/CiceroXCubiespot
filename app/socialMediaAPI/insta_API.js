@@ -13,6 +13,7 @@ const headersnocache = {
     'x-rapidapi-key': ciceroKey.instaKey.instakeyAPI,
     'x-rapidapi-host': ciceroKey.instaKey.instahostAPI
   }
+
 export async function instaFollowersAPI(key,pagination) {
 
     console.log("Insta Followers API Start");
@@ -41,6 +42,8 @@ export async function instaFollowersAPI(key,pagination) {
             };
             resolve (data);
         } catch (error) {
+
+            console.error (error);
             let data = {
                 data: error,
                 code: 303,
