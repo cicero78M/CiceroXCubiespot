@@ -13,10 +13,11 @@ export async function instaClientInfo(clietName, username) {
             const instaClientSheet = instaClientDoc.sheetsByTitle["PROFILE"];
             let instaClientRows = await instaClientSheet.getRows();
 
-            await instaInfoAPI(username).then (
+            await instaInfoAPI(username).then (                
                 async responseInstaInfo =>{
+                    let isDataExist = false;
 
-                    let isDataExist = false;   
+                    console.log(instaClientRows);
 
                     for (let i = 0; i < instaClientRows.length; i++){
                         if(instaClientRows[i].get("USERNAME") === username){
