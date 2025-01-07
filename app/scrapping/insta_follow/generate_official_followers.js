@@ -1,6 +1,6 @@
 import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 
-export async function instaUserFollowing(username, pages, array) {
+export async function instaUserFollowing(clientName, username, pages, array) {
 
     console.log("Execute insta user following");
     return new Promise(async (resolve, reject) => {
@@ -9,10 +9,16 @@ export async function instaUserFollowing(username, pages, array) {
                 async response => {
                     let childrenArray = array.concat(response.data.data.items);
                     console.log(childrenArray);
+                    let pagination = response.data.pagination_token;
+
                     if(response.data.pagination_token != null){
-                        setTimeout(() => {
-                            instaUserFollowing(username, response.data.pagination_token, childrenArray);
-                        }, 2000);
+
+                        await postInstaFollowersOfficial(clientName, response.data).then(
+                                async response => {
+                                    console.log(response.data);
+                                    client.sendMessage(msg.from, response.data);
+                                    instaUserFollowing(clientName, username, pagination, childrenArray);
+                                });
                     } else {
                         let responseData =  {
                             data: childrenArray,
