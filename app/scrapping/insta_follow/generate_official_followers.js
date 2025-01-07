@@ -3,6 +3,7 @@ import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 export async function instaUserFollowing(clientName, username, pages) {
 
     console.log("Execute insta user following");
+
     return new Promise(async (resolve, reject) => {
         try {
             await instaFollowersAPI(username, pages).then(
@@ -17,10 +18,11 @@ export async function instaUserFollowing(clientName, username, pages) {
                                     console.log(response.data);
                                     client.sendMessage(msg.from, response.data);
                                     await instaUserFollowing(clientName, username, pagination, childrenArray);
+                          
                                 });
                     } else {
                         let responseData =  {
-                            data: childrenArray,
+                            data: "Insta Follower API Done!!",
                             code: 200,
                             state: true
                         }                

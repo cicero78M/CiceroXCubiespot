@@ -741,7 +741,7 @@ client.on('message', async (msg) => {
                                     let pages = "";
                                     let array = [];
                                     if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                        instaUserFollowing(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM'), pages, array).then(
+                                        instaUserFollowing(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM'), pages).then(
                                             async response => {
 
                                                 console.log(response.data);
