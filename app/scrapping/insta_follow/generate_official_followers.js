@@ -12,25 +12,21 @@ export async function instaUserFollowing(clientName, username, pages) {
 
                     let pagination = response.data.pagination_token;
 
+                    await postInstaFollowersOfficial(clientName, response.data.data.items).then(
+                        async response => {
+                            console.log(response.data);
+                            client.sendMessage(msg.from, response.data);                          
+                        });
+
                     if(pagination != null){
                         console.log("Execute");
-                        await postInstaFollowersOfficial(clientName, response.data.data.items).then(
-                                async response => {
-                                    console.log(response.data);
-                                    client.sendMessage(msg.from, response.data);                          
-                                });
+                        
 
                         await instaUserFollowing(clientName, username, pagination);
 
                     } else {
-                        
+
                         console.log("Execute");
-                        await postInstaFollowersOfficial(clientName, response.data.data.items).then(
-                            async response => {
-                                console.log(response.data);
-                                client.sendMessage(msg.from, response.data);                          
-                            }
-                        );
 
                         let responseData =  {
                             data: "Insta Follower API Done!!",
