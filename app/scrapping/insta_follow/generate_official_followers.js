@@ -11,12 +11,12 @@ export async function instaUserFollowing(clientName, username, pages, array) {
                 await instaFollowersAPI(username, pages).then(
                     async response => {
 
-                        let pagination = await response.data.pagination_token;
-                        let total = await response.data.data.total ;
+                        let pagination = response.data.pagination_token;
+                        let total = response.data.data.total ;
 
                         let followersList = await array.concat(response.data.data.items);
 
-                        console.log(followersList);
+                        console.log(response);
 
                         console.log(total);
 
