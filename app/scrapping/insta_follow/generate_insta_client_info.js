@@ -15,7 +15,9 @@ export async function instaClientInfo(clietName, username) {
 
             await instaInfoAPI(username).then (
                 async responseInstaInfo =>{
-                    
+
+                    console.log(responseInstaInfo.data);
+
                     let isDataExist = false;   
 
                     for (let i = 0; i < instaClientRows.length; i++){
@@ -39,6 +41,7 @@ export async function instaClientInfo(clietName, username) {
                             resolve (data);
                         }     
                     }
+
                     if (!isDataExist){
                         instaClientSheet.addRow({
                             CLIENT_ID: clietName, USERNAME: username, isPRIVATE:responseInstaInfo.data.data.is_private, isBUSSINESS:responseInstaInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,

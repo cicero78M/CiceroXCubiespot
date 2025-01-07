@@ -49,7 +49,6 @@ export async function getTiktokComments(items) {
                                 console.log('next data switch point triggering '+response.data.cursor);
                                 forLoopGetComments(items, response.data.cursor);
                             }, 1200);
-
                         } else {
                             let data = {
                                 data: newDataUsers,
