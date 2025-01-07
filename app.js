@@ -743,20 +743,9 @@ client.on('message', async (msg) => {
                                     if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                         instaUserFollowing(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM'), pages, array).then(
                                             async response => {
-                                                postInstaFollowersOfficial(clientData[i].get('CLIENT_ID'), response.data).then(
-                                                    async response => {
 
-                                                        console.log(response.data);
-                                                        client.sendMessage(msg.from, response.data);
-
-                                                    }
-
-                                                ).catch(
-                                                    error => {
-                                                  //      console.error(error);
-                                                        client.sendMessage(msg.from, "Post Insta User Following Error");
-                                                    }                                                    
-                                                );
+                                                console.log(response.data);
+                                                client.sendMessage(msg.from, response.data);
                                             }
                                         ).catch(
                                             error => {
