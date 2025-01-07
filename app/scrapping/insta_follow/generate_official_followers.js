@@ -7,7 +7,9 @@ export async function instaUserFollowing(username, pages, array) {
                 async response => {
                     let childrenArray = array.concat(response.data.data.items);
                     if(response.data.pagination_token != null){
-                        instaUserFollowing(username, response.data.pagination_token, childrenArray);
+                        setTimeout(() => {
+                            instaUserFollowing(username, response.data.pagination_token, childrenArray);
+                        }, 2000);
                     } else {
                         let responseData =  {
                             data: childrenArray,
