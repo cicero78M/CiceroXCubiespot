@@ -16,7 +16,6 @@ export async function instaFollowersAPI(key,pagination) {
         url: ciceroKey.instaKey.instaFollowers,
         params: {
             username_or_id_or_url: key,
-            amount: '50',
             pagination_token: pagination
           },
         headers: headers
@@ -25,13 +24,14 @@ export async function instaFollowersAPI(key,pagination) {
     return new Promise(async(resolve, reject) => {
         try {
             let response = await request(options);
+            console.log(response.data);
+
             let data = {
-                data: response,
+                data: response.data,
                 code: 200,
                 state: true
             };
             resolve (data);
-
         } catch (error) {
             let data = {
                 data: error,
