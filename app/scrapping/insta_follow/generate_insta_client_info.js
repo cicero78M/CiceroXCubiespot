@@ -16,32 +16,34 @@ export async function instaClientInfo(clietName, username) {
             await instaInfoAPI(username).then (                
                 async responseInstaInfo =>{
                     let isDataExist = false;
+                    if (instaClientRows.length !=0 ){
 
-                    console.log(instaClientRows);
+                        for (let i = 0; i < instaClientRows.length; i++){
+                            if(instaClientRows[i].get("USERNAME") === username){
+                                isDataExist = true;   
+                                instaClientRows[i].assign({
+                                    CLIENT_ID: clietName, USERNAME: username, isPRIVATE:responseInstaInfo.data.data.is_private, isBUSSINESS:responseInstaInfo.data.data.is_business, 
+                                    isVERIFIED:responseInstaInfo.data.data.is_verified, CATEGORY:responseInstaInfo.data.data.category, 
+                                    CONTACT:responseInstaInfo.data.data.contact_phone_number, EMAIL:responseInstaInfo.data.data.public_email, 
+                                    FULL_NAME:responseInstaInfo.data.data.full_name, FOLLOWER:responseInstaInfo.data.data.follower_count, 
+                                    FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
+                                    BIOGRAPHY:responseInstaInfo.data.data.biography
+                                });
+    
+                                await instaClientRows[i].save();
+    
+                                let data = {
+                                    data: `Insta Official Account Updated `,
+                                    code: 200,
+                                    state: true
+                                };
+                        
+                                resolve (data);
+                            }     
+                        }
 
-                    for (let i = 0; i < instaClientRows.length; i++){
-                        if(instaClientRows[i].get("USERNAME") === username){
-                            isDataExist = true;   
-                            instaClientRows[i].assign({
-                                CLIENT_ID: clietName, USERNAME: username, isPRIVATE:responseInstaInfo.data.data.is_private, isBUSSINESS:responseInstaInfo.data.data.is_business, 
-                                isVERIFIED:responseInstaInfo.data.data.is_verified, CATEGORY:responseInstaInfo.data.data.category, 
-                                CONTACT:responseInstaInfo.data.data.contact_phone_number, EMAIL:responseInstaInfo.data.data.public_email, 
-                                FULL_NAME:responseInstaInfo.data.data.full_name, FOLLOWER:responseInstaInfo.data.data.follower_count, 
-                                FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
-                                BIOGRAPHY:responseInstaInfo.data.data.biography
-                            });
-
-                            await instaClientRows[i].save();
-
-                            let data = {
-                                data: `Insta Official Account Updated `,
-                                code: 200,
-                                state: true
-                            };
-                    
-                            resolve (data);
-                        }     
                     }
+
 
                     if (!isDataExist){
                         instaClientSheet.addRow({
