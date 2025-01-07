@@ -31,14 +31,7 @@ export async function instaClientInfo(clietName, username) {
                                 });
     
                                 await instaClientRows[i].save();
-    
-                                let data = {
-                                    data: `Insta Official Account Updated `,
-                                    code: 200,
-                                    state: true
-                                };
-                        
-                                resolve (data);
+
                             }     
                         }
 
@@ -54,13 +47,15 @@ export async function instaClientInfo(clietName, username) {
                             FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
                             BIOGRAPHY:responseInstaInfo.data.data.biography
                         });
-                        let data = {
-                            data: `Insta Official Account Added `,
-                            code: 200,
-                            state: true
-                        };
-                        resolve (data);
+
                     }
+
+                    let data = {
+                        data: responseInstaInfo.data.data.follower_count,
+                        code: 200,
+                        state: true
+                    };
+                    resolve (data);
                 }
             );
         } catch (error) {

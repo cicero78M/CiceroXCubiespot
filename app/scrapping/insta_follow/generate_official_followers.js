@@ -1,7 +1,7 @@
 import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 import { postInstaFollowersOfficial } from "./post_insta_official_follower.js";
 
-export async function instaUserFollowing(clientName, username, pages, array, total) {
+export async function instaUserFollowing(clientName, username, pages, arrayData, countData, totalData) {
 
     console.log("Execute insta user following");
     return new Promise(
@@ -11,26 +11,24 @@ export async function instaUserFollowing(clientName, username, pages, array, tot
                 await instaFollowersAPI(username, pages).then(
                     async response => {
 
-                        let pagination = response.data.data.pagination_token;
-                        let count = response.data.data.data.count ;
+                        let pagination = response.data.pagination_token;
+                        let count = response.data.data.count ;
 
-                        let followersList = await array.concat(response.data.data.data.items);
+                        let followersList = await arrayData.concat(response.data.data.items);
 
-                        let totalValue = total + count;
+                        let totalValue = countData + count;
 
-                        console.log(response);
-
-                        console.log(total);
+                        console.log(totalValue);
 
                         let arrayLenght = followersList.lenght;
 
                         console.log(arrayLenght);
 
-                        if(total > totalValue){
+                        if(totalData > totalValue){
 
                             console.log("Under Total");
                             setTimeout(async () => {
-                                await instaUserFollowing(clientName, username, pagination, followersList, totalValue);
+                                await instaUserFollowing(clientName, username, pagination, followersList, totalValue, totalData);
                             }, 2000);
     
                         } else {
