@@ -736,7 +736,6 @@ client.on('message', async (msg) => {
                             
                         await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
                             async clientData =>{
-                                console.log(clientData);
                                 for (let i = 0; i < clientData.length; i++){
                                     let pages = "";
                                     if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {

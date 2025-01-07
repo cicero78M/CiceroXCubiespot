@@ -13,12 +13,14 @@ export async function instaUserFollowing(clientName, username, pages) {
                         let pagination = response.data.pagination_token;
                         let total = response.data.total ;
 
-
-                        
-                        await postInstaFollowersOfficial(clientName, response.data.data.items).then(
+                        let followersList = response.data.data.items;
+                        let followersListTotal = followersList.lenght;
+                        let followersListFinal = followersListTotal+followersListFinal;
+                        console.log(followersListFinal);
+                        await postInstaFollowersOfficial(clientName, followersList).then(
                             async response => {
                                 console.log(response);
-                                if(total > response.data){
+                                if(total > followersListFinal.data){
                                     console.log("Execute");
                                     setTimeout(async () => {
                                         await instaUserFollowing(clientName, username, pagination);

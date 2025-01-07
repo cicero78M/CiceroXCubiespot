@@ -6,8 +6,8 @@ export async function postInstaFollowersOfficial(clientName, array) {
 
     return new Promise(async (resolve, reject) => {
         console.log("Post Data Username Tiktok Engagement" );
-        client.sendMessage('6281235114745@c.us', "Post Data Username Tiktok Engagement");
-        console.log(array);
+        client.sendMessage('6281235114745@c.us', "Post Data Username Official Followers");
+        
         try {
     
             let userdata =[]; 
@@ -31,26 +31,15 @@ export async function postInstaFollowersOfficial(clientName, array) {
                     }
                     await instaOfficialFollowerSheet.addRows(childrenArray);
                     
-                    await instaOfficialFollowerSheet.getRows().then(
-                        async response => {
-                            let data = {
-                                data: await response.lenght,
-                                code: 200,
-                                state: true
-                            };
-                            console.log (`Insta Official Follower Accounts Added`);
-                            resolve(data);
-                        }
-                    ).catch(
-                        error => {
-                            let data = {
-                                data: error,
-                                code: 303,
-                                state: false
-                            };
-                            reject (data);
-                        }
-                    )
+
+                    let data = {
+                        data: `Insta Official Follower Accounts Added`,
+                        code: 200,
+                        state: true
+                    };
+                    
+                    console.log (`Insta Official Follower Accounts Added`);
+                    resolve(data);
                 }
             );
             
