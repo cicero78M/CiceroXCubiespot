@@ -144,7 +144,7 @@ client.on('message', async (msg) => {
         'ig','ig1', 'ig2','ig3', 'insta'];
     const info = ['info', 'divisilist', 'titlelist'];
     const cubies = ['cubiehome', 'likes', 'comment',];
-    const generateSocmed = ["allsocmed","alltiktok", "reporttiktok", "allinsta", "reportinsta", "follow"];
+    const generateSocmed = ["allsocmed","alltiktok", "reporttiktok", "allinsta", "reportinsta", "instainfo"];
 
     try {
         const contact = await msg.getContact();
@@ -507,7 +507,7 @@ client.on('message', async (msg) => {
                             if(splittedMsg[1].toLowerCase() === 'report'){
                                 await schedullerAllSocmed("report");
                             } else {
-                                await schedullerAllSocmed("daily");
+                                await schedullerAllSocmed("routine");
                             }
                             break;
 
@@ -701,20 +701,32 @@ client.on('message', async (msg) => {
                             )
                             break
 
-                        case 'follow':
-                            console.log("Execute New All Insta ");
-                            await instaClientInfo().then(
-                                async response =>{
-                                    console.log(response.data);
-                                    client.sendMessage(msg.from, response.data);
-                                }
-                            ).catch(
-                                async error =>{
-                                    console.error(error);
-                                    client.sendMessage(msg.from, "Follow Error");
+                        case 'instainfo':
+
+                            await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
+                                async clientData =>{
+                                    for (let i = 0; i < clientData.length; i++){
+                                        if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                            instaClientInfo(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM')).then(
+                                                async response =>{
+
+                                                    console.log(response.data);
+                                                    client.sendMessage(msg.from, response.data)
+
+                                                }
+                                            ).catch(
+                                                async error =>{
+
+                                                    console.error(error);
+                                                    client.sendMessage(msg.from, "Collect Insta Info Error")
+
+                                                }
+                                            );
+                                        }
+                                    }
                                 }
                             );
-
+                            
                             break;
 
                         default:
