@@ -47,7 +47,7 @@ export async function instaFollowersAPI(key,pagination) {
             let response = await request(options);
             
             let data = {
-                data: response,
+                data: response.data,
                 code: 200,
                 state: true
             };
