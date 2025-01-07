@@ -15,6 +15,7 @@ export async function instaUserFollowing(clientName, username, pages, array) {
                         let total = response.data.total ;
 
                         let followersList = array.concat(response.data.data.items);
+                        console.log(total);
 
                         console.log(followersList.lenght);
 

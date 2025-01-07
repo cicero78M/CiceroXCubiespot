@@ -5,7 +5,7 @@ import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 export async function postInstaFollowersOfficial(clientName, array) {
 
     return new Promise(async (resolve, reject) => {
-        console.log("Post Data Username Tiktok Engagement" );
+        console.log("Post Data Username Official Followers" );
         client.sendMessage('6281235114745@c.us', "Post Data Username Official Followers");
         
         try {
