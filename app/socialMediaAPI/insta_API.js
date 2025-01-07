@@ -158,6 +158,7 @@ export async function instaInfoAPI(key) {
             };
     
             resolve (data);
+            
         } catch (error) {
             let data = {
                 data: error,
