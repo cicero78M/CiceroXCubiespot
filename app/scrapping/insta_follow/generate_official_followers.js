@@ -19,9 +19,11 @@ export async function instaUserFollowing(clientName, username, pages) {
                                     console.log(response.data);
                                     client.sendMessage(msg.from, response.data);
 
-                                    instaUserFollowing(clientName, username, pagination);
                           
                                 });
+
+                                instaUserFollowing(clientName, username, pagination);
+
                     } else {
                         let responseData =  {
                             data: "Insta Follower API Done!!",
