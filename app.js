@@ -731,9 +731,12 @@ client.on('message', async (msg) => {
                             break;
 
                         case 'officialfollowers':
+
+                        console.log("Execute Insta Followers");
                             
                         await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
                             async clientData =>{
+                                console.log(clientData);
                                 for (let i = 0; i < clientData.length; i++){
                                     let pages = "";
                                     let array = [];
