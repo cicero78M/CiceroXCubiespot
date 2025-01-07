@@ -21,8 +21,10 @@ export async function instaUserFollowing(clientName, username, pages) {
                     if(pagination != null){
                         console.log("Execute");
                         
+                        setTimeout(async () => {
+                            await instaUserFollowing(clientName, username, pagination);
 
-                        await instaUserFollowing(clientName, username, pagination);
+                        }, 2000);
 
                     } else {
 
