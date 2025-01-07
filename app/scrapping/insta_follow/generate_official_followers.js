@@ -1,8 +1,9 @@
 import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 
 export async function instaUserFollowing(username, pages, array) {
+
     console.log("Execute insta user following");
-    console.log(username);
+    console.log(array.lenght);
     return new Promise(async (resolve, reject) => {
         try {
             await instaFollowersAPI(username, pages).then(
@@ -11,26 +12,19 @@ export async function instaUserFollowing(username, pages, array) {
                     console.log(response);
 
                     let childrenArray = array.concat(response.data.data.items);
-
-                    let responseData =  {
-                        data: childrenArray,
-                        code: 200,
-                        state: true
-                    }                
-                    resolve (responseData);
                     
-                    // if(response.data.pagination_token != null){
-                    //     setTimeout(() => {
-                    //         instaUserFollowing(username, response.data.pagination_token, childrenArray);
-                    //     }, 2000);
-                    // } else {
-                    //     let responseData =  {
-                    //         data: childrenArray,
-                    //         code: 200,
-                    //         state: true
-                    //     }                
-                    //     resolve (responseData);
-                    // }
+                    if(response.data.pagination_token != null){
+                        setTimeout(() => {
+                            instaUserFollowing(username, response.data.pagination_token, childrenArray);
+                        }, 2000);
+                    } else {
+                        let responseData =  {
+                            data: childrenArray,
+                            code: 200,
+                            state: true
+                        }                
+                        resolve (responseData);
+                    }
                 }
             );
         } catch (error) {
