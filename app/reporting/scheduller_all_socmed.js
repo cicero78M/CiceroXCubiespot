@@ -1,11 +1,11 @@
-import { client } from "../../app";
-import { ciceroKey, newRowsData } from "../database/new_query/sheet_query";
-import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes";
-import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post";
-import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post";
-import { tiktokItemsBridges } from "../scrapping/tiktok_scrapping/tiktok_items_bridge";
-import { sendClientResponse, sendResponse } from "../view/sendWA";
-import { newReportInsta } from "./insta_report";
+import { client } from "../../app.js";
+import { ciceroKey, newRowsData } from "../database/new_query/sheet_query.js";
+import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
+import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
+import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";
+import { tiktokItemsBridges } from "../scrapping/tiktok_scrapping/tiktok_items_bridge.js";
+import { sendClientResponse, sendResponse } from "../view/sendWA.js";
+import { newReportInsta } from "./insta_report.js";
 
 export async function schedullerAllSocmed(timeSwitch) {
     let d = new Date();
