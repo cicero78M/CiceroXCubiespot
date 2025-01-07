@@ -45,24 +45,24 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 }
               }
           
-              await instaLikesAPI(todayItems[i]).then(async response =>{
-                const likesItems = await response.data.data.items;
-                for (let iii = 0; iii < likesItems.length; iii++) {
-                  if (likesItems[iii].username != undefined || likesItems[iii].username != null || likesItems[iii].username != "") {
-                    if (!newDataUsers.includes(likesItems[iii].username)) {
-                      newDataUsers.push(likesItems[iii].username);
+              await instaLikesAPI(todayItems[i]).then(
+                async response =>{
+                  const likesItems = await response.data.data.items;
+                  for (let iii = 0; iii < likesItems.length; iii++) {
+                    if (likesItems[iii].username != undefined || likesItems[iii].username != null || likesItems[iii].username != "") {
+                      if (!newDataUsers.includes(likesItems[iii].username)) {
+                        newDataUsers.push(likesItems[iii].username);
+                      }
                     }
                   }
                 }
-              
-              }).catch(
-                error =>{
+              ).catch(
+                async error =>{
                   let data = {
                     data: error,
                     state: false,
                     code: 303
                   };
-
                   reject (data);
                 }
               );
@@ -98,44 +98,47 @@ export async function getInstaLikes(todayItems, clientValue ) {
           //Final Code
           if (!hasShortcode) {
             //If Shortcode doesn't exist push new data
-            await instaLikesAPI(todayItems[i]).then(async response =>{
-              let likesItems = await response.data.data.items;
-              let userNameList = [todayItems[i]];
-          
-              for (let iii = 0; iii < likesItems.length; iii++) {
-                if ('username' in likesItems[iii]) {
-                  userNameList.push(likesItems[iii].username);
+            await instaLikesAPI(todayItems[i]).then(
+              async response =>{
+                let likesItems = await response.data.data.items;
+                let userNameList = [todayItems[i]];
+            
+                for (let iii = 0; iii < likesItems.length; iii++) {
+                  if ('username' in likesItems[iii]) {
+                    userNameList.push(likesItems[iii].username);
+                  }
                 }
-              }
-              //Add new Row              
-              async function postData(listdata) {
-                await instaLikesUsernameSheet.addRow(listdata).catch(
-                  async response =>{
-                    setTimeout(async () => {
-                      if(switchPoint < 2){
-                        console.error(response.code);
-                        await postData(listdata);
-                        switchPoint++
-                      }                    
-                    }, 2000);
-                  }                
-                );  
-              }
+                //Add new Row              
+                async function postData(listdata) {
+                  await instaLikesUsernameSheet.addRow(listdata).catch(
+                    async response =>{
+                      setTimeout(async () => {
+                        if(switchPoint < 2){
+                          console.error(response.code);
+                          await postData(listdata);
+                          switchPoint++
+                        }                    
+                      }, 2000);
+                    }                
+                  );  
+                }
 
-              await postData(userNameList);
-          
-              console.log(`${clientName} Insert New Data ${todayItems[i]}`);
-              await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
-              newData++;
+                await postData(userNameList);
+            
+                console.log(`${clientName} Insert New Data ${todayItems[i]}`);
+                await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
+                newData++;
 
-            }).catch(
-              error =>{
+              }
+            ).catch(
+              async error =>{
                 let data = {
                   data: error,
                   state: false,
                   code: 303
                 };
                 reject (data);
+              
               }
             );
           }
@@ -158,12 +161,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
         };
         reject (data);
       }
-    });
+    }
+  );
 }
-
-
-
-
-
-
-
