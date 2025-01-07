@@ -17,7 +17,7 @@ const headersnocache = {
 export async function instaFollowersAPI(key,pagination) {
 
     console.log("Insta Followers API Start");
-    
+
     let parameters;
 
     if (pagination === ""){
@@ -51,6 +51,7 @@ export async function instaFollowersAPI(key,pagination) {
                 code: 200,
                 state: true
             };
+            console.log(data);
             resolve (data);
         } catch (error) {
 
