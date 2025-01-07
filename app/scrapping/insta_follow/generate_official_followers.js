@@ -3,16 +3,12 @@ import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 export async function instaUserFollowing(username, pages, array) {
 
     console.log("Execute insta user following");
-    console.log(array);
     return new Promise(async (resolve, reject) => {
         try {
             await instaFollowersAPI(username, pages).then(
                 async response => {
-
-                    console.log(response);
-
                     let childrenArray = array.concat(response.data.data.items);
-                    
+                    console.log(childrenArray);
                     if(response.data.pagination_token != null){
                         setTimeout(() => {
                             instaUserFollowing(username, response.data.pagination_token, childrenArray);
