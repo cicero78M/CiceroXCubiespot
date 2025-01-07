@@ -16,13 +16,18 @@ export async function newRowsData(sheetID, clientName) {
 
     const dataDoc = new GoogleSpreadsheet(sheetID, googleAuth);//Google Authentication for client DB
     await dataDoc.loadInfo(); // loads document properties and worksheets
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         const sheetTitle = dataDoc.sheetsByTitle[clientName];
         await sheetTitle.getRows()
         .then( response => {
             resolve (response);
-        }).catch( response =>{
-            reject (response);
-        });
+        }).catch( async response =>{
+            setTimeout(() => {
+                console.error(response);
+                console.log ("Re-Try");
+            }, 2000);
+
+            await newRowsData(sheetID, clientName)
+            });
     });
 }

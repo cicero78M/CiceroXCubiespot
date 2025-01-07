@@ -4,7 +4,7 @@ export async function newListValueData(clientName, keyValue) {
 
     let listValue = [];
 
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         await newRowsData(ciceroKey.dbKey.userDataID, clientName).then( response => {        
             for (let i = 0; i < response.length; i++){
                 if(!listValue.includes(response[i].get(keyValue))){
@@ -15,8 +15,14 @@ export async function newListValueData(clientName, keyValue) {
             resolve (listValue);
             
         }).catch(
-            response => {
-                reject(response);
+
+            async response => {   
+                setTimeout(() => {
+                    console.error(response);
+                    console.log ("Re-Try");
+                }, 2000);
+
+                await newRowsData(ciceroKey.dbKey.userDataID, clientName);
         }); 
     });
 }
