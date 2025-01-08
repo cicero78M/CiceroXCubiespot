@@ -8,10 +8,10 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
         forLoopGenerateFollowing(username, pages, countData, totalData);
 
-        async function forLoopGenerateFollowing(username, pages, countData, totalData) {
+        let stateFoll = false;
 
+        async function forLoopGenerateFollowing(username, pages, countData, totalData) {
             try {
-                let stateFoll = false;
 
                 await instaFollowingAPI(username, pages).then(
                     async response => {
