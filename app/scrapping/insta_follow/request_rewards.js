@@ -42,7 +42,7 @@ export async function requestVoucer(from, username) {
                 EMAIL:responseInfo.data.data.public_email, FULL_NAME:responseInfo.data.data.full_name,	
                 FOLLOWER:responseInfo.data.data.follower_count, FOLLOWING:responseInfo.data.data.following_count,
                 MEDIA_COUNT:responseInfo.data.data.media_count,
-                BIOGRAPHY:responseInfo.data.data.biography
+                BIOGRAPHY:responseInfo.data.data.biography, isFOLLOWING : isFollowing
             });
 
             if (isFollowing === "TRUE"){
