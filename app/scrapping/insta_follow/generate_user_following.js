@@ -10,6 +10,8 @@ export async function instaUserFollowing(clientName, username, pages, countData,
                 await instaFollowingAPI(username, pages).then(
                     async response => {
 
+                        let stateFoll = false;
+
                         let dataFollowing = response.data.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
@@ -19,7 +21,7 @@ export async function instaUserFollowing(clientName, username, pages, countData,
                             console.log(dataFollowing[i].username);
 
                             if (dataFollowing[i].username === 'cubiehome'){
-                                
+                                stateFoll = true;
                                 console.log(response);
 
                                 let responseData =  {
@@ -29,7 +31,7 @@ export async function instaUserFollowing(clientName, username, pages, countData,
                                 }                
     
                                 resolve (responseData);
-                                break;
+                                                         
                             }
                         }
 
@@ -37,21 +39,26 @@ export async function instaUserFollowing(clientName, username, pages, countData,
 
                         console.log(totalValue);
 
-                        if(totalData > totalValue){
+                        if (stateFoll === false){
+                            if(totalData > totalValue){
 
-                            console.log("Under Total");
-                            setTimeout(async () => {
-                                await instaUserFollowing(clientName, username, pagination, totalValue, totalData);
-                            }, 2000);
-    
-                        } else {
-                            console.log(response);
-                            let responseData =  {
-                                data: false,
-                                code: 200,
-                                state: true
-                            }                
-                            resolve (responseData);
+                                console.log("Under Total");
+                                setTimeout(async () => {
+                                    await instaUserFollowing(clientName, username, pagination, totalValue, totalData);
+                                }, 2000);
+
+                            } else {
+
+                                console.log(response);
+
+                                let responseData =  {
+                                    data: false,
+                                    code: 200,
+                                    state: true
+                                }                
+                                resolve (responseData);
+
+                            }
                         }            
                     }
                 );
