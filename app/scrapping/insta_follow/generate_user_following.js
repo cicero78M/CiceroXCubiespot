@@ -3,11 +3,7 @@ import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 export async function instaUserFollowing(username, pages, countData, totalData) {
 
     console.log("Execute insta user following");
-
-    return new Promise(
-        async (resolve, reject) => {
             let stateFoll = false;
-
             try {
 
                 await instaFollowingAPI(username, pages).then(
@@ -46,7 +42,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                         code: 200,
                                         state: true
                                     }                
-                                    resolve (responseData);   
+                                    return responseData;   
                 
                                 } else {
                 
@@ -55,7 +51,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                         code: 200,
                                         state: true
                                     }                
-                                    resolve (responseData);
+                                    return responseData;
                                 }
                                 
                             }
@@ -68,8 +64,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                     code: 303,
                     state: false
                 }
-                reject (responseData);   
+                return responseData;   
             } 
-        }
-    );
+        
 }

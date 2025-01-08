@@ -2,6 +2,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaUserFollowing } from "./generate_user_following.js";
+import { bridgeFollow } from "./bridge_insta_follow.js";
 
 export async function requestVoucer(from, username) {
     try {
@@ -25,17 +26,8 @@ export async function requestVoucer(from, username) {
             }               
         }
 
-        await instaUserFollowing(username, pages, countData, responseInfo.data.data.following_count).then(
-            async response =>{
-                console.log(response);
-                let dataChecker = await response.data;
-                if(dataChecker === true){
-                    isFollowing =  "TRUE";
-                }
-            }
-        ).catch(
-            response => console.log(response)
-        );
+        await bridgeFollow(username, pages, countData, responseInfo.data.data.following_count);
+
 
         if (!isDataExist){
  

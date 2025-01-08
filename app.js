@@ -482,8 +482,7 @@ client.on('message', async (msg) => {
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
                                     await requestVoucer(msg.from, instaUsername).then(
-                                        async responseData =>{            
-                                            
+                                        async responseData =>{                                                        
                                             console.log( responseData);
                                             //await sendResponse(msg.from, responseData, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
                                         }
