@@ -5,7 +5,7 @@ import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 export async function requestVoucer(from, username) {
     try {
         const responseInfo = await instaInfoAPI(username);
-        console.log();
+        console.log(responseInfo);
         let isDataExist = false;
         let isFollowing = false;
 
