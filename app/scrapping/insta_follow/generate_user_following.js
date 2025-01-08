@@ -3,7 +3,9 @@ import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 export async function instaUserFollowing(username, pages, countData, totalData) {
 
     new Promise(async (resolve) => {
-        resolve (await generateFollowing(username, pages, countData, totalData));
+
+        let data = await generateFollowing(username, pages, countData, totalData)
+        resolve (data);
     })
  
     async function generateFollowing(username, pages, countData, totalData) {
