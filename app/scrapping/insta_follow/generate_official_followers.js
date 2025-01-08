@@ -1,7 +1,7 @@
 import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 import { postInstaFollowersOfficial } from "./post_insta_official_follower.js";
 
-export async function instaUserFollowing(clientName, username, pages, arrayData, countData, totalData) {
+export async function instaOffcialFollower(clientName, username, pages, arrayData, countData, totalData) {
 
     console.log("Execute insta user following");
     return new Promise(
@@ -24,7 +24,7 @@ export async function instaUserFollowing(clientName, username, pages, arrayData,
 
                             console.log("Under Total");
                             setTimeout(async () => {
-                                await instaUserFollowing(clientName, username, pagination, followersList, totalValue, totalData);
+                                await instaOffcialFollower(clientName, username, pagination, followersList, totalValue, totalData);
                             }, 2000);
     
                         } else {

@@ -38,8 +38,7 @@ import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_li
 import { clientRegister } from './app/database/client_register/client_register.js';
 import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
 import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
-import { instaUserFollowing } from './app/scrapping/insta_follow/generate_official_followers.js';
-import { postInstaFollowersOfficial } from './app/scrapping/insta_follow/post_insta_official_follower.js';
+import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -735,41 +734,43 @@ client.on('message', async (msg) => {
 
                         case 'officialfollowers':
 
-                        console.log("Execute Insta Followers");
-                        let arrayData = [];
-                        let countData = 0;
-                        await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
-                            async clientData =>{
-                                for (let i = 0; i < clientData.length; i++){
-                                    let pages = "";
-                                    if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                                        await instaClientInfo(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM')). then (
-                                            async response =>{
-                                                console.log(response);
-                                                await instaUserFollowing(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM'), pages, arrayData, countData, response.data).then(
-                                                    async response => {
-                                                        console.log(response.data);
-                                                    }
-                                                ).catch(
-                                                    error => {
-                                                        // console.error(error);
-                                                        console.error(error);
-                                                        client.sendMessage(msg.from, "Insta User Following Error")
-                                                    }
-                                                );
-                                            }
-                                        ).catch(
-                                            error => {
-                                                // console.error(error);
-                                                console.error(error);
-                                                client.sendMessage(msg.from, "Insta Client Info Error")
-                                            }
-                                        );
+                            console.log("Execute Insta Followers");
+            
+                            let arrayData = [];
+                            let countData = 0;
+            
+                            await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
+                                async clientData =>{
+                                    for (let i = 0; i < clientData.length; i++){
+                                        let pages = "";
+                                        if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                            await instaClientInfo(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM')). then (
+                                                async response =>{
+                                                    console.log(response);
+                                                    await instaOffcialFollower(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM'), pages, arrayData, countData, response.data).then(
+                                                        async response => {
+                                                            console.log(response.data);
+                                                        }
+                                                    ).catch(
+                                                        error => {
+                                                            // console.error(error);
+                                                            console.error(error);
+                                                            client.sendMessage(msg.from, "Insta User Following Error")
+                                                        }
+                                                    );
+                                                }
+                                            ).catch(
+                                                error => {
+                                                    // console.error(error);
+                                                    console.error(error);
+                                                    client.sendMessage(msg.from, "Insta Client Info Error")
+                                                }
+                                            );
+                                        }
                                     }
                                 }
-                            }
-                        );
-                            break;    
+                            );
+                                break;    
 
                         default:
                             break;                    

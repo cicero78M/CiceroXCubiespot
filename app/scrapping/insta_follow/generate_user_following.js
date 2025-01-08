@@ -10,13 +10,27 @@ export async function instaUserFollowing(clientName, username, pages, countData,
                 await instaFollowingAPI(username, pages).then(
                     async response => {
 
+                        let dataFollowing = response.data.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
 
-                        for (let i = 0; i < response.data.data.items; i++ ){
+                        for (let i = 0; i < dataFollowing; i++ ){
 
+                            if (dataFollowing[i].username === 'cubiehome'){
+                                
+                                console.log(response);
+
+                                let responseData =  {
+                                    data: true,
+                                    code: 200,
+                                    state: true
+                                }                
+    
+                                resolve (responseData);
+                                break;
+                            }
                         }
-                        
+
                         let totalValue = countData + count;
 
                         console.log(totalValue);
@@ -29,18 +43,13 @@ export async function instaUserFollowing(clientName, username, pages, countData,
                             }, 2000);
     
                         } else {
-
                             console.log(response);
-
                             let responseData =  {
-                                data: "Insta Follower API Done!!",
+                                data: false,
                                 code: 200,
                                 state: true
                             }                
-
                             resolve (responseData);
-
-
                         }            
                     }
                 );

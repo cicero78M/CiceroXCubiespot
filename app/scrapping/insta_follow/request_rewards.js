@@ -1,4 +1,6 @@
-
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import { instaFollowingAPI, instaInfoAPI } from "../../socialMediaAPI/insta_API";
+import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query";
 
 export async function instaUserData(from, username) {
     try {
@@ -17,13 +19,14 @@ export async function instaUserData(from, username) {
             }               
         }
 
-        const responseFollowing = await instaUserFollowing(username); 
-        let isFollowing =  await responseFollowing.data;
-        console.log(isFollowing);
-
+        await instaFollowingAPI(username).then(
+            async response =>{
+                let isFollowing =  await response.data;
+                console.log(isFollowing);
+            }
+        );
 
         if (!isDataExist){
-
             await instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.data.is_private, isBUSSINESS:responseInfo.data.data.is_business, isVERIFIED:responseInfo.data.data.is_verified,
                 CATEGORY:responseInfo.data.data.category, CONTACT:responseInfo.data.data.contact_phone_number, EMAIL:responseInfo.data.data.public_email, FULL_NAME:responseInfo.data.data.full_name,	
@@ -53,8 +56,7 @@ export async function instaUserData(from, username) {
                 state: true
             }
             return responseData;
-        }
-    
+        }    
     } catch (error) {
         let responseData = {
             data: error,
@@ -63,5 +65,4 @@ export async function instaUserData(from, username) {
         }
         return responseData;
     }
-
 }

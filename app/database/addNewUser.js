@@ -62,11 +62,13 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
           state: true,
           code: 201
         };
+
         console.log('Return ID_Key used');
         userDoc.delete;
         return responseData;
       }
     } else {
+ 
       let responseData = {
         data: 'Divisi Tidak Terdaftar',
         state: true,
@@ -86,6 +88,8 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       state: false,
       code: 303
     };
+ 
     return responseData;
+ 
   }
 }
