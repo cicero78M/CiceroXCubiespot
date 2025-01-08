@@ -33,7 +33,8 @@ export async function requestVoucer(from, username) {
             console.log(responseInfo.data.data.is_private);
  
             await instaProfileSheet.addRow({
-                WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.data.is_private
+                WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.data.is_private, isBUSSINESS:responseInfo.data.data.is_business, 
+                isVERIFIED:responseInfo.data.data.is_verified, CATEGORY:responseInfo.data.data.category
             });
 
             if (isFollowing){
