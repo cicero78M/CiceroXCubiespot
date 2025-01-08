@@ -9,7 +9,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
         forLoopGenerateFollowing(username, pages, countData, totalData);
 
-
         async function forLoopGenerateFollowing(username, pages, countData, totalData) {
             try {
 
@@ -23,11 +22,8 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
 
-                        console.log(dataFollowing);
-
                         for (let i = 0; i < dataFollowing.length; i++){
 
-                            console.log(dataFollowing[i].username);
                             
                             if (dataFollowing[i].username === 'cubiehome'){
                                 console.log("true");
