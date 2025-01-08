@@ -8,67 +8,77 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
     return new Promise(async(resolve, reject) => {
 
-        try {
+        forLoopGenerateFollowing(username, pages, countData, totalData);
 
-            await instaFollowingAPI(username, pages).then(
-                async response => {
-                    let dataFollowing = response.data.data.items;
-                    let pagination = response.data.pagination_token;
-                    let count = response.data.data.count ;
+        async function forLoopGenerateFollowing(username, pages, countData, totalData) {
 
-                    for (let i = 0; i < dataFollowing; i++ ){
-                        console.log(dataFollowing[i].username);
-                        if (dataFollowing[i].username === 'cubiehome'){
-                            stateFoll = true;
-                        }
-                    }
+            try {
 
-                    let totalValue = countData + count;
-
-                    if (stateFoll === false){
-                        
-                        console.log('execute');
-                        if(totalData > totalValue){
-                            console.log("Under Total");
-
-                            setTimeout(async () => {
-                                instaUserFollowing(username, pagination, totalValue, totalData);
-                            }, 2000);
-
-                        } else {
-                            console.log("done");
-
-                            if (stateFoll === false){
-
-                                let responseData =  {
-                                    data: true,
-                                    code: 200,
-                                    state: true
-                                }                
-                                resolve (responseData);   
-            
-                            } else {
-            
-                                let responseData =  {
-                                    data: false,
-                                    code: 200,
-                                    state: true
-                                }                
-                                resolve (responseData);
+                await instaFollowingAPI(username, pages).then(
+                    async response => {
+                        let dataFollowing = response.data.data.items;
+                        let pagination = response.data.pagination_token;
+                        let count = response.data.data.count ;
+    
+                        for (let i = 0; i < dataFollowing; i++ ){
+                            console.log(dataFollowing[i].username);
+                            if (dataFollowing[i].username === 'cubiehome'){
+                                stateFoll = true;
                             }
-                            
                         }
-                    }            
+    
+                        let totalValue = countData + count;
+    
+                        if (stateFoll === false){
+                            
+                            console.log('execute');
+                            if(totalData > totalValue){
+                                console.log("Under Total");
+    
+                                setTimeout(async () => {
+                                    forLoopGenerateFollowing(username, pagination, totalValue, totalData);
+                                }, 2000);
+    
+                            } else {
+    
+                                console.log("done");
+    
+                                if (stateFoll === false){
+    
+                                    let responseData =  {
+                                        data: true,
+                                        code: 200,
+                                        state: true
+                                    }                
+                                    resolve (responseData);   
+                
+                                } else {
+                
+                                    let responseData =  {
+                                        data: false,
+                                        code: 200,
+                                        state: true
+                                    }                
+                                    resolve (responseData);
+                                }
+                                
+                            }
+                        }            
+                    }
+                );
+            } catch (error) {
+                let responseData = {
+                    data: error,
+                    code: 303,
+                    state: false
                 }
-            );
-        } catch (error) {
-            let responseData = {
-                data: error,
-                code: 303,
-                state: false
-            }
-            reject (responseData);   
-        } 
+                reject (responseData);   
+            } 
+
+
+            
+        }
+
 
     });    
 
