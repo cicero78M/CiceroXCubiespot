@@ -31,7 +31,7 @@ export async function requestVoucer(from, username) {
 
                 let dataChecker = await response.data;
 
-                console.log( await dataChecker);
+                console.log(dataChecker);
 
                 if(dataChecker === true){
                     isFollowing =  "TRUE";
