@@ -9,7 +9,6 @@ export async function requestVoucer(from, username) {
 
         let pages = "";
         let countData = 0;
-        let totalData = 0;
         
         let isDataExist = false;
         let isFollowing = "FALSE";
