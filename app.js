@@ -27,7 +27,7 @@ import { updateUsername } from './app/database/updateUsername.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
-import { instaUserData } from './app/scrapping/insta_follow/request_rewards.js';
+import { instaUserData, requestVoucer } from './app/scrapping/insta_follow/request_rewards.js';
 import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktok_items_bridge.js';
 import { getTiktokPost } from './app/scrapping/tiktok_scrapping/generate_tiktok_post.js';
@@ -480,7 +480,7 @@ client.on('message', async (msg) => {
 
                                     const instaLink = splittedMsg[1].split('?')[0];
                                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
-                                    let responseData = await instaUserData(msg.from, instaUsername);
+                                    let responseData = await requestVoucer(msg.from, instaUsername);
 
                                     sendResponse(msg.from, responseData, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
 

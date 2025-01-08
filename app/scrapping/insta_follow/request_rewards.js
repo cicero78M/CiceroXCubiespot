@@ -2,7 +2,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { instaFollowingAPI, instaInfoAPI } from "../../socialMediaAPI/insta_API";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query";
 
-export async function instaUserData(from, username) {
+export async function requestVoucer(from, username) {
     try {
         const responseInfo = await instaInfoAPI(username);
         let isDataExist = false;
