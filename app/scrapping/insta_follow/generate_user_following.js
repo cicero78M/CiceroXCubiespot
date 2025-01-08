@@ -26,8 +26,10 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                         }
 
                         let totalValue = countData + count;
+                        
                         if (stateFoll === false){
                             console.log('execute');
+                            
                             if(totalData > totalValue){
                                 console.log("Under Total");
                                 setTimeout(async () => {
@@ -43,9 +45,11 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                     code: 200,
                                     state: true
                                 }                
-                                
+                                console.log(responseData);    
                                 resolve (responseData);
-                            } 
+
+                            }
+
                         } else {
 
                             let responseData =  {
@@ -53,7 +57,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 code: 200,
                                 state: true
                             }
-                            
+
                             resolve (responseData);  
                         }       
                     }

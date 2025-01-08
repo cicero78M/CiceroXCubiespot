@@ -29,15 +29,18 @@ export async function requestVoucer(from, username) {
         await instaUserFollowing(username, pages, countData, responseInfo.data.data.following_count).then(
             async response =>{
 
-                console.log(await response);
+                console.log( response);
 
                 if(response.data === true){
                     isFollowing =  "TRUE";
                 }
+
+
             }
         );
 
         if (!isDataExist){
+ 
             await instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, 
                 isPRIVATE:responseInfo.data.data.is_private, 
@@ -55,12 +58,7 @@ export async function requestVoucer(from, username) {
             });
 
             if (isFollowing === "TRUE"){
-                let responseData = {
-                    data: `Hi, Selamat Siang ${responseInfo.data.data.full_name}\n\nSelamat, Sistem Kami sudah membaca bahwa kamu sudah Follow Akun Instagram @cubiehome,\n\nBerikut Login dan Password yang bisa kamu gunakan untuk mengakses Wifi Corner CubieHome\n\nUser : Username\nPassword : xxxxxx`,
-                    code: 200,
-                    state: true
-                }
-                return responseData;
+
 
             } else {
                 let responseData = {
