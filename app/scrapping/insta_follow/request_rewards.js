@@ -23,18 +23,14 @@ export async function requestVoucer(from, username) {
 
         await instaFollowingAPI(username).then(
             async response =>{
-
+                console.log(response);
                 if(response.data === true){
                     isFollowing =  "TRUE";
                 }
-
-                console.log(isFollowing);
             }
         );
 
         if (!isDataExist){
-
-            console.log(responseInfo.data.data.is_private);
             await instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, 
                 isPRIVATE:responseInfo.data.data.is_private, 
