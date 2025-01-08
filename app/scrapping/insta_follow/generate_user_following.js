@@ -24,6 +24,15 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                             console.log(dataFollowing[i].username);
                             if (dataFollowing[i].username === 'cubiehome'){
                                 stateFoll = true;
+
+                                let responseData =  {
+                                    data: true,
+                                    code: 200,
+                                    state: true
+                                }                
+                                resolve (responseData);
+
+                                break;
                             }
                         }
     
@@ -43,27 +52,15 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
     
                                 console.log("done");
     
-                                if (stateFoll === false){
-    
-                                    let responseData =  {
-                                        data: true,
-                                        code: 200,
-                                        state: true
-                                    }                
-                                    resolve (responseData);   
-                
-                                } else {
-                
-                                    let responseData =  {
-                                        data: false,
-                                        code: 200,
-                                        state: true
-                                    }                
-                                    resolve (responseData);
-                                }
-                                
-                            }
-                        }            
+                                let responseData =  {
+                                    data: false,
+                                    code: 200,
+                                    state: true
+                                }                
+                                resolve (responseData);   
+                        
+                            }   
+                        }         
                     }
                 );
             } catch (error) {
