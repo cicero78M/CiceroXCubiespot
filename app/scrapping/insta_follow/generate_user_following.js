@@ -19,17 +19,16 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                         let dataFollowing = response.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
+                        
                         console.log(dataFollowing);
 
-
-
-    
                         for (let i = 0; i < dataFollowing; i++ ){
+
                             console.log(dataFollowing[i].username);
+                            
                             if (dataFollowing[i].username === 'cubiehome'){
                                 console.log("true");
                                 stateFoll = true;
-
                             }
                         }
     
