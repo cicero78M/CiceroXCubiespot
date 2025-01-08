@@ -8,9 +8,9 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
         async (resolve, reject) => {
 
             try {
+
                 await instaFollowingAPI(username, pages).then(
                     async response => {
-                        console.log(response);
                         let stateFoll = false;
                         let dataFollowing = response.data.data.items;
                         let pagination = response.data.pagination_token;
@@ -34,12 +34,13 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
                         if (stateFoll === false){
                             console.log('execute');
-
                             if(totalData > totalValue){
                                 console.log("Under Total");
+ 
                                 setTimeout(async () => {
-                                    await instaUserFollowing(username, pagination, totalValue, totalData);
+                                    instaUserFollowing(username, pagination, totalValue, totalData);
                                 }, 2000);
+ 
                             } else {
 
                                 console.log("resolve true")
