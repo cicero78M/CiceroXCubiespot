@@ -20,6 +20,10 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
                         console.log(dataFollowing);
+                        console.log(pagination);
+                        console.log(count);
+
+
 
     
                         for (let i = 0; i < dataFollowing; i++ ){
