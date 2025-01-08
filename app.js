@@ -27,7 +27,7 @@ import { updateUsername } from './app/database/updateUsername.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendResponse } from './app/view/sendWA.js';
 import { editProfile } from './app/database/editUserProfile.js';
-import { instaUserData } from './app/scrapping/collectInstaUser.js';
+import { instaUserData } from './app/scrapping/insta_follow/request_rewards.js';
 import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktok_items_bridge.js';
 import { getTiktokPost } from './app/scrapping/tiktok_scrapping/generate_tiktok_post.js';
