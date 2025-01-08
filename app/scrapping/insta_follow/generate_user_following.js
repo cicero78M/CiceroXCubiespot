@@ -22,7 +22,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
                         console.log(dataFollowing);
 
-                        for (let i = 0; i < dataFollowing; i++ ){
+                        for (let i = 0; i < dataFollowing.lenght; i++ ){
 
                             console.log(dataFollowing[i].username);
                             
