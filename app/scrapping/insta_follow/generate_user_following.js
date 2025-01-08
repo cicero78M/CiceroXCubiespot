@@ -31,8 +31,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                     state: true
                                 }                
                                 resolve (responseData);
-
-                                break;
                             }
                         }
     
