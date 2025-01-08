@@ -5,7 +5,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
     console.log("Execute insta user following");
             let stateFoll = false;
 
-
     return new Promise(async(resolve, reject) => {
 
         forLoopGenerateFollowing(username, pages, countData, totalData);
