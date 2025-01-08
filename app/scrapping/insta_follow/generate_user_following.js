@@ -16,10 +16,10 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                 await instaFollowingAPI(username, pages).then(
                     async response => {
 
-                        let dataFollowing = response.data.items;
+                        let dataFollowing = response.data.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
-                        
+
                         console.log(dataFollowing);
 
                         for (let i = 0; i < dataFollowing; i++ ){
