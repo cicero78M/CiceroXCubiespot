@@ -47,7 +47,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
 
     if (divisiList.includes(divisi)) {
       if (!idKeyList.includes(idKey)) {
-        Console.log("Id key not exist");
+        console.log("Id key not exist");
 
         //Get Target Sheet Documents by Title
         userSheet.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true, EXCEPTION: false });
