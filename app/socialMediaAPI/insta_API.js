@@ -68,16 +68,13 @@ export async function instaFollowersAPI(key,pagination) {
 export async function instaFollowingAPI(key,pagination) {
 
     console.log("Insta Followers API Start");
-
     let parameters;
-
     if (pagination === ""){
         parameters = {
             username_or_id_or_url: key,
             amount:'100'
         }
     } else {
-
         parameters = {
             username_or_id_or_url: key,
             amount:'100',
@@ -102,7 +99,6 @@ export async function instaFollowingAPI(key,pagination) {
                 state: true
             };
             resolve (data);
-
         } catch (error) {
             let data = {
                 data: error,
