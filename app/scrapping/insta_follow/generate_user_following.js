@@ -6,9 +6,11 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
     return new Promise(async(resolve, reject) => {
 
+        let stateFoll = false;
+
+
         forLoopGenerateFollowing(username, pages, countData, totalData);
 
-        let stateFoll = false;
 
         async function forLoopGenerateFollowing(username, pages, countData, totalData) {
             try {
