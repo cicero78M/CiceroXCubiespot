@@ -29,6 +29,8 @@ export async function requestVoucer(from, username) {
         );
 
         if (!isDataExist){
+
+            console.log(responseInfo.data..data.is_private);
             await instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, isPRIVATE:responseInfo.data.is_private, isBUSSINESS:responseInfo.data.is_business, isVERIFIED:responseInfo.data.is_verified,
                 CATEGORY:responseInfo.data.category, CONTACT:responseInfo.data.contact_phone_number, EMAIL:responseInfo.data.public_email, FULL_NAME:responseInfo.data.full_name,	
