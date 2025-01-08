@@ -20,19 +20,14 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                             console.log(dataFollowing[i].username);
                             if (dataFollowing[i].username === 'cubiehome'){
                                 stateFoll = true;
-                                console.log(dataFollowing[i].username);
-                                let responseData =  {
-                                    data: true,
-                                    code: 200,
-                                    state: true
-                                }                
-                                resolve (responseData);                                                         
+                                                      
                             }
                         }
 
                         let totalValue = countData + count;
 
                         if (stateFoll === false){
+                            
                             console.log('execute');
                             if(totalData > totalValue){
                                 console.log("Under Total");
@@ -42,18 +37,33 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 }, 2000);
  
                             } else {
-
-                                console.log("resolve true")
-                                let responseData =  {
-                                    data: false,
-                                    code: 200,
-                                    state: true
-                                }                
-                                resolve (responseData);
+                                console.log("done")
                             }
                         }            
                     }
                 );
+
+                if (stateFoll === false){
+        
+                    console.log(dataFollowing[i].username);
+                    let responseData =  {
+                        data: true,
+                        code: 200,
+                        state: true
+                    }                
+                    resolve (responseData);   
+
+                } else {
+
+                    console.log("resolve true")
+                    let responseData =  {
+                        data: false,
+                        code: 200,
+                        state: true
+                    }                
+                    resolve (responseData);
+                }
+                
             } catch (error) {
                 let responseData = {
                     data: error,
