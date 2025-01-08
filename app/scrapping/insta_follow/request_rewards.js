@@ -24,7 +24,7 @@ export async function requestVoucer(from, username) {
         await instaFollowingAPI(username).then(
             async response =>{
 
-                if(response.data){
+                if(response.data === true){
                     isFollowing =  "TRUE";
                 }
 
