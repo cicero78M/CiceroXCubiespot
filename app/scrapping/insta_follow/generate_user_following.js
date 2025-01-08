@@ -31,8 +31,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                             }
                         }
     
-                        let totalValue = countData + count;
-    
+                        let totalValue = countData + count;    
                         if (stateFoll === false){
                             
                             console.log('execute');
@@ -46,7 +45,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                             } else {
     
                                 console.log("done");
-    
                                 let responseData =  {
                                     data: false,
                                     code: 200,
