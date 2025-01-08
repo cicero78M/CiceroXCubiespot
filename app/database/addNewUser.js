@@ -1,5 +1,4 @@
 import { readFileSync } from 'fs';
-
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
@@ -17,6 +16,9 @@ const googleAuth = new JWT({
 
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
+
+  Console.log('Execute');
+
   try {
 
     const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth); //Google Auth
@@ -45,6 +47,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
 
     if (divisiList.includes(divisi)) {
       if (!idKeyList.includes(idKey)) {
+        Console.log("Id key not exist");
 
         //Get Target Sheet Documents by Title
         userSheet.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true, EXCEPTION: false });
