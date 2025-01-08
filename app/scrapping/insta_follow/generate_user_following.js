@@ -37,31 +37,31 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 }, 2000);
  
                             } else {
-                                console.log("done")
+                                console.log("done");
+
+                                if (stateFoll === false){
+    
+                                    let responseData =  {
+                                        data: true,
+                                        code: 200,
+                                        state: true
+                                    }                
+                                    resolve (responseData);   
+                
+                                } else {
+                
+                                    let responseData =  {
+                                        data: false,
+                                        code: 200,
+                                        state: true
+                                    }                
+                                    resolve (responseData);
+                                }
+                                
                             }
                         }            
                     }
                 );
-
-                if (stateFoll === false){
-        
-                    let responseData =  {
-                        data: true,
-                        code: 200,
-                        state: true
-                    }                
-                    resolve (responseData);   
-
-                } else {
-
-                    let responseData =  {
-                        data: false,
-                        code: 200,
-                        state: true
-                    }                
-                    resolve (responseData);
-                }
-                
             } catch (error) {
                 let responseData = {
                     data: error,
