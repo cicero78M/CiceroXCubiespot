@@ -187,7 +187,7 @@ export async function instaPostInfoAPI(key) {
         try {
             let response = await request(options);
             let data = {
-                data: response.data,
+                data: response.data.data,
                 code: 200,
                 state: true
             };
