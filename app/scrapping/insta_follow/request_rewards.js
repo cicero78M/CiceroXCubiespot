@@ -7,7 +7,7 @@ export async function requestVoucer(from, username) {
         const responseInfo = await instaInfoAPI(username);
         
         let isDataExist = false;
-        let isFollowing = false;
+        let isFollowing = "FALSE";
 
         const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
         await instaProfileDoc.loadInfo(); // loads document properties and worksheets
@@ -23,7 +23,11 @@ export async function requestVoucer(from, username) {
 
         await instaFollowingAPI(username).then(
             async response =>{
-                isFollowing =  await response.data;
+
+                if(response.data){
+                    isFollowing =  "TRUE";
+                }
+                
                 console.log(isFollowing);
             }
         );
