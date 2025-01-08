@@ -10,18 +10,15 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
             try {
                 await instaFollowingAPI(username, pages).then(
                     async response => {
-                        console.log(response);
                         let stateFoll = false;
                         let dataFollowing = response.data.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
-                        
+
                         console.log(dataFollowing);
                         for (let i = 0; i < dataFollowing; i++ ){
-                            console.log(dataFollowing[i].username);
                             if (dataFollowing[i].username === 'cubiehome'){
                                 stateFoll = true;
-                                console.log(dataFollowing[i].username);
                                 let responseData =  {
                                     data: true,
                                     code: 200,
@@ -30,7 +27,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 resolve (responseData);                                                         
                             }
                         }
-
                         let totalValue = countData + count;
 
                         if (stateFoll === false){
