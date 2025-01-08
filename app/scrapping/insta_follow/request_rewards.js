@@ -1,7 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
-import { instaUserFollowing } from "./generate_user_following.js";
 import { bridgeFollow } from "./bridge_insta_follow.js";
 
 export async function requestVoucer(from, username) {
