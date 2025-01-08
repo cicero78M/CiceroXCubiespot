@@ -73,12 +73,12 @@ export async function instaFollowingAPI(key,pagination) {
     if (pagination === ""){
         parameters = {
             username_or_id_or_url: key,
-            amount:'50'
+            amount:'1000'
         }
     } else {
         parameters = {
             username_or_id_or_url: key,
-            amount:'50',
+            amount:'1000',
             pagination_token: pagination
         }
     }

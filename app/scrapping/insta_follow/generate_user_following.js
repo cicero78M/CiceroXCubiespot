@@ -28,13 +28,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 console.log("true");
                                 stateFoll = true;
 
-                                let responseData =  {
-                                    data: true,
-                                    code: 200,
-                                    state: true
-                                }                
-
-                                resolve (responseData);
                             }
                         }
     
@@ -62,6 +55,15 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 resolve (responseData);   
                         
                             }   
+                        } else {
+                            
+                            let responseData =  {
+                                data: true,
+                                code: 200,
+                                state: true
+                            }                
+
+                            resolve (responseData);
                         }         
                     }
                 );
