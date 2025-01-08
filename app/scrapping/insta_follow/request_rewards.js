@@ -27,7 +27,7 @@ export async function requestVoucer(from, username) {
                 if(response.data){
                     isFollowing =  "TRUE";
                 }
-                
+
                 console.log(isFollowing);
             }
         );
@@ -45,7 +45,7 @@ export async function requestVoucer(from, username) {
                 BIOGRAPHY:responseInfo.data.data.biography
             });
 
-            if (isFollowing){
+            if (isFollowing === "TRUE"){
                 let responseData = {
                     data: `Hi, Selamat Siang ${responseInfo.data.data.full_name}\n\nSelamat, Sistem Kami sudah membaca bahwa kamu sudah Follow Akun Instagram @cubiehome,\n\nBerikut Login dan Password yang bisa kamu gunakan untuk mengakses Wifi Corner CubieHome\n\nUser : Username\nPassword : xxxxxx`,
                     code: 200,
