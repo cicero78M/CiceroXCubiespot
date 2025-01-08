@@ -19,7 +19,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                         let dataFollowing = response.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
-                        console.log(count);
+                        console.log(dataFollowing);
 
 
 
@@ -35,7 +35,9 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
     
                         let totalValue = countData + count;    
                         if (stateFoll === false){
+
                             console.log('execute');
+
                             if (pagination != ""){
                                 if(totalData > totalValue){
                                     console.log("Under Total");
