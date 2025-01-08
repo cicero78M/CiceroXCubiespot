@@ -19,6 +19,7 @@ export async function newRowsData(sheetID, clientName) {
         const sheetTitle = dataDoc.sheetsByTitle[clientName];
         await sheetTitle.getRows()
         .then( response => {
+            console.log();
             resolve (response);
         }).catch( async response =>{
             setTimeout(() => {

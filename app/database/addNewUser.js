@@ -17,7 +17,7 @@ const googleAuth = new JWT({
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
-  Console.log('Execute');
+  console.log('Execute');
 
   try {
 
