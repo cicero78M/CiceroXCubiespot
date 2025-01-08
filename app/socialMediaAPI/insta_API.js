@@ -67,8 +67,8 @@ export async function instaFollowersAPI(key,pagination) {
 }
 export async function instaFollowingAPI(key,pagination) {
 
-    console.log("Insta Followers API Start");
-    
+    console.log("Insta Following API Start");
+
     let parameters;
     if (pagination === ""){
         parameters = {

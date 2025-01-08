@@ -1,9 +1,9 @@
 import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 
-export async function instaUserFollowing(clientName, username, pages, countData, totalData) {
+export async function instaUserFollowing(username, pages, countData, totalData) {
 
     console.log("Execute insta user following");
-    
+
     return new Promise(
         async (resolve, reject) => {
 
@@ -37,7 +37,7 @@ export async function instaUserFollowing(clientName, username, pages, countData,
                             if(totalData > totalValue){
                                 console.log("Under Total");
                                 setTimeout(async () => {
-                                    await instaUserFollowing(clientName, username, pagination, totalValue, totalData);
+                                    await instaUserFollowing(username, pagination, totalValue, totalData);
                                 }, 2000);
                             } else {
                                 console.log("resolve true")

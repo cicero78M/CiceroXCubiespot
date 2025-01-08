@@ -6,6 +6,10 @@ import { instaUserFollowing } from "./generate_user_following.js";
 export async function requestVoucer(from, username) {
     try {
         const responseInfo = await instaInfoAPI(username);
+
+        let pages = "";
+        let countData = 0;
+        let totalData = 0;
         
         let isDataExist = false;
         let isFollowing = "FALSE";
@@ -22,7 +26,7 @@ export async function requestVoucer(from, username) {
             }               
         }
 
-        await instaUserFollowing(username).then(
+        await instaUserFollowing(username, pages, countData, totalData).then(
             async response =>{
                 console.log(response);
                 if(response.data === true){
