@@ -485,7 +485,7 @@ client.on('message', async (msg) => {
                                         async responseData =>{            
                                             
                                             console.log( responseData);
-                                            await sendResponse(msg.from, responseData, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
+                                            //await sendResponse(msg.from, responseData, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
                                         }
                                     ).catch(
                                         response =>{console.log(response)}
