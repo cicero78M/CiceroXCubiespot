@@ -32,8 +32,12 @@ export async function schedullerAllSocmed(timeSwitch) {
                                     switch (timeSwitch){
                                         case 'report':
                                             sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT TIKTOK');                                            
-                                            
                                             break;
+
+                                        case 'routine':
+
+                                            sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK BRIDGES');
+
                                         default:
                                             sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK BRIDGES');
                                             break;
@@ -46,6 +50,11 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             switch (timeSwitch){
                                                 case 'report':
                                                     sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), data, 'REPORT TIKTOK');                                            
+                                                    
+                                                    break;
+                                                    
+                                                case 'routine':
+                                                    sendResponse('6281235114745@c.us', data, ' ERROR GET TIKTOK BRIDGES');
                                                     
                                                     break;
                                                 default:
@@ -125,7 +134,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     console.error(error);
                     console.log ("Re-Try");
                 }, 2000);
-                schedullerAllSocmed();
+                schedullerAllSocmed("routine");
             }
         )  
 
