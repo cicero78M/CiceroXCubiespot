@@ -26,7 +26,7 @@ export async function requestVoucer(from, username) {
             }               
         }
 
-        await instaUserFollowing(username, pages, countData, totalData).then(
+        await instaUserFollowing(username, pages, countData, responseInfo.data.data.following_count).then(
             async response =>{
                 console.log(response);
                 if(response.data === true){
