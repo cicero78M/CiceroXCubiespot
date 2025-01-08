@@ -25,18 +25,18 @@ export async function requestVoucer(from, username) {
             }               
         }
 
-        
+        await instaUserFollowing(username, pages, countData, responseInfo.data.data.following_count).then(
+            async response =>{
+                if(response.data){
+                    isFollowing =  "TRUE";
+                }
+            }
+        );
+                
 
         if (!isDataExist){
 
-            await instaUserFollowing(username, pages, countData, responseInfo.data.data.following_count).then(
-                async response =>{
-                    if(response.data){
-                        isFollowing =  "TRUE";
-                    }
-                }
-            );
-            
+  
             await instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, 
                 isPRIVATE:responseInfo.data.data.is_private, 
