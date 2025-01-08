@@ -1,7 +1,4 @@
-import { ciceroKey, googleAuth } from "../../database_query/sheetDoc.js";
-import { instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { instaUserFollowing } from "./collectInstaFollow.js";
+
 
 export async function instaUserData(from, username) {
     try {
