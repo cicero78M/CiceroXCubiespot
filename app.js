@@ -300,7 +300,7 @@ client.on('message', async (msg) => {
                     console.log("Exec Rows");
                     await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then( 
                         async clientRows => {             
-                            Console.log("Response OK");
+                            console.log("Response OK");
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
                                     let responseData;
