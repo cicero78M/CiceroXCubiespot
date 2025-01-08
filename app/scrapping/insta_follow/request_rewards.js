@@ -1,6 +1,7 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { instaFollowingAPI, instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
+import { instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
+import { instaUserFollowing } from "./generate_user_following.js";
 
 export async function requestVoucer(from, username) {
     try {
@@ -21,7 +22,7 @@ export async function requestVoucer(from, username) {
             }               
         }
 
-        await instaFollowingAPI(username).then(
+        await instaUserFollowing(username).then(
             async response =>{
                 console.log(response);
                 if(response.data === true){

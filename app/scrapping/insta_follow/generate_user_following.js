@@ -3,6 +3,7 @@ import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 export async function instaUserFollowing(clientName, username, pages, countData, totalData) {
 
     console.log("Execute insta user following");
+    
     return new Promise(
         async (resolve, reject) => {
 
