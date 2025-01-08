@@ -16,11 +16,9 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                 await instaFollowingAPI(username, pages).then(
                     async response => {
 
-                        let dataFollowing = response.data.data.items;
+                        let dataFollowing = response.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
-                        console.log(dataFollowing);
-                        console.log(pagination);
                         console.log(count);
 
 
@@ -37,23 +35,25 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
     
                         let totalValue = countData + count;    
                         if (stateFoll === false){
-
                             console.log('execute');
-                            
-                            if(totalData > totalValue){
-                                console.log("Under Total");
-                                setTimeout(async () => {
-                                    forLoopGenerateFollowing(username, pagination, totalValue, totalData);
-                                }, 2000);
-                            } else {
-                                console.log("done");
-                                let responseData =  {
-                                    data: false,
-                                    code: 200,
-                                    state: true
-                                }                
-                                resolve (responseData);   
-                            }   
+                            if (pagination != ""){
+                                if(totalData > totalValue){
+                                    console.log("Under Total");
+                                    setTimeout(async () => {
+                                        forLoopGenerateFollowing(username, pagination, totalValue, totalData);
+                                    }, 2000);
+                                } else {
+                                    console.log("done");
+                                    let responseData =  {
+                                        data: false,
+                                        code: 200,
+                                        state: true
+                                    }                
+                                    resolve (responseData);   
+                                } 
+
+                            } 
+  
                         } else {
                             
                             let responseData =  {
