@@ -45,7 +45,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
                 if (stateFoll === false){
         
-                    console.log(dataFollowing[i].username);
                     let responseData =  {
                         data: true,
                         code: 200,
@@ -55,7 +54,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
                 } else {
 
-                    console.log("resolve true")
                     let responseData =  {
                         data: false,
                         code: 200,
