@@ -16,6 +16,8 @@ export async function instaUserFollowing(clientName, username, pages, countData,
 
                         for (let i = 0; i < dataFollowing; i++ ){
 
+                            console.log(dataFollowing[i].username);
+
                             if (dataFollowing[i].username === 'cubiehome'){
                                 
                                 console.log(response);
