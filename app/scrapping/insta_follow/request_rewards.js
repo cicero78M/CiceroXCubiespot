@@ -36,7 +36,6 @@ export async function requestVoucer(from, username) {
 
         if (!isDataExist){
 
-  
             await instaProfileSheet.addRow({
                 WHATSAPP: from, USERNAME: username, 
                 isPRIVATE:responseInfo.data.data.is_private, 
@@ -60,6 +59,7 @@ export async function requestVoucer(from, username) {
                     code: 200,
                     state: true
                 }
+ 
                 return responseData;
 
             } else {
@@ -69,9 +69,11 @@ export async function requestVoucer(from, username) {
                     code: 200,
                     state: true
                 }
+ 
                 return responseData;
             }
         } else {
+            
             let responseData = {
                 data: 'Data Base Terisi',
                 code: 201,

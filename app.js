@@ -483,7 +483,7 @@ client.on('message', async (msg) => {
 
                                     await requestVoucer(msg.from, instaUsername).then(
                                         async responseData =>{                                                        
-                                            sendResponse(msg.from, responseData.data, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
+                                            sendResponse(msg.from, responseData, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
                                         }
                                     ).catch(
                                         response =>{console.log(response)}
