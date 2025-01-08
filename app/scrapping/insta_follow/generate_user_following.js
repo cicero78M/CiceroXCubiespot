@@ -6,7 +6,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
     return new Promise(
         async (resolve, reject) => {
-
             try {
                 await instaFollowingAPI(username, pages).then(
                     async response => {
@@ -34,22 +33,27 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 setTimeout(async () => {
                                     await instaUserFollowing(username, pagination, totalValue, totalData);
                                 }, 1000);
+
                             } else {
+
                                 console.log("resolve true")
+                                
                                 let responseData =  {
                                     data: false,
                                     code: 200,
                                     state: true
                                 }                
+                                
                                 resolve (responseData);
                             } 
                         } else {
+
                             let responseData =  {
                                 data: true,
                                 code: 200,
                                 state: true
                             }
-
+                            
                             resolve (responseData);  
                         }       
                     }
