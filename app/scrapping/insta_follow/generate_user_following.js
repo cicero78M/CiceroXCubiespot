@@ -22,17 +22,11 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                             if (dataFollowing[i].username === 'cubiehome'){
                                 
                                 stateFoll = true;
-                                
-                                let responseData =  {
-                                    data: true,
-                                    code: 200,
-                                    state: true
-                                }
-                                resolve (responseData);                                                         
+                                                                                       
                             }
                         }
-                        let totalValue = countData + count;
 
+                        let totalValue = countData + count;
                         if (stateFoll === false){
                             console.log('execute');
                             if(totalData > totalValue){
@@ -48,8 +42,16 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                     state: true
                                 }                
                                 resolve (responseData);
+                            } 
+                        } else {
+                            let responseData =  {
+                                data: true,
+                                code: 200,
+                                state: true
                             }
-                        }            
+
+                            resolve (responseData);  
+                        }       
                     }
                 );
             } catch (error) {
