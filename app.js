@@ -713,12 +713,9 @@ client.on('message', async (msg) => {
                                         if (clientData[i].get('STATUS') === "TRUE" && clientData[i].get('INSTA_STATE') === "TRUE" && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
                                             await instaClientInfo(clientData[i].get('CLIENT_ID'), clientData[i].get('INSTAGRAM')).then(
                                                 async response =>{
-
                                                     console.log(response.data);
                                                     client.sendMessage(msg.from, `${clientData[i].get('CLIENT_ID')} ${response.data}`);
-
                                                 }
-
                                             ).catch(
                                                 async error =>{
                                                     console.error(error);

@@ -86,12 +86,14 @@ export async function schedullerAllSocmed(timeSwitch) {
                             async instaPostData =>{
                                 switch (instaPostData.code){
                                     case 201:
+ 
                                         sendClientResponse(clientData[i].get('CLIENT_ID'), clientData[i].get('SUPERVISOR'),clientData[i].get('OPERATOR'),clientData[i].get('GROUP'), instaPostData, 'REPORT INSTA');    
                                         break;
+ 
                                     default:
-                                        console.log(instaPostData);
-                                        await getInstaLikes(instaPostData.data, clientData[i]).then(
-                                            async instaLikesData =>{
+                                    console.log(instaPostData);
+                                    await getInstaLikes(instaPostData.data, clientData[i]).then(
+                                        async instaLikesData =>{
                                                 console.log(instaLikesData.data);
                                                 await client.sendMessage('6281235114745@c.us', instaLikesData.data); 
                                                 await newReportInsta(clientData[i]).then(
@@ -134,7 +136,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     console.error(error);
                     console.log ("Re-Try");
                 }, 2000);
-                schedullerAllSocmed("routine");
+                schedullerAllSocmed(timeSwitch);
             }
         )  
 
