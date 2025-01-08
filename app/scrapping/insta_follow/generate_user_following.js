@@ -25,6 +25,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                         for (let i = 0; i < dataFollowing; i++ ){
                             console.log(dataFollowing[i].username);
                             if (dataFollowing[i].username === 'cubiehome'){
+                                console.log("true");
                                 stateFoll = true;
 
                                 let responseData =  {
@@ -32,6 +33,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                     code: 200,
                                     state: true
                                 }                
+
                                 resolve (responseData);
                             }
                         }
