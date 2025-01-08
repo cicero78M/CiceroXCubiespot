@@ -6,12 +6,12 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
     return new Promise(
         async (resolve, reject) => {
+            let stateFoll = false;
 
             try {
 
                 await instaFollowingAPI(username, pages).then(
                     async response => {
-                        let stateFoll = false;
                         let dataFollowing = response.data.data.items;
                         let pagination = response.data.pagination_token;
                         let count = response.data.data.count ;
