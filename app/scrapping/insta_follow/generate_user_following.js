@@ -39,7 +39,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                                 console.log("Under Total");
                                 setTimeout(async () => {
                                     await instaUserFollowing(username, pagination, totalValue, totalData);
-                                }, 2000);
+                                }, 1000);
                             } else {
                                 console.log("resolve true")
                                 let responseData =  {
