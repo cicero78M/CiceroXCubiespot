@@ -31,17 +31,25 @@ export async function newReportInsta(clientValue) {
   let shortcodeListString = '';
   let userByDivisi = '';
 
-  return new Promise(async (resolve, reject) => 
-    {
+  return new Promise(
+    async (
+      resolve, reject
+    ) => {
       try {
         
-        await newListValueData(clientName, 'DIVISI').then(
+        await newListValueData(
+          clientName, 
+          'DIVISI'
+        ).then(
           async response =>{
             divisiList = await response;
           }
-        )
+        );
 
-        await newRowsData(ciceroKey.dbKey.userDataID, clientName).then( 
+        await newRowsData(
+          ciceroKey.dbKey.userDataID, 
+          clientName
+        ).then( 
           async response => {    
             userRows = await response;                           
             for (let i = 0; i < userRows.length; i++) {
@@ -54,26 +62,35 @@ export async function newReportInsta(clientValue) {
 
         // If Client_ID exist. then get official content
         if (clientValue.get('STATUS')) {   
-          await newRowsData(ciceroKey.dbKey.instaOfficialID, clientName).then( 
+          await newRowsData(
+            ciceroKey.dbKey.instaOfficialID, 
+            clientName
+          ).then( 
             async response => {    
+              
               const officialRows = await response;
 
               for (let i = 0; i < officialRows.length; i++) {
-                  let itemDate = new Date(officialRows[i].get('TIMESTAMP') * 1000);
-                  if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-                      if (!shortcodeList.includes(officialRows[i].get('SHORTCODE'))) {
-                          shortcodeList.push(officialRows[i].get('SHORTCODE'));
-                          if (officialRows[i].get('TYPE') === 'reel') {
-                              shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + officialRows[i].get('SHORTCODE'));
-                          } else {
-                              shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + officialRows[i].get('SHORTCODE'));
-                          }
-                      }
+              
+                let itemDate = new Date(officialRows[i].get('TIMESTAMP') * 1000);
+
+                if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+                  if (!shortcodeList.includes(officialRows[i].get('SHORTCODE'))) {
+                    shortcodeList.push(officialRows[i].get('SHORTCODE'));
+                    if (officialRows[i].get('TYPE') === 'reel') {
+                      shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + officialRows[i].get('SHORTCODE'));
+                    } else {
+                      shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + officialRows[i].get('SHORTCODE'));
+                    }
                   }
+                }
               }
 
               if (shortcodeList.length >= 1) {    
-                await newRowsData(ciceroKey.dbKey.instaLikesUsernameID, clientName).then( 
+                await newRowsData(
+                  ciceroKey.dbKey.instaLikesUsernameID, 
+                  clientName
+                ).then( 
                   async response => {    
                     instaLikesUsernameData = await response;                        
                     for (let i = 0; i < shortcodeList.length; i++) {
@@ -117,22 +134,28 @@ export async function newReportInsta(clientValue) {
         
                     if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
                       
-                      if (notLikesList[iv].get('INSTA') === undefined|| notLikesList[iv].get('INSTA') === null || notLikesList[iv].get('INSTA') === ""){
+                      if (notLikesList[iv].get('INSTA') === undefined
+                      || notLikesList[iv].get('INSTA') === null 
+                      || notLikesList[iv].get('INSTA') === ""){
                         notLikesName = "Belum Input";
                       } else {
                         notLikesName = notLikesList[iv].get('INSTA');
                       }
         
                       if (clientValue.get('TYPE')  === "RES") {
+                      
                         userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesName);
                         divisiCounter++;
                         userCounter++;
+                      
                       } else if (clientValue.get('TYPE')  === "COM") {
+                      
                         name = notLikesList[iv].get('NAMA');
                         nameUpper = name.toUpperCase();
                         userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesName);
                         divisiCounter++;
                         userCounter++;
+                      
                       }
                     }
                   }

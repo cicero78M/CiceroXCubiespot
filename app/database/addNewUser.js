@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-//Google Spreadsheet
+
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { myData } from '../database_query/myData.js';
@@ -21,7 +21,11 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
 
   try {
 
-    const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth); //Google Auth
+    const userDoc = new GoogleSpreadsheet(
+      ciceroKey.dbKey.userDataID, 
+      googleAuth
+    ); //Google Auth
+    
     await userDoc.loadInfo(); // loads document properties and worksheets
     const userSheet = userDoc.sheetsByTitle[clientName];
 
@@ -50,11 +54,22 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         console.log("Id key not exist");
 
         //Get Target Sheet Documents by Title
-        userSheet.addRow({ ID_KEY: idKey, NAMA: name, TITLE: title, DIVISI: divisi, JABATAN: jabatan, STATUS: true, EXCEPTION: false });
+        userSheet.addRow({ 
+          ID_KEY: idKey, 
+          NAMA: name, 
+          TITLE: title, 
+          DIVISI: divisi, 
+          JABATAN: jabatan, 
+          STATUS: true, 
+          EXCEPTION: false 
+        });
           
-        let responseMyData = await myData(clientName, idKey);
+        let responseMyData = await myData(
+          clientName, 
+          idKey
+        );
           
-          return responseMyData;
+        return responseMyData;
       
       } else {
         let responseData = {
@@ -67,6 +82,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         userDoc.delete;
         return responseData;
       }
+
     } else {
  
       let responseData = {
@@ -81,8 +97,8 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       return responseData;
     }
   } catch (error) {
-    console.log(error);
 
+    console.log(error);
     let responseData = {
       data: error,
       state: false,
@@ -90,6 +106,5 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
     };
  
     return responseData;
- 
   }
 }
