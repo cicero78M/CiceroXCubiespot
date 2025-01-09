@@ -128,7 +128,7 @@ client.on('ready', () => {
         response => console.error(response)
     );
 
-    schedule('19 15,18,21 * * *', async () => {
+    schedule('20 15,18,21 * * *', async () => {
         schedullerAllSocmed("report");
     }).catch(
         response => console.error(response)
