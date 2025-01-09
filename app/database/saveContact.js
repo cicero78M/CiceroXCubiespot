@@ -17,57 +17,57 @@ const googleAuth = new JWT({
 export async function saveContacts() {
 
     try {
-    const waContactDoc = new GoogleSpreadsheet(ciceroKey.dbKey.waContact, googleAuth); //Google Auth
-    await waContactDoc.loadInfo(); // loads document properties and worksheets
+        const waContactDoc = new GoogleSpreadsheet(ciceroKey.dbKey.waContact, googleAuth); //Google Auth
+        await waContactDoc.loadInfo(); // loads document properties and worksheets
 
-    let whatsappList = ['',];
-    let contactData = [];
+        let whatsappList = ['',];
+        let contactData = [];
 
-    let contactResponse = await sheetDoc(ciceroKey.dbKey.waContact, 'CONTACT');
-    let contactRows = contactResponse.data;
-    let contactList = [];
+        let contactResponse = await sheetDoc(ciceroKey.dbKey.waContact, 'CONTACT');
+        let contactRows = contactResponse.data;
+        let contactList = [];
 
-    for (let i = 0; i < contactRows.length; i++){
-        
-        if(!contactList.includes(contactRows[i].get('MOBILE PHONE'))){ 
-            contactList.push(contactRows[i].get('MOBILE PHONE'));
+        for (let i = 0; i < contactRows.length; i++){
+            
+            if(!contactList.includes(contactRows[i].get('MOBILE PHONE'))){ 
+                contactList.push(contactRows[i].get('MOBILE PHONE'));
 
+            }
         }
-    }
 
-    console.log(contactList);
+        console.log(contactList);
 
-    let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
-    let clientRows = clientResponse.data;
+        let clientResponse = await sheetDoc(ciceroKey.dbKey.clientDataID, 'ClientData');
+        let clientRows = clientResponse.data;
 
-    if (clientRows.length >= 1){
-        for (let i = 0; i < clientRows.length; i++){
-            console.log(clientRows[i].get('CLIENT_ID'));
+        if (clientRows.length >= 1){
+            for (let i = 0; i < clientRows.length; i++){
+                console.log(clientRows[i].get('CLIENT_ID'));
 
-            let userResponse;
-            let userRows
-            
-            userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
-            userRows = userResponse.data;
+                let userResponse;
+                let userRows
+                
+                userResponse = await sheetDoc(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID'));
+                userRows = userResponse.data;
 
-            console.log(userRows);
+                console.log(userRows);
 
-            for (let ii = 0; ii < userRows.length; ii++){
-                clientRows[i].get('OPERATOR')
-                if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || Number(userRows[ii].get('WHATSAPP')) != NaN ){
-                    
-                    if(!whatsappList.includes(userRows[ii].get('WHATSAPP') )){ 
-            
-                        whatsappList.push(userRows[ii].get('WHATSAPP'));
-                        contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
+                for (let ii = 0; ii < userRows.length; ii++){
+                    clientRows[i].get('OPERATOR')
+                    if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') || Number(userRows[ii].get('WHATSAPP')) != NaN ){
+                        
+                        if(!whatsappList.includes(userRows[ii].get('WHATSAPP') )){ 
+                
+                            whatsappList.push(userRows[ii].get('WHATSAPP'));
+                            contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
+                        }
                     }
                 }
             }
-        }
-            const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
-            waSheet.addRows(contactData);
-    
-            return 'SUCCESS!!!!';
+                const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
+                waSheet.addRows(contactData);
+        
+                return 'SUCCESS!!!!';
 
         }    
 

@@ -128,20 +128,21 @@ client.on('ready', () => {
         response => console.error(response)
     );
 
-    // Reload Tiktok every hours until 22
-    schedule('00 15,18,21 * * *', async () => {
+    schedule('19 15,18,21 * * *', async () => {
         schedullerAllSocmed("report");
     }).catch(
         response => console.error(response)
     );
+
+
 });
 
 client.on('message', async (msg) => {
     //Date Time
-    const d = new Date();
-    const localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta" });
-    const hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
-    const time = localDate+" >> "+hours;
+    let d = new Date();
+    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta" });
+    let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
+    let time = localDate+" >> "+hours;
 
     try {
         const contact = await msg.getContact();
@@ -199,6 +200,7 @@ client.on('message', async (msg) => {
                         console.log('Push User Res Client Triggered');
 
                         if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+                        
                             console.log("Link True");
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
@@ -218,19 +220,20 @@ client.on('message', async (msg) => {
                             }                          
                         
                         }  else {
-                        
                             console.log('Bukan Spreadsheet Links');
                             client.sendMessage(
                                 msg.from, 
                                 'Bukan Spreadsheet Links'
                             );
-                        
                         }
+
                     } else if (splittedMsg[1].toLowerCase() === 'pushusercom'){
                         //Company Request     
                         //ClientName#pushnewusercom#linkspreadsheet
                         console.log('Push User Com Client Triggered');
+                        
                         if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+                        
                             console.log("Link True");
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
                             
@@ -246,7 +249,6 @@ client.on('message', async (msg) => {
                                     msg.from, 
                                     responseData.data
                                 );
-
                             } else {
                                 console.log(responseData.data);
                             }                          
@@ -311,7 +313,10 @@ client.on('message', async (msg) => {
                             splittedMsg[0].toUpperCase(), 
                             splittedMsg[2].toUpperCase()
                         ).then(
-                            async data => client.sendMessage('6281235114745@c.us', data.data)
+                            async data => client.sendMessage(
+                                '6281235114745@c.us', 
+                                data.data
+                            )
                         ).catch(
                             async error => console.error(error)
                         );
