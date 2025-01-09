@@ -20,7 +20,7 @@ export async function newListValueData(clientName, keyValue) {
                 setTimeout(() => {
                     console.error(response);
                     console.log ("Re-Try");
-                }, 2000);
+                }, 4000);
 
                 await newRowsData(ciceroKey.dbKey.userDataID, clientName);
         }); 

@@ -25,7 +25,7 @@ export async function newRowsData(sheetID, clientName) {
             setTimeout(() => {
                 console.error(response);
                 console.log ("Re-Try");
-            }, 2000);
+            }, 8000);
             await newRowsData(sheetID, clientName);
         });
     });

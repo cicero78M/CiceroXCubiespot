@@ -150,7 +150,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
           code: 200
         };
 
-        instaLikesUsernameDoc.delete;
         resolve(data);
         
       } catch (error) {

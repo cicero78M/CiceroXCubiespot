@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 const app = express();
 
 import { readFileSync } from 'fs';
@@ -97,12 +97,8 @@ client.on('ready', () => {
     schedule('*/10 * * * *', async () =>  {
         //Date Time
         let d = new Date();
-        let localDate = d.toLocaleDateString("en-US", {
-            timeZone: "Asia/Jakarta"
-        });
-        let hours = d.toLocaleTimeString("en-US", {
-            timeZone: "Asia/Jakarta"
-        });     
+        let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+        let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
         let time = localDate+" >> "+hours;
 
         console.log(time+' '+ciceroKey.waSession+' <<<System Alive>>>');
@@ -112,13 +108,16 @@ client.on('ready', () => {
     // Reload Tiktok every hours until 22
     schedule('30 6-21 * * *', async () => {
         schedullerAllSocmed("routine");
-    });
+    }).catch(
+        response => console.error(response)
+    );
 
     // Reload Tiktok every hours until 22
     schedule('00 15,18,21 * * *', async () => {
         schedullerAllSocmed("report");
-    });
-
+    }).catch(
+        response => console.error(response)
+    );
 });
 
 client.on('qr', qr => {
@@ -163,31 +162,30 @@ client.on('message', async (msg) => {
                 if (url != null || url != undefined){
                     let splittedUrl = url[0].split('/');
                     if (splittedUrl.includes("www.instagram.com")){
-                    console.log('Response Sent');
-                    //client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
-                        
-                    //   let rawLink;
-                    /*  
-                    if(url[0].includes('/?')){
-                        rawLink = url[0].replaceAll('/?', '?');
-                        shortcode = rawLink.split('?')[0].split('/').pop();
-                    } else {
-                        shortcode = url[0].split('/').pop();
-                    }
+                        console.log('Response Sent');
+                        //client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
+                            
+                        //   let rawLink;
+                        /*  
+                        if(url[0].includes('/?')){
+                            rawLink = url[0].replaceAll('/?', '?');
+                            shortcode = rawLink.split('?')[0].split('/').pop();
+                        } else {
+                            shortcode = url[0].split('/').pop();
+                        }
 
-                    //Report Likes from Insta Official
-                    let response = await _instaSW(contact.number, shortcode);
-                
-                    if (response.code === 200){
-                        client.sendMessage(msg.from, response.data);
-                    } else {
-                        console.log(response.data);
-                    }
+                        //Report Likes from Insta Official
+                        let response = await _instaSW(contact.number, shortcode);
+                    
+                        if (response.code === 200){
+                            client.sendMessage(msg.from, response.data);
+                        } else {
+                            console.log(response.data);
+                        }
                     */ 
-                  }
+                    }
                 }            
             }
-
         } else {
             //Splitted Msg
             const splittedMsg = msg.body.split("#");
@@ -226,15 +224,13 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'pushusercom'){
                         //Company Request     
                         //ClientName#pushnewusercom#linkspreadsheet
-                        
-                        console.log('Push User Com Client Triggered');
 
+                        console.log('Push User Com Client Triggered');
+                        
                         if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
                             console.log("Link True");
-                            
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
-
                             let responseData = await pushUserClient(splittedMsg[0].toUpperCase(), splittedMsg[2], "COM");
                             
                             if (responseData.code === 200){
@@ -243,11 +239,10 @@ client.on('message', async (msg) => {
                             } else {
                                 console.log(responseData.data);
                             }                          
+                        
                         } else {
-                    
                             console.log('Bukan Spreadsheet Links');
                             client.sendMessage(msg.from, 'Bukan Spreadsheet Links');
-    
                         }
 
                     } else if (splittedMsg[1].toLowerCase() === 'secuid') {
@@ -469,7 +464,8 @@ client.on('message', async (msg) => {
                                 }
                             }
         
-                    });
+                        }
+                    );
 
                 } else if (cubies.includes(splittedMsg[0].toLowerCase())){  //const cubies = ['follow', 'like', 'comment'];
                     switch (splittedMsg[0].toLowerCase()) {

@@ -135,7 +135,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                 setTimeout(() => {
                     console.error(error);
                     console.log ("Re-Try");
-                }, 2000);
+                }, 10000);
                 schedullerAllSocmed(timeSwitch);
             }
         )  
