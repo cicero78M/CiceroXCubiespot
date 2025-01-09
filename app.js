@@ -224,9 +224,8 @@ client.on('message', async (msg) => {
                     } else if (splittedMsg[1].toLowerCase() === 'pushusercom'){
                         //Company Request     
                         //ClientName#pushnewusercom#linkspreadsheet
-
                         console.log('Push User Com Client Triggered');
-                        
+
                         if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
                             console.log("Link True");
@@ -479,7 +478,7 @@ client.on('message', async (msg) => {
 
                                     await requestVoucer(msg.from, instaUsername).then(
                                         async responseData =>{                                                        
-                                            sendResponse(msg.from, responseData, 'Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome');
+                                            sendResponse(msg.from, responseData, `Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome`);
                                         }
                                     ).catch(
                                         response =>{console.log(response)}
@@ -487,15 +486,17 @@ client.on('message', async (msg) => {
 
 
                                 } else {
-
-                                    client.sendMessage(msg.from, "Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
-                                        +"Instagram anda dan bukan Akun Private.\n\nTerimakasih.");
+                                    client.sendMessage(msg.from, 
+                                        `Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
+                                        
+                                        Terimakasih.`);
                                 }
 
                             } else{
-                                client.sendMessage(msg.from, "Silahkan Cek Kembali link yang anda cantumkan, pastikan link tersebut adalah link Akun Profile " 
-                                    +"Instagram anda dan bukan Akun Private.\n\nTerimakasih.");
-                            }
+                                client.sendMessage(msg.from,
+                                    `Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
+                                        
+                                    Terimakasih.`);                            }
                             break;
 
                         case 'likes':
@@ -511,7 +512,7 @@ client.on('message', async (msg) => {
                 } else if (generateSocmed.includes(splittedMsg[1].toLowerCase())){   //const newAdminOrder = ["newalltiktok", "newreporttiktok"];
                     switch (splittedMsg[1].toLowerCase()) {
                         case 'allsocmed':
-                            if(splittedMsg[1].toLowerCase() === 'report'){
+                            if(splittedMsg[2].toLowerCase() === 'report'){
                                 await schedullerAllSocmed("report");
                             } else {
                                 await schedullerAllSocmed("routine");
