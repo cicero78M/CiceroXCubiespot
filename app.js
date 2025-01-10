@@ -123,16 +123,12 @@ client.on('ready', () => {
 
     // Reload Tiktok every hours until 22
     schedule('30 6-21 * * *', async () => {
-        schedullerAllSocmed("routine");
-    }).catch(
-        response => console.error(response)
-    );
+        await schedullerAllSocmed("routine");
+    });
 
     schedule('0 15,18,21 * * *', async () => {
-        schedullerAllSocmed("report");
-    }).catch(
-        response => console.error(response)
-    );
+        await schedullerAllSocmed("report");
+    });
 
 });
 
@@ -214,6 +210,7 @@ client.on('message', async (msg) => {
                                     msg.from, 
                                     responseData.data
                                 );
+                
                             } else {
                                 console.log(responseData.data);
                             }                          

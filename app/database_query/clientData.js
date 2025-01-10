@@ -62,5 +62,3 @@ export async function clientData(clientName) {
 
   }
 }
-
-
