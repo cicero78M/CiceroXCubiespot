@@ -139,6 +139,23 @@ client.on('ready', () => {
         await schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
+    schedule('0 12,17,19 * * *', async () => {
+        await newRowsData(
+            ciceroKey.dbKey.clientDataID, 
+            'ClientData'
+        ).then( 
+            async clientData =>{
+                for (let i = 0; i < clientData.length; i++){
+                    await warningReportInsta(clientRows[i]).then(
+                        response => console.log(response)
+                    ).catch(
+                        response => console.error(response)
+                    );
+                }
+            }
+        )
+    });
+
 });
 
 client.on('message', async (msg) => {

@@ -1,5 +1,4 @@
 import { client } from '../../app.js';
-import { newListValueData } from '../database/new_query/data_list_query.js';
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 
 export async function warningReportInsta(clientValue) {
@@ -122,22 +121,22 @@ export async function warningReportInsta(clientValue) {
                         }, 2000);
                     }
                 }
+
+                data = {
+                    data: "Send warning Done",
+                    state: true,
+                    code: 200
+                  };
+                  resolve (data);
+                
               } else {
-                    data = {
+                data = {
                   data: "Tidak ada konten data untuk di olah",
                   state: true,
                   code: 201
                 };
                 reject (data);
-              }
-
-              data = {
-                data: "Send warning Done",
-                state: true,
-                code: 200
-              };
-              resolve (data);
-            
+              }            
             }
           ).catch (
             error =>{
