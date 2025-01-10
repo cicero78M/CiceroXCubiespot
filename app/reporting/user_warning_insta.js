@@ -111,7 +111,6 @@ export async function warningReportInsta(clientValue) {
                 for (let i = 0; i<notLikesList.length; i++){
                     if(notLikesList[i].get('WHATSAPP') != ""){
                         setTimeout(async () => {
-
                             console.log(`Send Warning messages to ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')} `);  
                             await client.sendMessage(
                                 `${notLikesList[i].get('WHATSAPP')}@c.us`,
