@@ -119,7 +119,7 @@ client.on('ready', () => {
     console.log('===============================');
 
     // Server Life State Warning
-    schedule('*/10 * * * *', async () =>  {
+    schedule('*/10 * * * *',  () =>  {
         //Date Time
         let d = new Date();
         let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -131,16 +131,16 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule("0 16-20 * * *", async () => {
-        await schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
+    schedule('0 16-20 * * *',  () => {
+        schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
-    schedule("0 15,18,20 * * *", async () => {
-        await schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
+    schedule('0 15,18,20 * * *',  () => {
+        schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule("4 12,16,19 * * *", async () => {
-        await newRowsData(
+    schedule('4 12,16,19 * * *',  () => {
+        newRowsData(
             ciceroKey.dbKey.clientDataID, 
             'ClientData'
         ).then( 
