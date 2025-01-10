@@ -10,10 +10,10 @@ export async function warningReportTiktok(clientValue) {
         
             try {
 
-                console.log("Execute Report Tiktok");
+                console.log("Execute Warning Report Tiktok");
                 client.sendMessage(
                     '6281235114745@c.us', 
-                    "Execute Report Tiktok"
+                    "Execute Warning Report Tiktok"
                 );
             
                 //Date Time
@@ -23,7 +23,6 @@ export async function warningReportTiktok(clientValue) {
                 let userAll = 0;
 
                 let userRows;
-                let responseData;
 
                 let shortcodeListString = '';
 
@@ -105,14 +104,14 @@ export async function warningReportTiktok(clientValue) {
                                     }
                                 }
                                 
-                                for (let i = 0; i<notLikesList.length; i++){
-                                    if(notLikesList[i].get('WHATSAPP') != ""){
+                                for (let i = 0; i<notCommentList.length; i++){
+                                    if(notCommentList[i].get('WHATSAPP') != ""){
                                         setTimeout(async () => {
                 
-                                            console.log(`Send Warning Tiktok messages to ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')} `);  
+                                            console.log(`Send Warning Tiktok messages to ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')} `);  
                                             await client.sendMessage(
-                                                `${notLikesList[i].get('WHATSAPP')}@c.us`,
-                                                `Selamat Siang, Bpk/Ibu ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
+                                                `${notCommentList[i].get('WHATSAPP')}@c.us`,
+                                                `Selamat Siang, Bpk/Ibu ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
                                             );
                                         }, 2000);
                                     }
