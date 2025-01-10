@@ -24,7 +24,6 @@ import { myData } from './app/database_query/myData.js';
 import { infoView } from './app/view/info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
-import { sheetDoc } from './app/database_query/sheetDoc.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
 import { addNewUser } from './app/database/addNewUser.js';
 import { updateUsername } from './app/database/updateUsername.js';
