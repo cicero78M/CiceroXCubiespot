@@ -51,53 +51,55 @@ import { adminOrder, cubiesOrder, generateSocmed, infoOrder, operatorOrder, user
 import { addNewUser } from './app/database/user_profile/addNewUser.js';
 import { editProfile } from './app/database/user_profile/editUserProfile.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
+import { warningReportInsta } from './app/reporting/user_warning_insta.js';
 
-//Routing Port 
+// Routing Port 
 const port = ciceroKey.port;
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
 });
 
-//WWEB JS Client Constructor
+// WWEB JS Client Constructor
 export const client = new Client({
     authStrategy: new LocalAuth({
         clientId: ciceroKey.waSession,
     }),
 });
 
-//On WWEB Client Initializing
+// On WWEB Client Initializing
 console.log('Initializing...');
 client.initialize();
 
-//On WWeB Authenticate Checking
+// On WWeB Authenticate Checking
 client.on('authenthicated', (session)=>{
     console.log(+JSON.stringify(session));
 });
 
-//On WWEB If Authenticate Failure
+// On WWEB If Authenticate Failure
 client.on('auth_failure', msg => {
     console.error('AUTHENTICATION FAILURE', msg);
 });
 
-//On WWEB If Disconected
+// On WWEB If Disconected
 client.on('disconnected', (reason) => {
     console.log('Client was logged out', reason);
 });
 
-//On Pairing with QR Code
+// On Pairing with QR Code
 client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
 });
 
-//On Reject Calls
+// On Reject Calls
 let rejectCalls = true;
 client.on('call', async (call) => {
     console.log('Call received, rejecting. GOTO Line 261 to disable', call);
     if (rejectCalls) await call.reject();
 });
 
-//on WWeb Ready
+// On WWeb Ready
 client.on('ready', () => {
+    
     //Banner
     console.log(textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
@@ -372,7 +374,27 @@ client.on('message', async (msg) => {
                         let response = await saveContacts();
                         console.log(response);
    
-                    }                   
+                    } else if (splittedMsg[1].toLowerCase() === 'sendwarning') {
+
+                        await newRowsData(
+                            ciceroKey.dbKey.clientDataID, 
+                            'ClientData'
+                        ).then( 
+                            async clientRows => {    
+                                for (let i = 0; i < clientRows.length; i++){
+                                    if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                                        await warningReportInsta(clientRows[i].get("CLIENT_ID")).then(
+                                            response => console.log(response)
+
+                                        ).catch(
+                                            response => console.error(response)
+                                        );
+                                    }
+                                }
+                            }
+                        );
+
+                    }               
    
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
@@ -1183,5 +1205,5 @@ client.on('message', async (msg) => {
             'Error on Main Apps'
         );
 
-    }//try catch
+    }
 });
