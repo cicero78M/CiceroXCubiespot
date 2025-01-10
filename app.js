@@ -383,7 +383,7 @@ client.on('message', async (msg) => {
                             async clientRows => {    
                                 for (let i = 0; i < clientRows.length; i++){
                                     if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
-                                        await warningReportInsta(clientRows[i].get("CLIENT_ID")).then(
+                                        await warningReportInsta(clientRows[i]).then(
                                             response => console.log(response)
 
                                         ).catch(
