@@ -21,10 +21,12 @@ export async function getInstaLikes(todayItems, clientValue ) {
       try { 
 
         let instaLikesUsernameData;
+        let instaLikesUsernameSheet;
+        let instaLikesUsernameDoc;
         try {
-          const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+           instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
           await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-          let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
+          instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
           instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
         } catch (error) {
 
@@ -32,9 +34,9 @@ export async function getInstaLikes(todayItems, clientValue ) {
             console.log("Await");
         }, 10000);
           
-            const instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+             instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
             await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-            let instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
+            instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
             instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
           
         }

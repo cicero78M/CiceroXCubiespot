@@ -48,10 +48,11 @@ export async function getTiktokPost(clientValue) {
 
                     if (hasContent) {
 
+                        let tiktokOfficialDoc;
                         let officialTiktokSheet;
 
                         try {
-                            let tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
+                            tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
                             await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
                             officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
                         } catch (error) {
@@ -60,7 +61,7 @@ export async function getTiktokPost(clientValue) {
                                 console.log("Await");
                             }, 10000);
 
-                            let tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
+                            tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
                             await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
                             officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
                             

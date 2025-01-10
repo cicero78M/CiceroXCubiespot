@@ -47,11 +47,14 @@ export async function getInstaPost(clientValue) {
   
             console.log(`${clientName} Official Account Has Post Data...`);
             await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
+            
+            let instaOfficialDoc;
+            let officialInstaSheet;
             let officialInstaData;
             try {
-              let instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
+              instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
               await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-              let officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
+              officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
               officialInstaData = await officialInstaSheet.getRows();
                   
             } catch (error) {
@@ -60,9 +63,9 @@ export async function getInstaPost(clientValue) {
                 console.log("Await");
               }, 10000);
 
-              let instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
+              instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
               await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-              let officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
+              officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
               officialInstaData = await officialInstaSheet.getRows();
                   
             }  

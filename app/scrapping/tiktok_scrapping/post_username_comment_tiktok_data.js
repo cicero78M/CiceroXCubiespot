@@ -11,18 +11,19 @@ export async function postTiktokUserComments(clientName, items, userdata) {
 
     return new Promise(async (resolve, reject) => { 
         try {
-            let tiktokCommentsUsernameSheet
+            let tiktokCommentsUsernameDoc;
+            let tiktokCommentsUsernameSheet;
            try {
-                let tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+                tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
                 await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
                 tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
            } catch (error) {
-            
+
             setTimeout(() => {
                 console.log("Await");
             }, 10000);
 
-            let tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+            tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
             await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
             tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
            }
