@@ -1,22 +1,30 @@
 //Import Dependency
+
 //Route
 import express from 'express';
 const app = express();
+
 //Reading Json File 
 import { readFileSync } from 'fs';
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+
 //WWebjs
 import wwebjs from 'whatsapp-web.js';
 const { Client, LocalAuth } = wwebjs;
+
 //QR-Code
 import qrcode from 'qrcode-terminal';
+
 //Figlet
 import figlet from 'figlet';
 const { textSync } = figlet;
+
 //Banner
 import { set } from 'simple-banner';
+
 //Schedule
 import { schedule } from 'node-cron';
+
 //Local Dependency
 import { saveContacts } from './app/database/saveContact.js';
 import { myData } from './app/database_query/myData.js';
@@ -42,6 +50,7 @@ import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_offi
 import { adminOrder, cubiesOrder, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
 import { addNewUser } from './app/database/user_profile/addNewUser.js';
 import { editProfile } from './app/database/user_profile/editUserProfile.js';
+import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -107,7 +116,7 @@ client.on('ready', () => {
     console.log('===============================');
     console.log('===============================');
 
-    //Server Life State Warning
+    // Server Life State Warning
     schedule('*/10 * * * *', async () =>  {
         //Date Time
         let d = new Date();
@@ -131,7 +140,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async (msg) => {
-    //Date Time
+    // Date Time
     let d = new Date(); //Date Time
     let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta" }); //Local Date
     let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});  //Hours
@@ -191,6 +200,7 @@ client.on('message', async (msg) => {
                 
                 //Admin Order Data         
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){ 
+    
                     //ClientName#pushnewuserres#linkspreadsheet
                     if (splittedMsg[1].toLowerCase() === 'pushuserres'){
                         //Res Request
@@ -364,7 +374,7 @@ client.on('message', async (msg) => {
    
                     }                   
    
-                    //Operator Order Data         
+                //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
                     console.log("Exec Rows");
                     await newRowsData(ciceroKey.dbKey.clientDataID, 
@@ -459,14 +469,7 @@ client.on('message', async (msg) => {
                         async clientRows => {    
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
-                                    if ([
-                                        'updateinsta', 
-                                        'ig', 
-                                        'ig1', 
-                                        'ig2',
-                                        'ig3', 
-                                        'insta'
-                                    ].includes(splittedMsg[1].toLowerCase())) {
+                                    if (updateinsta.includes(splittedMsg[1].toLowerCase())) {
                                         //Update Insta Profile
                                         //CLientName#updateinsta/ig/#linkprofileinstagram
                                         if (splittedMsg[3].includes('instagram.com')){
@@ -509,10 +512,7 @@ client.on('message', async (msg) => {
                                             );
                                         }
 
-                                    } else if ([
-                                        'updatetiktok', 
-                                        'tiktok'
-                                    ].includes(splittedMsg[1].toLowerCase())) {
+                                    } else if (updatetiktok.includes(splittedMsg[1].toLowerCase())) {
                                         //Update Tiktok profile
                                         //CLientName#updatetiktok/tiktok/#linkprofiletiktok
                                         if (splittedMsg[3].includes('tiktok.com')){
@@ -540,11 +540,7 @@ client.on('message', async (msg) => {
                                             );
                                         }
 
-                                    } else if ([
-                                        'editdivisi', 
-                                        'editsatfung',
-                                        'satfung' 
-                                    ].includes(splittedMsg[1].toLowerCase())) {
+                                    } else if (updatedivisi.includes(splittedMsg[1].toLowerCase())) {
                                         //update Divisi Name
                                         //clientName#editdivisi/satfung#id_key/NRP#newdata
                                         let responseData = await editProfile(
@@ -561,10 +557,7 @@ client.on('message', async (msg) => {
                                             "Error Edit Satfung"
                                         );
 
-                                    } else if ([
-                                        'editjabatan', 
-                                        'jabatan'
-                                    ].includes(splittedMsg[1].toLowerCase())) {
+                                    } else if (editjabatan.includes(splittedMsg[1].toLowerCase())) {
                                         //Update Jabatan
                                         //clientName#editjabatan/jabatan#id_key/NRP#newdata
                                         let responseData = await editProfile(
@@ -581,10 +574,7 @@ client.on('message', async (msg) => {
                                             "Error Edit Jabatan"
                                         );
 
-                                    } else if ([
-                                        'editnama', 
-                                        'nama'
-                                    ].includes(splittedMsg[1].toLowerCase())) {
+                                    } else if (editnama.includes(splittedMsg[1].toLowerCase())) {
                                         //clientName#editnama/nama#id_key/NRP#newdata
                                         let responseData = await editProfile(
                                             splittedMsg[0].toUpperCase(),
@@ -600,12 +590,7 @@ client.on('message', async (msg) => {
                                             "Error Edit Nama"
                                         );
 
-                                    } else if ([
-                                        'editpangkat', 
-                                        'ubahpangkat', 
-                                        'pangkat', 
-                                        'title'
-                                    ].includes(splittedMsg[1].toLowerCase())) {
+                                    } else if (edittitle.includes(splittedMsg[1].toLowerCase())) {
                                         //clientName#editnama/nama#id_key/NRP#newdata
                                         let responseData = await editProfile(
                                             splittedMsg[0].toUpperCase(),

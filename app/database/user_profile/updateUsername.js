@@ -10,6 +10,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
   return new Promise(async (resolve, reject) => {
 
     try {
+      
       //Insert New Sheet
       const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth); //Google Auth
       await userDoc.loadInfo(); // loads document properties and worksheets
