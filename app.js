@@ -131,15 +131,15 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule(ciceroKey.schedule.routine, async () => {
+    schedule("30 16-20 * * *", async () => {
         await schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
-    schedule(ciceroKey.schedule.report, async () => {
+    schedule("0 15,18,20 * * *", async () => {
         await schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule(ciceroKey.schedule.warning, async () => {
+    schedule("0 12,16,19 * * *", async () => {
         await newRowsData(
             ciceroKey.dbKey.clientDataID, 
             'ClientData'
