@@ -132,15 +132,15 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('30 6-21 * * *', async () => {
+    schedule(ciceroKey.schedule.routine, async () => {
         await schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
-    schedule('0 15,18,21 * * *', async () => {
+    schedule(ciceroKey.schedule.report, async () => {
         await schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule('0 12,17,19 * * *', async () => {
+    schedule(ciceroKey.schedule.warning, async () => {
         await newRowsData(
             ciceroKey.dbKey.clientDataID, 
             'ClientData'
@@ -160,10 +160,7 @@ client.on('ready', () => {
                             '6281235114745@c.us', 
                             ` ${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK WARNINGDATA`
                         );
-
                         await warningReportTiktok(clientData[i]);
-                        
- 
                     }         
 
                     //This process Insta Report
@@ -176,18 +173,12 @@ client.on('ready', () => {
                             '6281235114745@c.us', 
                             `${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`
                         );
-
                         await warningReportInsta(clientData[i]);
-                        
-
                     }  
                 }
-
             }
-                
         )
     });
-
 });
 
 client.on('message', async (msg) => {
