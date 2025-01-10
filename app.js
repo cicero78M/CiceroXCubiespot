@@ -147,7 +147,13 @@ client.on('ready', () => {
         ).then( 
             async clientData =>{
                 for (let i = 0; i < clientData.length; i++){
-                    await warningReportInsta(clientRows[i]).then(
+                    await warningReportInsta(clientData[i]).then(
+                        response => console.log(response)
+                    ).catch(
+                        response => console.error(response)
+                    );
+
+                    await warningReportTiktok(clientData[i]).then(
                         response => console.log(response)
                     ).catch(
                         response => console.error(response)
