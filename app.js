@@ -143,7 +143,7 @@ client.on('ready', () => {
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule('5 12,16,19 * * *',  () => {
+    schedule('12 12,16,19 * * *',  () => {
 
         console.log("Execute Schedule");
         newRowsData(
@@ -160,7 +160,6 @@ client.on('ready', () => {
                     && clientData[i].get('TIKTOK_STATE') === "TRUE" 
                     && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
                         console.log(`${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK WARNING DATA`);
-            
                         await client.sendMessage(
                             '6281235114745@c.us', 
                             ` ${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK WARNINGDATA`
@@ -172,8 +171,8 @@ client.on('ready', () => {
                     if (clientData[i].get('STATUS') === "TRUE" 
                     && clientData[i].get('INSTA_STATE') === "TRUE" 
                     && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                        console.log(`${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNINGDATA`);
-            
+                        console.log(`${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`);
+    
                         await client.sendMessage(
                             '6281235114745@c.us', 
                             `${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`
