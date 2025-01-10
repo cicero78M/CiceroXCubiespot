@@ -122,7 +122,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('38 6-21 * * *', async () => {
+    schedule('39 6-21 * * *', async () => {
         await schedullerAllSocmed("routine");
     });
 
