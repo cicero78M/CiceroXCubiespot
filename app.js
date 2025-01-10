@@ -662,7 +662,21 @@ client.on('message', async (msg) => {
                                             responseData, 
                                             "Error on Getting My Data"
                                         );
-                                    }
+                                    } else if (splittedMsg[1].toLowerCase() === 'whatsapp') {
+                                        let responseData = await editProfile(
+                                            splittedMsg[0].toUpperCase(),
+                                            splittedMsg[2].toLowerCase(), 
+                                            msg.from.replace('@c.us', ''), 
+                                            msg.from.replace('@c.us', ''), 
+                                            "WHATSAPPP"
+                                        );
+                                        
+                                        sendResponse(
+                                            msg.from, 
+                                            responseData, 
+                                            "Error Edit Nama"
+                                        );
+                                    } 
                                 }
                             }
                         }

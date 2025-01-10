@@ -79,6 +79,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               userRows[ii].assign({ STATUS : newData}); // Update Status Value
             } else if (type === 'EXCEPTION') {
               userRows[ii].assign({ EXCEPTION : newData}); // Update Exception Value
+            } else if (type === 'WHATSAPP') {
+              userRows[ii].assign({ WHATSAPP : phone}); // Update Status Value
             }
 
             await userRows[ii].save(); //save update

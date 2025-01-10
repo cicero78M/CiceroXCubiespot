@@ -17,6 +17,7 @@ export const operatorOrder = [
 ];
 
 export const userOrder =[
+    'whatsapp',
     'mydata', 
     'updateinsta', 
     'updatetiktok',
