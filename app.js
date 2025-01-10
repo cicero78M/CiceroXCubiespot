@@ -24,11 +24,9 @@ import { infoView } from './app/view/info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
-import { addNewUser } from './app/database/addNewUser.js';
-import { updateUsername } from './app/database/updateUsername.js';
+import { updateUsername } from './app/database/user_profile/updateUsername.js';
 import { setSecuid } from './app/database/secuidTiktok.js';
 import { sendResponse } from './app/view/sendWA.js';
-import { editProfile } from './app/database/editUserProfile.js';
 import { requestVoucer } from './app/scrapping/insta_follow/request_rewards.js';
 import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktok_items_bridge.js';
@@ -42,6 +40,8 @@ import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_cli
 import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
 import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
 import { adminOrder, cubiesOrder, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
+import { addNewUser } from './app/database/user_profile/addNewUser.js';
+import { editProfile } from './app/database/user_profile/editUserProfile.js';
 
 //Routing Port 
 const port = ciceroKey.port;
@@ -1197,6 +1197,6 @@ client.on('message', async (msg) => {
             '6281235114745@c.us', 
             'Error on Main Apps'
         );
-        
+
     }//try catch
 });
