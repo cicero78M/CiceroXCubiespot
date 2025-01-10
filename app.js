@@ -131,19 +131,19 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('0 16-20 * * *',  () => {
+    schedule('35 16-20 * * *',  () => {
         console.log("Execute Schedule");
 
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
-    schedule('0 15,18,20 * * *',  () => {
+    schedule('5 15,18,20 * * *',  () => {
         console.log("Execute Schedule");
 
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule('9 12,16,19 * * *',  () => {
+    schedule('5 12,16,19 * * *',  () => {
 
         console.log("Execute Schedule");
         newRowsData(
