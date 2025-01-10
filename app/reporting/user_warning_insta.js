@@ -30,15 +30,6 @@ export async function warningReportInsta(clientValue) {
     ) => {
       try {
         
-        await newListValueData(
-          clientName, 
-          'DIVISI'
-        ).then(
-          async response =>{
-            divisiList = await response;
-          }
-        );
-
         await newRowsData(
           ciceroKey.dbKey.userDataID, 
           clientName
