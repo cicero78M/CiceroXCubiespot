@@ -27,31 +27,34 @@ export async function newRowsData(
 
             async function customLoop( 
                 sheetID,
-                clientName) {                   
+                clientName) {          
+
                     let dataDoc = new GoogleSpreadsheet(
                         sheetID, 
                         googleAuth
                     );
 
-                //Google Authentication for client DB
+                    //Google Authentication for client DB
                     await dataDoc.loadInfo(); // loads document properties and worksheets
                 
                     let sheetTitle = dataDoc.sheetsByTitle[clientName];
+                    
                     await sheetTitle.getRows()
-                        .then( response => {
-                            console.log();
-                            resolve (response);
-                
-                        }).catch( response =>{
-                            console.error(response);
-                            console.log("Try-Again");
-                            setTimeout(async () => {
-                                await customLoop(
-                                    sheetID, 
-                                    clientName
-                                );
-                            }, 6000);                    
-                
+                    .then( response => {
+                        console.log();
+                        resolve (response);
+            
+                    }).catch( response =>{
+                        console.error(response);
+                        console.log("Try-Again");
+                        setTimeout(async () => {
+                            await customLoop(
+                                sheetID, 
+                                clientName
+                            );
+                        }, 
+                        6000
+                    );                               
                 });
             }
         }
