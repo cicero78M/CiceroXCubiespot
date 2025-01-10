@@ -137,7 +137,7 @@ client.on('ready', () => {
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
-    schedule('0 15,18,20 * * *',  () => {
+    schedule('0 15,18,21 * * *',  () => {
         console.log("Execute Schedule");
 
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator

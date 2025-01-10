@@ -2,7 +2,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 //Local Import
-import { ciceroKey, googleAuth } from '../new_query/sheet_query.js';
+import { ciceroKey, googleAuth, newRowsData } from '../new_query/sheet_query.js';
 import { myData } from '../../database_query/myData.js';
 import { propertiesView } from '../../view/properties_view.js';
 
@@ -44,18 +44,25 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               if (dataList.includes(newData)) {
                 userRows[ii].assign({ DIVISI: newData });; // Update Divisi Value
               } else {
-                let responseData = {
-                  data: 'Divisi Unregsitered',
-                  state: true,
-                  code: 200
-                };
-
-                let divisiList = await propertiesView(clientName, "DIVISI");// Update Divisi Value
                 
-                client.sendMessage(phone+'@c.us', divisiList.data);
-                console.log('Return Success');
-                return responseData;
+                propertiesView(clientName, "DIVISI").then(
+                  async response =>{
+                    client.sendMessage(phone+'@c.us', response.data);
+                  }
+                ).catch(
+                  error =>{
+                    console.log(error);
+                    let responseData = {
+                      data: "Divisi Unregistred",
+                      state: true,
+                      code: 200
+                    };
 
+                    client.sendMessage(phone+'@c.us', responseData.data);
+
+
+                  }
+                )
               }
 
 
@@ -71,7 +78,6 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                 userRows[ii].assign({ TITLE: newData }); // Update Title Value
               } else {
                 let responseData = await propertiesView(clientName, type);
-                userDoc.delete;
                 return responseData;
               }
 
