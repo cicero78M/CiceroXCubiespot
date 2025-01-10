@@ -18,23 +18,25 @@ export async function newRowsData(
     clientName
 ) {
     return new Promise(
-        async (resolve) => {
-            
-        await customLoop(
+        async (resolve) => {            
+        
+            await customLoop(
             sheetID, 
             clientName
         );
 
         async function customLoop( 
             clientName) {                   
-
-                const dataDoc = new GoogleSpreadsheet(
+                let dataDoc = new GoogleSpreadsheet(
                     sheetID, 
                     googleAuth
                 );
+
                 //Google Authentication for client DB
                 await dataDoc.loadInfo(); // loads document properties and worksheets
-                const sheetTitle = dataDoc.sheetsByTitle[clientName];
+                
+                let sheetTitle = dataDoc.sheetsByTitle[clientName];
+console.log(sheetTitle);
                 await sheetTitle.getRows()
                 .then( response => {
                     console.log();
