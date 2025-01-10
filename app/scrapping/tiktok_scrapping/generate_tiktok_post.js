@@ -47,9 +47,25 @@ export async function getTiktokPost(clientValue) {
                     }
 
                     if (hasContent) {
-                        const tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-                        await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
-                        const officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
+
+                        let officialTiktokSheet;
+
+                        try {
+                            let tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
+                            await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
+                            officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
+                        } catch (error) {
+
+                            setTimeout(() => {
+                                console.log("Await");
+                            }, 10000);
+
+                            let tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
+                            await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
+                            officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
+                            
+                        }
+
                         await officialTiktokSheet.getRows().then(async response =>{
                             for (let i = 0; i < response.length; i++) {
                                 if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {

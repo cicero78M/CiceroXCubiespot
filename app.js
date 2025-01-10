@@ -100,7 +100,6 @@ client.on('call', async (call) => {
 
 // On WWeb Ready
 client.on('ready', () => {
-    
     //Banner
     console.log(textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
