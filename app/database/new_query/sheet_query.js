@@ -20,7 +20,7 @@ export async function newRowsData(
     return new Promise(
         async (resolve) => {
             
-        customLoop(
+        await customLoop(
             sheetID, 
             clientName
         );
@@ -43,8 +43,8 @@ export async function newRowsData(
                 }).catch( response =>{
                     console.error(response);
                     console.log("Try-Again");
-                    setTimeout(() => {
-                        customLoop(clientName);
+                    setTimeout(async () => {
+                        await customLoop(clientName);
                     }, 6000);                    
                 
                 });
