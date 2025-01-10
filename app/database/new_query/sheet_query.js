@@ -17,27 +17,38 @@ export async function newRowsData(
     sheetID, 
     clientName
 ) {
-    const dataDoc = new GoogleSpreadsheet(
-        sheetID, 
-        googleAuth
-    );//Google Authentication for client DB
-    
-    await dataDoc.loadInfo(); // loads document properties and worksheets
     return new Promise(
         async (resolve) => {
+            
+        customLoop(
+            sheetID, 
+            clientName
+        );
 
-            const sheetTitle = dataDoc.sheetsByTitle[clientName];
-            await sheetTitle.getRows()
-            .then( response => {
-                console.log();
-                resolve (response);
-            }).catch( async response =>{
-                setTimeout(() => {
+        async function customLoop( 
+            clientName) {                    
+                const dataDoc = new GoogleSpreadsheet(
+                    sheetID, 
+                    googleAuth
+                );//Google Authentication for client DB
+                await dataDoc.loadInfo(); // loads document properties and worksheets
+
+                const sheetTitle = dataDoc.sheetsByTitle[clientName];
+                
+                await sheetTitle.getRows()
+                .then( response => {
+                    console.log();
+                    resolve (response);
+                
+                }).catch( response =>{
                     console.error(response);
-                    console.log ("Re-Try");
-                }, 8000);
-                await newRowsData(sheetID, clientName);
-            });
+                    console.log("Try-Again");
+                    setTimeout(() => {
+                        customLoop(clientName);
+                    }, 6000);                    
+                
+                });
+            }
         }
     );
 }

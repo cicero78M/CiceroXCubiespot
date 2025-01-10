@@ -43,18 +43,18 @@ export async function schedullerAllSocmed(
                             async data => {
                                 switch (data.code){
                                     case 201:
-                         
-                         
+                                                  
                                        switch (timeSwitch){
                                             case 'report':
-                                            sendClientResponse(
-                                                clientData[i].get('CLIENT_ID'), 
-                                                clientData[i].get('SUPERVISOR'),
-                                                clientData[i].get('OPERATOR'),
-                                                clientData[i].get('GROUP'), 
-                                                data, 
-                                                'REPORT TIKTOK'
-                                            );                                            
+                         
+                                               sendClientResponse(
+                                                    clientData[i].get('CLIENT_ID'), 
+                                                    clientData[i].get('SUPERVISOR'),
+                                                    clientData[i].get('OPERATOR'),
+                                                    clientData[i].get('GROUP'), 
+                                                    data, 
+                                                    'REPORT TIKTOK'
+                                                );                                            
                                                 break;
 
                                             case 'routine':
@@ -73,59 +73,59 @@ export async function schedullerAllSocmed(
                                             );
                                                 break;
                                         }
-                                            break;
-                                
-                                    default: 
-
-                                    await tiktokItemsBridges(
-                                        clientData[i], 
-                                        data.data
-                                    ).then(
-                                        async data =>{
-                                            switch (timeSwitch){
-                                                case 'report':
-                                
-                                                    sendClientResponse(
-                                                        clientData[i].get('CLIENT_ID'), 
-                                                        clientData[i].get('SUPERVISOR'),
-                                                        clientData[i].get('OPERATOR'),
-                                                        clientData[i].get('GROUP'), 
-                                                        data, 
-                                                        'REPORT TIKTOK'
-                                                    );                                            
-                                
-                                                    break;
-                            
-                                                case 'routine':
-                                                    sendResponse(
-                                                        '6281235114745@c.us', 
-                                                        data, 
-                                                        ' ERROR GET TIKTOK BRIDGES'
-                                                    );                                                    
-                                                    break;
-                            
-                                                default:
-                                    
-                                                sendResponse(
-                                                        '6281235114745@c.us', 
-                                                        data, 
-                                                        ' ERROR GET TIKTOK BRIDGES'
-                                                    );
-                                                    break;
-                            
-                                            }                   
-                                            console.log("Report TIKTOK SUCCESS!!!");
-                                        }
-                                    ).catch(
-                                        data =>{
-                                            sendResponse(
-                                                '6281235114745@c.us', 
-                                                data, 
-                                                ' ERROR TIKTOK BRIDGES'  
-                                            );
-                                        }
-                                    );
+                                        
                                         break;
+                                
+                                        default: 
+
+                                        await tiktokItemsBridges(
+                                            clientData[i], 
+                                            data.data
+                                        ).then(
+                                            async data =>{
+                                                switch (timeSwitch){
+                                                    case 'report':
+                                    
+                                                        sendClientResponse(
+                                                            clientData[i].get('CLIENT_ID'), 
+                                                            clientData[i].get('SUPERVISOR'),
+                                                            clientData[i].get('OPERATOR'),
+                                                            clientData[i].get('GROUP'), 
+                                                            data, 
+                                                            'REPORT TIKTOK'
+                                                        );                                            
+                                    
+                                                        break;
+                                
+                                                    case 'routine':
+                                                        sendResponse(
+                                                            '6281235114745@c.us', 
+                                                            data, 
+                                                            ' ERROR GET TIKTOK BRIDGES'
+                                                        );                                                    
+                                                        break;
+                                
+                                                    default:
+                                        
+                                                    sendResponse(
+                                                            '6281235114745@c.us', 
+                                                            data, 
+                                                            ' ERROR GET TIKTOK BRIDGES'
+                                                        );
+                                                        break;
+                                                }                   
+                                                console.log("Report TIKTOK SUCCESS!!!");
+                                            }
+                                        ).catch(
+                                            data =>{
+                                                sendResponse(
+                                                    '6281235114745@c.us', 
+                                                    data, 
+                                                    ' ERROR TIKTOK BRIDGES'  
+                                                );
+                                            }
+                                        );
+                                            break;
                                     }
                             
                                 }

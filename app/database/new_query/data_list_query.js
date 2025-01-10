@@ -25,15 +25,7 @@ export async function newListValueData(
                 }
             ).catch(
                 async response => {   
-                    setTimeout(() => {
-                        console.error(response);
-                        console.log ("Re-Try");
-                    }, 10000);
-
-                    await newRowsData(
-                        ciceroKey.dbKey.userDataID, 
-                        clientName
-                    );
+                    console.error(response);
                 }
             ); 
         }
