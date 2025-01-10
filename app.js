@@ -23,7 +23,6 @@ const { textSync } = figlet;
 import { set } from 'simple-banner';
 
 //Schedule
-import { schedule } from 'node-cron';
 
 //Local Dependency
 import { saveContacts } from './app/database/saveContact.js';
@@ -53,6 +52,7 @@ import { editProfile } from './app/database/user_profile/editUserProfile.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
 import { warningReportInsta } from './app/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
+import { schedule } from 'node-cron';
 
 // Routing Port 
 const port = ciceroKey.port;
@@ -131,15 +131,15 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule("35 16-20 * * *", async () => {
+    schedule("0 16-20 * * *", async () => {
         await schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
-    schedule("5 15,18,20 * * *", async () => {
+    schedule("0 15,18,20 * * *", async () => {
         await schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule("5 12,16,19 * * *", async () => {
+    schedule("4 12,16,19 * * *", async () => {
         await newRowsData(
             ciceroKey.dbKey.clientDataID, 
             'ClientData'
