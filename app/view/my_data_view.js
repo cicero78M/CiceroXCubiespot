@@ -1,5 +1,7 @@
 export async function myDataView(dataResponse) {
+
     let accountState;
+    
     if(dataResponse.get('STATUS') === "TRUE"){
         accountState = 'ACTIVE';
     } else {
@@ -12,5 +14,6 @@ export async function myDataView(dataResponse) {
     state: true,
     code: 200
     }
+    
     return data;
 }

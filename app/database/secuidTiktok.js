@@ -1,18 +1,17 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
-import { tiktokUserInfoAPI } from '../socialMediaAPI/tiktok_API.js';
 
 export async function setSecuid(clientValue) {
 
     try {
 
         const clientName = clientValue.get('CLIENT_ID');
-        //Collect Content Shortcode from Official Account
         let tiktokAccount = clientValue.get('TIKTOK');
+
         let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
         const secUid = await responseInfo.data.userInfo.user.secUid;
         console.log(secUid);
+
         const clientDoc = new GoogleSpreadsheet(ciceroKey.dbKey.clientDataID, googleAuth); //Google Auth
         await clientDoc.loadInfo(); // loads document properties and worksheets
 

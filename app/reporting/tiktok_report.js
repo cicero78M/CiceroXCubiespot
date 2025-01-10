@@ -1,6 +1,5 @@
-import { sheetDoc as _sheetDoc, ciceroKey } from '../database_query/sheetDoc.js';
 import { newListValueData } from '../database/new_query/data_list_query.js';
-import { newRowsData } from '../database/new_query/sheet_query.js';
+import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { client } from '../../app.js';
   
 export async function newReportTiktok(clientValue) {

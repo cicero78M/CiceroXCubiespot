@@ -1,55 +1,62 @@
 import { readFileSync } from 'fs';
-import { sheetDoc as _sheetDoc } from './sheetDoc.js';
 import { myDataView } from '../view/my_data_view.js';
+import { newRowsData } from '../database/new_query/sheet_query.js';
 
 const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function myData(clientName, idKey) {
-  //Auth Request to Files
-  try {
-    //Data by Sheet Name
 
-    let isUserExist = false;
-    let response = [];
-
-    let responseUser = await _sheetDoc(ciceroKey.dbKey.userDataID, clientName);
-    let userRows = responseUser.data;
-
-    //Check if idKey Exist
-    for (let i = 0; i < userRows.length; i++) {
-
-      if (userRows[i].get('ID_KEY') === idKey) {
-
-        isUserExist = true;
-        response = userRows[i];
-
-        let responseData = await myDataView(response);
-        return responseData;
-      
+  return new Promise(async (resolve, reject) => {
+    try {
+      //Data by Sheet Name
+  
+      let isUserExist = false;
+      let response = [];
+  
+      await newRowsData(
+        ciceroKey.dbKey.userDataID, 
+        clientName
+      ).then(
+        async userRows =>{
+          //Check if idKey Exist
+          for (let i = 0; i < userRows.length; i++) {
+  
+            if (userRows[i].get('ID_KEY') === idKey) {
+  
+              isUserExist = true;
+              response = userRows[i];
+  
+              let responseData = await myDataView(response);
+              resolve (responseData);
+            
+            }
+          }
+        }
+      )
+  
+      if (!isUserExist) {
+        
+        let responseData = {
+          data: "ID KEY HAVE NO RECORD",
+          state: true,
+          code: 201
+        };
+  
+        reject (responseData);
       }
-    }
-
-    if (!isUserExist) {
-      
+  
+    } catch (error) {
+    
       let responseData = {
-        data: "ID KEY HAVE NO RECORD",
-        state: true,
-        code: 201
+        data: error,
+        state: false,
+        code: 303
       };
-
-      return responseData;
+  
+      console.log(error);
+      reject (responseData);
+    
     }
+  })
 
-  } catch (error) {
-  
-    let responseData = {
-      data: error,
-      state: false,
-      code: 303
-    };
-
-    console.log(error);
-    return responseData;
-  
-  }
 }
