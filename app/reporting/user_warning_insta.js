@@ -118,7 +118,7 @@ export async function warningReportInsta(clientValue) {
                                 `Selamat Siang, Bpk/Ibu ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari AKun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_
                                 `
                             );
-                        }, 2000);
+                        }, 4000);
                     }
                 }
 
