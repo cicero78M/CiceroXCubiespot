@@ -122,14 +122,6 @@ export async function warningReportInsta(clientValue) {
                         }, 2000);
                     }
                 }
-
-                data = {
-                    data: "Send warning Done",
-                    state: true,
-                    code: 200
-                  };
-                  resolve (data);
-                
               } else {
                     data = {
                   data: "Tidak ada konten data untuk di olah",
@@ -138,6 +130,14 @@ export async function warningReportInsta(clientValue) {
                 };
                 reject (data);
               }
+
+              data = {
+                data: "Send warning Done",
+                state: true,
+                code: 200
+              };
+              resolve (data);
+            
             }
           ).catch (
             error =>{
