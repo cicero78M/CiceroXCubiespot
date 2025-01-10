@@ -115,7 +115,7 @@ export async function warningReportInsta(clientValue) {
 
                             console.log(`Send Warning messages to ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')} `);  
                             await client.sendMessage(
-                                `${notLikesList[i].get('WHATSAAP')}@c.us`,
+                                `${notLikesList[i].get('WHATSAPP')}@c.us`,
                                 `Selamat Siang, Bpk/Ibu ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')} 
                                 Sistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari AKun Official  berikut :
                                 
