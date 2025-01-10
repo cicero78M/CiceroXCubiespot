@@ -119,7 +119,7 @@ export async function warningReportTiktok(clientValue) {
                             }
                         );
 
-                        data = {
+                        let data = {
                             data: "Send warning Done",
                             state: true,
                             code: 200
