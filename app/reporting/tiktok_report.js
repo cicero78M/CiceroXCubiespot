@@ -89,7 +89,6 @@ export async function newReportTiktok(clientValue) {
                     });
         
                     if (shortcodeList.length >= 1) {   
-
                         await newRowsData(
                             ciceroKey.dbKey.tiktokCommentUsernameID, 
                             clientName

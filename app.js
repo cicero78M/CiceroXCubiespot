@@ -1,4 +1,3 @@
-
 //Import Dependency
 //Route
 import express from 'express';
@@ -122,25 +121,26 @@ client.on('ready', () => {
 
     // Reload Tiktok every hours until 22
     schedule('30 6-21 * * *', async () => {
-        await schedullerAllSocmed("routine");
+        await schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
     schedule('0 15,18,21 * * *', async () => {
-        await schedullerAllSocmed("report");
+        await schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
 });
 
 client.on('message', async (msg) => {
     //Date Time
-    let d = new Date();
-    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta" });
-    let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
+    let d = new Date(); //Date Time
+    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta" }); //Local Date
+    let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});  //Hours
     let time = localDate+" >> "+hours;
 
     try {
-        const contact = await msg.getContact();
-        if (msg.isStatus){
+        const contact = await msg.getContact(); // This Catch Contact Sender. 
+        
+        if (msg.isStatus){ // This Catch Wa Story from Users
             
             //If Msg is WA Story
             const chat = await msg.getChat();
@@ -178,14 +178,17 @@ client.on('message', async (msg) => {
                     }
                 }            
             }
-        } else {
+        } else { // This Catch Request Messages
             //Splitted Msg
-            const splittedMsg = msg.body.split("#");
-            if (splittedMsg.length > 1){
-                let chatMsg = await msg.getChat();
-                chatMsg.sendSeen();
-                chatMsg.sendStateTyping();
+            const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
+            if (splittedMsg.length > 1){ //System response if message is user by lenght of splitted messages
+
+                let chatMsg = await msg.getChat(); //this catch message data
+                chatMsg.sendSeen(); //this send seen by bot whatsapp
+                chatMsg.sendStateTyping(); //this create bot typing state 
+
                 console.log(msg.from+' ==> '+splittedMsg[1].toLowerCase());
+                
                 //Admin Order Data         
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){ 
                     //ClientName#pushnewuserres#linkspreadsheet
@@ -198,16 +201,17 @@ client.on('message', async (msg) => {
                             console.log("Link True");
                             console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                            let responseData = await pushUserClient(
-                                splittedMsg[0].toUpperCase(), 
-                                splittedMsg[2], "RES"
+                            let responseData = await pushUserClient( //this trigger function to push user data from sheet to database
+                                splittedMsg[0].toUpperCase(), //this from splitted coontain Client Name
+                                splittedMsg[2], //this Contains Order
+                                "RES" //this is Client Type 
                             );
                             
                             if (responseData.code === 200){
                                 console.log(responseData.data);
-                                client.sendMessage(
-                                    msg.from, 
-                                    responseData.data
+                                client.sendMessage( //this send response messages to user request
+                                    msg.from, //this phone number of user
+                                    responseData.data //this messages of response
                                 );
                 
                             } else {
@@ -272,11 +276,13 @@ client.on('message', async (msg) => {
                             );
          
                             let clientRows = await clientResponse.data;
+
                             //Itterate Client
                             for (let i = 0; i < clientRows.length; i++){
                                 if (clientRows[i].get('STATUS') === "TRUE" 
                                 && clientRows[i].get('INSTA_STATE') === "TRUE" 
                                 && clientRows[i].get('TYPE') === ciceroKey.ciceroClientType) {         
+                            
                                     console.log(time+" "+clientRows[i].get('CLIENT_ID')+' START TIKTOK SECUID DATA');
                                     
                                     await client.sendMessage(
@@ -293,18 +299,24 @@ client.on('message', async (msg) => {
                                         tiktokSecuid, 
                                         `${clientRows[i].get('CLIENT_ID')} START TIKTOK SECUID DATA`
                                     );
+                                
                                 } 
                             }
+   
                         } catch (error) {
-                            console.log(error)
+                            
+                            console.log(error)//error messages
+                            
                             await client.sendMessage(
                                 '6281235114745@c.us',
                                 'Collect #SECUIDERROR Error'    
                             );
+
                         }
+   
                     } else if (splittedMsg[1].toLowerCase() === 'register'){
 
-                        await clientRegister(
+                        await clientRegister(//this execute function, read the function
                             splittedMsg[0].toUpperCase(), 
                             splittedMsg[2].toUpperCase()
                         ).then(
@@ -317,6 +329,7 @@ client.on('message', async (msg) => {
                         );
                         
                     } else if (splittedMsg[1].toLowerCase() === 'exception') {
+                        
                         //clientName#editnama/nama#id_key/NRP#newdata
                         let response = await editProfile(
                             splittedMsg[0].toUpperCase(),
@@ -327,23 +340,31 @@ client.on('message', async (msg) => {
                         );
                         
                         if (response.code === 200){
+   
                             console.log(response.data);
                             client.sendMessage(
                                 msg.from, 
                                 response.data
                             );
+   
                         } else {
+   
                             console.log(response.data);
                             client.sendMessage(
                                 '6281235114745@c.us', 
                                 'Response Error from Exceptions'
                             );
+   
                         }   
+   
                     } else if (splittedMsg[1].toLowerCase() === 'savecontact') {
+   
                         let response = await saveContacts();
                         console.log(response);
+   
                     }                   
-                //Operator Order Data         
+   
+                    //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
                     console.log("Exec Rows");
                     await newRowsData(ciceroKey.dbKey.clientDataID, 
@@ -1162,17 +1183,20 @@ client.on('message', async (msg) => {
                         }
                     }
                 }
-                //if(splittedMsg[1].toLowerCase()......
+            //if(splittedMsg[1].toLowerCase()......
             } else {
                 const contact = await msg.getContact();
                 console.log(contact.number+" ===>>>> "+msg.body);
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {
+        
         console.log(error);
+        
         client.sendMessage(
             '6281235114745@c.us', 
-            'Error on Apps'
+            'Error on Main Apps'
         );
+        
     }//try catch
 });
