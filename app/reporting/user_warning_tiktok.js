@@ -1,7 +1,7 @@
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { client } from '../../app.js';
   
-export async function newReportTiktok(clientValue) {
+export async function warningReportTiktok(clientValue) {
 
     return new Promise(
         async (

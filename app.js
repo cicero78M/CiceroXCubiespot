@@ -52,6 +52,7 @@ import { addNewUser } from './app/database/user_profile/addNewUser.js';
 import { editProfile } from './app/database/user_profile/editUserProfile.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
 import { warningReportInsta } from './app/reporting/user_warning_insta.js';
+import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 
 // Routing Port 
 const port = ciceroKey.port;
@@ -400,9 +401,8 @@ client.on('message', async (msg) => {
                             async clientRows => {    
                                 for (let i = 0; i < clientRows.length; i++){
                                     if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
-                                        await warningReportInsta(clientRows[i]).then(
+                                        await warningReportTiktok(clientRows[i]).then(
                                             response => console.log(response)
-
                                         ).catch(
                                             response => console.error(response)
                                         );
