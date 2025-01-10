@@ -110,11 +110,11 @@ export async function warningReportInsta(clientValue) {
                 }
 
                 for (let i = 0; i<notLikesList.length; i++){
-                    if(notLikesList[i].get('WHATSAAP') != ""){
-                        setTimeout(() => {
+                    if(notLikesList[i].get('WHATSAPP') != ""){
+                        setTimeout(async () => {
 
-                            console.log(`Send Warning messages to `);  
-                            client.sendMessage(
+                            console.log(`Send Warning messages to ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')} `);  
+                            await client.sendMessage(
                                 `${notLikesList[i].get('WHATSAAP')}@c.us`,
                                 `Selamat Siang, Bpk/Ibu ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')} 
                                 Sistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari AKun Official  berikut :
@@ -133,7 +133,7 @@ export async function warningReportInsta(clientValue) {
                 }
 
                 data = {
-                    data: "Ssend warning Done",
+                    data: "Send warning Done",
                     state: true,
                     code: 200
                   };
