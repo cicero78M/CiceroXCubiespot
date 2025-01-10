@@ -44,17 +44,19 @@ export async function newRowsData(
                         console.log();
                         resolve (response);
             
-                    }).catch( response =>{
+                    }).catch( async response =>{
                         console.error(response);
-                        console.log("Try-Again");
                         setTimeout(async () => {
-                            await customLoop(
-                                sheetID, 
-                                clientName
-                            );
+                            console.log("Try-Again");
                         }, 
-                        6000
-                    );                               
+                            6000
+                        );
+
+                        await customLoop(
+                            sheetID, 
+                            clientName
+                        );
+
                 });
             }
         }

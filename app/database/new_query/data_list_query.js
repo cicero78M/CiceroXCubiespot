@@ -36,14 +36,15 @@ export async function newListValueData(
                     
                 ).catch(
                     async response => {   
-                        console.error(response);
 
                         setTimeout(() => {
-                            customLoop(
-                                clientName, 
-                                keyValue
-                            );
+                            console.error(response);
                         }, 6000);
+
+                        await customLoop(
+                            clientName, 
+                            keyValue
+                        );
                     }
                 );
             }    
