@@ -26,6 +26,7 @@ export async function newRowsData(
             );
 
             async function customLoop( 
+                sheetID,
                 clientName) {                   
                     let dataDoc = new GoogleSpreadsheet(
                         sheetID, 
@@ -36,18 +37,21 @@ export async function newRowsData(
                     await dataDoc.loadInfo(); // loads document properties and worksheets
                 
                     let sheetTitle = dataDoc.sheetsByTitle[clientName];
-                console.log(sheetTitle);
-                await sheetTitle.getRows()
-                .then( response => {
-                    console.log();
-                    resolve (response);
+                    console.log(sheetTitle);
+                    await sheetTitle.getRows()
+                        .then( response => {
+                            console.log();
+                            resolve (response);
                 
-                }).catch( response =>{
-                    console.error(response);
-                    console.log("Try-Again");
-                    setTimeout(async () => {
-                        await customLoop(clientName);
-                    }, 6000);                    
+                        }).catch( response =>{
+                            console.error(response);
+                            console.log("Try-Again");
+                            setTimeout(async () => {
+                                await customLoop(
+                                    sheetID, 
+                                    clientName
+                                );
+                            }, 6000);                    
                 
                 });
             }
