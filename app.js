@@ -1231,7 +1231,6 @@ client.on('message', async (msg) => {
                 //Key Order Data Not Exist         
                 } else {
 
-
                     await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
                         async clientRows => {
                             
@@ -1265,6 +1264,5 @@ client.on('message', async (msg) => {
             '6281235114745@c.us', 
             'Error on Main Apps'
         );
-
     }
 });
