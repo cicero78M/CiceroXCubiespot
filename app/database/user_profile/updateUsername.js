@@ -6,6 +6,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
   let isDataExist = false;
   let usernameList;
+  let userType;
 
   return new Promise(async (resolve, reject) => {
 
