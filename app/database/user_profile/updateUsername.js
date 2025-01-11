@@ -21,7 +21,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       //Collect Divisi List String
       if (type === "updateinstausername") {
         await newListValueData(clientName, 'INSTA').then(
-          response => {console.log(response);
+          response => {
             usernameList = response.data;
             userType = 'INSTA';
 
