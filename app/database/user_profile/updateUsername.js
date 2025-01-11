@@ -115,7 +115,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       };
   
       console.log(error);
-      userDoc.delete;
       reject (responseData);
     }
     
