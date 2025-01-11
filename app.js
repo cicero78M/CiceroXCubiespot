@@ -161,7 +161,37 @@ client.on('ready', () => {
                             '6281235114745@c.us', 
                             ` ${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK WARNINGDATA`
                         );
-                        await warningReportTiktok(clientData[i]);
+
+                        await warningReportTiktok(clientData[i]).then(
+                            async response => {
+                                
+                                await client.sendMessage(
+                                    '6281235114745@c.us', 
+                                    response.data);
+                                }
+                        ).catch(
+                            async response => {
+                                switch (response.code){
+                                    case 201 : 
+                                    await client.sendMessage(
+                                        '6281235114745@c.us', 
+                                        response.data);
+
+                                        break;
+                                    case 303 : 
+                                    await client.sendMessage(
+                                        '6281235114745@c.us', 
+                                        'Error');
+
+                                        break;
+                                    default:
+                                        break;
+
+                                }
+
+                            }
+
+                        );
                     }         
 
                     //This process Insta Report
@@ -175,11 +205,40 @@ client.on('ready', () => {
                             `${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`
                         );
 
-                        await warningReportInsta(clientData[i]);
+                        await warningReportInsta(clientData[i]).then(
+                            async response => {
+                                
+                                await client.sendMessage(
+                                    '6281235114745@c.us', 
+                                    response.data);
+                                }
+                        ).catch(
+                            async response => {
+                                switch (response.code){
+                                    case 201 : 
+                                    await client.sendMessage(
+                                        '6281235114745@c.us', 
+                                        response.data);
+
+                                        break;
+                                    case 303 : 
+                                    await client.sendMessage(
+                                        '6281235114745@c.us', 
+                                        'Error');
+
+                                        break;
+                                    default:
+                                        break;
+
+                                }
+
+                            }
+
+                        );
                     }  
                 }
             }
-        )
+        );
     });
 });
 
