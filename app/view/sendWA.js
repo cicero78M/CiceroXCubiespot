@@ -19,9 +19,12 @@ export async function sendResponse(from, responseData, errormessage) {
             console.log(responseData.data);
             await client.sendMessage(from, errormessage);
             break;
-        default:
+        case 201:
             console.log(time+" "+responseData.data);
             await client.sendMessage(from, responseData.data);
+            break;
+        default:
+            console.log(time+" Something Error on My Data ");
             break;
     }   
 }
@@ -48,11 +51,14 @@ export async function sendClientResponse(clientID, supervisor, operator, group, 
             console.log(responseData.data);
             await client.sendMessage('6281235114745@c.us', time+" "+clientID+' FAIL '+type+' DATA');
             break;
-        default:
+        case 201:
             console.log(time+" "+responseData.data);
             await client.sendMessage(supervisor, responseData.data);
             await client.sendMessage(operator, responseData.data);
             await client.sendMessage(group, responseData.data);
+            break;
+        default:
+            console.log("Something Error");
             break;
     }
 }
