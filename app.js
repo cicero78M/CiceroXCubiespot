@@ -543,19 +543,27 @@ client.on('message', async (msg) => {
                                                     '/profilecard/',
                                                     ''
                                                 ).split('/').pop();  
-                                                
-                                                let responseData = await updateUsername(
+                                    
+                                                await updateUsername(
                                                     splittedMsg[0].toUpperCase(), 
                                                     splittedMsg[2], 
                                                     instaUsername, 
                                                     contact.number, 
                                                     "updateinstausername"
+                                                ).then(
+                                                    response => {
+                                                       client.sendMessage(msg.from, response.data);
+                                                    }
+                                                ).catch(
+                                                    response => {
+                                                        if (response.code === 201){
+                                                            client.sendMessage(msg.from, response.data);
+                                                        } else {
+                                                            client.sendMessage(msg.from, "Error");
+                                                        }
+                                                     }
                                                 );
-                                                sendResponse(
-                                                    msg.from, 
-                                                    responseData, 
-                                                    "Error Update Insta"
-                                                );
+
                                             } else {
                                                 console.log('Bukan Link Profile Instagram');
                                                 client.sendMessage(
