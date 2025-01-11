@@ -417,6 +417,8 @@ client.on('message', async (msg) => {
    
                     } else if (splittedMsg[1].toLowerCase() === 'sendwarning') {
 
+                        console.log("Executr Send Warning");
+
                         await newRowsData(
                             ciceroKey.dbKey.clientDataID, 
                             'ClientData'
@@ -545,16 +547,21 @@ client.on('message', async (msg) => {
                                                 ).split('/').pop();  
                                     
                                                 await updateUsername(
+
                                                     splittedMsg[0].toUpperCase(), 
                                                     splittedMsg[2], 
                                                     instaUsername, 
                                                     contact.number, 
                                                     "updateinstausername"
+
                                                 ).then(
+
                                                     response => {
-                                                       client.sendMessage(msg.from, response.data);
+                                                        client.sendMessage(msg.from, response.data);
                                                     }
+
                                                 ).catch(
+
                                                     response => {
                                                         if (response.code === 201){
                                                             client.sendMessage(msg.from, response.data);
@@ -562,22 +569,27 @@ client.on('message', async (msg) => {
                                                             client.sendMessage(msg.from, "Error");
                                                         }
                                                     }
+
                                                 );
 
                                             } else {
+
                                                 console.log('Bukan Link Profile Instagram');
                                                 client.sendMessage(
                                                     msg.from, 
                                                     'Bukan Link Profile Instagram'
                                                 );
+
                                             }
 
                                         } else {
+
                                             console.log('Bukan Link Instagram');
                                             client.sendMessage(
                                                 msg.from, 
                                                 'Bukan Link Instagram'
                                             );
+
                                         }
 
                                     } else if (updatetiktok.includes(splittedMsg[1].toLowerCase())) {
@@ -700,6 +712,7 @@ client.on('message', async (msg) => {
                                             "Error Edit Nama"
                                         );
                                     } 
+                                    
                                 }
                             }
                         }
