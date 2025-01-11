@@ -21,9 +21,10 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       //Collect Divisi List String
       if (type === "updateinstausername") {
         await newListValueData(clientName, 'INSTA').then(
-          response => {
+          response => {console.log(response);
             usernameList = response.data;
             userType = 'INSTA';
+
           }
         );
       } else if (type === "updatetiktokusername") {
