@@ -168,12 +168,13 @@ client.on('ready', () => {
                     if (clientData[i].get('STATUS') === "TRUE" 
                     && clientData[i].get('INSTA_STATE') === "TRUE" 
                     && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                        
                         console.log(`${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`);
-    
                         await client.sendMessage(
                             '6281235114745@c.us', 
                             `${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`
                         );
+
                         await warningReportInsta(clientData[i]);
                     }  
                 }
@@ -416,26 +417,44 @@ client.on('message', async (msg) => {
                         console.log(response);
    
                     } else if (splittedMsg[1].toLowerCase() === 'sendwarning') {
-
-                        console.log("Executr Send Warning");
-
-                        await newRowsData(
+                        console.log("Execute Schedule");
+                        newRowsData(
                             ciceroKey.dbKey.clientDataID, 
                             'ClientData'
                         ).then( 
-                            async clientRows => {    
-                                for (let i = 0; i < clientRows.length; i++){
-                                    if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
-                                        await warningReportTiktok(clientRows[i]).then(
-                                            response => console.log(response)
-                                        ).catch(
-                                            response => console.error(response)
+                
+                            async clientData =>{
+                
+                                for (let i = 0; i < clientData.length; i++){
+                            
+                                    //This Procces Tiktok Report
+                                    if (clientData[i].get('STATUS') === "TRUE" 
+                                    && clientData[i].get('TIKTOK_STATE') === "TRUE" 
+                                    && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                        console.log(`${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK WARNING DATA`);
+                                        await client.sendMessage(
+                                            '6281235114745@c.us', 
+                                            ` ${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK WARNINGDATA`
                                         );
-                                    }
+                                        await warningReportTiktok(clientData[i]);
+                                    }         
+                
+                                    //This process Insta Report
+                                    if (clientData[i].get('STATUS') === "TRUE" 
+                                    && clientData[i].get('INSTA_STATE') === "TRUE" 
+                                    && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
+                                        
+                                        console.log(`${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`);
+                                        await client.sendMessage(
+                                            '6281235114745@c.us', 
+                                            `${clientData[i].get('CLIENT_ID')} START LOAD INSTA WARNING DATA`
+                                        );
+                
+                                        await warningReportInsta(clientData[i]);
+                                    }  
                                 }
                             }
-                        );
-
+                        )
                     }               
    
                 //Operator Order Data         
