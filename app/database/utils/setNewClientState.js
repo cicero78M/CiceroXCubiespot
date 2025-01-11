@@ -1,6 +1,6 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { ciceroKey, googleAuth } from '../database_query/sheetDoc.js';
+import { ciceroKey, googleAuth } from '../new_query/sheet_query';
 
 export async function setNewClientState(clientName, newstate) {
 

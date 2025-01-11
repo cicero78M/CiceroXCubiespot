@@ -32,7 +32,7 @@ import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
 import { pushUserClient } from './app/database/pushUserClient.js';
 import { updateUsername } from './app/database/user_profile/updateUsername.js';
-import { setSecuid } from './app/database/secuidTiktok.js';
+import { setSecuid } from './app/database/utils/secuidTiktok.js';
 import { sendResponse } from './app/view/sendWA.js';
 import { requestVoucer } from './app/scrapping/insta_follow/request_rewards.js';
 import { newRowsData } from './app/database/new_query/sheet_query.js';
