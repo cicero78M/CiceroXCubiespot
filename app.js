@@ -30,7 +30,6 @@ import { myData } from './app/database_query/myData.js';
 import { infoView } from './app/view/info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
-import { pushUserClient } from './app/database/pushUserClient.js';
 import { updateUsername } from './app/database/user_profile/updateUsername.js';
 import { setSecuid } from './app/database/utils/secuidTiktok.js';
 import { sendResponse } from './app/view/sendWA.js';
@@ -448,9 +447,7 @@ client.on('message', async (msg) => {
                             for (let i = 0; i < clientRows.length; i++){
                                 if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
                                     let responseData;
-                                    switch (
-                                        splittedMsg[1].toLowerCase()
-                                    ) {
+                                    switch (splittedMsg[1].toLowerCase()) {
                                         case "addnewuser":
                                             console.log("Add User");
                                             //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
