@@ -561,7 +561,7 @@ client.on('message', async (msg) => {
                                                         } else {
                                                             client.sendMessage(msg.from, "Error");
                                                         }
-                                                     }
+                                                    }
                                                 );
 
                                             } else {
@@ -1230,25 +1230,26 @@ client.on('message', async (msg) => {
                     }
                 //Key Order Data Not Exist         
                 } else {
-                    let clientResponse = await sheetDoc(
-                        ciceroKey.dbKey.clientDataID, 'ClientData'
-                    );
-                    
-                    let clientRows = clientResponse.data;
 
-                    for (let i = 0; i < clientRows.length; i++){
-                        if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
-                            console.log("Request Code Doesn't Exist");
-                            let responseData = await infoView(
-                                splittedMsg[0].toUpperCase()
-                            );
-                            //Wait A Second
-                            client.sendMessage(
-                                msg.from, 
-                                responseData.data
-                            );
+
+                    await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
+                        async clientRows => {
+                            
+                            for (let i = 0; i < clientRows.length; i++){
+                                if(clientRows[i].get("CLIENT_ID") === splittedMsg[0].toUpperCase()){
+                                    console.log("Request Code Doesn't Exist");
+                                    let responseData = await infoView(
+                                        splittedMsg[0].toUpperCase()
+                                    );
+                                    //Wait A Second
+                                    client.sendMessage(
+                                        msg.from, 
+                                        responseData.data
+                                    );
+                                }
+                            }
                         }
-                    }
+                    )
                 }
             //if(splittedMsg[1].toLowerCase()......
             } else {
