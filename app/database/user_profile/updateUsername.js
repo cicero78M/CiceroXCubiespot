@@ -5,7 +5,7 @@ import { newListValueData } from "../new_query/data_list_query.js";
 export async function updateUsername(clientName, idKey, username, phone, type) {
 
   let isDataExist = false;
-  let usernameList;
+  let usernameList = [];
   let userType;
 
   return new Promise(async (resolve, reject) => {
