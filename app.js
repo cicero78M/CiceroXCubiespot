@@ -131,7 +131,7 @@ client.on('ready', () => {
     });
 
     // Reload Tiktok every hours until 22
-    schedule('30 16-20 * * *',  () => {
+    schedule('30 6-20 * * *',  () => {
         console.log("Execute Schedule");
 
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
