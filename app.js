@@ -52,6 +52,7 @@ import { schedule } from 'node-cron';
 import { saveContacts } from './app/database/utils/saveContact.js';
 
 import 'dotenv/config';
+import { clientData2Json } from './json_data_file/client_data_to_json.js';
 
 //.env
 const private_key = process.env;
@@ -1496,7 +1497,7 @@ client.on('message', async (msg) => {
                 } else if(dataTransfer.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
                         case "client2json":
-                            
+                            clientData2Json();
 
                             break;
                     default:
