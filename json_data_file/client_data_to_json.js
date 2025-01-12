@@ -1,4 +1,4 @@
-import { newRowsData } from "../app/database/new_query/sheet_query";
+import { newRowsData } from "../app/database/new_query/sheet_query.js";
 
 export async function clientData2Json() {
     newRowsData(
