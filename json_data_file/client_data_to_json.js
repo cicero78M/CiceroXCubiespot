@@ -29,9 +29,9 @@ export async function clientData2Json() {
                 clientData.GROUP = data[i].get("GROUP");
                 clientData.SECUID = data[i].get("SECUID");
 
-                console.log(clientData);
+                let client = new Object();
 
-                jsonData.client.push(clientData);
+                jsonData.push(client.clientData);
                 
             };
         }
