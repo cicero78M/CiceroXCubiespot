@@ -7,7 +7,7 @@ export async function clientData2Json() {
         'ClientData'
     ).then(
         response => {
-            console.log(JSON.parse(response))
+            console.log(JSON.stringify(response))
         }
     );
 }
