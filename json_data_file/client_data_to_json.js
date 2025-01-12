@@ -30,8 +30,7 @@ export async function clientData2Json() {
 
                 let client = new Object();
 
-                jsonData.push(client.clientData);
-                
+                console.log(client);                
             };
         }
     );
