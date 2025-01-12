@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { private_key } from '../../app.js';
+import 'dotenv/config';
+
+export const private_key = process.env;
 
 export const { request } = axios;
 
