@@ -1,16 +1,17 @@
+import { private_key } from '../../app.js';
 import { ciceroKey } from '../database/new_query/sheet_query.js';
 import { request } from './insta_API.js';
 
 const headers = {
   'x-cache-control': 'no-cache',
-  'x-rapidapi-key': ciceroKey.tiktokKey.tiktokKey,
-  'x-rapidapi-host': ciceroKey.tiktokKey.tiktokHost
+  'x-rapidapi-key': private_key.TIKTOK_API_KEY,
+  'x-rapidapi-host': private_key.TIKTOK_API_HOST
 }
 
 export async function tiktokUserInfoAPI(key) {
   const options = {
     method: 'GET',
-    url: ciceroKey.tiktokKey.tiktokhostInfo,
+    url: private_key.TIKTOK_HOST_INFO,
     params: {
       uniqueId: key
     },
@@ -40,7 +41,7 @@ export async function tiktokPostAPI(key, cursors) {
   //Tiktok Post API
   const options = {
     method: 'GET',
-    url: ciceroKey.tiktokKey.tiktokhostContent,
+    url: private_key.TIKTOK_HOST_POSTS,
     params: {
       secUid: key,
       count: '50',
@@ -71,7 +72,7 @@ export async function tiktokCommentAPI(key, cursors) {
   //Insta Likes API
   const options = {
     method: 'GET',
-    url: ciceroKey.tiktokKey.tiktokhostComments,
+    url: private_key.TIKTOK_HOST_COMMENTS,
     params: {
       videoId: key,
       count: '100',
@@ -102,5 +103,4 @@ export async function tiktokCommentAPI(key, cursors) {
       reject (data);
     }  
   });
-
 }

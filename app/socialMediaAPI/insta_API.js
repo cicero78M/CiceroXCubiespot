@@ -1,17 +1,17 @@
 import axios from 'axios';
-import { ciceroKey } from '../database/new_query/sheet_query.js';
+import { private_key } from '../../app.js';
 
 export const { request } = axios;
 
 const headers = {
   'x-cache-control': 'no-cache',
-  'x-rapidapi-key': ciceroKey.instaKey.instakeyAPI,
-  'x-rapidapi-host': ciceroKey.instaKey.instahostAPI
+  'x-rapidapi-key': private_key.INSTA_API_KEY,
+  'x-rapidapi-host': private_key.INSTA_API_HOST
 }
 
 const headersnocache = {
-    'x-rapidapi-key': ciceroKey.instaKey.instakeyAPI,
-    'x-rapidapi-host': ciceroKey.instaKey.instahostAPI
+    'x-rapidapi-key': private_key.INSTA_API_KEY,
+    'x-rapidapi-host': private_key.INSTA_API_HOST
   }
 
 export async function instaFollowersAPI(key,pagination) {
@@ -36,7 +36,7 @@ export async function instaFollowersAPI(key,pagination) {
     //Insta Post API
     let options = {
         method: 'GET',
-        url: ciceroKey.instaKey.instaFollowers,
+        url: private_key.INSTA_HOST_FOLLOWERS,
         
         params: parameters,
         headers: headersnocache
@@ -86,7 +86,7 @@ export async function instaFollowingAPI(key,pagination) {
     //Insta Post API
     let options = {
         method: 'GET',
-        url: ciceroKey.instaKey.instaFollowing,
+        url: private_key.INSTA_HOST_FOLLOWING ,
         params: parameters,
         headers: headers
     };
@@ -114,7 +114,7 @@ export async function instaLikesAPI(key) {
     //Insta Likes API
     let options = {
         method: 'GET',
-        url: ciceroKey.instaKey.instahostLikes,
+        url: private_key.INSTA_HOST_LIKES,
         params: {
             code_or_id_or_url: key
         },
@@ -145,7 +145,7 @@ export async function instaPostAPI(key) {
     //Insta Post API
     let options = {
         method: 'GET',
-        url: ciceroKey.instaKey.instahostContent,
+        url: private_key.INSTA_HOST_POST,
         params: {
             username_or_id_or_url: key
         },
@@ -176,7 +176,7 @@ export async function instaPostInfoAPI(key) {
     //Insta Post API
     let options = {
         method: 'GET',
-        url: ciceroKey.instaKey.instapostInfo,
+        url: private_key.INSTA_HOST_POST_INFO,
         params: {
             code_or_id_or_url: key,
             include_insights: 'false'
@@ -208,7 +208,7 @@ export async function instaInfoAPI(key) {
     //Insta Post API
     let options = {
         method: 'GET',
-        url: ciceroKey.instaKey.instaUserInfo,
+        url: private_key.INSTA_HOST_USER_INFO,
         params: {
             username_or_id_or_url: key
         },
