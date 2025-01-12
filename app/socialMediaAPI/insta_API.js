@@ -88,7 +88,7 @@ export async function instaFollowingAPI(key,pagination) {
     //Insta Post API
     let options = {
         method: 'GET',
-        url: private_key.INSTA_HOST_FOLLOWING ,
+        url: private_key.INSTA_HOST_FOLLOWING,
         params: parameters,
         headers: headers
     };
@@ -147,7 +147,7 @@ export async function instaPostAPI(key) {
     //Insta Post API
     let options = {
         method: 'GET',
-        url: private_key.INSTA_HOST_POST,
+        url: private_key.INSTA_HOST_POSTS,
         params: {
             username_or_id_or_url: key
         },
