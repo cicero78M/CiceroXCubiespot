@@ -50,7 +50,7 @@ import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetikt
 import { warningReportInsta } from './app/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
-import 'dotenv/config'
+import 'dotenv/config';
 
 export const private_key = process.env;
 
