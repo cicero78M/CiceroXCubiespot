@@ -23,7 +23,6 @@ import { set } from 'simple-banner';
 //Schedule
 
 //Local Dependency
-import { saveContacts } from './app/database/saveContact.js';
 import { myData } from './app/database_query/myData.js';
 import { infoView } from './app/view/info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
@@ -50,7 +49,10 @@ import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetikt
 import { warningReportInsta } from './app/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
+
 import 'dotenv/config';
+import { saveContacts } from './app/database/utils/saveContact.js';
+
 //.env
 const private_key = process.env;
 
@@ -1493,9 +1495,8 @@ client.on('message', async (msg) => {
                     }
                 } else if(dataTransfer.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
-                        case "client2json":{
-                            clientData2Json();
-                        }
+                        case "client2json":
+                            
 
                             break;
                     default:
