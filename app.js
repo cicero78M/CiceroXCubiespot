@@ -49,9 +49,9 @@ import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetikt
 import { warningReportInsta } from './app/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
+import { saveContacts } from './app/database/utils/saveContact.js';
 
 import 'dotenv/config';
-import { saveContacts } from './app/database/utils/saveContact.js';
 
 //.env
 const private_key = process.env;
