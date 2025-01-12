@@ -7,7 +7,7 @@ export async function clientData2Json() {
         'ClientData'
     ).then(
         async response => {
-            console.log(response);
+            console.log(response.data);
             console.log(response.lenght);
             for (let i = 0; i < response.lenght; i++){
                 console.log(await response[i]);
