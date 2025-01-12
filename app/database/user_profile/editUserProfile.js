@@ -2,9 +2,10 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 //Local Import
-import { ciceroKey, googleAuth, newRowsData } from '../new_query/sheet_query.js';
+import { ciceroKey, googleAuth } from '../new_query/sheet_query.js';
 import { myData } from '../../database_query/myData.js';
 import { propertiesView } from '../../view/properties_view.js';
+import { client } from '../../../app.js';
 
 //This Function for edit user data profile
 export async function editProfile(clientName, idKey, newData, phone, type) {
