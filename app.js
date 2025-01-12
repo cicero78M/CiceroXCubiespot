@@ -52,12 +52,10 @@ import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
 import 'dotenv/config';
 
-export const private_key = process.env;
-
-console.log(private_key.INSTA_HOST_POST_INFO);
+const private_key = process.env;
 
 // Routing Port 
-const port = ciceroKey.port;
+const port = private_key.EXPRESS_PORT;
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
 });
@@ -65,7 +63,7 @@ app.listen(port, () => {
 // WWEB JS Client Constructor
 export const client = new Client({
     authStrategy: new LocalAuth({
-        clientId: ciceroKey.waSession,
+        clientId: private_key.APP_SESSION_NAME,
     }),
 });
 
