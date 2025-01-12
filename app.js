@@ -51,11 +51,12 @@ import { warningReportInsta } from './app/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
 import 'dotenv/config';
-
+//.env
 const private_key = process.env;
 
 // Routing Port 
 const port = private_key.EXPRESS_PORT;
+
 app.listen(port, () => {
     console.log(`Cicero System Start listening on port >>> ${port}`)
 });
@@ -1490,8 +1491,19 @@ client.on('message', async (msg) => {
                         default:
                             break;                    
                     }
-                //Key Order Data Not Exist         
-                } else {
+                } else if(dataTransfer.includes(splittedMsg[1].toLowerCase())){
+                    switch (splittedMsg[1].toLowerCase()){
+                        case "client2json":{
+                            clientData2Json();
+                        }
+
+                            break;
+                    default:
+                        break
+                    }
+
+                } else {//Key Order Data Not Exist         
+
 
                     await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
                         async clientRows => {

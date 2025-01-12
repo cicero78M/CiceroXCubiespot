@@ -59,3 +59,7 @@ export const generateSocmed = [
     "instainfo", 
     "officialfollowers"
 ];
+
+export const dataTransfer = [
+    "client2json"
+];
