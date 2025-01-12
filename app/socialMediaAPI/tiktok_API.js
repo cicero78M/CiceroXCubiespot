@@ -1,5 +1,4 @@
 import { private_key } from '../../app.js';
-import { ciceroKey } from '../database/new_query/sheet_query.js';
 import { request } from './insta_API.js';
 
 const headers = {
