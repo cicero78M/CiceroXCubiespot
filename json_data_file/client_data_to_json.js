@@ -9,7 +9,7 @@ export async function clientData2Json() {
         async data => {
             console.log(data);
             for (let i = 0; i < data.length; i++){
-                console.log(data[i]);
+                console.log(data[i].get("STATUS"));
             };
         }
     );
