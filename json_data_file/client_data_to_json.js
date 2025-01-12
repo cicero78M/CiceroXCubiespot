@@ -6,11 +6,10 @@ export async function clientData2Json() {
         ciceroKey.dbKey.clientDataID, 
         'ClientData'
     ).then(
-        response => {
-            for (let i =0; i < response.lenght; i++){
-                console.log(response[i]);
+        async response => {
+            for (let i = 0; i < response.lenght; i++){
+                console.log(await response[i]);
             };
-
         }
     );
 }
