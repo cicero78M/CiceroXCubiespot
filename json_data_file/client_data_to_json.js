@@ -14,7 +14,6 @@ export async function clientData2Json() {
 
                 let clientData = new Object();
 
-                console.log(encrypted(data[i].get("CLIENT_ID")));
                 
                 clientData.CLIENT_ID = encrypted(data[i].get("CLIENT_ID"));
                 clientData.TYPE = encrypted(data[i].get("TYPE"));
@@ -29,12 +28,13 @@ export async function clientData2Json() {
                 clientData.SECUID = encrypted(data[i].get("SECUID"));
 
                 client.push(clientData);
+                console.log(encrypted(data[i].get("CLIENT_ID")));
 
             //    console.log(client);                
             };
     });
 
-    console.log(JSON.parse(readFileSync('json_data_file/client_data.json')));    
+    //console.log(JSON.parse(readFileSync('json_data_file/client_data.json')));    
     writeFileSync('json_data_file/client_data.json', JSON.stringify(client));
 
 }
