@@ -43,6 +43,6 @@ export async function clientData2Json() {
        }
    )
 
-   writeFile('json_data_file/client_data.json', JSON.stringify(client));
+   writeFile('json_data_file/client_data.json', client);
 
 }
