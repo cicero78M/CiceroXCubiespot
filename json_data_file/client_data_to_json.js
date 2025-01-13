@@ -28,5 +28,5 @@ export async function clientData2Json() {
             //    console.log(client);                
             };
     });
-    console.log(JSON.parse(readFileSync('json_data_file/client_data.json')));
+    console.log(readFileSync('json_data_file/client_data.json'));
 }
