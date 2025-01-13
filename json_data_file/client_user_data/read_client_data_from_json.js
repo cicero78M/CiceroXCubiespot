@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { decrypted } from "../crypto";
+import { decrypted } from "../crypto.js";
 
 export async function clientData() {
     let data = JSON.parse(readFileSync('json_data_file/client_user_data/client_data.json'));
