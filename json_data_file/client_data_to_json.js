@@ -1,14 +1,19 @@
 import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js";
-import { existsSync } from "fs";
+import { readFile } from "fs";
 
-    if(existsSync('json_data_file/client_data.json')){
+    readFile('json_data_file/client_data.json', (err, data)=>{
 
-        console.log("File Exists");
-
-    } else {
-        console.log('file doesnt exist');
-    }
-
+        if(!err)
+           {
+   
+               console.log(data);
+       
+           } else {
+               console.log('file doesnt exist');
+           }
+        
+       }
+   )
 
 let client = [];
 
@@ -36,6 +41,4 @@ export async function clientData2Json() {
             //    console.log(client);                
             };
     });
-
-    
 }
