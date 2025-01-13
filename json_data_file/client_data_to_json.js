@@ -39,8 +39,7 @@ export async function clientData2Json() {
 
                 client.push(clientData);
 
-                let json = JSON.stringify(client);
-                writeFile('json_data_file/client_data.json', json);
+                writeFile('json_data_file/client_data.json', JSON.stringify(client));
             //    console.log(client);                
             };
     });
