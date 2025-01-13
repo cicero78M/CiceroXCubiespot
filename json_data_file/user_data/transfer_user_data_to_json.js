@@ -29,7 +29,7 @@ export async function transferUserData(clientID) {
                     client.push(userData);
                 };
     
-                writeFileSync(`json_data_file/client_data/${clientID}.json`, JSON.stringify(client));
+                writeFileSync(`json_data_file/user_data/${clientID}.json`, JSON.stringify(client));
                 resolve (`${clientID} JSON Data Successfully Added.`);
             }
         );
