@@ -1,4 +1,5 @@
 import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
+import { encrypted } from "../crypto.js";
 
 export async function transferUserData(clientID) {
     return new Promise(async (resolve, reject) => {
