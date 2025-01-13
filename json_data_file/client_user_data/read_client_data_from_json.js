@@ -8,7 +8,7 @@ export async function clientData() {
 
     for (let i = 0; i < data.lenght; i++){
 
-        console.log(decrypted(dataItems[i].get("INSTAGRAM")));
+        console.log(decrypted(data[i].INSTAGRAM));
 
         let dataItems = data[i];
 
