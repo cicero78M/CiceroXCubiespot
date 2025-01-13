@@ -1,20 +1,6 @@
 import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js";
 import { readFile, writeFile } from "fs";
 
-    readFile('json_data_file/client_data.json', (err, data)=>{
-
-        if(!err)
-           {
-   
-               console.log(data);
-       
-           } else {
-               console.log('file doesnt exist');
-           }
-        
-       }
-   )
-
 let client = [];
 
 export async function clientData2Json() {
@@ -39,8 +25,24 @@ export async function clientData2Json() {
 
                 client.push(clientData);
 
-                writeFile('json_data_file/client_data.json', JSON.stringify(client));
             //    console.log(client);                
             };
     });
+
+    readFile('json_data_file/client_data.json', (err, data)=>{
+
+        if(!err)
+           {
+   
+               console.log(data);
+       
+           } else {
+               console.log('file doesnt exist');
+           }
+        
+       }
+   )
+
+   writeFile('json_data_file/client_data.json', JSON.stringify(client));
+
 }
