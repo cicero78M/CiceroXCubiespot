@@ -1,4 +1,4 @@
-import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query";
+import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
 
 export async function transferUserData(clientID) {
     return new Promise(async (resolve, reject) => {
