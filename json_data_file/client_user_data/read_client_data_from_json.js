@@ -11,26 +11,24 @@ export async function clientData() {
 
         console.log(data[i]);
 
-        // let dataItems = data[i];
+        let dataItems = data[i];
 
-        // let clientData = new Object();
+        let clientData = new Object();
                         
-        // clientData.CLIENT_ID = await decrypted(dataItems[i].get("CLIENT_ID"));
-        // clientData.TYPE = await decrypted(dataItems[i].get("TYPE"));
-        // clientData.STATUS = await decrypted(dataItems[i].get("STATUS"));
-        // clientData.INSTAGRAM = await decrypted(dataItems[i].get("INSTAGRAM"));
-        // clientData.TIKTOK = await decrypted(dataItems[i].get("TIKTOK"));
-        // clientData.INSTA_STATE = await decrypted(dataItems[i].get("INSTA_STATE"));
-        // clientData.TIKTOK_STATE = await decrypted(dataItems[i].get("TIKTOK_STATE"));
-        // clientData.SUPERVISOR = await decrypted(dataItems[i].get("SUPERVISOR"));
-        // clientData.OPERATOR = await decrypted(dataItems[i].get("OPERATOR"));
-        // clientData.GROUP = await decrypted(dataItems[i].get("GROUP"));
-        // clientData.SECUID = await decrypted(dataItems[i].get("SECUID"));
+        clientData.CLIENT_ID = await decrypted(dataItems.CLIENT_ID);
+        clientData.TYPE = await decrypted(dataItems.TYPE);
+        clientData.STATUS = await decrypted(dataItems.STATUS);
+        clientData.INSTAGRAM = await decrypted(dataItems.INSTAGRAM);
+        clientData.TIKTOK = await decrypted(dataItems.TIKTOK);
+        clientData.INSTA_STATE = await decrypted(dataItems.INSTA_STATE);
+        clientData.TIKTOK_STATE = await decrypted(dataItems.TIKTOK_STATE);
+        clientData.SUPERVISOR = await decrypted(dataItems.SUPERVISOR);
+        clientData.OPERATOR = await decrypted(dataItems.OPERATOR);
+        clientData.GROUP = await decrypted(dataItems.GROUP);
+        clientData.SECUID = await decrypted(dataItems.SECUID);
 
-        // client.push(clientData);
-
-
-        // console.log(client);
+        client.push(clientData);
+        console.log(client);
 
     }
 
