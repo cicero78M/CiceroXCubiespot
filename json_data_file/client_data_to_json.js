@@ -13,7 +13,6 @@ export async function clientData2Json() {
             for (let i = 0; i < data.length; i++){
 
                 let clientData = new Object();
-
                 
                 clientData.CLIENT_ID = await encrypted(data[i].get("CLIENT_ID"));
                 clientData.TYPE = await encrypted(data[i].get("TYPE"));
@@ -28,7 +27,6 @@ export async function clientData2Json() {
                 clientData.SECUID = await encrypted(data[i].get("SECUID"));
 
                 client.push(clientData);
-                console.log(await encrypted(data[i].get("CLIENT_ID")));
 
             //    console.log(client);                
             };
