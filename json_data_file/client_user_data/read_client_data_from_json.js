@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import { decrypted } from "../crypto";
 
 export async function clientData() {
     let data = JSON.parse(readFileSync('json_data_file/client_user_data/client_data.json'));
@@ -21,7 +22,6 @@ export async function clientData() {
         clientData.SECUID = await decrypted(dataItems[i].get("SECUID"));
 
         console.log(clientData);
-
 
     }
 
