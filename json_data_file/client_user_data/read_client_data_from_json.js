@@ -2,11 +2,12 @@ import { readFileSync } from "fs";
 import { decrypted } from "../crypto.js";
 
 export async function clientData() {
-    let data = JSON.parse(readFileSync('json_data_file/client_user_data/client_data.json'));
-    console.log(data);
+    let data = [];
+    data = JSON.parse(readFileSync('json_data_file/client_user_data/client_data.json'));
+    console.log(data.length);
     // let client = [];
 
-    for (let i = 0; i < data.lenght; i++){
+    for (let i = 0; i < data.length; i++){
 
         console.log(data[i]);
 
