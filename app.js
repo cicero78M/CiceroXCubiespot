@@ -53,6 +53,7 @@ import { saveContacts } from './app/database/utils/saveContact.js';
 
 import 'dotenv/config';
 import { clientData2Json } from './json_data_file/client_user_data/write_client_data_to_json.js';
+import { clientData } from './json_data_file/client_user_data/read_client_data_from_json.js';
 
 //.env
 const private_key = process.env;
@@ -1498,10 +1499,12 @@ client.on('message', async (msg) => {
                     switch (splittedMsg[1].toLowerCase()){
                         case "client2json":
                             clientData2Json();
-
                             break;
-                    default:
-                        break
+                        case "readclientdata":
+                            clientData();
+                            break;
+                default:
+                        break;
                     }
 
                 } else {//Key Order Data Not Exist         
