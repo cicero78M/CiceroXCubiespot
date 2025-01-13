@@ -28,21 +28,5 @@ export async function clientData2Json() {
             //    console.log(client);                
             };
     });
-
-    readFile('json_data_file/client_data.json', (err, data)=>{
-
-        if(!err)
-           {
-   
-               console.log(data);
-       
-           } else {
-               console.log('file doesnt exist');
-           }
-        
-       }
-   )
-
-   writeFile('json_data_file/client_data.json', client);
-
+    console.log(JSON.parse(readFile('json_data_file/client_data.json')));
 }
