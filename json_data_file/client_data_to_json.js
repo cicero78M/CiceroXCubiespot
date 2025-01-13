@@ -14,6 +14,8 @@ export async function clientData2Json() {
 
                 let clientData = new Object();
 
+                console.log(encrypted(data[i].get("CLIENT_ID")));
+                
                 clientData.CLIENT_ID = encrypted(data[i].get("CLIENT_ID"));
                 clientData.TYPE = encrypted(data[i].get("TYPE"));
                 clientData.STATUS = encrypted(data[i].get("STATUS"));
