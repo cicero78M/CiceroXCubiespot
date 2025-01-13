@@ -5,7 +5,7 @@ export async function clientData() {
     let data = [];
     data = JSON.parse(readFileSync('json_data_file/client_user_data/client_data.json'));
     console.log(data.length);
-    // let client = [];
+     let client = [];
 
     for (let i = 0; i < data.length; i++){
 
@@ -15,7 +15,7 @@ export async function clientData() {
 
         let clientData = new Object();
                         
-        clientData.CLIENT_ID = await decrypted(dataItems.CLIENT_ID);
+        clientData.CLIENT_ID = (await decrypted(dataItems.CLIENT_ID));
         clientData.TYPE = await decrypted(dataItems.TYPE);
         clientData.STATUS = await decrypted(dataItems.STATUS);
         clientData.INSTAGRAM = await decrypted(dataItems.INSTAGRAM);
