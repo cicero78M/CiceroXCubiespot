@@ -2,8 +2,6 @@ import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js
 
 import { readFileSync } from 'fs';
 
-let data = readFileSync('./json_data_file/client_data.json');
-let jsonData = JSON.parse(data);
 
 export async function clientData2Json() {
 
@@ -28,9 +26,8 @@ export async function clientData2Json() {
                 clientData.GROUP = data[i].get("GROUP");
                 clientData.SECUID = data[i].get("SECUID");
 
-                let client = new Object();
 
-                console.log(client);                
+                console.log(clientData);                
             };
         }
     );
