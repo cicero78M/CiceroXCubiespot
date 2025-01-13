@@ -31,5 +31,5 @@ export async function clientData2Json() {
             };
     });
 
-    writeFileSync('client_user_data/client_data.json', JSON.stringify(client));
+    writeFileSync('json_data_file/client_user_data/client_data.json', JSON.stringify(client));
 }
