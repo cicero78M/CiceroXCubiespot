@@ -1,6 +1,6 @@
-import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js";
 import { writeFileSync } from "fs";
-import { encrypted } from "./crypto.js";
+import { encrypted } from "../crypto.js";
+import { ciceroKey } from "../../app/database/new_query/sheet_query.js";
 
 let client = [];
 
@@ -28,11 +28,8 @@ export async function clientData2Json() {
 
                 client.push(clientData);
 
-            //    console.log(client);                
             };
     });
 
-    //console.log(JSON.parse(readFileSync('json_data_file/client_data.json')));    
-    writeFileSync('json_data_file/client_data.json', JSON.stringify(client));
-
+    writeFileSync('client_user_data/client_data.json', JSON.stringify(client));
 }

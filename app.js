@@ -52,7 +52,7 @@ import { schedule } from 'node-cron';
 import { saveContacts } from './app/database/utils/saveContact.js';
 
 import 'dotenv/config';
-import { clientData2Json } from './json_data_file/client_data_to_json.js';
+import { clientData2Json } from './json_data_file/client_user_data/write_client_data_to_json.js';
 
 //.env
 const private_key = process.env;
