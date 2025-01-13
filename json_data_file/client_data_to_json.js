@@ -29,5 +29,5 @@ export async function clientData2Json() {
             };
     });
     console.log(JSON.parse(readFileSync('json_data_file/client_data.json')));
-    writeFileSync('json_data_file/client_data.json', JSON.stringify(clientData));
+    writeFileSync('json_data_file/client_data.json', JSON.stringify(client));
 }
