@@ -3,8 +3,11 @@ import { decrypted } from "../crypto.js";
 
 export async function clientData() {
     let data = JSON.parse(readFileSync('json_data_file/client_user_data/client_data.json'));
+    console.log(data);
+
 
     for (let i = 0; i < data.lenght; i++){
+
         let dataItems = data[i];
 
         let clientData = new Object();

@@ -7,7 +7,7 @@ export async function encrypted(data) {
 }
 
 export async function decrypted(data) {
-    let decrypt = CryptoJS.AES.decrypt(data, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);
+    let decrypt = CryptoJS.AES.decrypt(data, process.env.SECRET_KEY).toString();
     console.log(decrypt);
     return decrypt;
 }
