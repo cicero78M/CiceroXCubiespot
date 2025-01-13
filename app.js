@@ -54,6 +54,7 @@ import { saveContacts } from './app/database/utils/saveContact.js';
 import 'dotenv/config';
 import { clientData2Json } from './json_data_file/client_user_data/write_client_data_to_json.js';
 import { clientData } from './json_data_file/client_user_data/read_client_data_from_json.js';
+import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
 
 //.env
 const private_key = process.env;
@@ -1503,12 +1504,27 @@ client.on('message', async (msg) => {
                         case "readclientdata":
                             clientData();
                             break;
-                default:
-                        break;
+                        case "user2json":
+                            clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length;i++){
+                                        transferUserData(response[i].CLIENT_ID)
+                                        .then(
+                                            response => {
+                                                console.log(response);
+                                            }
+                                        ).catch (
+                                            error => console.log(error)
+                                        );
+                                    }
+                                }
+                            )
+                            break;
+                        default:
+                            break;
                     }
 
                 } else {//Key Order Data Not Exist         
-
 
                     await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData').then(
                         async clientRows => {
