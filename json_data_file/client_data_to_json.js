@@ -1,8 +1,8 @@
 import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js";
 
-const fs = require('fs');
+import { existsSync } from 'fs';
 
-fs.existsSync('myjsonfile.json',(exists) =>
+existsSync('myjsonfile.json',(exists) =>
     {
     if(exists){
 
