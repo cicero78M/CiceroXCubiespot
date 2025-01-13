@@ -3,7 +3,7 @@ import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js
 import { existsSync } from 'fs';
 
 
-    if(existsSync('./json_data_file/client_data.json')){
+    if(existsSync('json_data_file/client_data.json')){
 
         console.log("File Exists");
 
