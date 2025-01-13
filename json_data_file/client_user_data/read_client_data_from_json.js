@@ -4,7 +4,7 @@ import { decrypted } from "../crypto.js";
 export async function clientData() {
     let data = JSON.parse(readFileSync('json_data_file/client_user_data/client_data.json'));
     console.log(data);
-
+    let client = [];
 
     for (let i = 0; i < data.lenght; i++){
 
@@ -24,7 +24,10 @@ export async function clientData() {
         clientData.GROUP = await decrypted(dataItems[i].get("GROUP"));
         clientData.SECUID = await decrypted(dataItems[i].get("SECUID"));
 
-        console.log(clientData);
+        client.push(clientData);
+
+
+        console.log(client);
 
     }
 
