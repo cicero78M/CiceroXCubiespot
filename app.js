@@ -52,8 +52,8 @@ import { schedule } from 'node-cron';
 import { saveContacts } from './app/database/utils/saveContact.js';
 
 import 'dotenv/config';
-import { clientData2Json } from './json_data_file/client_user_data/write_client_data_to_json.js';
-import { clientData } from './json_data_file/client_user_data/read_client_data_from_json.js';
+import { clientData2Json } from './json_data_file/client_data/write_client_data_to_json.js';
+import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
 
 //.env
