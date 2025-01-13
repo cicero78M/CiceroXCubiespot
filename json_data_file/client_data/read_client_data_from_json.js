@@ -30,6 +30,7 @@ export async function clientData() {
                 client.push(clientData);
         
             }
+            
             resolve (client);
         } catch (error) {
             reject (error)            

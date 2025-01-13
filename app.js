@@ -1502,7 +1502,11 @@ client.on('message', async (msg) => {
                             clientData2Json();
                             break;
                         case "readclientdata":
-                            clientData();
+                            clientData().then(
+                                response =>{
+                                    console.log(response);
+                                }
+                            );
                             break;
                         case "user2json":
                             clientData().then(
