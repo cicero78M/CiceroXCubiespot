@@ -9,8 +9,6 @@ export async function clientData() {
 
     for (let i = 0; i < data.length; i++){
 
-        console.log(data[i]);
-
         let dataItems = data[i];
 
         let clientData = new Object();
