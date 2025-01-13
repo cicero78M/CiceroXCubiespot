@@ -1,5 +1,5 @@
 import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js";
-import { readFile } from "fs";
+import { readFile, writeFile } from "fs";
 
     readFile('json_data_file/client_data.json', (err, data)=>{
 
@@ -38,6 +38,9 @@ export async function clientData2Json() {
                 clientData.SECUID = data[i].get("SECUID");
 
                 client.push(clientData);
+
+                let json = JSON.stringify(client);
+                writeFile('json_data_file/client_data.json', json);
             //    console.log(client);                
             };
     });
