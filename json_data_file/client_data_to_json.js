@@ -1,5 +1,5 @@
 import { ciceroKey, newRowsData } from "../app/database/new_query/sheet_query.js";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 let client = [];
 
@@ -29,4 +29,5 @@ export async function clientData2Json() {
             };
     });
     console.log(JSON.parse(readFileSync('json_data_file/client_data.json')));
+    writeFileSync('json_data_file/client_data.json', JSON.stringify(clientData));
 }
