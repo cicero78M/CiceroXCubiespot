@@ -5,9 +5,10 @@ export async function userData(clientName) {
     return new Promise(async (resolve, reject) => {
         try {
             let data = [];
+
             data = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}.json`));
 
-            console.log(data.length);
+            console.log(data);
             
             let client = [];
         
