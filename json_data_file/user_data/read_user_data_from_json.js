@@ -15,16 +15,17 @@ export async function userData(clientName) {
             for (let i = 0; i < data.length; i++){
                 
                 let userData = new Object();
-                userData.ID_KEY = await decrypted(data[i].get("ID_KEY"));
-                userData.NAMA = await decrypted(data[i].get("NAMA"));
-                userData.TITLE = await decrypted(data[i].get("TITLE"));
-                userData.DIVISI = await decrypted(data[i].get("DIVISI"));
-                userData.JABATAN = await decrypted(data[i].get("JABATAN"));
-                userData.STATUS = await decrypted(data[i].get("STATUS"));
-                userData.WHATSAPP = await decrypted(data[i].get("WHATSAPP"));
-                userData.INSTA = await decrypted(data[i].get("INSTA"));
-                userData.TIKTOK = await decrypted(data[i].get("TIKTOK"));
-                userData.EXCEPTION = await decrypted(data[i].get("EXCEPTION"));
+
+                userData.ID_KEY = await decrypted(data[i].ID_KEY);
+                userData.NAMA = await decrypted(data[i].NAMA);
+                userData.TITLE = await decrypted(data[i].TITLE);
+                userData.DIVISI = await decrypted(data[i].DIVISI);
+                userData.JABATAN = await decrypted(data[i].JABATAN);
+                userData.STATUS = await decrypted(data[i].STATUS);
+                userData.WHATSAPP = await decrypted(data[i].WHATSAPP);
+                userData.INSTA = await decrypted(data[i].INSTA);
+                userData.TIKTOK = await decrypted(data[i].TIKTOK);
+                userData.EXCEPTION = await decrypted(data[i].EXCEPTION);
         
                 client.push(clientData);
         
