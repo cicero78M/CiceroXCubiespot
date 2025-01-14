@@ -27,7 +27,7 @@ export async function userData(clientName) {
                 userData.TIKTOK = await decrypted(data[i].TIKTOK);
                 userData.EXCEPTION = await decrypted(data[i].EXCEPTION);
         
-                client.push(clientData);
+                client.push(userData);
         
             }
             
