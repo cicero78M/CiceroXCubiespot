@@ -142,3 +142,6 @@ ciceroKey.json
 instaKey.json
 dbKey.json
 client_data.json
+
+# User Data
+user_data/*.json
