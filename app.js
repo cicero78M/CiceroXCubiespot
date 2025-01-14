@@ -10,6 +10,9 @@ const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 import wwebjs from 'whatsapp-web.js';
 const { Client, LocalAuth } = wwebjs;
 
+//.env
+import 'dotenv/config';
+
 //QR-Code
 import qrcode from 'qrcode-terminal';
 
@@ -51,7 +54,6 @@ import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
 import { saveContacts } from './app/database/utils/saveContact.js';
 
-import 'dotenv/config';
 import { clientData2Json } from './json_data_file/client_data/write_client_data_to_json.js';
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
@@ -1526,9 +1528,18 @@ client.on('message', async (msg) => {
                             )
                             break;
                         case "readuserdata":
-                            userData().then(
-                                response =>{
-                                    console.log(response);
+                            clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length;i++){
+                                        userData(response[i].CLIENT_ID)
+                                        .then(
+                                            response => {
+                                                console.log(response);
+                                            }
+                                        ).catch (
+                                            error => console.log(error)
+                                        );
+                                    }
                                 }
                             );
                             break;
