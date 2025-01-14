@@ -55,6 +55,7 @@ import 'dotenv/config';
 import { clientData2Json } from './json_data_file/client_data/write_client_data_to_json.js';
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
+import { userData } from './json_data_file/user_data/read_user_data_from_json.js';
 
 //.env
 const private_key = process.env;
@@ -1523,6 +1524,13 @@ client.on('message', async (msg) => {
                                     }
                                 }
                             )
+                            break;
+                        case "readuserdata":
+                            userData().then(
+                                response =>{
+                                    console.log(response);
+                                }
+                            );
                             break;
                         default:
                             break;

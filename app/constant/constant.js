@@ -63,5 +63,6 @@ export const generateSocmed = [
 export const dataTransfer = [
     "client2json",
     "readclientdata",
-    "user2json"
+    "user2json",
+    "readuserdata"
 ];
