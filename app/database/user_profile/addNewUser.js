@@ -31,12 +31,12 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
     //Collect ID_KEY List String
     for (let i = 0; i < userRows.length; i++) {
 
-      if(userRows[i].get('ID_KEY') === dataKey){
+      if(parseInt(userRows[i].get('ID_KEY')) === dataKey){
         idExist = true;
       }
       
-      if (!idKeyList.includes(userRows[i].get('ID_KEY'))) {
-        idKeyList.push(userRows[i].get('ID_KEY'));
+      if (!idKeyList.includes(parseInt(userRows[i].get('ID_KEY')))) {
+        idKeyList.push(parseInt(userRows[i].get('ID_KEY')));
       }
     }
 
