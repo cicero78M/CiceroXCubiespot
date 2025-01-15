@@ -3,11 +3,12 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
 import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
+import { decrypted } from '../../../json_data_file/crypto.js';
 
 export async function getTiktokPost(clientValue) {
 
-    const clientName = clientValue.get('CLIENT_ID');
-    const secUid = clientValue.get('SECUID');
+    const clientName = decrypted(clientValue.get('CLIENT_ID'));
+    const secUid = decrypted(clientValue.get('SECUID'));
 
     console.log(`${clientName} Execute Tiktok Post Data`);
     client.sendMessage('6281235114745@c.us', "Execute Tiktok Post Data");
@@ -31,7 +32,7 @@ export async function getTiktokPost(clientValue) {
             let hasContent = false;
             let hasShortcode = false;
         
-            if (clientValue.get('STATUS') === 'TRUE') {
+            if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
 
                 await tiktokPostAPI(secUid, cursor).then( async response =>{
     

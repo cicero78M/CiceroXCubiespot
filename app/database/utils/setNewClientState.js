@@ -1,6 +1,7 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { ciceroKey, googleAuth } from '../new_query/sheet_query';
+import { ciceroKey, googleAuth } from '../new_query/sheet_query.js';
+import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 
 export async function setNewClientState(clientName, newstate) {
 
@@ -9,15 +10,15 @@ export async function setNewClientState(clientName, newstate) {
         const clientDoc = new GoogleSpreadsheet(ciceroKey.dbKey.clientDataID, googleAuth); //Google Auth
         await clientDoc.loadInfo(); // loads document properties and worksheets
 
-        const clientSheet = clientDoc.sheetsByTitle['ClientData'];
+        const clientSheet = clientDoc.sheetsByTitle['ClientData_Enc'];
         const clientRows = await clientSheet.getRows();
 
         let isClient = false;
 
         for (let i = 0; i < clientRows.length; i++) {
-            if (clientRows[i].get('CLIENT_ID') === clientName) {
+            if (decrypted(clientRows[i].get('CLIENT_ID')) === clientName) {
                 isClient = true;
-                clientRows[i].assign({ STATUS: newstate });; // Updae State Value
+                clientRows[i].assign({ STATUS: encrypted(newstate) });; // Updae State Value
                 await clientRows[i].save(); //save update
 
                 let response = {
@@ -26,9 +27,7 @@ export async function setNewClientState(clientName, newstate) {
                     code: 200
                 };
 
-                clientDoc.delete;
                 console.log('Return Success');
-
                 return response;
             }
         }
@@ -39,9 +38,8 @@ export async function setNewClientState(clientName, newstate) {
                 state: true,
                 code: 200
             };
-            console.log('Return Success');
-            clientDoc.delete;
 
+            console.log('Return Success');
             return responseData;
         }
     } catch (error) {
@@ -53,8 +51,6 @@ export async function setNewClientState(clientName, newstate) {
         };
 
         console.log(error);
-        targetDoc.delete;
-
         return responseData;
     }
 }

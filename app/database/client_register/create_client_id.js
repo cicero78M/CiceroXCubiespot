@@ -6,6 +6,7 @@
  */
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { ciceroKey, googleAuth } from "../new_query/sheet_query.js";
+import { encrypted } from "../../../json_data_file/crypto.js";
 
 export async function createClientID(clientName, type) {
 
@@ -56,9 +57,9 @@ export async function createClientID(clientName, type) {
                     } else {
                         
                         await sheetName.addRow({
-                            CLIENT_ID: clientName, 
-                            TYPE: type, 
-                            STATUS: true 
+                            CLIENT_ID: encrypted(clientName), 
+                            TYPE: encrypted(type), 
+                            STATUS: encrypted(true) 
                         });
                         
                         response = {

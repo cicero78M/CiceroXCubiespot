@@ -1,4 +1,5 @@
 import { client } from "../../app.js";
+import { decrypted } from "../../json_data_file/crypto.js";
 import { ciceroKey, newRowsData } from "../database/new_query/sheet_query.js";
 import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
@@ -23,20 +24,20 @@ export async function schedullerAllSocmed(
 
         await newRowsData(
             ciceroKey.dbKey.clientDataID, 
-            'ClientData'
+            'ClientData_Enc'
         ).then( 
             async clientData =>{
                 for (let i = 0; i < clientData.length; i++){
             
                     //This Procces Tiktok Report
-                    if (clientData[i].get('STATUS') === "TRUE" 
-                    && clientData[i].get('TIKTOK_STATE') === "TRUE" 
-                    && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                        console.log(`${time} ${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK DATA`);
+                    if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
+                    && decrypted(clientData[i].get('TIKTOK_STATE')) === "TRUE" 
+                    && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                        console.log(`${time} ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
-                            ` ${clientData[i].get('CLIENT_ID')} START LOAD TIKTOK DATA`
+                            ` ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK DATA`
                         );
                         
                         await getTiktokPost(
@@ -50,10 +51,10 @@ export async function schedullerAllSocmed(
                                             case 'report':
                          
                                                sendClientResponse(
-                                                    clientData[i].get('CLIENT_ID'), 
-                                                    clientData[i].get('SUPERVISOR'),
-                                                    clientData[i].get('OPERATOR'),
-                                                    clientData[i].get('GROUP'), 
+                                                    decrypted(clientData[i].get('CLIENT_ID')), 
+                                                    decrypted(clientData[i].get('SUPERVISOR')),
+                                                    decrypted(clientData[i].get('OPERATOR')),
+                                                    decrypted(clientData[i].get('GROUP')), 
                                                     data, 
                                                     'REPORT TIKTOK'
                                                 );                                            
@@ -88,10 +89,10 @@ export async function schedullerAllSocmed(
                                                     case 'report':
                                     
                                                         sendClientResponse(
-                                                            clientData[i].get('CLIENT_ID'), 
-                                                            clientData[i].get('SUPERVISOR'),
-                                                            clientData[i].get('OPERATOR'),
-                                                            clientData[i].get('GROUP'), 
+                                                            decrypted(clientData[i].get('CLIENT_ID')), 
+                                                            decrypted(clientData[i].get('SUPERVISOR')),
+                                                            decrypted(clientData[i].get('OPERATOR')),
+                                                            decrypted(clientData[i].get('GROUP')), 
                                                             data, 
                                                             'REPORT TIKTOK'
                                                         );                                            
@@ -143,14 +144,14 @@ export async function schedullerAllSocmed(
                     }         
 
                     //This process Insta Report
-                    if (clientData[i].get('STATUS') === "TRUE" 
-                    && clientData[i].get('INSTA_STATE') === "TRUE" 
-                    && clientData[i].get('TYPE') === ciceroKey.ciceroClientType) {
-                        console.log(`${time} ${clientData[i].get('CLIENT_ID')} START LOAD INSTA DATA`);
+                    if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
+                    && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
+                    && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                        console.log(`${time} ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
-                            `${clientData[i].get('CLIENT_ID')} START LOAD INSTA DATA`
+                            `${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA DATA`
                         );
                         
                         await getInstaPost(
@@ -159,10 +160,11 @@ export async function schedullerAllSocmed(
                             async instaPostData =>{
                                 switch (instaPostData.code){
                                     case 201:
-                                        sendClientResponse(clientData[i].get('CLIENT_ID'), 
-                                            clientData[i].get('SUPERVISOR'),
-                                            clientData[i].get('OPERATOR'),
-                                            clientData[i].get('GROUP'), 
+                                        sendClientResponse(
+                                            decrypted(clientData[i].get('CLIENT_ID')), 
+                                            decrypted(clientData[i].get('SUPERVISOR')),
+                                            decrypted(clientData[i].get('OPERATOR')),
+                                            decrypted(clientData[i].get('GROUP')), 
                                             instaPostData, 
                                             'REPORT INSTA'
                                         );    
@@ -192,10 +194,10 @@ export async function schedullerAllSocmed(
         
                                                             case 'report':
                                                                 sendClientResponse(
-                                                                    clientData[i].get('CLIENT_ID'), 
-                                                                    clientData[i].get('SUPERVISOR'),
-                                                                    clientData[i].get('OPERATOR'),
-                                                                    clientData[i].get('GROUP'), 
+                                                                    decrypted(clientData[i].get('CLIENT_ID')), 
+                                                                    decrypted(clientData[i].get('SUPERVISOR')),
+                                                                    decrypted(clientData[i].get('OPERATOR')),
+                                                                    decrypted(clientData[i].get('GROUP')), 
                                                                     data, 
                                                                     'REPORT TIKTOK'
                                                                 );            

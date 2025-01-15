@@ -2,14 +2,15 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { client } from "../../../app.js";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
+import { decrypted } from '../../../json_data_file/crypto.js';
 
 export async function getInstaPost(clientValue) {
   //Date Time
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
 
-  const clientName = clientValue.get('CLIENT_ID');
-  const instaAccount = clientValue.get('INSTAGRAM');
+  const clientName = decrypted(clientValue.get('CLIENT_ID'));
+  const instaAccount = decrypted(clientValue.get('INSTAGRAM'));
 
   console.log(clientName + " Collecting Insta Post Starting...");
   await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Starting...`);
@@ -27,7 +28,7 @@ export async function getInstaPost(clientValue) {
 
     try {
 
-      if (clientValue.get('STATUS') === 'TRUE') {
+      if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
   
         await instaPostAPI(instaAccount).then( async response =>{
 

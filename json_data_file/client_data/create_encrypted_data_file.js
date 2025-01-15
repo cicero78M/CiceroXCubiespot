@@ -2,9 +2,6 @@ import { encrypted } from "../crypto.js";
 import { ciceroKey, googleAuth, newRowsData } from "../../app/database/new_query/sheet_query.js";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 
-
-
-
 export async function encryptClientData() {
     let client = [];
 
@@ -43,5 +40,4 @@ export async function encryptClientData() {
 
         await clientSheet.addRows(client);
         return "Client Data Encrypted"
-
 }

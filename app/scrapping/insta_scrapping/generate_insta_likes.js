@@ -2,12 +2,13 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
 import { instaLikesAPI } from '../../socialMediaAPI/insta_API.js';
 import { client } from '../../../app.js';
+import { decrypted } from '../../../json_data_file/crypto.js';
 
 export async function getInstaLikes(todayItems, clientValue ) {
 
     console.log("Generate Username Insta Likes");
 
-    const clientName = clientValue.get('CLIENT_ID');
+    const clientName = decrypted(clientValue.get('CLIENT_ID'));
 
     let newData = 0;
     let updateData = 0;

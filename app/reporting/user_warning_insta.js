@@ -1,4 +1,5 @@
 import { client } from '../../app.js';
+import { decrypted } from '../../json_data_file/crypto.js';
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 
 export async function warningReportInsta(clientValue) {
@@ -7,7 +8,7 @@ export async function warningReportInsta(clientValue) {
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
       
-  const clientName = clientValue.get('CLIENT_ID');
+  const clientName = decrypted(clientValue.get('CLIENT_ID'));
 
 
   let data;
@@ -44,7 +45,7 @@ export async function warningReportInsta(clientValue) {
         );
 
         // If Client_ID exist. then get official content
-        if (clientValue.get('STATUS')) {   
+        if (decrypted(clientValue.get('STATUS'))) {   
           await newRowsData(
             ciceroKey.dbKey.instaOfficialID, 
             clientName
@@ -108,7 +109,7 @@ export async function warningReportInsta(clientValue) {
                   }          
                 }
 
-                for (let i = 0; i<notLikesList.length; i++){
+                for (let i = 0; i < notLikesList.length; i++){
                     if(notLikesList[i].get('WHATSAPP') != ""){
                       
                       console.log(`Send Warning messages to ${notLikesList[i].get('TITLE')} ${notLikesList[i].get('NAMA')} `);  

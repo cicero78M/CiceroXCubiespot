@@ -1,5 +1,6 @@
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { client } from '../../app.js';
+import { decrypted } from '../../json_data_file/crypto.js';
   
 export async function warningReportTiktok(clientValue) {
 
@@ -32,10 +33,10 @@ export async function warningReportTiktok(clientValue) {
                 let userNotComment = [];
                 let notCommentList = [];
 
-                const clientName = clientValue.get('CLIENT_ID');
-                const tiktokAccount = clientValue.get('TIKTOK');
+                const clientName = decrypted(clientValue.get('CLIENT_ID'));
+                const tiktokAccount = decrypted(clientValue.get('TIKTOK'));
 
-                if (clientValue.get('STATUS') === 'TRUE') {
+                if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
                     
                     await newRowsData(
                         ciceroKey.dbKey.userDataID, 
@@ -104,7 +105,7 @@ export async function warningReportTiktok(clientValue) {
                                     }
                                 }
                                 
-                                for (let i = 0; i<notCommentList.length; i++){
+                                for (let i = 0; i < notCommentList.length; i++){
                                     if(notCommentList[i].get('WHATSAPP') != ""){
 
                                         console.log(`Send Warning Tiktok messages to ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')} `);  
@@ -126,14 +127,17 @@ export async function warningReportTiktok(clientValue) {
                             code: 200
                           };
                           resolve (data);       
+
                     } else {
                         let responseData = {
                             data: 'Tidak ada Konten Data untuk di Olah',
                             state: true,
                             code: 201
                         };
+
                         console.log(responseData.data);
                         reject (responseData);
+                
                     }
                 } else {   
                     let responseData = {

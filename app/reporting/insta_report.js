@@ -1,3 +1,4 @@
+import { decrypted } from '../../json_data_file/crypto.js';
 import { newListValueData } from '../database/new_query/data_list_query.js';
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 
@@ -8,7 +9,7 @@ export async function newReportInsta(clientValue) {
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
   let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});   
       
-  const clientName = clientValue.get('CLIENT_ID');
+  const clientName = decrypted(clientValue.get('CLIENT_ID'));
 
   let notLikesName;
   let name;
@@ -61,7 +62,7 @@ export async function newReportInsta(clientValue) {
         );
 
         // If Client_ID exist. then get official content
-        if (clientValue.get('STATUS')) {   
+        if (decrypted(clientValue.get('STATUS'))) {   
           await newRowsData(
             ciceroKey.dbKey.instaOfficialID, 
             clientName
@@ -142,13 +143,13 @@ export async function newReportInsta(clientValue) {
                         notLikesName = notLikesList[iv].get('INSTA');
                       }
         
-                      if (clientValue.get('TYPE')  === "RES") {
+                      if (decrypted(clientValue.get('TYPE'))  === "RES") {
                       
                         userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesName);
                         divisiCounter++;
                         userCounter++;
                       
-                      } else if (clientValue.get('TYPE')  === "COM") {
+                      } else if (decrypted(clientValue.get('TYPE'))  === "COM") {
                       
                         name = notLikesList[iv].get('NAMA');
                         nameUpper = name.toUpperCase();
@@ -167,7 +168,7 @@ export async function newReportInsta(clientValue) {
         
                 let instaSudah = userAll - notLikesList.length;
         
-                if (clientValue.get('TYPE')  === 'COM') {
+                if (decrypted(clientValue.get('TYPE'))  === 'COM') {
                   data = {
                     data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" 
                       + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + "\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
@@ -176,7 +177,7 @@ export async function newReportInsta(clientValue) {
                     state: true,
                     code: 200
                   };
-                } else if (clientValue.get('TYPE')  === "RES") {
+                } else if (decrypted(clientValue.get('TYPE'))  === "RES") {
                   data = {
                     data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " 
                       + clientName + "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours 

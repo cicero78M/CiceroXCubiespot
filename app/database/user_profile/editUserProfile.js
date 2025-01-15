@@ -45,7 +45,6 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               if (dataList.includes(newData)) {
                 userRows[ii].assign({ DIVISI: newData });; // Update Divisi Value
               } else {
-                
                 propertiesView(clientName, "DIVISI").then(
                   async response =>{
                     client.sendMessage(phone+'@c.us', response.data);
@@ -58,14 +57,10 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       state: true,
                       code: 200
                     };
-
                     client.sendMessage(phone+'@c.us', responseData.data);
-
-
                   }
                 )
               }
-
 
             } else if (type === 'JABATAN') {
               userRows[ii].assign({ JABATAN : newData }); // Update Jabatan Value

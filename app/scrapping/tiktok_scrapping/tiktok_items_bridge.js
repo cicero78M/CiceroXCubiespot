@@ -1,4 +1,5 @@
 import { client } from "../../../app.js";
+import { decrypted } from "../../../json_data_file/crypto.js";
 import { newReportTiktok } from "../../reporting/tiktok_report.js";
 import { getTiktokComments } from "./generate_tiktok_comments.js";
 import { postTiktokUserComments } from "./post_username_comment_tiktok_data.js";
@@ -14,7 +15,7 @@ export async function tiktokItemsBridges(clientValue, items) {
                 
                 await getTiktokComments(items[i])
                 .then (async response =>{
-                    await postTiktokUserComments(clientValue.get('CLIENT_ID'), items[i], response.data)
+                    await postTiktokUserComments(decrypted(clientValue.get('CLIENT_ID')), items[i], response.data)
                     .then(async data => {
                         console.log(data);
                         await client.sendMessage('6281235114745@c.us', data.data);
