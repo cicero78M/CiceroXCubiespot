@@ -544,6 +544,7 @@ client.on('message', async (msg) => {
                                             responseData, 
                                             "Error Adding New User"
                                         );
+
                                         break;
     
                                     case "deleteuser":

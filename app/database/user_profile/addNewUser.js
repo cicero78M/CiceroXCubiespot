@@ -23,10 +23,14 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
 
     //Collect ID_KEY List String
     for (let i = 0; i < userRows.length; i++) {
+      
       if (!idKeyList.includes(userRows[i].get('ID_KEY'))) {
         idKeyList.push(userRows[i].get('ID_KEY'));
       }
+    
     }
+
+    console.log(idKeyList);
 
     let divisiList = [];
 
@@ -38,7 +42,9 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
     }
 
     if (divisiList.includes(divisi)) {
+
       if (!idKeyList.includes(idKey)) {
+
         console.log("Id key not exist");
 
         //Get Target Sheet Documents by Title
