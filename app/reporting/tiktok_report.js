@@ -134,11 +134,11 @@ export async function newReportTiktok(clientValue) {
                             for (let iv = 0; iv < notCommentList.length; iv++) {
                                 if (divisiList[iii] === notCommentList[iv].get('DIVISI')) {
 
-                                    if (clientValue.get('TYPE') === "RES") {
+                                    if (decrypted(clientValue.get('TYPE')) === "RES") {
                                         userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].get('TITLE') + ' ' + notCommentList[iv].get('NAMA') + ' - ' + notCommentList[iv].get('TIKTOK'));
                                         divisiCounter++;
                                         userCounter++;
-                                    } else if (clientValue.get('TYPE')  === "COM") {
+                                    } else if (decrypted(clientValue.get('TYPE'))  === "COM") {
                                         name = notCommentList[iv].get('NAMA');
                                         nameUpper = name.toUpperCase();
                                         userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].get('TIKTOK'));
