@@ -1,6 +1,6 @@
 //Google Spreadsheet
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { decrypted, encrypted } from '../../../json_data_file/crypto';
+import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 
 export async function setSecuid(clientValue) {
 
