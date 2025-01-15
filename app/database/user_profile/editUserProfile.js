@@ -31,7 +31,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
     }
 
     for (let ii = 0; ii < userRows.length; ii++) {
-      if (userRows[ii].get('ID_KEY') === idKey) {
+      if (parseInt(userRows[ii].get('ID_KEY')) === parseInt(idKey)) {
 
         if (userRows[ii].get('WHATSAPP') === "" 
         || userRows[ii].get('WHATSAPP') === phone 

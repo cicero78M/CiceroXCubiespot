@@ -21,7 +21,7 @@ export async function myData(clientName, idKey) {
           //Check if idKey Exist
           for (let i = 0; i < userRows.length; i++) {
   
-            if (userRows[i].get('ID_KEY') === idKey) {
+            if (parseInt(userRows[i].get('ID_KEY')) === parseInt(idKey)) {
   
               isUserExist = true;
               response = userRows[i];

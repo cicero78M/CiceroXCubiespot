@@ -72,15 +72,14 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         return responseMyData;
       
       } else {
-        let responseData = {
-          data: 'ID_Key is Exist, Try Another ID_Key',
-          state: true,
-          code: 201
-        };
+ 
+        let responseMyData = await myData(
+          clientName, 
+          dataKey
+        );
 
-        console.log('Return ID_Key used');
-        userDoc.delete;
-        return responseData;
+        return responseMyData;
+
       }
 
     } else {
