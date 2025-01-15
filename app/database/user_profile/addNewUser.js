@@ -60,7 +60,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
           
         let responseMyData = await myData(
           clientName, 
-          parseInt(idKey);
+          parseInt(idKey)
         );
           
         return responseMyData;
