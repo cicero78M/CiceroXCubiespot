@@ -323,7 +323,7 @@ client.on('message', async (msg) => {
                                 if (sheetID.includes('edit')){
                                     console.log(sheetID.split('/').pop());
                                 } else {
-                                    console.log(sheetID.split('/')[0])
+                                    console.log(sheetID.split('/')[-2])
                                 }
 
 
