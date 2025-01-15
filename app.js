@@ -321,9 +321,9 @@ client.on('message', async (msg) => {
                                 let sheetID = url.pathname.slice(1);
 
                                 if (sheetID.includes('edit')){
-                                    console.log(sheetID.split('/').pop());
-                                } else {
                                     console.log(sheetID.split('/')[-2])
+                                } else {
+                                    console.log(sheetID.split('/').pop());
                                 }
 
 
