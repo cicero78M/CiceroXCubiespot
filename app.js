@@ -318,10 +318,12 @@ client.on('message', async (msg) => {
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
                                 const url = new URL(splittedMsg[2]);
-                            
-                                if (url.pathname.slice(1).includes('edit')){
-                                    let sheetID = url.pathname.slice(1);
+                                let sheetID = url.pathname.slice(1);
+
+                                if (sheetID.includes('edit')){
                                     console.log(sheetID.split('/').pop());
+                                } else {
+                                    console.log(sheetID.split('/')[0])
                                 }
 
 
