@@ -43,13 +43,13 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
 
     if (divisiList.includes(divisi)) {
 
-      if (!idKeyList.includes(idKey)) {
+      if (!idKeyList.includes(parseInt(idKey))) {
 
         console.log("Id key not exist");
 
         //Get Target Sheet Documents by Title
         userSheet.addRow({ 
-          ID_KEY: idKey, 
+          ID_KEY: parseInt(idKey), 
           NAMA: name, 
           TITLE: title, 
           DIVISI: divisi, 
@@ -60,7 +60,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
           
         let responseMyData = await myData(
           clientName, 
-          idKey
+          parseInt(idKey);
         );
           
         return responseMyData;
