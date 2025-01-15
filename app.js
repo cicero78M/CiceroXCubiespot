@@ -317,7 +317,7 @@ client.on('message', async (msg) => {
 
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
-                                let sheetID = splittedMsg[2].substring(url.lastIndexOf('/') + 1);
+                                let sheetID = splittedMsg[2].substring(splittedMsg[2].lastIndexOf('/') + 1);
 
                                 console.log(sheetID);
 
