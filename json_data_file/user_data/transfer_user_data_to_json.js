@@ -16,6 +16,7 @@ export async function transferUserData(clientID) {
                     for (let i = 0; i < data.length; i++){
         
                         let userData = new Object();
+
                         userData.ID_KEY = await encrypted(data[i].get("ID_KEY"));
                         userData.NAMA = await encrypted(data[i].get("NAMA"));
                         userData.TITLE = await encrypted(data[i].get("TITLE"));
@@ -27,10 +28,12 @@ export async function transferUserData(clientID) {
                         userData.TIKTOK = await encrypted(data[i].get("TIKTOK"));
                         userData.EXCEPTION = await encrypted(data[i].get("EXCEPTION"));
                         client.push(userData);
+
                     };
         
                     writeFileSync(`json_data_file/user_data/${clientID}.json`, JSON.stringify(client));
                     resolve (`${clientID} JSON Data Successfully Added.`);
+
                 }
             );
         } catch (error) {

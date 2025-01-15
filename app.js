@@ -317,17 +317,12 @@ client.on('message', async (msg) => {
 
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
-                                const url = new URL(splittedMsg[2]);
-                                let sheetID = url.pathname.slice(1);
+                                let slicedData = splittedMsg[2].split('/');
+                                let sheetID = slicedData[slicedData.length-1];
 
-                                if (sheetID.includes('edit')){
-                                    console.log(sheetID.lastIndexOf('/')+1);
-                                } else {
-                                    console.log(sheetID.lastIndexOf('/').pop());
-                                }
+                                console.log(sheetID);
 
-
-
+ 
                                 // let responseData = await pushUserClient( //this trigger function to push user data from sheet to database
                                 //     splittedMsg[0].toUpperCase(), //this from splitted coontain Client Name
                                 //     splittedMsg[2], //this Contains Order
