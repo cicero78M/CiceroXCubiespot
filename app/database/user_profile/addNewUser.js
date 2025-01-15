@@ -5,9 +5,11 @@ import { myData } from '../../database_query/myData.js';
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
-  console.log('Execute');
+  console.log(parseInt(idKey));
 
   try {
+
+    
 
     const userDoc = new GoogleSpreadsheet(
       ciceroKey.dbKey.userDataID, 
@@ -30,7 +32,6 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
     
     }
 
-    console.log(idKeyList);
 
     let divisiList = [];
 
