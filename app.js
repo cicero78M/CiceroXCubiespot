@@ -1042,9 +1042,11 @@ client.on('message', async (msg) => {
                             ).then( 
                                 async clientData =>{
                                     for (let i = 0; i < clientData.length; i++){
+
                                         if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
                                         && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
                                         && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                                        
                                             console.log(time+" "+decrypted(clientData[i].get('CLIENT_ID'))+' START LOAD INSTA DATA');
                                             
                                             client.sendMessage(

@@ -9,7 +9,7 @@ export async function getTiktokPost(clientValue) {
 
     const clientName = decrypted(clientValue.get('CLIENT_ID'));
     const secUid = decrypted(clientValue.get('SECUID'));
-
+        
     console.log(`${clientName} Execute Tiktok Post Data`);
     client.sendMessage('6281235114745@c.us', "Execute Tiktok Post Data");
 
