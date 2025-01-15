@@ -39,8 +39,9 @@ export async function getTiktokComments(items) {
                 if (response.data.has_more === 1){    
                     setTimeout(async() => {
                         console.log('next data normal '+response.data.cursor);
+                        await forLoopGetComments(items, response.data.cursor);
+
                     }, 1200);
-                    await forLoopGetComments(items, response.data.cursor);
 
                 } else {    
                     if(total === response.data.cursor){
@@ -48,8 +49,9 @@ export async function getTiktokComments(items) {
                             switchPoint = 1;
                             setTimeout(async () => {
                                 console.log('next data switch point triggering '+response.data.cursor);
+                                await forLoopGetComments(items, response.data.cursor);
+
                             }, 1200);
-                            await forLoopGetComments(items, response.data.cursor);
 
                         } else {
                             let data = {
@@ -64,8 +66,9 @@ export async function getTiktokComments(items) {
                             if (dataUser != 0){
                                 setTimeout(async () => {
                                     console.log('next data not equals zero '+response.data.cursor);
+                                    await forLoopGetComments(items, response.data.cursor);
+
                                 }, 1200);
-                                await forLoopGetComments(items, response.data.cursor);
 
                             } else {
                                 let data = {
@@ -77,8 +80,9 @@ export async function getTiktokComments(items) {
                         } else {
                             setTimeout(async () => {
                                 console.log('next data over 400 '+response.data.cursor);
+                                await forLoopGetComments(items, response.data.cursor);
+
                             }, 1200); 
-                            await forLoopGetComments(items, response.data.cursor);
                    
                         }
                     }
