@@ -532,7 +532,7 @@ client.on('message', async (msg) => {
                                         //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
                                         responseData = await addNewUser(
                                             splittedMsg[0].toUpperCase(), 
-                                            splittedMsg[2], 
+                                            parseInt(splittedMsg[2]), 
                                             splittedMsg[3].toUpperCase(), 
                                             splittedMsg[4].toUpperCase(), 
                                             splittedMsg[5].toUpperCase(), 
