@@ -27,7 +27,10 @@ export async function schedullerAllSocmed(
             'ClientData_Enc'
         ).then( 
             async clientData =>{
+
                 for (let i = 0; i < clientData.length; i++){
+                    console.log(decrypted(clientData[i].get('STATUS')));
+
             
                     //This Procces Tiktok Report
                     if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
