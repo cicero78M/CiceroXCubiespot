@@ -72,17 +72,11 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       }
 
     } else {
- 
-      let responseData = {
-        data: 'Divisi Tidak Terdaftar',
-        state: true,
-        code: 201
-      };
 
       console.log('Return Divisi Tidak Terdaftar');
 
       await propertiesView(
-          splittedMsg[0].toUpperCase(), 
+          clientName, 
           "DIVISI"
       ).then(
         response =>
