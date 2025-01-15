@@ -4,9 +4,9 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 
 
 
-let client = [];
 
 export async function encryptClientData() {
+    let client = [];
 
     await newRowsData(
         ciceroKey.dbKey.clientDataID, 
@@ -41,7 +41,8 @@ export async function encryptClientData() {
         await  dataDoc.loadInfo(); // loads document properties and worksheets            
         let clientSheet = dataDoc.sheetsByTitle["ClientName_Enc"];
 
-        await clientSheet.addRows(client);
+        console.log(clientSheet);
+
         return "Client Data Encrypted"
 
 }
