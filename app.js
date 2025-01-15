@@ -316,17 +316,18 @@ client.on('message', async (msg) => {
                             console.log('Push User Res Client Triggered');
 
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
-                            
-                                console.log("Link True");
-                                console.log(splittedMsg[1].toUpperCase()+" Triggered");
 
-                                let responseData = await pushUserClient( //this trigger function to push user data from sheet to database
-                                    splittedMsg[0].toUpperCase(), //this from splitted coontain Client Name
-                                    splittedMsg[2], //this Contains Order
-                                    "RES" //this is Client Type 
-                                );
+                                let sheetID = splittedMsg[2].substring(url.lastIndexOf('/') + 1);
 
-                                await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
+                                console.log(sheetID);
+
+                                // let responseData = await pushUserClient( //this trigger function to push user data from sheet to database
+                                //     splittedMsg[0].toUpperCase(), //this from splitted coontain Client Name
+                                //     splittedMsg[2], //this Contains Order
+                                //     "RES" //this is Client Type 
+                                // );
+
+                                // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
                                                         
                             }  else {
                                 
@@ -485,8 +486,6 @@ client.on('message', async (msg) => {
                         }
                             break;
                     }
-    
-                    // //ClientName#pushnewuserres#linkspreadsheet
                     // if (splittedMsg[1].toLowerCase() === 'pushuserres'){
                     //     //Res Request
                     //     console.log('Push User Res Client Triggered');

@@ -26,11 +26,9 @@ export async function userData(clientName) {
                 userData.INSTA = await decrypted(data[i].INSTA);
                 userData.TIKTOK = await decrypted(data[i].TIKTOK);
                 userData.EXCEPTION = await decrypted(data[i].EXCEPTION);
-        
                 client.push(userData);
         
-            }
-            
+            }    
             resolve (client);
         } catch (error) {
             reject (error)            
