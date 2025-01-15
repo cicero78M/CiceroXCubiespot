@@ -80,9 +80,14 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       };
 
       console.log('Return Divisi Tidak Terdaftar');
-      userDoc.delete;
-      
-      return responseData;
+
+      await propertiesView(
+          splittedMsg[0].toUpperCase(), 
+          "DIVISI"
+      ).then(
+        response =>
+          resolve (response)
+      )
     }
   } catch (error) {
 

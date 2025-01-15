@@ -31,7 +31,7 @@ export async function getTiktokComments(items) {
                     if (commentItems[ii].user.unique_id != undefined || commentItems[ii].user.unique_id != null || commentItems[ii].user.unique_id != "") {
                         if (!newDataUsers.includes(commentItems[ii].user.unique_id)) {
                             newDataUsers.push(commentItems[ii].user.unique_id);
-                            dataUser++
+                            dataUser++;
                         }
                     }
                 }
@@ -76,7 +76,8 @@ export async function getTiktokComments(items) {
                                     state: true,
                                     code: 200
                                   };
-                                resolve (data);                        }
+                                resolve (data);                        
+                            }
                         } else {
                             setTimeout(async () => {
                                 console.log('next data over 400 '+response.data.cursor);
@@ -88,6 +89,8 @@ export async function getTiktokComments(items) {
                     }
                 }
             }). catch (error => {
+
+
                 let data = {
                     data: error,
                     state: false,
