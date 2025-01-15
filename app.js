@@ -58,6 +58,8 @@ import { clientData2Json } from './json_data_file/client_data/write_client_data_
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
 import { userData } from './json_data_file/user_data/read_user_data_from_json.js';
+import { pushUserCom, pushUserData, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
+import { encryptClientData } from './json_data_file/client_data/create_encrypted_data_file.js';
 
 //.env
 const private_key = process.env;
@@ -318,21 +320,26 @@ client.on('message', async (msg) => {
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
                                 let slicedData = splittedMsg[2].split('/');
+                                let sheetID;
 
                                 if (slicedData[slicedData.length-1].includes('edit')){
-                                    let sheetID = slicedData[slicedData.length-2];
+                                    sheetID = slicedData[slicedData.length-2];
                                     console.log(sheetID);
                                 } else {
-                                    let sheetID = slicedData[slicedData.length-1];
+                                    sheetID = slicedData[slicedData.length-1];
                                     console.log(sheetID);
                                 }
 
- 
-                                // let responseData = await pushUserClient( //this trigger function to push user data from sheet to database
-                                //     splittedMsg[0].toUpperCase(), //this from splitted coontain Client Name
-                                //     splittedMsg[2], //this Contains Order
-                                //     "RES" //this is Client Type 
-                                // );
+                                await pushUserRes(splittedMsg[0], sheetID)
+                                .then(
+                                    response =>
+                                    console.log(response)
+                                )
+                                .catch(
+                                    response =>
+                                    console.log(response)
+                                );
+
 
                                 // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
                                                         
@@ -351,25 +358,39 @@ client.on('message', async (msg) => {
 
                         case 'pushusercom': {
 
+                            //Com Request
                             console.log('Push User Com Client Triggered');
-                        
-                            if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
-                            
-                                console.log("Link True");
-                                console.log(splittedMsg[1].toUpperCase()+" Triggered");
-                                
-                                await pushUserClient(
-                                    splittedMsg[0].toUpperCase(), 
-                                    splittedMsg[2], 
-                                    "COM"
-                                ).then(async data => 
-                                    await sendMessage(msg.from, data, "PUSH USER COM CLIENT ERROR")
-                                ).catch(async error => 
-                                    await sendMessage(msg.from, error, "PUSH USER COM CLIENT ERROR")
-                                );
-                            } else {
 
+                            if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+
+                                let slicedData = splittedMsg[2].split('/');
+                                let sheetID;
+
+                                if (slicedData[slicedData.length-1].includes('edit')){
+                                    sheetID = slicedData[slicedData.length-2];
+                                    console.log(sheetID);
+                                } else {
+                                    sheetID = slicedData[slicedData.length-1];
+                                    console.log(sheetID);
+                                }
+
+                                await pushUserCom(splittedMsg[0], sheetID)
+                                .then(
+                                    response =>
+                                    console.log(response)
+                                )
+                                .catch(
+                                    response =>
+                                    console.log(response)
+                                );
+
+
+                                // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
+                                                        
+                            }  else {
+                                
                                 console.log('Bukan Spreadsheet Links');
+                                
                                 client.sendMessage(
                                     msg.from, 
                                     'Bukan Spreadsheet Links'
@@ -386,9 +407,9 @@ client.on('message', async (msg) => {
                                 splittedMsg[0].toUpperCase(), 
                                 splittedMsg[2].toUpperCase()
                             ).then(async data => 
-                                await sendMessage(msg.from, data, "PUSH USER RES CLIENT ERROR")
+                                await sendMessage(msg.from, data, "REGISTER CLIENT ERROR")
                             ).catch(async error => 
-                                await sendMessage(msg.from, error, "PUSH USER RES CLIENT ERROR")
+                                await sendMessage(msg.from, error, "REGISTER CLIENT ERROR")
                             );
                         }
                             break;
@@ -453,7 +474,7 @@ client.on('message', async (msg) => {
                         }
                             break;
                             
-                        default :{
+                        default : {
                             //Execute Send Warning
                             console.log("Execute Schedule");
                             newRowsData(
@@ -1339,6 +1360,9 @@ client.on('message', async (msg) => {
                                 }
                             );
                             break;
+                        case "encryptclientdata":
+                            console.log(await encryptClientData());
+
                         default:
                             break;
                     }
