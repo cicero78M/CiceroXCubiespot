@@ -320,9 +320,8 @@ client.on('message', async (msg) => {
                                 const url = new URL(splittedMsg[2]);
                             
                                 if (url.pathname.slice(1).includes('edit')){
-                                    let sheetID = url.pathname.slice(1);
-                                    console.log(sheetID);
-
+                                    let sheetID = url.pathname.slice();
+                                    console.log(sheetID.pop());
                                 }
 
 
