@@ -20,7 +20,7 @@ export async function getTiktokComments(items) {
         async function forLoopGetComments(items, cursorNumber) {    
 
             let dataUser = 0;
-            await tiktokCommentAPI(items, cursorNumber).then ( response =>{
+            await tiktokCommentAPI(items, cursorNumber).then ( async response =>{
 
                 const total = response.data.total+100;
                 console.log(total);
@@ -40,7 +40,7 @@ export async function getTiktokComments(items) {
                     setTimeout(async() => {
                         console.log('next data normal '+response.data.cursor);
                     }, 1200);
-                    forLoopGetComments(items, response.data.cursor);
+                    await forLoopGetComments(items, response.data.cursor);
 
                 } else {    
                     if(total === response.data.cursor){
@@ -49,7 +49,7 @@ export async function getTiktokComments(items) {
                             setTimeout(async () => {
                                 console.log('next data switch point triggering '+response.data.cursor);
                             }, 1200);
-                            forLoopGetComments(items, response.data.cursor);
+                            await forLoopGetComments(items, response.data.cursor);
 
                         } else {
                             let data = {
@@ -65,7 +65,7 @@ export async function getTiktokComments(items) {
                                 setTimeout(async () => {
                                     console.log('next data not equals zero '+response.data.cursor);
                                 }, 1200);
-                                forLoopGetComments(items, response.data.cursor);
+                                await forLoopGetComments(items, response.data.cursor);
 
                             } else {
                                 let data = {
@@ -78,7 +78,7 @@ export async function getTiktokComments(items) {
                             setTimeout(async () => {
                                 console.log('next data over 400 '+response.data.cursor);
                             }, 1200); 
-                            forLoopGetComments(items, response.data.cursor);
+                            await forLoopGetComments(items, response.data.cursor);
                    
                         }
                     }
