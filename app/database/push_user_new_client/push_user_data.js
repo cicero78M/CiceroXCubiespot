@@ -1,5 +1,5 @@
-import { encrypted } from "../../../json_data_file/crypto";
-import { newRowsData } from "../new_query/sheet_query";
+import { encrypted } from "../../../json_data_file/crypto.js";
+import { newRowsData } from "../new_query/sheet_query.js";
 
 export async function pushUserRes(clientName, sheetID) {
     return new Promise(async (resolve, reject) => {
