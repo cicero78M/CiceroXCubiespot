@@ -32,7 +32,6 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
     for (let i = 0; i < userRows.length; i++) {
 
       if(userRows[i].get('ID_KEY') === dataKey){
-
         idExist = true;
       }
       
@@ -40,9 +39,6 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         idKeyList.push(userRows[i].get('ID_KEY'));
       }
     }
-
-    console.log(userRows[i].get('ID_KEY'));
-
 
     let divisiList = [];
 
