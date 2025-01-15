@@ -39,10 +39,9 @@ export async function encryptClientData() {
             );
 
         await  dataDoc.loadInfo(); // loads document properties and worksheets            
-        let clientSheet = dataDoc.sheetsByTitle["ClientName_Enc"];
+        let clientSheet = dataDoc.sheetsByTitle["ClientData_Enc"];
 
-        console.log(dataDoc);
-
+        await clientSheet.addRows(client);
         return "Client Data Encrypted"
 
 }
