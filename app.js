@@ -317,9 +317,15 @@ client.on('message', async (msg) => {
 
                             if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
 
-                                let sheetID = splittedMsg[2].substring(splittedMsg[2].lastIndexOf('/'));
+                                const url = new URL(splittedMsg[2]);
+                            
+                                if (url.pathname.slice(1).includes('edit')){
+                                    let sheetID = url.pathname.slice(1);
+                                    console.log(sheetID);
 
-                                console.log(sheetID);
+                                }
+
+
 
                                 // let responseData = await pushUserClient( //this trigger function to push user data from sheet to database
                                 //     splittedMsg[0].toUpperCase(), //this from splitted coontain Client Name
