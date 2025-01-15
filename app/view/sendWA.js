@@ -16,11 +16,11 @@ export async function sendResponse(from, responseData, errormessage) {
             await client.sendMessage(from, responseData.data);
             break;
         case 303:                                
-            console.log(responseData.data);
+            console.log(responseData);
             await client.sendMessage(from, errormessage);
             break;
         case 201:
-            console.log(time+" "+responseData.data);
+            console.log(time+" "+responseData);
             await client.sendMessage(from, responseData.data);
             break;
         default:
@@ -48,11 +48,11 @@ export async function sendClientResponse(clientID, supervisor, operator, group, 
             await client.sendMessage(group, responseData.data);
             break;
         case 303 :
-            console.log(responseData.data);
+            console.log(responseData);
             await client.sendMessage('6281235114745@c.us', time+" "+clientID+' FAIL '+type+' DATA');
             break;
         case 201:
-            console.log(time+" "+responseData.data);
+            console.log(time+" "+responseData);
             await client.sendMessage(supervisor, responseData.data);
             await client.sendMessage(operator, responseData.data);
             await client.sendMessage(group, responseData.data);
