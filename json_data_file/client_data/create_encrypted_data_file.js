@@ -33,7 +33,7 @@ export async function encryptClientData() {
             };
     });
 
-    let dataDoc = new GoogleSpreadsheet(
+        let dataDoc = new GoogleSpreadsheet(
         ciceroKey.dbKey.clientDataID, 
             googleAuth
         );
@@ -41,7 +41,7 @@ export async function encryptClientData() {
         await  dataDoc.loadInfo(); // loads document properties and worksheets            
         let clientSheet = dataDoc.sheetsByTitle["ClientName_Enc"];
 
-        clientSheet.addRows(client);
+        await clientSheet.addRows(client);
         return "Client Data Encrypted"
 
 }
