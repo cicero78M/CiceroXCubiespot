@@ -5,7 +5,10 @@ import { myData } from '../../database_query/myData.js';
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
-  console.log(parseInt(idKey));
+  let dataKey = parseInt(idKey);
+
+  console.log(dataKey);
+
 
   try {
 
@@ -32,7 +35,6 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
     
     }
 
-
     let divisiList = [];
 
     //Collect Divisi List String
@@ -43,14 +45,11 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
     }
 
     if (divisiList.includes(divisi)) {
-
-      if (!idKeyList.includes(idKey)) {
-
+      if (!idKeyList.includes(dataKey)) {
         console.log("Id key not exist");
-
         //Get Target Sheet Documents by Title
         userSheet.addRow({ 
-          ID_KEY: idKey, 
+          ID_KEY: dataKey, 
           NAMA: name, 
           TITLE: title, 
           DIVISI: divisi, 
@@ -61,7 +60,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
           
         let responseMyData = await myData(
           clientName, 
-          idKey
+          dataKey
         );
           
         return responseMyData;
