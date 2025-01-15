@@ -320,7 +320,9 @@ client.on('message', async (msg) => {
                                 let slicedData = splittedMsg[2].split('/');
                                 let sheetID = slicedData[slicedData.length-1];
 
-                                console.log(sheetID);
+                                if (sheetID.includes('edit')){
+                                    crossOriginIsolated.log(slicedData[slicedData.length-2]);
+                                }
 
  
                                 // let responseData = await pushUserClient( //this trigger function to push user data from sheet to database
