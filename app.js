@@ -174,7 +174,7 @@ client.on('ready', () => {
                         ` ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNINGDATA`
                     );
 
-                    await warningReportTiktok(decrypted(clientData[i])).then(async response => {
+                    await warningReportTiktok(clientData[i]).then(async response => {
                         
                         await client.sendMessage(
                             '6281235114745@c.us', 
@@ -215,7 +215,7 @@ client.on('ready', () => {
                         `${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`
                     );
 
-                    await warningReportInsta(decrypted(clientData[i])).then(async response => {
+                    await warningReportInsta(clientData[i]).then(async response => {
                             
                         await client.sendMessage(
                             '6281235114745@c.us', 
