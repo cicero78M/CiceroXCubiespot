@@ -153,8 +153,8 @@ client.on('ready', () => {
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule('0 12,16,19 * * *',  () => {
-
+    schedule('15 12,16,19 * * *',  () => {
+        
         console.log("Execute Schedule");
         newRowsData(
             ciceroKey.dbKey.clientDataID, 
