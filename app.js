@@ -53,7 +53,7 @@ import { warningReportInsta } from './app/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
 import { saveContacts } from './app/database/utils/saveContact.js';
-
+//New Function
 import { clientData2Json } from './json_data_file/client_data/write_client_data_to_json.js';
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
@@ -242,7 +242,6 @@ client.on('ready', () => {
                             default:
                                 break;
                         }
-
                     });
                 }  
             }
