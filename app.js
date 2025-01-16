@@ -755,7 +755,7 @@ client.on('message', async (msg) => {
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
-                                        "PANGKAT"
+                                        "TITLE"
                                     );
                                     
                                     sendResponse(
@@ -888,6 +888,7 @@ client.on('message', async (msg) => {
                                     Terimakasih.`
                                 );
                             }
+
                             break;
 
                         case 'likes':
@@ -1406,6 +1407,5 @@ client.on('message', async (msg) => {
             '6281235114745@c.us', 
             'Error on Main Apps'
         );
-
     }
 });
