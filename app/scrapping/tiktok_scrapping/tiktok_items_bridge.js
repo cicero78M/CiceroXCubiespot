@@ -15,6 +15,7 @@ export async function tiktokItemsBridges(clientValue, items) {
                 
                 await getTiktokComments(items[i])
                 .then (async response =>{
+                        console.log(clientValue);
                     await postTiktokUserComments(decrypted(clientValue.get('CLIENT_ID')), items[i], response.data)
                     .then(async data => {
                         console.log(data);
