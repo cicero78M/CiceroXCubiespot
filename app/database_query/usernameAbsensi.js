@@ -49,8 +49,8 @@ export async function usernameAbsensi(clientName, clientType) {
             let userByDivisi = '';
 
             for (let ii = 0; ii < userRows.length; ii++) {            
-                if (divisiList[i] === userRows[ii].get('DIVISI')) {
-                  if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined || userRows[ii].get(clientType) === "" ) {
+                if (divisiList[i] === userRows[ii].DIVISI) {
+                  if (userRows[ii][clientType] === null || userRows[ii][clientType] === undefined || userRows[ii][clientType] === "" ) {
       
                     if (clientType === "RES"){
       
