@@ -1,5 +1,3 @@
-import { ciceroKey, newRowsData } from './sheet_query.js';
-
 export async function newListValueData(
     clientName, 
     keyValue
@@ -10,44 +8,23 @@ export async function newListValueData(
         ) => {
 
             let listValue = [];
-
-            customLoop(
-                clientName, 
-                keyValue
-            );
-
-            async function customLoop(   
-                clientName, 
-                keyValue
-            ) {
         
-                await newRowsData(
-                    ciceroKey.dbKey.userDataID, 
-                    clientName
-                ).then( 
-                    response => {        
-                    for (let i = 0; i < response.length; i++){
-                        if(!listValue.includes(response[i].get(keyValue))){
-                            listValue.push(response[i].get(keyValue)); 
+            await readUser(clientName).then(
+            data =>{
+                    userRows = data;
+                    
+                    for (let i = 0; i < data.length; i++) {            
+                        
+                        if (!listValue.includes(data[i][keyValue])){
+                            listValue.push(data[i][keyValue]); 
+
                         }
-                    }
+                        
                         resolve (listValue);
                     }
                     
-                ).catch(
-                    async response => {   
-
-                        setTimeout(() => {
-                            console.error(response);
-                        }, 6000);
-
-                        await customLoop(
-                            clientName, 
-                            keyValue
-                        );
-                    }
-                );
-            }    
+                }
+            )
         }
     );
 }

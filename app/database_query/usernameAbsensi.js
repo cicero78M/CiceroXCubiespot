@@ -12,20 +12,6 @@ export async function usernameAbsensi(clientName, clientType) {
       let userActive = 0;
       let userRows = [];
 
-      // await newRowsData(
-      //   ciceroKey.dbKey.userDataID, 
-      //   clientName
-      // ).then(
-      //   data =>{
-      //     userRows = data;
-      //     for (let i = 0; i < data.length; i++) {            
-      //       if (data[i].get("STATUS") === 'TRUE'){
-      //         userActive++;
-      //       }
-      //     }
-      //   }
-      // );
-
       await readUser(clientName).then(
         data =>{
               userRows = data;

@@ -1,4 +1,5 @@
 import { decrypted } from '../../json_data_file/crypto.js';
+import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { newListValueData } from '../database/new_query/data_list_query.js';
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 
@@ -47,14 +48,13 @@ export async function newReportInsta(clientValue) {
           }
         );
 
-        await newRowsData(
-          ciceroKey.dbKey.userDataID, 
+        await readUser(
           clientName
         ).then( 
           async response => {    
             userRows = await response;                           
             for (let i = 0; i < userRows.length; i++) {
-              if (userRows[i].get('STATUS') === 'TRUE' ){
+              if (userRows[i].STATUS === 'TRUE' ){
                 userAll++;
               }
             } 
@@ -116,21 +116,21 @@ export async function newReportInsta(clientValue) {
         
                 for (let i = 0; i < userRows.length; i++) {     
 
-                  if (userRows[i].get('INSTA') === undefined
-                  || userRows[i].get('INSTA') === null 
-                  || userRows[i].get('INSTA') === ""){
+                  if (userRows[i].INSTA === undefined
+                  || userRows[i].INSTA === null 
+                  || userRows[i].INSTA === ""){
 
                     console.log("Null Data Exist");
-                    UserNotLikes.push(userRows[i].get('ID_KEY'));
+                    UserNotLikes.push(userRows[i].ID_KEY);
                     notLikesList.push(userRows[i]);
 
                   } else {
-                    if (!userLikesData.includes(userRows[i].get('INSTA'))) {
-                      if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
-                        if (userRows[i].get('STATUS') === 'TRUE' ){
-                          if (userRows[i].get('EXCEPTION') === "FALSE"){
+                    if (!userLikesData.includes(userRows[i].INSTA)) {
+                      if (!UserNotLikes.includes(userRows[i].ID_KEY)) {
+                        if (userRows[i].STATUS === 'TRUE' ){
+                          if (userRows[i].EXCEPTION === "FALSE"){
                             
-                            UserNotLikes.push(userRows[i].get('ID_KEY'));
+                            UserNotLikes.push(userRows[i].ID_KEY);
                             notLikesList.push(userRows[i]);
                           }                
                         }
@@ -147,25 +147,25 @@ export async function newReportInsta(clientValue) {
         
                   for (let iv = 0; iv < notLikesList.length; iv++) {
         
-                    if (divisiList[iii] === notLikesList[iv].get('DIVISI')) {
+                    if (divisiList[iii] === notLikesList[iv].DIVISI) {
                       
-                      if (notLikesList[iv].get('INSTA') === undefined
-                      || notLikesList[iv].get('INSTA') === null 
-                      || notLikesList[iv].get('INSTA') === ""){
+                      if (notLikesList[iv].INSTA === undefined
+                      || notLikesList[iv].INSTA === null 
+                      || notLikesList[iv].INSTA === ""){
                         notLikesName = "Belum Input";
                       } else {
-                        notLikesName = notLikesList[iv].get('INSTA');
+                        notLikesName = notLikesList[iv].INSTA;
                       }
         
                       if (decrypted(clientValue.get('TYPE'))  === "RES") {
                       
-                        userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].get('TITLE') + ' ' + notLikesList[iv].get('NAMA') + ' - ' + notLikesName);
+                        userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].TITLE + ' ' + notLikesList[iv].NAMA + ' - ' + notLikesName);
                         divisiCounter++;
                         userCounter++;
                       
                       } else if (decrypted(clientValue.get('TYPE'))  === "COM") {
                       
-                        name = notLikesList[iv].get('NAMA');
+                        name = notLikesList[iv].NAMA;
                         nameUpper = name.toUpperCase();
                         userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notLikesName);
                         divisiCounter++;
