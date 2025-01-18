@@ -1,7 +1,5 @@
-import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { newListValueData } from '../database/new_query/data_list_query.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
-import { decrypted } from '../../json_data_file/crypto.js';
 
 let date = new Date();
 
