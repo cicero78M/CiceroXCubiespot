@@ -2,7 +2,7 @@ export async function myDataView(dataResponse) {
 
     let accountState;
     
-    if(dataResponse.get('STATUS') === "TRUE"){
+    if(dataResponse.STATUS === "TRUE"){
         accountState = 'ACTIVE';
     } else {
         accountState = 'DELETED';
