@@ -154,7 +154,6 @@ client.on('ready', () => {
     });
 
     schedule('15 12,16,19 * * *',  () => {
-        
         console.log("Execute Schedule");
         newRowsData(
             ciceroKey.dbKey.clientDataID, 
@@ -1366,7 +1365,7 @@ client.on('message', async (msg) => {
                             break;
                         case "encryptclientdata":
                             console.log(await encryptClientData());
-
+                            break;
                         default:
                             break;
                     }
@@ -1399,9 +1398,7 @@ client.on('message', async (msg) => {
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) {
-        
         console.log(error);
-    
         client.sendMessage(
             '6281235114745@c.us', 
             'Error on Main Apps'
