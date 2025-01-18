@@ -27,7 +27,7 @@ export async function transferUserData(clientID) {
                         userData.TIKTOK = encrypted(data[i].get("TIKTOK"));
                         userData.EXCEPTION = encrypted(data[i].get("EXCEPTION"));
 
-                        writeFileSync(`json_data_file/user_data/${clientID}/${encrypted(data[i].get("ID_KEY"))}.json`, JSON.stringify(userData));
+                        writeFileSync(`json_data_file/user_data/${clientID}/${data[i].get("ID_KEY")}.json`, JSON.stringify(userData));
                         resolve (`${data[i].get("ID_KEY")} JSON Data Successfully Added.`);
 
                     };
