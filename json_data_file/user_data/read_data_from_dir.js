@@ -14,7 +14,7 @@ export async function userDir(clientName) {
         
             for (let i = 0; i < data.length; i++){
                 
-                let fromJson = readFileSync(`json_data_file/user_data/${clientName}/${data[i]}`);
+                let fromJson = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${data[i]}`));
                 
                 let userData = new Object();
 
