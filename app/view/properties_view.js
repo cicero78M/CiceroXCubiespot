@@ -14,15 +14,16 @@ export async function propertiesView(clientName, type) {
        userRows => {
          //Collect Divisi List String
          for (let i = 0; i < userRows.length; i++) {
-           if (!dataList.includes(userRows[i][type])) {
-             dataList.push(userRows[i][type]);
-             if(userRows[i][type] !== undefined){
-               dataString = dataString+"\n"+userRows[i][type];
+           if (!dataList.includes(userRows[i])) {
+             dataList.push(userRows[i]);
+             if(userRows[i] !== undefined){
+               dataString = dataString+"\n"+userRows[i];
              }
            }
          }
        }
      )
+
      let data = {
        data : `*`+type+` List*\n\n`+dataString,
        state: true,
