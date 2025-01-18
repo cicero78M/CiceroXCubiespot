@@ -8,9 +8,7 @@ export async function warningReportTiktok(clientValue) {
         async (
             resolve, reject
         ) => {
-        
             try {
-
                 console.log("Execute Warning Report Tiktok");
                 client.sendMessage(
                     '6281235114745@c.us', 

@@ -1,16 +1,12 @@
-import { readFileSync } from 'fs';
-import { newRowsData } from '../database/new_query/sheet_query.js';
+import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { newListValueData } from '../database/new_query/data_list_query.js';
 
 let date = new Date();
-
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
 
 export async function usernameAbsensi(clientName, clientType) {
   
   return new Promise(async (resolve, reject) => {
   
-    
     try {
       
       let userActive = 0;
