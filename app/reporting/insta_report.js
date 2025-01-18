@@ -101,7 +101,7 @@ export async function newReportInsta(clientValue) {
                           const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
                 
                           for (let iii = 0; iii < fromRows.length; iii++) {
-                            if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
+                            if (fromRows[iii] !== undefined || fromRows[iii] !== null || fromRows[iii] !== "") {
                               if (!userLikesData.includes(fromRows[iii])) {
                                 userLikesData.push(fromRows[iii]);
                               }
