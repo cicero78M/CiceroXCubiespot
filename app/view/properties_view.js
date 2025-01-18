@@ -1,6 +1,4 @@
-import { readFileSync } from 'fs';
-import { newRowsData } from '../database/new_query/sheet_query.js';
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+import { newListValueData } from '../database/new_query/data_list_query.js';
 
 export async function propertiesView(clientName, type) {
   
@@ -9,17 +7,17 @@ export async function propertiesView(clientName, type) {
   return new Promise(async (resolve) => {
     
    try {
-     await newRowsData(
-       ciceroKey.dbKey.userDataID, 
-       clientName
+     await newListValueData(
+       clientName,
+       type
      ).then(
        userRows => {
          //Collect Divisi List String
          for (let i = 0; i < userRows.length; i++) {
-           if (!dataList.includes(userRows[i].get(type))) {
-             dataList.push(userRows[i].get(type));
-             if(userRows[i].get(type) !== undefined){
-               dataString = dataString+"\n"+userRows[i].get(type);
+           if (!dataList.includes(userRows[i][type])) {
+             dataList.push(userRows[i][type]);
+             if(userRows[i][type] !== undefined){
+               dataString = dataString+"\n"+userRows[i][type];
              }
            }
          }
