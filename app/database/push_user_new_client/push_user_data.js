@@ -13,16 +13,16 @@ export async function pushUserRes(clientName, sheetID) {
         
                         let userData = new Object();
     
-                        userData.ID_KEY = await encrypted(data[i].get("NRP"));
-                        userData.NAMA = await encrypted(data[i].get("NAMA"));
-                        userData.TITLE = await encrypted(data[i].get("PANGKAT"));
-                        userData.DIVISI = await encrypted(data[i].get("SATFUNG"));
-                        userData.JABATAN = await encrypted(data[i].get("JABATAN"));
-                        userData.STATUS = await encrypted("TRUE");
-                        userData.WHATSAPP = await encrypted("");
-                        userData.INSTA = await encrypted("");
-                        userData.TIKTOK = await encrypted("");
-                        userData.EXCEPTION = await encrypted("FALSE");
+                        userData.ID_KEY =  encrypted(data[i].get("NRP"));
+                        userData.NAMA =  encrypted(data[i].get("NAMA"));
+                        userData.TITLE =  encrypted(data[i].get("PANGKAT"));
+                        userData.DIVISI =  encrypted(data[i].get("SATFUNG"));
+                        userData.JABATAN =  encrypted(data[i].get("JABATAN"));
+                        userData.STATUS =  encrypted("TRUE");
+                        userData.WHATSAPP =  encrypted("");
+                        userData.INSTA =  encrypted("");
+                        userData.TIKTOK =  encrypted("");
+                        userData.EXCEPTION =  encrypted("FALSE");
                         client.push(userData);
     
                     };
@@ -49,16 +49,16 @@ export async function pushUserCom(clientName, sheetID) {
         
                         let userData = new Object();
     
-                        userData.ID_KEY = await encrypted(data[i].get("ID_KEY"));
-                        userData.NAMA = await encrypted(data[i].get("NAMA"));
-                        userData.TITLE = await encrypted(data[i].get("TITLE"));
-                        userData.DIVISI = await encrypted(data[i].get("DIVISI"));
-                        userData.JABATAN = await encrypted(data[i].get("JABATAN"));
-                        userData.STATUS = await encrypted("TRUE");
-                        userData.WHATSAPP = await encrypted("");
-                        userData.INSTA = await encrypted("");
-                        userData.TIKTOK = await encrypted("");
-                        userData.EXCEPTION = await encrypted("FALSE");
+                        userData.ID_KEY =  encrypted(data[i].get("ID_KEY"));
+                        userData.NAMA =  encrypted(data[i].get("NAMA"));
+                        userData.TITLE =  encrypted(data[i].get("TITLE"));
+                        userData.DIVISI =  encrypted(data[i].get("DIVISI"));
+                        userData.JABATAN =  encrypted(data[i].get("JABATAN"));
+                        userData.STATUS =  encrypted("TRUE");
+                        userData.WHATSAPP =  encrypted("");
+                        userData.INSTA =  encrypted("");
+                        userData.TIKTOK =  encrypted("");
+                        userData.EXCEPTION =  encrypted("FALSE");
                         client.push(userData);
     
                     };

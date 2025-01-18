@@ -625,7 +625,7 @@ client.on('message', async (msg) => {
                                                 splittedMsg[2], 
                                                 instaUsername, 
                                                 contact.number, 
-                                                "updateinstausername"
+                                                "INSTA"
 
                                             ).then(
 
@@ -678,7 +678,7 @@ client.on('message', async (msg) => {
                                             splittedMsg[2], 
                                             tiktokUsername, 
                                             contact.number, 
-                                            "updatetiktokusername"
+                                            "TIKTOK"
                                         );
                                         
                                         sendResponse(

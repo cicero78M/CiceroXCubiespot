@@ -1,57 +1,70 @@
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../new_query/sheet_query.js";
 import { newListValueData } from "../new_query/data_list_query.js";
 import { myData } from "../../database_query/myData.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type) {
 
-  let isDataExist = false;
+  let idExist = false;
   let usernameList = [];
-  let userType;
 
   return new Promise(async (resolve, reject) => {
 
     try {
-      
-      //Insert New Sheet
-      const userDoc = new GoogleSpreadsheet(ciceroKey.dbKey.userDataID, googleAuth); //Google Auth
-      await userDoc.loadInfo(); // loads document properties and worksheets
-      const userSheet = userDoc.sheetsByTitle[clientName];
-      const userRows = await userSheet.getRows();
+    
+      await newListValueData(clientName, type).then(
+        async response => {
+          usernameList = await response;
+        }
+      );
+
   
-      //Collect Divisi List String
-      if (type === "updateinstausername") {
-        await newListValueData(clientName, 'INSTA').then(
-          async response => {
-            usernameList = await response;
-            userType = 'INSTA';
-
-          }
-        );
-
-      } else if (type === "updatetiktokusername") {
-        await newListValueData(clientName, 'TIKTOK').then(
-          async response => {
-            usernameList = await response;
-            userType = 'TIKTOK';     
-          }
-        );
-      }
+      await readUser(
+        clientName
+      ).then( 
+        async response => {    
+          userRows = await response;                           
+          for (let i = 0; i < userRows.length; i++) {
+            if (parseInt(userRows[i].ID_KEY) === idKey ){
+              
+              idExist = true;
+  
+              let fromJson = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
+  
+              userData.ID_KEY = fromJson.ID_KEY;
+              userData.NAMA = fromJson.NAMA;
+              userData.TITLE = fromJson.TITLE;
+              userData.DIVISI = fromJson.DIVISI;
+              userData.JABATAN = fromJson.JABATAN;
+              userData.STATUS = fromJson.STATUS;
+              userData.WHATSAPP = fromJson.WHATSAPP;
+              userData.INSTA = fromJson.INSTA;
+              userData.TIKTOK = fromJson.TIKTOK;
+              userData.EXCEPTION = fromJson.EXCEPTION;
+            
+            }
+          } 
+        }
+      );
   
       if (!usernameList.includes(username)) {
         for (let i = 0; i < userRows.length; i++) {
-          if (userRows[i].get('ID_KEY') === idKey) {
-            if (userRows[i].get('WHATSAPP') === phone || userRows[i].get('WHATSAPP') === "" || phone === "6281235114745") {
+          if (parseInt(userRows[i].ID_KEY) === parseInt(idKey)) {
+            if (userRows[i].WHATSAPP === phone || userRows[i].WHATSAPP === "" || phone === "6281235114745") {
   
-              if (userRows[i].get('STATUS') === "TRUE") {
+              if (userRows[i].STATUS === "TRUE") {
   
                 isDataExist = true;
-                if (type === "updateinstausername") {
-                  userRows[i].assign({ INSTA: username, WHATSAPP: phone }); // Update Insta Value
-                } else if (type === "updatetiktokusername") {
-                  userRows[i].assign({ TIKTOK: username, WHATSAPP: phone }); // Update Insta Value
+                
+                if (type === "INSTA") {
+                userData.INSTA = encrypted(username);
+                } else if (type === "TIKTOK") {
+                  userData.TIKTOK = encrypted(username);
                 }
-                await userRows[i].save(); //save update
+                
+                if (userRows[i].WHATSAPP === "" && phone !== "6281235114745") {
+                  userData.WHATSAPP = encrypted(phone);
+                } 
+                
+                writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
                 
                 await myData(clientName, idKey).then(
                   response => resolve (response)
@@ -86,7 +99,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           }
         }
   
-        if (!isDataExist) {
+        if (!idExist) {
   
           let responseData = {
             data: 'User Data with delegated ID_KEY Doesn\'t Exist',

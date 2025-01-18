@@ -1,49 +1,72 @@
-//Google Spreadsheet
-import { GoogleSpreadsheet } from 'google-spreadsheet';
 
-//Local Import
-import { ciceroKey, googleAuth } from '../new_query/sheet_query.js';
 import { myData } from '../../database_query/myData.js';
 import { propertiesView } from '../../view/properties_view.js';
 import { client } from '../../../app.js';
+import { readUser } from '../../../json_data_file/user_data/read_data_from_dir.js';
+import { readFileSync, writeFileSync } from "fs";
+import { encrypted } from '../../../json_data_file/crypto.js';
+
 
 //This Function for edit user data profile
 export async function editProfile(clientName, idKey, newData, phone, type) {
   try {
-    //Insert New Sheet
-    const userDoc = new GoogleSpreadsheet(
-      ciceroKey.dbKey.userDataID, 
-      googleAuth
-    ); //Google Auth Constructor
-    
-    await userDoc.loadInfo(); // loads document properties and worksheets
-    const userSheet = userDoc.sheetsByTitle[clientName];
-    const userRows = await userSheet.getRows();
-
     let isDataExist = false;
+    let userRows = [];
     let dataList = [];
 
-    //Collect Divisi List String
-    for (let i = 0; i < userRows.length; i++) {
-      if (!dataList.includes(userRows[i].get(type))) {
-        dataList.push(userRows[i].get(type));
+    let userData = new Object();
+
+
+    await newListValueData(
+      clientName, 
+      type
+    ).then(
+      async response =>{
+        dataList = await response;
       }
-    }
+    );
+
+    await readUser(
+      clientName
+    ).then( 
+      async response => {    
+        userRows = await response;                           
+        for (let i = 0; i < userRows.length; i++) {
+          if (parseInt(userRows[i].ID_KEY) === idKey ){
+            
+            idExist = true;
+
+            let fromJson = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
+
+            userData.ID_KEY = fromJson.ID_KEY;
+            userData.NAMA = fromJson.NAMA;
+            userData.TITLE = fromJson.TITLE;
+            userData.DIVISI = fromJson.DIVISI;
+            userData.JABATAN = fromJson.JABATAN;
+            userData.STATUS = fromJson.STATUS;
+            userData.WHATSAPP = fromJson.WHATSAPP;
+            userData.INSTA = fromJson.INSTA;
+            userData.TIKTOK = fromJson.TIKTOK;
+            userData.EXCEPTION = fromJson.EXCEPTION;
+          
+          }
+        } 
+      }
+    );
+
 
     for (let ii = 0; ii < userRows.length; ii++) {
-      if (parseInt(userRows[ii].get('ID_KEY')) === parseInt(idKey)) {
-
-        if (userRows[ii].get('WHATSAPP') === "" 
-        || userRows[ii].get('WHATSAPP') === phone 
+      if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
+        if (userRows[ii].WHATSAPP === "" 
+        || userRows[ii].WHATSAPP === phone 
         || phone === "6281235114745") {
 
           isDataExist = true;
 
-          if (userRows[ii].get('STATUS') === "TRUE") {
-
+          if (userRows[ii].STATUS === "TRUE") {
             if (type === 'DIVISI') {
               if (dataList.includes(newData)) {
-                userRows[ii].assign({ DIVISI: newData });; // Update Divisi Value
+                userData.DIVISI = encrypted(newData);
               } else {
                 propertiesView(clientName, "DIVISI").then(
                   async response =>{
@@ -63,29 +86,29 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               }
 
             } else if (type === 'JABATAN') {
-              userRows[ii].assign({ JABATAN : newData }); // Update Jabatan Value
+              userData.JABATAN = encrypted(newData);
             } else if (type === 'NAMA') {
-              userRows[ii].assign({ NAMA : newData }); // Update Nama Value
+              userData.NAMA = encrypted(newData);
             } else if (type === 'ID_KEY') {
-              userRows[ii].assign({ ID_KEY : newData}); // Update IDKey Value
+              userData.ID_KEY = encrypted(newData);
             } else if (type === 'TITLE') {
 
               if (dataList.includes(newData)) {
-                userRows[ii].assign({ TITLE: newData }); // Update Title Value
+                userData.TITLE = encrypted(newData);
               } else {
                 let responseData = await propertiesView(clientName, type);
                 return responseData;
               }
 
             } else if (type === 'STATUS') {
-              userRows[ii].assign({ STATUS : newData}); // Update Status Value
+              userData.STATUS = encrypted(newData);
             } else if (type === 'EXCEPTION') {
-              userRows[ii].assign({ EXCEPTION : newData}); // Update Exception Value
+              userData.EXCEPTION = encrypted(newData);
             } else if (type === 'WHATSAPP') {
-              userRows[ii].assign({ WHATSAPP : phone}); // Update Status Value
+              userData.WHATSAPP = encrypted(phone);
             }
 
-            await userRows[ii].save(); //save update
+            writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
 
             let responseMyData = await myData(clientName, idKey);
             

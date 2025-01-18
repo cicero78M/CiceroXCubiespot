@@ -1,81 +1,82 @@
-
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { ciceroKey, googleAuth } from '../new_query/sheet_query.js';
 import { myData } from '../../database_query/myData.js';
+import { newListValueData } from '../new_query/data_list_query.js';
+import { readUser } from '../../../json_data_file/user_data/read_data_from_dir.js';
+import { encrypted } from '../../../json_data_file/crypto.js';
+import { writeFileSync } from "fs";
+
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
-  let dataKey = parseInt(idKey);
-
-  console.log(dataKey);
-
-
   try {
-
-    
-
-    const userDoc = new GoogleSpreadsheet(
-      ciceroKey.dbKey.userDataID, 
-      googleAuth
-    ); //Google Auth
-    
-    await userDoc.loadInfo(); // loads document properties and worksheets
-    const userSheet = userDoc.sheetsByTitle[clientName];
-
-    const userRows = await userSheet.getRows();
-
-    let idKeyList = [];
 
     let idExist = false;
 
-    //Collect ID_KEY List String
-    for (let i = 0; i < userRows.length; i++) {
-
-      if(parseInt(userRows[i].get('ID_KEY')) === dataKey){
-        idExist = true;
+    await readUser(
+      clientName
+    ).then( 
+      async response => {    
+        userRows = await response;                           
+        for (let i = 0; i < userRows.length; i++) {
+          if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
+            idExist = true;
+          }
+        } 
       }
-      
-      if (!idKeyList.includes(parseInt(userRows[i].get('ID_KEY')))) {
-        idKeyList.push(parseInt(userRows[i].get('ID_KEY')));
-      }
-    }
+    );
 
     let divisiList = [];
 
-    //Collect Divisi List String
-    for (let i = 0; i < userRows.length; i++) {
-      if (!divisiList.includes(userRows[i].get('DIVISI'))) {
-        divisiList.push(userRows[i].get('DIVISI'));
+    await newListValueData(
+      clientName, 
+      'DIVISI'
+    ).then(
+      async response =>{
+        divisiList = await response;
       }
-    }
+    );
 
     if (divisiList.includes(divisi)) {
 
       if (!idExist) {
         console.log("Id key not exist");
         //Get Target Sheet Documents by Title
-        userSheet.addRow({ 
-          ID_KEY: dataKey, 
-          NAMA: name, 
-          TITLE: title, 
-          DIVISI: divisi, 
-          JABATAN: jabatan, 
-          STATUS: true, 
-          EXCEPTION: false 
-        });
-          
+        let userData = new Object();
+
+        userData.ID_KEY = encrypted(parseInt(idKey));
+        userData.NAMA = encrypted(name);
+        userData.TITLE = encrypted(title);
+        userData.DIVISI = encrypted(divisi);
+        userData.JABATAN = encrypted(jabatan);
+        userData.STATUS = encrypted(true);
+        userData.WHATSAPP = encrypted(null);
+        userData.INSTA = encrypted(null);
+        userData.TIKTOK = encrypted(null);
+        userData.EXCEPTION = encrypted(false);
+
+        try {
+
+          writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+          resolve (`${dataKey} JSON Data Successfully Added.`);
+
+        } catch (error) {
+
+            (`json_data_file/user_data/${clientName}`);
+            writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+            
+        }
+            
         let responseMyData = await myData(
           clientName, 
-          dataKey
+          parseInt(idKey)
         );
           
-        return responseMyData;
+      return responseMyData;
       
       } else {
  
         let responseMyData = await myData(
           clientName, 
-          dataKey
+          parseInt(idKey)
         );
 
         return responseMyData;
