@@ -1,6 +1,6 @@
 import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
 import { encrypted } from "../crypto.js";
-import { writeFileSync } from 'fs'
+import { mkdirSync, writeFileSync } from 'fs'
 
 export async function transferUserData(clientID) {
     return new Promise(async (resolve, reject) => {
@@ -27,8 +27,19 @@ export async function transferUserData(clientID) {
                         userData.TIKTOK = encrypted(data[i].get("TIKTOK"));
                         userData.EXCEPTION = encrypted(data[i].get("EXCEPTION"));
 
-                        writeFileSync(`json_data_file/user_data/${clientID}/${data[i].get("ID_KEY")}.json`, JSON.stringify(userData));
-                        resolve (`${data[i].get("ID_KEY")} JSON Data Successfully Added.`);
+                        try {
+
+                            writeFileSync(`json_data_file/user_data/${clientID}/${data[i].get("ID_KEY")}.json`, JSON.stringify(userData));
+                            resolve (`${data[i].get("ID_KEY")} JSON Data Successfully Added.`);
+
+                        } catch (error) {
+
+                            mkdirSync(`json_data_file/user_data/${clientID}`);
+                            writeFileSync(`json_data_file/user_data/${clientID}/${data[i].get("ID_KEY")}.json`, JSON.stringify(userData));
+
+                            
+                        }
+
 
                     };
         
