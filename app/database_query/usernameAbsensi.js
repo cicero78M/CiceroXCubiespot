@@ -10,14 +10,16 @@ export async function usernameAbsensi(clientName, clientType) {
     try {
       
       let userActive = 0;
+      let userRows = [];
 
       await newRowsData(
         ciceroKey.dbKey.userDataID, 
         clientName
       ).then(
-        userRows =>{
-          for (let i = 0; i < userRows.length; i++) {            
-            if (userRows[i].get("STATUS") === 'TRUE'){
+        data =>{
+          userRows = data;
+          for (let i = 0; i < data.length; i++) {            
+            if (data[i].get("STATUS") === 'TRUE'){
               userActive++;
             }
           }
@@ -34,6 +36,7 @@ export async function usernameAbsensi(clientName, clientType) {
         
             let divisiCounter = 0;
             let userByDivisi = '';
+
             for (let ii = 0; ii < userRows.length; ii++) {            
                 if (divisiList[i] === userRows[ii].get('DIVISI')) {
                   if (userRows[ii].get(clientType) === null || userRows[ii].get(clientType) === undefined ||userRows[ii].get(clientType) === "" ) {
