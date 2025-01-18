@@ -116,9 +116,9 @@ export async function newReportInsta(clientValue) {
         
                 for (let i = 0; i < userRows.length; i++) {     
 
-                  if (userRows[iv].get('INSTA') !== undefined
-                  || userRows[iv].get('INSTA') !== null 
-                  || userRows[iv].get('INSTA') !== ""){
+                  if (userRows[i].get('INSTA') !== undefined
+                  || userRows[i].get('INSTA') !== null 
+                  || userRows[i].get('INSTA') !== ""){
 
                     if (!userLikesData.includes(userRows[i].get('INSTA'))) {
                       if (!UserNotLikes.includes(userRows[i].get('ID_KEY'))) {
