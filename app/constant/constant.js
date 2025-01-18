@@ -65,5 +65,6 @@ export const dataTransfer = [
     "readclientdata",
     "user2json",
     "readuserdata",
+    "readuserdir",
     "encryptclientdata"
 ];
