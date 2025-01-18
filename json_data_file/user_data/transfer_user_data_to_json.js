@@ -11,7 +11,6 @@ export async function transferUserData(clientID) {
                 clientID
             ).then(
                 async data =>{
-                    let client = [];
                     
                     for (let i = 0; i < data.length; i++){
         
