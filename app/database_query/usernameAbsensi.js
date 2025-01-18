@@ -1,5 +1,7 @@
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { newListValueData } from '../database/new_query/data_list_query.js';
+import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
+import { decrypted } from '../../json_data_file/crypto.js';
 
 let date = new Date();
 
@@ -12,19 +14,30 @@ export async function usernameAbsensi(clientName, clientType) {
       let userActive = 0;
       let userRows = [];
 
-      await newRowsData(
-        ciceroKey.dbKey.userDataID, 
-        clientName
-      ).then(
+      // await newRowsData(
+      //   ciceroKey.dbKey.userDataID, 
+      //   clientName
+      // ).then(
+      //   data =>{
+      //     userRows = data;
+      //     for (let i = 0; i < data.length; i++) {            
+      //       if (data[i].get("STATUS") === 'TRUE'){
+      //         userActive++;
+      //       }
+      //     }
+      //   }
+      // );
+
+      await readUser(clientName).then(
         data =>{
-          userRows = data;
-          for (let i = 0; i < data.length; i++) {            
-            if (data[i].get("STATUS") === 'TRUE'){
-              userActive++;
+              userRows = data;
+              for (let i = 0; i < data.length; i++) {            
+                if (data[i].STATUS === 'TRUE'){
+                  userActive++;
+                }
+              }
             }
-          }
-        }
-      );
+      )
       
       let userString = '';
       let userCounter = 0;
@@ -43,13 +56,13 @@ export async function usernameAbsensi(clientName, clientType) {
       
                     if (clientType === "RES"){
       
-                      userByDivisi = userByDivisi.concat('\n' + userRows[ii].get('TITLE') + ' ' + userRows[ii].get('NAMA'));
+                      userByDivisi = userByDivisi.concat('\n' + userRows[ii].TITLE + ' ' + userRows[ii].NAMA);
                       divisiCounter++;
                       userCounter++;
       
                     } else {
       
-                      userByDivisi = userByDivisi.concat('\n'+ userRows[ii].get('NAMA'));
+                      userByDivisi = userByDivisi.concat('\n'+ userRows[ii].NAMA);
                       divisiCounter++;
                       userCounter++;
                                       

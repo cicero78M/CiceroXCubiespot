@@ -1363,22 +1363,22 @@ client.on('message', async (msg) => {
                                 }
                             );
                             break;
-                            case "readuserdir":
-                                clientData().then(
-                                    async response =>{
-                                        for (let i = 0; i < response.length;i++){
-                                            userDir(response[i].CLIENT_ID)
-                                            .then(
-                                                response => {
-                                                    console.log(response);
-                                                }
-                                            ).catch (
-                                                error => console.log(error)
-                                            );
-                                        }
+                        case "readuserdir":
+                            clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length;i++){
+                                        readUser(response[i].CLIENT_ID)
+                                        .then(
+                                            response => {
+                                                console.log(response);
+                                            }
+                                        ).catch (
+                                            error => console.log(error)
+                                        );
                                     }
-                                );
-                                break;
+                                }
+                            );
+                            break;
                         case "encryptclientdata":
                             console.log(await encryptClientData());
                             break;
