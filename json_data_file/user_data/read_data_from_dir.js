@@ -1,4 +1,4 @@
-import { readdirSync } from "fs";
+import { readdirSync, readFileSync } from "fs";
 //import { decrypted } from "../crypto.js";
 
 export async function userDir(clientName) {    
@@ -10,26 +10,30 @@ export async function userDir(clientName) {
 
             console.log(data);
             
-            // let client = [];
+            let client = [];
         
-            // for (let i = 0; i < data.length; i++){
+            for (let i = 0; i < data.length; i++){
                 
-            //     let userData = new Object();
+                let fromJson = readFileSync(`json_data_file/user_data/${clientName}/${data[i]}`);
+                
+                let userData = new Object();
 
-            //     userData.ID_KEY = decrypted(data[i].ID_KEY);
-            //     userData.NAMA = decrypted(data[i].NAMA);
-            //     userData.TITLE = decrypted(data[i].TITLE);
-            //     userData.DIVISI = decrypted(data[i].DIVISI);
-            //     userData.JABATAN = decrypted(data[i].JABATAN);
-            //     userData.STATUS = decrypted(data[i].STATUS);
-            //     userData.WHATSAPP = decrypted(data[i].WHATSAPP);
-            //     userData.INSTA = decrypted(data[i].INSTA);
-            //     userData.TIKTOK = decrypted(data[i].TIKTOK);
-            //     userData.EXCEPTION = decrypted(data[i].EXCEPTION);
-            //     client.push(userData);
+                userData.ID_KEY = decrypted(fromJson.ID_KEY);
+                userData.NAMA = decrypted(fromJson.NAMA);
+                userData.TITLE = decrypted(fromJson.TITLE);
+                userData.DIVISI = decrypted(fromJson.DIVISI);
+                userData.JABATAN = decrypted(fromJson.JABATAN);
+                userData.STATUS = decrypted(fromJson.STATUS);
+                userData.WHATSAPP = decrypted(fromJson.WHATSAPP);
+                userData.INSTA = decrypted(fromJson.INSTA);
+                userData.TIKTOK = decrypted(fromJson.TIKTOK);
+                userData.EXCEPTION = decrypted(fromJson.EXCEPTION);
+
+                client.push(userData);
         
-            // }    
-            resolve (data);
+            }    
+
+            resolve (client);
         } catch (error) {
             reject (error)            
         }
