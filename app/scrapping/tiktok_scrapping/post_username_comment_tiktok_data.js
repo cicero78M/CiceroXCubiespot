@@ -6,19 +6,28 @@ import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 export async function postTiktokUserComments(clientName, items, userdata) {
 
     let hasShortcode = false;
+
     console.log("Post Data Username Tiktok Engagement" );
     client.sendMessage('6281235114745@c.us', "Post Data Username Tiktok Engagement");
 
     return new Promise(async (resolve, reject) => { 
         try {
-            
-            let tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-            await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
-            let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
+            let tiktokCommentsUsernameDoc;
+            let tiktokCommentsUsernameSheet;
+           try {
+                tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
+                await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
+                tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
+           } catch (error) {
+
+            setTimeout(() => {
+                console.log("Await");
+            }, 10000);
 
             tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
             await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
             tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
+           }
             
             await tiktokCommentsUsernameSheet.getRows().then ( async response =>{
 
@@ -37,10 +46,8 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                                 }
                             }
                         }
-
                         await response[ii].delete();
                         await tiktokCommentsUsernameSheet.addRow(userdata);
-
                     }
                 }
 
@@ -56,7 +63,9 @@ export async function postTiktokUserComments(clientName, items, userdata) {
 
                 resolve (data);  
             });
-           
+
+
+            
         } catch (error) {
             let data = {
                     data: error,
