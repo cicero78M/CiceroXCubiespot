@@ -13,7 +13,6 @@ export async function newListValueData(
         
             await readUser(clientName).then(
             data =>{
-                    userRows = data;
                     
                     for (let i = 0; i < data.length; i++) {            
                         
