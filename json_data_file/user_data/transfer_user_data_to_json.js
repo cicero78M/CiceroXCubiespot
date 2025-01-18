@@ -17,22 +17,23 @@ export async function transferUserData(clientID) {
         
                         let userData = new Object();
 
-                        userData.ID_KEY = await encrypted(data[i].get("ID_KEY"));
-                        userData.NAMA = await encrypted(data[i].get("NAMA"));
-                        userData.TITLE = await encrypted(data[i].get("TITLE"));
-                        userData.DIVISI = await encrypted(data[i].get("DIVISI"));
-                        userData.JABATAN = await encrypted(data[i].get("JABATAN"));
-                        userData.STATUS = await encrypted(data[i].get("STATUS"));
-                        userData.WHATSAPP = await encrypted(data[i].get("WHATSAPP"));
-                        userData.INSTA = await encrypted(data[i].get("INSTA"));
-                        userData.TIKTOK = await encrypted(data[i].get("TIKTOK"));
-                        userData.EXCEPTION = await encrypted(data[i].get("EXCEPTION"));
-                        client.push(userData);
+                        userData.ID_KEY = encrypted(data[i].get("ID_KEY"));
+                        userData.NAMA = encrypted(data[i].get("NAMA"));
+                        userData.TITLE = encrypted(data[i].get("TITLE"));
+                        userData.DIVISI = encrypted(data[i].get("DIVISI"));
+                        userData.JABATAN = encrypted(data[i].get("JABATAN"));
+                        userData.STATUS = encrypted(data[i].get("STATUS"));
+                        userData.WHATSAPP = encrypted(data[i].get("WHATSAPP"));
+                        userData.INSTA = encrypted(data[i].get("INSTA"));
+                        userData.TIKTOK = encrypted(data[i].get("TIKTOK"));
+                        userData.EXCEPTION = encrypted(data[i].get("EXCEPTION"));
+
+                        writeFileSync(`json_data_file/user_data/${clientID}/${encrypted(data[i].get("ID_KEY"))}.json`, JSON.stringify(userData));
+                        resolve (`${data[i].get("ID_KEY")} JSON Data Successfully Added.`);
 
                     };
         
-                    writeFileSync(`json_data_file/user_data/${clientID}.json`, JSON.stringify(client));
-                    resolve (`${clientID} JSON Data Successfully Added.`);
+
 
                 }
             );

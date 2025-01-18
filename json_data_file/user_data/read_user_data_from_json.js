@@ -16,16 +16,16 @@ export async function userData(clientName) {
                 
                 let userData = new Object();
 
-                userData.ID_KEY = await decrypted(data[i].ID_KEY);
-                userData.NAMA = await decrypted(data[i].NAMA);
-                userData.TITLE = await decrypted(data[i].TITLE);
-                userData.DIVISI = await decrypted(data[i].DIVISI);
-                userData.JABATAN = await decrypted(data[i].JABATAN);
-                userData.STATUS = await decrypted(data[i].STATUS);
-                userData.WHATSAPP = await decrypted(data[i].WHATSAPP);
-                userData.INSTA = await decrypted(data[i].INSTA);
-                userData.TIKTOK = await decrypted(data[i].TIKTOK);
-                userData.EXCEPTION = await decrypted(data[i].EXCEPTION);
+                userData.ID_KEY = decrypted(data[i].ID_KEY);
+                userData.NAMA = decrypted(data[i].NAMA);
+                userData.TITLE = decrypted(data[i].TITLE);
+                userData.DIVISI = decrypted(data[i].DIVISI);
+                userData.JABATAN = decrypted(data[i].JABATAN);
+                userData.STATUS = decrypted(data[i].STATUS);
+                userData.WHATSAPP = decrypted(data[i].WHATSAPP);
+                userData.INSTA = decrypted(data[i].INSTA);
+                userData.TIKTOK = decrypted(data[i].TIKTOK);
+                userData.EXCEPTION = decrypted(data[i].EXCEPTION);
                 client.push(userData);
         
             }    
