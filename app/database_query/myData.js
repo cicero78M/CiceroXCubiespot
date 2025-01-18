@@ -1,8 +1,5 @@
-import { readFileSync } from 'fs';
 import { myDataView } from '../view/my_data_view.js';
-import { newRowsData } from '../database/new_query/sheet_query.js';
-
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
+import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 
 export async function myData(clientName, idKey) {
 
@@ -13,15 +10,14 @@ export async function myData(clientName, idKey) {
       let isUserExist = false;
       let response = [];
   
-      await newRowsData(
-        ciceroKey.dbKey.userDataID, 
+      await readUser(
         clientName
       ).then(
         async userRows =>{
           //Check if idKey Exist
           for (let i = 0; i < userRows.length; i++) {
   
-            if (parseInt(userRows[i].get('ID_KEY')) === parseInt(idKey)) {
+            if (parseInt(userRows[i].ID_KEY) === parseInt(idKey)) {
   
               isUserExist = true;
               response = userRows[i];
