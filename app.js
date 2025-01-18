@@ -56,11 +56,10 @@ import { saveContacts } from './app/database/utils/saveContact.js';
 import { clientData2Json } from './json_data_file/client_data/write_client_data_to_json.js';
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
-import { userData } from './json_data_file/user_data/read_user_data_from_json.js';
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
 import { encryptClientData } from './json_data_file/client_data/create_encrypted_data_file.js';
 import { decrypted } from './json_data_file/crypto.js';
-import { userDir } from './json_data_file/user_data/read_data_from_dir.js';
+import { readUser } from './json_data_file/user_data/read_data_from_dir.js';
 
 //.env
 const private_key = process.env;
