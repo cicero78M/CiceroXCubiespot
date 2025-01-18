@@ -2,6 +2,7 @@ import { newListValueData } from '../database/new_query/data_list_query.js';
 import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
+import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
   
 export async function newReportTiktok(clientValue) {
 
@@ -56,16 +57,14 @@ export async function newReportTiktok(clientValue) {
                         response => divisiList = response
                     )
 
-                    await newRowsData(
-                        ciceroKey.dbKey.userDataID, 
+                    await readUser(
                         clientName
                     ).then( 
                         response => {    
-                    
                             userRows = response;                           
                     
                             for (let i = 0; i < response.length; i++) {
-                                if (response[i].get('STATUS') === 'TRUE' ){
+                                if (response[i].STATUS === 'TRUE' ){
                                     userAll++;
                                 }
                             } 
@@ -111,11 +110,11 @@ export async function newReportTiktok(clientValue) {
                                 }
 
                                 for (let iii = 0; iii < userRows.length; iii++) {
-                                    if (!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))) {
-                                        if (!userNotComment.includes(userRows[iii].get('ID_KEY'))) {
-                                            if (userRows[iii].get('STATUS') === 'TRUE' ){
-                                                if (userRows[iii].get('EXCEPTION') === "FALSE"){                   
-                                                    userNotComment.push(userRows[iii].get('ID_KEY'));
+                                    if (!userCommentData.includes(userRows[iii].TIKTOK.replaceAll('@', ''))) {
+                                        if (!userNotComment.includes(userRows[iii].ID_KEY)) {
+                                            if (userRows[iii].STATUS === 'TRUE' ){
+                                                if (userRows[iii].EXCEPTION === "FALSE"){                   
+                                                    userNotComment.push(userRows[iii].ID_KEY);
                                                     notCommentList.push(userRows[iii]);
                                                 }
                                             }
@@ -132,16 +131,17 @@ export async function newReportTiktok(clientValue) {
                             userByDivisi = '';
                             
                             for (let iv = 0; iv < notCommentList.length; iv++) {
-                                if (divisiList[iii] === notCommentList[iv].get('DIVISI')) {
+                                if (divisiList[iii] === notCommentList[iv].DIVISI) {
 
                                     if (decrypted(clientValue.get('TYPE')) === "RES") {
-                                        userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].get('TITLE') + ' ' + notCommentList[iv].get('NAMA') + ' - ' + notCommentList[iv].get('TIKTOK'));
+                                        userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].TITLE + ' ' + notCommentList[iv].NAMA 
+                                            + ' - ' + notCommentList[iv].TIKTOK);
                                         divisiCounter++;
                                         userCounter++;
                                     } else if (decrypted(clientValue.get('TYPE'))  === "COM") {
                                         name = notCommentList[iv].get('NAMA');
                                         nameUpper = name.toUpperCase();
-                                        userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].get('TIKTOK'));
+                                        userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].TIKTOK);
                                         divisiCounter++;
                                         userCounter++;
                                     }
