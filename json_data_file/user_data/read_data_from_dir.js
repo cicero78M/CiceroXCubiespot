@@ -1,6 +1,5 @@
 import { readdirSync, readFileSync } from "fs";
-import { decrypted } from "../crypto";
-//import { decrypted } from "../crypto.js";
+import { decrypted } from "../crypto.js";
 
 export async function userDir(clientName) {    
     return new Promise(async (resolve, reject) => {
