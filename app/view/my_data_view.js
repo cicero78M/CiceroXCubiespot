@@ -8,8 +8,8 @@ export async function myDataView(dataResponse) {
         accountState = 'DELETED';
     }
     let data = {
-    data : `*Profile Anda*\n\nUser : ` +dataResponse.get('TITLE')+` `+dataResponse.get('NAMA') + `\nID Key : ` + dataResponse.get('ID_KEY') + `\nDivisi / Jabatan : `
-        + dataResponse.get('DIVISI') + ` / ` + dataResponse.get('JABATAN') + `\nInsta : ` + dataResponse.get('INSTA') + `\nTikTok : ` + dataResponse.get('TIKTOK')
+    data : `*Profile Anda*\n\nUser : ` +dataResponse.TITLE+` `+dataResponse.NAMA + `\nID Key : ` + dataResponse.ID_KEY + `\nDivisi / Jabatan : `
+        + dataResponse.DIVISI + ` / ` + dataResponse.JABATAN + `\nInsta : ` + dataResponse.INSTA + `\nTikTok : ` + dataResponse.TIKTOK
         + `\nAccount Status : ` + accountState,
     state: true,
     code: 200
