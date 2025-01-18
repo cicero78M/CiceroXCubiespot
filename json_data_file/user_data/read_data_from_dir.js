@@ -7,9 +7,7 @@ export async function readUser(clientName) {
             let data = [];
 
             data = readdirSync(`json_data_file/user_data/${clientName}`);
-
-            console.log(data);
-            
+                        
             let client = [];
         
             for (let i = 0; i < data.length; i++){
