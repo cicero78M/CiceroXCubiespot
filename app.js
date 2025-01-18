@@ -60,6 +60,7 @@ import { userData } from './json_data_file/user_data/read_user_data_from_json.js
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
 import { encryptClientData } from './json_data_file/client_data/create_encrypted_data_file.js';
 import { decrypted } from './json_data_file/crypto.js';
+import { userDir } from './json_data_file/user_data/read_data_from_dir.js';
 
 //.env
 const private_key = process.env;
@@ -1362,6 +1363,22 @@ client.on('message', async (msg) => {
                                 }
                             );
                             break;
+                            case "readuserdir":
+                                clientData().then(
+                                    async response =>{
+                                        for (let i = 0; i < response.length;i++){
+                                            userDir(response[i].CLIENT_ID)
+                                            .then(
+                                                response => {
+                                                    console.log(response);
+                                                }
+                                            ).catch (
+                                                error => console.log(error)
+                                            );
+                                        }
+                                    }
+                                );
+                                break;
                         case "encryptclientdata":
                             console.log(await encryptClientData());
                             break;
