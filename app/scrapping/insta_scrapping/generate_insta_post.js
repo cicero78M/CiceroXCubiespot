@@ -93,7 +93,7 @@ export async function getInstaPost(clientValue) {
                 for (let ii = 0; ii < officialInstaData.length; ii++) {
                   if (officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code) {
 
-                    writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
+                    writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
 
                     //Update Existing Content Database                
                     officialInstaData[ii].assign({
@@ -105,7 +105,7 @@ export async function getInstaPost(clientValue) {
                     shortcodeUpdateCounter++;
                   } else if (!shortcodeList.includes(itemByDay[i].code)) {
                     //Push New Content to Database
-                    writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
+                    writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
   
                     shortcodeList.push(itemByDay[i].code);
                     await officialInstaSheet.addRow({
@@ -130,12 +130,12 @@ export async function getInstaPost(clientValue) {
               
                 try {
 
-                  writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
         
                 } catch (error) {
       
-                  mkdirSync(`json_data_file/insta_data/insta_content${clientName}`);
-                  writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
+                  mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
                     
                 }
                 resolve (`${itemByDay[i].code} JSON Data Successfully Added.`);
