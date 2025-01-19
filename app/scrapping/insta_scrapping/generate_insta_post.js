@@ -77,7 +77,8 @@ export async function getInstaPost(clientValue) {
             console.log(datax);
 
             for (let ix = 0; ix < todayItems.lenght; ix++){
-
+              
+              console.log(`${todayItems[ix]}.json`);
               if (datax.includes(`${todayItems[ix]}.json`)){
                 console.log ("Hi Im Exist");
               } else {
