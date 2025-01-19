@@ -11,7 +11,10 @@ export async function transferInstaLikes(clientName) {
     let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
     for (let i = 0; i < instaLikesUsernameData.length; i++) {
-      const fromRows = Object.values(instaLikesUsernameData[i].toObject());
+
+      let data = [];
+
+      let fromRows = Object.values(instaLikesUsernameData[i].toObject());
 
       for (let ii = 0; ii < fromRows.length; ii++) {
 
