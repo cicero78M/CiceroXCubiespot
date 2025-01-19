@@ -30,6 +30,7 @@ export async function getInstaPost(clientValue) {
 
           postItems = await response.data.data.items;
   
+          console.log(postItems);
           for (let i = 0; i < postItems.length; i++) {
   
             let itemDate = new Date(postItems[i].taken_at * 1000);
