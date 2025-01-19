@@ -43,9 +43,6 @@ export async function transferInstaContent(clientName) {
             writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${officialInstaData[i].get("SHORTCODE")}.json`, JSON.stringify(instaContents));
               
           }
-
-          
-
       }
 }
 
