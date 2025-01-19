@@ -64,7 +64,7 @@ export async function getInstaPost(clientValue) {
 
                 let dataObject = new Object();
 
-                // dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
+                dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
                 dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
                 dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
                 dataObject.ID = encrypted(itemByDay[i].id);
