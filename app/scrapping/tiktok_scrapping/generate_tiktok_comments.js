@@ -91,8 +91,11 @@ export async function getTiktokComments(items) {
                 }
             }). catch (error => {
                 console.log(error);
-                forLoopGetComments(items, cursorNumber)
+                setTimeout(async () => {
+                    console.log('error'+cursorNumber);
+                    await forLoopGetComments(items, cursorNumber);
 
+                }, 2500); 
 
                 // let data = {
                 //     data: error,
