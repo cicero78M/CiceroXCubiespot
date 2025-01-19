@@ -5,7 +5,8 @@ import { writeFileSync } from "fs";
 
 
 export async function updateUsername(clientName, idKey, username, phone, type) {
-
+  console.log(username);
+  let isDataExist = false;
   let idExist = false;
   let usernameList = [];
   let userRows = [];
