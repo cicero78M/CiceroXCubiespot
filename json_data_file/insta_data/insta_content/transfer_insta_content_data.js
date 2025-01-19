@@ -16,12 +16,12 @@ export async function transferInstaContent(clientName) {
 
         try {
 
-            writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents[i].code}.json`, JSON.stringify(instaContents[i]));
+            writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
   
           } catch (error) {
 
             mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-            writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents[i].code}.json`, JSON.stringify(instaContents[i]));
+            writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
               
           }
 
