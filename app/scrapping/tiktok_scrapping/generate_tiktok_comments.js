@@ -41,7 +41,7 @@ export async function getTiktokComments(items) {
                         console.log('next data normal '+response.data.cursor);
                         await forLoopGetComments(items, response.data.cursor);
 
-                    }, 1200);
+                    }, 2000);
 
                 } else {    
                     if(total === response.data.cursor){
@@ -51,7 +51,7 @@ export async function getTiktokComments(items) {
                                 console.log('next data switch point triggering '+response.data.cursor);
                                 await forLoopGetComments(items, response.data.cursor);
 
-                            }, 1200);
+                            }, 2000);
 
                         } else {
                             let data = {
@@ -68,7 +68,7 @@ export async function getTiktokComments(items) {
                                     console.log('next data not equals zero '+response.data.cursor);
                                     await forLoopGetComments(items, response.data.cursor);
 
-                                }, 1200);
+                                }, 2000);
 
                             } else {
                                 let data = {
@@ -83,7 +83,7 @@ export async function getTiktokComments(items) {
                                 console.log('next data over 400 '+response.data.cursor);
                                 await forLoopGetComments(items, response.data.cursor);
 
-                            }, 1200); 
+                            }, 2000); 
                    
                         }
                     }
