@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_query.js";
-import { mkdirSync, writeFileSync } from "fs";
+// import { mkdirSync, writeFileSync } from "fs";
 
 
 
@@ -14,16 +14,20 @@ export async function transferInstaContent(clientName) {
     for (let i = 0; i < officialInstaData.length; i++) {
         let instaContents = Object.values(officialInstaData[i].toObject());
 
-        try {
+        console.log(instaContents);
 
-            writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
+
+
+        // try {
+
+        //     writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
   
-          } catch (error) {
+        //   } catch (error) {
 
-            mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-            writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
+        //     mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+        //     writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
               
-          }
+        //   }
 
       }
 }
