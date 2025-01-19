@@ -11,25 +11,30 @@ export async function transferInstaContent(clientName) {
     let officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
     let officialInstaData = await officialInstaSheet.getRows();
 
-    for (let i = 0; i < officialInstaData.length; i++) {
-        let instaContents = Object.values(officialInstaData[i].toObject());
-
-        console.log(instaContents);
+    let instaContents = Object.values(officialInstaData.toObject());
+    console.log(instaContents);
 
 
 
-        // try {
+    // for (let i = 0; i < officialInstaData.length; i++) {
+    //     let instaContents = Object.values(officialInstaData[i].toObject());
 
-        //     writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
+    //     console.log(instaContents);
+
+
+
+    //     // try {
+
+    //     //     writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
   
-        //   } catch (error) {
+    //     //   } catch (error) {
 
-        //     mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-        //     writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
+    //     //     mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+    //     //     writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContents.code}.json`, JSON.stringify(instaContents));
               
-        //   }
+    //     //   }
 
-      }
+    //   }
 }
 
 
