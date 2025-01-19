@@ -65,15 +65,17 @@ export async function getInstaPost(clientValue) {
 
                  let dataObject = new Object();
 
-                // dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
+                 dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
                  dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
-                // dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
-                // dataObject.ID = encrypted(itemByDay[i].id);
-                // dataObject.TYPE = encrypted(itemByDay[i].media_name);
-                // dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
-                // dataObject.COMMENT_COUNT = encrypted(itemByDay[i].comment_count); 
-                // dataObject.LIKE_COUNT = encrypted(itemByDay[i].like_count);
-                // dataObject.PLAY_COUNT = encrypted(itemByDay[i].play_count);
+                 dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
+                dataObject.ID = encrypted(itemByDay[i].id);
+                dataObject.TYPE = encrypted(itemByDay[i].media_name);
+                dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
+                dataObject.COMMENT_COUNT = encrypted(itemByDay[i].comment_count); 
+                dataObject.LIKE_COUNT = encrypted(itemByDay[i].like_count);
+                dataObject.PLAY_COUNT = encrypted(itemByDay[i].play_count);
+
+                console.log(dataObject);
 
                 // try {
 
