@@ -8,8 +8,7 @@ import { tiktokItemsBridges } from "../scrapping/tiktok_scrapping/tiktok_items_b
 import { sendClientResponse, sendResponse } from "../view/sendWA.js";
 import { newReportInsta } from "./insta_report.js";
 
-export async function schedullerAllSocmed(
-    timeSwitch) {
+export async function schedullerAllSocmed(timeSwitch) {
     let d = new Date();
     let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
     let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
