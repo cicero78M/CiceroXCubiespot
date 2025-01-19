@@ -6,11 +6,6 @@ import { encrypted } from "../../../json_data_file/crypto.js";
 
 
 export async function updateUsername(clientName, idKey, username, phone, type) {
-  console.log(username);
-  console.log(idKey);
-  console.log(username);
-  console.log(phone);
-  console.log(type);
 
   let isDataExist = false;
   let idExist = false;
@@ -37,12 +32,12 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           userRows = await response;                           
           for (let i = 0; i < userRows.length; i++) {
             console.log(userRows[i].ID_KEY);
-            // if (userRows[i].ID_KEY === idKey ){
+            if (userRows[i].ID_KEY === idKey ){
               
-            //   idExist = true;
-            //   userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
+              idExist = true;
+              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
             
-            // }
+            }
           } 
         }
       );
@@ -53,18 +48,32 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             if (userRows[i].WHATSAPP === phone || userRows[i].WHATSAPP === "" || phone === "6281235114745") {
   
               if (userRows[i].STATUS === "TRUE") {
+
+                
+                userData.ID_KEY = encrypted(userRows[i].get("ID_KEY"));
+                userData.NAMA = encrypted(userRows[i].get("NAMA"));
+                userData.TITLE = encrypted(userRows[i].get("TITLE"));
+                userData.DIVISI = encrypted(userRows[i].get("DIVISI"));
+                userData.JABATAN = encrypted(userRows[i].get("JABATAN"));
+                userData.STATUS = encrypted(userRows[i].get("STATUS"));
+                userData.EXCEPTION = encrypted(userRows[i].get("EXCEPTION"));
   
                 isDataExist = true;
                 
                 if (type === "INSTA") {
+                  
+                  userData.TIKTOK = encrypted(userRows[i].get("TIKTOK"));
                   userData.INSTA = encrypted(username);
                 } else if (type === "TIKTOK") {
+                  userData.INSTA = encrypted(userRows[i].get("INSTA"));
                   userData.TIKTOK = encrypted(username);
                 }
                 
                 if (userRows[i].WHATSAPP === "" && phone !== "6281235114745") {
                   userData.WHATSAPP = encrypted(phone);
-                } 
+                } else {
+                  userData.WHATSAPP = encrypted(userRows[i].get("WHATSAPP"));
+                }
                 
                 writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
                 
