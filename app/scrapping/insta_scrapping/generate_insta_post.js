@@ -62,28 +62,30 @@ export async function getInstaPost(clientValue) {
 
               for (let i = 0; i < itemByDay.length; i++) {
 
-                let dataObject = new Object();
+                console.loh(itemByDay[i])
 
-                dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
-                dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
-                dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
-                dataObject.ID = encrypted(itemByDay[i].id);
-                dataObject.TYPE = encrypted(itemByDay[i].media_name);
-                dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
-                dataObject.COMMENT_COUNT = encrypted(itemByDay[i].comment_count); 
-                dataObject.LIKE_COUNT = encrypted(itemByDay[i].like_count);
-                dataObject.PLAY_COUNT = encrypted(itemByDay[i].play_count);
+                // let dataObject = new Object();
 
-                try {
+                // dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
+                // dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
+                // dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
+                // dataObject.ID = encrypted(itemByDay[i].id);
+                // dataObject.TYPE = encrypted(itemByDay[i].media_name);
+                // dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
+                // dataObject.COMMENT_COUNT = encrypted(itemByDay[i].comment_count); 
+                // dataObject.LIKE_COUNT = encrypted(itemByDay[i].like_count);
+                // dataObject.PLAY_COUNT = encrypted(itemByDay[i].play_count);
 
-                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+                // try {
+
+                //   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
         
-                } catch (error) {
+                // } catch (error) {
       
-                  mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+                //   mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+                //   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
                     
-                }
+                // }
               }
             }
 
