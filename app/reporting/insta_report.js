@@ -68,10 +68,13 @@ export async function newReportInsta(clientValue) {
           let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 
           for (let i = 0; i < instaContentDir.length; i++) {
+
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
+            console.log(contentItems)
+
+
             for (let ii = 0; ii < contentItems.length; ii++) {
 
-              console.log(contentItems)
 
 
               let itemDate = new Date(Number(decrypted(contentItems[i].TIMESTAMP)) * 1000);
