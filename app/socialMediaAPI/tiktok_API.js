@@ -5,7 +5,6 @@ import 'dotenv/config';
 export const private_key = process.env;
 
 const headers = {
-  'x-cache-control': 'no-cache',
   'x-rapidapi-key': private_key.TIKTOK_API_KEY,
   'x-rapidapi-host': private_key.TIKTOK_API_HOST
 }
