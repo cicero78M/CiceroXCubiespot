@@ -15,7 +15,12 @@ export async function transferInstaLikes(clientName) {
 
       let data = [];
 
-      for (let ii = 1; ii < fromRows[i].length; ii++) {
+      for (let ii = 0; ii < fromRows[i].length; ii++) {
+        let key;
+
+        if (ii === 0 ){
+          key = fromRows[i][ii]; 
+        }
 
         if (fromRows[i][ii] === null || fromRows[i][ii] === undefined || fromRows[i][ii] === ""){
 
@@ -29,16 +34,12 @@ export async function transferInstaLikes(clientName) {
 
         
         try {
-          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[i][0]}.json`, JSON.stringify(data));
+          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${key}.json`, JSON.stringify(data));
         } catch (error) {
           mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
-          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[i][0]}.json`, JSON.stringify(data));
-        }
-
-      
+          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${key}.json`, JSON.stringify(data));
+        }    
       }
-  
-
     }
 }
 
