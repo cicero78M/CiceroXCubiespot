@@ -1,5 +1,5 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_query";
+import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_query.js";
 
 
 export async function transferInstaContent(clientName) {
