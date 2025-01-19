@@ -19,14 +19,8 @@ export async function transferInstaLikes(clientName) {
       for (let ii = 0; ii < fromRows.length; ii++) {
 
 
-        if (fromRows[ii] === null || fromRows[ii] === undefined || fromRows[ii] === ""){
-
-          console.log(null);
-
-        } else {
-
+        if (fromRows[ii] !== null || fromRows[ii] !== undefined || fromRows[ii] !== ""){
           data.push(encrypted(fromRows[ii]));
-
         }
 
         
