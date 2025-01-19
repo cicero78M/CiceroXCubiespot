@@ -112,6 +112,7 @@ export async function instaFollowingAPI(key,pagination) {
         }
     });
 }
+
 export async function instaLikesAPI(key) {
     //Insta Likes API
     let options = {

@@ -1,8 +1,6 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
 import { instaLikesAPI } from '../../socialMediaAPI/insta_API.js';
 import { client } from '../../../app.js';
-import { decrypted } from '../../../json_data_file/crypto.js';
+import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 
 export async function getInstaLikes(todayItems, clientValue ) {
 
@@ -12,7 +10,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
 
     let newData = 0;
     let updateData = 0;
-    let switchPoint = 0;
     let newDataUsers = [];
 
     let hasShortcode = false;
@@ -21,42 +18,26 @@ export async function getInstaLikes(todayItems, clientValue ) {
       
       try { 
 
-        let instaLikesUsernameData;
-        let instaLikesUsernameSheet;
-        let instaLikesUsernameDoc;
-        try {
-           instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-          await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-          instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
-          instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
-        } catch (error) {
-
-          setTimeout(() => {
-            console.log("Await");
-        }, 10000);
-          
-             instaLikesUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-            await instaLikesUsernameDoc.loadInfo(); // loads document properties and worksheets
-            instaLikesUsernameSheet = instaLikesUsernameDoc.sheetsByTitle[clientName];
-            instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
-          
-        }
+        let datax = readdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
 
         for (let i = 0; i < todayItems.length; i++) {
           
-          for (let ii = 0; ii < instaLikesUsernameData.length; ii++) {
+          for (let ii = 0; ii < datax.length; ii++) {
             
-            if (instaLikesUsernameData[ii].get('SHORTCODE') === todayItems[i]) {
+            if (todayItems[i] === (datax[ii]).replace(".json", "")) {
+
+              console.log("Data Exist")
+
               hasShortcode = true;
 
               newDataUsers =[];
         
-              const fromRows = Object.values(instaLikesUsernameData[ii].toObject());
+              let fromRows = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${datax[ii]}`));
 
               for (let iii = 0; iii < fromRows.length; iii++) {
-                if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                  if (!newDataUsers.includes(fromRows[iii])) {
-                    newDataUsers.push(fromRows[iii]);
+                if (decrypted(fromRows[iii]) != undefined || decrypted(fromRows[iii]) != null || decrypted(fromRows[iii]) != "") {
+                  if (!newDataUsers.includes(decrypted(fromRows[iii]))) {
+                    newDataUsers.push(decrypted(fromRows[iii]));
                   }
                 }
               }
@@ -65,12 +46,26 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 async response =>{
                   const likesItems = await response.data.data.items;
                   for (let iii = 0; iii < likesItems.length; iii++) {
-                    if (likesItems[iii].username != undefined || likesItems[iii].username != null || likesItems[iii].username != "") {
+                    if (likesItems[iii].username !== undefined || likesItems[iii].username !== null || likesItems[iii].username !== "") {
                       if (!newDataUsers.includes(likesItems[iii].username)) {
                         newDataUsers.push(likesItems[iii].username);
                       }
                     }
                   }
+
+                  let encryptedData = []
+
+                  for (let iii = 0; iii < newDataUsers.length; iii++) {
+                    encryptedData.push(encrypted(newDataUsers[iii]));
+                  }
+
+                  try {
+                    writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                  } catch (error) {
+                    mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+                    writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                  }    
+
                 }
               ).catch(
                 async error =>{
@@ -82,26 +77,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
                   reject (data);
                 }
               );
-
-
-              await instaLikesUsernameData[ii].delete();
-              
-        
-              async function postData(listdata) {
-                await instaLikesUsernameSheet.addRow(listdata).catch(
-                  async response =>{
-                    setTimeout(async () => {
-                      if(switchPoint < 2){
-                        console.error(response.code);
-                        await postData(listdata);
-                        switchPoint++
-                      }                    
-                    }, 2000);
-                  }                
-                );  
-              }
-
-              await postData(newDataUsers);
 
               console.log(`${clientName} Update Data ${todayItems[i]}`);
               await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
@@ -117,30 +92,21 @@ export async function getInstaLikes(todayItems, clientValue ) {
             await instaLikesAPI(todayItems[i]).then(
               async response =>{
                 let likesItems = await response.data.data.items;
-                let userNameList = [todayItems[i]];
+                let encryptedData = [];
             
                 for (let iii = 0; iii < likesItems.length; iii++) {
                   if ('username' in likesItems[iii]) {
-                    userNameList.push(likesItems[iii].username);
+                    encryptedData.push(encrypted(likesItems[iii].username));
                   }
                 }
-                //Add new Row              
-                async function postData(listdata) {
-                  await instaLikesUsernameSheet.addRow(listdata).catch(
-                    async response =>{
-                      setTimeout(async () => {
-                        if(switchPoint < 2){
-                          console.error(response.code);
-                          await postData(listdata);
-                          switchPoint++
-                        }                    
-                      }, 2000);
-                    }                
-                  );  
-                }
+                
+                try {
+                  writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                } catch (error) {
+                  mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+                  writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                }    
 
-                await postData(userNameList);
-            
                 console.log(`${clientName} Insert New Data ${todayItems[i]}`);
                 await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
                 newData++;

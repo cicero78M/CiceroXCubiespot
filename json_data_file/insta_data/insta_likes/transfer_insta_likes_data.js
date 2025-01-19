@@ -22,8 +22,7 @@ export async function transferInstaLikes(clientName) {
         if (fromRows[ii] !== null || fromRows[ii] !== undefined || fromRows[ii] !== ""){
           data.push(encrypted(fromRows[ii]));
         }
-
-        
+                
         try {
           writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
         } catch (error) {

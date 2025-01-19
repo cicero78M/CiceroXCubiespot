@@ -1,9 +1,9 @@
 import { encrypted } from "../crypto.js";
-import { ciceroKey, googleAuth, newRowsData } from "../../app/database/new_query/sheet_query.js";
-import { GoogleSpreadsheet } from "google-spreadsheet";
+import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
+// import { GoogleSpreadsheet } from "google-spreadsheet";
 
 export async function encryptClientData() {
-    let client = [];
+    // let client = [];
 
     await newRowsData(
         ciceroKey.dbKey.clientDataID, 
@@ -13,31 +13,35 @@ export async function encryptClientData() {
 
                 let clientData = new Object();
                 
-                clientData.CLIENT_ID = await encrypted(data[i].get("CLIENT_ID"));
-                clientData.TYPE = await encrypted(data[i].get("TYPE"));
-                clientData.STATUS = await encrypted(data[i].get("STATUS"));
-                clientData.INSTAGRAM = await encrypted(data[i].get("INSTAGRAM"));
-                clientData.TIKTOK = await encrypted(data[i].get("TIKTOK"));
-                clientData.INSTA_STATE = await encrypted(data[i].get("INSTA_STATE"));
-                clientData.TIKTOK_STATE = await encrypted(data[i].get("TIKTOK_STATE"));
-                clientData.SUPERVISOR = await encrypted(data[i].get("SUPERVISOR"));
-                clientData.OPERATOR = await encrypted(data[i].get("OPERATOR"));
-                clientData.GROUP = await encrypted(data[i].get("GROUP"));
-                clientData.SECUID = await encrypted(data[i].get("SECUID"));
+                clientData.CLIENT_ID =  encrypted(data[i].get("CLIENT_ID"));
+                clientData.TYPE =  encrypted(data[i].get("TYPE"));
+                clientData.STATUS =  encrypted(data[i].get("STATUS"));
+                clientData.INSTAGRAM =  encrypted(data[i].get("INSTAGRAM"));
+                clientData.TIKTOK = encrypted(data[i].get("TIKTOK"));
+                clientData.INSTA_STATE = encrypted(data[i].get("INSTA_STATE"));
+                clientData.TIKTOK_STATE = encrypted(data[i].get("TIKTOK_STATE"));
+                clientData.SUPERVISOR = encrypted(data[i].get("SUPERVISOR"));
+                clientData.OPERATOR = encrypted(data[i].get("OPERATOR"));
+                clientData.GROUP = encrypted(data[i].get("GROUP"));
+                clientData.SECUID = encrypted(data[i].get("SECUID"));
 
-                client.push(clientData);
-
+                try {
+                    writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+                  } catch (error) {
+                    mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+                    writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+                  }  
             };
     });
 
-        let dataDoc = new GoogleSpreadsheet(
-                ciceroKey.dbKey.clientDataID, 
-                googleAuth
-            );
+        // let dataDoc = new GoogleSpreadsheet(
+        //         ciceroKey.dbKey.clientDataID, 
+        //         googleAuth
+        //     );
 
-        await  dataDoc.loadInfo(); // loads document properties and worksheets            
-        let clientSheet = dataDoc.sheetsByTitle["ClientData_Enc"];
+        // await  dataDoc.loadInfo(); // loads document properties and worksheets            
+        // let clientSheet = dataDoc.sheetsByTitle["ClientData_Enc"];
 
-        await clientSheet.addRows(client);
-        return "Client Data Encrypted"
+        // await clientSheet.addRows(client);
+        // return "Client Data Encrypted"
 }
