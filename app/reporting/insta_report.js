@@ -28,7 +28,6 @@ export async function newReportInsta(clientValue) {
   let userLikesData = [];
   let UserNotLikes = [];
   let notLikesList = [];
-  let instaLikesUsernameData = [];
   
   let dataInsta = '';
   let shortcodeListString = '';
@@ -74,8 +73,11 @@ export async function newReportInsta(clientValue) {
             for (let ii = 0; ii < contentItems.length; ii++) {
 
               let itemDate = new Date(Number(decrypted(contentItems[i].TIMESTAMP)) * 1000);
+              console.log(itemDate)
+
 
               if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+
                 if (!shortcodeList.includes(decrypted(contentItems[i].SHORTCODE))) {
                   shortcodeList.push(decrypted(contentItems[i].SHORTCODE));
                   if (decrypted(contentItems[i].TYPE) === 'reel') {
@@ -87,6 +89,7 @@ export async function newReportInsta(clientValue) {
               }
             }
           }
+
 
           if (shortcodeList.length >= 1) {  
             
