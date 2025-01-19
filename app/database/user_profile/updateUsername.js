@@ -32,12 +32,12 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           userRows = await response;                           
           for (let i = 0; i < userRows.length; i++) {
             console.log(userRows[i].ID_KEY);
-            if (userRows[i].ID_KEY === idKey ){
+            // if (userRows[i].ID_KEY === idKey ){
               
-              idExist = true;
-              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
+            //   idExist = true;
+            //   userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
             
-            }
+            // }
           } 
         }
       );
