@@ -8,6 +8,8 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
   let idExist = false;
   let usernameList = [];
+  let userRows = [];
+
   let userData = new Object();
 
   return new Promise(async (resolve, reject) => {
