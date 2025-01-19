@@ -44,16 +44,16 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
     for (let ii = 0; ii < userRows.length; ii++) {
       if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
 
-        userData.ID_KEY = encrypted(userRows[i].ID_KEY);
-        userData.NAMA = encrypted(userRows[i].NAMA);
-        userData.TITLE = encrypted(userRows[i].TITLE);
-        userData.DIVISI = encrypted(userRows[i].DIVISI);
-        userData.JABATAN = encrypted(userRows[i].JABATAN);
-        userData.STATUS = encrypted(userRows[i].STATUS);
-        userData.INSTA = encrypted(userRows[i].INSTA);
-        userData.TIKTOK = encrypted(userRows[i].TIKTOK);
-        userData.WHATSAPP = encrypted(userRows[i].WHATSAPP);
-        userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
+        userData.ID_KEY = encrypted(userRows[ii].ID_KEY);
+        userData.NAMA = encrypted(userRows[ii].NAMA);
+        userData.TITLE = encrypted(userRows[ii].TITLE);
+        userData.DIVISI = encrypted(userRows[ii].DIVISI);
+        userData.JABATAN = encrypted(userRows[ii].JABATAN);
+        userData.STATUS = encrypted(userRows[ii].STATUS);
+        userData.INSTA = encrypted(userRows[ii].INSTA);
+        userData.TIKTOK = encrypted(userRows[ii].TIKTOK);
+        userData.WHATSAPP = encrypted(userRows[ii].WHATSAPP);
+        userData.EXCEPTION = encrypted(userRows[ii].EXCEPTION);
 
         if (userRows[ii].WHATSAPP === "" 
         || userRows[ii].WHATSAPP === phone 
