@@ -82,8 +82,6 @@ export async function getInstaPost(clientValue) {
 
               if (todayItems.includes(datax[ix].replaceAll('.json', ''))){
                 console.log ("Hi Im Exist");
-              } else {
-                console.log("I'm not there");
               }
 
             }
