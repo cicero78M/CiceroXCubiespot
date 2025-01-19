@@ -20,13 +20,13 @@ export async function getInstaLikes(todayItems, clientValue ) {
       
       try { 
 
-        let datax = readdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+        let instaLikesDir = readdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
 
         for (let i = 0; i < todayItems.length; i++) {
           
-          for (let ii = 0; ii < datax.length; ii++) {
+          for (let ii = 0; ii < instaLikesDir.length; ii++) {
             
-            if (todayItems[i] === (datax[ii]).replace(".json", "")) {
+            if (todayItems[i] === (instaLikesDir[ii]).replace(".json", "")) {
 
               console.log("Data Exist")
 
@@ -34,12 +34,13 @@ export async function getInstaLikes(todayItems, clientValue ) {
 
               newDataUsers =[];
         
-              let fromRows = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${datax[ii]}`));
+              let instaLikes = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesDir[ii]}`));
+              console.log(fromRows);
 
-              for (let iii = 0; iii < fromRows.length; iii++) {
-                if (decrypted(fromRows[iii]) != undefined || decrypted(fromRows[iii]) != null || decrypted(fromRows[iii]) != "") {
-                  if (!newDataUsers.includes(decrypted(fromRows[iii]))) {
-                    newDataUsers.push(decrypted(fromRows[iii]));
+              for (let iii = 0; iii < instaLikes.length; iii++) {
+                if (decrypted(instaLikes[iii]) != undefined || decrypted(instaLikes[iii]) != null || decrypted(instaLikes[iii]) != "") {
+                  if (!newDataUsers.includes(decrypted(instaLikes[iii]))) {
+                    newDataUsers.push(decrypted(instaLikes[iii]));
                   }
                 }
               }

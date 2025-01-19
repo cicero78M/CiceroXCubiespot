@@ -61,8 +61,19 @@ export async function newReportInsta(clientValue) {
           }
         );
 
-        // If Client_ID exist. then get official content
+        // If Client_ID exist. then get Insta content
+
         if (decrypted(clientValue.get('STATUS'))) {   
+
+          let instaLikesDir = readdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+          for (let i = 0; i < instaLikesDir.length; i++) {
+
+            let instaLikes = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesDir[i]}`));
+            console.log(instaLikes);
+
+
+          }
+
           await newRowsData(
             ciceroKey.dbKey.instaOfficialID, 
             clientName
