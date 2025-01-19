@@ -1,8 +1,6 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { client } from "../../../app.js";
-import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
-import { decrypted } from '../../../json_data_file/crypto.js';
+import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, readdirSync, writeFileSync } from "fs";
 
 export async function getInstaPost(clientValue) {
@@ -15,9 +13,6 @@ export async function getInstaPost(clientValue) {
 
   console.log(clientName + " Collecting Insta Post Starting...");
   await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Starting...`);
-
-  let shortcodeUpdateCounter = 0;
-  let shortcodeNewCounter = 0;
 
   let itemByDay = [];
   let todayItems = [];
@@ -50,109 +45,47 @@ export async function getInstaPost(clientValue) {
             console.log(`${clientName} Official Account Has Post Data...`);
             await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
             
-            let instaOfficialDoc;
-            let officialInstaSheet;
-            let officialInstaData;
-            try {
-              instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
-              await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-              officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
-              officialInstaData = await officialInstaSheet.getRows();
-                  
-            } catch (error) {
-
-              setTimeout(() => {
-                console.log("Await");
-              }, 10000);
-
-              instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
-              await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
-              officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
-              officialInstaData = await officialInstaSheet.getRows();
-                  
-            }
+            let hasShortcode = false;
             
             let datax = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-
-            console.log(datax);
 
             for (let ix = 0; ix < datax.length; ix++){
               
               if (todayItems.includes(datax[ix].replaceAll('.json', ''))){
-                console.log ("Hi Im Exist");
-              }
-
-            }
-
-            let shortcodeList = [];
-  
-            for (let i = 0; i < officialInstaData.length; i++) {
-              if (!shortcodeList.includes(officialInstaData[i].get('SHORTCODE'))) {
-                shortcodeList.push(officialInstaData[i].get('SHORTCODE'));
-              }
-            }
-            //Check if Database Contains Shortcode Items        
-            let hasShortcode = false;
-            
-            for (let i = 0; i < itemByDay.length; i++) {
-              if (shortcodeList.includes(itemByDay[i].code)) {
                 hasShortcode = true;
               }
             }
+            
             //If Database Contains Shortcode 
             if (hasShortcode) {
+
               for (let i = 0; i < itemByDay.length; i++) {
-                for (let ii = 0; ii < officialInstaData.length; ii++) {
-                  if (officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code) {
 
-                    // writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
+                let dataObject = new Object();
 
-                    //Update Existing Content Database                
-                    officialInstaData[ii].assign({
-                      TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id,
-                      TYPE: itemByDay[i].media_name, CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count,
-                      PLAY_COUNT: itemByDay[i].play_count
-                    }); // Jabatan Divisi Value
-                    await officialInstaData[ii].save(); //save update
-                    shortcodeUpdateCounter++;
-                  } else if (!shortcodeList.includes(itemByDay[i].code)) {
-                    //Push New Content to Database
-                    // writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
-  
-                    shortcodeList.push(itemByDay[i].code);
-                    await officialInstaSheet.addRow({
-                      TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
-                      CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count
-                    });
-                    shortcodeNewCounter++;
-                  }
+                dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
+                dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
+                dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
+                dataObject.ID = encrypted(itemByDay[i].id);
+                dataObject.TYPE = encrypted(itemByDay[i].media_name);
+                dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
+                dataObject.COMMENT_COUNT = encrypted(itemByDay[i].comment_count); 
+                dataObject.LIKE_COUNT = encrypted(itemByDay[i].like_count);
+                dataObject.PLAY_COUNT = encrypted(itemByDay[i].play_count);
+
+                try {
+
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+        
+                } catch (error) {
+      
+                  mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+                    
                 }
               }
-            } else {
-              //Push New Shortcode Content to Database
-              for (let i = 0; i < itemByDay.length; i++) {
-                
-                await officialInstaSheet.addRow({
-                  TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
-                  CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count,
-                  THUMBNAIL: itemByDay[i].thumbnail_url, VIDEO_URL: itemByDay[i].video_url
-                });
-
-                shortcodeNewCounter++;
-              
-                // try {
-
-                //   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
-        
-                // } catch (error) {
-      
-                //   mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-                //   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
-                    
-                // }
-                // resolve (`${itemByDay[i].code} JSON Data Successfully Added.`);
-              }
             }
+
             let data = {
               data: todayItems,
               state: true,
