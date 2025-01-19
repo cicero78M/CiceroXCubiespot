@@ -11,7 +11,7 @@ export async function transferInstaContent(clientName) {
     let officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
     let officialInstaData = await officialInstaSheet.getRows();
 
-    let instaContents = Object.values(officialInstaData.toObject());
+    let instaContents = Object.values(officialInstaData);
     console.log(instaContents);
 
 
