@@ -71,8 +71,8 @@ export async function getInstaPost(clientValue) {
                 dataObject.TYPE = encrypted(itemByDay[i].media_name);
                 dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
                 // dataObject.COMMENT_COUNT = encrypted(itemByDay[i].comment_count);
-                dataObject.LIKE_COUNT = encrypted(itemByDay[i].like_count);
-                dataObject.PLAY_COUNT = encrypted(itemByDay[i].play_count);
+                // dataObject.LIKE_COUNT = encrypted(itemByDay[i].like_count);
+                // dataObject.PLAY_COUNT = encrypted(itemByDay[i].play_count);
 
                 console.log(dataObject);
 
