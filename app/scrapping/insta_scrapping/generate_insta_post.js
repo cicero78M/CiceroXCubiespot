@@ -62,7 +62,7 @@ export async function getInstaPost(clientValue) {
 
               for (let i = 0; i < itemByDay.length; i++) {
 
-                console.loh(itemByDay[i])
+                console.log(itemByDay[i])
 
                 // let dataObject = new Object();
 
