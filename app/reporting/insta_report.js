@@ -77,7 +77,7 @@ export async function newReportInsta(clientValue) {
 
               if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
                 shortcodeList.push(decrypted(contentItems.SHORTCODE));
-                if (decrypted(contentItems[i].TYPE) === 'reel') {
+                if (decrypted(contentItems.TYPE) === 'reel') {
                   shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
                 } else {
                   shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
