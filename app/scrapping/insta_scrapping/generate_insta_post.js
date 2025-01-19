@@ -92,6 +92,9 @@ export async function getInstaPost(clientValue) {
               for (let i = 0; i < itemByDay.length; i++) {
                 for (let ii = 0; ii < officialInstaData.length; ii++) {
                   if (officialInstaData[ii].get('SHORTCODE') === itemByDay[i].code) {
+
+                    writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
+
                     //Update Existing Content Database                
                     officialInstaData[ii].assign({
                       TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id,
@@ -101,7 +104,9 @@ export async function getInstaPost(clientValue) {
                     await officialInstaData[ii].save(); //save update
                     shortcodeUpdateCounter++;
                   } else if (!shortcodeList.includes(itemByDay[i].code)) {
-                    //Push New Content to Database  
+                    //Push New Content to Database
+                    writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
+  
                     shortcodeList.push(itemByDay[i].code);
                     await officialInstaSheet.addRow({
                       TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
@@ -133,12 +138,8 @@ export async function getInstaPost(clientValue) {
                   writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${itemByDay[i].code}.json`, JSON.stringify(itemByDay[i]));
                     
                 }
-
                 resolve (`${itemByDay[i].code} JSON Data Successfully Added.`);
-              
               }
-
-
             }
             let data = {
               data: todayItems,
