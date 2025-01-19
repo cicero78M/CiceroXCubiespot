@@ -1,10 +1,10 @@
-
 import { myData } from '../../database_query/myData.js';
 import { propertiesView } from '../../view/properties_view.js';
 import { client } from '../../../app.js';
 import { readUser } from '../../../json_data_file/user_data/read_data_from_dir.js';
 import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from '../../../json_data_file/crypto.js';
+import { newListValueData } from '../new_query/data_list_query.js';
 
 
 //This Function for edit user data profile
