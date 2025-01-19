@@ -1,7 +1,6 @@
 import { readdirSync, readFileSync } from 'fs';
 import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
-import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 
 export async function warningReportInsta(clientValue) {
 
@@ -28,8 +27,8 @@ export async function warningReportInsta(clientValue) {
       resolve, reject
     ) => {
       try {
-        
 
+        //Get User Data
         await readUser(
           clientName
         ).then( 
