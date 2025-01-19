@@ -38,6 +38,7 @@ export async function getTiktokComments(items) {
     
                 if (response.data.has_more === 1){    
                     setTimeout(async() => {
+                        console.log(items)
                         console.log('next data normal '+response.data.cursor);
                         await forLoopGetComments(items, response.data.cursor);
 
