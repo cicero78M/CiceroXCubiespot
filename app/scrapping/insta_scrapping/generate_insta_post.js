@@ -1,4 +1,6 @@
+import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { client } from "../../../app.js";
+import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
 import { decrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, writeFileSync } from "fs";
@@ -48,9 +50,28 @@ export async function getInstaPost(clientValue) {
             console.log(`${clientName} Official Account Has Post Data...`);
             await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
             
+            let instaOfficialDoc;
             let officialInstaSheet;
             let officialInstaData;
-            
+            try {
+              instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
+              await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+              officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
+              officialInstaData = await officialInstaSheet.getRows();
+                  
+            } catch (error) {
+
+              setTimeout(() => {
+                console.log("Await");
+              }, 10000);
+
+              instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
+              await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
+              officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
+              officialInstaData = await officialInstaSheet.getRows();
+                  
+            }  
+
             let shortcodeList = [];
   
             for (let i = 0; i < officialInstaData.length; i++) {
@@ -66,7 +87,6 @@ export async function getInstaPost(clientValue) {
                 hasShortcode = true;
               }
             }
-
             //If Database Contains Shortcode 
             if (hasShortcode) {
               for (let i = 0; i < itemByDay.length; i++) {
@@ -94,6 +114,14 @@ export async function getInstaPost(clientValue) {
             } else {
               //Push New Shortcode Content to Database
               for (let i = 0; i < itemByDay.length; i++) {
+                
+                await officialInstaSheet.addRow({
+                  TIMESTAMP: itemByDay[i].taken_at, USER_ACCOUNT: itemByDay[i].user.username, SHORTCODE: itemByDay[i].code, ID: itemByDay[i].id, TYPE: itemByDay[i].media_name,
+                  CAPTION: itemByDay[i].caption.text, COMMENT_COUNT: itemByDay[i].comment_count, LIKE_COUNT: itemByDay[i].like_count, PLAY_COUNT: itemByDay[i].play_count,
+                  THUMBNAIL: itemByDay[i].thumbnail_url, VIDEO_URL: itemByDay[i].video_url
+                });
+
+                shortcodeNewCounter++;
               
                 try {
 
@@ -106,7 +134,6 @@ export async function getInstaPost(clientValue) {
                     
                 }
 
-                shortcodeNewCounter++;
                 resolve (`${dataKey} JSON Data Successfully Added.`);
               
               }
