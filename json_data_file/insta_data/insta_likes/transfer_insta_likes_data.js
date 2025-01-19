@@ -40,7 +40,7 @@ export async function transferInstaLikes(clientName) {
       //     mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
       //     writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${key}.json`, JSON.stringify(data));
       //   }    
-      }
+      // }
     }
 }
 
