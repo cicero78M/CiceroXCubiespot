@@ -49,29 +49,29 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
               if (userRows[i].STATUS === "TRUE") {
 
                 
-                userData.ID_KEY = encrypted(userRows[i].get("ID_KEY"));
-                userData.NAMA = encrypted(userRows[i].get("NAMA"));
-                userData.TITLE = encrypted(userRows[i].get("TITLE"));
-                userData.DIVISI = encrypted(userRows[i].get("DIVISI"));
-                userData.JABATAN = encrypted(userRows[i].get("JABATAN"));
-                userData.STATUS = encrypted(userRows[i].get("STATUS"));
-                userData.EXCEPTION = encrypted(userRows[i].get("EXCEPTION"));
+                userData.ID_KEY = encrypted(userRows[i].ID_KEY);
+                userData.NAMA = encrypted(userRows[i].NAMA);
+                userData.TITLE = encrypted(userRows[i].TITLE);
+                userData.DIVISI = encrypted(userRows[i].DIVISI);
+                userData.JABATAN = encrypted(userRows[i].JABATAN);
+                userData.STATUS = encrypted(userRows[i].STATUS);
+                userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
   
                 isDataExist = true;
                 
                 if (type === "INSTA") {
                   
-                  userData.TIKTOK = encrypted(userRows[i].get("TIKTOK"));
+                  userData.TIKTOK = encrypted(userRows[i].TIKTOK);
                   userData.INSTA = encrypted(username);
                 } else if (type === "TIKTOK") {
-                  userData.INSTA = encrypted(userRows[i].get("INSTA"));
+                  userData.INSTA = encrypted(userRows[i].INSTA);
                   userData.TIKTOK = encrypted(username);
                 }
                 
                 if (userRows[i].WHATSAPP === "" && phone !== "6281235114745") {
                   userData.WHATSAPP = encrypted(phone);
                 } else {
-                  userData.WHATSAPP = encrypted(userRows[i].get("WHATSAPP"));
+                  userData.WHATSAPP = encrypted(userRows[i].WHATSAPP);
                 }
                 
                 writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
