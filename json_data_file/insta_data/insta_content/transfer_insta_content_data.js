@@ -8,11 +8,10 @@ export async function transferInstaContent(clientName) {
     await instaOfficialDoc.loadInfo(); // loads document properties and worksheets
     let officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
     let officialInstaData = await officialInstaSheet.getRows();
-    let instaContents = Object.values(officialInstaData.toObject());
 
+    for (let i = 0; i < officialInstaData.length; i++) {
+        let instaContents = Object.values(officialInstaData[i].toObject());
 
-    for (let i = 0; i < instaContents.length; i++) {
-        
         try {
 
             writeFileSync(`json_data_file/insta_data/insta_content${clientName}/${instaContents[i].code}.json`, JSON.stringify(instaContents[i]));
