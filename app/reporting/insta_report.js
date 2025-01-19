@@ -71,8 +71,10 @@ export async function newReportInsta(clientValue) {
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
             for (let ii = 0; ii < contentItems.length; ii++) {
 
+              console.log(contentItems)
+
+
               let itemDate = new Date(Number(decrypted(contentItems[i].TIMESTAMP)) * 1000);
-              console.log(itemDate)
 
 
               if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
