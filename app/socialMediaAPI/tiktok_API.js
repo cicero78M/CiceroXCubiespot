@@ -71,6 +71,9 @@ export async function tiktokPostAPI(key, cursors) {
   });
 }
 export async function tiktokCommentAPI(key, cursors) {
+  console.log(private_key.TIKTOK_HOST_COMMENTS);
+  console.log(key);
+  console.log(cursors);
   //Insta Likes API
   const options = {
     method: 'GET',
