@@ -134,7 +134,7 @@ export async function getInstaPost(clientValue) {
                     
                 }
 
-                resolve (`${dataKey} JSON Data Successfully Added.`);
+                resolve (`${itemByDay[i].code} JSON Data Successfully Added.`);
               
               }
 
