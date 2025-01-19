@@ -61,13 +61,12 @@ export async function getInstaPost(clientValue) {
 
               for (let i = 0; i < itemByDay.length; i++) {
 
-                console.log(itemByDay[i])
 
-                 let dataObject = new Object();
+                let dataObject = new Object();
 
-                 dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
-                 dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
-                 dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
+                // dataObject.TIMESTAMP = encrypted(itemByDay[i].taken_at);
+                dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
+                dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
                 dataObject.ID = encrypted(itemByDay[i].id);
                 dataObject.TYPE = encrypted(itemByDay[i].media_name);
                 dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
