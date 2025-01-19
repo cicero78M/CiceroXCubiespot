@@ -11,18 +11,20 @@ export async function transferInstaLikes(clientName) {
     let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
     for (let i = 0; i < instaLikesUsernameData.length; i++) {
+      const fromRows = Object.values(instaLikesUsernameData[i].toObject());
+      console.log(fromRows);
 
       let data = [];
 
-      for (let ii = 1; ii < instaLikesUsernameData[i].length; ii++) {
+      for (let ii = 1; ii < fromRows[i].length; ii++) {
 
-        if (instaLikesUsernameData[i][ii] === null || instaLikesUsernameData[i][ii] === undefined || instaLikesUsernameData[i][ii] === ""){
+        if (fromRows[i][ii] === null || fromRows[i][ii] === undefined || fromRows[i][ii] === ""){
 
           console.log(null);
 
         } else {
 
-          data.push(encrypted(instaLikesUsernameData[i][ii]));
+          data.push(encrypted(fromRows[i][ii]));
 
         }
 
