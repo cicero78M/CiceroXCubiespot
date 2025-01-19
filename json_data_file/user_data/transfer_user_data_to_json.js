@@ -38,9 +38,10 @@ export async function transferUserData(clientID) {
                             writeFileSync(`json_data_file/user_data/${clientID}/${data[i].get("ID_KEY")}.json`, JSON.stringify(userData));
                             
                         }
-                    };
+                    }
                 }
             );
+
         } catch (error) {
             reject (error)
         }
