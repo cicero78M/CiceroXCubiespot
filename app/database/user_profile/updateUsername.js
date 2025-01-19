@@ -7,6 +7,11 @@ import { encrypted } from "../../../json_data_file/crypto.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type) {
   console.log(username);
+  console.log(idKey);
+  console.log(username);
+  console.log(phone);
+  console.log(type);
+
   let isDataExist = false;
   let idExist = false;
   let usernameList = [];
