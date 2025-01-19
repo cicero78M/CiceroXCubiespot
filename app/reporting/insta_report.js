@@ -70,25 +70,17 @@ export async function newReportInsta(clientValue) {
           for (let i = 0; i < instaContentDir.length; i++) {
 
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-            console.log(contentItems)
 
+            let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
 
-            for (let ii = 0; ii < contentItems.length; ii++) {
+            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
 
-
-
-              let itemDate = new Date(Number(decrypted(contentItems[i].TIMESTAMP)) * 1000);
-
-
-              if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-
-                if (!shortcodeList.includes(decrypted(contentItems[i].SHORTCODE))) {
-                  shortcodeList.push(decrypted(contentItems[i].SHORTCODE));
-                  if (decrypted(contentItems[i].TYPE) === 'reel') {
-                    shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems[i].SHORTCODE));
-                  } else {
-                    shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems[i].SHORTCODE));
-                  }
+              if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
+                shortcodeList.push(decrypted(contentItems.SHORTCODE));
+                if (decrypted(contentItems[i].TYPE) === 'reel') {
+                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
+                } else {
+                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
                 }
               }
             }
