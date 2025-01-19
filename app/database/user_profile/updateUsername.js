@@ -1,7 +1,7 @@
 import { newListValueData } from "../new_query/data_list_query.js";
 import { myData } from "../../database_query/myData.js";
 import { readUser } from "../../../json_data_file/user_data/read_data_from_dir.js";
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from "../../../json_data_file/crypto.js";
 
 
