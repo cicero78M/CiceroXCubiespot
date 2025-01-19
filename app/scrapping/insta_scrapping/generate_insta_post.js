@@ -71,26 +71,19 @@ export async function getInstaPost(clientValue) {
                 dataObject.TYPE = encrypted(itemByDay[i].media_name);
                 dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
                 dataObject.COMMENT_COUNT = encrypted((itemByDay[i].comment_count ? (itemByDay[i].comment_count).toString() : null));
-
-                console.log(itemByDay[i].comment_count ? (itemByDay[i].comment_count).toString() : null)
                 dataObject.LIKE_COUNT = encrypted((itemByDay[i].like_count ? (itemByDay[i].like_count).toString() : null));
                 dataObject.PLAY_COUNT = encrypted((itemByDay[i].play_count ? (itemByDay[i].play_count).toString() : null));
 
-                console.log(itemByDay[i].play_count ? (itemByDay[i].play_count).toString() : null)
+                try {
 
-
-                console.log(dataObject);
-
-                // try {
-
-                //   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
         
-                // } catch (error) {
+                } catch (error) {
       
-                //   mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-                //   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+                  mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
                     
-                // }
+                }
               }
             }
 
@@ -100,7 +93,7 @@ export async function getInstaPost(clientValue) {
               code: 200
             };
 
-            // resolve (data);
+            resolve (data);
           } else {
             let data = {
               data: 'Official Account Has No Insta Content for Today',
