@@ -19,7 +19,9 @@ export async function transferInstaLikes(clientName) {
         let key;
 
         if (ii === 0 ){
-          key = fromRows[i][ii]; 
+          key = fromRows[i][ii];
+          console.log(key);
+ 
         }
 
         if (fromRows[i][ii] === null || fromRows[i][ii] === undefined || fromRows[i][ii] === ""){
