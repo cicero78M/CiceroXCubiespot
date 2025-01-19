@@ -39,7 +39,7 @@ export async function transferInstaLikes(clientName) {
       }
   
 
-      }
+    }
 }
 
 
