@@ -52,6 +52,7 @@ export async function getTiktokPost(clientValue) {
                         let tiktokOfficialDoc;
                         let officialTiktokSheet;
 
+                        //cek datalist from json contents
                         try {
                             tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
                             await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    

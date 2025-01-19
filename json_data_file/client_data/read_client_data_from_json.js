@@ -15,22 +15,21 @@ export async function clientData() {
         
                 let clientData = new Object();
                                 
-                clientData.CLIENT_ID = (await decrypted(dataItems.CLIENT_ID));
-                clientData.TYPE = await decrypted(dataItems.TYPE);
-                clientData.STATUS = await decrypted(dataItems.STATUS);
-                clientData.INSTAGRAM = await decrypted(dataItems.INSTAGRAM);
-                clientData.TIKTOK = await decrypted(dataItems.TIKTOK);
-                clientData.INSTA_STATE = await decrypted(dataItems.INSTA_STATE);
-                clientData.TIKTOK_STATE = await decrypted(dataItems.TIKTOK_STATE);
-                clientData.SUPERVISOR = await decrypted(dataItems.SUPERVISOR);
-                clientData.OPERATOR = await decrypted(dataItems.OPERATOR);
-                clientData.GROUP = await decrypted(dataItems.GROUP);
-                clientData.SECUID = await decrypted(dataItems.SECUID);
+                clientData.CLIENT_ID = decrypted(dataItems.CLIENT_ID)
+                clientData.TYPE =  decrypted(dataItems.TYPE);
+                clientData.STATUS = decrypted(dataItems.STATUS);
+                clientData.INSTAGRAM = decrypted(dataItems.INSTAGRAM);
+                clientData.TIKTOK = decrypted(dataItems.TIKTOK);
+                clientData.INSTA_STATE = decrypted(dataItems.INSTA_STATE);
+                clientData.TIKTOK_STATE = decrypted(dataItems.TIKTOK_STATE);
+                clientData.SUPERVISOR = decrypted(dataItems.SUPERVISOR);
+                clientData.OPERATOR = decrypted(dataItems.OPERATOR);
+                clientData.GROUP = decrypted(dataItems.GROUP);
+                clientData.SECUID = decrypted(dataItems.SECUID);
         
                 client.push(clientData);
-        
+    
             }
-            
             resolve (client);
         } catch (error) {
             reject (error)            

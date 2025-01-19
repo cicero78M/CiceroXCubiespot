@@ -3,7 +3,7 @@ import { client } from "../../../app.js";
 import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
 import { decrypted } from '../../../json_data_file/crypto.js';
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, readdirSync, writeFileSync } from "fs";
 
 export async function getInstaPost(clientValue) {
   //Date Time
@@ -70,7 +70,21 @@ export async function getInstaPost(clientValue) {
               officialInstaSheet = instaOfficialDoc.sheetsByTitle[clientName];
               officialInstaData = await officialInstaSheet.getRows();
                   
-            }  
+            }
+            
+            let datax = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+
+            console.log(datax);
+
+            for (let ix = 0; ix < todayItems.lenght; ix++){
+
+              if (data.includes(`${todayItems[ix]}.json`)){
+                console.log ("Hi Im Exist");
+              } else {
+                console.log("I'm not there");
+              }
+
+            }
 
             let shortcodeList = [];
   
