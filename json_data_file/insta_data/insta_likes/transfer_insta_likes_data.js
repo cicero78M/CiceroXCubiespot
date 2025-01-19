@@ -13,34 +13,27 @@ export async function transferInstaLikes(clientName) {
     for (let i = 0; i < instaLikesUsernameData.length; i++) {
       const fromRows = Object.values(instaLikesUsernameData[i].toObject());
 
-      console.log(fromRows);
-      // for (let ii = 0; ii < fromRows[i].length; ii++) {
-      //   let key;
+      for (let ii = 0; ii < fromRows.length; ii++) {
 
-      //   if (ii === 0 ){
-      //     key = fromRows[i][ii];
-      //     console.log(key);
- 
-      //   }
 
-      //   if (fromRows[i][ii] === null || fromRows[i][ii] === undefined || fromRows[i][ii] === ""){
+        if (fromRows[ii] === null || fromRows[ii] === undefined || fromRows[ii] === ""){
 
-      //     console.log(null);
+          console.log(null);
 
-      //   } else {
+        } else {
 
-      //     data.push(encrypted(fromRows[i][ii]));
+          data.push(encrypted(fromRows[ii]));
 
-      //   }
+        }
 
         
-      //   try {
-      //     writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${key}.json`, JSON.stringify(data));
-      //   } catch (error) {
-      //     mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
-      //     writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${key}.json`, JSON.stringify(data));
-      //   }    
-      // }
+        try {
+          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+        } catch (error) {
+          mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+        }    
+      }
     }
 }
 
