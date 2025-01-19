@@ -36,18 +36,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             
             idExist = true;
 
-            let fromJson = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
-
-            userData.ID_KEY = fromJson.ID_KEY;
-            userData.NAMA = fromJson.NAMA;
-            userData.TITLE = fromJson.TITLE;
-            userData.DIVISI = fromJson.DIVISI;
-            userData.JABATAN = fromJson.JABATAN;
-            userData.STATUS = fromJson.STATUS;
-            userData.WHATSAPP = fromJson.WHATSAPP;
-            userData.INSTA = fromJson.INSTA;
-            userData.TIKTOK = fromJson.TIKTOK;
-            userData.EXCEPTION = fromJson.EXCEPTION;
+            userData = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
           
           }
         } 

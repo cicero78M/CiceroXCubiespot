@@ -53,17 +53,9 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         userData.TIKTOK = encrypted(null);
         userData.EXCEPTION = encrypted(false);
 
-        try {
+        writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
 
-          writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-          resolve (`${dataKey} JSON Data Successfully Added.`);
-
-        } catch (error) {
-
-            (`json_data_file/user_data/${clientName}`);
-            writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-            
-        }
+        resolve (`${dataKey} JSON Data Successfully Added.`);
             
         let responseMyData = await myData(
           clientName, 

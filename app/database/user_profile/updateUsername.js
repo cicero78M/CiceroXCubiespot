@@ -5,6 +5,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
   let idExist = false;
   let usernameList = [];
+  let userData = new Object();
 
   return new Promise(async (resolve, reject) => {
 
@@ -27,18 +28,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
               
               idExist = true;
   
-              let fromJson = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
-  
-              userData.ID_KEY = fromJson.ID_KEY;
-              userData.NAMA = fromJson.NAMA;
-              userData.TITLE = fromJson.TITLE;
-              userData.DIVISI = fromJson.DIVISI;
-              userData.JABATAN = fromJson.JABATAN;
-              userData.STATUS = fromJson.STATUS;
-              userData.WHATSAPP = fromJson.WHATSAPP;
-              userData.INSTA = fromJson.INSTA;
-              userData.TIKTOK = fromJson.TIKTOK;
-              userData.EXCEPTION = fromJson.EXCEPTION;
+              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
             
             }
           } 
@@ -55,7 +45,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                 isDataExist = true;
                 
                 if (type === "INSTA") {
-                userData.INSTA = encrypted(username);
+                  userData.INSTA = encrypted(username);
                 } else if (type === "TIKTOK") {
                   userData.TIKTOK = encrypted(username);
                 }
