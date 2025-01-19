@@ -241,11 +241,15 @@ export async function schedullerAllSocmed(
 
                         ).catch(
                             async data => {
+
                                 sendResponse(
                                     '6281235114745@c.us', 
                                     data, 
                                     ' ERROR GET INSTA POST'
                                 );
+
+                                schedullerAllSocmed(timeSwitch);
+
                             }
                         );   
                     }  
