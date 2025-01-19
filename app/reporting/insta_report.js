@@ -70,6 +70,7 @@ export async function newReportInsta(clientValue) {
 
           for (let i = 0; i < instaContentDir.length; i++) {
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
+            console.log(contentItems);
             for (let ii = 0; ii < contentItems.length; ii++) {
 
               let itemDate = new Date(Number(decrypted(contentItems[i].TIMESTAMP)) * 1000);
@@ -89,8 +90,6 @@ export async function newReportInsta(clientValue) {
 
           if (shortcodeList.length >= 1) {  
             
-            
-
             //Collect Likes Data
             for (let i = 0; i < shortcodeList.length; i++) {
 
@@ -106,7 +105,7 @@ export async function newReportInsta(clientValue) {
               }
 
             } 
-                
+
             for (let i = 0; i < userRows.length; i++) {     
 
               if (userRows[i].INSTA === undefined
