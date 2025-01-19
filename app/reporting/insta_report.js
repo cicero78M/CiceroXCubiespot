@@ -94,8 +94,6 @@ export async function newReportInsta(clientValue) {
 
               let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
 
-
-
               for (let ii = 0; ii < likesItems.length; ii++) {
 
                 if (!userLikesData.includes(decrypted(likesItems[ii]))) {
