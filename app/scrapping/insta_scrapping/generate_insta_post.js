@@ -76,11 +76,11 @@ export async function getInstaPost(clientValue) {
 
             console.log(datax);
 
-            for (let ix = 0; ix < datax.lenght; ix++){
+            for (let ix = 0; ix < datax.length; ix++){
               
-              console.log(`${datax[ix]}.json`);
+              console.log(datax[ix]);
 
-              if (todayItems.includes(`${datax[ix]}.json`)){
+              if (todayItems.includes(datax[ix].replaceAll('.json', ''))){
                 console.log ("Hi Im Exist");
               } else {
                 console.log("I'm not there");
