@@ -33,10 +33,10 @@ export async function transferInstaLikes(clientName) {
   
 
         try {
-            writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesUsernameData[i][0]}.json`, JSON.stringify(data));
+            writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[i][0]}.json`, JSON.stringify(data));
           } catch (error) {
             mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
-            writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesUsernameData[i][0]}.json`, JSON.stringify(data));
+            writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[i][0]}.json`, JSON.stringify(data));
           }
       }
 }
