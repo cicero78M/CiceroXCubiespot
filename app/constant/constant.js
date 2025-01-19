@@ -66,5 +66,6 @@ export const dataTransfer = [
     "user2json",
     "readuserdir",
     "encryptclientdata",
-    "transferinstacontent"
+    "transferinstacontent",
+    "transferinstalikes"
 ];

@@ -61,6 +61,7 @@ import { encryptClientData } from './json_data_file/client_data/create_encrypted
 import { decrypted } from './json_data_file/crypto.js';
 import { readUser } from './json_data_file/user_data/read_data_from_dir.js';
 import { transferInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
+import { transferInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 
 //.env
 const private_key = process.env;
@@ -1371,6 +1372,22 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
                                         transferInstaContent(response[i].CLIENT_ID)
+                                        .then(
+                                            response => {
+                                                console.log(response);
+                                            }
+                                        ).catch (
+                                            error => console.log(error)
+                                        );
+                                    }
+                                }
+                            )
+                            break;
+                        case "transferinstalikes":
+                            clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length;i++){
+                                        transferInstaLikes(response[i].CLIENT_ID)
                                         .then(
                                             response => {
                                                 console.log(response);
