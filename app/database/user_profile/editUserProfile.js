@@ -13,9 +13,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
     let isDataExist = false;
     let userRows = [];
     let dataList = [];
-
     let userData = new Object();
-
 
     await newListValueData(
       clientName, 
@@ -36,16 +34,27 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             
             idExist = true;
 
-            userData = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}`));
+            userData = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`));
           
           }
         } 
       }
     );
 
-
     for (let ii = 0; ii < userRows.length; ii++) {
       if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
+
+        userData.ID_KEY = encrypted(userRows[i].ID_KEY);
+        userData.NAMA = encrypted(userRows[i].NAMA);
+        userData.TITLE = encrypted(userRows[i].TITLE);
+        userData.DIVISI = encrypted(userRows[i].DIVISI);
+        userData.JABATAN = encrypted(userRows[i].JABATAN);
+        userData.STATUS = encrypted(userRows[i].STATUS);
+        userData.INSTA = encrypted(userRows[i].INSTA);
+        userData.TIKTOK = encrypted(userRows[i].TIKTOK);
+        userData.WHATSAPP = encrypted(userRows[i].WHATSAPP);
+        userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
+
         if (userRows[ii].WHATSAPP === "" 
         || userRows[ii].WHATSAPP === phone 
         || phone === "6281235114745") {
