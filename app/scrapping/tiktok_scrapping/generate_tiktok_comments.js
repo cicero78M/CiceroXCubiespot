@@ -90,7 +90,7 @@ export async function getTiktokComments(items) {
                     }
                 }
             }). catch (error => {
-                console.logh(error);
+                console.log(error);
                 forLoopGetComments(items, cursorNumber)
 
 
