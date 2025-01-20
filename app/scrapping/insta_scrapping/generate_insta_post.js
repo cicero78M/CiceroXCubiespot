@@ -4,6 +4,8 @@ import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, readdirSync, writeFileSync } from "fs";
 
 export async function getInstaPost(clientValue) {
+  console.log(clientValue);
+
   //Date Time
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
@@ -77,12 +79,14 @@ export async function getInstaPost(clientValue) {
                 try {
 
                   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+                  console.log("Posted Content 1")
         
                 } catch (error) {
       
                   mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
                   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
-                    
+                  console.log("Posted Content 2")
+
                 }
               }
             }
