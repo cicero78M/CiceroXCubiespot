@@ -1,3 +1,4 @@
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { client } from "../../../app.js";
 
 
