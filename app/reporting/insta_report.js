@@ -76,7 +76,7 @@ export async function newReportInsta(clientValue) {
             // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
 
 
-            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === "20/1/2025") {
+            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === "1/20/2025") {
 
               console.log("Data Exist");
 
