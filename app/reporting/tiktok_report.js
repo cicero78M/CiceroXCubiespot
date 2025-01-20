@@ -102,13 +102,14 @@ export async function newReportTiktok(clientValue) {
                         for (let i = 0; i < shortcodeList.length; i++) {
 
                             let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
-              
+                            
+                            console.log(commentItems)
+                            
                             for (let ii = 0; ii < commentItems.length; ii++) {
                               if (!userCommentData.includes(decrypted(commentItems[ii]))) {
                                 userCommentData.push(decrypted(commentItems[ii]));
                               }
                             }
-                            console.log(userCommentData.lenght);
                         }
 
                         for (let i = 0; i < userRows.length; i++) {     
