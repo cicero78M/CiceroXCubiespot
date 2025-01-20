@@ -43,6 +43,7 @@ export async function newReportTiktok(clientValue) {
                 let userCommentData = [];
                 let notCommentList = [];
                 let UserNotLikes = [];
+                let notLikesList = [];
 
                 const clientName = decrypted(clientValue.get('CLIENT_ID'));
                 const tiktokAccount = decrypted(clientValue.get('TIKTOK'));
