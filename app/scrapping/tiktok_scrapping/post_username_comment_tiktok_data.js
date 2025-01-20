@@ -1,5 +1,6 @@
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { client } from "../../../app.js";
+import { decrypted, encrypted } from "../../../json_data_file/crypto.js";
 
 
 export async function postTiktokUserComments(clientName, items, userdata) {
