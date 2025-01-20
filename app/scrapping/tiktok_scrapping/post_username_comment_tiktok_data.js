@@ -16,7 +16,7 @@ export async function postTiktokUserComments(clientName, items, userdata) {
             let tiktokCommentsDir = readdirSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}`);
             
             for (let i = 0; i < tiktokCommentsDir.length; i++) {
-                if (items === (tiktokCommentsDir[ii]).replace(".json", "")) {
+                if (items === (tiktokCommentsDir[i]).replace(".json", "")) {
                     
                     hasShortcode = true;
 
