@@ -75,40 +75,13 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                 }                  
             }
             
-            await tiktokCommentsUsernameSheet.getRows().then ( async response =>{
+            let data = {
+                data: `${clientName} Adding Tiktok Username to ${items}`,
+                state: true,
+                code: 200
+            };
 
-                for (let ii = 0; ii < response.length; ii++) {
-
-                    
-                    if (response[ii].get('SHORTCODE') === items) {
-                        hasShortcode = true;
-
-                        const fromRows = Object.values(response[ii].toObject());
-
-                        for (let ii = 0; ii < fromRows.length; ii++) {
-                            if (fromRows[ii] != undefined || fromRows[ii] != null || fromRows[ii] != "") {
-                                if (!userdata.includes(fromRows[ii])) {
-                                    userdata.push(fromRows[ii]);
-                                }
-                            }
-                        }
-                        await response[ii].delete();
-                        await tiktokCommentsUsernameSheet.addRow(userdata);
-                    }
-                }
-
-
-
-                let data = {
-                    data: `${clientName} Adding Tiktok Username to ${items}`,
-                    state: true,
-                    code: 200
-                };
-
-                resolve (data);  
-            });
-
-
+            resolve (data);        
             
         } catch (error) {
             let data = {

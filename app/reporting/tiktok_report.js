@@ -39,10 +39,8 @@ export async function newReportTiktok(clientValue) {
                 let dataTiktok = '';
 
                 let divisiList = [];
-                let fromRows = [];
                 let shortcodeList = [];
                 let userCommentData = [];
-                let userNotComment = [];
                 let notCommentList = [];
 
                 const clientName = decrypted(clientValue.get('CLIENT_ID'));
@@ -71,59 +69,73 @@ export async function newReportTiktok(clientValue) {
                         }
                     );
 
-                    await newRowsData(
-                        ciceroKey.dbKey.tiktokOfficialID, 
-                        clientName
-                    ).then( 
-                        response => {            
-                            for (let i = 0; i < response.length; i++) {
-                                let itemDate = new Date(response[i].get('TIMESTAMP') * 1000);
-                                if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-                                    if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
-                                        shortcodeList.push(response[i].get('SHORTCODE'));
-                                        shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + tiktokAccount + '/video/' + response[i].get('SHORTCODE'));
-                                    }
-                                }
+
+                    
+                    let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+
+                    for (let i = 0; i < tiktokContentDir.length; i++) {
+
+                        let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
+                        // console.log(contentItems);
+
+                        let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+                        let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+
+                        // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+                        // console.log(localDate);
+
+
+                        if ( dateNow === localDate) {
+
+                            if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
+
+                                shortcodeList.push(decrypted(contentItems.SHORTCODE));
+                                shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + tiktokAccount + '/video/' + decrypted(contentItems.SHORTCODE));
+
                             }
-                            
-                    });
+                        }
+                    }
         
                     if (shortcodeList.length >= 1) {   
-                        await newRowsData(
-                            ciceroKey.dbKey.tiktokCommentUsernameID, 
-                            clientName
-                        ).then( 
-                            response => {  
-                                for (let i = 0; i < shortcodeList.length; i++) {
-                                    for (let ii = 0; ii < response.length; ii++) {
-                                        if (response[ii].get('SHORTCODE') === shortcodeList[i]) {
-                                            fromRows = Object.values(response[ii].toObject());
-                                            for (let iii = 0; iii < fromRows.length; iii++) {
-                                                if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                                                    if (!userCommentData.includes(fromRows[iii])) {
-                                                        userCommentData.push(fromRows[iii]);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
 
-                                for (let iii = 0; iii < userRows.length; iii++) {
-                                    if (!userCommentData.includes(userRows[iii].TIKTOK.replaceAll('@', ''))) {
-                                        if (!userNotComment.includes(userRows[iii].ID_KEY)) {
-                                            if (userRows[iii].STATUS === 'TRUE' ){
-                                                if (userRows[iii].EXCEPTION === "FALSE"){                   
-                                                    userNotComment.push(userRows[iii].ID_KEY);
-                                                    notCommentList.push(userRows[iii]);
-                                                }
-                                            }
+                        for (let i = 0; i < shortcodeList.length; i++) {
+
+                            let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+              
+                            for (let ii = 0; ii < commentItems.length; ii++) {
+                              if (!userCommentData.includes(decrypted(commentItems[ii]))) {
+                                userCommentData.push(decrypted(commentItems[ii]));
+                              }
+                            }
+              
+                          }
+
+                        for (let i = 0; i < userRows.length; i++) {     
+
+                            if (userRows[i].TIKTOK === undefined
+                            || userRows[i].TIKTOK === null 
+                            || userRows[i].TIKTOK === ""){
+                
+                                console.log("Null Data Exist");
+                                UserNotLikes.push(userRows[i].ID_KEY);
+                                notLikesList.push(userRows[i]);
+                
+                            } else {
+                                if (!userCommentData.includes(userRows[i].TIKTOK)) {
+                                    if (!UserNotLikes.includes(userRows[i].ID_KEY)) {
+                                        if (userRows[i].STATUS === 'TRUE' ){
+                                            if (userRows[i].EXCEPTION === "FALSE"){
+                                                
+                                                UserNotLikes.push(userRows[i].ID_KEY);
+                                                notLikesList.push(userRows[i]);
+                                            }                
                                         }
                                     }
-                                }
-                                
+                                } 
                             }
-                        );
+                
+                        }
+
 
                         for (let iii = 0; iii < divisiList.length; iii++) {
 
