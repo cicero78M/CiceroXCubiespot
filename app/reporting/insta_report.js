@@ -73,24 +73,24 @@ export async function newReportInsta(clientValue) {
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
 
-            console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            console.log(localDate);
+            // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+            // console.log(localDate);
 
 
             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
 
               console.log("Data Exist");
 
-              if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
+              // if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
-                shortcodeList.push(decrypted(contentItems.SHORTCODE));
+              //   shortcodeList.push(decrypted(contentItems.SHORTCODE));
                 
-                if (decrypted(contentItems.TYPE) === 'reel') {
-                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
-                } else {
-                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
-                }
-              }
+              //   if (decrypted(contentItems.TYPE) === 'reel') {
+              //     shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
+              //   } else {
+              //     shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
+              //   }
+              // }
             }
           }
 
