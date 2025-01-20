@@ -24,6 +24,7 @@ export async function schedullerAllSocmed(timeSwitch) {
 
         await clientData().then( 
             async clientData =>{
+                console.log(clientData);
 
                 for (let i = 0; i < clientData.length; i++){
             
