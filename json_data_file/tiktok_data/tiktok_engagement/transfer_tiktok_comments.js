@@ -21,6 +21,8 @@ export async function transferTiktokComments(clientName) {
         if (fromRows[ii] !== null || fromRows[ii] !== undefined || fromRows[ii] !== ""){
           data.push(encrypted(fromRows[ii]));
         }
+    
+        console.log(data);
                 
         try {
         
