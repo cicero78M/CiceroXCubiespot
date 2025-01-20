@@ -72,7 +72,7 @@ export async function newReportInsta(clientValue) {
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
 
-            console.log(localDate);
+            console.log(itemDate);
 
 
             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
