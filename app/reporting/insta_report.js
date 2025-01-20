@@ -71,12 +71,16 @@ export async function newReportInsta(clientValue) {
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
-            console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
 
             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+              console.log("Exist Data");
+
+              
 
               if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
+
                 shortcodeList.push(decrypted(contentItems.SHORTCODE));
+                
                 if (decrypted(contentItems.TYPE) === 'reel') {
                   shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
                 } else {
