@@ -156,99 +156,99 @@ client.on('ready', () => {
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule('15 12,16,19 * * *',  () => {
-        console.log("Execute Schedule");
-        newRowsData(
-            ciceroKey.dbKey.clientDataID, 
-            'ClientData_Enc'
-        ).then( async clientData =>{
+    // schedule('15 12,16,19 * * *',  () => {
+    //     console.log("Execute Schedule");
+    //     newRowsData(
+    //         ciceroKey.dbKey.clientDataID, 
+    //         'ClientData_Enc'
+    //     ).then( async clientData =>{
 
-            for (let i = 0; i < clientData.length; i++){
+    //         for (let i = 0; i < clientData.length; i++){
         
-                //This Procces Tiktok Report
-                if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                && decrypted(clientData[i].get('TIKTOK_STATE')) === "TRUE" 
-                && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
-                    console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNING DATA`);
+    //             //This Procces Tiktok Report
+    //             if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
+    //             && decrypted(clientData[i].get('TIKTOK_STATE')) === "TRUE" 
+    //             && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+    //                 console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNING DATA`);
                     
-                    await client.sendMessage(
-                        '6281235114745@c.us', 
-                        ` ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNINGDATA`
-                    );
+    //                 await client.sendMessage(
+    //                     '6281235114745@c.us', 
+    //                     ` ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNINGDATA`
+    //                 );
 
-                    await warningReportTiktok(clientData[i]).then(async response => {
+    //                 await warningReportTiktok(clientData[i]).then(async response => {
                         
-                        await client.sendMessage(
-                            '6281235114745@c.us', 
-                            response.data);
+    //                     await client.sendMessage(
+    //                         '6281235114745@c.us', 
+    //                         response.data);
 
-                    }).catch( async response => {
+    //                 }).catch( async response => {
                         
-                        switch (response.code){
-                            case 201 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    response.data
-                                );
-                                    break;
+    //                     switch (response.code){
+    //                         case 201 : 
+    //                             await client.sendMessage(
+    //                                 '6281235114745@c.us', 
+    //                                 response.data
+    //                             );
+    //                                 break;
 
-                            case 303 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    'Error'
-                                );
-                                    break;
+    //                         case 303 : 
+    //                             await client.sendMessage(
+    //                                 '6281235114745@c.us', 
+    //                                 'Error'
+    //                             );
+    //                                 break;
 
-                            default:
-                                break;
-                        }
+    //                         default:
+    //                             break;
+    //                     }
 
-                    });
-                }         
+    //                 });
+    //             }         
 
-                //This process Insta Report
-                if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
-                && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+    //             //This process Insta Report
+    //             if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
+    //             && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
+    //             && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
                     
-                    console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`);
-                    await client.sendMessage(
-                        '6281235114745@c.us', 
-                        `${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`
-                    );
+    //                 console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`);
+    //                 await client.sendMessage(
+    //                     '6281235114745@c.us', 
+    //                     `${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`
+    //                 );
 
-                    await warningReportInsta(clientData[i]).then(async response => {
+    //                 await warningReportInsta(clientData[i]).then(async response => {
                             
-                        await client.sendMessage(
-                            '6281235114745@c.us', 
-                            response.data
-                        );
+    //                     await client.sendMessage(
+    //                         '6281235114745@c.us', 
+    //                         response.data
+    //                     );
 
-                    }).catch(async response => {
+    //                 }).catch(async response => {
         
-                        switch (response.code){
-                            case 201 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    response.data
-                                );
+    //                     switch (response.code){
+    //                         case 201 : 
+    //                             await client.sendMessage(
+    //                                 '6281235114745@c.us', 
+    //                                 response.data
+    //                             );
 
-                                    break;
-                            case 303 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    'Error'
-                                );
+    //                                 break;
+    //                         case 303 : 
+    //                             await client.sendMessage(
+    //                                 '6281235114745@c.us', 
+    //                                 'Error'
+    //                             );
 
-                                    break;
-                            default:
-                                break;
-                        }
-                    });
-                }  
-            }
-        });
-    });
+    //                                 break;
+    //                         default:
+    //                             break;
+    //                     }
+    //                 });
+    //             }  
+    //         }
+    //     });
+    // });
 });
 
 client.on('message', async (msg) => {
