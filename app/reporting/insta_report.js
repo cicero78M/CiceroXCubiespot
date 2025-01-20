@@ -78,20 +78,19 @@ export async function newReportInsta(clientValue) {
             console.log(dateNow);
 
 
-            if ( dateNow === "1/14/2025") {
+            if ( dateNow === "1/19/2025") {
 
-              console.log("Data Exist");
 
-              // if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
+              if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
-              //   shortcodeList.push(decrypted(contentItems.SHORTCODE));
+                shortcodeList.push(decrypted(contentItems.SHORTCODE));
                 
-              //   if (decrypted(contentItems.TYPE) === 'reel') {
-              //     shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
-              //   } else {
-              //     shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
-              //   }
-              // }
+                if (decrypted(contentItems.TYPE) === 'reel') {
+                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
+                } else {
+                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
+                }
+              }
             }
           }
 
