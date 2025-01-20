@@ -3,7 +3,6 @@ import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 
-
 export async function getInstaLikes(todayItems, clientValue ) {
 
     const clientName = decrypted(clientValue.get('CLIENT_ID'));

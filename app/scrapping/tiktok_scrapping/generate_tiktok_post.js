@@ -1,8 +1,7 @@
 //Google Spreadsheet
-import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
-import { ciceroKey, googleAuth } from '../../database/new_query/sheet_query.js';
+import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { decrypted } from '../../../json_data_file/crypto.js';
 
 export async function getTiktokPost(clientValue) {
@@ -21,16 +20,12 @@ export async function getTiktokPost(clientValue) {
         try {
 
             let cursor = 0;
-            let shortcodeUpdateCounter = 0;
-            let shortcodeNewCounter = 0;
     
             let items = [];
             let itemByDay = [];
             let todayItems = [];
-            let shortcodeList = [];
             
             let hasContent = false;
-            let hasShortcode = false;
         
             if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
 
@@ -49,96 +44,45 @@ export async function getTiktokPost(clientValue) {
 
                     if (hasContent) {
 
-                        let tiktokOfficialDoc;
-                        let officialTiktokSheet;
-
-                        //cek datalist from json contents
-                        try {
-                            tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-                            await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
-                            officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
-                        } catch (error) {
-
-                            setTimeout(() => {
-                                console.log("Await");
-                            }, 10000);
-
-                            tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for InstaOfficial DB
-                            await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets    
-                            officialTiktokSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
-                            
+                        console.log(`${clientName} Official Account Has Post Data...`);
+                        await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
+                        
+                        let hasShortcode = false;
+                        
+                        let shortcodeData = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+            
+                        for (let ix = 0; ix < shortcodeData.length; ix++){
+                          
+                          if (todayItems.includes(shortcodeData[ix].replaceAll('.json', ''))){
+                            hasShortcode = true;
+                          }
                         }
 
-                        await officialTiktokSheet.getRows().then(async response =>{
-                            for (let i = 0; i < response.length; i++) {
-                                if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
-                                    shortcodeList.push(response[i].get('SHORTCODE'));
-                                }
-                            }
+                        for (let i = 0; i < itemByDay.length; i++) {
 
-                            for (let i = 0; i < itemByDay.length; i++) {
-                                if (shortcodeList.includes(itemByDay[i].video.id)) {
-                                    hasShortcode = true;
-                                }
-                            }
+                            let dataObject = new Object();                                            
+                            
+                            dataObject.TIMESTAMP = encrypted((itemByDay[i].createTime).toString());
+                            dataObject.USER_ACCOUNT = encrypted(itemByDay[i].author.uniqueId);
+                            dataObject.SHORTCODE = encrypted(itemByDay[i].video.id);
+                            dataObject.ID = encrypted(itemByDay[i].id);
+                            dataObject.CAPTION = encrypted(itemByDay[i].desc); 
+                            dataObject.COMMENT_COUNT = encrypted(((itemByDay[i].statsV2.commentCount).toString()));
+                            dataObject.LIKE_COUNT = encrypted((itemByDay[i].statsV2.diggCount).toString());
+                            dataObject.PLAY_COUNT = encrypted((itemByDay[i].statsV2.playCount).toString());
+                            dataObject.COLLECT_COUNT = encrypted((itemByDay[i].statsV2.collectCount).toString());
+                            dataObject.SHARE_COUNT = encrypted((itemByDay[i].statsV2.shareCount).toString());
+                            dataObject.REPOST_COUNT = encrypted((itemByDay[i].statsV2.repostCount).toString());
+            
+                        }
 
-                            if (hasShortcode) {
-                                for (let i = 0; i < itemByDay.length; i++) {
-                                    for (let ii = 0; ii < response.length; ii++) {
-                                        if (response[ii].get('SHORTCODE') === itemByDay[i].video.id) {
-                                            response[ii].assign({
-                                                TIMESTAMP: itemByDay[i].createTime, USER_ACCOUNT: itemByDay[i].author.uniqueId,
-                                                SHORTCODE: itemByDay[i].video.id, ID: itemByDay[i].id, CAPTION: itemByDay[i].desc, COMMENT_COUNT: itemByDay[i].statsV2.commentCount,
-                                                LIKE_COUNT: itemByDay[i].statsV2.diggCount, PLAY_COUNT: itemByDay[i].statsV2.playCount, COLLECT_COUNT: itemByDay[i].statsV2.collectCount,
-                                                SHARE_COUNT: itemByDay[i].statsV2.shareCount, REPOST_COUNT: itemByDay[i].statsV2.repostCount
-                                            }); // Jabatan Divisi Value
-                                            await response[ii].save(); //save update
-                                            shortcodeUpdateCounter++;
-                                        } else if (!shortcodeList.includes(itemByDay[i].video.id)) {
-                                            shortcodeList.push(itemByDay[i].video.id);   
-                                            await officialTiktokSheet.addRow({
-                                                TIMESTAMP: itemByDay[i].createTime, USER_ACCOUNT: itemByDay[i].author.uniqueId,
-                                                SHORTCODE: itemByDay[i].video.id, ID: itemByDay[i].id, CAPTION: itemByDay[i].desc, COMMENT_COUNT: itemByDay[i].statsV2.commentCount,
-                                                LIKE_COUNT: itemByDay[i].statsV2.diggCount, PLAY_COUNT: itemByDay[i].statsV2.playCount, COLLECT_COUNT: itemByDay[i].statsV2.collectCount,
-                                                SHARE_COUNT: itemByDay[i].statsV2.shareCount, REPOST_COUNT: itemByDay[i].statsV2.repostCount
-                                            });
-                                            shortcodeNewCounter++;
-                                        }
-                                    }
-                                }
-
-                            } else {
-                                //Push New Shortcode Content to Database
-                                for (let i = 0; i < itemByDay.length; i++) {
-                                    await officialTiktokSheet.addRow({
-                                        TIMESTAMP: itemByDay[i].createTime, USER_ACCOUNT: itemByDay[i].author.uniqueId,
-                                        SHORTCODE: itemByDay[i].video.id, ID: itemByDay[i].id, CAPTION: itemByDay[i].desc, COMMENT_COUNT: itemByDay[i].statsV2.commentCount,
-                                        LIKE_COUNT: itemByDay[i].statsV2.diggCount, PLAY_COUNT: itemByDay[i].statsV2.playCount, COLLECT_COUNT: itemByDay[i].statsV2.collectCount,
-                                        SHARE_COUNT: itemByDay[i].statsV2.shareCount, REPOST_COUNT: itemByDay[i].statsV2.repostCount
-                                    });
-                                    shortcodeNewCounter++;
-                                }
-                            }
-
-                            let data = {
+                        let data = {
                                 data:todayItems,
                                 state: true,
                                 code: 200
                             }
-                            resolve (data);
- 
-                        }).catch(
-                            response =>{
-                                let data = {
-                                    data: response,
-                                    state: true,
-                                    code: 303
-                                };
-                                reject (data);
-                            }
-                        );
-
-                
+                        resolve (data);
+            
                     } else {
                         let data = {
                                 data: ' Tiktok Official Account Has No Content',
@@ -147,6 +91,7 @@ export async function getTiktokPost(clientValue) {
                         };
                         resolve (data);
                     }
+
                 }).catch(error => {
                     let data = {
                         data: error,
@@ -155,6 +100,7 @@ export async function getTiktokPost(clientValue) {
                     };
                     reject(data);   
                 });
+
             } else {
                 let data = {
                         data: 'Your Client ID has Expired, Contacts Developers for more Informations',
@@ -163,6 +109,7 @@ export async function getTiktokPost(clientValue) {
                     };
                 reject (data);
             }
+
         } catch (error) {
             let data = {
                 data: error,

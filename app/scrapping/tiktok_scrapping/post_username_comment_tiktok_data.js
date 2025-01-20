@@ -1,33 +1,77 @@
-import { GoogleSpreadsheet } from "google-spreadsheet";
 import { client } from "../../../app.js";
-import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
 
 
 export async function postTiktokUserComments(clientName, items, userdata) {
 
     let hasShortcode = false;
+    let encryptedData = [];
 
     console.log("Post Data Username Tiktok Engagement" );
     client.sendMessage('6281235114745@c.us', "Post Data Username Tiktok Engagement");
 
     return new Promise(async (resolve, reject) => { 
         try {
-            let tiktokCommentsUsernameDoc;
-            let tiktokCommentsUsernameSheet;
-           try {
-                tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-                await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
-                tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
-           } catch (error) {
 
-            setTimeout(() => {
-                console.log("Await");
-            }, 10000);
+            let tiktokCommentsDir = readdirSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}`);
+            
+            for (let i = 0; i < tiktokCommentsDir.length; i++) {
+                if (items === (tiktokCommentsDir[ii]).replace(".json", "")) {
+                    
+                    hasShortcode = true;
 
-            tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for instaLikes Username DB
-            await  tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets            
-            tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
-           }
+                    encryptedData = [];
+                
+                    let tiktokComments = await JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`));
+
+                    for (let ii = 0; ii < tiktokComments.length; ii++) {
+                        if (decrypted(tiktokComments[ii]) != undefined || decrypted(tiktokComments[ii]) != null || decrypted(tiktokComments[ii]) != "") {
+                            if (!userdata.includes(decrypted(tiktokComments[ii]))) {
+                                userdata.push(decrypted(tiktokComments[ii]));
+                            }
+                        }
+                    }
+
+
+                    for (let ii = 0; ii < userdata.length; ii++) {
+                        encryptedData.push(encrypted(userdata[ii]));
+                    }
+
+                        
+                    try {
+    
+                        writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`, JSON.stringify(encryptedData));
+                    
+                    } catch (error) {
+            
+                        mkdirSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}`);
+                        writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`, JSON.stringify(encryptedData));
+                
+                    }   
+
+
+                }
+            }
+
+
+
+            if(!hasShortcode){
+
+
+                for (let i = 0; i < userdata.length; i++){
+                    encryptedData.push(encrypted(userdata[i]));
+                }
+
+                try {
+  
+                    writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`, JSON.stringify(encryptedData));
+                
+                } catch (error) {
+          
+                  mkdirSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}`);
+                  writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`, JSON.stringify(encryptedData));
+                
+                }                  
+            }
             
             await tiktokCommentsUsernameSheet.getRows().then ( async response =>{
 
@@ -39,10 +83,10 @@ export async function postTiktokUserComments(clientName, items, userdata) {
 
                         const fromRows = Object.values(response[ii].toObject());
 
-                        for (let iii = 0; iii < fromRows.length; iii++) {
-                            if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                                if (!userdata.includes(fromRows[iii])) {
-                                    userdata.push(fromRows[iii]);
+                        for (let ii = 0; ii < fromRows.length; ii++) {
+                            if (fromRows[ii] != undefined || fromRows[ii] != null || fromRows[ii] != "") {
+                                if (!userdata.includes(fromRows[ii])) {
+                                    userdata.push(fromRows[ii]);
                                 }
                             }
                         }
@@ -51,9 +95,7 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                     }
                 }
 
-                if(!hasShortcode){
-                    await tiktokCommentsUsernameSheet.addRow(userdata);                        
-                }
+
 
                 let data = {
                     data: `${clientName} Adding Tiktok Username to ${items}`,

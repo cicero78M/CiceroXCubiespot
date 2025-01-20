@@ -97,12 +97,6 @@ export async function getTiktokComments(items) {
 
                 }, 2500); 
 
-                // let data = {
-                //     data: error,
-                //     state: false,
-                //     code: 303
-                //   };
-                // reject (data);              
             });
         }
     });   

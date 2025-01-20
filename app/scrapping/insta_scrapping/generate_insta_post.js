@@ -30,6 +30,7 @@ export async function getInstaPost(clientValue) {
       if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
   
         await instaPostAPI(instaAccount).then( async response =>{
+        
 
           postItems = await response.data.data.items;
           
