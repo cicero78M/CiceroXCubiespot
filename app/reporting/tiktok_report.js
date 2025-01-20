@@ -109,13 +109,9 @@ export async function newReportTiktok(clientValue) {
                                 userCommentData.push(decrypted(commentItems[ii]));
                               }
                             }
-
-                            console.log(userCommentData)
-
                         }
-
-
-
+                        
+                        console.log(userRows);
                         for (let i = 0; i < userRows.length; i++) {     
 
                             if (userRows[i].TIKTOK === undefined
