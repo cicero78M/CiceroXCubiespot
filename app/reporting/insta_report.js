@@ -75,10 +75,10 @@ export async function newReportInsta(clientValue) {
             let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
             // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            console.log(localDate);
+            // console.log(localDate);
 
 
-            if ( dateNow === "1/20/2025") {
+            if ( dateNow === localDate) {
 
               if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
