@@ -69,14 +69,14 @@ export async function newReportInsta(clientValue) {
           for (let i = 0; i < instaContentDir.length; i++) {
 
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
+            console.log(contentItems);
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
 
-            console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+            // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
 
 
             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-
 
               if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
