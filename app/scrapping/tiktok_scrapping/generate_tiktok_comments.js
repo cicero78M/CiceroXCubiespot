@@ -13,7 +13,7 @@ export async function getTiktokComments(items) {
     
     newDataUsers.push(items);
 
-    return new Promise((resolve, reject) =>{
+    return new Promise((resolve) =>{
         
         forLoopGetComments(items, cursorNumber);
 

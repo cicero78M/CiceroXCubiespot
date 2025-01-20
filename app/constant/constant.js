@@ -69,5 +69,5 @@ export const dataTransfer = [
     "transferinstacontent",
     "transferinstalikes",
     "transfertiktokcontent",
-    "transfertiktoklikes"
+    "transfertiktokcomment"
 ];
