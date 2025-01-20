@@ -31,14 +31,17 @@ export async function getInstaPost(clientValue) {
         await instaPostAPI(instaAccount).then( async response =>{
 
           postItems = await response.data.data.items;
-  
+          
           for (let i = 0; i < postItems.length; i++) {
   
             let itemDate = new Date(postItems[i].taken_at * 1000);
+          
             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+          
               hasContent = true;
               itemByDay.push(postItems[i]);
               todayItems.push(postItems[i].code);
+          
             }
           }
   
@@ -59,8 +62,6 @@ export async function getInstaPost(clientValue) {
             }
             
             //If Database Contains Shortcode 
-            if (hasShortcode) {
-
               for (let i = 0; i < itemByDay.length; i++) {
 
 
@@ -89,7 +90,7 @@ export async function getInstaPost(clientValue) {
 
                 }
               }
-            }
+            
 
             let data = {
               data: todayItems,
