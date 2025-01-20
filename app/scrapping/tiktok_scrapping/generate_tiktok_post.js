@@ -2,6 +2,8 @@
 import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
+import { readdirSync } from "fs";
+
 
 export async function getTiktokPost(clientValue) {
 
