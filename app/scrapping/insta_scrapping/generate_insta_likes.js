@@ -35,7 +35,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
               newDataUsers =[];
         
               let instaLikes = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesDir[ii]}`));
-              console.log(fromRows);
+              console.log(instaLikes);
 
               for (let iii = 0; iii < instaLikes.length; iii++) {
                 if (decrypted(instaLikes[iii]) != undefined || decrypted(instaLikes[iii]) != null || decrypted(instaLikes[iii]) != "") {
