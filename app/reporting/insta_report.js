@@ -75,7 +75,7 @@ export async function newReportInsta(clientValue) {
             let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
             // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            console.log(localDate);
+            console.log(dateNow);
 
 
             if ( dateNow === "1/20/2025") {
