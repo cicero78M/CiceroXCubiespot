@@ -72,10 +72,11 @@ export async function newReportInsta(clientValue) {
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
 
-            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-              console.log("Exist Data");
+            console.log(localDate);
 
-              
+
+            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+
 
               if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
