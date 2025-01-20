@@ -24,7 +24,6 @@ export async function schedullerAllSocmed(timeSwitch) {
 
         await clientData().then( 
             async clientData =>{
-                console.log(clientData);
                 for (let i = 0; i < clientData.length; i++){
             
                     //This Procces Tiktok Report
@@ -259,7 +258,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     console.log ("Re-Try");
                 }, 10000);
                 
-                schedullerAllSocmed(timeSwitch);
+                // schedullerAllSocmed(timeSwitch);
             }
         );  
 
