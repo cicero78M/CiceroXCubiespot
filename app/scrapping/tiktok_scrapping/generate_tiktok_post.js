@@ -6,8 +6,8 @@ import { readdirSync } from "fs";
 
 export async function getTiktokPost(clientValue) {
 
-    const clientName = decrypted(clientValue.get('CLIENT_ID'));
-    const secUid = decrypted(clientValue.get('SECUID'));
+    const clientName = decrypted(clientValue.CLIENT_ID);
+    const secUid = decrypted(clientValue.SECUID);
         
     console.log(`${clientName} Execute Tiktok Post Data`);
     client.sendMessage('6281235114745@c.us', "Execute Tiktok Post Data");
@@ -27,7 +27,7 @@ export async function getTiktokPost(clientValue) {
             
             let hasContent = false;
         
-            if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
+            if (decrypted(clientValue.STATUS) === 'TRUE') {
 
                 await tiktokPostAPI(secUid, cursor).then( async response =>{
                     console.log(response);

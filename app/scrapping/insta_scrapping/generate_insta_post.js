@@ -9,8 +9,8 @@ export async function getInstaPost(clientValue) {
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
 
-  const clientName = decrypted(clientValue.get('CLIENT_ID'));
-  const instaAccount = decrypted(clientValue.get('INSTAGRAM'));
+  const clientName = decrypted(clientValue.CLIENT_ID);
+  const instaAccount = decrypted(clientValue.INSTAGRAM);
 
   let itemByDay = [];
   let todayItems = [];
@@ -26,7 +26,7 @@ export async function getInstaPost(clientValue) {
 
     try {
 
-      if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
+      if (decrypted(clientValue.STATUS) === 'TRUE') {
   
         await instaPostAPI(instaAccount).then( async response =>{
         

@@ -5,7 +5,7 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 
 export async function getInstaLikes(todayItems, clientValue ) {
 
-    const clientName = decrypted(clientValue.get('CLIENT_ID'));
+    const clientName = decrypted(clientValue.CLIENT_ID);
 
     let newData = 0;
     let updateData = 0;
