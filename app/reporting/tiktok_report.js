@@ -42,8 +42,7 @@ export async function newReportTiktok(clientValue) {
                 let shortcodeList = [];
                 let userCommentData = [];
                 let notCommentList = [];
-                let UserNotLikes = [];
-                let notLikesList = [];
+                let UserNotComment = [];
 
                 const clientName = decrypted(clientValue.get('CLIENT_ID'));
                 const tiktokAccount = decrypted(clientValue.get('TIKTOK'));
@@ -124,12 +123,12 @@ export async function newReportTiktok(clientValue) {
                 
                             } else {
                                 if (!userCommentData.includes(userRows[i].TIKTOK)) {
-                                    if (!UserNotLikes.includes(userRows[i].ID_KEY)) {
+                                    if (!UserNotComment.includes(userRows[i].ID_KEY)) {
                                         if (userRows[i].STATUS === 'TRUE' ){
                                             if (userRows[i].EXCEPTION === "FALSE"){
                                                 
-                                                UserNotLikes.push(userRows[i].ID_KEY);
-                                                notLikesList.push(userRows[i]);
+                                                UserNotComment.push(userRows[i].ID_KEY);
+                                                notCommentList.push(userRows[i]);
                                             }                
                                         }
                                     }
