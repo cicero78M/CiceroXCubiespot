@@ -24,7 +24,6 @@ export async function schedullerAllSocmed(timeSwitch) {
 
         await clientData().then( 
             async clientData =>{
-
                 for (let i = 0; i < clientData.length; i++){
             
                     //This Procces Tiktok Report
