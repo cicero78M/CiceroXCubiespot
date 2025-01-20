@@ -78,7 +78,7 @@ export async function newReportInsta(clientValue) {
             console.log(localDate);
 
 
-            if ( dateNow === localDate) {
+            if ( dateNow === "1/20/2025") {
 
               if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
