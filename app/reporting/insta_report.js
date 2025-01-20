@@ -72,12 +72,13 @@ export async function newReportInsta(clientValue) {
             // console.log(contentItems);
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+            let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
             // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
             // console.log(localDate);
 
 
-            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+            if ( dateNow === localDate) {
 
               console.log("Data Exist");
 
