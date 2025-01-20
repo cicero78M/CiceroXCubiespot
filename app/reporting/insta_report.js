@@ -10,7 +10,7 @@ export async function newReportInsta(clientValue) {
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
   let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});   
       
-  const clientName = decrypted(clientValue.get('CLIENT_ID'));
+  const clientName = decrypted(clientValue.CLIENT_ID);
 
   let notLikesName;
   let name;
@@ -62,7 +62,7 @@ export async function newReportInsta(clientValue) {
 
         // If Client_ID exist. then get Insta content
 
-        if (decrypted(clientValue.get('STATUS'))) {   
+        if (decrypted(clientValue.STATUS)) {   
 
           let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 
@@ -151,13 +151,13 @@ export async function newReportInsta(clientValue) {
                     notLikesName = notLikesList[iv].INSTA;
                   }
     
-                  if (decrypted(clientValue.get('TYPE'))  === "RES") {
+                  if (decrypted(clientValue.TYPE)  === "RES") {
                   
                     userByDivisi = userByDivisi.concat('\n' + notLikesList[iv].TITLE + ' ' + notLikesList[iv].NAMA + ' - ' + notLikesName);
                     divisiCounter++;
                     userCounter++;
                   
-                  } else if (decrypted(clientValue.get('TYPE'))  === "COM") {
+                  } else if (decrypted(clientValue.TYPE)  === "COM") {
                   
                     name = notLikesList[iv].NAMA;
                     nameUpper = name.toUpperCase();
@@ -176,7 +176,7 @@ export async function newReportInsta(clientValue) {
     
             let instaSudah = userAll - notLikesList.length;
     
-            if (decrypted(clientValue.get('TYPE'))  === 'COM') {
+            if (decrypted(clientValue.TYPE)  === 'COM') {
               data = {
                 data: "*" + clientName + "*\n\nInformasi Rekap Data yang belum melaksanakan likes pada " + shortcodeList.length + " konten Instagram :\n" 
                   + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours + "\n\nDengan Rincian Data sbb:\n\n_Jumlah User : "
@@ -185,7 +185,7 @@ export async function newReportInsta(clientValue) {
                 state: true,
                 code: 200
               };
-            } else if (decrypted(clientValue.get('TYPE'))  === "RES") {
+            } else if (decrypted(clientValue.TYPE)  === "RES") {
               data = {
                 data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Instagram *POLRES " 
                   + clientName + "* dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " + hours 

@@ -44,10 +44,10 @@ export async function newReportTiktok(clientValue) {
                 let notCommentList = [];
                 let userNotComment = [];
 
-                const clientName = decrypted(clientValue.get('CLIENT_ID'));
-                const tiktokAccount = decrypted(clientValue.get('TIKTOK'));
+                const clientName = decrypted(clientValue.CLIENT_ID);
+                const tiktokAccount = decrypted(clientValue.TIKTOK);
 
-                if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
+                if (decrypted(clientValue.STATUS) === 'TRUE') {
                     
                     await newListValueData(
                         clientName, 
@@ -146,12 +146,12 @@ export async function newReportTiktok(clientValue) {
                             for (let iv = 0; iv < notCommentList.length; iv++) {
                                 if (divisiList[iii] === notCommentList[iv].DIVISI) {
 
-                                    if (decrypted(clientValue.get('TYPE')) === "RES") {
+                                    if (decrypted(clientValue.TYPE) === "RES") {
                                         userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].TITLE + ' ' + notCommentList[iv].NAMA 
                                             + ' - ' + notCommentList[iv].TIKTOK);
                                         divisiCounter++;
                                         userCounter++;
-                                    } else if (decrypted(clientValue.get('TYPE'))  === "COM") {
+                                    } else if (decrypted(clientValue.TYPE)  === "COM") {
                                         name = notCommentList[iv].get('NAMA');
                                         nameUpper = name.toUpperCase();
                                         userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].TIKTOK);
@@ -168,7 +168,7 @@ export async function newReportTiktok(clientValue) {
 
                         tiktokSudah = userAll - notCommentList.length;
                         
-                        if (decrypted(clientValue.get('TYPE'))  === "RES") {
+                        if (decrypted(clientValue.TYPE)  === "RES") {
                             responseData = {
                                 data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " 
                                     + clientName + "* dengan Link konten sbb ::\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
@@ -177,7 +177,7 @@ export async function newReportTiktok(clientValue) {
                                 state: true,
                                 code: 200
                             };
-                        } else if (decrypted(clientValue.get('TYPE'))  === "COM") {
+                        } else if (decrypted(clientValue.TYPE)  === "COM") {
                             responseData = {
                                 data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " 
                                     + clientName+ " dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
