@@ -8,7 +8,7 @@ export async function transferTiktokComments(clientName) {
     let tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for InstaOfficial DB    
     await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
     let tiktokCommentsUsernameSheet = tiktokCommentsUsernameDoc.sheetsByTitle[clientName];
-    let tiktokCommentUsernameData = await tiktokCommentsUsernameSheet.getRows();3
+    let tiktokCommentUsernameData = await tiktokCommentsUsernameSheet.getRows();
 
     for (let i = 0; i < tiktokCommentUsernameData.length; i++) {
 
@@ -23,10 +23,14 @@ export async function transferTiktokComments(clientName) {
         }
                 
         try {
-          writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+        
+            writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+        
         } catch (error) {
+
           mkdirSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}`);
           writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+        
         }    
       }
     }
