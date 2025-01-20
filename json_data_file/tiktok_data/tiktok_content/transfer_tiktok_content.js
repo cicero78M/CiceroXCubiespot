@@ -36,8 +36,8 @@ export async function transferTiktokContent(clientName) {
 
         } catch (error) {
 
-        mkdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}}`);
-        writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokOfficialData[i].get("SHORTCODE")}.json`, JSON.stringify(tiktokContent));
+            mkdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+            writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokOfficialData[i].get("SHORTCODE")}.json`, JSON.stringify(tiktokContent));
             
         }
     }
