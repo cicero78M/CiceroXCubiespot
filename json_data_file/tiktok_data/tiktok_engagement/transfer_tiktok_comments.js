@@ -23,10 +23,10 @@ export async function transferTiktokComments(clientName) {
         }
                 
         try {
-          writeFileSync(`json_data_file/tiktok_data/tiktok_enggagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+          writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
         } catch (error) {
-          mkdirSync(`json_data_file/tiktok_data/tiktok_enggagement/tiktok_comments/${clientName}`);
-          writeFileSync(`json_data_file/tiktok_data/tiktok_enggagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+          mkdirSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}`);
+          writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
         }    
       }
     }
