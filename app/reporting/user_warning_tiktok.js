@@ -1,4 +1,3 @@
-import { ciceroKey, newRowsData } from '../database/new_query/sheet_query.js';
 import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
   
@@ -25,7 +24,6 @@ export async function warningReportTiktok(clientValue) {
 
                 let shortcodeListString = '';
 
-                let fromRows = [];
                 let shortcodeList = [];
                 let userCommentData = [];
                 let userNotComment = [];
@@ -36,88 +34,100 @@ export async function warningReportTiktok(clientValue) {
 
                 if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
                     
-                    await newRowsData(
-                        ciceroKey.dbKey.userDataID, 
+                    await readUser(
                         clientName
                     ).then( 
                         response => {    
-                    
                             userRows = response;                           
                     
                             for (let i = 0; i < response.length; i++) {
-                                if (response[i].get('STATUS') === 'TRUE' ){
+                                if (response[i].STATUS === 'TRUE' ){
                                     userAll++;
                                 }
                             } 
                         }
                     );
 
-                    await newRowsData(
-                        ciceroKey.dbKey.tiktokOfficialID, 
-                        clientName
-                    ).then( 
-                        response => {            
-                            for (let i = 0; i < response.length; i++) {
-                                let itemDate = new Date(response[i].get('TIMESTAMP') * 1000);
-                                if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-                                    if (!shortcodeList.includes(response[i].get('SHORTCODE'))) {
-                                        shortcodeList.push(response[i].get('SHORTCODE'));
-                                        shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + tiktokAccount + '/video/' + response[i].get('SHORTCODE'));
-                                    }
-                                }
+
+                    let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+
+                    for (let i = 0; i < tiktokContentDir.length; i++) {
+
+                        let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
+                        // console.log(contentItems);
+
+                        let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+                        let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+
+                        // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+                        // console.log(localDate);
+
+
+                        if ( dateNow === localDate) {
+
+                            if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
+
+                                shortcodeList.push(decrypted(contentItems.SHORTCODE));
+                                shortcodeListString = shortcodeListString.concat('\nhttps://tiktok.com/' + tiktokAccount + '/video/' + decrypted(contentItems.SHORTCODE));
+
                             }
-                            
-                    });
-        
+                        }
+                    }
+
+                                                        
                     if (shortcodeList.length >= 1) {   
-                        await newRowsData(
-                            ciceroKey.dbKey.tiktokCommentUsernameID, 
-                            clientName
-                        ).then( 
-                            async response => {  
-                                for (let i = 0; i < shortcodeList.length; i++) {
-                                    for (let ii = 0; ii < response.length; ii++) {
-                                        if (response[ii].get('SHORTCODE') === shortcodeList[i]) {
-                                            fromRows = Object.values(response[ii].toObject());
-                                            for (let iii = 0; iii < fromRows.length; iii++) {
-                                                if (fromRows[iii] != undefined || fromRows[iii] != null || fromRows[iii] != "") {
-                                                    if (!userCommentData.includes(fromRows[iii])) {
-                                                        userCommentData.push(fromRows[iii]);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
 
-                                for (let iii = 0; iii < userRows.length; iii++) {
-                                    if (!userCommentData.includes(userRows[iii].get('TIKTOK').replaceAll('@', ''))) {
-                                        if (!userNotComment.includes(userRows[iii].get('ID_KEY'))) {
-                                            if (userRows[iii].get('STATUS') === 'TRUE' ){
-                                                if (userRows[iii].get('EXCEPTION') === "FALSE"){                   
-                                                    userNotComment.push(userRows[iii].get('ID_KEY'));
-                                                    notCommentList.push(userRows[iii]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                
-                                for (let i = 0; i < notCommentList.length; i++){
-                                    if(notCommentList[i].get('WHATSAPP') != ""){
+                        
+                        for (let i = 0; i < shortcodeList.length; i++) {
 
-                                        console.log(`Send Warning Tiktok messages to ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')} `);  
-                                        await client.sendMessage(
-                                            `${notCommentList[i].get('WHATSAPP')}@c.us`,
-                                            `Selamat Siang, Bpk/Ibu ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
-                                        );
-                                        setTimeout(async () => {
-                                            console.log ("Wait ");
-                                        }, 4000);
-                                    }
-                                }         
+                            let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+                            
+                            
+                            for (let ii = 0; ii < commentItems.length; ii++) {
+                              if (!userCommentData.includes(decrypted(commentItems[ii]))) {
+                                userCommentData.push(decrypted(commentItems[ii]));
+                              }
                             }
-                        );
+                        }
+                        
+                        for (let i = 0; i < userRows.length; i++) {     
+
+                            if (userRows[i].TIKTOK === undefined
+                            || userRows[i].TIKTOK === null 
+                            || userRows[i].TIKTOK === ""){
+                
+                                console.log("Null Data Exist");
+                                UserNotLikes.push(userRows[i].ID_KEY);
+                                notLikesList.push(userRows[i]);
+                
+                            } else {
+                                if (!userCommentData.includes((userRows[i].TIKTOK).replace('@',''))) {
+                                    if (!userNotComment.includes(userRows[i].ID_KEY)) {
+                                        if (userRows[i].STATUS === 'TRUE' ){
+                                            if (userRows[i].EXCEPTION === "FALSE"){
+                                                
+                                                userNotComment.push(userRows[i].ID_KEY);
+                                                notCommentList.push(userRows[i]);
+                                            }                
+                                        }
+                                    }
+                                } 
+                            }
+                        }
+
+                        for (let i = 0; i < notCommentList.length; i++){
+                            if(notCommentList[i].get('WHATSAPP') != ""){
+    
+                                console.log(`Send Warning Tiktok messages to ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')} `);  
+                                await client.sendMessage(
+                                    `${notCommentList[i].get('WHATSAPP')}@c.us`,
+                                    `Selamat Siang, Bpk/Ibu ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
+                                );
+                                setTimeout(async () => {
+                                    console.log ("Wait ");
+                                }, 4000);
+                            }
+                        }  
 
                         let data = {
                             data: "Send warning Done",

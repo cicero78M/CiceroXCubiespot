@@ -1,7 +1,5 @@
 import { request } from './insta_API.js';
-
 import 'dotenv/config';
-
 export const private_key = process.env;
 
 const headers = {

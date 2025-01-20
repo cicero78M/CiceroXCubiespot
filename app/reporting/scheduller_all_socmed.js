@@ -1,6 +1,7 @@
 import { client } from "../../app.js";
+import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { decrypted } from "../../json_data_file/crypto.js";
-import { ciceroKey, newRowsData } from "../database/new_query/sheet_query.js";
+import { ciceroKey } from "../database/new_query/sheet_query.js";
 import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
 import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";
@@ -21,23 +22,20 @@ export async function schedullerAllSocmed(timeSwitch) {
         );            
         console.log(time+' Generate All Socmed Data Starting');
 
-        await newRowsData(
-            ciceroKey.dbKey.clientDataID, 
-            'ClientData_Enc'
-        ).then( 
+        await clientData().then( 
             async clientData =>{
 
                 for (let i = 0; i < clientData.length; i++){
             
                     //This Procces Tiktok Report
-                    if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                    && decrypted(clientData[i].get('TIKTOK_STATE')) === "TRUE" 
-                    && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
-                        console.log(`${time} ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK DATA`);
+                    if (decrypted(clientData[i].STATUS) === "TRUE" 
+                    && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
+                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                        console.log(`${time} ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
-                            ` ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK DATA`
+                            ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`
                         );
                         
                         await getTiktokPost(
@@ -51,10 +49,10 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             case 'report':
                          
                                                sendClientResponse(
-                                                    decrypted(clientData[i].get('CLIENT_ID')), 
-                                                    decrypted(clientData[i].get('SUPERVISOR')),
-                                                    decrypted(clientData[i].get('OPERATOR')),
-                                                    decrypted(clientData[i].get('GROUP')), 
+                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                    decrypted(clientData[i].SUPERVISOR),
+                                                    decrypted(clientData[i].OPERATOR),
+                                                    decrypted(clientData[i].GROUP), 
                                                     data, 
                                                     'REPORT TIKTOK'
                                                 );                                            
@@ -89,10 +87,10 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     case 'report':
                                     
                                                         sendClientResponse(
-                                                            decrypted(clientData[i].get('CLIENT_ID')), 
-                                                            decrypted(clientData[i].get('SUPERVISOR')),
-                                                            decrypted(clientData[i].get('OPERATOR')),
-                                                            decrypted(clientData[i].get('GROUP')), 
+                                                            decrypted(clientData[i].CLIENT_ID), 
+                                                            decrypted(clientData[i].SUPERVISOR),
+                                                            decrypted(clientData[i].OPERATOR),
+                                                            decrypted(clientData[i].GROUP), 
                                                             data, 
                                                             'REPORT TIKTOK'
                                                         );                                            
@@ -144,14 +142,14 @@ export async function schedullerAllSocmed(timeSwitch) {
                     }         
 
                     //This process Insta Report
-                    if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                    && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
-                    && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
-                        console.log(`${time} ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA DATA`);
+                    if (decrypted(clientData[i].STATUS) === "TRUE" 
+                    && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                        console.log(`${time} ${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
-                            `${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA DATA`
+                            `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`
                         );
                         
                         await getInstaPost(
@@ -161,10 +159,10 @@ export async function schedullerAllSocmed(timeSwitch) {
                                 switch (instaPostData.code){
                                     case 201:
                                         sendClientResponse(
-                                            decrypted(clientData[i].get('CLIENT_ID')), 
-                                            decrypted(clientData[i].get('SUPERVISOR')),
-                                            decrypted(clientData[i].get('OPERATOR')),
-                                            decrypted(clientData[i].get('GROUP')), 
+                                            decrypted(clientData[i].CLIENT_ID), 
+                                            decrypted(clientData[i].SUPERVISOR),
+                                            decrypted(clientData[i].OPERATOR),
+                                            decrypted(clientData[i].GROUP), 
                                             instaPostData, 
                                             'REPORT INSTA'
                                         );    
@@ -194,10 +192,10 @@ export async function schedullerAllSocmed(timeSwitch) {
         
                                                             case 'report':
                                                                 sendClientResponse(
-                                                                    decrypted(clientData[i].get('CLIENT_ID')), 
-                                                                    decrypted(clientData[i].get('SUPERVISOR')),
-                                                                    decrypted(clientData[i].get('OPERATOR')),
-                                                                    decrypted(clientData[i].get('GROUP')), 
+                                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                                    decrypted(clientData[i].SUPERVISOR),
+                                                                    decrypted(clientData[i].OPERATOR),
+                                                                    decrypted(clientData[i].GROUP), 
                                                                     data, 
                                                                     'REPORT TIKTOK'
                                                                 );            

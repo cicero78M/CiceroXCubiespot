@@ -1,9 +1,6 @@
 import { readUser } from "../../../json_data_file/user_data/read_data_from_dir.js";
 
-export async function newListValueData(
-    clientName, 
-    keyValue
-) {
+export async function newListValueData( clientName, keyValue) {
     return new Promise(
         async (
             resolve
@@ -22,8 +19,7 @@ export async function newListValueData(
                         }
                         
                         resolve (listValue);
-                    }
-                    
+                    }                   
                 }
             )
         }

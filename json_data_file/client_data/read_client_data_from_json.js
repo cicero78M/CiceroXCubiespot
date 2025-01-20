@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
 import { decrypted } from "../crypto.js";
 
 export async function clientData() {    
@@ -28,11 +28,11 @@ export async function clientData() {
                 clientData.SECUID = decrypted(dataItems.SECUID);
         
                 client.push(clientData);
-
-                writeFileSync(`json_data_file/client_data/${decrypted(dataItems.CLIENT_ID)}.json`, JSON.stringify(dataItems));
                 
             }
+
             resolve (client);
+
         } catch (error) {
             reject (error)            
         }

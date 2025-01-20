@@ -32,7 +32,6 @@ import { updateUsername } from './app/database/user_profile/updateUsername.js';
 import { setSecuid } from './app/database/utils/secuidTiktok.js';
 import { sendResponse } from './app/view/sendWA.js';
 import { requestVoucer } from './app/scrapping/insta_follow/request_rewards.js';
-import { newRowsData } from './app/database/new_query/sheet_query.js';
 import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktok_items_bridge.js';
 import { getTiktokPost } from './app/scrapping/tiktok_scrapping/generate_tiktok_post.js';
 import { newReportTiktok } from './app/reporting/tiktok_report.js';
@@ -166,14 +165,14 @@ client.on('ready', () => {
     //         for (let i = 0; i < clientData.length; i++){
         
     //             //This Procces Tiktok Report
-    //             if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-    //             && decrypted(clientData[i].get('TIKTOK_STATE')) === "TRUE" 
-    //             && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
-    //                 console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNING DATA`);
+    //             if (decrypted(clientData[i].STATUS) === "TRUE" 
+    //             && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
+    //             && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+    //                 console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
                     
     //                 await client.sendMessage(
     //                     '6281235114745@c.us', 
-    //                     ` ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNINGDATA`
+    //                     ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNINGDATA`
     //                 );
 
     //                 await warningReportTiktok(clientData[i]).then(async response => {
@@ -207,14 +206,14 @@ client.on('ready', () => {
     //             }         
 
     //             //This process Insta Report
-    //             if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-    //             && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
-    //             && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+    //             if (decrypted(clientData[i].STATUS) === "TRUE" 
+    //             && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+    //             && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
                     
-    //                 console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`);
+    //                 console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
     //                 await client.sendMessage(
     //                     '6281235114745@c.us', 
-    //                     `${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`
+    //                     `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
     //                 );
 
     //                 await warningReportInsta(clientData[i]).then(async response => {
@@ -441,26 +440,24 @@ client.on('message', async (msg) => {
                             
                             console.log(time+' Generate Tiktok secUID Data Starting');
             
-                            await newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then(async clientRows =>{
+                            await clientData().then(
+                                async clientData =>{
                                     //Itterate Client
-                                    for (let i = 0; i < clientRows.length; i++){
-                                        if (decrypted(clientRows[i].get('STATUS')) === "TRUE" 
-                                        && decrypted(clientRows[i].get('INSTA_STATE')) === "TRUE" 
-                                        && decrypted(clientRows[i].get('TYPE')) === ciceroKey.ciceroClientType) {         
+                                    for (let i = 0; i < clientData.length; i++){
+                                        if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                        && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {         
                                     
-                                            console.log(time+" "+decrypted(clientRows[i].get('CLIENT_ID'))+' START TIKTOK SECUID DATA');
+                                            console.log(time+" "+decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
                                         
                                             let tiktokSecuid = await setSecuid(
-                                                clientRows[i]
+                                                clientData[i]
                                             );
                                             
                                             sendResponse(
                                                 msg.from, 
                                                 tiktokSecuid, 
-                                                `${decrypted(clientRows[i].get('CLIENT_ID'))} START TIKTOK SECUID DATA`
+                                                `${decrypted(clientData[i].CLIENT_ID)} START TIKTOK SECUID DATA`
                                             );
                                         
                                         } 
@@ -479,34 +476,32 @@ client.on('message', async (msg) => {
                         default : {
                             //Execute Send Warning
                             console.log("Execute Schedule");
-                            newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then(async clientData =>{
+                            clientData().then(
+                                async clientData =>{
                     
                                 for (let i = 0; i < clientData.length; i++){
                             
                                     //This Procces Tiktok Report
-                                    if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                                    && decrypted(clientData[i].get('TIKTOK_STATE')) === "TRUE" 
-                                    && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
-                                        console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNING DATA`);
+                                    if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                    && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
+                                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                                        console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
                                         await client.sendMessage(
                                             '6281235114745@c.us', 
-                                            ` ${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD TIKTOK WARNINGDATA`
+                                            ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNINGDATA`
                                         );
                                         await warningReportTiktok(clientData[i]);
                                     }         
                 
                                     //This process Insta Report
-                                    if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                                    && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
-                                    && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                                    if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                    && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
                                         
-                                        console.log(`${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`);
+                                        console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
                                         await client.sendMessage(
                                             '6281235114745@c.us', 
-                                            `${decrypted(clientData[i].get('CLIENT_ID'))} START LOAD INSTA WARNING DATA`
+                                            `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
                                         );
                 
                                         await warningReportInsta(clientData[i]);
@@ -520,12 +515,10 @@ client.on('message', async (msg) => {
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
                     console.log("Exec Rows");
-                    await newRowsData(ciceroKey.dbKey.clientDataID, 
-                        'ClientData_Enc'
-                    ).then(async clientRows => {             
+                    await clientData().then(async clientData => {             
                         console.log("Response OK");
-                        for (let i = 0; i < clientRows.length; i++){
-                            if(decrypted(clientRows[i].get("CLIENT_ID")) === splittedMsg[0].toUpperCase()){
+                        for (let i = 0; i < clientData.length; i++){
+                            if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                 let responseData;
                                 switch (splittedMsg[1].toLowerCase()) {
                                     case "addnewuser":
@@ -602,12 +595,9 @@ client.on('message', async (msg) => {
 
                 //User Order Data         
                 } else if (userOrder.includes(splittedMsg[1].toLowerCase())){   
-                    await newRowsData(
-                        ciceroKey.dbKey.clientDataID, 
-                        'ClientData_Enc'
-                    ).then(async clientRows => {    
-                        for (let i = 0; i < clientRows.length; i++){
-                            if(decrypted(clientRows[i].get("CLIENT_ID")) === splittedMsg[0].toUpperCase()){
+                    await clientData().then(async clientData => {    
+                        for (let i = 0; i < clientData.length; i++){
+                            if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                 if (updateinsta.includes(splittedMsg[1].toLowerCase())) {
                                     //Update Insta Profile
                                     //CLientName#updateinsta/ig/#linkprofileinstagram
@@ -798,13 +788,10 @@ client.on('message', async (msg) => {
 
                 } else if (infoOrder.includes(splittedMsg[1].toLowerCase())){    
 
-                    await newRowsData(
-                        ciceroKey.dbKey.clientDataID, 
-                        'ClientData_Enc'
-                    ).then( 
-                        async clientRows => {    
-                            for (let i = 0; i < clientRows.length; i++){
-                                if(decrypted(clientRows[i].get("CLIENT_ID")) === splittedMsg[0].toUpperCase()){
+                    await clientData().then( 
+                        async clientData => {    
+                            for (let i = 0; i < clientData.length; i++){
+                                if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     let responseData;
                                     switch (splittedMsg[1].toLowerCase()) {
                                         case 'info':
@@ -916,20 +903,17 @@ client.on('message', async (msg) => {
 
                             console.log("Execute New All Tiktok")
 
-                            await newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then( 
+                            await clientData.then( 
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
-                                        if (decrypted(response[i].get('STATUS')) === "TRUE" 
-                                        && decrypted(response[i].get('TIKTOK_STATE')) === "TRUE" 
-                                        && decrypted(response[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                                        if (decrypted(response[i].STATUS) === "TRUE" 
+                                        && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
+                                        && decrypted(response[i].TYPE) === ciceroKey.ciceroClientType) {
                                             
-                                            console.log(time+" "+decrypted(response[i].get('CLIENT_ID'))+' START LOAD TIKTOK DATA');
+                                            console.log(time+" "+decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
                                             client.sendMessage(
                                                 '6281235114745@c.us', 
-                                                decrypted(response[i].get('CLIENT_ID'))+' START LOAD TIKTOK DATA');
+                                                decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
                                             
                                             await getTiktokPost(
                                                 response[i]
@@ -957,13 +941,13 @@ client.on('message', async (msg) => {
                                                             console.log(data.data);
                                                             client.sendMessage(
                                                                 '6281235114745@c.us', 
-                                                                decrypted(response[i].get('CLIENT_ID'))+' ERROR GET TIKTOK POST'
+                                                                decrypted(response[i].CLIENT_ID)+' ERROR GET TIKTOK POST'
                                                             );
                                                             break;
                                                         default:
                                                             client.sendMessage(
                                                                 '6281235114745@c.us', 
-                                                                decrypted(response[i].get('CLIENT_ID'))+' '+data.data
+                                                                decrypted(response[i].CLIENT_ID)+' '+data.data
                                                             );
                                                             break;
                                                     }
@@ -984,19 +968,16 @@ client.on('message', async (msg) => {
 
                         case 'reporttiktok':
                             console.log("Execute New Report Tiktok ")
-                            await newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then( 
+                            await clientData.then( 
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
-                                        if (decrypted(response[i].get('STATUS')) === "TRUE" 
-                                        && decrypted(response[i].get('TIKTOK_STATE')) === "TRUE" 
-                                        && decrypted(response[i].get('TYPE')) === ciceroKey.ciceroClientType) {
-                                            console.log(time+" "+decrypted(response[i].get('CLIENT_ID'))+' START REPORT TIKTOK DATA');
+                                        if (decrypted(response[i].STATUS) === "TRUE" 
+                                        && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
+                                        && decrypted(response[i].TYPE) === ciceroKey.ciceroClientType) {
+                                            console.log(time+" "+decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
                                             client.sendMessage(
                                                 '6281235114745@c.us', 
-                                                decrypted(response[i].get('CLIENT_ID'))+' START REPORT TIKTOK DATA'
+                                                decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA'
                                             );
                                             await newReportTiktok(
                                                 response[i]
@@ -1012,13 +993,13 @@ client.on('message', async (msg) => {
                                                             console.log(data.data);
                                                             client.sendMessage(
                                                                 '6281235114745@c.us', 
-                                                                decrypted(response[i].get('CLIENT_ID'))+' ERROR REPORT TIKTOK POST'
+                                                                decrypted(response[i].CLIENT_ID)+' ERROR REPORT TIKTOK POST'
                                                             );
                                                             break;
                                                         default:
                                                             client.sendMessage(
                                                                 '6281235114745@c.us',
-                                                                decrypted(response[i].get('CLIENT_ID'))+' '+data.data
+                                                                decrypted(response[i].CLIENT_ID)+' '+data.data
                                                             );
                                                             break;
                                                     }
@@ -1039,22 +1020,19 @@ client.on('message', async (msg) => {
                         case 'allinsta':
 
                             console.log("Execute New All Insta ")
-                            await newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then( 
+                            await clientData().then( 
                                 async clientData =>{
                                     for (let i = 0; i < clientData.length; i++){
 
-                                        if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                                        && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
-                                        && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                                        if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                        && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
                                         
-                                            console.log(time+" "+decrypted(clientData[i].get('CLIENT_ID'))+' START LOAD INSTA DATA');
+                                            console.log(time+" "+decrypted(clientData[i].CLIENT_ID)+' START LOAD INSTA DATA');
                                             
                                             client.sendMessage(
                                                 '6281235114745@c.us', 
-                                                decrypted(clientData[i].get('CLIENT_ID'))+' START LOAD INSTA DATA'
+                                                decrypted(clientData[i].CLIENT_ID)+' START LOAD INSTA DATA'
                                             );
 
                                             await getInstaPost(
@@ -1092,14 +1070,14 @@ client.on('message', async (msg) => {
                                                                             console.log(data.data);
                                                                             await client.sendMessage(
                                                                                 '6281235114745@c.us', 
-                                                                                decrypted(clientData[i].get('CLIENT_ID'))+' ERROR REPORT INSTA POST'
+                                                                                decrypted(clientData[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
                                                                             );
                                                                             break;
 
                                                                         default:
                                                                             await client.sendMessage(
                                                                                 '6281235114745@c.us', 
-                                                                                decrypted(clientData[i].get('CLIENT_ID'))+' '+data.data
+                                                                                decrypted(clientData[i].CLIENT_ID)+' '+data.data
                                                                             );
                                                                             break;
                                                                     }
@@ -1113,7 +1091,7 @@ client.on('message', async (msg) => {
                                                                     console.log(data.data);
                                                                     await client.sendMessage(
                                                                         '6281235114745@c.us', 
-                                                                        decrypted(clientData[i].get('CLIENT_ID'))+' ERROR GET INSTA LIKES'
+                                                                        decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA LIKES'
                                                                     );
                                                                     break;
                                                                 
@@ -1121,7 +1099,7 @@ client.on('message', async (msg) => {
                                                                     console.log(data);
                                                                     await client.sendMessage(
                                                                         '6281235114745@c.us', 
-                                                                        decrypted(clientData[i].get('CLIENT_ID'))+' '+data.data
+                                                                        decrypted(clientData[i].CLIENT_ID)+' '+data.data
                                                                     );
                                                                     break;
                                                             }
@@ -1136,7 +1114,7 @@ client.on('message', async (msg) => {
                                                             console.log(data.data);
                                                             await client.sendMessage(
                                                                 '6281235114745@c.us', 
-                                                                decrypted(clientData[i].get('CLIENT_ID'))+' ERROR GET INSTA POST'
+                                                                decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA POST'
                                                             );
                                                             break;
 
@@ -1144,7 +1122,7 @@ client.on('message', async (msg) => {
                                                             console.log(data);
                                                             await client.sendMessage(
                                                                 '6281235114745@c.us', 
-                                                                decrypted(clientData[i].get('CLIENT_ID'))+' '+data.data
+                                                                decrypted(clientData[i].CLIENT_ID)+' '+data.data
                                                             );
                                                             break;
                                                     }
@@ -1165,19 +1143,16 @@ client.on('message', async (msg) => {
 
                         case 'reportinsta':
                             console.log("Execute New Report Insta ")
-                            await newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then( 
+                            await clientData().then( 
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
-                                        if (decrypted(response[i].get('STATUS')) === "TRUE" 
-                                        && decrypted(response[i].get('INSTA_STATE')) === "TRUE" 
-                                        && decrypted(response[i].get('TYPE')) === ciceroKey.ciceroClientType) {
-                                            console.log(time+" "+decrypted(response[i].get('CLIENT_ID'))+' START REPORT INSTA DATA');
+                                        if (decrypted(response[i].STATUS) === "TRUE" 
+                                        && decrypted(response[i].INSTA_STATE) === "TRUE" 
+                                        && decrypted(response[i].TYPE) === ciceroKey.ciceroClientType) {
+                                            console.log(time+" "+decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA');
                                             client.sendMessage(
                                                 '6281235114745@c.us', 
-                                                decrypted(response[i].get('CLIENT_ID'))+' START REPORT INSTA DATA'
+                                                decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA'
                                             );
                                             
                                             await newReportInsta(
@@ -1195,14 +1170,14 @@ client.on('message', async (msg) => {
                                                             console.log(data.data);
                                                             await client.sendMessage(
                                                                 '6281235114745@c.us', 
-                                                                decrypted(response[i].get('CLIENT_ID'))+' ERROR REPORT INSTA POST'
+                                                                decrypted(response[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
                                                             );
                                                             break;
 
                                                         default:
                                                             await client.sendMessage(
                                                                 '6281235114745@c.us', 
-                                                                decrypted(response[i].get('CLIENT_ID'))+' '+data.data
+                                                                decrypted(response[i].CLIENT_ID)+' '+data.data
                                                             );
                                                             break;
                                                     }
@@ -1222,24 +1197,21 @@ client.on('message', async (msg) => {
 
                         case 'instainfo':
 
-                            await newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then(
+                            await clientData().then(
                                 async clientData =>{
                                     for (let i = 0; i < clientData.length; i++){
-                                        if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                                        && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
-                                        && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                                        if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                        && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
                                             await instaClientInfo(
-                                                decrypted(clientData[i].get('CLIENT_ID')), 
-                                                decrypted(clientData[i].get('INSTAGRAM'))
+                                                decrypted(clientData[i].CLIENT_ID), 
+                                                decrypted(clientData[i].INSTAGRAM)
                                             ).then(
                                                 async response =>{
                                                     console.log(response.data);
                                                     client.sendMessage(
                                                         msg.from, 
-                                                        `${decrypted(clientData[i].get('CLIENT_ID'))} ${response.data}`
+                                                        `${decrypted(clientData[i].CLIENT_ID)} ${response.data}`
                                                     );
                                                 }
                                             ).catch(
@@ -1247,7 +1219,7 @@ client.on('message', async (msg) => {
                                                     console.error(error);
                                                     client.sendMessage(
                                                         msg.from, 
-                                                        `${decrypted(clientData[i].get('CLIENT_ID'))} Collect Insta Info Error`
+                                                        `${decrypted(clientData[i].CLIENT_ID)} Collect Insta Info Error`
                                                     );
                                                 }
                                             );
@@ -1265,25 +1237,22 @@ client.on('message', async (msg) => {
                             let arrayData = [];
                             let countData = 0;
             
-                            await newRowsData(
-                                ciceroKey.dbKey.clientDataID, 
-                                'ClientData_Enc'
-                            ).then(
+                            await clientData().then(
                                 async clientData =>{
                                     for (let i = 0; i < clientData.length; i++){
                                         let pages = "";
-                                        if (decrypted(clientData[i].get('STATUS')) === "TRUE" 
-                                        && decrypted(clientData[i].get('INSTA_STATE')) === "TRUE" 
-                                        && decrypted(clientData[i].get('TYPE')) === ciceroKey.ciceroClientType) {
+                                        if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                        && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
                                             await instaClientInfo(
-                                                decrypted(clientData[i].get('CLIENT_ID')), 
-                                                decrypted(clientData[i].get('INSTAGRAM'))
+                                                decrypted(clientData[i].CLIENT_ID), 
+                                                decrypted(clientData[i].INSTAGRAM)
                                             ). then (
                                                 async response =>{
                                                     console.log(response);
                                                     await instaOffcialFollower(
-                                                        decrypted(clientData[i].get('CLIENT_ID')), 
-                                                        decrypted(clientData[i].get('INSTAGRAM')), 
+                                                        decrypted(clientData[i].CLIENT_ID), 
+                                                        decrypted(clientData[i].INSTAGRAM), 
                                                         pages, 
                                                         arrayData, 
                                                         countData, 
@@ -1436,16 +1405,15 @@ client.on('message', async (msg) => {
                         default:
                             break;
 
-                            
                     }
 
                 } else {//Key Order Data Not Exist         
 
-                    await newRowsData(ciceroKey.dbKey.clientDataID, 'ClientData_Enc').then(
-                        async clientRows => {
+                    await clientData().then(
+                        async clientData => {
                             
-                            for (let i = 0; i < clientRows.length; i++){
-                                if(decrypted(clientRows[i].get("CLIENT_ID")) === splittedMsg[0].toUpperCase()){
+                            for (let i = 0; i < clientData.length; i++){
+                                if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     console.log("Request Code Doesn't Exist");
                                     let responseData = await infoView(
                                         splittedMsg[0].toUpperCase()
