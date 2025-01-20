@@ -123,7 +123,7 @@ export async function newReportTiktok(clientValue) {
                                 notLikesList.push(userRows[i]);
                 
                             } else {
-                                if (!userCommentData.includes(userRows[i].TIKTOK)) {
+                                if (!userCommentData.includes((userRows[i].TIKTOK).replace('@',''))) {
                                     if (!UserNotComment.includes(userRows[i].ID_KEY)) {
                                         if (userRows[i].STATUS === 'TRUE' ){
                                             if (userRows[i].EXCEPTION === "FALSE"){
