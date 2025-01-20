@@ -903,7 +903,7 @@ client.on('message', async (msg) => {
 
                             console.log("Execute New All Tiktok")
 
-                            await clientData.then( 
+                            await clientData().then( 
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         if (decrypted(response[i].STATUS) === "TRUE" 
@@ -968,7 +968,7 @@ client.on('message', async (msg) => {
 
                         case 'reporttiktok':
                             console.log("Execute New Report Tiktok ")
-                            await clientData.then( 
+                            await clientData().then( 
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         if (decrypted(response[i].STATUS) === "TRUE" 
