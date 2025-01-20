@@ -63,7 +63,7 @@ import { readUser } from './json_data_file/user_data/read_data_from_dir.js';
 import { transferInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
 import { transferInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 import { transferTiktokContent } from './json_data_file/tiktok_data/tiktok_content/transfer_tiktok_content.js';
-import { transferTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/transfer_tiktok_comments.js';
+import { transferTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/transfer_tiktok_comments.js';
 
 //.env
 const private_key = process.env;
