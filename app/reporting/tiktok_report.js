@@ -109,8 +109,8 @@ export async function newReportTiktok(clientValue) {
                                 userCommentData.push(decrypted(commentItems[ii]));
                               }
                             }
-              
-                          }
+                            console.log(userCommentData.lenght);
+                        }
 
                         for (let i = 0; i < userRows.length; i++) {     
 
