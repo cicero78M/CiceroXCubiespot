@@ -111,7 +111,6 @@ export async function newReportTiktok(clientValue) {
                             }
                         }
                         
-                        console.log(userRows);
                         for (let i = 0; i < userRows.length; i++) {     
 
                             if (userRows[i].TIKTOK === undefined
