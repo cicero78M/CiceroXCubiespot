@@ -67,5 +67,7 @@ export const dataTransfer = [
     "readuserdir",
     "encryptclientdata",
     "transferinstacontent",
-    "transferinstalikes"
+    "transferinstalikes",
+    "transfertiktokcontent",
+    "transfertiktoklikes"
 ];

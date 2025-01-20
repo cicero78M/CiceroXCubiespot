@@ -13,14 +13,15 @@ export async function getInstaPost(clientValue) {
   const clientName = decrypted(clientValue.get('CLIENT_ID'));
   const instaAccount = decrypted(clientValue.get('INSTAGRAM'));
 
-  console.log(clientName + " Collecting Insta Post Starting...");
-  await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Starting...`);
-
   let itemByDay = [];
   let todayItems = [];
   let postItems = [];
 
   let hasContent = false;
+
+  
+  console.log(`${clientName} Collecting Insta Post Starting...`);
+  await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Starting...`);
 
   return new Promise(async (resolve, reject) => {
 
@@ -64,7 +65,6 @@ export async function getInstaPost(clientValue) {
             //If Database Contains Shortcode 
               for (let i = 0; i < itemByDay.length; i++) {
 
-
                 let dataObject = new Object();
 
                 dataObject.TIMESTAMP = encrypted((itemByDay[i].taken_at).toString());
@@ -99,13 +99,17 @@ export async function getInstaPost(clientValue) {
             };
 
             resolve (data);
+
           } else {
+            
             let data = {
               data: 'Official Account Has No Insta Content for Today',
               state: true,
               code: 201
             };
+            
             resolve (data);
+          
           }
         }).catch(error =>{
           let data = {

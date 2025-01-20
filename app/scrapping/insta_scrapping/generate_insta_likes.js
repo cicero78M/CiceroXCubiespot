@@ -6,15 +6,17 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 
 export async function getInstaLikes(todayItems, clientValue ) {
 
-    console.log("Generate Username Insta Likes");
-
     const clientName = decrypted(clientValue.get('CLIENT_ID'));
 
     let newData = 0;
     let updateData = 0;
     let newDataUsers = [];
+    let encryptedData = []                
 
     let hasShortcode = false;
+
+    console.log(`${clientName} Generate Username Insta Likes`);
+
     
     return new Promise(async (resolve, reject) => {
       
@@ -28,14 +30,11 @@ export async function getInstaLikes(todayItems, clientValue ) {
             
             if (todayItems[i] === (instaLikesDir[ii]).replace(".json", "")) {
 
-              console.log("Data Exist")
-
               hasShortcode = true;
 
               newDataUsers =[];
         
-              let instaLikes = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesDir[ii]}`));
-              console.log(instaLikes);
+              let instaLikes = await JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesDir[ii]}`));
 
               for (let iii = 0; iii < instaLikes.length; iii++) {
                 if (decrypted(instaLikes[iii]) != undefined || decrypted(instaLikes[iii]) != null || decrypted(instaLikes[iii]) != "") {
@@ -47,7 +46,9 @@ export async function getInstaLikes(todayItems, clientValue ) {
           
               await instaLikesAPI(todayItems[i]).then(
                 async response =>{
+
                   const likesItems = await response.data.data.items;
+                
                   for (let iii = 0; iii < likesItems.length; iii++) {
                     if (likesItems[iii].username !== undefined || likesItems[iii].username !== null || likesItems[iii].username !== "") {
                       if (!newDataUsers.includes(likesItems[iii].username)) {
@@ -55,8 +56,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
                       }
                     }
                   }
-
-                  let encryptedData = []
 
                   for (let iii = 0; iii < newDataUsers.length; iii++) {
                     encryptedData.push(encrypted(newDataUsers[iii]));
@@ -69,6 +68,12 @@ export async function getInstaLikes(todayItems, clientValue ) {
                     writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
                   }    
 
+                  console.log(`${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+                  
+                  await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+        
+                  updateData++;
+
                 }
               ).catch(
                 async error =>{
@@ -80,12 +85,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
                   reject (data);
                 }
               );
-
-              console.log(`${clientName} Update Data ${todayItems[i]}`);
-              await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
-    
-              updateData++;
-
             }
           }
 
@@ -95,7 +94,6 @@ export async function getInstaLikes(todayItems, clientValue ) {
             await instaLikesAPI(todayItems[i]).then(
               async response =>{
                 let likesItems = await response.data.data.items;
-                let encryptedData = [];
             
                 for (let iii = 0; iii < likesItems.length; iii++) {
                   if ('username' in likesItems[iii]) {
@@ -111,7 +109,9 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 }    
 
                 console.log(`${clientName} Insert New Data ${todayItems[i]}`);
+                
                 await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
+                
                 newData++;
 
               }
