@@ -44,12 +44,8 @@ export async function tiktokContentBackup(clientValue) {
                             shortcodeList.push(contentItems);
     
                             if ( dateNow === localDate) {
-                            }
-    
-                             
-    
+                            }   
                         }
-
 
                     }
                                       
@@ -65,7 +61,7 @@ export async function tiktokContentBackup(clientValue) {
                         const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
                         await sheetName.addRows(shortcodeList);
             
-                        data = {
+                        let data = {
                             data: `${clientName} Added Tiktok Content Data`,
                             state: true,
                             code: 200
