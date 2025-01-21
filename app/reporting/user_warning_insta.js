@@ -44,7 +44,7 @@ export async function warningReportInsta(clientValue) {
 
         // If Client_ID exist. then get Insta content
         
-        if (decrypted(clientValue.get('STATUS'))) {   
+        if (decrypted(clientValue.STATUS)) {   
 
           let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 

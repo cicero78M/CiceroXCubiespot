@@ -29,10 +29,10 @@ export async function warningReportTiktok(clientValue) {
                 let userNotComment = [];
                 let notCommentList = [];
 
-                const clientName = decrypted(clientValue.get('CLIENT_ID'));
-                const tiktokAccount = decrypted(clientValue.get('TIKTOK'));
+                const clientName = decrypted(clientValue.CLIENT_ID);
+                const tiktokAccount = decrypted(clientValue.TIKTOK);
 
-                if (decrypted(clientValue.get('STATUS')) === 'TRUE') {
+                if (decrypted(clientValue.STATUS) === 'TRUE') {
                     
                     await readUser(
                         clientName
@@ -116,12 +116,12 @@ export async function warningReportTiktok(clientValue) {
                         }
 
                         for (let i = 0; i < notCommentList.length; i++){
-                            if(notCommentList[i].get('WHATSAPP') != ""){
+                            if(notCommentList[i].WHATSAPP != ""){
     
-                                console.log(`Send Warning Tiktok messages to ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')} `);  
+                                console.log(`Send Warning Tiktok messages to ${notCommentList[i].TITLE} ${notCommentList[i].NAMA} `);  
                                 await client.sendMessage(
-                                    `${notCommentList[i].get('WHATSAPP')}@c.us`,
-                                    `Selamat Siang, Bpk/Ibu ${notCommentList[i].get('TITLE')} ${notCommentList[i].get('NAMA')}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
+                                    `${notCommentList[i].WHATSAPP}@c.us`,
+                                    `Selamat Siang, Bpk/Ibu ${notCommentList[i].TITLE} ${notCommentList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
                                 );
                                 setTimeout(async () => {
                                     console.log ("Wait ");
