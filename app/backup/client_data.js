@@ -1,5 +1,5 @@
-import { clientData } from "../../json_data_file/client_data/read_client_data_from_json";
-import { googleAuth } from "../database/new_query/sheet_query";
+import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
+import { googleAuth } from "../database/new_query/sheet_query.js";
 
 export async function clientDataBackup() {    
     
