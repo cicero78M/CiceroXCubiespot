@@ -27,19 +27,20 @@ export async function userDataBackup() {
                             
                             userData.push(JSON.parse(readFileSync(`json_data_file/user_data/${decrypted(response[i].CLIENT_ID)}/${data[ii]}`)));
 
-                            let sheetDoc = new GoogleSpreadsheet(
-                                process.env.userDataID, 
-                                googleAuth
-                            ); //Google Auth
-                            await sheetDoc.loadInfo();
-                            const newSheet = await sheetDoc.addSheet({ 
-                                title: `${decrypted(response[i].CLIENT_ID)}_${localDate}`, 
-                                headerValues: ['ID_KEY','NAMA',	'TITLE','DIVISI','JABATAN','STATUS','WHATSAPP','INSTA','TIKTOK','EXCEPTION']
-                            });
-        
-                            await newSheet.addRows(userData);
-        
                         } 
+                        
+                        let sheetDoc = new GoogleSpreadsheet(
+                            process.env.userDataID, 
+                            googleAuth
+                        ); //Google Auth
+                        await sheetDoc.loadInfo();
+                        let newSheet = await sheetDoc.addSheet({ 
+                            title: `${decrypted(response[i].CLIENT_ID)}_${localDate}`, 
+                            headerValues: ['ID_KEY','NAMA',	'TITLE','DIVISI','JABATAN','STATUS','WHATSAPP','INSTA','TIKTOK','EXCEPTION']
+                        });
+    
+                        await newSheet.addRows(userData);
+    
                         console.log(`${decrypted(response[i].CLIENT_ID)}_${localDate} Backed Up`);    
 
                     }
