@@ -25,35 +25,41 @@ export async function tiktokContentBackup(clientValue) {
       
                 const clientName = decrypted(clientValue.CLIENT_ID);
 
-                if (clientName !== "PONOROGO") {
-                                      
-                    let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+                if (decrypted(clientValue.TIKTOK_STATE)) {
+                    if (clientName !== "PONOROGO"){
 
-                    for (let i = 0; i < tiktokContentDir.length; i++) {
+                        let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
-                        JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`)).catch(
-                            async contentItems =>{
-
-                                                        // console.log(contentItems);
-
-                        let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
-                        let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-
-                        // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-                        // console.log(localDate);
-                        shortcodeList.push(contentItems);
-
-                        if ( dateNow === localDate) {
+                        for (let i = 0; i < tiktokContentDir.length; i++) {
+    
+                            JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`)).catch(
+                                async contentItems =>{
+    
+                                                            // console.log(contentItems);
+    
+                            let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+                            let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+    
+                            // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+                            // console.log(localDate);
+                            shortcodeList.push(contentItems);
+    
+                            if ( dateNow === localDate) {
+                            }
+    
+                                }
+                            ).catch(
+                                error => {
+                                    reject (error);
+                                }
+                            )
+    
                         }
 
-                            }
-                        ).catch(
-                            error => {
-                                reject (error);
-                            }
-                        )
 
                     }
+                                      
+
         
                     if (shortcodeList.length >= 1) {   
                         const sheetDoc = new GoogleSpreadsheet(
