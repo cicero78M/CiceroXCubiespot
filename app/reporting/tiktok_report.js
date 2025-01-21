@@ -7,9 +7,7 @@ import { readdirSync, readFileSync } from 'fs';
 export async function newReportTiktok(clientValue) {
 
     return new Promise(
-        async (
-            resolve, reject
-        ) => {
+        async (resolve, reject) => {
         
             try {
 

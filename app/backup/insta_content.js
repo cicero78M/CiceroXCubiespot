@@ -35,10 +35,9 @@ export async function instaContentBackup(clientValue) {
             // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
             // console.log(localDate);
 
-            shortcodeList.push(contentItems);
 
             if ( dateNow === localDate) {
-
+                shortcodeList.push(contentItems);
             }
 
           }

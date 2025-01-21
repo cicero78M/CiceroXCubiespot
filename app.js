@@ -66,6 +66,7 @@ import { transferTiktokComments } from './json_data_file/tiktok_data/tiktok_enga
 import { clientDataBackup } from './app/backup/client_data.js';
 import { userDataBackup } from './app/backup/user_data.js';
 import { instaContentBackup } from './app/backup/insta_content.js';
+import { tiktokContentBackup } from './app/backup/tiktok_content.js';
 
 //.env
 const private_key = process.env;
@@ -1425,6 +1426,19 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await instaContentBackup(response[i]).then(
+                                            response => console.log(response)
+                                        );
+                                    }
+                                }
+                            );
+
+                            break;
+
+                        case "backuptiktokcontent":
+                            await clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length; i++){
+                                        await tiktokContentBackupContentBackup(response[i]).then(
                                             response => console.log(response)
                                         );
                                     }
