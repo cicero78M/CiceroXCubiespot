@@ -42,7 +42,7 @@ import { clientRegister } from './app/database/client_register/client_register.j
 import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
 import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
 import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
-import { adminOrder, cubiesOrder, dataTransfer, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
+import { adminOrder, backupData, cubiesOrder, dataTransfer, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
 import { addNewUser } from './app/database/user_profile/addNewUser.js';
 import { editProfile } from './app/database/user_profile/editUserProfile.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
@@ -63,6 +63,7 @@ import { transferInstaContent } from './json_data_file/insta_data/insta_content/
 import { transferInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 import { transferTiktokContent } from './json_data_file/tiktok_data/tiktok_content/transfer_tiktok_content.js';
 import { transferTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/transfer_tiktok_comments.js';
+import { clientDataBackup } from './app/backup/client_data.js';
 
 //.env
 const private_key = process.env;
@@ -155,99 +156,98 @@ client.on('ready', () => {
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    // schedule('15 12,16,19 * * *',  () => {
-    //     console.log("Execute Schedule");
-    //     newRowsData(
-    //         ciceroKey.dbKey.clientDataID, 
-    //         'ClientData_Enc'
-    //     ).then( async clientData =>{
+    schedule('15 12,16,19 * * *',  () => {
+        console.log("Execute Schedule");
+        clientData().then( async clientData =>{
 
-    //         for (let i = 0; i < clientData.length; i++){
+            for (let i = 0; i < clientData.length; i++){
         
-    //             //This Procces Tiktok Report
-    //             if (decrypted(clientData[i].STATUS) === "TRUE" 
-    //             && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
-    //             && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
-    //                 console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
+                //This Procces Tiktok Report
+                if (decrypted(clientData[i].STATUS) === "TRUE" 
+                && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
+                && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                    console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
                     
-    //                 await client.sendMessage(
-    //                     '6281235114745@c.us', 
-    //                     ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNINGDATA`
-    //                 );
+                    await client.sendMessage(
+                        '6281235114745@c.us', 
+                        ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`
+                    );
 
-    //                 await warningReportTiktok(clientData[i]).then(async response => {
+                    await warningReportTiktok(clientData[i]).then(async response => {
                         
-    //                     await client.sendMessage(
-    //                         '6281235114745@c.us', 
-    //                         response.data);
+                        await client.sendMessage(
+                            '6281235114745@c.us', 
+                            response.data);
 
-    //                 }).catch( async response => {
+                    }).catch( async response => {
                         
-    //                     switch (response.code){
-    //                         case 201 : 
-    //                             await client.sendMessage(
-    //                                 '6281235114745@c.us', 
-    //                                 response.data
-    //                             );
-    //                                 break;
+                        switch (response.code){
+                            case 201 : 
+                                await client.sendMessage(
+                                    '6281235114745@c.us', 
+                                    response.data
+                                );
+                                    break;
 
-    //                         case 303 : 
-    //                             await client.sendMessage(
-    //                                 '6281235114745@c.us', 
-    //                                 'Error'
-    //                             );
-    //                                 break;
+                            case 303 : 
+                                await client.sendMessage(
+                                    '6281235114745@c.us', 
+                                    'Error'
+                                );
+                                    break;
 
-    //                         default:
-    //                             break;
-    //                     }
+                            default:
+                                break;
+                        }
 
-    //                 });
-    //             }         
+                    });
+                }         
 
-    //             //This process Insta Report
-    //             if (decrypted(clientData[i].STATUS) === "TRUE" 
-    //             && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-    //             && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                //This process Insta Report
+                if (decrypted(clientData[i].STATUS) === "TRUE" 
+                && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
                     
-    //                 console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
-    //                 await client.sendMessage(
-    //                     '6281235114745@c.us', 
-    //                     `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
-    //                 );
+                    console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
+                    await client.sendMessage(
+                        '6281235114745@c.us', 
+                        `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
+                    );
 
-    //                 await warningReportInsta(clientData[i]).then(async response => {
+                    await warningReportInsta(clientData[i]).then(async response => {
                             
-    //                     await client.sendMessage(
-    //                         '6281235114745@c.us', 
-    //                         response.data
-    //                     );
+                        await client.sendMessage(
+                            '6281235114745@c.us', 
+                            response.data
+                        );
 
-    //                 }).catch(async response => {
+                    }).catch(async response => {
         
-    //                     switch (response.code){
-    //                         case 201 : 
-    //                             await client.sendMessage(
-    //                                 '6281235114745@c.us', 
-    //                                 response.data
-    //                             );
+                        switch (response.code){
+                            case 201 : 
+                                await client.sendMessage(
+                                    '6281235114745@c.us', 
+                                    response.data
+                                );
 
-    //                                 break;
-    //                         case 303 : 
-    //                             await client.sendMessage(
-    //                                 '6281235114745@c.us', 
-    //                                 'Error'
-    //                             );
+                                    break;
+                            
+                            case 303 : 
+                                await client.sendMessage(
+                                    '6281235114745@c.us', 
+                                    'Error'
+                                );
 
-    //                                 break;
-    //                         default:
-    //                             break;
-    //                     }
-    //                 });
-    //             }  
-    //         }
-    //     });
-    // });
+                                    break;
+                    
+                            default:
+                                break;
+                        }
+                    });
+                }  
+            }
+        });
+    });
 });
 
 client.on('message', async (msg) => {
@@ -834,6 +834,7 @@ client.on('message', async (msg) => {
                 } else if (cubiesOrder.includes(splittedMsg[0].toLowerCase())){  
                     switch (splittedMsg[0].toLowerCase()) {
                         case 'cubiehome':
+                           
                             if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
 
                                 if (!splittedMsg[1].includes('/p/') 
@@ -876,7 +877,6 @@ client.on('message', async (msg) => {
                                     Terimakasih.`
                                 );
                             }
-
                             break;
 
                         case 'likes':
@@ -1406,7 +1406,16 @@ client.on('message', async (msg) => {
                             break;
 
                     }
-
+                } else if(backupData.includes(splittedMsg[1].toLowerCase())){
+                    switch (splittedMsg[1].toLowerCase()){
+                        case "backupclientdata":
+                            clientDataBackup().then{
+                                response => console.log(response);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 } else {//Key Order Data Not Exist         
 
                     await clientData().then(

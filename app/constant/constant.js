@@ -71,3 +71,7 @@ export const dataTransfer = [
     "transfertiktokcontent",
     "transfertiktokcomment"
 ];
+
+export const backupData= [
+    "backupclientdata"
+];
