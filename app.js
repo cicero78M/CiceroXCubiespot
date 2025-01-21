@@ -64,6 +64,7 @@ import { transferInstaLikes } from './json_data_file/insta_data/insta_likes/tran
 import { transferTiktokContent } from './json_data_file/tiktok_data/tiktok_content/transfer_tiktok_content.js';
 import { transferTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/transfer_tiktok_comments.js';
 import { clientDataBackup } from './app/backup/client_data.js';
+import { userDataBackup } from './app/backup/user_data.js';
 
 //.env
 const private_key = process.env;
@@ -1410,6 +1411,11 @@ client.on('message', async (msg) => {
                     switch (splittedMsg[1].toLowerCase()){
                         case "backupclientdata":
                             clientDataBackup().then(
+                                response => console.log(response)
+                            );
+                            break;
+                        case "backupuserdata":
+                            userDataBackup().then(
                                 response => console.log(response)
                             );
                             break;

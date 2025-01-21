@@ -73,5 +73,6 @@ export const dataTransfer = [
 ];
 
 export const backupData= [
-    "backupclientdata"
+    "backupclientdata",
+    "backupuserdata"
 ];
