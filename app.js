@@ -1454,6 +1454,8 @@ client.on('message', async (msg) => {
                                 }
                             }
                         }
+                    ).catch (
+                        error => console.error(error)
                     )
                 }
             //if(splittedMsg[1].toLowerCase()......

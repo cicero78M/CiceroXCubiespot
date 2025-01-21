@@ -58,6 +58,7 @@ export async function instaContentBackup(clientValue) {
                 state: true,
                 code: 200
               };
+
               resolve (data);
 
           } else {
@@ -66,8 +67,10 @@ export async function instaContentBackup(clientValue) {
               state: true,
               code: 201
             };
+
             reject (data);
-          }
+          
+        }
 
         } else {
           data = {
