@@ -18,7 +18,10 @@ export async function clientDataBackup() {
                         googleAuth
                     ); //Google Auth
                     await sheetDoc.loadInfo();
-                    const newSheet = await sheetDoc.addSheet({ title: localDate });
+                    const newSheet = await sheetDoc.addSheet({ 
+                        title: localDate, 
+                        headerValues: ['CLIENT_ID','TYPE',	'STATUS','INSTAGRAM','TIKTOK','INSTA_STATE','TIKTOK_STATE','SUPERVISOR','OPERATOR','GROUP',	'SECUID']
+                    });
 
                     await newSheet.addRows(response);
 
