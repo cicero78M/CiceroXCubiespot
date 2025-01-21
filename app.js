@@ -157,7 +157,7 @@ client.on('ready', () => {
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
-    schedule('44 12,16,19 * * *',  () => {
+    schedule('48 12,16,19 * * *',  () => {
         console.log("Execute Schedule");
         clientData().then( async clientData =>{
 
