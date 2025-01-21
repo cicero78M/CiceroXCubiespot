@@ -1421,7 +1421,7 @@ client.on('message', async (msg) => {
                             );
                             break;
                         case "backupinstacontent":
-                            clientData().then(
+                            await clientData().then(
                                 response =>{
                                     for (let i = 0; i < response.length; i++){
                                         instaContentBackup(response[i]).then(
@@ -1429,7 +1429,7 @@ client.on('message', async (msg) => {
                                         );
                                     }
                                 }
-                            )
+                            );
 
                             break;
                         default:
