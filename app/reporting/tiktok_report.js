@@ -73,6 +73,7 @@ export async function newReportTiktok(clientValue) {
 
                     
                     let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+                    console.log(tiktokContentDir);
 
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
@@ -87,7 +88,7 @@ export async function newReportTiktok(clientValue) {
 
 
                         if ( dateNow === localDate) {
-                            
+
                             if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
                                 shortcodeList.push(decrypted(contentItems.SHORTCODE));
