@@ -25,7 +25,7 @@ export async function tiktokContentBackup(clientValue) {
       
                 const clientName = decrypted(clientValue.CLIENT_ID);
 
-                if (decrypted(clientValue.STATUS) === 'TRUE') {
+                if (decrypted(clientValue.STATUS)) {
                                       
                     let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
