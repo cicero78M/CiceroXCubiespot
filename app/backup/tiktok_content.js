@@ -3,6 +3,7 @@ import { decrypted } from '../../json_data_file/crypto.js';
 import { readdirSync, readFileSync } from 'fs';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
+import { error } from 'console';
   
 export async function tiktokContentBackup(clientValue) {
 
@@ -33,8 +34,10 @@ export async function tiktokContentBackup(clientValue) {
 
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
-                        let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
-                        // console.log(contentItems);
+                        JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`)).catch(
+                            async contentItems =>{
+
+                                                        // console.log(contentItems);
 
                         let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                         let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -45,6 +48,14 @@ export async function tiktokContentBackup(clientValue) {
 
                         if ( dateNow === localDate) {
                         }
+
+                            }
+                        ).catch(
+                            error => {
+                                reject (error);
+                            }
+                        )
+
                     }
         
                     if (shortcodeList.length >= 1) {   
