@@ -1,7 +1,7 @@
 import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
-import { mkdirSync, readdirSync, writeFileSync } from "fs";
+import { readdirSync } from "fs";
 
 
 export async function getTiktokPost(clientValue) {
@@ -64,7 +64,7 @@ export async function getTiktokPost(clientValue) {
                             
                             dataObject.TIMESTAMP = encrypted((itemByDay[i].createTime).toString());
                             dataObject.USER_ACCOUNT = encrypted(itemByDay[i].author.uniqueId);
-                            dataObject.SHORTCODE = encrypted(tiktok_content);
+                            dataObject.SHORTCODE = encrypted(itemByDay[i].video.id);
                             dataObject.ID = encrypted(itemByDay[i].id);
                             dataObject.CAPTION = encrypted(itemByDay[i].desc); 
                             dataObject.COMMENT_COUNT = encrypted(((itemByDay[i].statsV2.commentCount).toString()));
@@ -76,15 +76,15 @@ export async function getTiktokPost(clientValue) {
 
                             try {
     
-                                writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktok_content}.json`, JSON.stringify(dataObject));
+                                writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${itemByDay[i].video.id}.json`, JSON.stringify(dataObject));
                             
                             } catch (error) {
                     
                                 mkdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
-                                writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktok_content}.json`, JSON.stringify(dataObject));
+                                writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${itemByDay[i].video.id}.json`, JSON.stringify(dataObject));
                         
                             }   
-
+            
                         }
 
                         let data = {
