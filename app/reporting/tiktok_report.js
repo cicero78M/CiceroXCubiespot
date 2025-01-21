@@ -73,7 +73,6 @@ export async function newReportTiktok(clientValue) {
 
                     
                     let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
-                    console.log(tiktokContentDir);
 
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
