@@ -56,7 +56,7 @@ export async function tiktokContentBackup(clientValue) {
                         await sheetName.addRows(shortcodeList);
             
                         data = {
-                            data: `${clientName} Added Insta Content Data`,
+                            data: `${clientName} Added Tiktok Content Data`,
                             state: true,
                             code: 200
                           };
