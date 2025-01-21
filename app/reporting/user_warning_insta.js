@@ -47,6 +47,8 @@ export async function warningReportInsta(clientValue) {
         
         if (decrypted(clientValue.STATUS)) { 
 
+          console.log("This Status Stage OK")
+
                   await readUser(
                     clientName
                   ).then( 
@@ -69,7 +71,7 @@ export async function warningReportInsta(clientValue) {
                     for (let i = 0; i < instaContentDir.length; i++) {
           
                       let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-                      // console.log(contentItems);
+                      console.log(contentItems);
           
                       let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                       let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -102,6 +104,7 @@ export async function warningReportInsta(clientValue) {
                       for (let i = 0; i < shortcodeList.length; i++) {
           
                         let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
+
                         console.log(userLikesData);
 
           
