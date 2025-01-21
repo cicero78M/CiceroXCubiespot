@@ -93,7 +93,8 @@ export async function warningReportInsta(clientValue) {
                       }
                     }
           
-                    if (shortcodeList.length >= 1) {              
+                    if (shortcodeList.length >= 1) {      
+
                       //Collect Likes Data
                       for (let i = 0; i < shortcodeList.length; i++) {
           
@@ -107,7 +108,8 @@ export async function warningReportInsta(clientValue) {
                         }
           
                       } 
-          
+                                console.log(userLikesData);
+
                       for (let i = 0; i < userRows.length; i++) {     
           
                         if (userRows[i].INSTA === undefined
