@@ -1,3 +1,4 @@
+import { GoogleSpreadsheet } from "google-spreadsheet";
 import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { googleAuth } from "../database/new_query/sheet_query.js";
 
