@@ -1,4 +1,4 @@
-import {  newRowsData } from "../database/new_query/sheet_query";
+import {  newRowsData } from "../database/new_query/sheet_query.js";
 
 export async function instaContentBackup() {
     return new Promise(async (resolve, reject) => {
