@@ -67,7 +67,6 @@ import { clientDataBackup } from './app/backup/client_data.js';
 import { userDataBackup } from './app/backup/user_data.js';
 import { instaContentBackup } from './app/backup/insta_content.js';
 import { tiktokContentBackup } from './app/backup/tiktok_content.js';
-import { error } from 'console';
 
 //.env
 const private_key = process.env;
@@ -1447,6 +1446,8 @@ client.on('message', async (msg) => {
                                     for (let i = 0; i < response.length; i++){
                                         await tiktokContentBackup(response[i]).then(
                                             response => console.log(response)
+                                        ).catch(
+                                            error => console.error(error)
                                         );
                                     }
                                 }
