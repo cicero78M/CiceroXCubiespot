@@ -47,8 +47,6 @@ export async function warningReportInsta(clientValue) {
         
         if (decrypted(clientValue.STATUS)) { 
 
-          console.log("This Status Stage OK")
-
                   await readUser(
                     clientName
                   ).then( 
@@ -94,9 +92,6 @@ export async function warningReportInsta(clientValue) {
                         }
                       }
                     }
-
-                    console.log(shortcodeList);
-
           
                     if (shortcodeList.length >= 1) {      
 
@@ -104,9 +99,6 @@ export async function warningReportInsta(clientValue) {
                       for (let i = 0; i < shortcodeList.length; i++) {
           
                         let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
-
-                        console.log(userLikesData);
-
           
                         for (let ii = 0; ii < likesItems.length; ii++) {
           
