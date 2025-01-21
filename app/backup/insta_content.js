@@ -21,7 +21,7 @@ export async function instaContentBackup(clientValue) {
     ) => {
       try {
                 
-        if (decrypted(clientValue.STATUS)) {   
+        if (decrypted(clientValue.INSTA_STATE)) {   
           
           let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 

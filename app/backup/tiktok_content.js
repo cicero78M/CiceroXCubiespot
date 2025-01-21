@@ -6,8 +6,6 @@ import { googleAuth } from '../database/new_query/sheet_query.js';
   
 export async function tiktokContentBackup(clientValue) {
 
-    console.log(decrypted(clientValue.STATUS));
-
     return new Promise(
         async (resolve, reject) => {
         
@@ -27,41 +25,35 @@ export async function tiktokContentBackup(clientValue) {
       
                 const clientName = decrypted(clientValue.CLIENT_ID);
 
-                if (decrypted(clientValue.STATUS)) {
-                    
-                    if (clientName !== "PONOROGO"){
+                if (decrypted(clientValue.TIKTOK_STATE)) {
+                                      
+                    let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
-                        let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+                    for (let i = 0; i < tiktokContentDir.length; i++) {
 
-                        for (let i = 0; i < tiktokContentDir.length; i++) {
-    
-                            JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`)).catch(
-                                async contentItems =>{
-    
-                                                            // console.log(contentItems);
-    
-                            let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
-                            let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-    
-                            // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-                            // console.log(localDate);
-                            shortcodeList.push(contentItems);
-    
-                            if ( dateNow === localDate) {
-                            }
-    
-                                }
-                            ).catch(
-                                error => {
-                                    reject (error);
-                                }
-                            )
-    
+                        JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`)).catch(
+                            async contentItems =>{
+
+                                                        // console.log(contentItems);
+
+                        let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+                        let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+
+                        // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+                        // console.log(localDate);
+                        shortcodeList.push(contentItems);
+
+                        if ( dateNow === localDate) {
                         }
 
-                        
-                    }                                      
+                            }
+                        ).catch(
+                            error => {
+                                reject (error);
+                            }
+                        )
 
+                    }
         
                     if (shortcodeList.length >= 1) {   
                         const sheetDoc = new GoogleSpreadsheet(
