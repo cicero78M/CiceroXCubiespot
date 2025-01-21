@@ -34,7 +34,7 @@ export async function tiktokContentBackup(clientValue) {
     
                             let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
     
-                            // console.log(contentItems);
+                                                            // console.log(contentItems);
     
                             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                             let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -46,12 +46,12 @@ export async function tiktokContentBackup(clientValue) {
                             if ( dateNow === localDate) {
                             }
     
-                        }
+                             
     
+                        }
+
+
                     }
-
-
-                }
                                       
 
         
