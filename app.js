@@ -1450,9 +1450,7 @@ client.on('message', async (msg) => {
                                         );
                                     }
                                 }
-                            ).catch (
-                                error => console.error(error)
-                            );
+                            )
 
                             break;
                         default:
