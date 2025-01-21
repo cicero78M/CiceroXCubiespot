@@ -1438,7 +1438,7 @@ client.on('message', async (msg) => {
                             await clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
-                                        await tiktokContentBackupContentBackup(response[i]).then(
+                                        await tiktokContentBackup(response[i]).then(
                                             response => console.log(response)
                                         );
                                     }
