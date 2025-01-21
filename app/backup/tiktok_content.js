@@ -6,6 +6,8 @@ import { googleAuth } from '../database/new_query/sheet_query.js';
   
 export async function tiktokContentBackup(clientValue) {
 
+    console.log(decrypted(clientValue.STATUS));
+
     return new Promise(
         async (resolve, reject) => {
         
