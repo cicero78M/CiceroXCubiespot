@@ -1422,9 +1422,9 @@ client.on('message', async (msg) => {
                             break;
                         case "backupinstacontent":
                             await clientData().then(
-                                response =>{
+                                async response =>{
                                     for (let i = 0; i < response.length; i++){
-                                        instaContentBackup(response[i]).then(
+                                        await instaContentBackup(response[i]).then(
                                             response => console.log(response)
                                         );
                                     }
