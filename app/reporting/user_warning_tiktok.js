@@ -35,7 +35,7 @@ export async function warningReportTiktok(clientValue) {
                 const clientName = decrypted(clientValue.CLIENT_ID);
                 const tiktokAccount = decrypted(clientValue.TIKTOK);
 
-                if (decrypted(clientValue.STATUS) === 'TRUE') {
+                if (decrypted(clientValue.STATUS)) {
                     
                     await readUser(
                         clientName
