@@ -74,5 +74,7 @@ export const dataTransfer = [
 
 export const backupData= [
     "backupclientdata",
-    "backupuserdata"
+    "backupuserdata",
+    "backupinstacontent"
+
 ];

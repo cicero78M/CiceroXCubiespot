@@ -4,7 +4,6 @@ import { googleAuth } from "../database/new_query/sheet_query.js";
 import { decrypted } from "../../json_data_file/crypto.js";
 import { readdirSync, readFileSync } from "fs";
 
-
 export async function userDataBackup() {    
     
   //Date Time
@@ -43,9 +42,7 @@ export async function userDataBackup() {
     
                         console.log(`${decrypted(response[i].CLIENT_ID)}_${localDate} Backed Up`);    
 
-                    }
-
-        
+                    }       
                 }
             );
 
