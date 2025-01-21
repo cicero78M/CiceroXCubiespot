@@ -35,9 +35,10 @@ export async function instaContentBackup(clientValue) {
             // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
             // console.log(localDate);
 
+            shortcodeList.push(contentItems);
+
             if ( dateNow === localDate) {
 
-                shortcodeList.push(contentItems);
             }
 
           }
@@ -50,7 +51,7 @@ export async function instaContentBackup(clientValue) {
             ); //Google Auth
 
             await sheetDoc.loadInfo();
-            const sheetName = sheetDoc.sheetsByTitle[clientName];
+            const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
             await sheetName.addRows(shortcodeList);
 
             data = {
