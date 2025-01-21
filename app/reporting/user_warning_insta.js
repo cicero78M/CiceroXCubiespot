@@ -9,7 +9,7 @@ export async function warningReportInsta(clientValue) {
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
       
-  const clientName = decrypted(clientValue.get('CLIENT_ID'));
+  const clientName = decrypted(clientValue.CLIENT_ID);
 
   let data;
 
