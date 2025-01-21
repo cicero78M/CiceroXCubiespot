@@ -92,6 +92,9 @@ export async function warningReportInsta(clientValue) {
                         }
                       }
                     }
+
+                    console.log(shortcodeList);
+
           
                     if (shortcodeList.length >= 1) {      
 
@@ -99,6 +102,8 @@ export async function warningReportInsta(clientValue) {
                       for (let i = 0; i < shortcodeList.length; i++) {
           
                         let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
+                        console.log(userLikesData);
+
           
                         for (let ii = 0; ii < likesItems.length; ii++) {
           
@@ -108,7 +113,6 @@ export async function warningReportInsta(clientValue) {
                         }
           
                       } 
-                                console.log(userLikesData);
 
                       for (let i = 0; i < userRows.length; i++) {     
           
