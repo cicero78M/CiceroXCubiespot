@@ -6,7 +6,7 @@ export async function instaContentBackup() {
             clientData().then(
                 async response =>{ 
 
-                    for (let i = 0; i < response.length; i++){\
+                    for (let i = 0; i < response.length; i++){
 
                         newRowsData(
                             process.env.instaOfficialID, 
