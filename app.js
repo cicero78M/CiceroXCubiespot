@@ -1409,9 +1409,9 @@ client.on('message', async (msg) => {
                 } else if(backupData.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
                         case "backupclientdata":
-                            clientDataBackup().then{
-                                response => console.log(response);
-                            }
+                            clientDataBackup().then(
+                                response => console.log(response)
+                            );
                             break;
                         default:
                             break;
