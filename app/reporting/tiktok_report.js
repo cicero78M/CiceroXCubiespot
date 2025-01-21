@@ -76,7 +76,7 @@ export async function newReportTiktok(clientValue) {
 
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
-                        let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
+                        let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}.json`));
                         // console.log(contentItems);
 
                         let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
