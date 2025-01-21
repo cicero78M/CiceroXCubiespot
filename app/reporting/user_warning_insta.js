@@ -134,6 +134,8 @@ export async function warningReportInsta(clientValue) {
                
                       }
 
+                      console.log(notLikesList);
+
                       for (let i = 0; i < notLikesList.length; i++){
                         if(notLikesList[i].WHATSAPP !== ""){
                           
