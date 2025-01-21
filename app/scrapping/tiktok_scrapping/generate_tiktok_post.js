@@ -64,7 +64,7 @@ export async function getTiktokPost(clientValue) {
                             
                             dataObject.TIMESTAMP = encrypted((itemByDay[i].createTime).toString());
                             dataObject.USER_ACCOUNT = encrypted(itemByDay[i].author.uniqueId);
-                            dataObject.SHORTCODE = encrypted(itemByDay[i].video.id);
+                            dataObject.SHORTCODE = encrypted(tiktok_content);
                             dataObject.ID = encrypted(itemByDay[i].id);
                             dataObject.CAPTION = encrypted(itemByDay[i].desc); 
                             dataObject.COMMENT_COUNT = encrypted(((itemByDay[i].statsV2.commentCount).toString()));
@@ -73,6 +73,19 @@ export async function getTiktokPost(clientValue) {
                             dataObject.COLLECT_COUNT = encrypted((itemByDay[i].statsV2.collectCount).toString());
                             dataObject.SHARE_COUNT = encrypted((itemByDay[i].statsV2.shareCount).toString());
                             dataObject.REPOST_COUNT = encrypted((itemByDay[i].statsV2.repostCount).toString());
+
+                            try {
+    
+                                writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktok_content}.json`, JSON.stringify(dataObject));
+                            
+                            } catch (error) {
+                    
+                                mkdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+                                writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktok_content}.json`, JSON.stringify(dataObject));
+                        
+                            }   
+
+
             
                         }
 
