@@ -3,7 +3,9 @@ import { ciceroKey, googleAuth } from "../../../../app/database/new_query/sheet_
 import { encrypted } from "../../../crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
 
-export async function transferTiktokComments(clientName) {
+export async function restoreTiktokComments(clientName) {
+
+  console.log("Execute");
 
     let tiktokCommentsUsernameDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokCommentUsernameID, googleAuth); //Google Authentication for InstaOfficial DB    
     await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
@@ -21,15 +23,14 @@ export async function transferTiktokComments(clientName) {
         if (fromRows[ii] !== null || fromRows[ii] !== undefined || fromRows[ii] !== ""){
           data.push(encrypted(fromRows[ii]));
         }
-    
-  
+
       }
 
       console.log(data);
                 
       try {
       
-          writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+        writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
       
       } catch (error) {
 
@@ -37,6 +38,9 @@ export async function transferTiktokComments(clientName) {
         writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
       
       }  
+
+      console.log("Done")
+    
     }
 }
 
