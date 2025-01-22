@@ -56,7 +56,6 @@ import { restoreClientData } from './json_data_file/client_data/restore_client_d
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
-import { encryptClientData } from './json_data_file/client_data/create_encrypted_data_file.js';
 import { decrypted } from './json_data_file/crypto.js';
 import { readUser } from './json_data_file/user_data/read_data_from_dir.js';
 import { transferInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
@@ -1299,7 +1298,7 @@ client.on('message', async (msg) => {
                         case "restoreclientdata":
                             restoreClientData();
                             break;
-                        case "user2json":
+                        case "restoreuserdata":
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){

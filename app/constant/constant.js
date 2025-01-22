@@ -62,7 +62,7 @@ export const generateSocmed = [
 
 export const dataTransfer = [
     "restoreclientdata",
-    "user2json",
+    "restoreuserdata",
     "readuserdir",
     "encryptclientdata",
     "transferinstacontent",
