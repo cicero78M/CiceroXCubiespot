@@ -56,14 +56,9 @@ export async function warningReportTiktok(clientValue) {
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
                         let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
-                        // console.log(contentItems);
 
                         let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                         let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-
-                        // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-                        // console.log(localDate);
-
 
                         if ( dateNow === localDate) {
 
@@ -100,7 +95,7 @@ export async function warningReportTiktok(clientValue) {
                 
                                 console.log("Null Data Exist");
                                 UserNotLikes.push(userRows[i].ID_KEY);
-                                notLikesList.push(userRows[i]);
+                                notCommentList.push(userRows[i]);
                 
                             } else {
                                 if (!userCommentData.includes((userRows[i].TIKTOK).replace('@',''))) {
