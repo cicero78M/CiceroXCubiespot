@@ -167,7 +167,7 @@ client.on('ready', () => {
                 //This Procces Tiktok Report
                 if (decrypted(clientData[i].STATUS) === "TRUE" 
                 && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
-                && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                     console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
                     
                     await client.sendMessage(
@@ -208,7 +208,7 @@ client.on('ready', () => {
                 //This process Insta Report
                 if (decrypted(clientData[i].STATUS) === "TRUE" 
                 && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                     
                     console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
                     await client.sendMessage(
@@ -444,7 +444,7 @@ client.on('message', async (msg) => {
                                     for (let i = 0; i < clientData.length; i++){
                                         if (decrypted(clientData[i].STATUS) === "TRUE" 
                                         && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {         
+                                        && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {         
                                     
                                             console.log(time+" "+decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
                                         
@@ -480,7 +480,7 @@ client.on('message', async (msg) => {
                                     //This Procces Tiktok Report
                                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
-                                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                         console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
                                         await client.sendMessage(
                                             '6281235114745@c.us', 
@@ -492,7 +492,7 @@ client.on('message', async (msg) => {
                                     //This process Insta Report
                                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                                     && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                         
                                         console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
                                         await client.sendMessage(
@@ -889,7 +889,7 @@ client.on('message', async (msg) => {
                                     for (let i = 0; i < response.length; i++){
                                         if (decrypted(response[i].STATUS) === "TRUE" 
                                         && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
-                                        && decrypted(response[i].TYPE) === ciceroKey.ciceroClientType) {
+                                        && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                             
                                             console.log(time+" "+decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
                                             client.sendMessage(
@@ -953,7 +953,7 @@ client.on('message', async (msg) => {
                                     for (let i = 0; i < response.length; i++){
                                         if (decrypted(response[i].STATUS) === "TRUE" 
                                         && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
-                                        && decrypted(response[i].TYPE) === ciceroKey.ciceroClientType) {
+                                        && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                             console.log(time+" "+decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
                                             client.sendMessage(
                                                 '6281235114745@c.us', 
@@ -1004,7 +1004,7 @@ client.on('message', async (msg) => {
 
                                         if (decrypted(clientData[i].STATUS) === "TRUE" 
                                         && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                                        && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                         
                                             console.log(time+" "+decrypted(clientData[i].CLIENT_ID)+' START LOAD INSTA DATA');
                                             
@@ -1125,7 +1125,7 @@ client.on('message', async (msg) => {
                                     for (let i = 0; i < response.length; i++){
                                         if (decrypted(response[i].STATUS) === "TRUE" 
                                         && decrypted(response[i].INSTA_STATE) === "TRUE" 
-                                        && decrypted(response[i].TYPE) === ciceroKey.ciceroClientType) {
+                                        && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                             console.log(time+" "+decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA');
                                             client.sendMessage(
                                                 '6281235114745@c.us', 
@@ -1177,7 +1177,7 @@ client.on('message', async (msg) => {
                                     for (let i = 0; i < clientData.length; i++){
                                         if (decrypted(clientData[i].STATUS) === "TRUE" 
                                         && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                                        && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                             await instaClientInfo(
                                                 decrypted(clientData[i].CLIENT_ID), 
                                                 decrypted(clientData[i].INSTAGRAM)
@@ -1214,7 +1214,7 @@ client.on('message', async (msg) => {
                                         let pages = "";
                                         if (decrypted(clientData[i].STATUS) === "TRUE" 
                                         && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                        && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                                        && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                             await instaClientInfo(
                                                 decrypted(clientData[i].CLIENT_ID), 
                                                 decrypted(clientData[i].INSTAGRAM)

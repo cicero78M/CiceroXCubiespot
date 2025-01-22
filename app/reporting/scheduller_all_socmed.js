@@ -29,7 +29,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     //This Procces Tiktok Report
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
-                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                         console.log(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
                         await client.sendMessage(
@@ -142,7 +142,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     //This process Insta Report
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                    && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
+                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                         console.log(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
             
                         await client.sendMessage(
