@@ -39,7 +39,7 @@ export async function restoreTiktokComments(clientName) {
       
       }  
 
-      console.log("Done")
+      console.log("Done");
     
     }
 }

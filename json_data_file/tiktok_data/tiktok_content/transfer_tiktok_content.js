@@ -42,7 +42,7 @@ export async function restoreTiktokContent(clientName) {
             
         }
 
-        console.log("Done";)
+        console.log("Done");
     }
 }
 
