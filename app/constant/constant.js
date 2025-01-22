@@ -5,7 +5,6 @@ export const adminOrder = [
     'exception', 
     'savecontact',
     'secuid', 
-    'register',
     'sendwarning'
 ];
 

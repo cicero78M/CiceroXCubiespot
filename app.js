@@ -34,7 +34,6 @@ import { newReportTiktok } from './app/reporting/tiktok_report.js';
 import { newReportInsta } from './app/reporting/insta_report.js';
 import { getInstaPost } from './app/scrapping/insta_scrapping/generate_insta_post.js';
 import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_likes.js';
-import { clientRegister } from './app/database/client_register/client_register.js';
 import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
 import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
 import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
@@ -52,7 +51,7 @@ import { restoreUserData } from './json_data_file/user_data/restore_user_data.js
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
 import { decrypted } from './json_data_file/crypto.js';
 import { restoreInstaContent } from './json_data_file/insta_data/insta_content/restore_insta_content_data.js';
-import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/restore_insta_likes_data.js';
+import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 import { restoreTiktokContent } from './json_data_file/tiktok_data/tiktok_content/restore_tiktok_content.js';
 import { restoreTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/restore_tiktok_comments.js';
 import { clientDataBackup } from './app/backup/client_data.js';
@@ -310,7 +309,6 @@ client.on('message', async (msg) => {
                 
                 //Admin Order Data         
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){ 
-
                     switch(splittedMsg[1].toLowerCase()){
                         case 'pushuserres': {
                             //Res Request
@@ -397,19 +395,7 @@ client.on('message', async (msg) => {
                             }
 
                         }
-                                break;
-                        case 'register': {
-                            
-                            await clientRegister(//this execute function, read the function
-                                splittedMsg[0].toUpperCase(), 
-                                splittedMsg[2].toUpperCase()
-                            ).then(async data => 
-                                await sendMessage(msg.from, data, "REGISTER CLIENT ERROR")
-                            ).catch(async error => 
-                                await sendMessage(msg.from, error, "REGISTER CLIENT ERROR")
-                            );
-                        }
-                            break;
+                                break;                  
                         case 'exception': {//Exception
                             await editProfile(
                                 splittedMsg[0].toUpperCase(),
@@ -769,7 +755,6 @@ client.on('message', async (msg) => {
                                         "Error Edit Nama"
                                     );
                                 } 
-                                
                             }
                         }
                     });
