@@ -36,7 +36,7 @@ export async function instaLikesBackup(clientValue) {
                   shortcodeList.push(decrypted(instaContentDir[i].SHORTCODE));
                 }
 
-                console.log(contentItems);
+                console.log(shortcodeList);
 
             }
 
