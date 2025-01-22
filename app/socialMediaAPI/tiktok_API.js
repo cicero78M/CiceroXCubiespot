@@ -86,7 +86,6 @@ export async function tiktokCommentAPI(key, cursors) {
     try {
 
       let response = await request(options);
-      console.log(response);
 
       let data = {
         data: response.data,

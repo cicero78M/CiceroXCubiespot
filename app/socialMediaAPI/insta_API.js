@@ -52,8 +52,9 @@ export async function instaFollowersAPI(key,pagination) {
                 code: 200,
                 state: true
             };
-            console.log(data);
+
             resolve (data);
+
         } catch (error) {
 
             console.error (error);
