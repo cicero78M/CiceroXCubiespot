@@ -31,8 +31,9 @@ export async function instaLikesBackup(clientValue) {
 
                 let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                 let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+                shortcodeList.push(decrypted(contentItems.SHORTCODE));
+
                 if ( dateNow === localDate) {
-                  shortcodeList.push(decrypted(contentItems.SHORTCODE));
                 }
             }
 
@@ -56,7 +57,7 @@ export async function instaLikesBackup(clientValue) {
               await sheetDoc.loadInfo();
               const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
               await sheetName.addRow(likeItem);
-              
+
               }, 1000);
 
               } catch (error) {

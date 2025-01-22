@@ -27,19 +27,18 @@ export async function tiktokCommentsBackup(clientValue) {
 
                 let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                 let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-                
+                shortcodeList.push(decrypted(contentItems.SHORTCODE));
+
                 if ( dateNow === localDate) {
-                  shortcodeList.push(decrypted(contentItems.SHORTCODE));
                 }
             }
-          let commentList =[];
           if (shortcodeList.length >= 1) {  
         
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
 
               let commentItems =[];
-              
+
               commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
               commentItems.unshift(encrypted(shortcodeList[i]));
 
