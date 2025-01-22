@@ -1302,7 +1302,7 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferUserData(response[i].CLIENT_ID)
+                                        transferUserData(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);
