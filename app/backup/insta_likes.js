@@ -37,15 +37,13 @@ export async function instaLikesBackup(clientValue) {
                 }
             }
 
-            console.log(shortcodeList);
 
-
-            // for (let i = 0; i < shortcodeList.length; i++) {
-            //     let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}`));
-            //     console.log(likeItem);
-            // }
-
-        //   if (shortcodeList.length >= 1) {      
+        //   if (shortcodeList.length >= 1) {  
+        
+                for (let i = 0; i < shortcodeList.length; i++) {
+                  let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
+                  console.log(likeItem);
+                }
             
         //     const sheetDoc = new GoogleSpreadsheet(
         //         process.env.instaOfficialID, 
