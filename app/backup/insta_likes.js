@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'fs';
 import { decrypted, encrypted } from '../../json_data_file/crypto.js';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
+import { timeout } from 'cron';
 
 export async function instaLikesBackup(clientValue) {
 
@@ -35,7 +36,6 @@ export async function instaLikesBackup(clientValue) {
                 }
             }
 
-            let itemList = [];
 
           if (shortcodeList.length >= 1) {  
         
@@ -45,8 +45,17 @@ export async function instaLikesBackup(clientValue) {
               let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
               likeItem.unshift(encrypted(shortcodeList[i]));
               console.log(likeItem);
-              itemList.push(likeItem);
 
+              setTimeout(async () => {
+                const sheetDoc = new GoogleSpreadsheet(
+                  process.env.instaLikesUsernameID, 
+                  googleAuth
+              ); //Google Auth
+  
+              await sheetDoc.loadInfo();
+              const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
+              await sheetName.addRow(likeItem);
+              }, 1000);
 
               } catch (error) {
                 // console.log('No Data');
@@ -54,15 +63,6 @@ export async function instaLikesBackup(clientValue) {
 
             }
             
-            const sheetDoc = new GoogleSpreadsheet(
-                process.env.instaLikesUsernameID, 
-                googleAuth
-            ); //Google Auth
-
-            await sheetDoc.loadInfo();
-            const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
-            await sheetName.addRows(itemList);
-
             data = {
               data: `${clientName} Added Insta Content Data`,
               state: true,
