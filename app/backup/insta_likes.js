@@ -23,19 +23,21 @@ export async function instaLikesBackup(clientValue) {
                 
         if (decrypted(clientValue.INSTA_STATE)) {   
             
-            let instaContentDir = readdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+            let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 
             for (let i = 0; i < instaContentDir.length; i++) {
 
-                let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`));
-                console.log(contentItems);
+                let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
 
-                // let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
-                // let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+                let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+                let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
-                // if ( dateNow === localDate) {
-                //     shortcodeList.push(instaContentDir[i]);
-                // }
+                if ( dateNow === localDate) {
+                  shortcodeList.push(decrypted(instaContentDir[i].SHORTCODE));
+                }
+
+                console.log(shortcodeList);
+
             }
 
             // for (let i = 0; i < shortcodeList.length; i++) {
