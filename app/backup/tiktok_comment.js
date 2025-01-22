@@ -43,7 +43,7 @@ export async function tiktokCommentsBackup(clientValue) {
               try {
 
                 
-              let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+              let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
 
               commentItems.unshift(encrypted(shortcodeList[i]));
               commentList.push(commentItems);
