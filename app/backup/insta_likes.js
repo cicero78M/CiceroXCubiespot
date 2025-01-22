@@ -32,7 +32,6 @@ export async function instaLikesBackup(clientValue) {
                 let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
                 if ( dateNow === localDate) {
                   shortcodeList.push(decrypted(contentItems.SHORTCODE));
-
                 }
             }
 
@@ -45,9 +44,12 @@ export async function instaLikesBackup(clientValue) {
                 
               let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
               likeItem.unshift(encrypted(shortcodeList[i]));
+              console.log(likeItem);
               itemList.push(likeItem);
+
+
               } catch (error) {
-                console.log('No Data');
+                // console.log('No Data');
               }
 
             }
