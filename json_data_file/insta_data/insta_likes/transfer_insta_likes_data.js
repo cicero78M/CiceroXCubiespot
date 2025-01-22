@@ -3,7 +3,9 @@ import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_que
 import { encrypted } from "../../crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
 
-export async function transferInstaLikes(clientName) {
+export async function restoreInstaLikes(clientName) {
+
+  console.log("Execute");
 
     let instaLikesDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for InstaOfficial DB    
     await instaLikesDoc.loadInfo(); // loads document properties and worksheets
@@ -24,11 +26,17 @@ export async function transferInstaLikes(clientName) {
         }
                 
         try {
+
           writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+        
         } catch (error) {
+        
           mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
           writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
-        }    
+        
+        }
+        
+        console.log("Done")
       }
     }
 }
