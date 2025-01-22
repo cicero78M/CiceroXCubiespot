@@ -41,9 +41,14 @@ export async function instaLikesBackup(clientValue) {
           if (shortcodeList.length >= 1) {  
         
             for (let i = 0; i < shortcodeList.length; i++) {
+              try {
+                
               let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
               likeItem.unshift(encrypted(shortcodeList[i]));
               itemList.push(likeItem);
+              } catch (error) {
+                console.log('No Data');
+              }
 
             }
             
