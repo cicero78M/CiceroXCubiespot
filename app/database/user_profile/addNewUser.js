@@ -45,7 +45,7 @@ return new Promise(async (resolve, reject) => {
         //Get Target Sheet Documents by Title
         let userData = new Object();
 
-        userData.ID_KEY = encrypted(idKey);
+        userData.ID_KEY = encrypted(parseInt(idKey));
         userData.NAMA = encrypted(name);
         userData.TITLE = encrypted(title);
         userData.DIVISI = encrypted(divisi);
@@ -62,7 +62,8 @@ return new Promise(async (resolve, reject) => {
             
         let responseMyData = await myData(
           clientName, 
-          idKey
+          parseInt(idKey)
+
         );
           
       resolve (responseMyData);
