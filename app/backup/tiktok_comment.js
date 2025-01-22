@@ -38,8 +38,17 @@ export async function tiktokCommentsBackup(clientValue) {
           if (shortcodeList.length >= 1) {  
         
             for (let i = 0; i < shortcodeList.length; i++) {
+              try {
+
+                
               let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
               commentItems.unshift(encrypted(shortcodeList[i]));
+                
+              } catch (error) {
+
+                console.log("No Data");
+                
+              }
             }
             
             const sheetDoc = new GoogleSpreadsheet(
