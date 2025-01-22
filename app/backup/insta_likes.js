@@ -29,16 +29,17 @@ export async function instaLikesBackup(clientValue) {
 
                 let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
 
-                let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
-                let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+                console.log(contentItems);
 
-                if ( dateNow === localDate) {
-                  shortcodeList.push(decrypted(instaContentDir[i].SHORTCODE));
-                }
 
-                console.log(shortcodeList);
+                // let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+                // let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
+                // if ( dateNow === localDate) {
+                //   shortcodeList.push(decrypted(instaContentDir[i].SHORTCODE));
+                // }
             }
+
 
             // for (let i = 0; i < shortcodeList.length; i++) {
             //     let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}`));
