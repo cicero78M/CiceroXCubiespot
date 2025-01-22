@@ -144,7 +144,7 @@ client.on('ready', () => {
         client.sendMessage('6281235114745@c.us', ciceroKey.waSession+' <<<System Alive>>>');
     });
 
-    // Reload Tiktok every hours until 22
+    // Scrapping Socmed every hours until 21
     schedule('30 6-20 * * *',  () => {
         console.log("Execute Schedule");
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
@@ -155,6 +155,7 @@ client.on('ready', () => {
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
+    //User Warning Likes Comments Insta & Tiktok
     schedule('15 12,16,19 * * *',  () => {
         console.log("Execute Schedule");
         clientData().then( async clientData =>{
@@ -355,7 +356,6 @@ client.on('message', async (msg) => {
                             }
                         }
                                 break;
-
                         case 'pushusercom': {
 
                             //Com Request
@@ -400,7 +400,6 @@ client.on('message', async (msg) => {
 
                         }
                                 break;
-   
                         case 'register': {
                             
                             await clientRegister(//this execute function, read the function
@@ -413,7 +412,6 @@ client.on('message', async (msg) => {
                             );
                         }
                             break;
-
                         case 'exception': {
                             await editProfile(
                                 splittedMsg[0].toUpperCase(),
@@ -429,7 +427,6 @@ client.on('message', async (msg) => {
 
                         }
                             break;
-                        
                         case 'secuid': {
                             //Generate All Socmed
                             await client.sendMessage(
@@ -465,13 +462,11 @@ client.on('message', async (msg) => {
 
                         }
                             break;
-                        
                         case 'savecontact': {
                             let response = await saveContacts();
                             console.log(response);
                         }
                             break;
-                            
                         default : {
                             //Execute Send Warning
                             console.log("Execute Schedule");
@@ -539,7 +534,6 @@ client.on('message', async (msg) => {
                                         );
 
                                         break;
-    
                                     case "deleteuser":
                                         //clientName#deleteuser#id_key/NRP#newdata
                                         responseData = await editProfile(
@@ -556,7 +550,6 @@ client.on('message', async (msg) => {
                                             "Error Delete User Data"
                                         );
                                         break;
-    
                                     case "instacheck":
                                         //ClientName#instacheck
                                         responseData = await usernameAbsensi(
@@ -570,7 +563,6 @@ client.on('message', async (msg) => {
                                             "Error on Insta Check Data"
                                         );
                                         break;
-    
                                     case "tiktokcheck":
                                         //ClientName#tiktokcheck
                                         responseData = await usernameAbsensi(
@@ -584,7 +576,6 @@ client.on('message', async (msg) => {
                                             "Error on Tiktok Check Data"
                                         );
                                         break;
-    
                                     default:
                                         break;
                                 }
@@ -800,7 +791,6 @@ client.on('message', async (msg) => {
                                             }, 1000);
                                             client.sendMessage(msg.from, responseData.data);
                                             break;
-
                                         case 'divisilist':                        
                                             responseData = await propertiesView(
                                                 splittedMsg[0].toUpperCase(), 
@@ -812,7 +802,6 @@ client.on('message', async (msg) => {
                                                 responseData.data
                                             );  
                                             break;
-
                                         case 'titlelist':    
                                             responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
                                             setTimeout(() => {
@@ -820,7 +809,6 @@ client.on('message', async (msg) => {
                                             }, 1000);
                                             client.sendMessage(msg.from, responseData.data); 
                                             break;
-
                                         default:
                                             break;
                                     }
@@ -878,10 +866,8 @@ client.on('message', async (msg) => {
                             break;
                         case 'likes':
                             break;
-
                         case 'comment':
                             break;
-
                         default:
                             break;                    
                     }
@@ -1309,7 +1295,6 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
-                        case "readuserdir":
                         case "restoreinstacontent":
                             clientData().then(
                                 async response =>{
@@ -1376,7 +1361,6 @@ client.on('message', async (msg) => {
                             break;
                         default:
                             break;
-
                     }
                 } else if(dataBackup.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){

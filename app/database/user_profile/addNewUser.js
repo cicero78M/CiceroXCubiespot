@@ -58,7 +58,7 @@ return new Promise(async (resolve, reject) => {
 
         writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
 
-        resolve (`${parseInt(idKey)} JSON Data Successfully Added.`);
+        console.log(`${parseInt(idKey)} JSON Data Successfully Added.`);
             
         let responseMyData = await myData(
           clientName, 
