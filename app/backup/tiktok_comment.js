@@ -38,12 +38,23 @@ export async function tiktokCommentsBackup(clientValue) {
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
 
-                
-              let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
-
+              let commentItems =[];
+              
+              commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
               commentItems.unshift(encrypted(shortcodeList[i]));
-              commentList.push(commentItems);
+
+              setTimeout(async () => {
+                const sheetDoc = new GoogleSpreadsheet(
+                  process.env.tiktokCommentUsernameID, 
+                  googleAuth
+                ); //Google Auth
+    
+                await sheetDoc.loadInfo();
                 
+                const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
+                await sheetName.addRow(commentItems);
+              }, 1000);
+             
               } catch (error) {
 
                 console.log("No Data");
@@ -51,16 +62,6 @@ export async function tiktokCommentsBackup(clientValue) {
               }
             }
             
-            const sheetDoc = new GoogleSpreadsheet(
-                process.env.tiktokCommentUsernameID, 
-                googleAuth
-            ); //Google Auth
-
-            await sheetDoc.loadInfo();
-            
-            const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
-            await sheetName.addRows(commentList);
-
             data = {
               data: `${clientName} Added Tiktok Content Data`,
               state: true,

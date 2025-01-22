@@ -41,8 +41,9 @@ export async function instaLikesBackup(clientValue) {
         
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
+              let likeItem =[]
                 
-              let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
+              likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
               likeItem.unshift(encrypted(shortcodeList[i]));
               console.log(likeItem);
 
@@ -55,6 +56,7 @@ export async function instaLikesBackup(clientValue) {
               await sheetDoc.loadInfo();
               const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
               await sheetName.addRow(likeItem);
+              
               }, 1000);
 
               } catch (error) {
