@@ -56,7 +56,7 @@ import { restoreUserData } from './json_data_file/user_data/restore_user_data.js
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
 import { decrypted } from './json_data_file/crypto.js';
 import { restoreInstaContent } from './json_data_file/insta_data/insta_content/restore_insta_content_data.js';
-import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
+import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/restore_insta_likes_data.js';
 import { restoreTiktokContent } from './json_data_file/tiktok_data/tiktok_content/restore_tiktok_content.js';
 import { restoreTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/restore_tiktok_comments.js';
 import { clientDataBackup } from './app/backup/client_data.js';

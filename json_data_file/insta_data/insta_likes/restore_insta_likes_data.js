@@ -22,7 +22,7 @@ export async function restoreInstaLikes(clientName) {
 
 
         if (fromRows[ii] !== null || fromRows[ii] !== undefined || fromRows[ii] !== ""){
-          data.push(fromRows[ii));
+          data.push(fromRows[ii]);
         }
                 
         try {
