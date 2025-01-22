@@ -58,7 +58,7 @@ import { transferUserData } from './json_data_file/user_data/transfer_user_data_
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
 import { decrypted } from './json_data_file/crypto.js';
 import { restoreInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
-import { transferInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
+import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 import { transferTiktokContent } from './json_data_file/tiktok_data/tiktok_content/transfer_tiktok_content.js';
 import { transferTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/transfer_tiktok_comments.js';
 import { clientDataBackup } from './app/backup/client_data.js';
@@ -1334,7 +1334,7 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferInstaLikes(decrypted(response[i].CLIENT_ID))
+                                        restoreInstaLikes(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);
