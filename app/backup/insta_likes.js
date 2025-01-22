@@ -33,12 +33,11 @@ export async function instaLikesBackup(clientValue) {
                 let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
                 if ( dateNow === localDate) {
-                  shortcodeList.push(decrypted(instaContentDir[i].SHORTCODE));
+                  shortcodeList.push(instaContentDir[i]);
                 }
-
-                console.log(shortcodeList);
-
             }
+
+            console.log(shortcodeList);
 
 
             // for (let i = 0; i < shortcodeList.length; i++) {
