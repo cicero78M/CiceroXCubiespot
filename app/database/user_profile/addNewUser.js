@@ -43,7 +43,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         //Get Target Sheet Documents by Title
         let userData = new Object();
 
-        userData.ID_KEY = encrypted(parseInt(idKey));
+        userData.ID_KEY = encrypted(idKey);
         userData.NAMA = encrypted(name);
         userData.TITLE = encrypted(title);
         userData.DIVISI = encrypted(divisi);
@@ -54,7 +54,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         userData.TIKTOK = encrypted(null);
         userData.EXCEPTION = encrypted(false);
 
-        writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+        writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
 
         resolve (`${dataKey} JSON Data Successfully Added.`);
             
