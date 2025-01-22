@@ -23,6 +23,7 @@ export async function myData(clientName, idKey) {
               response = userRows[i];
   
               let responseData = await myDataView(response);
+              
               resolve (responseData);
             
             }

@@ -24,7 +24,7 @@ export async function sendResponse(from, responseData, errormessage) {
             await client.sendMessage(from, responseData.data);
             break;
         default:
-            console.log(time+" Something Error on Send Messages ");
+            console.log(responseData);
             break;
     }   
 }

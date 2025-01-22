@@ -32,8 +32,11 @@ export async function readUser(clientName) {
             }    
 
             resolve (client);
+
         } catch (error) {
+            
             reject (error)            
+        
         }
     });
 }
