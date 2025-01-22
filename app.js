@@ -63,6 +63,7 @@ import { clientDataBackup } from './app/backup/client_data.js';
 import { userDataBackup } from './app/backup/user_data.js';
 import { instaContentBackup } from './app/backup/insta_content.js';
 import { tiktokContentBackup } from './app/backup/tiktok_content.js';
+import { instaLikesBackup } from './app/backup/insta_likes.js';
 
 //.env
 const private_key = process.env;
@@ -777,7 +778,6 @@ client.on('message', async (msg) => {
                     });
 
                 } else if (infoOrder.includes(splittedMsg[1].toLowerCase())){    
-
                     await clientData().then( 
                         async clientData => {    
                             for (let i = 0; i < clientData.length; i++){
@@ -814,7 +814,6 @@ client.on('message', async (msg) => {
                                     }
                                 }
                             }
-        
                         }
                     );
 
@@ -1406,7 +1405,22 @@ client.on('message', async (msg) => {
                             )
 
                             break;
-                        default:
+                        case "backupinstalikes":
+                            await clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length; i++){
+                                        await instaLikesBackup(response[i]).then(
+                                            response => console.log(response)
+                                        ).catch(
+                                            error => console.error(error)
+                                        );
+                                    }
+                                }
+                            )
+
+                            break;
+                            
+                            default:
                             break;
                     }
                 } else {//Key Order Data Not Exist         

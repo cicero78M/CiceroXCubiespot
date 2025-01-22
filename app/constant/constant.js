@@ -75,5 +75,8 @@ export const dataBackup= [
     "backupclientdata",
     "backupuserdata",
     "backupinstacontent",
-    "backuptiktokcontent"
+    "backuptiktokcontent",
+    "backupinstalikes",
+    "backuptiktokcomments",
+
 ];

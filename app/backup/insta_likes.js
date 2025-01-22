@@ -1,9 +1,9 @@
 import { readdirSync, readFileSync } from 'fs';
 import { decrypted } from '../../json_data_file/crypto.js';
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { googleAuth } from '../database/new_query/sheet_query.js';
+// import { GoogleSpreadsheet } from 'google-spreadsheet';
+// import { googleAuth } from '../database/new_query/sheet_query.js';
 
-export async function instaContentBackup(clientValue) {
+export async function instaLikesBackup(clientValue) {
 
   //Date Time
   let d = new Date();
@@ -23,18 +23,14 @@ export async function instaContentBackup(clientValue) {
                 
         if (decrypted(clientValue.INSTA_STATE)) {   
             
-            let instaContentDir = readdirSync(`json_data_file/insta_data/insta_/${clientName}`);
+            let instaContentDir = readdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
 
             for (let i = 0; i < instaContentDir.length; i++) {
 
-                let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
+                let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`));
 
                 let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                 let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-
-                // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-                // console.log(localDate);
-
 
                 if ( dateNow === localDate) {
                     shortcodeList.push(instaContentDir[i]);
@@ -65,16 +61,15 @@ export async function instaContentBackup(clientValue) {
 
         //       resolve (data);
 
-          } else {
-            data = {
-              data: "Tidak ada konten data untuk di olah",
-              state: true,
-              code: 201
-            };
+        //   } else {
+        //     data = {
+        //       data: "Tidak ada konten data untuk di olah",
+        //       state: true,
+        //       code: 201
+        //     };
 
-            reject (data);
-          
-        }
+        //     reject (data);         
+        // }
 
         } else {
           data = {
