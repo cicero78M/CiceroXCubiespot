@@ -39,7 +39,7 @@ export async function tiktokCommentsBackup(clientValue) {
         
             for (let i = 0; i < shortcodeList.length; i++) {
               let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
-              commentItems.upshift(encrypted(shortcodeList[i]));
+              commentItems.unshift(encrypted(shortcodeList[i]));
             }
             
             const sheetDoc = new GoogleSpreadsheet(
