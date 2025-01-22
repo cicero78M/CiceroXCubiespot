@@ -42,21 +42,23 @@ export async function sendClientResponse(clientID, supervisor, operator, group, 
     switch (responseData.code){
         case 200 :
             console.log(time+" "+clientID+' SUCCESS '+type+' DATA');
-            await client.sendMessage(supervisor, responseData.data);
-            
+            await client.sendMessage(supervisor, responseData.data);           
             await client.sendMessage(operator, responseData.data);
             await client.sendMessage(group, responseData.data);
             break;
+            
         case 303 :
             console.log(responseData);
             await client.sendMessage('6281235114745@c.us', time+" "+clientID+' FAIL '+type+' DATA');
             break;
+
         case 201:
             console.log(time+" "+responseData);
             await client.sendMessage(supervisor, responseData.data);
             await client.sendMessage(operator, responseData.data);
             await client.sendMessage(group, responseData.data);
             break;
+            
         default:
             console.log(responseData);
             break;

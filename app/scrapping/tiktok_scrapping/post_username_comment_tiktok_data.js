@@ -20,7 +20,6 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                 if (items === (tiktokCommentsDir[i]).replace(".json", "")) {
                     
                     hasShortcode = true;
-
                     encryptedData = [];
                 
                     let tiktokComments = await JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`));

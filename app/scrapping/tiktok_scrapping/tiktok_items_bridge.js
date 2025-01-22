@@ -15,10 +15,8 @@ export async function tiktokItemsBridges(clientValue, items) {
                 
                 await getTiktokComments(items[i])
                 .then (async response =>{
-                        console.log(clientValue);
                     await postTiktokUserComments(decrypted(clientValue.CLIENT_ID), items[i], response.data)
                     .then(async data => {
-                        console.log(data);
                         await client.sendMessage('6281235114745@c.us', data.data);
                     }).catch(error => reject (error));               
                 }).catch(error => reject (error));

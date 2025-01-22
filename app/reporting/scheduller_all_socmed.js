@@ -20,7 +20,8 @@ export async function schedullerAllSocmed(timeSwitch) {
             '6281235114745@c.us', 
             'Generate All Socmed Data Starting...'
         );            
-        console.log(time+' Generate All Socmed Data Starting');
+
+        console.log(`${time} >>> Generate All Socmed Data Starting`);
 
         await clientData().then( 
             async clientData =>{
@@ -30,7 +31,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
-                        console.log(`${time} ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
+                        console.log(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
@@ -113,7 +114,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                         );
                                                         break;
                                                 }                   
-                                                console.log("Report TIKTOK SUCCESS!!!");
+                                                console.log(`${time} >>> Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
                                             data =>{
@@ -126,7 +127,6 @@ export async function schedullerAllSocmed(timeSwitch) {
                                         );
                                         break;
                                 }
-                        
                             }
                     
                         ).catch(
@@ -144,7 +144,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === ciceroKey.ciceroClientType) {
-                        console.log(`${time} ${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
+                        console.log(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
@@ -168,15 +168,12 @@ export async function schedullerAllSocmed(timeSwitch) {
                                         break; 
 
                                     default:
-                                        console.log(instaPostData);
                                         await getInstaLikes(
                                             instaPostData.data, 
                                             clientData[i]
                                         ).then(
                                             async instaLikesData => {
-                                                    
-                                                console.log(instaLikesData.data);
-                                                
+                                                                                                    
                                                 await client.sendMessage(
                                                     '6281235114745@c.us', 
                                                     instaLikesData.data
@@ -237,16 +234,11 @@ export async function schedullerAllSocmed(timeSwitch) {
 
                         ).catch(
                             async data => {
-
-                                console.log(data);
-
                                 sendResponse(
                                     '6281235114745@c.us', 
                                     data, 
                                     ' ERROR GET INSTA POST'
                                 );
-
-                                // schedullerAllSocmed(timeSwitch);
 
                             }
                         );   
@@ -254,13 +246,12 @@ export async function schedullerAllSocmed(timeSwitch) {
                 }
             }
         ). catch (
-            error =>{
-                setTimeout(() => {
-                    console.error(error);
-                    console.log ("Re-Try");
-                }, 10000);
+            async error =>{
+                console.log(error)
+                await client.sendMessage('6281235114745@c.us', 
+                    'Client Data Request Error '
+                );
                 
-                // schedullerAllSocmed(timeSwitch);
             }
         );  
 

@@ -148,18 +148,18 @@ client.on('ready', () => {
 
     // Scrapping Socmed every hours until 21
     schedule('30 6-20 * * *',  () => {
-        console.log("Execute Schedule");
+        console.log("Execute Cron Job");
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
     schedule('0 15,18,21 * * *',  () => {
-        console.log("Execute Schedule");
+        console.log("Execute Cron Job");
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
     //User Warning Likes Comments Insta & Tiktok
     schedule('15 12,16,19 * * *',  () => {
-        console.log("Execute Schedule");
+        console.log("Execute Cron Job");
         clientData().then( async clientData =>{
 
             for (let i = 0; i < clientData.length; i++){

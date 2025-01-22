@@ -189,5 +189,3 @@ export async function clientRegister(clientName, type) {
         }
     )
 }
-
-

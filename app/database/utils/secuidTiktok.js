@@ -26,7 +26,7 @@ export async function setSecuid(clientValue) {
             if (decrypted(clientRows[i].get('CLIENT_ID')) === clientName) {
                 isClient = true;
                 
-                clientRows[i].assign({ SECUID: encryptedSecuid });; // Updae State Value
+                clientRows[i].assign({ SECUID: encryptedSecuid });; // Update State Value
                 await clientRows[i].save(); //save update
 
                 let response = {
