@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
-import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
+import { googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaUserFollowing } from "./generate_user_following.js";
 
 export async function requestVoucer(from, username) {
@@ -13,7 +13,7 @@ export async function requestVoucer(from, username) {
         let isDataExist = false;
         let isFollowing = "FALSE";
 
-        const instaProfileDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
+        const instaProfileDoc = new GoogleSpreadsheet(process.env.instaProfileData, googleAuth); //Google Authentication for InstaOfficial DB  
         await instaProfileDoc.loadInfo(); // loads document properties and worksheets
         const instaProfileSheet = instaProfileDoc.sheetsByTitle["PROFILE"];
         let instaProfileRows = await instaProfileSheet.getRows();

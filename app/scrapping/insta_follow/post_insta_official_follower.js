@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { client } from "../../../app.js";
-import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
+import { googleAuth } from "../../database/new_query/sheet_query.js";
 
 export async function postInstaFollowersOfficial(clientName, array) {
 
@@ -13,7 +13,7 @@ export async function postInstaFollowersOfficial(clientName, array) {
             let userdata =[]; 
             let childrenArray = [];
     
-            const instaOfficialFollowerDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialFollowers, googleAuth); //Google Authentication for instaLikes Username DB
+            const instaOfficialFollowerDoc = new GoogleSpreadsheet(process.env.instaOfficialFollowers, googleAuth); //Google Authentication for instaLikes Username DB
             await  instaOfficialFollowerDoc.loadInfo(); // loads document properties and worksheets            
             let instaOfficialFollowerSheet = instaOfficialFollowerDoc.sheetsByTitle[clientName];
 
