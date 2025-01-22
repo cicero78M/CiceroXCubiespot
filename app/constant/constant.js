@@ -60,18 +60,18 @@ export const generateSocmed = [
     "officialfollowers"
 ];
 
-export const dataTransfer = [
+export const dataRestore = [
     "restoreclientdata",
     "restoreuserdata",
     "readuserdir",
     "encryptclientdata",
-    "transferinstacontent",
-    "transferinstalikes",
-    "transfertiktokcontent",
-    "transfertiktokcomment"
+    "restoreinstacontent",
+    "restoreinstalikes",
+    "restoretiktokcontent",
+    "restoretiktokcomments"
 ];
 
-export const backupData= [
+export const dataBackup= [
     "backupclientdata",
     "backupuserdata",
     "backupinstacontent",

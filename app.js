@@ -42,7 +42,7 @@ import { clientRegister } from './app/database/client_register/client_register.j
 import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
 import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
 import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
-import { adminOrder, backupData, cubiesOrder, dataTransfer, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
+import { adminOrder, cubiesOrder, dataBackup, dataRestore, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
 import { addNewUser } from './app/database/user_profile/addNewUser.js';
 import { editProfile } from './app/database/user_profile/editUserProfile.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
@@ -57,7 +57,7 @@ import { clientData } from './json_data_file/client_data/read_client_data_from_j
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
 import { decrypted } from './json_data_file/crypto.js';
-import { transferInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
+import { restoreInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
 import { transferInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 import { transferTiktokContent } from './json_data_file/tiktok_data/tiktok_content/transfer_tiktok_content.js';
 import { transferTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/transfer_tiktok_comments.js';
@@ -1292,7 +1292,7 @@ client.on('message', async (msg) => {
                         default:
                             break;                    
                     }
-                } else if(dataTransfer.includes(splittedMsg[1].toLowerCase())){
+                } else if(dataRestore.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
                         case "restoreclientdata":
                             restoreClientData();
@@ -1314,11 +1314,11 @@ client.on('message', async (msg) => {
                             )
                             break;
                         case "readuserdir":
-                        case "transferinstacontent":
+                        case "restoreinstacontent":
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferInstaContent(decrypted(response[i].CLIENT_ID))
+                                        restoreInstaContent(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);
@@ -1330,7 +1330,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
-                        case "transferinstalikes":
+                        case "restoreinstalikes":
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
@@ -1346,7 +1346,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
-                        case "transfertiktokcontent":
+                        case "restoretiktokcontent":
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
@@ -1362,7 +1362,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
-                        case "transfertiktokcomment":
+                        case "restoretiktokcomments":
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
@@ -1382,7 +1382,7 @@ client.on('message', async (msg) => {
                             break;
 
                     }
-                } else if(backupData.includes(splittedMsg[1].toLowerCase())){
+                } else if(dataBackup.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
                         case "backupclientdata":
                             clientDataBackup().then(

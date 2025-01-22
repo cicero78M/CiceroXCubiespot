@@ -1,11 +1,9 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_query.js";
 import { encrypted } from "../../crypto.js";
- import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 
-
-
-export async function transferInstaContent(clientName) {
+export async function restoreInstaContent(clientName) {
 
 
     let instaOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
