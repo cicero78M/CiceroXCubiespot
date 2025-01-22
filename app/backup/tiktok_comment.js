@@ -11,13 +11,20 @@ export async function tiktokCommentsBackup(clientValue) {
   let data;
   let shortcodeList = [];
 
+   
+  const sheetDoc = new GoogleSpreadsheet(
+    process.env.tiktokCommentUsernameID, 
+    googleAuth
+  ); //Google Auth
+
+
   return new Promise(
     async (
       resolve, reject
     ) => {
       try {
-                
-        if (decrypted(clientValue.INSTA_STATE)) {   
+       
+        if (decrypted(clientValue.TIKTOK_STATE)) {   
             
             let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
@@ -43,10 +50,7 @@ export async function tiktokCommentsBackup(clientValue) {
               commentItems.unshift(encrypted(shortcodeList[i]));
 
               setTimeout(async () => {
-                const sheetDoc = new GoogleSpreadsheet(
-                  process.env.tiktokCommentUsernameID, 
-                  googleAuth
-                ); //Google Auth
+
     
                 await sheetDoc.loadInfo();
                 

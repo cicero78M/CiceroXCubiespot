@@ -14,6 +14,11 @@ export async function instaLikesBackup(clientValue) {
 
   let data;
   let shortcodeList = [];
+  
+  const sheetDoc = new GoogleSpreadsheet(
+    process.env.instaLikesUsernameID, 
+    googleAuth
+); //Google Auth
 
   return new Promise(
     async (
@@ -49,10 +54,7 @@ export async function instaLikesBackup(clientValue) {
               console.log(likeItem);
 
               setTimeout(async () => {
-                const sheetDoc = new GoogleSpreadsheet(
-                  process.env.instaLikesUsernameID, 
-                  googleAuth
-              ); //Google Auth
+  
   
               await sheetDoc.loadInfo();
               const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
