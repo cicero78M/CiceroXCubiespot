@@ -58,7 +58,7 @@ import { decrypted } from './json_data_file/crypto.js';
 import { restoreInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
 import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 import { restoreTiktokContent } from './json_data_file/tiktok_data/tiktok_content/transfer_tiktok_content.js';
-import { restoreTiktokComments, transferTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/transfer_tiktok_comments.js';
+import { restoreTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/transfer_tiktok_comments.js';
 import { clientDataBackup } from './app/backup/client_data.js';
 import { userDataBackup } from './app/backup/user_data.js';
 import { instaContentBackup } from './app/backup/insta_content.js';
