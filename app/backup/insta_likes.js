@@ -58,7 +58,7 @@ const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
               likeItem.unshift(encrypted(shortcodeList[i]));
 
               setTimeout(async () => {
-                console.log(likeItem);
+                console.log(likeItem.length);
               }, 2000);
 
               await sheetName.addRow(likeItem);
