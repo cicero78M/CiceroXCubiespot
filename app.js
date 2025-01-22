@@ -1315,24 +1315,6 @@ client.on('message', async (msg) => {
                             )
                             break;
                         case "readuserdir":
-                            clientData().then(
-                                async response =>{
-                                    for (let i = 0; i < response.length;i++){
-                                        readUser(response[i].CLIENT_ID)
-                                        .then(
-                                            response => {
-                                                console.log(response);
-                                            }
-                                        ).catch (
-                                            error => console.log(error)
-                                        );
-                                    }
-                                }
-                            );
-                            break;
-                        case "encryptclientdata":
-                            console.log(await encryptClientData());
-                            break;
                         case "transferinstacontent":
                             clientData().then(
                                 async response =>{

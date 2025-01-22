@@ -15,7 +15,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       clientName
     ).then( 
       async response => {    
-        userRows = await response;                           
+        let userRows = await response;                           
         for (let i = 0; i < userRows.length; i++) {
           if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
             idExist = true;
