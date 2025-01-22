@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { decrypted, encrypted } from '../../json_data_file/crypto.js';
-// import { GoogleSpreadsheet } from 'google-spreadsheet';
-// import { googleAuth } from '../database/new_query/sheet_query.js';
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { googleAuth } from '../database/new_query/sheet_query.js';
 
 export async function tiktokCommentsBackup(clientValue) {
   //Date Time
@@ -12,12 +12,13 @@ export async function tiktokCommentsBackup(clientValue) {
   let shortcodeList = [];
 
    
-  // const sheetDoc = new GoogleSpreadsheet(
-  //   process.env.tiktokCommentUsernameID, 
-  //   googleAuth
-  // ); //Google Auth
-  // await sheetDoc.loadInfo();
-  // const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
+  const sheetDoc = new GoogleSpreadsheet(
+    process.env.tiktokCommentUsernameID, 
+    googleAuth
+  ); //Google Auth
+
+  await sheetDoc.loadInfo();
+  const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
 
 
   return new Promise(
@@ -28,21 +29,22 @@ export async function tiktokCommentsBackup(clientValue) {
        
         if (decrypted(clientValue.TIKTOK_STATE)) {   
             
-            let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+          let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
-            for (let i = 0; i < tiktokContentDir.length; i++) {
+          for (let i = 0; i < tiktokContentDir.length; i++) {
 
-                let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
+              let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
 
-                let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
-                let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+              let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
+              let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
-                if ( dateNow === localDate) {
+              if ( dateNow === localDate) {
 
-                  shortcodeList.push(decrypted(contentItems.SHORTCODE));
+                shortcodeList.push(decrypted(contentItems.SHORTCODE));
 
-                }
-            }
+              }
+          }
+
           if (shortcodeList.length >= 1) {  
         
             for (let i = 0; i < shortcodeList.length; i++) {
@@ -53,13 +55,12 @@ export async function tiktokCommentsBackup(clientValue) {
               commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
               commentItems.unshift(encrypted(shortcodeList[i]));
 
-              console.log(commentItems.length);
 
-              // setTimeout(async () => {
-
-              //   await sheetName.addRow(commentItems);
-
-              // }, 2000);
+              setTimeout(async () => {
+                console.log(commentItems.length);
+              }, 2000);
+              
+              await sheetName.addRow(commentItems);
              
               } catch (error) {
 
