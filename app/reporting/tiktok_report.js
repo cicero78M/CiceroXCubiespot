@@ -115,7 +115,7 @@ export async function newReportTiktok(clientValue) {
                 
                                 console.log("Null Data Exist");
                                 userNotComment.push(userRows[i].ID_KEY);
-                                notLikesList.push(userRows[i]);
+                                notCommentList.push(userRows[i]);
                 
                             } else {
                                 if (!userCommentData.includes((userRows[i].TIKTOK).replace('@',''))) {
