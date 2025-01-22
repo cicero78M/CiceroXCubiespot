@@ -7,6 +7,8 @@ import { writeFileSync } from "fs";
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
+return new Promise(async (resolve, reject) => {
+
   try {
 
     let idExist = false;
@@ -63,7 +65,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
           idKey
         );
           
-      return responseMyData;
+      resolve (responseMyData);
       
       } else {
  
@@ -72,7 +74,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
           parseInt(idKey)
         );
 
-        return responseMyData;
+        resolve (responseMyData);
 
       }
 
@@ -97,6 +99,9 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       code: 303
     };
  
-    return responseData;
+    reject (responseData);
   }
+  
+})
+
 }
