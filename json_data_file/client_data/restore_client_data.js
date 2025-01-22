@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
+import { decrypted } from "../crypto.js";
 
 let client = [];
 
@@ -29,10 +30,10 @@ export async function restoreClientData() {
 
                 
                 try {
-                    writeFileSync(`json_data_file/client_data/${data[i].get("CLIENT_ID")}.json`, JSON.stringify(clientData));
+                    writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
                   } catch (error) {
-                    mkdirSync(`json_data_file/client_data/${data[i].get("CLIENT_ID")}`);
-                    writeFileSync(`json_data_file/client_data/${data[i].get("CLIENT_ID")}.json`, JSON.stringify(clientData));
+                    mkdirSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}`);
+                    writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
                   } 
 
             };
