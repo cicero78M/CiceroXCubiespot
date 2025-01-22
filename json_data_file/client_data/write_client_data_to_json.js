@@ -1,5 +1,4 @@
 import { writeFileSync } from "fs";
-import { encrypted } from "../crypto.js";
 import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
 
 let client = [];

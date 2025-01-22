@@ -38,8 +38,11 @@ export async function newRowsData(
                     await dataDoc.loadInfo(); // loads document properties and worksheets
                 
                     let sheetTitle = dataDoc.sheetsByTitle[clientName];
-                    console.log(sheetTitle)
+                    
+                    console.log(dataDoc)
+                    
                     await sheetTitle.getRows()
+
                     .then( response => {
                         console.log();
                         resolve (response);
