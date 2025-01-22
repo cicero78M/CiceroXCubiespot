@@ -38,7 +38,7 @@ export async function newRowsData(
                     await dataDoc.loadInfo(); // loads document properties and worksheets
                 
                     let sheetTitle = dataDoc.sheetsByTitle[clientName];
-                    
+                    console.log(sheetTitle)
                     await sheetTitle.getRows()
                     .then( response => {
                         console.log();
