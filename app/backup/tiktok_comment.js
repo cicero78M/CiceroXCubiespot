@@ -32,6 +32,8 @@ export async function tiktokCommentsBackup(clientValue) {
 
                 if ( dateNow === localDate) {
                   shortcodeList.push(decrypted(contentItems.SHORTCODE));
+
+                  console.log(shortcodeList);
                 }
             }
 
@@ -41,8 +43,8 @@ export async function tiktokCommentsBackup(clientValue) {
               try {
 
                 
-              let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
-              commentItems.unshift(encrypted(shortcodeList[i]));
+              // let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+              // commentItems.unshift(encrypted(shortcodeList[i]));
                 
               } catch (error) {
 
@@ -57,6 +59,7 @@ export async function tiktokCommentsBackup(clientValue) {
             ); //Google Auth
 
             await sheetDoc.loadInfo();
+            
             const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
             await sheetName.addRows(commentItems);
 
