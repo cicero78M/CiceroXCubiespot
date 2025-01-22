@@ -52,8 +52,8 @@ const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
         
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
-              let likeItem =[];
-                
+
+              let likeItem = [];
               likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
               likeItem.unshift(encrypted(shortcodeList[i]));
 

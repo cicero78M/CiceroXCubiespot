@@ -46,6 +46,8 @@ export async function getInstaLikes(todayItems, clientValue ) {
                 async response =>{
 
                   const likesItems = await response.data.data.items;
+
+                  newDataUsers = [];
                 
                   for (let iii = 0; iii < likesItems.length; iii++) {
                     if (likesItems[iii].username !== undefined || likesItems[iii].username !== null || likesItems[iii].username !== "") {
@@ -54,7 +56,9 @@ export async function getInstaLikes(todayItems, clientValue ) {
                       }
                     }
                   }
-
+                  
+                  encryptedData = [];
+                  
                   for (let iii = 0; iii < newDataUsers.length; iii++) {
                     encryptedData.push(encrypted(newDataUsers[iii]));
                   }
@@ -92,7 +96,8 @@ export async function getInstaLikes(todayItems, clientValue ) {
             await instaLikesAPI(todayItems[i]).then(
               async response =>{
                 let likesItems = await response.data.data.items;
-            
+                
+                encryptedData = [];
                 for (let iii = 0; iii < likesItems.length; iii++) {
                   if ('username' in likesItems[iii]) {
                     encryptedData.push(encrypted(likesItems[iii].username));
