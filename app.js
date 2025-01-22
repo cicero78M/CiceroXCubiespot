@@ -2,10 +2,6 @@
 import express from 'express';
 const app = express();
 
-//Reading Json File 
-import { readFileSync } from 'fs';
-const ciceroKey = JSON.parse (readFileSync('ciceroKey.json'));
-
 //WWebjs
 import wwebjs from 'whatsapp-web.js';
 const { Client, LocalAuth } = wwebjs;
