@@ -36,15 +36,17 @@ export async function tiktokCommentsBackup(clientValue) {
                   console.log(shortcodeList);
                 }
             }
-
+          let commentList =[];
           if (shortcodeList.length >= 1) {  
         
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
 
                 
-              // let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
-              // commentItems.unshift(encrypted(shortcodeList[i]));
+              let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+
+              commentItems.unshift(encrypted(shortcodeList[i]));
+              commentList.push(commentItems);
                 
               } catch (error) {
 
@@ -61,7 +63,7 @@ export async function tiktokCommentsBackup(clientValue) {
             await sheetDoc.loadInfo();
             
             const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
-            await sheetName.addRows(commentItems);
+            await sheetName.addRows(commentList);
 
             data = {
               data: `${clientName} Added Tiktok Content Data`,
