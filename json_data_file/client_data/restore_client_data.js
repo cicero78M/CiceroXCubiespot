@@ -1,9 +1,9 @@
-import { writeFileSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
 
 let client = [];
 
-export async function clientData2Json() {
+export async function restoreClientData() {
 
     await newRowsData(
         ciceroKey.dbKey.clientDataID, 

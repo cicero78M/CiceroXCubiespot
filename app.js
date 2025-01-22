@@ -52,7 +52,7 @@ import { schedule } from 'node-cron';
 import { saveContacts } from './app/database/utils/saveContact.js';
 
 //New Function
-import { clientData2Json } from './json_data_file/client_data/write_client_data_to_json.js';
+import { restoreClientData } from './json_data_file/client_data/restore_client_data.js';
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
@@ -1297,7 +1297,7 @@ client.on('message', async (msg) => {
                 } else if(dataTransfer.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
                         case "restoreclientdata":
-                            clientData2Json();
+                            restoreClientData();
                             break;
                         case "user2json":
                             clientData().then(
