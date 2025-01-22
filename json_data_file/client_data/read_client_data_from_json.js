@@ -1,4 +1,4 @@
-import { readFileSync,  } from "fs";
+import { readFileSync  } from "fs";
 
 export async function clientData() {    
     return new Promise(async (resolve, reject) => {

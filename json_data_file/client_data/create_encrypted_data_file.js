@@ -1,5 +1,5 @@
 import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
-// import { GoogleSpreadsheet } from "google-spreadsheet";
+import { mkdirSync, writeFileSync  } from "fs";
 
 export async function encryptClientData() {
     // let client = [];
@@ -31,16 +31,5 @@ export async function encryptClientData() {
                     writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
                   }  
             };
-    });
-
-        // let dataDoc = new GoogleSpreadsheet(
-        //         ciceroKey.dbKey.clientDataID, 
-        //         googleAuth
-        //     );
-
-        // await  dataDoc.loadInfo(); // loads document properties and worksheets            
-        // let clientSheet = dataDoc.sheetsByTitle["ClientData_Enc"];
-
-        // await clientSheet.addRows(client);
-        // return "Client Data Encrypted"
+    });       // return "Client Data Encrypted"
 }
