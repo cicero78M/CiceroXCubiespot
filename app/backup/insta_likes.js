@@ -56,13 +56,13 @@ const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
                 
               likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
               likeItem.unshift(encrypted(shortcodeList[i]));
-              console.log(likeItem);
 
               setTimeout(async () => {
-
-                await sheetName.addRow(likeItem);
-
+                console.log(likeItem);
               }, 2000);
+
+              await sheetName.addRow(likeItem);
+
 
               } catch (error) {
                 // console.log('No Data');

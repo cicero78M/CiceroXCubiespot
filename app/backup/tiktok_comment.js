@@ -59,8 +59,8 @@ export async function tiktokCommentsBackup(clientValue) {
               setTimeout(async () => {
                 console.log(commentItems.length);
               }, 2000);
-              
-              await sheetName.addRow(commentItems);
+
+                await sheetName.addRow(commentItems);
              
               } catch (error) {
 
