@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { decrypted, encrypted } from '../../json_data_file/crypto.js';
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { googleAuth } from '../database/new_query/sheet_query.js';
+// import { GoogleSpreadsheet } from 'google-spreadsheet';
+// import { googleAuth } from '../database/new_query/sheet_query.js';
 
 export async function tiktokCommentsBackup(clientValue) {
   //Date Time
@@ -12,12 +12,12 @@ export async function tiktokCommentsBackup(clientValue) {
   let shortcodeList = [];
 
    
-  const sheetDoc = new GoogleSpreadsheet(
-    process.env.tiktokCommentUsernameID, 
-    googleAuth
-  ); //Google Auth
-  await sheetDoc.loadInfo();
-  const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
+  // const sheetDoc = new GoogleSpreadsheet(
+  //   process.env.tiktokCommentUsernameID, 
+  //   googleAuth
+  // ); //Google Auth
+  // await sheetDoc.loadInfo();
+  // const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
 
 
   return new Promise(
@@ -53,11 +53,13 @@ export async function tiktokCommentsBackup(clientValue) {
               commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
               commentItems.unshift(encrypted(shortcodeList[i]));
 
-              setTimeout(async () => {
+              console.log(commentItems.length);
 
-                await sheetName.addRow(commentItems);
+              // setTimeout(async () => {
 
-              }, 2000);
+              //   await sheetName.addRow(commentItems);
+
+              // }, 2000);
              
               } catch (error) {
 

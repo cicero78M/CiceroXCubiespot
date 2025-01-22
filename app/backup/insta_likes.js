@@ -2,7 +2,6 @@ import { readdirSync, readFileSync } from 'fs';
 import { decrypted, encrypted } from '../../json_data_file/crypto.js';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
-import { timeout } from 'cron';
 
 export async function instaLikesBackup(clientValue) {
 
@@ -53,16 +52,15 @@ const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
         
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
-              let likeItem =[]
+              let likeItem =[];
                 
               likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
               likeItem.unshift(encrypted(shortcodeList[i]));
               console.log(likeItem);
 
               setTimeout(async () => {
-  
-  
-              await sheetName.addRow(likeItem);
+
+                await sheetName.addRow(likeItem);
 
               }, 2000);
 
