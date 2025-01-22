@@ -3,7 +3,7 @@ import { decrypted, encrypted } from '../../json_data_file/crypto.js';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
 
-export async function instaLikesBackup(clientValue) {
+export async function tiktokCommentsBackup(clientValue) {
 
   //Date Time
   let d = new Date();
@@ -12,6 +12,7 @@ export async function instaLikesBackup(clientValue) {
   const clientName = decrypted(clientValue.CLIENT_ID);
 
   let data;
+
   let shortcodeList = [];
 
   return new Promise(
@@ -22,11 +23,11 @@ export async function instaLikesBackup(clientValue) {
                 
         if (decrypted(clientValue.INSTA_STATE)) {   
             
-            let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+            let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
             for (let i = 0; i < instaContentDir.length; i++) {
 
-                let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
+                let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
 
                 let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                 let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -36,25 +37,24 @@ export async function instaLikesBackup(clientValue) {
                 }
             }
 
-
           if (shortcodeList.length >= 1) {  
         
             for (let i = 0; i < shortcodeList.length; i++) {
-              let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
-              likeItem.upshift(encrypted(shortcodeList[i]));
+              let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagements/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+              commentItems.upshift(encrypted(shortcodeList[i]));
             }
             
             const sheetDoc = new GoogleSpreadsheet(
-                process.env.instaLikesUsernameID, 
+                process.env.tiktokCommentUsernameID, 
                 googleAuth
             ); //Google Auth
 
             await sheetDoc.loadInfo();
             const sheetName = sheetDoc.sheetsByTitle[clientName];
-            await sheetName.addRows(likeItem);
+            await sheetName.addRows(commentItems);
 
             data = {
-              data: `${clientName} Added Insta Content Data`,
+              data: `${clientName} Added Tiktok Content Data`,
               state: true,
               code: 200
             };

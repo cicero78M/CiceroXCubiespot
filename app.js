@@ -64,6 +64,7 @@ import { userDataBackup } from './app/backup/user_data.js';
 import { instaContentBackup } from './app/backup/insta_content.js';
 import { tiktokContentBackup } from './app/backup/tiktok_content.js';
 import { instaLikesBackup } from './app/backup/insta_likes.js';
+import { tiktokCommentsBackup } from './app/backup/tiktok_commentjs';
 
 //.env
 const private_key = process.env;
@@ -796,7 +797,6 @@ client.on('message', async (msg) => {
                                                 splittedMsg[0].toUpperCase(), 
                                                 "DIVISI"
                                             );
-                                            
                                             client.sendMessage(
                                                 msg.from, 
                                                 responseData.data
@@ -880,11 +880,8 @@ client.on('message', async (msg) => {
                                 await schedullerAllSocmed("routine");
                             }
                             break;
-
                         case 'alltiktok':
-
                             console.log("Execute New All Tiktok")
-
                             await clientData().then( 
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
@@ -947,7 +944,6 @@ client.on('message', async (msg) => {
                                 }
                             )  
                             break;
-
                         case 'reporttiktok':
                             console.log("Execute New Report Tiktok ")
                             await clientData().then( 
@@ -998,9 +994,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
-
                         case 'allinsta':
-
                             console.log("Execute New All Insta ")
                             await clientData().then( 
                                 async clientData =>{
@@ -1122,7 +1116,6 @@ client.on('message', async (msg) => {
                                 }
                             )  
                             break;
-
                         case 'reportinsta':
                             console.log("Execute New Report Insta ")
                             await clientData().then( 
@@ -1176,9 +1169,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break
-
                         case 'instainfo':
-
                             await clientData().then(
                                 async clientData =>{
                                     for (let i = 0; i < clientData.length; i++){
@@ -1211,14 +1202,10 @@ client.on('message', async (msg) => {
                             );
                             
                             break;
-
                         case 'officialfollowers':
-
-                            console.log("Execute Insta Followers");
-            
+                            console.log("Execute Insta Followers");            
                             let arrayData = [];
-                            let countData = 0;
-            
+                            let countData = 0;    
                             await clientData().then(
                                 async clientData =>{
                                     for (let i = 0; i < clientData.length; i++){
@@ -1269,7 +1256,6 @@ client.on('message', async (msg) => {
                                 }
                             );
                                 break;    
-
                         default:
                             break;                    
                     }
@@ -1417,9 +1403,23 @@ client.on('message', async (msg) => {
                                     }
                                 }
                             )
-
                             break;
-                        
+                        case "backuptiktokcomments":
+                            await clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length; i++){
+                                        await tiktokCommentsBackup(response[i]).then(
+                                            response => console.log(response)
+                                        ).catch(
+                                            error => console.error(error)
+                                        );
+                                    }
+                                }
+                            ).catch (
+                                error => console.error(error)
+                            )
+
+                            break;     
                         default:
                             break;
                     }
