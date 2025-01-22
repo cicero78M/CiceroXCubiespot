@@ -1319,7 +1319,7 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferInstaContent(response[i].CLIENT_ID)
+                                        transferInstaContent(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);
@@ -1335,7 +1335,7 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferInstaLikes(response[i].CLIENT_ID)
+                                        transferInstaLikes(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);
@@ -1351,7 +1351,7 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferTiktokContent(response[i].CLIENT_ID)
+                                        transferTiktokContent(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);
@@ -1367,7 +1367,7 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferTiktokComments(response[i].CLIENT_ID)
+                                        transferTiktokComments(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);
@@ -1413,7 +1413,6 @@ client.on('message', async (msg) => {
                             );
 
                             break;
-
                         case "backuptiktokcontent":
                             await clientData().then(
                                 async response =>{
