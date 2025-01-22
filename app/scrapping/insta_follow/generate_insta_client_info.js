@@ -1,5 +1,5 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../../database/new_query/sheet_query.js";
+import { googleAuth } from "../../database/new_query/sheet_query.js";
 import { instaInfoAPI } from "../../socialMediaAPI/insta_API.js";
 
 
@@ -8,7 +8,7 @@ export async function instaClientInfo(clietName, username) {
     return new Promise(async (resolve, reject) => {
         try {
 
-            const instaClientDoc = new GoogleSpreadsheet(ciceroKey.dbKey.clientInstaProfile, googleAuth); //Google Authentication for InstaOfficial DB  
+            const instaClientDoc = new GoogleSpreadsheet(process.env.clientInstaProfile, googleAuth); //Google Authentication for InstaOfficial DB  
             await instaClientDoc.loadInfo(); // loads document properties and worksheets
             const instaClientSheet = instaClientDoc.sheetsByTitle["PROFILE"];
             let instaClientRows = await instaClientSheet.getRows();
