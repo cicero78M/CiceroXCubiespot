@@ -3,8 +3,9 @@ import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_que
 import { encrypted } from "../../crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
 
-export async function transferTiktokContent(clientName) {
+export async function restoreTiktokContent(clientName) {
 
+    console.log("Execute");
 
     let tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for Tiktok Official DB    
     await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
@@ -40,6 +41,8 @@ export async function transferTiktokContent(clientName) {
             writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokOfficialData[i].get("SHORTCODE")}.json`, JSON.stringify(tiktokContent));
             
         }
+
+        console.log("Done";)
     }
 }
 
