@@ -52,10 +52,10 @@ import { schedule } from 'node-cron';
 import { saveContacts } from './app/database/utils/saveContact.js';
 import { restoreClientData } from './json_data_file/client_data/restore_client_data.js';
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
-import { transferUserData } from './json_data_file/user_data/transfer_user_data_to_json.js';
+import { restoreUserData } from './json_data_file/user_data/restore_user_data.js';
 import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
 import { decrypted } from './json_data_file/crypto.js';
-import { restoreInstaContent } from './json_data_file/insta_data/insta_content/transfer_insta_content_data.js';
+import { restoreInstaContent } from './json_data_file/insta_data/insta_content/restore_insta_content_data.js';
 import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
 import { restoreTiktokContent } from './json_data_file/tiktok_data/tiktok_content/restore_tiktok_content.js';
 import { restoreTiktokComments } from './json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/restore_tiktok_comments.js';
@@ -1272,7 +1272,7 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     for (let i = 0; i < response.length;i++){
-                                        transferUserData(decrypted(response[i].CLIENT_ID))
+                                        restoreUserData(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 console.log(response);

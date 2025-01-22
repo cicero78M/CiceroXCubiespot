@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
+import { newRowsData } from "../../app/database/new_query/sheet_query.js";
 import { decrypted } from "../crypto.js";
 
 let client = [];
@@ -7,7 +7,7 @@ let client = [];
 export async function restoreClientData() {
 
     await newRowsData(
-        ciceroKey.dbKey.clientDataID, 
+        process.env.clientDataID, 
         'ClientData_Enc'
     ).then(async data => {
             for (let i = 0; i < data.length; i++){

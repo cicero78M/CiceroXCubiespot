@@ -5,7 +5,7 @@
  * 
  */
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../new_query/sheet_query.js";
+import { googleAuth } from "../new_query/sheet_query.js";
 import { encrypted } from "../../../json_data_file/crypto.js";
 
 export async function createClientID(clientName, type) {
@@ -26,7 +26,7 @@ export async function createClientID(clientName, type) {
             try {
 
                 const sheetDoc = new GoogleSpreadsheet(
-                    ciceroKey.dbKey.clientDataID, 
+                    process.env.clientDataID, 
                     googleAuth
                 ); //Google Auth
                 await sheetDoc.loadInfo();

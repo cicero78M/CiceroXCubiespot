@@ -41,7 +41,7 @@ return new Promise(async (resolve, reject) => {
     if (divisiList.includes(divisi)) {
 
       if (!idExist) {
-        console.log("Id key not exist");
+        console.log("Id key not exist, Added Data");
         //Get Target Sheet Documents by Title
         let userData = new Object();
 

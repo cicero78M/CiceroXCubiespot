@@ -1,5 +1,4 @@
 import { client } from "../../../app.js";
-import { ciceroKey } from "../new_query/sheet_query.js";
 import { createClientID } from "./create_client_id.js";
 import { createDataSheet } from "./create_data_sheet.js";
 import { createSheetHeader } from "./create_header_rows.js";
@@ -32,7 +31,7 @@ export async function clientRegister(clientName, type) {
 
             await createDataSheet(
                 clientName, 
-                ciceroKey.dbKey.userDataID, 
+                process.env.userDataID, 
                 headerValuesUser, 
                 "USER DATA"
             ).then(
@@ -61,7 +60,7 @@ export async function clientRegister(clientName, type) {
 
             await createDataSheet(
                 clientName, 
-                ciceroKey.dbKey.instaOfficialID, 
+                process.env.instaOfficialID, 
                 headerValuesInsta, 
                 "INSTA OFFICIAL"
             ).then(
@@ -74,7 +73,7 @@ export async function clientRegister(clientName, type) {
                     
                     await createDataSheet(
                         clientName, 
-                        ciceroKey.dbKey.instaLikesUsernameID, 
+                        process.env.instaLikesUsernameID, 
                         headerValues, 
                         "INSTA USERNAME DATA"
                     ).then(
@@ -86,7 +85,7 @@ export async function clientRegister(clientName, type) {
                             );
                                 await createSheetHeader(
                                 clientName, 
-                                ciceroKey.dbKey.instaLikesUsernameID
+                                process.env.instaLikesUsernameID
                             ).then (
                                     async data =>{
                                         console.log(data);
@@ -124,7 +123,7 @@ export async function clientRegister(clientName, type) {
 
             await createDataSheet(
                 clientName, 
-                ciceroKey.dbKey.tiktokOfficialID, 
+                process.env.tiktokOfficialID, 
                 headerValuesTiktok, 
                 "TIKTOK OFFICIAL"
             ).then(
@@ -136,7 +135,7 @@ export async function clientRegister(clientName, type) {
                     );
                     await createDataSheet(
                         clientName, 
-                        ciceroKey.dbKey.tiktokCommentUsernameID, 
+                        process.env.tiktokCommentUsernameID, 
                         headerValues, 
                         "TIKTOK USERNAME DATA"
                     ).then(
@@ -148,7 +147,7 @@ export async function clientRegister(clientName, type) {
                             );
                             await createSheetHeader(
                                 clientName, 
-                                ciceroKey.dbKey.tiktokCommentUsernameID
+                                process.env.tiktokCommentUsernameID
                             ).then (
                                 async data =>{
                                     console.log(data);

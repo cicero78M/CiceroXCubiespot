@@ -7,7 +7,6 @@ import { encrypted } from "../../../json_data_file/crypto.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type) {
 
-  let isDataExist = false;
   let idExist = false;
   let usernameList = [];
   let userRows = [];
@@ -47,8 +46,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             if (userRows[i].WHATSAPP === phone || userRows[i].WHATSAPP === "" || phone === "6281235114745") {
   
               if (userRows[i].STATUS === "TRUE") {
-
-                
+              
                 userData.ID_KEY = encrypted(userRows[i].ID_KEY);
                 userData.NAMA = encrypted(userRows[i].NAMA);
                 userData.TITLE = encrypted(userRows[i].TITLE);
@@ -56,11 +54,8 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                 userData.JABATAN = encrypted(userRows[i].JABATAN);
                 userData.STATUS = encrypted(userRows[i].STATUS);
                 userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
-  
-                isDataExist = true;
-                
-                if (type === "INSTA") {
                   
+                if (type === "INSTA") {                  
                   userData.TIKTOK = encrypted(userRows[i].TIKTOK);
                   userData.INSTA = encrypted(username);
                 } else if (type === "TIKTOK") {

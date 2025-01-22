@@ -1,15 +1,15 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_query.js";
-import { encrypted } from "../../crypto.js";
+import { googleAuth } from "../../../app/database/new_query/sheet_query.js";
+import { decrypted } from "../../crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
 
 export async function restoreInstaLikes(clientName) {
 
   console.log("Execute");
 
-    let instaLikesDoc = new GoogleSpreadsheet(ciceroKey.dbKey.instaLikesUsernameID, googleAuth); //Google Authentication for InstaOfficial DB    
+    let instaLikesDoc = new GoogleSpreadsheet(process.env.instaLikesUsernameID, googleAuth); //Google Authentication for InstaOfficial DB    
     await instaLikesDoc.loadInfo(); // loads document properties and worksheets
-    let instaLikesUsernameSheet = instaLikesDoc.sheetsByTitle[clientName];
+    let instaLikesUsernameSheet = instaLikesDoc.sheetsByTitle[`${clientName}_BACKUP`];
     let instaLikesUsernameData = await instaLikesUsernameSheet.getRows();
 
     for (let i = 0; i < instaLikesUsernameData.length; i++) {
@@ -22,17 +22,17 @@ export async function restoreInstaLikes(clientName) {
 
 
         if (fromRows[ii] !== null || fromRows[ii] !== undefined || fromRows[ii] !== ""){
-          data.push(encrypted(fromRows[ii]));
+          data.push(fromRows[ii));
         }
                 
         try {
 
-          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${decrypted(fromRows[0])}.json`, JSON.stringify(data));
         
         } catch (error) {
         
           mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
-          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${fromRows[0]}.json`, JSON.stringify(data));
+          writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${decrypted(fromRows[0])}.json`, JSON.stringify(data));
         
         }
         
