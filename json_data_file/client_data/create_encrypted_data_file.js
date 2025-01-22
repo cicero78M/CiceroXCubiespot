@@ -1,4 +1,3 @@
-import { encrypted } from "../crypto.js";
 import { ciceroKey, newRowsData } from "../../app/database/new_query/sheet_query.js";
 // import { GoogleSpreadsheet } from "google-spreadsheet";
 
