@@ -36,9 +36,11 @@ export async function tiktokCommentsBackup(clientValue) {
 
                 let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                 let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-                shortcodeList.push(decrypted(contentItems.SHORTCODE));
 
                 if ( dateNow === localDate) {
+
+                  shortcodeList.push(decrypted(contentItems.SHORTCODE));
+
                 }
             }
           if (shortcodeList.length >= 1) {  
