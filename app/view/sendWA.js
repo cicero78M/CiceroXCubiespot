@@ -58,7 +58,7 @@ export async function sendClientResponse(clientID, supervisor, operator, group, 
             await client.sendMessage(group, responseData.data);
             break;
         default:
-            console.log("Something Error");
+            console.log(responseData);
             break;
     }
 }
