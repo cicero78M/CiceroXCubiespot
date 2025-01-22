@@ -16,6 +16,8 @@ export async function tiktokCommentsBackup(clientValue) {
     process.env.tiktokCommentUsernameID, 
     googleAuth
   ); //Google Auth
+  await sheetDoc.loadInfo();
+  const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
 
 
   return new Promise(
@@ -51,10 +53,6 @@ export async function tiktokCommentsBackup(clientValue) {
 
               setTimeout(async () => {
 
-    
-                await sheetDoc.loadInfo();
-                
-                const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
                 await sheetName.addRow(commentItems);
 
               }, 2000);
