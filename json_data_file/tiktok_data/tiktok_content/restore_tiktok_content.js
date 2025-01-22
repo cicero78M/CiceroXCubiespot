@@ -1,5 +1,5 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { ciceroKey, googleAuth } from "../../../app/database/new_query/sheet_query.js";
+import { googleAuth } from "../../../app/database/new_query/sheet_query.js";
 import { encrypted } from "../../crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
 
@@ -7,7 +7,7 @@ export async function restoreTiktokContent(clientName) {
 
     console.log("Execute");
 
-    let tiktokOfficialDoc = new GoogleSpreadsheet(ciceroKey.dbKey.tiktokOfficialID, googleAuth); //Google Authentication for Tiktok Official DB    
+    let tiktokOfficialDoc = new GoogleSpreadsheet(process.env.tiktokOfficialID, googleAuth); //Google Authentication for Tiktok Official DB    
     await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
     let tiktokOfficialSheet = tiktokOfficialDoc.sheetsByTitle[clientName];
     let tiktokOfficialData = await tiktokOfficialSheet.getRows();
