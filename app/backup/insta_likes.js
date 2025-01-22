@@ -36,12 +36,15 @@ export async function instaLikesBackup(clientValue) {
                 }
             }
 
+            let itemList = [];
 
           if (shortcodeList.length >= 1) {  
         
             for (let i = 0; i < shortcodeList.length; i++) {
               let likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
-              likeItem.upshift(encrypted(shortcodeList[i]));
+              likeItem.unshift(encrypted(shortcodeList[i]));
+              itemList.push(likeItem);
+
             }
             
             const sheetDoc = new GoogleSpreadsheet(
