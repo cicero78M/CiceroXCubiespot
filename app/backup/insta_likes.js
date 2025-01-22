@@ -58,7 +58,7 @@ export async function instaLikesBackup(clientValue) {
               const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
               await sheetName.addRow(likeItem);
 
-              }, 1000);
+              }, 2000);
 
               } catch (error) {
                 // console.log('No Data');

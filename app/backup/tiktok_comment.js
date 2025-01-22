@@ -52,7 +52,8 @@ export async function tiktokCommentsBackup(clientValue) {
                 
                 const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
                 await sheetName.addRow(commentItems);
-              }, 1000);
+
+              }, 2000);
              
               } catch (error) {
 
