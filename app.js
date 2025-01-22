@@ -64,7 +64,7 @@ import { userDataBackup } from './app/backup/user_data.js';
 import { instaContentBackup } from './app/backup/insta_content.js';
 import { tiktokContentBackup } from './app/backup/tiktok_content.js';
 import { instaLikesBackup } from './app/backup/insta_likes.js';
-import { tiktokCommentsBackup } from './app/backup/tiktok_commentjs';
+import { tiktokCommentsBackup } from './app/backup/tiktok_comment.js';
 
 //.env
 const private_key = process.env;
