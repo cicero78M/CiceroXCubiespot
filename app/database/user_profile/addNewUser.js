@@ -56,9 +56,9 @@ return new Promise(async (resolve, reject) => {
         userData.TIKTOK = encrypted("");
         userData.EXCEPTION = encrypted("FALSE");
 
-        writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
+        writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
 
-        resolve (`${idKey} JSON Data Successfully Added.`);
+        resolve (`${parseInt(idKey)} JSON Data Successfully Added.`);
             
         let responseMyData = await myData(
           clientName, 
