@@ -48,11 +48,11 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         userData.TITLE = encrypted(title);
         userData.DIVISI = encrypted(divisi);
         userData.JABATAN = encrypted(jabatan);
-        userData.STATUS = encrypted(true);
-        userData.WHATSAPP = encrypted(null);
-        userData.INSTA = encrypted(null);
-        userData.TIKTOK = encrypted(null);
-        userData.EXCEPTION = encrypted(false);
+        userData.STATUS = encrypted("TRUE");
+        userData.WHATSAPP = encrypted("");
+        userData.INSTA = encrypted("");
+        userData.TIKTOK = encrypted("");
+        userData.EXCEPTION = encrypted("FALSE");
 
         writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
 
