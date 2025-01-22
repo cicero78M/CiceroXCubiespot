@@ -1296,15 +1296,8 @@ client.on('message', async (msg) => {
                     }
                 } else if(dataTransfer.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
-                        case "transferclientdata1":
+                        case "restoreclientdata":
                             clientData2Json();
-                            break;
-                        case "transferclientdata2":
-                            clientData().then(
-                                response =>{
-                                    console.log(response);
-                                }
-                            );
                             break;
                         case "user2json":
                             clientData().then(
