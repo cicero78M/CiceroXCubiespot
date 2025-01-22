@@ -4,15 +4,11 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
 
 export async function tiktokCommentsBackup(clientValue) {
-
   //Date Time
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-      
   const clientName = decrypted(clientValue.CLIENT_ID);
-
   let data;
-
   let shortcodeList = [];
 
   return new Promise(
@@ -25,7 +21,7 @@ export async function tiktokCommentsBackup(clientValue) {
             
             let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
-            for (let i = 0; i < instaContentDir.length; i++) {
+            for (let i = 0; i < tiktokContentDir.length; i++) {
 
                 let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
 
