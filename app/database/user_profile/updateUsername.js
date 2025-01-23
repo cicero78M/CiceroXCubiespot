@@ -75,7 +75,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
                   userData.WHATSAPP = encrypted(phone);
 
-                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                  writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
               
                   await myData(clientName, idKey).then(
                     response => resolve (response)
@@ -90,7 +90,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
                   userData.WHATSAPP = encrypted("");
 
-                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                  writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
                 
                   await myData(clientName, idKey).then(
                     response => resolve (response)
@@ -108,7 +108,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
                   userData.WHATSAPP = encrypted(phone);
 
-                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                  writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
               
                   await myData(clientName, idKey).then(
                     response => resolve (response)
