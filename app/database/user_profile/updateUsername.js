@@ -13,9 +13,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
   let userData = new Object();
 
-  console.log(idKey);
-  console.log(parseInt(idKey));
-
   return new Promise(async (resolve, reject) => {
 
     try {
@@ -36,7 +33,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
               console.log("data exist")
               idExist = true;
-              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`));
+              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${userRows[i].ID_KEY}.json`));
             
             }
           } 
