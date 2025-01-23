@@ -83,7 +83,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                   ).catch(
                     response => reject (response)
   
-                  )
+                  );
                   
                   break;
                 case "6281235114745":
@@ -98,7 +98,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                   ).catch(
                     response => reject (response)
   
-                  )
+                  );
 
                   break;
               

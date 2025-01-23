@@ -44,11 +44,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
           
               await instaLikesAPI(todayItems[i]).then(
                 async response =>{
-
                   const likesItems = await response.data.data.items;
-
-                  newDataUsers = [];
-                
                   for (let iii = 0; iii < likesItems.length; iii++) {
                     if (likesItems[iii].username !== undefined || likesItems[iii].username !== null || likesItems[iii].username !== "") {
                       if (!newDataUsers.includes(likesItems[iii].username)) {
