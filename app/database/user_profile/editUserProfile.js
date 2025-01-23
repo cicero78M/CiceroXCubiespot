@@ -10,9 +10,12 @@ import { newListValueData } from '../new_query/data_list_query.js';
 //This Function for edit user data profile
 export async function editProfile(clientName, idKey, newData, phone, type) {
   try {
+    
     let isDataExist = false;
     let userRows = [];
     let dataList = [];
+    let phoneList = [];
+
     let userData = new Object();
 
     await newListValueData(
@@ -21,6 +24,15 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
     ).then(
       async response =>{
         dataList = await response;
+      }
+    );
+
+    await newListValueData(
+      clientName, 
+      "WHATSAPP"
+    ).then(
+      async response =>{
+        phoneList = await response;
       }
     );
 
@@ -42,6 +54,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
     );
 
     for (let ii = 0; ii < userRows.length; ii++) {
+
       if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
 
         userData.ID_KEY = encrypted(userRows[ii].ID_KEY);
@@ -55,88 +68,103 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
         userData.WHATSAPP = encrypted(userRows[ii].WHATSAPP);
         userData.EXCEPTION = encrypted(userRows[ii].EXCEPTION);
 
-        if (userRows[ii].WHATSAPP === "" 
-        || userRows[ii].WHATSAPP === phone 
-        || phone === "6281235114745") {
+        if (!phoneList.includes(phone)){
 
-          isDataExist = true;
-
-          if (userRows[ii].STATUS === "TRUE") {
-            if (type === 'DIVISI') {
-              if (dataList.includes(newData)) {
-                userData.DIVISI = encrypted(newData);
-              } else {
-                propertiesView(clientName, "DIVISI").then(
-                  async response =>{
-                    client.sendMessage(phone+'@c.us', response.data);
+          if (userRows[ii].WHATSAPP === "" 
+            || userRows[ii].WHATSAPP === phone 
+            || phone === "6281235114745") {
+    
+    
+    
+              isDataExist = true;
+    
+              if (userRows[ii].STATUS === "TRUE") {
+                if (type === 'DIVISI') {
+                  if (dataList.includes(newData)) {
+                    userData.DIVISI = encrypted(newData);
+                  } else {
+                    propertiesView(clientName, "DIVISI").then(
+                      async response =>{
+                        client.sendMessage(phone+'@c.us', response.data);
+                      }
+                    ).catch(
+                      error =>{
+                        console.log(error);
+                        let responseData = {
+                          data: "Divisi Unregistred",
+                          state: true,
+                          code: 200
+                        };
+                        client.sendMessage(phone+'@c.us', responseData.data);
+                      }
+                    )
                   }
-                ).catch(
-                  error =>{
-                    console.log(error);
-                    let responseData = {
-                      data: "Divisi Unregistred",
-                      state: true,
-                      code: 200
-                    };
-                    client.sendMessage(phone+'@c.us', responseData.data);
+    
+                } else if (type === 'JABATAN') {
+                  userData.JABATAN = encrypted(newData);
+                } else if (type === 'NAMA') {
+                  userData.NAMA = encrypted(newData);
+                } else if (type === 'ID_KEY') {
+                  userData.ID_KEY = encrypted(newData);
+                } else if (type === 'TITLE') {
+    
+                  if (dataList.includes(newData)) {
+                    userData.TITLE = encrypted(newData);
+                  } else {
+                    let responseData = await propertiesView(clientName, type);
+                    return responseData;
                   }
-                )
-              }
-
-            } else if (type === 'JABATAN') {
-              userData.JABATAN = encrypted(newData);
-            } else if (type === 'NAMA') {
-              userData.NAMA = encrypted(newData);
-            } else if (type === 'ID_KEY') {
-              userData.ID_KEY = encrypted(newData);
-            } else if (type === 'TITLE') {
-
-              if (dataList.includes(newData)) {
-                userData.TITLE = encrypted(newData);
+    
+                } else if (type === 'STATUS') {
+                  userData.STATUS = encrypted(newData);
+                } else if (type === 'EXCEPTION') {
+                  userData.EXCEPTION = encrypted(newData);
+                } else if (type === 'WHATSAPP') {
+                  userData.WHATSAPP = encrypted(phone);
+                }
+    
+                writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+    
+                let responseMyData = await myData(clientName, idKey);
+                
+                return responseMyData;
+    
               } else {
-                let responseData = await propertiesView(clientName, type);
+    
+                let responseData = {
+                  data: 'Your Account Suspended',
+                  state: true,
+                  code: 201
+                };
+    
+                console.log('Return Account Suspended');
                 return responseData;
+              
               }
-
-            } else if (type === 'STATUS') {
-              userData.STATUS = encrypted(newData);
-            } else if (type === 'EXCEPTION') {
-              userData.EXCEPTION = encrypted(newData);
-            } else if (type === 'WHATSAPP') {
-              userData.WHATSAPP = encrypted(phone);
-            }
-
-            writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-
-            let responseMyData = await myData(clientName, idKey);
+            } else {
+              
+              let responseData = {
+                data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                state: true,
+                code: 201
+              };
+              
+              console.log('Return Whatsapp Used');
+              return responseData;
             
-            return responseMyData;
-
-          } else {
-
-            let responseData = {
-              data: 'Your Account Suspended',
-              state: true,
-              code: 201
-            };
-
-            console.log('Return Account Suspended');
-            return responseData;
-          
+            }
           }
+
         } else {
-          
           let responseData = {
-            data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+            data: 'Nomor yang anda Gunakan Sudah Terdaftar, silahkan gunakan nomer whatsapp pribadi anda untuk melakukan perubahan data.',
             state: true,
             code: 201
           };
           
           console.log('Return Whatsapp Used');
           return responseData;
-        
         }
-      }
     }
 
     if (!isDataExist) {
