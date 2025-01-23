@@ -137,8 +137,8 @@ client.on('ready', () => {
         let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
         let time = localDate+" >> "+hours;
 
-        console.log(time+' '+ciceroKey.waSession+' <<<System Alive>>>');
-        client.sendMessage('6281235114745@c.us', process.env.APP_SESSION_NAME+' <<<System Alive>>>');
+        console.log(time+' '+ process.env.APP_SESSION_NAME +' <<<System Alive>>>');
+        client.sendMessage('6281235114745@c.us', process.env.APP_SESSION_NAME +' <<<System Alive>>>');
     });
 
     // Scrapping Socmed every hours until 21
