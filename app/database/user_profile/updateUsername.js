@@ -9,6 +9,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
   let idExist = false;
   let usernameList = [];
   let userRows = [];
+  let phoneList = [];
 
   let userData = new Object();
 
@@ -19,6 +20,15 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       await newListValueData(clientName, type).then(
         async response => {
           usernameList = await response;
+        }
+      );
+
+      await newListValueData(
+        clientName, 
+        "WHASTAPP"
+      ).then(
+        async response =>{
+          phoneList = await response;
         }
       );
   
@@ -41,63 +51,95 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       if (!usernameList.includes(username)) {
         for (let i = 0; i < userRows.length; i++) {
           if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
-            if (userRows[i].WHATSAPP === phone || userRows[i].WHATSAPP === "" || phone === "6281235114745") {
-  
-              if (userRows[i].STATUS === "TRUE") {
+
+            if (userRows[i].STATUS === "TRUE") {
               
-                userData.ID_KEY = encrypted(userRows[i].ID_KEY);
-                userData.NAMA = encrypted(userRows[i].NAMA);
-                userData.TITLE = encrypted(userRows[i].TITLE);
-                userData.DIVISI = encrypted(userRows[i].DIVISI);
-                userData.JABATAN = encrypted(userRows[i].JABATAN);
-                userData.STATUS = encrypted(userRows[i].STATUS);
-                userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
-                  
-                if (type === "INSTA") {                  
-                  userData.TIKTOK = encrypted(userRows[i].TIKTOK);
-                  userData.INSTA = encrypted(username);
-                } else if (type === "TIKTOK") {
-                  userData.INSTA = encrypted(userRows[i].INSTA);
-                  userData.TIKTOK = encrypted(username);
-                }
+              userData.ID_KEY = encrypted(userRows[i].ID_KEY);
+              userData.NAMA = encrypted(userRows[i].NAMA);
+              userData.TITLE = encrypted(userRows[i].TITLE);
+              userData.DIVISI = encrypted(userRows[i].DIVISI);
+              userData.JABATAN = encrypted(userRows[i].JABATAN);
+              userData.STATUS = encrypted(userRows[i].STATUS);
+              userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
                 
-                if (userRows[i].WHATSAPP === "" && phone !== "6281235114745") {
-                  userData.WHATSAPP = encrypted(phone);
-                } else {
-                  userData.WHATSAPP = encrypted(userRows[i].WHATSAPP);
-                }
-                
-                writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-                
-                await myData(clientName, idKey).then(
-                  response => resolve (response)
-
-                ).catch(
-                  response => reject (response)
-
-                )
-                  
-              } else {
-  
-                let responseData = {
-                  data: 'Your Account Suspended',
-                  state: true,
-                  code: 201
-                };
-  
-                console.log('Return Success');
-                reject (responseData);
-  
+              if (type === "INSTA") {                  
+                userData.TIKTOK = encrypted(userRows[i].TIKTOK);
+                userData.INSTA = encrypted(username);
+              } else if (type === "TIKTOK") {
+                userData.INSTA = encrypted(userRows[i].INSTA);
+                userData.TIKTOK = encrypted(username);
               }
+
+              switch (userRows[i].WHATSAPP) {
+                case phone:
+
+                  userData.WHATSAPP = encrypted(phone);
+
+                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+              
+                  await myData(clientName, idKey).then(
+                    response => resolve (response)
   
+                  ).catch(
+                    response => reject (response)
+  
+                  )
+                  
+                  break;
+                case "6281235114745":
+
+                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                
+                  await myData(clientName, idKey).then(
+                    response => resolve (response)
+  
+                  ).catch(
+                    response => reject (response)
+  
+                  )
+
+                  break;
+              
+                default:
+
+                if (!phoneList.includes(phone)) {
+
+                  userData.WHATSAPP = encrypted(phone);
+
+                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+              
+                  await myData(clientName, idKey).then(
+                    response => resolve (response)
+  
+                  ).catch(
+                    response => reject (response)
+  
+                  )
+                } else {
+                  
+                  let responseData = {
+                    data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                    state: true,
+                    code: 201
+                  };
+
+                  console.log('Return Success');
+                  reject (responseData);                  
+                }
+                  break;
+              }
+                
             } else {
+
               let responseData = {
-                data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                data: 'Your Account Suspended',
                 state: true,
                 code: 201
               };
+
               console.log('Return Success');
               reject (responseData);
+
             }
           }
         }
@@ -112,8 +154,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           console.log('Return ID_Key Doesnt Exist');
           reject (responseData);
         }
-  
-  
       } else {
   
         let responseData = {
