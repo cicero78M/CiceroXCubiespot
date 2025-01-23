@@ -12,9 +12,10 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
   let userRows = [];
 
   let userData = new Object();
-  console.log(idKey);
 
+  console.log(idKey);
   console.log(parseInt(idKey));
+
   return new Promise(async (resolve, reject) => {
 
     try {
@@ -32,10 +33,10 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         async response => {    
           userRows = await response;                           
           for (let i = 0; i < userRows.length; i++) {
-            if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
+            if (parseInt(userRows[i].ID_KEY) === idKey ){
               
               idExist = true;
-              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`));
+              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`));
             
             }
           } 
@@ -44,7 +45,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
   
       if (!usernameList.includes(username)) {
         for (let i = 0; i < userRows.length; i++) {
-          if (parseInt(userRows[i].ID_KEY) === parseInt(idKey)) {
+          if (parseInt(userRows[i].ID_KEY) === idKey) {
             if (userRows[i].WHATSAPP === phone || userRows[i].WHATSAPP === "" || phone === "6281235114745") {
   
               if (userRows[i].STATUS === "TRUE") {
