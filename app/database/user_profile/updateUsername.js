@@ -4,7 +4,6 @@ import { readUser } from "../../../json_data_file/user_data/read_data_from_dir.j
 import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from "../../../json_data_file/crypto.js";
 
-
 export async function updateUsername(clientName, idKey, username, phone, type) {
 
   let idExist = false;
@@ -22,7 +21,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           usernameList = await response;
         }
       );
-
   
       await readUser(
         clientName
