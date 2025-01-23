@@ -28,7 +28,6 @@ export async function getTiktokPost(clientValue) {
             let hasContent = false;
         
             if (decrypted(clientValue.STATUS) === 'TRUE') {
-
                 await tiktokPostAPI(secUid, cursor).then( async response =>{
                     items =  await response.data.data.itemList;
                     for (let i = 0; i < items.length; i++) {
@@ -91,6 +90,7 @@ export async function getTiktokPost(clientValue) {
                                 state: true,
                                 code: 200
                             }
+                            
                         resolve (data);
             
                     } else {

@@ -42,8 +42,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                         ).then(
                             async data => {
                                 switch (data.code){
-                                    case 201:
-                                                  
+                                    case 201:   
                                         switch (timeSwitch){
                                             case 'report':
                          

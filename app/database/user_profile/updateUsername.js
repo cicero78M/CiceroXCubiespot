@@ -12,7 +12,9 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
   let userRows = [];
 
   let userData = new Object();
+  console.log(idKey);
 
+  console.log(parseInt(idKey));
   return new Promise(async (resolve, reject) => {
 
     try {
