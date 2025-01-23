@@ -126,6 +126,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             case "6281235114745":
               {
 
+                userData.WHATSAPP = encrypted("");
+
                 writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
 
                 responseMyData = await myData(clientName, idKey);

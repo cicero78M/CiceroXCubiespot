@@ -88,6 +88,8 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                   break;
                 case "6281235114745":
 
+                  userData.WHATSAPP = encrypted("");
+
                   writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
                 
                   await myData(clientName, idKey).then(
