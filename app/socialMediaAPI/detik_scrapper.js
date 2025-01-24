@@ -1,13 +1,15 @@
 import puppeteer from "puppeteer";
 
+
+    export async function detikScrapping(url) {
+
+        
 const browser = await puppeteer.launch({
     headless: false,
     defaultViewport: null,
 });
 
 const page = await browser.newPage();
-
-    export async function detikScrapping(url) {
 
     await page.goto(url, {
         waitUntil: "domcontentloaded",
