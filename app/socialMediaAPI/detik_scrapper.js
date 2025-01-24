@@ -16,12 +16,10 @@ export async function detikScrapping() {
     await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
         waitUntil: "domcontentloaded",
       });
-
-      const titleNode = await page.$('thecomment2'); 
-      const title = await page.evaluate(el => el, titleNode); 
+      const link = await page.$eval('a', anchor => anchor.getAttribute('href')); 
 
 
-      console.log (title);
+      console.log (link);
     
     
     await browser.close();
