@@ -21,7 +21,7 @@ export async function detikScrapping() {
 
         const quote = document.querySelector("#comm1");
 
-        const commentCount = quote.querySelector("#root > div > div.komentar-iframe-min-comment-lead > span:nth-child(2)");
+        const commentCount = quote.querySelector("#root > div > div.komentar-iframe-min-comment-lead > span:nth-child(2)").innerText;
 
         return { commentCount };
       });
