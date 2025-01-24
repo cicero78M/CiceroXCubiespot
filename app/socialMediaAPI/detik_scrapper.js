@@ -15,6 +15,10 @@ export async function detikScrapping() {
     await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
         waitUntil: "domcontentloaded",
       });
+
+      await page.waitForSelector('#comm1', {
+        visible: true,
+      });
       const comments = await page.$$('.komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered');
 
       console.log(comments);
