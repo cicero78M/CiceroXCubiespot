@@ -13,19 +13,14 @@ export async function detikScrapping() {
     
     const page = await browser.newPage();
 
-    await page.goto("http://quotes.toscrape.com/", {
+    await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
         waitUntil: "domcontentloaded",
       });
 
       const quotes = await page.evaluate(() => {
-        // Fetch the first element with class "quote"
-        const quote = document.querySelector(".quote");
-    
-        // Fetch the sub-elements from the previously fetched quote element
-        // Get the displayed text and return it (`.innerText`)
-        // const text = quote.querySelector(".text").innerText;
-        // const author = quote.querySelector(".author").innerText;
-    
+
+        const quote = document.querySelector(".box cb-berita-terkait");
+
         return { quote };
       });
 
