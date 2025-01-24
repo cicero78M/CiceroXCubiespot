@@ -1478,7 +1478,7 @@ client.on('message', async (msg) => {
                             break;
                     }
                 } else if( detikCom.includes(splittedMsg[1].toLowerCase())){
-                    detikScrapping(includes(splittedMsg[2]));
+                    detikScrapping(splittedMsg[2]);
                 } else {//Key Order Data Not Exist         
 
                     await clientData().then(
