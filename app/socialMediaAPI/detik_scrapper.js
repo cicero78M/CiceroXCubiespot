@@ -19,7 +19,7 @@ export async function detikScrapping() {
 
       const quotes = await page.evaluate(() => {
 
-        const quote = document.querySelector("#comm1");
+        const quote = document.querySelector("##thecomment2");
 
         return { quote };
       });
@@ -32,6 +32,5 @@ export async function detikScrapping() {
     } catch (error) {
         console.log(error);
     }
-
 
 }
