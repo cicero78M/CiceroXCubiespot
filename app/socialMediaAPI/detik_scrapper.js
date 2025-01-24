@@ -19,7 +19,7 @@ export async function detikScrapping() {
 
       const quotes = await page.evaluate(() => {
 
-        const quote = document.querySelector("#thecomment2");
+        const quote = document.querySelector(".komentar-iframe-min-media__desc").innerHTML;
 
         return { quote };
       });
