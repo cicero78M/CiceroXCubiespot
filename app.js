@@ -37,7 +37,7 @@ import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_li
 import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
 import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
 import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
-import { adminOrder, cubiesOrder, dataBackup, dataRestore, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
+import { adminOrder, cubiesOrder, dataBackup, dataRestore, detikCom, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
 import { addNewUser } from './app/database/user_profile/addNewUser.js';
 import { editProfile } from './app/database/user_profile/editUserProfile.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
@@ -60,6 +60,7 @@ import { instaContentBackup } from './app/backup/insta_content.js';
 import { tiktokContentBackup } from './app/backup/tiktok_content.js';
 import { instaLikesBackup } from './app/backup/insta_likes.js';
 import { tiktokCommentsBackup } from './app/backup/tiktok_comment.js';
+import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
 
 //.env
 const private_key = process.env;
@@ -245,6 +246,75 @@ client.on('ready', () => {
             }
         });
     });
+
+    //User Warning Likes Comments Insta & Tiktok
+    schedule('* 1 * * *',  async () => {
+
+        console.log("Execute Backup Client & User Data");
+        await clientDataBackup().then(
+            response => console.log(response)
+        ).catch (
+            error => console.error(error)
+        );
+
+        await userDataBackup().then(
+            response => console.log(response)
+        ).catch (
+            error => console.error(error)
+        );
+        
+    });
+
+    //User Warning Likes Comments Insta & Tiktok
+    schedule('* 22 * * *',  async () => {
+
+        console.log("Execute Backup Insta & Tiktok Content");
+        await clientData().then(
+            async response =>{
+                for (let i = 0; i < response.length; i++){
+                    await instaContentBackup(response[i]).then(
+                        response => console.log(response)
+                    ).catch(
+                        error => console.error(error)
+                    );
+
+                    await tiktokContentBackup(response[i]).then(
+                        response => console.log(response)
+                    ).catch(
+                        error => console.error(error)
+                    );
+                }
+            }
+        ).catch (
+            error => console.error(error)
+        );
+        
+    });
+
+    //User Warning Likes Comments Insta & Tiktok
+    schedule('* 23 * * *',  async () => {
+
+        console.log("Execute Backup Insta & Tiktok Like Comments");
+        await clientData().then(
+            async response =>{
+                for (let i = 0; i < response.length; i++){
+            
+                    await instaLikesBackup(response[i]).then(
+                        response => console.log(response)
+                    ).catch(
+                        error => console.error(error)
+                    );
+
+                    await tiktokCommentsBackup(response[i]).then(
+                        response => console.log(response)
+                    ).catch(
+                        error => console.error(error)
+                    );
+        
+                }
+            }
+        );
+    });
 });
 
 client.on('message', async (msg) => {
@@ -337,7 +407,6 @@ client.on('message', async (msg) => {
                                     console.log(response)
                                 );
 
-
                                 // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
                                                         
                             }  else {
@@ -429,7 +498,6 @@ client.on('message', async (msg) => {
                                         && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {         
                                     
                                             console.log(time+" "+decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
-                                        
                                             let tiktokSecuid = await setSecuid(
                                                 clientData[i]
                                             );
@@ -439,7 +507,6 @@ client.on('message', async (msg) => {
                                                 tiktokSecuid, 
                                                 `${decrypted(clientData[i].CLIENT_ID)} START TIKTOK SECUID DATA`
                                             );
-                                        
                                         } 
                                     }
                             });
@@ -1375,7 +1442,7 @@ client.on('message', async (msg) => {
                                         );
                                     }
                                 }
-                            )
+                            );
 
                             break;
                         case "backupinstalikes"://Backup Encrypted Insta Likes Username Data
@@ -1389,7 +1456,7 @@ client.on('message', async (msg) => {
                                         );
                                     }
                                 }
-                            )
+                            );
                             break;
                         case "backuptiktokcomments"://Backup Encrypted Tiktok Comments Username Data
                             await clientData().then(
@@ -1404,13 +1471,14 @@ client.on('message', async (msg) => {
                                 }
                             ).catch (
                                 error => console.error(error)
-                            )
+                            );
 
                             break;     
                         default:
                             break;
                     }
-
+                } else if( detikCom.includes(splittedMsg[1].toLowerCase())){
+                    detikScrapping(includes(splittedMsg[2]));
                 } else {//Key Order Data Not Exist         
 
                     await clientData().then(

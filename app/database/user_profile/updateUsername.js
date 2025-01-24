@@ -10,11 +10,9 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
   let usernameList = [];
   let userRows = [];
   let phoneList = [];
-
   let userData = new Object();
 
   return new Promise(async (resolve, reject) => {
-
     try {
     
       await newListValueData(clientName, type).then(
@@ -41,8 +39,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
               console.log("data exist")
               idExist = true;
-              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${userRows[i].ID_KEY}.json`));
-            
+              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${userRows[i].ID_KEY}.json`));            
             }
           } 
         }
@@ -72,62 +69,48 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
               switch (userRows[i].WHATSAPP) {
                 case phone:
-
                   userData.WHATSAPP = encrypted(phone);
-
                   writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-              
                   await myData(clientName, idKey).then(
                     response => resolve (response)
-  
                   ).catch(
                     response => reject (response)
-  
                   );
-                  
                   break;
                 case "6281235114745":
-
                   userData.WHATSAPP = encrypted("");
-
                   writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-                
                   await myData(clientName, idKey).then(
                     response => resolve (response)
-  
                   ).catch(
                     response => reject (response)
-  
                   );
-
                   break;
-              
                 default:
+                  if (!phoneList.includes(phone)) {
 
-                if (!phoneList.includes(phone)) {
+                    userData.WHATSAPP = encrypted(phone);
 
-                  userData.WHATSAPP = encrypted(phone);
+                    writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
+                
+                    await myData(clientName, idKey).then(
+                      response => resolve (response)
+    
+                    ).catch(
+                      response => reject (response)
+    
+                    )
+                  } else {
+                    
+                    let responseData = {
+                      data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                      state: true,
+                      code: 201
+                    };
 
-                  writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-              
-                  await myData(clientName, idKey).then(
-                    response => resolve (response)
-  
-                  ).catch(
-                    response => reject (response)
-  
-                  )
-                } else {
-                  
-                  let responseData = {
-                    data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
-                    state: true,
-                    code: 201
-                  };
-
-                  console.log('Return Success');
-                  reject (responseData);                  
-                }
+                    console.log('Return Success');
+                    reject (responseData);                  
+                  }
                   break;
               }
                 
@@ -178,8 +161,5 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
       console.log(error);
       reject (responseData);
     }
-    
-  })
-
-
+  });
 }

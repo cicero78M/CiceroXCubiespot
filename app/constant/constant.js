@@ -70,11 +70,15 @@ export const dataRestore = [
     "restoretiktokcomments"
 ];
 
-export const dataBackup= [
+export const dataBackup = [
     "backupclientdata",
     "backupuserdata",
     "backupinstacontent",
     "backuptiktokcontent",
     "backupinstalikes",
     "backuptiktokcomments",
+];
+
+export const detikCom =[
+    "loadcomment"
 ];
