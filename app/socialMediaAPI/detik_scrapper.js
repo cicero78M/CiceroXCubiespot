@@ -21,19 +21,15 @@ export async function detikScrapping() {
 
         try {
 
-          const user = await page.evaluate(el => el.querySelector('div.komentar-iframe-min-media__user').textContent, comment);
+          const user = await page.evaluate(el => el.querySelector('komentar-iframe-min-media__user').textContent, comment);
 
           console.log(user);
           
         } catch (error) {
-          
+
+          console.error(error);
         }
-
-
       }
-
-
-      console.log (header, link);
        
     await browser.close();
         
