@@ -13,7 +13,7 @@ export async function detikScrapping(url) {
 
     await page.goto(url);
 
-    console.log(page._timeoutSettings.timeout());
+    console.log(page);
     await browser.close();
 
 }
