@@ -5,7 +5,7 @@ import puppeteer from "puppeteer";
     const browser = await puppeteer.launch({
         headless: false,
         defaultViewport: null,
-        executablePath: '/usr/bin/chromium-browser',
+        executablePath: '/usr/bin/google-chrome',
         ignoreDefaultArgs: ['--disable-extensions']
 
     });
