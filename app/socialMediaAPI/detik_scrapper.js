@@ -16,10 +16,8 @@ export async function detikScrapping() {
         waitUntil: "domcontentloaded",
       });
 
-      await page.waitForSelector('#comm1', {
-        visible: true,
-      });
-      const comments = await page.$$('#root > div > div.komentar-iframe-min-comment-entry > div.komentar-iframe-min-comment-entry > div');
+      await page.waitForSelector('.komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered');
+      const comments = await page.$$('.komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered');
 
       console.log(comments);
 
