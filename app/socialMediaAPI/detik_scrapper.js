@@ -19,13 +19,13 @@ export async function detikScrapping() {
 
       const quotes = await page.evaluate(() => {
         // Fetch the first element with class "quote"
-        const quote = document.querySelector(".comm1.box komentar_box");
+        const quote = document.querySelector(".root");
     
         // Fetch the sub-elements from the previously fetched quote element
         // Get the displayed text and return it (`.innerText`)
-        const text = quote.querySelector(".komentar-iframe-min-media__user").innerText;
+        // const text = quote.querySelector(".komentar-iframe-min-media__user").innerText;
     
-        return { text };
+        return { quote };
       });
 
       console.log (quotes);
