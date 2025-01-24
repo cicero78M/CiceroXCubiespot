@@ -1,7 +1,9 @@
 import puppeteer from "puppeteer";
 
 export async function detikScrapping(url) {   
+    try {
 
+        
     const browser = await puppeteer.launch({
         headless: false,
         defaultViewport: null,
@@ -15,5 +17,10 @@ export async function detikScrapping(url) {
 
     console.log(page);
     await browser.close();
+        
+    } catch (error) {
+        console.log(error);
+    }
+
 
 }
