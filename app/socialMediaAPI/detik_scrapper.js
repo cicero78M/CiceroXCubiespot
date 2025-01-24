@@ -10,7 +10,7 @@ const browser = await puppeteer.launch({
 
 const page = await browser.newPage();
 
-    export async function detikScrapping(url) {
+export async function detikScrapping(url) {
             
     await page.goto(url, {
         waitUntil: "domcontentloaded",
@@ -19,7 +19,7 @@ const page = await browser.newPage();
       // Get page data
     const document = await page.evaluate(() => {
         // Fetch the first element with class "quote"
-        const comment = document.querySelector(".komentar-iframe-min-comment-body");
+        const comment = document.querySelector(".komentar-iframe-min-comment-body komentar-iframe-min-comment-body--detiknews");
 
         // Fetch the sub-elements from the previously fetched quote element
         // Get the displayed text and return it (`.innerText`)
