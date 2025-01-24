@@ -17,9 +17,11 @@ export async function detikScrapping() {
         waitUntil: "domcontentloaded",
       });
 
-      const quotes = await page.content();
+      const titleNode = await page.$('h1'); 
+      const title = await page.evaluate(el => el.innerText, titleNode); 
 
-      console.log (quotes);
+
+      console.log (title);
     
     
     await browser.close();
