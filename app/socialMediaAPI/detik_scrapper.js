@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-export async function detikScrapping(url) {   
+export async function detikScrapping() {   
     try {
 
         
@@ -13,29 +13,20 @@ export async function detikScrapping(url) {
     
     const page = await browser.newPage();
 
-    console.log('Browser Loaded')
-
-    page.once('load', () => console.log('Page loaded!'))
-    
-    page.on('error', err => console.log(err))
-
-    page.setDefaultNavigationTimeout(0);
-
-
-    await page.goto(url, {
-        waitUntil: "domcontentloaded", timeout: 0 
+    await page.goto("http://quotes.toscrape.com/", {
+        waitUntil: "domcontentloaded",
       });
 
       const quotes = await page.evaluate(() => {
         // Fetch the first element with class "quote"
-        const quote = document.querySelector(".komentar-iframe-min-comment-body komentar-iframe-min-comment-body--detiknews");
+        const quote = document.querySelector(".quote");
     
         // Fetch the sub-elements from the previously fetched quote element
         // Get the displayed text and return it (`.innerText`)
-        const author = quote.querySelector(".komentar-iframe-min-media__user").innerText;
-        const text = quote.querySelector("komentar-iframe-min-media__desc").innerText;
+        const text = quote.querySelector(".text").innerText;
+        const author = quote.querySelector(".author").innerText;
     
-        return { author, text };
+        return { text, author };
       });
 
       console.log (quotes);
