@@ -80,5 +80,5 @@ export const dataBackup = [
 ];
 
 export const detikCom =[
-    "loadcomment"
+    "loaddetik"
 ];
