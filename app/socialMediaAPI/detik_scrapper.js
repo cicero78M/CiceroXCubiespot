@@ -17,7 +17,7 @@ export async function detikScrapping() {
         waitUntil: "domcontentloaded",
       });
 
-      const titleNode = await page.$('h1'); 
+      const titleNode = await page.$('comm1'); 
       const title = await page.evaluate(el => el.innerText, titleNode); 
 
 
