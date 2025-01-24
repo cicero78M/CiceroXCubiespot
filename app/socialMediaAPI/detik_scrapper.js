@@ -4,7 +4,7 @@ export async function detikScrapping() {
     try {
         
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         defaultViewport: null,
         executablePath: '/usr/bin/chromium-browser',
         ignoreDefaultArgs: ['--disable-extensions']
@@ -15,13 +15,15 @@ export async function detikScrapping() {
     await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
         waitUntil: "domcontentloaded",
       });
-      const comments = await page.$$('.komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered > .komentar-iframe-min-media__user');
+      const comments = await page.$$('.komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered');
+
+      console.log(comments);
 
       for (const comment of comments ){
 
         try {
 
-          const user = await page.evaluate(el => el.textContent, comment);
+          const user = await page.evaluate(el => el.querySelector('.komentar-iframe-min-media__user').textContent, comment);
 
           console.log(user);
           
