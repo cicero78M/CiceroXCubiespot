@@ -13,6 +13,10 @@ export async function detikScrapping(url) {
     
     const page = await browser.newPage();
 
+    console.log('Browser Loaded')
+    page.once('load', () => console.log('Page loaded!'))
+    page.on('error', err => console.log(err))
+
     await page.goto(url, {
         waitUntil: "domcontentloaded",
       });
