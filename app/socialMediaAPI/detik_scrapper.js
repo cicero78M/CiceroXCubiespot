@@ -4,7 +4,6 @@ export async function detikScrapping() {
     try {
         
     const browser = await puppeteer.launch({
-        headless: true,
         defaultViewport: null,
         executablePath: '/usr/bin/chromium-browser',
         ignoreDefaultArgs: ['--disable-extensions']
