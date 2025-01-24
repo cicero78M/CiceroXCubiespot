@@ -17,14 +17,9 @@ export async function detikScrapping() {
         waitUntil: "domcontentloaded",
       });
 
-      const quotes = await page.evaluate(() => {
+      const quotes = await page.content();
 
-        const quote = document.querySelector(".komentar-iframe-min-media__desc");
-
-        return { quote };
-      });
-
-      console.log (quotes.quote);
+      console.log (quotes);
     
     
     await browser.close();
