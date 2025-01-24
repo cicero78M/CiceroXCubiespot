@@ -16,7 +16,7 @@ export async function detikScrapping() {
               
       const $ = cheerio.load(axiosResponse.data);
 
-      console.log($('#comm1').html());
+      console.log($('#comm1 > #thecomment2').html());
 
     } catch (error) {
       console.log(error);
