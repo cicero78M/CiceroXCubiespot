@@ -1,13 +1,11 @@
 import puppeteer from "puppeteer";
 
-
     export async function detikScrapping(url) {
-
             
     const browser = await puppeteer.launch({
         headless: false,
         defaultViewport: null,
-        executablePath: '/usr/bin/chromium-browser'
+        args: ["--no-sandbox", "--disabled-setupid-sandbox"],
 
     });
 
