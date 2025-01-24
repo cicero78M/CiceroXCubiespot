@@ -14,11 +14,16 @@ export async function detikScrapping(url) {
     const page = await browser.newPage();
 
     console.log('Browser Loaded')
+
     page.once('load', () => console.log('Page loaded!'))
+    
     page.on('error', err => console.log(err))
 
+    page.setDefaultNavigationTimeout(0);
+
+
     await page.goto(url, {
-        waitUntil: "domcontentloaded",
+        waitUntil: "domcontentloaded", timeout: 0 
       });
 
       const quotes = await page.evaluate(() => {
