@@ -5,7 +5,7 @@ import puppeteer from "puppeteer";
     const browser = await puppeteer.launch({
         headless: false,
         defaultViewport: null,
-        args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+        executablePath: '/usr/bin/chromium-browser'
 
     });
 
