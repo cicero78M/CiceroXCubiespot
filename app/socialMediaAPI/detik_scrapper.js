@@ -19,12 +19,12 @@ export async function detikScrapping() {
 
       const quotes = await page.evaluate(() => {
 
-        const quote = document.querySelector("#comm1");
+        const quote = document.querySelector(".detail__author");
 
         return { quote };
       });
 
-      console.log (quotes.quote);
+      console.log (quotes);
     
     
     await browser.close();
