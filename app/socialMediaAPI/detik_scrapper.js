@@ -16,7 +16,7 @@ export async function detikScrapping() {
               
       const $ = cheerio.load(axiosResponse.data);
 
-      console.log($('.komentar-iframe-min-comment-entry').html());
+      console.log($('.komentar-iframe-min-media__user').text());
 
     } catch (error) {
       console.log(error);
