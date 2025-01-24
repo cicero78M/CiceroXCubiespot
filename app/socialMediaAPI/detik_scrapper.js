@@ -14,9 +14,9 @@ export async function detikScrapping() {
       });
       
               
-      const doc = cheerio.load(axiosResponse.data);
+      const $ = cheerio.load(axiosResponse.data);
 
-      console.log(doc);
+      console.log($('#comm1'));
 
     } catch (error) {
       console.log(error);
