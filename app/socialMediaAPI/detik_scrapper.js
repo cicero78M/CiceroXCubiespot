@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-export async function detikScrapping(url) {   
+export async function detikScrapping() {   
     try {
 
         
@@ -13,9 +13,12 @@ export async function detikScrapping(url) {
     
     const page = await browser.newPage();
 
-    await page.goto(url);
+    await page.goto("http://quotes.toscrape.com/", {
+        waitUntil: "domcontentloaded",
+      });
 
     console.log(page);
+
     await browser.close();
         
     } catch (error) {
