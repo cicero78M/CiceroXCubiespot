@@ -15,7 +15,7 @@ export async function detikScrapping() {
     await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
         waitUntil: "domcontentloaded",
       });
-      const getHeader = await page.$('h1')
+      const getHeader = await page.$('.detail__body-text itp_bodycontent')
       const header = await page.evaluate( el => el.innerText, getHeader); 
 
       const link = await page.$eval('a', anchor => anchor.getAttribute('href')); 
