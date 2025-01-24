@@ -10,14 +10,10 @@ export async function detikScrapping(url) {
     });
     
     const page = await browser.newPage();
-    
-    page.setDefaultTimeout(30);
 
-    await page.goto(url, {
-        waitUntil: "domcontentloaded",
-    });
+    await page.goto(url);
 
-    console.log(page);
+    console.log(page._timeoutSettings.timeout());
     await browser.close();
 
 }
