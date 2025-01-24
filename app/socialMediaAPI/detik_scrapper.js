@@ -19,11 +19,9 @@ export async function detikScrapping() {
 
       const quotes = await page.evaluate(() => {
 
-        const quote = document.querySelector("#comm1");
+        const quote = document.querySelector("#cmt75141214 > div > div.komentar-iframe-min-media__text");
 
-        const commentCount = quote.querySelector(".komentar-iframe-min-media__text");
-
-        return { commentCount };
+        return { quote };
       });
 
       console.log (quotes);
