@@ -19,7 +19,7 @@ export async function detikScrapping() {
 
       const quotes = await page.evaluate(() => {
 
-        const quote = document.querySelector("#root");
+        const quote = document.querySelector("#comm1");
 
         return { quote };
       });
