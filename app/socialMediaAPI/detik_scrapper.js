@@ -16,8 +16,8 @@ export async function detikScrapping() {
         waitUntil: "domcontentloaded",
       });
 
-      await page.waitForSelector('#comm1');
-      const comments = await page.$$('#comm1');
+      await page.waitForSelector('.komentar-iframe-min-comment-entry');
+      const comments = await page.$$('komentar-iframe-min-comment-entry');
 
       console.log(comments);
 
