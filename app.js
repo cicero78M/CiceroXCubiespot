@@ -248,7 +248,7 @@ client.on('ready', () => {
     });
 
     //User Warning Likes Comments Insta & Tiktok
-    schedule('* 1 * * *',  async () => {
+    schedule('0 1 * * *',  async () => {
 
         console.log("Execute Backup Client & User Data");
         await clientDataBackup().then(
@@ -266,7 +266,7 @@ client.on('ready', () => {
     });
 
     //User Warning Likes Comments Insta & Tiktok
-    schedule('* 22 * * *',  async () => {
+    schedule('0 22 * * *',  async () => {
 
         console.log("Execute Backup Insta & Tiktok Content");
         await clientData().then(
@@ -292,7 +292,7 @@ client.on('ready', () => {
     });
 
     //User Warning Likes Comments Insta & Tiktok
-    schedule('* 23 * * *',  async () => {
+    schedule('0 23 * * *',  async () => {
 
         console.log("Execute Backup Insta & Tiktok Like Comments");
         await clientData().then(
