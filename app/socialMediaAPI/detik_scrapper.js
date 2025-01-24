@@ -1,6 +1,7 @@
 import cheerio from 'cheerio';
 import axios from 'axios';
 
+
 export async function detikScrapping() {   
     try {
 
