@@ -15,13 +15,13 @@ export async function detikScrapping() {
     await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
         waitUntil: "domcontentloaded",
       });
-      const comments = await page.$$('.komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered');
+      const comments = await page.$$('.komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered > .komentar-iframe-min-media__user');
 
       for (const comment of comments ){
 
         try {
 
-          const user = await page.evaluate(el => el.querySelector('komentar-iframe-min-media__user').textContent, comment);
+          const user = await page.evaluate(el => el.textContent, comment);
 
           console.log(user);
           
