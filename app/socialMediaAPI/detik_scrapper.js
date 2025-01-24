@@ -19,7 +19,7 @@ export async function detikScrapping() {
 
       const quotes = await page.evaluate(() => {
 
-        const quote = document.querySelector(".detail__author");
+        const quote = document.querySelector("#h1");
 
         return { quote };
       });
