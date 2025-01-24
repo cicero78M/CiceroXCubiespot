@@ -1,24 +1,36 @@
-import * as cheerio from 'cheerio';
-import axios from 'axios';
-
+import puppeteer from "puppeteer";
 
 export async function detikScrapping() {   
     try {
 
-      const axiosResponse = await axios.request({
-        method: "GET",
-        url: "https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu",
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
-        }
+        
+    const browser = await puppeteer.launch({
+        headless: false,
+        defaultViewport: null,
+        executablePath: '/usr/bin/chromium-browser',
+        ignoreDefaultArgs: ['--disable-extensions']
+    });
+    
+    const page = await browser.newPage();
+
+    await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
+        waitUntil: "domcontentloaded",
       });
-      
-              
-      const $ = cheerio.load(axiosResponse.data);
 
-      console.log($('#comm1').html());
+      const quotes = await page.evaluate(() => {
 
+        const quote = document.querySelector("#comm1");
+
+        return { quote };
+      });
+
+      console.log (quotes.quote);
+    
+    
+    await browser.close();
+        
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
+
 }
