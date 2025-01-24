@@ -24,7 +24,7 @@ export async function detikScrapping() {
         return { quote };
       });
 
-      console.log (quotes);
+      console.log (quotes.quote);
     
     
     await browser.close();
