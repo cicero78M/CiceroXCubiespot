@@ -17,8 +17,8 @@ export async function detikScrapping() {
         waitUntil: "domcontentloaded",
       });
 
-      const titleNode = await page.$('komentar-iframe-min-media__user'); 
-      const title = await page.evaluate(el => el.innerText, titleNode); 
+      const titleNode = await page.$('box komentar_box'); 
+      const title = await page.evaluate(el => el, titleNode); 
 
 
       console.log (title);
