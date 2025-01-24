@@ -14,14 +14,10 @@ export async function detikScrapping() {
       });
       
               
-      const $ = cheerio.load(axiosResponse.data);
+      const doc = cheerio.load(axiosResponse.data);
 
-      $(".komentar-iframe-min-list-content .komentar-iframe-min-list-content--bordered")
-      .find(".komentar-iframe-min-media__user")
-      .each((index, element) => {
-      console.log(index, element);
-        
-      });        
+      console.log(doc);
+
     } catch (error) {
       console.log(error);
     }
