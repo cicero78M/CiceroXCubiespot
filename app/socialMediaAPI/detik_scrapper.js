@@ -17,8 +17,21 @@ export async function detikScrapping() {
         waitUntil: "domcontentloaded",
       });
 
-    console.log(page);
+      const quotes = await page.evaluate(() => {
+        // Fetch the first element with class "quote"
+        const quote = document.querySelector(".quote");
+    
+        // Fetch the sub-elements from the previously fetched quote element
+        // Get the displayed text and return it (`.innerText`)
+        const text = quote.querySelector(".text").innerText;
+        const author = quote.querySelector(".author").innerText;
+    
+        return { text, author };
+      });
 
+      console.log (quotes);
+    
+    
     await browser.close();
         
     } catch (error) {
