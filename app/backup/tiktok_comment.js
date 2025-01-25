@@ -11,7 +11,6 @@ export async function tiktokCommentsBackup(clientValue) {
   let data;
   let shortcodeList = [];
 
-   
   const sheetDoc = new GoogleSpreadsheet(
     process.env.tiktokCommentUsernameID, 
     googleAuth
@@ -19,7 +18,6 @@ export async function tiktokCommentsBackup(clientValue) {
 
   await sheetDoc.loadInfo();
   const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
-
 
   return new Promise(
     async (
@@ -50,17 +48,26 @@ export async function tiktokCommentsBackup(clientValue) {
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
 
-              let commentItems =[];
+              let commentItems = [];
+              let decryptedComments = [];
+              let reEncryptedComments = [];
 
               commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
-              commentItems.unshift(encrypted(shortcodeList[i]));
 
+              commentItems.forEach(element => {
+                if(!decryptedComments.includes(decrypted(element))){
+                  decryptedComments.push(decrypted(element));
+                  reEncryptedComments.push(element);                
+                }
+              });
+
+              reEncryptedComments.unshift(encrypted(shortcodeList[i]));
 
               setTimeout(async () => {
-                console.log(commentItems.length);
+                console.log(reEncryptedComments.length);
               }, 2000);
 
-                await sheetName.addRow(commentItems);
+                await sheetName.addRow(reEncryptedComments);
              
               } catch (error) {
 

@@ -14,7 +14,7 @@ export async function detikScrapping() {
     const page = await browser.newPage();
 
     await page.goto("https://news.detik.com/berita/d-7745563/hoegeng-awards-2025-resmi-dibuka-saatnya-usulkan-polisi-teladan-di-sekitarmu", {
-        waitUntil: "domcontentloaded",
+        waitUntil: "networkidle2",
       });
 
       const quotes = await page.evaluate(() => {

@@ -54,20 +54,29 @@ const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
               try {
 
               let likeItem = [];
-              likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
-              likeItem.unshift(encrypted(shortcodeList[i]));
+              let decryptedLikes = [];
+              let reEncryptedLikes = [];
 
+              likeItem = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
+              
+              likeItem.forEach(element => {
+                if(!decryptedLikes.includes(decrypted(element))){
+                  decryptedLikes.push(decrypted(element));
+                  reEncryptedLikes.push(element);                
+                }
+              });
+
+              reEncryptedLikes.unshift(encrypted(shortcodeList[i]));
+              
               setTimeout(async () => {
-                console.log(likeItem.length);
+                console.log(reEncryptedLikes.length);
               }, 2000);
 
-              await sheetName.addRow(likeItem);
-
+              await sheetName.addRow(reEncryptedLikes);
 
               } catch (error) {
                 // console.log('No Data');
               }
-
             }
             
             data = {
