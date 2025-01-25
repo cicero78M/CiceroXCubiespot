@@ -6,7 +6,6 @@ export async function clientDataView() {
         try {
             
             console.log("Collecting Client Data");
-
             let data = [];
             data = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
 
