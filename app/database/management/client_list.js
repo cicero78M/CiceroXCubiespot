@@ -1,7 +1,7 @@
 import { readFileSync  } from "fs";
 import { decrypted } from "../../../json_data_file/crypto.js";
 
-export async function dataView() {    
+export async function clientDataView() {    
     return new Promise(async (resolve, reject) => {
         try {
             
