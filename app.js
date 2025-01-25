@@ -1483,7 +1483,7 @@ client.on('message', async (msg) => {
                     detikScrapping();
                 } else if( dataManagement.includes(splittedMsg[1].toLowerCase())){
 
-                    switch (includes(splittedMsg[1].toLowerCase())) {
+                    switch (splittedMsg[1].toLowerCase()) {
                         case "clientdataview":{
                             await clientData().then(
                                 async response =>{
