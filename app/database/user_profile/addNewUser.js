@@ -3,6 +3,7 @@ import { newListValueData } from '../new_query/data_list_query.js';
 import { readUser } from '../../../json_data_file/user_data/read_data_from_dir.js';
 import { encrypted } from '../../../json_data_file/crypto.js';
 import { writeFileSync } from "fs";
+import { logsResponse } from '../../responselogs/response_view.js';
 
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
@@ -41,7 +42,7 @@ return new Promise(async (resolve, reject) => {
     if (divisiList.includes(divisi)) {
 
       if (!idExist) {
-        console.log("Id key not exist, Added Data");
+        logsResponse("Id key not exist, Added Data");
         //Get Target Sheet Documents by Title
         let userData = new Object();
 
@@ -58,7 +59,7 @@ return new Promise(async (resolve, reject) => {
 
         writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
 
-        console.log(`${parseInt(idKey)} JSON Data Successfully Added.`);
+        logsResponse(`${parseInt(idKey)} JSON Data Successfully Added.`);
             
         let responseMyData = await myData(
           clientName, 
@@ -81,7 +82,7 @@ return new Promise(async (resolve, reject) => {
 
     } else {
 
-      console.log('Return Divisi Tidak Terdaftar');
+      logsResponse('Return Divisi Tidak Terdaftar');
 
       await propertiesView(
           clientName, 
@@ -93,7 +94,7 @@ return new Promise(async (resolve, reject) => {
     }
   } catch (error) {
 
-    console.log(error);
+    logsResponse(error);
     let responseData = {
       data: error,
       state: false,

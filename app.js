@@ -501,7 +501,7 @@ client.on('message', async (msg) => {
                                                 && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                                                 && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {         
                                             
-                                                    logsResponse(time+" "+decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
+                                                    logsResponse(decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
                                                     let tiktokSecuid = await setSecuid(clientData[i]);
                                                     
                                                     sendResponse(
@@ -1053,7 +1053,7 @@ client.on('message', async (msg) => {
                                             && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
                                             && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                                 
-                                                logsResponse(time+" "+decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
+                                                logsResponse(decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
                                                     decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
@@ -1116,7 +1116,7 @@ client.on('message', async (msg) => {
                                             if (decrypted(response[i].STATUS) === "TRUE" 
                                             && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
                                             && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsResponse(time+" "+decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
+                                                logsResponse(decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
                                                     decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA'
@@ -1168,7 +1168,7 @@ client.on('message', async (msg) => {
                                             && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                                             && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                             
-                                                logsResponse(time+" "+decrypted(clientData[i].CLIENT_ID)+' START LOAD INSTA DATA');
+                                                logsResponse(decrypted(clientData[i].CLIENT_ID)+' START LOAD INSTA DATA');
                                                 
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
@@ -1288,7 +1288,7 @@ client.on('message', async (msg) => {
                                             if (decrypted(response[i].STATUS) === "TRUE" 
                                             && decrypted(response[i].INSTA_STATE) === "TRUE" 
                                             && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsResponse(time+" "+decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA');
+                                                logsResponse(decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA');
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
                                                     decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA'

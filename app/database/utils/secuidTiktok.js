@@ -2,6 +2,7 @@
 import { clientData } from '../../../json_data_file/client_data/read_client_data_from_json.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import {writeFileSync } from "fs";
+import { logsResponse } from '../../responselogs/response_view.js';
 
 export async function setSecuid(clientValue) {
 
@@ -15,7 +16,7 @@ export async function setSecuid(clientValue) {
             const secUid = await responseInfo.data.userInfo.user.secUid;
             const encryptedSecuid = encrypted(secUid)
     
-            console.log(secUid);
+            logsResponse(secUid);
     
             let isClient = false;
             clientData().then(
@@ -36,7 +37,7 @@ export async function setSecuid(clientValue) {
                                 code: 200
                             };
                 
-                            console.log('Return Success');
+                            logsResponse('Return Success');
 
                             resolve (response);
                         }
@@ -48,7 +49,7 @@ export async function setSecuid(clientValue) {
                             state: true,
                             code: 201
                         };
-                        console.log('Return Success');
+                        logsResponse('Return Success');
                         resolve (responseData);
                     }    
                 }
@@ -62,7 +63,7 @@ export async function setSecuid(clientValue) {
                 code: 303
             };
     
-            console.log(error);
+            logsResponse(error);
             reject (responseData);
         } 
     });

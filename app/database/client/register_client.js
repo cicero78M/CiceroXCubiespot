@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { encrypted } from "../../../json_data_file/crypto.js";
+import { logsResponse } from "../../responselogs/response_view.js";
 export async function registerClientData(clientName, clientType) {
 
     if(["COM", "RES"].includes(clientType)){
@@ -35,7 +36,7 @@ export async function registerClientData(clientName, clientType) {
         )
 
     } else {
-        console.log("Client Type Only Receive \"COM\" & \"RES\"");
+        logsResponse("Client Type Only Receive \"COM\" & \"RES\"");
     }
 
 }

@@ -1,5 +1,6 @@
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { clientData } from '../../../json_data_file/client_data/read_client_data_from_json.js';
+import { logsResponse } from '../../responselogs/response_view.js';
 
 export async function updateClientData(clientName, newvalue, type) {
 
@@ -49,7 +50,7 @@ export async function updateClientData(clientName, newvalue, type) {
                             code: 200
                         };
         
-                        console.log('Return Success');
+                        logsResponse('Return Success');
                         return response;
                     }
                 }
@@ -61,7 +62,7 @@ export async function updateClientData(clientName, newvalue, type) {
                         code: 200
                     };
         
-                    console.log('Return Success');
+                    logsResponse('Return Success');
                     return responseData;
                 }
             }
@@ -74,7 +75,7 @@ export async function updateClientData(clientName, newvalue, type) {
             code: 303
         };
 
-        console.log(error);
+        logsResponse(error);
         return responseData;
     }
 }

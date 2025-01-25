@@ -5,6 +5,7 @@ import { readUser } from '../../../json_data_file/user_data/read_data_from_dir.j
 import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from '../../../json_data_file/crypto.js';
 import { newListValueData } from '../new_query/data_list_query.js';
+import { logsResponse } from '../../responselogs/response_view.js';
 
 
 //This Function for edit user data profile
@@ -77,7 +78,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               }
             ).catch(
               error =>{
-                console.log(error);
+                logsResponse(error);
                 let responseData = {
                   data: "Divisi Unregistred",
                   state: true,
@@ -154,7 +155,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                     code: 201
                   };
                   
-                  console.log('Return Whatsapp Used');
+                  logsResponse('Return Whatsapp Used');
                   return responseData;
                 
                 }
@@ -168,7 +169,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             code: 201
           };
 
-          console.log('Return Account Suspended');
+          logsResponse('Return Account Suspended');
           return responseData;
         
         }
@@ -183,7 +184,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
         state: true,
         code: 201
       };
-      console.log('Return No ID_Key');
+      logsResponse('Return No ID_Key');
       return responseData;
     }
 
@@ -195,7 +196,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       code: 303
     };
 
-    console.log(error);
+    logsResponse(error);
     return responseData;
 
   }

@@ -37,7 +37,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           userRows = await response;                           
           for (let i = 0; i < userRows.length; i++) {
             if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
-              console.log("data exist")
+              logsResponse("data exist")
               idExist = true;
               userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${userRows[i].ID_KEY}.json`));            
             }
@@ -108,7 +108,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                       code: 201
                     };
 
-                    console.log('Return Success');
+                    logsResponse('Return Success');
                     reject (responseData);                  
                   }
                   break;
@@ -122,7 +122,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                 code: 201
               };
 
-              console.log('Return Success');
+              logsResponse('Return Success');
               reject (responseData);
 
             }
@@ -136,7 +136,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             state: true,
             code: 201
           };
-          console.log('Return ID_Key Doesnt Exist');
+          logsResponse('Return ID_Key Doesnt Exist');
           reject (responseData);
         }
       } else {
@@ -146,7 +146,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           state: true,
           code: 201
         };
-        console.log('Return Username Exist');
+        logsResponse('Return Username Exist');
         reject (responseData);
       }
   
@@ -158,7 +158,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         code: 303
       };
   
-      console.log(error);
+      logsResponse(error);
       reject (responseData);
     }
   });

@@ -3,6 +3,7 @@ import { clientData } from "../../json_data_file/client_data/read_client_data_fr
 import { googleAuth } from "../database/new_query/sheet_query.js";
 import { decrypted } from "../../json_data_file/crypto.js";
 import { readdirSync, readFileSync } from "fs";
+import { logsResponse } from "../responselogs/response_view.js";
 
 export async function userDataBackup() {    
     
@@ -40,7 +41,7 @@ export async function userDataBackup() {
     
                         await newSheet.addRows(userData);
     
-                        console.log(`${decrypted(response[i].CLIENT_ID)}_${localDate} Backed Up`);    
+                        logsResponse(`${decrypted(response[i].CLIENT_ID)}_${localDate} Backed Up`);    
 
                     }       
                 }
