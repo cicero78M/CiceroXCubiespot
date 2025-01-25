@@ -20,7 +20,7 @@ export async function infoView(dataResponse) {
     =================================
     
     *Format WA Pesan Untuk Perubahan data Tiktok :*
-    ${dataResponse} #TIKTOK#NRP#link_profile_tiktok
+    ${dataResponse}#TIKTOK#NRP#link_profile_tiktok
     
     _Contoh :_ ${dataResponse}#TIKTOK#87020990#https://www.tiktok.com/@cicero_dev
     =================================
