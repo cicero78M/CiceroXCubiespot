@@ -64,7 +64,7 @@ import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
 import { clientDataView } from './app/database/management/client_list.js';
 import { updateClientData } from './app/database/client/update_client.js';
 import { registerClientData } from './app/database/client/register_client.js';
-import { logsResponse } from './app/logs/response_view.js';
+import { logsResponse } from './app/responselogs/response_view.js';
 
 //.env
 const private_key = process.env;
