@@ -1,5 +1,5 @@
 import { readFileSync  } from "fs";
-import { decrypted } from "../../../json_data_file/crypto";
+import { decrypted } from "../../../json_data_file/crypto.js";
 
 export async function dataView() {    
     return new Promise(async (resolve, reject) => {
@@ -14,7 +14,7 @@ export async function dataView() {
 
                 data: 
                 `Name : ${decrypted(data.CLIENT_ID)}
-                
+
                 Type : ${decrypted(data.TYPE)}
                 State : ${decrypted(data.STATUS)}
                 Insta : ${decrypted(data.INSTAGRAM)}
