@@ -46,6 +46,7 @@ export async function infoView(dataResponse) {
     *Format Pesan WA untuk merubah Data Nama Satfung :*
     
     ${dataResponse}#EDITSATFUNG#NRP#SATFUNG
+    
     _Contoh :_
     ${dataResponse}#EDITSATFUNG#87020990#TIK
     =================================
