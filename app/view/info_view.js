@@ -1,7 +1,8 @@
 export async function infoView(dataResponse) {
 
     let data = {
-    data : `*Berikut Format Pesan WABOT PEGIAT MEDSOS*
+    data : 
+    `*Berikut Format Pesan WABOT PEGIAT MEDSOS*
     =================================
     *Menampilkan Pesan ini* :
     ${dataResponse}#INFO
@@ -10,40 +11,40 @@ export async function infoView(dataResponse) {
     
     ${dataResponse}#MYDATA#NRP
     
-    _Contoh :_${dataResponse}#MYDATA#87020990
+    _Contoh :_ ${dataResponse}#MYDATA#87020990
     =================================
     
     *Format Pesan WA Untuk Penambahan / Perubahan data IG :*
     ${dataResponse}#IG#NRP#link_profile_instagram
-    _Contoh :_${dataResponse}#IG#87020990#https://www.instagram.com/riezqo_fx
+    _Contoh :_ ${dataResponse}#IG#87020990#https://www.instagram.com/riezqo_fx
     =================================
     
     *Format WA Pesan Untuk Perubahan data Tiktok :*
     ${dataResponse} #TIKTOK#NRP#link_profile_tiktok
     
-    _Contoh :_${dataResponse}#TIKTOK#87020990#https://www.tiktok.com/@cicero_dev
+    _Contoh :_ ${dataResponse}#TIKTOK#87020990#https://www.tiktok.com/@cicero_dev
     =================================
     
     *Format Pesan WA untuk input No WA Anda :*
     
     ${dataResponse}#WHATSAPP#NRP
-    _Contoh :_${dataResponse}#WHATSAPP#87020990
+    _Contoh :_ ${dataResponse}#WHATSAPP#87020990
     =================================
     *Format Wa Untuk merubah Data Pangkat :*
     
     ${dataResponse}#EDITPANGKAT#NRP#PANGKATBARU
-    _Contoh :_${dataResponse}#EDITPANGKAT#87020990#BRIPKA
+    _Contoh :_ ${dataResponse}#EDITPANGKAT#87020990#BRIPKA
     =================================
     
     *Format Pesan WA untuk merubah Data Nama Satfung :*
     
     ${dataResponse}#EDITSATFUNG#NRP#NAMA SATFUNG
-    _Contoh :_${dataResponse}#EDITSATFUNG#87020990#SI TIK
+    _Contoh :_ ${dataResponse}#EDITSATFUNG#87020990#SI TIK
     =================================
     
     *Format Pesan WA untuk merubah data Jabatan :*
     ${dataResponse}#EDITJABATAN#NRP#NAMA JABATAN
-    Contoh :_\n\n${dataResponse}#EDITJABATAN#87020990#BAMIN TEKINFO
+    _Contoh :_ ${dataResponse}#EDITJABATAN#87020990#BAMIN TEKINFO
     =================================`,
     state: true,
     code: 200
