@@ -142,6 +142,7 @@ export async function warningReportInsta(clientValue) {
                 state: true,
                 code: 200
               };
+              
               resolve (data);
             
   

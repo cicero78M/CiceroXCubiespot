@@ -64,7 +64,7 @@ import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
 import { clientDataView } from './app/database/management/client_list.js';
 import { updateClientData } from './app/database/client/update_client.js';
 import { registerClientData } from './app/database/client/register_client.js';
-import { logsResponse } from './app/responselogs/response_view.js';
+import { logsResponse, sendResponseData } from './app/responselogs/response_view.js';
 
 //.env
 const private_key = process.env;
@@ -136,24 +136,23 @@ client.on('ready', () => {
 
     // Server Life State Warning
     schedule('*/10 * * * *',  () =>  {
-        logsResponse('<<<System Alive>>>');
-        client.sendMessage('6281235114745@c.us', process.env.APP_SESSION_NAME +' <<<System Alive>>>');
+        sendResponseData('<<<System Alive>>>');
     });
 
     // Scrapping Socmed every hours until 21
     schedule('30 6-20 * * *',  () => {
-        logsResponse('Exec Cron Job');
+        sendResponseData('Exec Cron Job');
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
     schedule('0 15,18,21 * * *',  () => {
-        logsResponse('Exec Cron Job');
+        sendResponseData('Exec Cron Job');
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
     //User Warning Likes Comments Insta & Tiktok
     schedule('15 12,16,19 * * *',  () => {
-        logsResponse('User Warning Likes Comments Insta & Tiktok');
+        sendResponseData('User Warning Likes Comments Insta & Tiktok');
         clientData().then( async clientData =>{
 
             for (let i = 0; i < clientData.length; i++){
@@ -162,40 +161,20 @@ client.on('ready', () => {
                 if (decrypted(clientData[i].STATUS) === "TRUE" 
                 && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                 && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                    logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
-                    
-                    await client.sendMessage(
-                        '6281235114745@c.us', 
-                        ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`
-                    );
-
+                    sendResponseData(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);                    
                     await warningReportTiktok(clientData[i]).then(async response => {
-                        
-                        await client.sendMessage(
-                            '6281235114745@c.us', 
-                            response.data);
-
-                    }).catch( async response => {
-                        
-                        switch (response.code){
+                        sendResponseData(response.data);
+                    }).catch( async error => {
+                        switch (error.code){
                             case 201 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    response.data
-                                );
-                                    break;
-
+                                sendResponseData(error.data);
+                                break;
                             case 303 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    'Error'
-                                );
-                                    break;
-
+                                logsSend(error.data, "Warning Report Insta");
+                                break;
                             default:
                                 break;
                         }
-
                     });
                 }         
 
@@ -203,39 +182,17 @@ client.on('ready', () => {
                 if (decrypted(clientData[i].STATUS) === "TRUE" 
                 && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                 && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                    
-                    logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
-                    await client.sendMessage(
-                        '6281235114745@c.us', 
-                        `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
-                    );
-
-                    await warningReportInsta(clientData[i]).then(async response => {
-                            
-                        await client.sendMessage(
-                            '6281235114745@c.us', 
-                            response.data
-                        );
-
-                    }).catch(async response => {
-        
-                        switch (response.code){
+                    sendResponseData(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
+                    await warningReportInsta(clientData[i]).then(async response => {                       
+                        sendResponseData(response.data);
+                    }).catch(async error => {
+                        switch (error.code){
                             case 201 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    response.data
-                                );
-
-                                    break;
-                            
+                                sendResponseData(error.data);
+                                break;
                             case 303 : 
-                                await client.sendMessage(
-                                    '6281235114745@c.us', 
-                                    'Error'
-                                );
-
-                                    break;
-                    
+                                logsSend(error.data, "Warning Report Insta");
+                                break;
                             default:
                                 break;
                         }
@@ -1645,10 +1602,6 @@ client.on('message', async (msg) => {
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) { //Catching the Error Request
-        logsResponse(error);
-        client.sendMessage(
-            '6281235114745@c.us', 
-            'Error on Main Apps'
-        );
+        logsSend(error, "Main Apps");
     }
 });

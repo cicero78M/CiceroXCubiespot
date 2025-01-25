@@ -46,16 +46,16 @@ export async function getTiktokPost(clientValue) {
                         logsResponse(`${clientName} Official Account Has Post Data...`);
                         await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
                         
-                        let hasShortcode = false;
+                        // let hasShortcode = false;
                         
-                        let shortcodeData = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+                        // let shortcodeData = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
             
-                        for (let ix = 0; ix < shortcodeData.length; ix++){
+                        // for (let ix = 0; ix < shortcodeData.length; ix++){
                           
-                          if (todayItems.includes(shortcodeData[ix].replaceAll('.json', ''))){
-                            hasShortcode = true;
-                          }
-                        }
+                        //   if (todayItems.includes(shortcodeData[ix].replaceAll('.json', ''))){
+                        //     hasShortcode = true;
+                        //   }
+                        // }
 
                         for (let i = 0; i < itemByDay.length; i++) {
 
@@ -83,7 +83,6 @@ export async function getTiktokPost(clientValue) {
                                 writeFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${itemByDay[i].video.id}.json`, JSON.stringify(dataObject));
                         
                             }   
-            
                         }
 
                         let data = {
@@ -96,7 +95,7 @@ export async function getTiktokPost(clientValue) {
             
                     } else {
                         let data = {
-                                data: ' Tiktok Official Account Has No Content',
+                                data: 'Tiktok Official Account Has No Content',
                                 state: true,
                                 code: 201
                         };

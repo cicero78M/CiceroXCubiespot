@@ -1,7 +1,7 @@
 import { client } from "../../app.js";
 import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { decrypted } from "../../json_data_file/crypto.js";
-import { logsResponse } from "../responselogs/response_view.js";
+import { logsResponse, sendResponseData } from "../responselogs/response_view.js";
 import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
 import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";
@@ -13,13 +13,7 @@ export async function schedullerAllSocmed(timeSwitch) {
 
     try {
         //Commit if schedule Working
-        await client.sendMessage(
-            '6281235114745@c.us', 
-            'Generate All Socmed Data Starting...'
-        );            
-
-        logsResponse(`Generate All Socmed Data Starting`);
-
+        sendResponseData(`Generate All Socmed Data Starting...`);
         await clientData().then( 
             async clientData =>{
                 for (let i = 0; i < clientData.length; i++){
@@ -28,51 +22,14 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
+                        sendResponseData(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
-                        await client.sendMessage(
-                            '6281235114745@c.us', 
-                            ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`
-                        );
-                        
                         await getTiktokPost(
                             clientData[i]
                         ).then(
                             async data => {
                                 switch (data.code){
-                                    case 201:   
-                                        switch (timeSwitch){
-                                            case 'report':
-                         
-                                               sendClientResponse(
-                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                    decrypted(clientData[i].SUPERVISOR),
-                                                    decrypted(clientData[i].OPERATOR),
-                                                    decrypted(clientData[i].GROUP), 
-                                                    data, 
-                                                    'REPORT TIKTOK'
-                                                );                                            
-                                                break;
-
-                                            case 'routine':
-                                            sendResponse(
-                                                '6281235114745@c.us', 
-                                                data, 
-                                                ' ERROR GET TIKTOK BRIDGES'
-                                            );
-                                                break;
-                                            
-                                            default:
-                                            sendResponse(
-                                                '6281235114745@c.us', 
-                                                data, 
-                                                ' ERROR GET TIKTOK BRIDGES'
-                                            );
-                                                break;
-                                        }
-                                        break;
-                                
-                                    default: 
+                                    case 200: 
 
                                         await tiktokItemsBridges(
                                             clientData[i], 
@@ -97,42 +54,53 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                         sendResponse(
                                                             '6281235114745@c.us', 
                                                             data, 
-                                                            ' ERROR GET TIKTOK BRIDGES'
+                                                            'ERROR GET TIKTOK BRIDGES'
                                                         );                                                    
                                                         break;
                                 
                                                     default:
-                                        
-                                                    sendResponse(
-                                                            '6281235114745@c.us', 
-                                                            data, 
-                                                            ' ERROR GET TIKTOK BRIDGES'
-                                                        );
                                                         break;
                                                 }                   
-                                                logsResponse(`Report TIKTOK SUCCESS!!!`);
+                                                sendResponseData(`Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
-                                            data =>{
+                                            error => logsResponse(error)
+                                        );
+                                        
+                                        break;
+                                
+                                    case 201:   
+                                        switch (timeSwitch){
+                                            case 'report':
+                                               sendClientResponse(
+                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                    decrypted(clientData[i].SUPERVISOR),
+                                                    decrypted(clientData[i].OPERATOR),
+                                                    decrypted(clientData[i].GROUP), 
+                                                    data, 
+                                                    'REPORT TIKTOK'
+                                                );                                            
+                                                break;
+                                            case 'routine':
                                                 sendResponse(
                                                     '6281235114745@c.us', 
                                                     data, 
-                                                    ' ERROR TIKTOK BRIDGES'  
+                                                    ' ERROR GET TIKTOK BRIDGES'
                                                 );
-                                            }
-                                        );
+                                                break;
+                                            default:
+                                                break;
+                                        }
+
+                                        break;
+                                
+                                    default:
                                         break;
                                 }
                             }
                     
                         ).catch(
-                            data => {
-                                sendResponse(
-                                    '6281235114745@c.us', 
-                                    data, 
-                                    ' ERROR GET TIKTOK POST'
-                                );
-                            }
+                            error => logsResponse(error)
                         );
                     }         
 
@@ -168,20 +136,14 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             instaPostData.data, 
                                             clientData[i]
                                         ).then(
-                                            async instaLikesData => {
-                                                                                                    
-                                                await client.sendMessage(
-                                                    '6281235114745@c.us', 
-                                                    instaLikesData.data
-                                                ); 
-
+                                            async instaLikesData => {                                              
+                                                sendResponseData(instaLikesData.data); 
                                                 await newReportInsta(
                                                     clientData[i]
                                                 ).then(
                                                     async data => {
         
                                                         switch (timeSwitch){
-        
                                                             case 'report':
                                                                 sendClientResponse(
                                                                     decrypted(clientData[i].CLIENT_ID), 
@@ -193,8 +155,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 );            
                                                                 break;
 
-                                                            default:
-                                                                
+                                                            case 'routine':
                                                                 sendResponse(
                                                                     '6281235114745@c.us', 
                                                                     data, 
@@ -202,60 +163,32 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 );
                                                                 break;
                                                         }
-                                                        logsResponse("Report Insta SUCCESS!!!");
+
+                                                        sendResponseData("Report Insta SUCCESS!!!");
                                                     }
 
                                                 ).catch(
-                                                    async data => {
-                                                        sendResponse(
-                                                            '6281235114745@c.us', 
-                                                            data, 
-                                                            ' ERROR GET INSTA REPORT'
-                                                        );
-                                                    }
+                                                    error => logsResponse(error)
                                                 );
                                             }
                                         ).catch(
-                                            async data => {
-                                                sendResponse(
-                                                    '6281235114745@c.us', 
-                                                    data, 
-                                                    ' ERROR GET INSTA LIKES'
-                                                );
-                                            }
-                                        ); 
+                                            error => logsResponse(error)
+                                        );
                                         break;
                                 }
                             }
-
                         ).catch(
-                            async data => {
-                                sendResponse(
-                                    '6281235114745@c.us', 
-                                    data, 
-                                    ' ERROR GET INSTA POST'
-                                );
-
-                            }
+                            error => logsResponse(error)
                         );   
                     }  
                 }
             }
         ). catch (
-            async error =>{
-                logsResponse(error)
-                await client.sendMessage('6281235114745@c.us', 
-                    'Client Data Request Error '
-                );
-                
-            }
+            error => logsResponse(error)
         );  
 
     //If Something Error
     } catch (error) {
         logsResponse(error)
-        await client.sendMessage('6281235114745@c.us', 
-            'Cron Job Hourly Error '
-        );
     }
 }
