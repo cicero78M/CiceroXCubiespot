@@ -3,6 +3,7 @@ import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from 'fs';
+import { logsResponse } from '../responselogs/response_view.js';
   
 export async function newReportTiktok(clientValue) {
 
@@ -11,7 +12,7 @@ export async function newReportTiktok(clientValue) {
         
             try {
 
-                console.log("Execute Report Tiktok");
+                logsResponse("Execute Report Tiktok");
                 client.sendMessage(
                     '6281235114745@c.us', 
                     "Execute Report Tiktok"
@@ -73,13 +74,13 @@ export async function newReportTiktok(clientValue) {
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
                         let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
-                        // console.log(contentItems);
+                        // logsResponse(contentItems);
 
                         let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                         let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
-                        // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-                        // console.log(localDate);
+                        // logsResponse(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+                        // logsResponse(localDate);
 
 
                         if ( dateNow === localDate) {
@@ -112,7 +113,7 @@ export async function newReportTiktok(clientValue) {
                             || userRows[i].TIKTOK === null 
                             || userRows[i].TIKTOK === ""){
                 
-                                console.log("Null Data Exist");
+                                logsResponse("Null Data Exist");
                                 userNotComment.push(userRows[i].ID_KEY);
                                 notCommentList.push(userRows[i]);
                 
@@ -182,7 +183,7 @@ export async function newReportTiktok(clientValue) {
                                 code: 200
                             };
                         }
-                        console.log('Return Success');
+                        logsResponse('Return Success');
                         resolve (responseData);
                     } else {
                         let responseData = {
@@ -190,7 +191,7 @@ export async function newReportTiktok(clientValue) {
                             state: true,
                             code: 201
                         };
-                        console.log(responseData.data);
+                        logsResponse(responseData.data);
                         reject (responseData);
                     }
                 } else {   
@@ -199,7 +200,7 @@ export async function newReportTiktok(clientValue) {
                         state: true,
                         code: 201
                     };
-                    console.log(responseData.data);               
+                    logsResponse(responseData.data);               
                     reject (responseData);
                 }
             } catch (error) {
@@ -208,7 +209,7 @@ export async function newReportTiktok(clientValue) {
                     state: false,
                     code: 303
                 };
-                console.log(responseData.data);
+                logsResponse(responseData.data);
                 reject (responseData);
             }
         }
