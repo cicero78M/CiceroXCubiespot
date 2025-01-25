@@ -1,14 +1,10 @@
-import { readFileSync  } from "fs";
 import { decrypted } from "../../../json_data_file/crypto.js";
 
-export async function clientDataView() {    
+export async function clientDataView(data) {    
     return new Promise(async (resolve, reject) => {
         try {
             
             console.log("Collecting Client Data");
-            let data = [];
-            data = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
-
             let response =  {
 
                 data: 
