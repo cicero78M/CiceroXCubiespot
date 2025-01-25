@@ -5,7 +5,7 @@ export async function infoView(dataResponse) {
     `*Berikut Format Pesan WABOT PEGIAT MEDSOS*
     =================================
     *Menampilkan Pesan ini* :
-    
+
     ${dataResponse}#INFO
     =================================
     *Format Pesan untuk menampilkan data anda :*
