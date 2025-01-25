@@ -34,7 +34,6 @@ export async function instaClientInfo(clietName, username) {
 
                             }     
                         }
-
                     }
 
 
@@ -47,7 +46,6 @@ export async function instaClientInfo(clietName, username) {
                             FOLLOWING:responseInstaInfo.data.data.following_count, MEDIA_COUNT:responseInstaInfo.data.data.media_count,
                             BIOGRAPHY:responseInstaInfo.data.data.biography
                         });
-
                     }
 
                     let data = {

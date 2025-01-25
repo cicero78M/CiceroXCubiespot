@@ -1,6 +1,7 @@
 import { client } from "../../app.js";
 import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { decrypted } from "../../json_data_file/crypto.js";
+import { logsResponse } from "../responselogs/response_view.js";
 import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
 import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";
@@ -20,7 +21,7 @@ export async function schedullerAllSocmed(timeSwitch) {
             'Generate All Socmed Data Starting...'
         );            
 
-        console.log(`${time} >>> Generate All Socmed Data Starting`);
+        logsResponse(`${time} >>> Generate All Socmed Data Starting`);
 
         await clientData().then( 
             async clientData =>{
@@ -30,7 +31,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        console.log(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
+                        logsResponse(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
@@ -112,7 +113,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                         );
                                                         break;
                                                 }                   
-                                                console.log(`${time} >>> Report TIKTOK SUCCESS!!!`);
+                                                logsResponse(`${time} >>> Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
                                             data =>{
@@ -142,7 +143,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        console.log(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
+                        logsResponse(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
@@ -204,7 +205,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 );
                                                                 break;
                                                         }
-                                                        console.log("Report Insta SUCCESS!!!");
+                                                        logsResponse("Report Insta SUCCESS!!!");
                                                     }
 
                                                 ).catch(
@@ -245,7 +246,7 @@ export async function schedullerAllSocmed(timeSwitch) {
             }
         ). catch (
             async error =>{
-                console.log(error)
+                logsResponse(error)
                 await client.sendMessage('6281235114745@c.us', 
                     'Client Data Request Error '
                 );
@@ -255,7 +256,7 @@ export async function schedullerAllSocmed(timeSwitch) {
 
     //If Something Error
     } catch (error) {
-        console.log(error)
+        logsResponse(error)
         await client.sendMessage('6281235114745@c.us', 
             'Cron Job Hourly Error '
         );

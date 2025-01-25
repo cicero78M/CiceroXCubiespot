@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import { logsResponse } from "../responselogs/response_view";
 
 export async function detikScrapping() {   
     try {
@@ -24,13 +25,13 @@ export async function detikScrapping() {
         return { quote };
       });
 
-      console.log (quotes);
+      logsResponse(quotes);
     
     
     await browser.close();
         
     } catch (error) {
-        console.log(error);
+        logsResponse(error);
     }
 
 }

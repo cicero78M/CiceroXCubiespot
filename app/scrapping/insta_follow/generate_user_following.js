@@ -1,9 +1,10 @@
+import { logsResponse } from "../../responselogs/response_view.js";
 import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 
 export async function instaUserFollowing(username, pages, countData, totalData) {
     let stateFoll = false;
 
-    console.log("Execute insta user following");
+    logsResponse("Execute insta user following");
 
     return new Promise(async(resolve, reject) => {
 
@@ -13,7 +14,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
             try {
 
                 let dataFollowing = [];
-                console.log(totalData);
+                logsResponse(totalData);
 
                 await instaFollowingAPI(username, pages).then(
                     async response => {
@@ -26,7 +27,7 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
                             
                             if (dataFollowing[i].username === 'cubiehome'){
-                                console.log("true");
+                                logsResponse("true");
                                 stateFoll = true;
                             }
                         }
@@ -34,16 +35,16 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
                         let totalValue = countData + count;    
                         if (stateFoll === false){
 
-                            console.log('execute');
+                            logsResponse('execute');
 
                             if (pagination != ""){
                                 if(totalData > totalValue){
-                                    console.log("Under Total");
+                                    logsResponse("Under Total");
                                     setTimeout(async () => {
                                         forLoopGenerateFollowing(username, pagination, totalValue, totalData);
                                     }, 2000);
                                 } else {
-                                    console.log("done");
+                                    logsResponse("done");
                                     let responseData =  {
                                         data: false,
                                         code: 200,

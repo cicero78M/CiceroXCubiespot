@@ -1,6 +1,7 @@
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { client } from "../../../app.js";
 import { decrypted, encrypted } from "../../../json_data_file/crypto.js";
+import { logsResponse } from "../../responselogs/response_view.js";
 
 
 export async function postTiktokUserComments(clientName, items, userdata) {
@@ -8,7 +9,7 @@ export async function postTiktokUserComments(clientName, items, userdata) {
     let hasShortcode = false;
     let encryptedData = [];
 
-    console.log("Post Data Username Tiktok Engagement" );
+    logsResponse("Post Data Username Tiktok Engagement" );
     client.sendMessage('6281235114745@c.us', "Post Data Username Tiktok Engagement");
 
     return new Promise(async (resolve, reject) => { 

@@ -2,10 +2,11 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { googleAuth } from "../../../app/database/new_query/sheet_query.js";
 import { decrypted } from "../../crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
+import { logsResponse } from "../../../app/responselogs/response_view.js";
 
 export async function restoreInstaLikes(clientName) {
 
-  console.log("Execute");
+  logsResponse("Execute");
 
     let instaLikesDoc = new GoogleSpreadsheet(process.env.instaLikesUsernameID, googleAuth); //Google Authentication for InstaOfficial DB    
     await instaLikesDoc.loadInfo(); // loads document properties and worksheets
@@ -36,7 +37,7 @@ export async function restoreInstaLikes(clientName) {
         
         }
         
-        console.log("Done")
+        logsResponse("Done")
       }
     }
 }

@@ -2,6 +2,7 @@ import { client } from "../../../app.js";
 import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, readdirSync, writeFileSync } from "fs";
+import { logsResponse } from "../../responselogs/response_view.js";
 
 export async function getInstaPost(clientValue) {
 
@@ -19,7 +20,7 @@ export async function getInstaPost(clientValue) {
   let hasContent = false;
 
   
-  console.log(`${clientName} Collecting Insta Post Starting...`);
+  logsResponse(`${clientName} Collecting Insta Post Starting...`);
   await client.sendMessage('6281235114745@c.us', `${clientName} Collecting Insta Post Starting...`);
 
   return new Promise(async (resolve, reject) => {
@@ -48,7 +49,7 @@ export async function getInstaPost(clientValue) {
   
           if (hasContent) {
   
-            console.log(`${clientName} Official Account Has Post Data...`);
+            logsResponse(`${clientName} Official Account Has Post Data...`);
             await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
             
             let hasShortcode = false;
@@ -88,7 +89,7 @@ export async function getInstaPost(clientValue) {
 
                 }
 
-                console.log("Insta Content Updated");
+                logsResponse("Insta Content Updated");
               }
             
 

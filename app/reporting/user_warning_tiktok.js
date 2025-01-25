@@ -2,6 +2,7 @@ import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from "fs";
+import { logsResponse } from '../responselogs/response_view.js';
   
 export async function warningReportTiktok(clientValue) {
     
@@ -10,7 +11,7 @@ export async function warningReportTiktok(clientValue) {
             resolve, reject
         ) => {
             try {
-                console.log("Execute Warning Report Tiktok");
+                logsResponse("Execute Warning Report Tiktok");
                 client.sendMessage(
                     '6281235114745@c.us', 
                     "Execute Warning Report Tiktok"
@@ -93,7 +94,7 @@ export async function warningReportTiktok(clientValue) {
                             || userRows[i].TIKTOK === null 
                             || userRows[i].TIKTOK === ""){
                 
-                                console.log("Null Data Exist");
+                                logsResponse("Null Data Exist");
                                 UserNotLikes.push(userRows[i].ID_KEY);
                                 notCommentList.push(userRows[i]);
                 
@@ -115,13 +116,13 @@ export async function warningReportTiktok(clientValue) {
                         for (let i = 0; i < notCommentList.length; i++){
                             if(notCommentList[i].WHATSAPP != ""){
     
-                                console.log(`Send Warning Tiktok messages to ${notCommentList[i].TITLE} ${notCommentList[i].NAMA} `);  
+                                logsResponse(`Send Warning Tiktok messages to ${notCommentList[i].TITLE} ${notCommentList[i].NAMA} `);  
                                 await client.sendMessage(
                                     `${notCommentList[i].WHATSAPP}@c.us`,
                                     `Selamat Siang, Bpk/Ibu ${notCommentList[i].TITLE} ${notCommentList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
                                 );
                                 setTimeout(async () => {
-                                    console.log ("Wait ");
+                                    logsResponse ("Wait ");
                                 }, 4000);
                             }
                         }  
@@ -140,7 +141,7 @@ export async function warningReportTiktok(clientValue) {
                             code: 201
                         };
 
-                        console.log(responseData.data);
+                        logsResponse(responseData.data);
                         reject (responseData);
                 
                     }
@@ -150,7 +151,7 @@ export async function warningReportTiktok(clientValue) {
                         state: true,
                         code: 201
                     };
-                    console.log(responseData.data);               
+                    logsResponse(responseData.data);               
                     reject (responseData);
                 }
             } catch (error) {
@@ -159,7 +160,7 @@ export async function warningReportTiktok(clientValue) {
                     state: false,
                     code: 303
                 };
-                console.log(responseData.data);
+                logsResponse(responseData.data);
                 reject (responseData);
             }
         }

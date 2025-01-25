@@ -2,10 +2,11 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { googleAuth } from "../../../app/database/new_query/sheet_query.js";
 import { mkdirSync, writeFileSync } from "fs";
 import { decrypted } from "../../crypto.js";
+import { logsResponse } from "../../../app/responselogs/response_view.js";
 
 export async function restoreInstaContent(clientName) {
 
-  console.log("Execute");
+  logsResponse("Execute");
 
   let instaOfficialDoc = new GoogleSpreadsheet(process.env.instaOfficialID, googleAuth); //Google Authentication for InstaOfficial DB    
   await instaOfficialDoc.loadInfo(); // loads document properties and worksheets

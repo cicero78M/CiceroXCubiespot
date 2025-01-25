@@ -3,8 +3,7 @@ import { mkdirSync, writeFileSync } from 'fs'
 import { decrypted } from "../crypto.js";
 
 export async function restoreUserData(clientID) {
-
-        
+       
     //Date Time
     let d = new Date();
     let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});

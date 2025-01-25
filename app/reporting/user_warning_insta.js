@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'fs';
 import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
+import { logsResponse } from '../responselogs/response_view.js';
 
 export async function warningReportInsta(clientValue) {
 
@@ -53,13 +54,13 @@ export async function warningReportInsta(clientValue) {
           for (let i = 0; i < instaContentDir.length; i++) {
 
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-            // console.log(contentItems);
+            // logsResponse(contentItems);
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
             let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
-            // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            // console.log(localDate);
+            // logsResponse(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+            // logsResponse(localDate);
 
 
             if ( dateNow === localDate) {
@@ -99,7 +100,7 @@ export async function warningReportInsta(clientValue) {
               || userRows[i].INSTA === null 
               || userRows[i].INSTA === ""){
 
-                console.log("Null Data Exist");
+                logsResponse("Null Data Exist");
                 UserNotLikes.push(userRows[i].ID_KEY);
                 notLikesList.push(userRows[i]);
 
@@ -119,19 +120,19 @@ export async function warningReportInsta(clientValue) {
      
             }
 
-            console.log(notLikesList);
+            logsResponse(notLikesList);
 
             for (let i = 0; i < notLikesList.length; i++){
               if(notLikesList[i].WHATSAPP !== ""){
                 
-                console.log(`Send Warning messages to ${notLikesList[i].TITLE} ${notLikesList[i].NAMA}`);  
+                logsResponse(`Send Warning messages to ${notLikesList[i].TITLE} ${notLikesList[i].NAMA}`);  
                 await client.sendMessage(
                     `${notLikesList[i].WHATSAPP}@c.us`,
                     `Selamat Siang, Bpk/Ibu ${notLikesList[i].TITLE} ${notLikesList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari AKun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_
                     `
                 );
                 setTimeout(async () => {
-                  console.log("Waits");
+                  logsResponse("Waits");
                 }, 4000);
               }
             }
