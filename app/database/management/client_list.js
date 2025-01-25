@@ -8,7 +8,7 @@ export async function clientDataView(data) {
             let response =  {
 
                 data: 
-                `Name : ${decrypted(data.CLIENT_ID)}
+                `Client : ${decrypted(data.CLIENT_ID)}
 
                 Type : ${decrypted(data.TYPE)}
                 State : ${decrypted(data.STATUS)}
