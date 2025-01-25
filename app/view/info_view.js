@@ -49,7 +49,7 @@ export async function infoView(dataResponse) {
     ${dataResponse}#SATFUNG#NRP#SATFUNG
     
     _Contoh :_
-    ${dataResponse}#SATFUNG#87020990#TIK
+    ${dataResponse}#SATFUNG#87020990#SI TIK
     =================================
     *Format Pesan WA untuk merubah data Jabatan :*
 
