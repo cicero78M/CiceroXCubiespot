@@ -1489,7 +1489,13 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await clientDataView(response[i]).then(
-                                            response => console.log(response)
+                                            response => {
+                                                sendResponse(
+                                                    msg.from, 
+                                                    response, 
+                                                    "Error Handling Client Data"
+                                                );
+                                            }
                                         ).catch(
                                             error => console.error(error)
                                         );
