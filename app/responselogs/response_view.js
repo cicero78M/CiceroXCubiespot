@@ -1,4 +1,4 @@
-import { client } from "../../app";
+import { client } from "../../app.js";
 
 export function logsResponse(params) {
     //Date Time
