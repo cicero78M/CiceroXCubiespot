@@ -64,6 +64,7 @@ import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
 import { clientDataView } from './app/database/management/client_list.js';
 import { updateClientData } from './app/database/client/update_client.js';
 import { registerClientData } from './app/database/client/register_client.js';
+import { logsResponse } from './app/logs/response_view.js';
 
 //.env
 const private_key = process.env;
@@ -135,30 +136,24 @@ client.on('ready', () => {
 
     // Server Life State Warning
     schedule('*/10 * * * *',  () =>  {
-        //Date Time
-        let d = new Date();
-        let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-        let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
-        let time = localDate+" >> "+hours;
-
-        console.log(time+' '+ process.env.APP_SESSION_NAME +' <<<System Alive>>>');
+        console.log(logsResponse(process.env.APP_SESSION_NAME +' <<<System Alive>>>'));
         client.sendMessage('6281235114745@c.us', process.env.APP_SESSION_NAME +' <<<System Alive>>>');
     });
 
     // Scrapping Socmed every hours until 21
     schedule('30 6-20 * * *',  () => {
-        console.log("Execute Cron Job");
+        console.log(logsResponse(process.env.APP_SESSION_NAME +' Exec Cron Job'));
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
     schedule('0 15,18,21 * * *',  () => {
-        console.log("Execute Cron Job");
+        console.log(logsResponse(process.env.APP_SESSION_NAME +' Exec Cron Job'));
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
     //User Warning Likes Comments Insta & Tiktok
     schedule('15 12,16,19 * * *',  () => {
-        console.log("Execute Cron Job");
+        console.log(logsResponse(process.env.APP_SESSION_NAME +' Exec User Warning'));
         clientData().then( async clientData =>{
 
             for (let i = 0; i < clientData.length; i++){
@@ -253,45 +248,45 @@ client.on('ready', () => {
     //Backup Client & User data
     schedule('0 1 * * *',  async () => {
         if(process.env.APP_CLIENT_TYPE === response[i].TYPE){
-            console.log("Execute Backup Client & User Data");
+            console.log(logsResponse(process.env.APP_SESSION_NAME +' Exec Client & User Backup'));
             await clientDataBackup().then(
                 response => console.log(response)
             ).catch (
-                error => console.error(error)
+                error => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+error))
             );
 
             await userDataBackup().then(
-                response => console.log(response)
+                response => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+response))
             ).catch (
-                error => console.error(error)
+                error => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+error))
             );
         }                
     });
 
-    //User Warning Likes Comments Insta & Tiktok
+    //Backup Insta & Tiktok Content
     schedule('0 22 * * *',  async () => {
 
-        console.log("Execute Backup Insta & Tiktok Content");
+        console.log(logsResponse(process.env.APP_SESSION_NAME +' >> Backup Insta & Tiktok Content'))
         await clientData().then(
             async response =>{
                 if(process.env.APP_CLIENT_TYPE === response[i].TYPE){
                     for (let i = 0; i < response.length; i++){
                         await instaContentBackup(response[i]).then(
-                            response => console.log(response)
+                            response => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+response))
                         ).catch(
-                            error => console.error(error)
+                            error => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+error))
                         );
 
                         await tiktokContentBackup(response[i]).then(
-                            response => console.log(response)
+                            response => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+response))
                         ).catch(
-                            error => console.error(error)
+                            error => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+error))
                         );
                     }
                 }
             }
         ).catch (
-            error => console.error(error)
+            error => console.log(logsResponse(process.env.APP_SESSION_NAME +' >> '+error))
         );
         
     });
