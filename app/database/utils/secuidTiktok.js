@@ -50,9 +50,7 @@ export async function setSecuid(clientValue) {
                         };
                         console.log('Return Success');
                         resolve (responseData);
-                    }
-    
-    
+                    }    
                 }
             )
     
