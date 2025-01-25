@@ -26,8 +26,7 @@ export async function detikScrapping() {
       });
 
       logsResponse(quotes);
-    
-    
+   
     await browser.close();
         
     } catch (error) {

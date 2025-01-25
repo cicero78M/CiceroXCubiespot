@@ -320,12 +320,6 @@ client.on('ready', () => {
 });
 
 client.on('message', async (msg) => {
-    // Date Time
-    let d = new Date(); //Date Time
-    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta" }); //Local Date
-    let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});  //Hours
-    let time = localDate+" >> "+hours;
-
     try {
 
         const contact = await msg.getContact(); // This Catch Contact Sender. 
