@@ -246,75 +246,77 @@ client.on('ready', () => {
             }
         });
     });
+    if(process.env.APP_CLIENT_TYPE === "RES"){
+        //User Warning Likes Comments Insta & Tiktok
+        schedule('0 1 * * *',  async () => {
 
-    //User Warning Likes Comments Insta & Tiktok
-    schedule('0 1 * * *',  async () => {
+            console.log("Execute Backup Client & User Data");
+            await clientDataBackup().then(
+                response => console.log(response)
+            ).catch (
+                error => console.error(error)
+            );
 
-        console.log("Execute Backup Client & User Data");
-        await clientDataBackup().then(
-            response => console.log(response)
-        ).catch (
-            error => console.error(error)
-        );
-
-        await userDataBackup().then(
-            response => console.log(response)
-        ).catch (
-            error => console.error(error)
-        );
-        
-    });
-
-    //User Warning Likes Comments Insta & Tiktok
-    schedule('0 22 * * *',  async () => {
-
-        console.log("Execute Backup Insta & Tiktok Content");
-        await clientData().then(
-            async response =>{
-                for (let i = 0; i < response.length; i++){
-                    await instaContentBackup(response[i]).then(
-                        response => console.log(response)
-                    ).catch(
-                        error => console.error(error)
-                    );
-
-                    await tiktokContentBackup(response[i]).then(
-                        response => console.log(response)
-                    ).catch(
-                        error => console.error(error)
-                    );
-                }
-            }
-        ).catch (
-            error => console.error(error)
-        );
-        
-    });
-
-    //User Warning Likes Comments Insta & Tiktok
-    schedule('0 23 * * *',  async () => {
-
-        console.log("Execute Backup Insta & Tiktok Like Comments");
-        await clientData().then(
-            async response =>{
-                for (let i = 0; i < response.length; i++){
+            await userDataBackup().then(
+                response => console.log(response)
+            ).catch (
+                error => console.error(error)
+            );
             
-                    await instaLikesBackup(response[i]).then(
-                        response => console.log(response)
-                    ).catch(
-                        error => console.error(error)
-                    );
+        });
 
-                    await tiktokCommentsBackup(response[i]).then(
-                        response => console.log(response)
-                    ).catch(
-                        error => console.error(error)
-                    );
-        
+        //User Warning Likes Comments Insta & Tiktok
+        schedule('0 22 * * *',  async () => {
+
+            console.log("Execute Backup Insta & Tiktok Content");
+            await clientData().then(
+                async response =>{
+                    for (let i = 0; i < response.length; i++){
+                        await instaContentBackup(response[i]).then(
+                            response => console.log(response)
+                        ).catch(
+                            error => console.error(error)
+                        );
+
+                        await tiktokContentBackup(response[i]).then(
+                            response => console.log(response)
+                        ).catch(
+                            error => console.error(error)
+                        );
+                    }
                 }
-            }
-        );
-    });
+            ).catch (
+                error => console.error(error)
+            );
+            
+        });
+
+        //User Warning Likes Comments Insta & Tiktok
+        schedule('0 23 * * *',  async () => {
+
+            console.log("Execute Backup Insta & Tiktok Like Comments");
+            await clientData().then(
+                async response =>{
+                    for (let i = 0; i < response.length; i++){
+                
+                        await instaLikesBackup(response[i]).then(
+                            response => console.log(response)
+                        ).catch(
+                            error => console.error(error)
+                        );
+
+                        await tiktokCommentsBackup(response[i]).then(
+                            response => console.log(response)
+                        ).catch(
+                            error => console.error(error)
+                        );
+            
+                    }
+                }
+            );
+        });
+    }
+
 });
 
 client.on('message', async (msg) => {
