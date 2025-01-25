@@ -9,49 +9,49 @@ export async function infoView(dataResponse) {
 
     ${dataResponse}#INFO
     =================================
-    *Format Pesan untuk menampilkan data anda :*
+    *Menampilkan data anda :*
     
     ${dataResponse}#MYDATA#NRP
     
     _Contoh :_ 
     ${dataResponse}#MYDATA#87020990
     =================================
-    *Format Pesan WA Untuk Penambahan / Perubahan data IG :*
+    *Perubahan / Input data IG :*
     
     ${dataResponse}#IG#NRP#link_profile_instagram
 
     _Contoh :_ 
     ${dataResponse}#IG#87020990#https://www.instagram.com/riezqo_fx
     =================================
-    *Format WA Pesan Untuk Perubahan data Tiktok :*
+    *Perubahan / Input data Tiktok :*
     
     ${dataResponse}#TIKTOK#NRP#link_profile_tiktok
     
     _Contoh :_ 
     ${dataResponse}#TIKTOK#87020990#https://www.tiktok.com/@cicero_dev
     =================================
-    *Format Pesan WA untuk input No WA Anda :*
+    *Input No WA Anda :*
     
     ${dataResponse}#WHATSAPP#NRP
     
     _Contoh :_ 
     ${dataResponse}#WHATSAPP#87020990
     =================================
-    *Format Wa Untuk merubah Data Pangkat :*
+    *Merubah Data Pangkat :*
     
     ${dataResponse}#PANGKAT#NRP#PANGKAT
     
     _Contoh :_ 
     ${dataResponse}#PANGKAT#87020990#BRIPKA
     =================================
-    *Format Pesan WA untuk merubah Data Nama Satfung :*
+    *Merubah Data Nama Satfung :*
     
     ${dataResponse}#SATFUNG#NRP#SATFUNG
     
     _Contoh :_
     ${dataResponse}#SATFUNG#87020990#SI TIK
     =================================
-    *Format Pesan WA untuk merubah data Jabatan :*
+    *Merubah data Jabatan :*
 
     ${dataResponse}#JABATAN#NRP#JABATAN
     
