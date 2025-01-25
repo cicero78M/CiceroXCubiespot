@@ -52,16 +52,16 @@ export async function getInstaPost(clientValue) {
             logsResponse(`${clientName} Official Account Has Post Data...`);
             await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
             
-            let hasShortcode = false;
+            // let hasShortcode = false;
             
-            let datax = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+            // let datax = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 
-            for (let ix = 0; ix < datax.length; ix++){
+            // for (let ix = 0; ix < datax.length; ix++){
               
-              if (todayItems.includes(datax[ix].replaceAll('.json', ''))){
-                hasShortcode = true;
-              }
-            }
+            //   if (todayItems.includes(datax[ix].replaceAll('.json', ''))){
+            //     hasShortcode = true;
+            //   }
+            // }
             
             //If Database Contains Shortcode 
               for (let i = 0; i < itemByDay.length; i++) {

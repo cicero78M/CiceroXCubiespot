@@ -3,17 +3,10 @@ import { logsResponse } from "../responselogs/response_view.js";
 //Response By User
 export async function sendResponse(from, responseData, errormessage) {
     //Date Time
-    let d = new Date();
-    let localDate = d.toLocaleDateString("en-US", {
-        timeZone: "Asia/Jakarta"
-    });
-    let hours = d.toLocaleTimeString("en-US", {
-        timeZone: "Asia/Jakarta"
-    });     
-    let time = localDate+" >> "+hours;
+    
     switch (responseData.code){
         case 200:
-            logsResponse(time+" SUCCESS GENERATE DATA");
+            logsResponse("SUCCESS GENERATE DATA");
             await client.sendMessage(from, responseData.data);
             break;
         case 303:                                

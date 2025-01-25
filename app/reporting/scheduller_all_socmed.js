@@ -189,7 +189,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                     decrypted(clientData[i].OPERATOR),
                                                                     decrypted(clientData[i].GROUP), 
                                                                     data, 
-                                                                    'REPORT TIKTOK'
+                                                                    'REPORT INSTA'
                                                                 );            
                                                                 break;
 
@@ -198,7 +198,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 sendResponse(
                                                                     '6281235114745@c.us', 
                                                                     data, 
-                                                                    ' ERROR GET TIKTOK BRIDGES'
+                                                                    ' ERROR REPORT INSTA'
                                                                 );
                                                                 break;
                                                         }
