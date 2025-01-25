@@ -10,10 +10,7 @@ import { sendClientResponse, sendResponse } from "../view/sendWA.js";
 import { newReportInsta } from "./insta_report.js";
 
 export async function schedullerAllSocmed(timeSwitch) {
-    let d = new Date();
-    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-    let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
-    let time = localDate+" >> "+hours;
+
     try {
         //Commit if schedule Working
         await client.sendMessage(
@@ -21,7 +18,7 @@ export async function schedullerAllSocmed(timeSwitch) {
             'Generate All Socmed Data Starting...'
         );            
 
-        logsResponse(`${time} >>> Generate All Socmed Data Starting`);
+        logsResponse(`Generate All Socmed Data Starting`);
 
         await clientData().then( 
             async clientData =>{
@@ -31,7 +28,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        logsResponse(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
+                        logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
@@ -113,7 +110,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                         );
                                                         break;
                                                 }                   
-                                                logsResponse(`${time} >>> Report TIKTOK SUCCESS!!!`);
+                                                logsResponse(`Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
                                             data =>{
@@ -143,7 +140,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        logsResponse(`${time} >>> ${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
+                        logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 
