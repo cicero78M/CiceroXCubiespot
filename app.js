@@ -286,7 +286,7 @@ client.on('message', async (msg) => {
             const chat = await msg.getChat();
             chat.sendSeen();
             if (contact.pushname !== undefined){
-                logsResponse(contact.pushname+" ===>>>> "+msg.body);
+                logsResponse(contact.pushname+" >>> "+msg.body);
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
                 if (url != null || url != undefined){
