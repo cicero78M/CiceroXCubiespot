@@ -14,6 +14,7 @@ export async function dataView() {
 
                 data: 
                 `Name : ${decrypted(data.CLIENT_ID)}
+                
                 Type : ${decrypted(data.TYPE)}
                 State : ${decrypted(data.STATUS)}
                 Insta : ${decrypted(data.INSTAGRAM)}
