@@ -48,7 +48,7 @@ import { saveContacts } from './app/database/utils/saveContact.js';
 import { restoreClientData } from './json_data_file/client_data/restore_client_data.js';
 import { clientData } from './json_data_file/client_data/read_client_data_from_json.js';
 import { restoreUserData } from './json_data_file/user_data/restore_user_data.js';
-import { pushUserCom, pushUserRes } from './app/database/push_user_new_client/push_user_data.js';
+import { pushUserCom, pushUserRes } from './app/database/client_user_data/push_user_data.js';
 import { decrypted } from './json_data_file/crypto.js';
 import { restoreInstaContent } from './json_data_file/insta_data/insta_content/restore_insta_content_data.js';
 import { restoreInstaLikes } from './json_data_file/insta_data/insta_likes/transfer_insta_likes_data.js';
@@ -62,6 +62,8 @@ import { instaLikesBackup } from './app/backup/insta_likes.js';
 import { tiktokCommentsBackup } from './app/backup/tiktok_comment.js';
 import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
 import { clientDataView } from './app/database/management/client_list.js';
+import { updateClientData } from './app/database/client/update_client.js';
+import { registerClientData } from './app/database/client/register_client.js';
 
 //.env
 const private_key = process.env;
@@ -381,183 +383,298 @@ client.on('message', async (msg) => {
                 
                 //Admin Order Data         
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){ 
-                    switch(splittedMsg[1].toLowerCase()){
-                        case 'pushuserres': {
-                            //Res Request
-                            console.log('Push User Res Client Triggered');
-
-                            if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
-
-                                let slicedData = splittedMsg[2].split('/');
-                                let sheetID;
-
-                                if (slicedData[slicedData.length-1].includes('edit')){
-                                    sheetID = slicedData[slicedData.length-2];
-                                    console.log(sheetID);
-                                } else {
-                                    sheetID = slicedData[slicedData.length-1];
-                                    console.log(sheetID);
-                                }
-
-                                await pushUserRes(splittedMsg[0], sheetID)
-                                .then(
-                                    response =>
-                                    console.log(response)
-                                )
-                                .catch(
-                                    response =>
-                                    console.log(response)
-                                );
-
-                                // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
-                                                        
-                            }  else {
-                                
-                                console.log('Bukan Spreadsheet Links');
-                                
-                                client.sendMessage(
-                                    msg.from, 
-                                    'Bukan Spreadsheet Links'
-                                );
-
-                            }
-                        }
-                                break;
-                        case 'pushusercom': {
-
-                            //Com Request
-                            console.log('Push User Com Client Triggered');
-
-                            if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
-
-                                let slicedData = splittedMsg[2].split('/');
-                                let sheetID;
-
-                                if (slicedData[slicedData.length-1].includes('edit')){
-                                    sheetID = slicedData[slicedData.length-2];
-                                    console.log(sheetID);
-                                } else {
-                                    sheetID = slicedData[slicedData.length-1];
-                                    console.log(sheetID);
-                                }
-
-                                await pushUserCom(splittedMsg[0], sheetID)
-                                .then(
-                                    response =>
-                                    console.log(response)
-                                )
-                                .catch(
-                                    response =>
-                                    console.log(response)
-                                );
-
-
-                                // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
-                                                        
-                            }  else {
-                                
-                                console.log('Bukan Spreadsheet Links');
-                                
-                                client.sendMessage(
-                                    msg.from, 
-                                    'Bukan Spreadsheet Links'
-                                );
-
-                            }
-
-                        }
-                                break;                  
-                        case 'exception': {//Exception
-                            await editProfile(
-                                splittedMsg[0].toUpperCase(),
-                                splittedMsg[2].toLowerCase(), 
-                                splittedMsg[3].toUpperCase(), 
-                                msg.from.replace('@c.us', ''),
-                                "EXCEPTION"
-                            ).then(async data => 
-                                await sendMessage(msg.from, data, " EXCEPTION REQUEST ERROR")
-                            ).catch(async error => 
-                                await sendMessage(msg.from, error, " EXCEPTION REQUEST ERROR")
-                            )
-
-                        }
-                            break;
-                        case 'secuid': {
-                            //Generate All Socmed
-                            await client.sendMessage(
-                                '6281235114745@c.us', 
-                                'Generate Tiktok secUID Data Starting...'
-                            );
-                            
-                            console.log(time+' Generate Tiktok secUID Data Starting');
-            
-                            await clientData().then(
-                                async clientData =>{
-                                    //Itterate Client
-                                    for (let i = 0; i < clientData.length; i++){
-                                        if (decrypted(clientData[i].STATUS) === "TRUE" 
-                                        && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                        && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {         
-                                    
-                                            console.log(time+" "+decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
-                                            let tiktokSecuid = await setSecuid(
-                                                clientData[i]
-                                            );
-                                            
-                                            sendResponse(
-                                                msg.from, 
-                                                tiktokSecuid, 
-                                                `${decrypted(clientData[i].CLIENT_ID)} START TIKTOK SECUID DATA`
-                                            );
-                                        } 
-                                    }
-                            });
-
-                        }
-                            break;
-                        case 'savecontact': {
-                            let response = await saveContacts();
-                            console.log(response);
-                        }
-                            break;
-                        default : {
-                            //Execute Send Warning
-                            console.log("Execute Schedule");
-                            clientData().then(
-                                async clientData =>{
-                    
-                                for (let i = 0; i < clientData.length; i++){
-                            
-                                    //This Procces Tiktok Report
-                                    if (decrypted(clientData[i].STATUS) === "TRUE" 
-                                    && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
-                                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                        console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
-                                        await client.sendMessage(
-                                            '6281235114745@c.us', 
-                                            ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNINGDATA`
+                    if(msg.from === "6281235114745@c.us"){
+                        switch(splittedMsg[1].toLowerCase()){
+                            case 'pushuserres': 
+                                {
+                                    //Res Request
+                                    console.log('Push User Res Client Triggered');
+        
+                                    if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+        
+                                        let slicedData = splittedMsg[2].split('/');
+                                        let sheetID;
+        
+                                        if (slicedData[slicedData.length-1].includes('edit')){
+                                            sheetID = slicedData[slicedData.length-2];
+                                            console.log(sheetID);
+                                        } else {
+                                            sheetID = slicedData[slicedData.length-1];
+                                            console.log(sheetID);
+                                        }
+        
+                                        await pushUserRes(splittedMsg[0], sheetID)
+                                        .then(
+                                            response =>
+                                            console.log(response)
+                                        )
+                                        .catch(
+                                            response =>
+                                            console.log(response)
                                         );
-                                        await warningReportTiktok(clientData[i]);
-                                    }         
-                
-                                    //This process Insta Report
-                                    if (decrypted(clientData[i].STATUS) === "TRUE" 
-                                    && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+        
+                                        // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
+                                                                
+                                    }  else {
                                         
-                                        console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
-                                        await client.sendMessage(
-                                            '6281235114745@c.us', 
-                                            `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
+                                        console.log('Bukan Spreadsheet Links');
+                                        
+                                        client.sendMessage(
+                                            msg.from, 
+                                            'Bukan Spreadsheet Links'
                                         );
-                
-                                        await warningReportInsta(clientData[i]);
-                                    }  
+        
+                                    }
                                 }
-                            });
-                        }
-                            break;
-                    }  
+                                    break;
+                            case 'pushusercom': 
+                                {
+        
+                                    //Com Request
+                                    console.log('Push User Com Client Triggered');
+        
+                                    if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
+        
+                                        let slicedData = splittedMsg[2].split('/');
+                                        let sheetID;
+        
+                                        if (slicedData[slicedData.length-1].includes('edit')){
+                                            sheetID = slicedData[slicedData.length-2];
+                                            console.log(sheetID);
+                                        } else {
+                                            sheetID = slicedData[slicedData.length-1];
+                                            console.log(sheetID);
+                                        }
+        
+                                        await pushUserCom(splittedMsg[0], sheetID)
+                                        .then(
+                                            response =>
+                                            console.log(response)
+                                        )
+                                        .catch(
+                                            response =>
+                                            console.log(response)
+                                        );
+        
+        
+                                        // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
+                                                                
+                                    }  else {
+                                        
+                                        console.log('Bukan Spreadsheet Links');
+                                        
+                                        client.sendMessage(
+                                            msg.from, 
+                                            'Bukan Spreadsheet Links'
+                                        );
+        
+                                    }
+        
+                                }
+                                    break;                  
+                            case 'exception': 
+                                {//Exception
+                                    await editProfile(
+                                        splittedMsg[0].toUpperCase(),
+                                        splittedMsg[2].toLowerCase(), 
+                                        splittedMsg[3].toUpperCase(), 
+                                        msg.from.replace('@c.us', ''),
+                                        "EXCEPTION"
+                                    ).then(async data => 
+                                        await sendMessage(msg.from, data, " EXCEPTION REQUEST ERROR")
+                                    ).catch(async error => 
+                                        await sendMessage(msg.from, error, " EXCEPTION REQUEST ERROR")
+                                    )
+        
+                                }
+                                break;
+                            case 'secuid': 
+                                {
+                                    //Generate All Socmed
+                                    await client.sendMessage(
+                                        '6281235114745@c.us', 
+                                        'Generate Tiktok secUID Data Starting...'
+                                    );
+                                    
+                                    console.log(time+' Generate Tiktok secUID Data Starting');
+                    
+                                    await clientData().then(
+                                        async clientData =>{
+                                            //Itterate Client
+                                            for (let i = 0; i < clientData.length; i++){
+                                                if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                                && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                                && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {         
+                                            
+                                                    console.log(time+" "+decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
+                                                    let tiktokSecuid = await setSecuid(clientData[i]);
+                                                    
+                                                    sendResponse(
+                                                        msg.from, 
+                                                        tiktokSecuid, 
+                                                        `${decrypted(clientData[i].CLIENT_ID)} START TIKTOK SECUID DATA`
+                                                    );
+                                                } 
+                                            }
+                                    });
+        
+                                }
+                                break;
+                            case 'savecontact': 
+                                {
+                                    let response = await saveContacts();
+                                    console.log(response);
+                                }
+                                break;
+                            case 'updateclientdata':
+                                {
+                                    switch (splittedMsg[2].toLowerCase()) {
+                                        case 'insta':
+                                            {
+                                                if (splittedMsg[3].includes('instagram.com')){
+                                                    if (!splittedMsg[3].includes('/p/') 
+                                                    || !splittedMsg[3].includes('/reels/') 
+                                                    || !splittedMsg[3].includes('/video/') ){
+                                                        
+                                                        const instaLink = splittedMsg[3].split('?')[0];
+                                                        
+                                                        const instaUsername = instaLink.replaceAll(
+                                                            '/profilecard/',
+                                                            ''
+                                                        ).split('/').pop();  
+                                            
+                                                        updateClientData(splittedMsg[0].toUpperCase(), instaUsername, "insta");
+                                                    
+                    
+                                                    } else {
+            
+                                                        console.log('Bukan Link Profile Instagram');
+                                                        client.sendMessage(
+                                                            msg.from, 
+                                                            'Bukan Link Profile Instagram'
+                                                        );
+            
+                                                    }
+            
+                                                } else {
+            
+                                                    console.log('Bukan Link Instagram');
+  
+                                                    client.sendMessage(
+                                                        msg.from, 
+                                                        'Bukan Link Instagram'
+                                                    );
+            
+                                                }
+                                            }
+                                            
+                                            break;
+                                        case 'instastate':
+                                            {
+                                                if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "instastate");
+                                                }
+                                            }
+                                            break;
+                                        case 'tiktok':
+                                            {
+                                                if (splittedMsg[3].includes('tiktok.com')){
+                                            
+                                                    const tiktokLink = splittedMsg[3].split('?')[0];
+                                                    const tiktokUsername = tiktokLink.split('/').pop();  
+    
+                                                    updateClientData(splittedMsg[0].toUpperCase(), tiktokUsername, "tiktok");
+    
+                                                    sendResponse(
+                                                        msg.from, 
+                                                        responseData, 
+                                                        "Error Update Tiktok"
+                                                    );
+            
+                                                } else {
+                                                    console.log('Bukan Link Profile Tiktok');
+                                                    client.sendMessage(
+                                                        msg.from, 
+                                                        'Bukan Link Profile Tiktok'
+                                                    );
+                                                }
+                                            }
+                                           
+                                            break;
+                                        case 'tiktokstate':
+                                            {
+                                                if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "tiktokstate");
+                                                }
+                                            }
+                                            break;
+                                        case 'super':
+                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3], "super");
+                                            
+                                            break;
+                                        case 'opr':
+                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3], "opr");
+    
+                                            break;
+                                        case 'clientstate':
+                                            {
+                                                if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "tiktokstate");
+                                                }
+                                            }
+                            
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+                            case 'registerclient': 
+                            {
+                               registerClientData(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase())
+                            }
+                                break;
+                            default : 
+                                {
+                                    //Execute Send Warning
+                                    console.log("Execute Schedule");
+                                    clientData().then(
+                                        async clientData =>{
+                                        for (let i = 0; i < clientData.length; i++){
+                                            //This Procces Tiktok Report
+                                            if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                            && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
+                                            && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
+                                                await client.sendMessage(
+                                                    '6281235114745@c.us', 
+                                                    ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNINGDATA`
+                                                );
+                                                await warningReportTiktok(clientData[i]);
+                                            }         
+                        
+                                            //This process Insta Report
+                                            if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                            && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                            && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                
+                                                console.log(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
+                                                await client.sendMessage(
+                                                    '6281235114745@c.us', 
+                                                    `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
+                                                );
+                        
+                                                await warningReportInsta(clientData[i]);
+                                            }  
+                                        }
+                                    });
+                                }
+                                break;
+                        }  
+                    } else {
+                        client.sendMessage(msg.from, "Only Super Saint Seiya have this POWER!")
+                    }
+
    
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
@@ -565,72 +682,74 @@ client.on('message', async (msg) => {
                     await clientData().then(async clientData => {             
                         console.log("Response OK");
                         for (let i = 0; i < clientData.length; i++){
-                            if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
-                                let responseData;
-                                switch (splittedMsg[1].toLowerCase()) {
-                                    case "addnewuser"://Added New User Data Profile
-                                        console.log("Add User");
-                                        //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
-                                        responseData = await addNewUser(
-                                            splittedMsg[0].toUpperCase(), 
-                                            splittedMsg[2], 
-                                            splittedMsg[3].toUpperCase(), 
-                                            splittedMsg[4].toUpperCase(), 
-                                            splittedMsg[5].toUpperCase(), 
-                                            splittedMsg[6].toUpperCase()
-                                        );
-
-                                        sendResponse(
-                                            msg.from, 
-                                            responseData, 
-                                            "Error Adding New User"
-                                        );
-
-                                        break;
-                                    case "deleteuser"://Delete Existing Data User
-                                        //clientName#deleteuser#id_key/NRP#newdata
-                                        responseData = await editProfile(
-                                            splittedMsg[0].toUpperCase(), 
-                                            splittedMsg[2].toLowerCase(), 
-                                            false, 
-                                            msg.from.replace('@c.us', ''),
-                                                "STATUS"
+                            if(decrypted(clientData[i].OPERATOR) === msg.from){
+                                if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
+                                    let responseData;
+                                    switch (splittedMsg[1].toLowerCase()) {
+                                        case "addnewuser"://Added New User Data Profile
+                                            console.log("Add User");
+                                            //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
+                                            responseData = await addNewUser(
+                                                splittedMsg[0].toUpperCase(), 
+                                                splittedMsg[2], 
+                                                splittedMsg[3].toUpperCase(), 
+                                                splittedMsg[4].toUpperCase(), 
+                                                splittedMsg[5].toUpperCase(), 
+                                                splittedMsg[6].toUpperCase()
                                             );
-
-                                        sendResponse(
-                                            msg.from, 
-                                            responseData, 
-                                            "Error Delete User Data"
-                                        );
-                                        break;
-                                    case "instacheck"://Insta Username Checking Data User Not Updated
-                                        //ClientName#instacheck
-                                        responseData = await usernameAbsensi(
-                                            splittedMsg[0].toUpperCase(), 
-                                            'INSTA'
-                                        );
-                                                                                
-                                        sendResponse(
-                                            msg.from, 
-                                            responseData, 
-                                            "Error on Insta Check Data"
-                                        );
-                                        break;
-                                    case "tiktokcheck"://Tiktok Checking Data User Not Updated
-                                        //ClientName#tiktokcheck
-                                        responseData = await usernameAbsensi(
-                                            splittedMsg[0].toUpperCase(), 
-                                            'TIKTOK'
-                                        );
-                                        
-                                        sendResponse(
-                                            msg.from, 
-                                            responseData, 
-                                            "Error on Tiktok Check Data"
-                                        );
-                                        break;
-                                    default:
-                                        break;
+    
+                                            sendResponse(
+                                                msg.from, 
+                                                responseData, 
+                                                "Error Adding New User"
+                                            );
+    
+                                            break;
+                                        case "deleteuser"://Delete Existing Data User
+                                            //clientName#deleteuser#id_key/NRP#newdata
+                                            responseData = await editProfile(
+                                                splittedMsg[0].toUpperCase(), 
+                                                splittedMsg[2].toLowerCase(), 
+                                                false, 
+                                                msg.from.replace('@c.us', ''),
+                                                    "STATUS"
+                                                );
+    
+                                            sendResponse(
+                                                msg.from, 
+                                                responseData, 
+                                                "Error Delete User Data"
+                                            );
+                                            break;
+                                        case "instacheck"://Insta Username Checking Data User Not Updated
+                                            //ClientName#instacheck
+                                            responseData = await usernameAbsensi(
+                                                splittedMsg[0].toUpperCase(), 
+                                                'INSTA'
+                                            );
+                                                                                    
+                                            sendResponse(
+                                                msg.from, 
+                                                responseData, 
+                                                "Error on Insta Check Data"
+                                            );
+                                            break;
+                                        case "tiktokcheck"://Tiktok Checking Data User Not Updated
+                                            //ClientName#tiktokcheck
+                                            responseData = await usernameAbsensi(
+                                                splittedMsg[0].toUpperCase(), 
+                                                'TIKTOK'
+                                            );
+                                            
+                                            sendResponse(
+                                                msg.from, 
+                                                responseData, 
+                                                "Error on Tiktok Check Data"
+                                            );
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
                             }
                         }

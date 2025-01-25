@@ -67,54 +67,53 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
 
         isDataExist = true;
 
-          if (type === 'DIVISI') {
-            if (dataList.includes(newData)) {
-              userData.DIVISI = encrypted(newData);
-            } else {
-              propertiesView(clientName, "DIVISI").then(
-                async response =>{
-                  client.sendMessage(phone+'@c.us', response.data);
-                }
-              ).catch(
-                error =>{
-                  console.log(error);
-                  let responseData = {
-                    data: "Divisi Unregistred",
-                    state: true,
-                    code: 200
-                  };
-                  client.sendMessage(phone+'@c.us', responseData.data);
-                }
-              )
-            }
+        if (type === 'DIVISI') {
+          if (dataList.includes(newData)) {
+            userData.DIVISI = encrypted(newData);
+          } else {
+            propertiesView(clientName, "DIVISI").then(
+              async response =>{
+                client.sendMessage(phone+'@c.us', response.data);
+              }
+            ).catch(
+              error =>{
+                console.log(error);
+                let responseData = {
+                  data: "Divisi Unregistred",
+                  state: true,
+                  code: 200
+                };
+                client.sendMessage(phone+'@c.us', responseData.data);
+              }
+            )
+          }
 
-          } else if (type === 'JABATAN') {
-            userData.JABATAN = encrypted(newData);
-          } else if (type === 'NAMA') {
-            userData.NAMA = encrypted(newData);
-          } else if (type === 'ID_KEY') {
-            userData.ID_KEY = encrypted(newData);
-          } else if (type === 'TITLE') {
+        } else if (type === 'JABATAN') {
+          userData.JABATAN = encrypted(newData);
+        } else if (type === 'NAMA') {
+          userData.NAMA = encrypted(newData);
+        } else if (type === 'ID_KEY') {
+          userData.ID_KEY = encrypted(newData);
+        } else if (type === 'TITLE') {
 
-            if (dataList.includes(newData)) {
-              userData.TITLE = encrypted(newData);
-            } else {
-              let responseData = await propertiesView(clientName, type);
-              return responseData;
-            }
+          if (dataList.includes(newData)) {
+            userData.TITLE = encrypted(newData);
+          } else {
+            let responseData = await propertiesView(clientName, type);
+            return responseData;
+          }
 
-          } else if (type === 'STATUS') {
-            userData.STATUS = encrypted(newData);
-          } else if (type === 'EXCEPTION') {
-            userData.EXCEPTION = encrypted(newData);
-          } 
+        } else if (type === 'STATUS') {
+          userData.STATUS = encrypted(newData);
+        } else if (type === 'EXCEPTION') {
+          userData.EXCEPTION = encrypted(newData);
+        } 
 
-        if (userRows[ii].STATUS === "TRUE") {
-          
+        if (userRows[ii].STATUS === "TRUE") { 
           switch (userRows[ii].WHATSAPP) {
             case phone:
               {
- 
+
                 userData.WHATSAPP = encrypted(phone);
 
                 writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
@@ -161,7 +160,6 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                 }
               }
           }
-
         } else {
 
           let responseData = {

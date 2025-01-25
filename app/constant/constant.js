@@ -5,7 +5,7 @@ export const adminOrder = [
     'exception', 
     'savecontact',
     'secuid', 
-    'sendwarning'
+    'updateclientdata'
 ];
 
 export const operatorOrder = [
