@@ -4,6 +4,6 @@ let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});     
 let time = localDate+" >> "+hours;
 
-export async function logsResponse(params) {
-    return (time+ ">>" +params);
+export function logsResponse(params) {
+    console.log(time+ " >> "+process.env.APP_SESSION_NAME+" >> "+params);
 }
