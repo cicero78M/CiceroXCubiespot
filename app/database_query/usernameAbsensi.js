@@ -78,7 +78,5 @@ export async function usernameAbsensi(clientName, clientType) {
       console.log('Return Success');
       reject (responseData);
     }
-
-  })
-  
+  });
 }

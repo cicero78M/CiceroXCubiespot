@@ -82,3 +82,7 @@ export const dataBackup = [
 export const detikCom =[
     "loaddetik"
 ];
+
+export const dataManagement =[
+    "clientdataview"
+];

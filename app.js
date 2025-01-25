@@ -61,6 +61,7 @@ import { tiktokContentBackup } from './app/backup/tiktok_content.js';
 import { instaLikesBackup } from './app/backup/insta_likes.js';
 import { tiktokCommentsBackup } from './app/backup/tiktok_comment.js';
 import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
+import { clientDataView } from './app/database/management/client_list.js';
 
 //.env
 const private_key = process.env;
@@ -333,16 +334,13 @@ client.on('message', async (msg) => {
         const contact = await msg.getContact(); // This Catch Contact Sender. 
         
         if (msg.isStatus){ // This Catch Wa Story from Users
-            
             //If Msg is WA Story
             const chat = await msg.getChat();
             chat.sendSeen();
             if (contact.pushname !== undefined){
-
                 console.log(contact.pushname+" ===>>>> "+msg.body);
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
-
                 if (url != null || url != undefined){
                     let splittedUrl = url[0].split('/');
                     if (splittedUrl.includes("www.instagram.com")){
@@ -1483,6 +1481,32 @@ client.on('message', async (msg) => {
                     }
                 } else if( detikCom.includes(splittedMsg[1].toLowerCase())){
                     detikScrapping();
+                } else if( dataManagement.includes(splittedMsg[1].toLowerCase())){
+
+                    switch (includes(splittedMsg[1].toLowerCase())) {
+                        case "clientdataview":{
+                            await clientData().then(
+                                async response =>{
+                                    for (let i = 0; i < response.length; i++){
+                                        await clientDataView(response[i]).then(
+                                            response => console.log(response)
+                                        ).catch(
+                                            error => console.error(error)
+                                        );
+                                    }
+                                }
+                            ).catch (
+                                error => console.error(error)
+                            );
+                        }
+                            
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+
                 } else {//Key Order Data Not Exist         
 
                     await clientData().then(
