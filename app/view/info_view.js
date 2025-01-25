@@ -49,14 +49,14 @@ export async function infoView(dataResponse) {
     ${dataResponse}#EDITSATFUNG#NRP#SATFUNG
     
     _Contoh :_ 
-    ${dataResponse}#EDITSATFUNG#87020990#SI TIK
+    ${dataResponse}#EDITSATFUNG#87020990#SITIK
     =================================
     *Format Pesan WA untuk merubah data Jabatan :*
 
     ${dataResponse}#EDITJABATAN#NRP#JABATAN
     
     _Contoh :_ 
-    ${dataResponse}#EDITJABATAN#87020990#BAMIN TEKINFO
+    ${dataResponse}#EDITJABATAN#87020990#BAMIN
     =================================`,
     state: true,
     code: 200
