@@ -368,7 +368,7 @@ client.on('message', async (msg) => {
                 chatMsg.sendSeen(); //this send seen by bot whatsapp
                 chatMsg.sendStateTyping(); //this create bot typing state 
 
-                logsResponse(msg.from+' ==> '+splittedMsg[1].toLowerCase());
+                logsResponse(msg.from+' >>> '+splittedMsg[1].toLowerCase());
                 
                 //Admin Order Data         
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){ 
@@ -400,19 +400,15 @@ client.on('message', async (msg) => {
                                         .catch(
                                             response =>
                                             logsResponse(response)
-                                        );
-        
-                                        // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
+                                        );    
                                                                 
                                     }  else {
                                         
                                         logsResponse('Bukan Spreadsheet Links');
-                                        
                                         client.sendMessage(
                                             msg.from, 
                                             'Bukan Spreadsheet Links'
                                         );
-        
                                     }
                                 }
                                     break;
@@ -1645,7 +1641,7 @@ client.on('message', async (msg) => {
             //if(splittedMsg[1].toLowerCase()......
             } else {
                 const contact = await msg.getContact();
-                logsResponse(contact.number+" ===>>>> "+msg.body);
+                logsResponse(contact.number+" >>> "+msg.body);
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) { //Catching the Error Request
