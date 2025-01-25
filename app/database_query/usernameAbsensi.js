@@ -35,26 +35,20 @@ export async function usernameAbsensi(clientName, clientType) {
             let userByDivisi = '';
 
             for (let ii = 0; ii < userRows.length; ii++) {            
-                if (divisiList[i] === userRows[ii].DIVISI) {
-                  if(userRows[ii].STATUS){
-                    if (userRows[ii][clientType] === null || userRows[ii][clientType] === undefined || userRows[ii][clientType] === "" ) {
-      
-                      if (clientType === "RES"){
-        
-                        userByDivisi = userByDivisi.concat('\n' + userRows[ii].TITLE + ' ' + userRows[ii].NAMA);
-                        divisiCounter++;
-                        userCounter++;
-        
-                      } else {
-        
-                        userByDivisi = userByDivisi.concat('\n'+ userRows[ii].NAMA);
-                        divisiCounter++;
-                        userCounter++;
-                                        
-                      }
-        
+              if (divisiList[i] === userRows[ii].DIVISI) {
+                if(userRows[ii].STATUS === "TRUE"){
+                  if (userRows[ii][clientType] === null || userRows[ii][clientType] === undefined || userRows[ii][clientType] === "" ) {
+                    if (clientType === "RES"){
+                      userByDivisi = userByDivisi.concat('\n' + userRows[ii].TITLE + ' ' + userRows[ii].NAMA);
+                      divisiCounter++;
+                      userCounter++;
+                    } else {
+                      userByDivisi = userByDivisi.concat('\n'+ userRows[ii].NAMA);
+                      divisiCounter++;
+                      userCounter++;          
                     }
                   }
+                }
               }
             }
       
@@ -62,7 +56,6 @@ export async function usernameAbsensi(clientName, clientType) {
               userString = userString.concat('\n\n' + divisiList[i] + ' : ' + divisiCounter + ' User\n' + userByDivisi);
             }
           }
-
         }
       )
 
