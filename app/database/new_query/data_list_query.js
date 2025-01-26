@@ -3,6 +3,7 @@ import { logsSave } from "../../responselogs/logs_modif.js";
 
 export async function newListValueData( clientName, keyValue) {
     logsSave("Exec List Value")
+    let data;
     return new Promise(
         async (resolve, reject) => {
 
@@ -11,7 +12,7 @@ export async function newListValueData( clientName, keyValue) {
             await readUser(clientName).then(
                 response =>{
 
-                    let userData = response.data
+                    let userData = response.data;
                     
                     for (let i = 0; i < userData.length; i++) {            
                         
@@ -26,7 +27,8 @@ export async function newListValueData( clientName, keyValue) {
                             code: 200
                         };      
 
-                        resolve (data);                    }                   
+                        resolve (data);                    
+                    }                   
                 }
             ).catch(
                 error =>{
