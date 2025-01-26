@@ -144,7 +144,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 await newReportInsta(
                                                     clientData[i]
                                                 ).then(
-                                                    async data => {
+                                                    async response => {
         
                                                         switch (timeSwitch){
                                                             case 'report':
@@ -153,7 +153,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                     decrypted(clientData[i].SUPERVISOR),
                                                                     decrypted(clientData[i].OPERATOR),
                                                                     decrypted(clientData[i].GROUP), 
-                                                                    data, 
+                                                                    response.data, 
                                                                     'REPORT INSTA'
                                                                 );            
                                                                 break;
@@ -161,7 +161,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                             case 'routine':
                                                                 sendResponse(
                                                                     '6281235114745@c.us', 
-                                                                    data, 
+                                                                    response.data, 
                                                                     ' ERROR REPORT INSTA'
                                                                 );
                                                                 break;
