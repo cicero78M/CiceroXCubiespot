@@ -6,8 +6,6 @@ import { logsSave } from '../responselogs/logs_modif.js';
   
 export async function newReportTiktok(clientValue) {
 
-    logsSave(clientValue)
-
     return new Promise(
         async (resolve, reject) => {
         

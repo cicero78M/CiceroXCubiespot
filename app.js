@@ -999,7 +999,6 @@ client.on('message', async (msg) => {
                                     async response =>{
                                         let clientData = response.data;
                                         for (let i = 0; i < clientData.length; i++){
-                                            logsSave(clientData[i])
 
                                             if (decrypted(clientData[i].STATUS) === "TRUE" 
                                             && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
@@ -1009,7 +1008,7 @@ client.on('message', async (msg) => {
                                                 await newReportTiktok(
                                                     clientData[i]
                                                 ).then(
-                                                    response => { logsSend(response)
+                                                    response => { logsSend(response.data)
                                                 }).catch( error => logsError (error));
                                             }           
                                         }
