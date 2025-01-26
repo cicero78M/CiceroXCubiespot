@@ -14,7 +14,7 @@ export async function newReportInsta(clientValue) {
   let hours = d.toLocaleTimeString("en-US", {timeZone: "Asia/Jakarta"});   
       
   const clientName = decrypted(clientValue.CLIENT_ID);
-
+  logsSave(clientName);
   let notLikesName;
   let name;
   let nameUpper;
@@ -36,10 +36,10 @@ export async function newReportInsta(clientValue) {
   let userByDivisi = '';
 
   return new Promise(
-    async (
-      resolve, reject
-    ) => {
+    async (resolve, reject) => {
       try {
+
+        logsSave("Execute")
         
         await newListValueData(
           clientName, 
