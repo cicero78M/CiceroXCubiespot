@@ -10,7 +10,7 @@ const { Client, LocalAuth } = wwebjs;
 import 'dotenv/config';
 
 //QR-Code
-import qrcode from 'qrcode-terminal';
+import qrcode, { error } from 'qrcode-terminal';
 
 //Figlet
 import figlet from 'figlet';
@@ -795,16 +795,15 @@ client.on('message', async (msg) => {
                                     );
 
                                 } else if (splittedMsg[1].toLowerCase() === 'mydata') {
-                                    let responseData = await myData(
+                                    await myData(
                                         splittedMsg[0].toUpperCase(), 
                                         splittedMsg[2]
-                                    );
+                                    ).then( 
+                                        response => logsUserSend(msg.from, response.data)
+                                    ).catch(
+                                        error => logsUserError(msg.from, error)
+                                    )
 
-                                    sendResponse(
-                                        msg.from, 
-                                        responseData, 
-                                        "Error on Getting My Data"
-                                    );
                                 } else if (splittedMsg[1].toLowerCase() === 'whatsapp') {
                                     let responseData = await editProfile(
                                         splittedMsg[0].toUpperCase(),
