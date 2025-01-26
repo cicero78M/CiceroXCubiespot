@@ -8,102 +8,106 @@ import { logsResponse } from '../../responselogs/logs_modif.js';
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
-return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
 
-  try {
+    try {
 
-    let idExist = false;
-    let userRows;
+      let idExist = false;
+      let userRows;
 
-    await readUser(
-      clientName
-    ).then( 
-      async response => {    
-        userRows = await response;                           
-        for (let i = 0; i < userRows.length; i++) {
-          if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
-            idExist = true;
-          }
-        } 
-      }
-    );
-
-    let divisiList = [];
-
-    await newListValueData(
-      clientName, 
-      'DIVISI'
-    ).then(
-      async response =>{
-        divisiList = await response;
-      }
-    );
-
-    if (divisiList.includes(divisi)) {
-
-      if (!idExist) {
-        logsResponse("Id key not exist, Added Data");
-        //Get Target Sheet Documents by Title
-        let userData = new Object();
-
-        userData.ID_KEY = encrypted(idKey);
-        userData.NAMA = encrypted(name);
-        userData.TITLE = encrypted(title);
-        userData.DIVISI = encrypted(divisi);
-        userData.JABATAN = encrypted(jabatan);
-        userData.STATUS = encrypted("TRUE");
-        userData.WHATSAPP = encrypted("");
-        userData.INSTA = encrypted("");
-        userData.TIKTOK = encrypted("");
-        userData.EXCEPTION = encrypted("FALSE");
-
-        writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-
-        logsResponse(`${parseInt(idKey)} JSON Data Successfully Added.`);
-            
-        let responseMyData = await myData(
-          clientName, 
-          parseInt(idKey)
-
-        );
-          
-      resolve (responseMyData);
-      
-      } else {
- 
-        let responseMyData = await myData(
-          clientName, 
-          parseInt(idKey)
-        );
-
-        resolve (responseMyData);
-
-      }
-
-    } else {
-
-      logsResponse('Return Divisi Tidak Terdaftar');
-
-      await propertiesView(
-          clientName, 
-          "DIVISI"
-      ).then(
-        response =>
-          resolve (response)
+      await readUser(
+        clientName
+      ).then( 
+        async response => {    
+          userRows = await response;                           
+          for (let i = 0; i < userRows.length; i++) {
+            if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
+              idExist = true;
+            }
+          } 
+        }
+      ).catch(
+        error => reject(error)
       )
-    }
-  } catch (error) {
 
-    logsResponse(error);
-    let responseData = {
-      data: error,
-      state: false,
-      code: 303
-    };
- 
-    reject (responseData);
-  }
+      let divisiList = [];
+
+      await newListValueData(
+        clientName, 
+        'DIVISI'
+      ).then(
+        async response =>{
+          divisiList = await response;
+        }
+      ).catch(
+        error => reject(error)
+      )
+
+      if (divisiList.includes(divisi)) {
+
+        if (!idExist) {
+          //Get Target Sheet Documents by Title
+          let userData = new Object();
+
+          userData.ID_KEY = encrypted(idKey);
+          userData.NAMA = encrypted(name);
+          userData.TITLE = encrypted(title);
+          userData.DIVISI = encrypted(divisi);
+          userData.JABATAN = encrypted(jabatan);
+          userData.STATUS = encrypted("TRUE");
+          userData.WHATSAPP = encrypted("");
+          userData.INSTA = encrypted("");
+          userData.TIKTOK = encrypted("");
+          userData.EXCEPTION = encrypted("FALSE");
+
+          writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+              
+          await myData(
+            clientName, 
+            parseInt(idKey)
+
+          ).then(
+            response => resolve (response)
+          ).catch(
+            error => reject (error)
+          )
+                  
+        } else {
   
-})
+          await myData(
+            clientName, 
+            parseInt(idKey)
+          ).then(
+            response => resolve (response)
+          ).catch(
+            error => reject (error)
+          )
+
+        }
+
+      } else {
+
+        await propertiesView(
+            clientName, 
+            "DIVISI"
+        ).then(
+            response => resolve (response)
+          ).catch(
+            error => reject (error)
+          )
+      }
+    } catch (error) {
+
+      logsResponse(error);
+      let responseData = {
+        data: error,
+        state: false,
+        code: 303
+      };
+  
+      reject (responseData);
+    }
+    
+  });
 
 }
