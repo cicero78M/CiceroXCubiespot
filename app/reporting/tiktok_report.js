@@ -20,7 +20,6 @@ export async function newReportTiktok(clientValue) {
                 let userCounter = 0;
                 let divisiCounter = 0;
 
-                let userRows;
                 let responseData;
                 let name;
                 let nameUpper;
@@ -30,6 +29,7 @@ export async function newReportTiktok(clientValue) {
                 let userByDivisi = '';
                 let dataTiktok = '';
 
+                let userRows = [];
                 let divisiList = [];
                 let shortcodeList = [];
                 let userCommentData = [];
@@ -54,9 +54,7 @@ export async function newReportTiktok(clientValue) {
                         clientName
                     ).then( 
                         response => {    
-                            logsSave(response.data)
-
-                            let userRows = response.data;                           
+                            userRows = response.data;                           
 
                             for (let i = 0; i < userRows.length; i++) {
                                 if (userRows[i].STATUS === 'TRUE' ){
