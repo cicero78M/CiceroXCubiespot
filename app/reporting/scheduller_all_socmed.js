@@ -138,7 +138,9 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             clientData[i]
                                         ).then(
                                             async instaLikesData => {                                              
+                                                
                                                 logsSave(instaLikesData.data); 
+
                                                 await newReportInsta(
                                                     clientData[i]
                                                 ).then(

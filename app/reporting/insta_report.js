@@ -6,6 +6,8 @@ import { logsSave } from '../responselogs/logs_modif.js';
 
 export async function newReportInsta(clientValue) {
 
+  logsSave("Execute Report Insta")
+
   //Date Time
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});

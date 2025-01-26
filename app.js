@@ -138,13 +138,13 @@ client.on('ready', () => {
         logsSend('<<<System Alive>>>');
     });
 
-    // // Scrapping Socmed every hours until 21
-    // schedule('30 6-20 * * *',  () => {
-    //     logsSend('Execute Hourly Cron Job');
-    //     schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
-    // });
+    // Scrapping Socmed every hours until 21
+    schedule('30 6-20 * * *',  () => {
+        logsSend('Execute Hourly Cron Job');
+        schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
+    });
 
-    schedule('30 15,18,21 * * *',  () => {
+    schedule('00 15,18,21 * * *',  () => {
         logsSend('Execute Reporting Cron Job');
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
