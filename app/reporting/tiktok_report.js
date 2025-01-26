@@ -45,7 +45,7 @@ export async function newReportTiktok(clientValue) {
                         clientName, 
                         'DIVISI'
                     ).then(
-                        response => divisiList = response.data
+                        response => {divisiList = response.data;}
                     ).catch(
                         error => reject(error)
                     )
@@ -54,10 +54,10 @@ export async function newReportTiktok(clientValue) {
                         clientName
                     ).then( 
                         response => {    
-                            userRows = response.data;                           
+                            let userRows = response.data;                           
                     
-                            for (let i = 0; i < response.length; i++) {
-                                if (response[i].STATUS === 'TRUE' ){
+                            for (let i = 0; i < userRows.length; i++) {
+                                if (userRows[i].STATUS === 'TRUE' ){
                                     userAll++;
                                 }
                             } 
