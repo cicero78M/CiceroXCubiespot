@@ -28,13 +28,12 @@ export async function schedullerAllSocmed(timeSwitch) {
                         await getTiktokPost(
                             clientData[i]
                         ).then(
-                            async data => {
-                                switch (data.code){
+                            async response => {
+                                switch (response.code){
                                     case 200: 
-
                                         await tiktokItemsBridges(
                                             clientData[i], 
-                                            data.data
+                                            response.data
                                         ).then(
                                             async response =>{
                                                 switch (timeSwitch){
@@ -61,7 +60,8 @@ export async function schedullerAllSocmed(timeSwitch) {
                                 
                                                     default:
                                                         break;
-                                                }                   
+                                                }           
+                                                        
                                                 logsSave(`Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
