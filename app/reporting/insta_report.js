@@ -48,7 +48,9 @@ export async function newReportInsta(clientValue) {
           async response =>{
             divisiList = await response;
           }
-        );
+        ).catch(
+          error => reject(error)
+        )
 
         await readUser(
           clientName
@@ -61,7 +63,7 @@ export async function newReportInsta(clientValue) {
               }
             } 
           }
-        );
+        ).catch( error => reject (error))
 
         // If Client_ID exist. then get Insta content
 
