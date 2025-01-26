@@ -1,4 +1,3 @@
-import { logsResponse } from "../../responselogs/logs_modif.js";
 import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 
 export async function instaUserFollowing(username, pages, countData, totalData) {
@@ -14,7 +13,6 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
             try {
 
                 let dataFollowing = [];
-                logsResponse(totalData);
 
                 await instaFollowingAPI(username, pages).then(
                     async response => {
@@ -27,24 +25,18 @@ export async function instaUserFollowing(username, pages, countData, totalData) 
 
                             
                             if (dataFollowing[i].username === 'cubiehome'){
-                                logsResponse("true");
                                 stateFoll = true;
                             }
                         }
     
                         let totalValue = countData + count;    
                         if (stateFoll === false){
-
-                            logsResponse('execute');
-
                             if (pagination != ""){
                                 if(totalData > totalValue){
-                                    logsResponse("Under Total");
                                     setTimeout(async () => {
                                         forLoopGenerateFollowing(username, pagination, totalValue, totalData);
                                     }, 2000);
                                 } else {
-                                    logsResponse("done");
                                     let responseData =  {
                                         data: false,
                                         code: 200,
