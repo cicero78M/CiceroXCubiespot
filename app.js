@@ -563,7 +563,8 @@ client.on('message', async (msg) => {
                     }
                 //Operator Order Data         //On Progress
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
-                    await clientData().then(async clientData => {             
+                    await clientData().then(async response => {    
+                        let clientData = response.data;         
                         for (let i = 0; i < clientData.length; i++){
                             if(decrypted(clientData[i].OPERATOR) === msg.from){
                                 if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
@@ -637,7 +638,8 @@ client.on('message', async (msg) => {
                     )
                 //User Order Data         
                 } else if (userOrder.includes(splittedMsg[1].toLowerCase())){   
-                    await clientData().then(async clientData => {    
+                    await clientData().then(async response => {    
+                        let clientData = response.data;
                         for (let i = 0; i < clientData.length; i++){
                             if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                 if (updateinsta.includes(splittedMsg[1].toLowerCase())) {
@@ -826,7 +828,8 @@ client.on('message', async (msg) => {
                 //Divisi & Title List Data
                 } else if (infoOrder.includes(splittedMsg[1].toLowerCase())){    
                     await clientData().then( 
-                        async clientData => {    
+                        async response => {  
+                            let clientData = response.data;  
                             for (let i = 0; i < clientData.length; i++){
                                 if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     let responseData;
@@ -1272,24 +1275,28 @@ client.on('message', async (msg) => {
                         case "restoreuserdata"://Restore User Data Base
                             clientData().then(
                                 async response =>{
-                                    for (let i = 0; i < response.length;i++){
-                                        restoreUserData(decrypted(response[i].CLIENT_ID))
+                                    let clientData = response.data;
+                                    for (let i = 0; i < clientData.length;i++){
+                                        restoreUserData(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsSave(response);
+                                                logsSend(response);
                                             }
                                         ).catch (
-                                            error => logsSave(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
+                            ).catch (
+                                error => logsError(error)
                             )
                             break;
                         case "restoreinstacontent"://Restore Insta Content Data
                             clientData().then(
                                 async response =>{
-                                    for (let i = 0; i < response.length;i++){
-                                        restoreInstaContent(decrypted(response[i].CLIENT_ID))
+                                    let clientData = response.data;
+                                    for (let i = 0; i < clientData.length;i++){
+                                        restoreInstaContent(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 logsSave(response);
@@ -1304,8 +1311,10 @@ client.on('message', async (msg) => {
                         case "restoreinstalikes"://Restore Insta Likes Username Data
                             clientData().then(
                                 async response =>{
-                                    for (let i = 0; i < response.length;i++){
-                                        restoreInstaLikes(decrypted(response[i].CLIENT_ID))
+                                    let clientData = response.data;
+
+                                    for (let i = 0; i < clientData.length;i++){
+                                        restoreInstaLikes(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 logsSave(response);
@@ -1320,8 +1329,10 @@ client.on('message', async (msg) => {
                         case "restoretiktokcontent"://Restore Tiktok Contents
                             clientData().then(
                                 async response =>{
-                                    for (let i = 0; i < response.length;i++){
-                                        restoreTiktokContent(decrypted(response[i].CLIENT_ID))
+                                    let clientData = response.data;
+
+                                    for (let i = 0; i < clientData.length;i++){
+                                        restoreTiktokContent(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 logsSave(response);
@@ -1336,8 +1347,10 @@ client.on('message', async (msg) => {
                         case "restoretiktokcomments"://Restore Tiktok Comments Username Data
                             clientData().then(
                                 async response =>{
-                                    for (let i = 0; i < response.length;i++){
-                                        restoreTiktokComments(decrypted(response[i].CLIENT_ID))
+                                    let clientData = response.data;
+
+                                    for (let i = 0; i < clientData.length;i++){
+                                        restoreTiktokComments(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
                                                 logsSave(response);
@@ -1358,16 +1371,16 @@ client.on('message', async (msg) => {
                     switch (splittedMsg[1].toLowerCase()){
                         case "backupclientdata"://Backup Encrypted Client Data
                             clientDataBackup().then(
-                                response => logsSave(response)
+                                response => logsSave(response.data)
                             ).catch (
                                 error => console.error(error)
                             );
                             break;
                         case "backupuserdata"://Backup Encrypted User Data
                             userDataBackup().then(
-                                response => logsSave(response)
+                                response => logsSave(response.data)
                             ).catch (
-                                error => console.error(error)
+                                error => logsError(error)
                             );
                             break;
                         case "backupinstacontent"://Backup Encrypted Insta Content Data
@@ -1375,7 +1388,7 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await instaContentBackup(response[i]).then(
-                                            response => logsSave(response)
+                                            response => logsSend(response)
                                         );
                                     }
                                 }
@@ -1389,9 +1402,9 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await tiktokContentBackup(response[i]).then(
-                                            response => logsSave(response)
+                                            response => logsSend(response)
                                         ).catch(
-                                            error => console.error(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
