@@ -1,8 +1,12 @@
 import { readFileSync  } from "fs";
+import { logsSave } from "../../app/responselogs/logs_modif";
 
 export async function clientData() {    
 
+    logsSave("Execute Client Data")
+
     let data;
+
     return new Promise(async (resolve, reject) => {
         try {
             
