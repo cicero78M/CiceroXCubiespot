@@ -46,7 +46,8 @@ export async function newReportInsta(clientValue) {
           'DIVISI'
         ).then(
           async response =>{
-            divisiList = await response;
+            logsSave(response.data)
+            divisiList = await response.data;
           }
         ).catch(
           error => reject(error)
@@ -56,7 +57,7 @@ export async function newReportInsta(clientValue) {
           clientName
         ).then( 
           async response => {    
-            userRows = await response;                           
+            userRows = await response.data;                           
             for (let i = 0; i < userRows.length; i++) {
               if (userRows[i].STATUS === 'TRUE' ){
                 userAll++;
