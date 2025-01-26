@@ -159,11 +159,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 break;
 
                                                             case 'routine':
-                                                                sendResponse(
-                                                                    '6281235114745@c.us', 
-                                                                    response.data, 
-                                                                    ' ERROR REPORT INSTA'
-                                                                );
+                                                                logsSend(response.data)
                                                                 break;
                                                         }
 
@@ -171,27 +167,27 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     }
 
                                                 ).catch(
-                                                    error => logsSave(error)
+                                                    error => logsError(error)
                                                 );
                                             }
                                         ).catch(
-                                            error => logsSave(error)
+                                            error => logsError(error)
                                         );
                                         break;
                                 }
                             }
                         ).catch(
-                            error => logsSave(error)
+                            error => logsError(error)
                         );   
                     }  
                 }
             }
         ). catch (
-            error => logsSave(error)
+            error => logsError(error)
         );  
 
     //If Something Error
     } catch (error) {
-        logsSave(error)
+        logsError(error)
     }
 }

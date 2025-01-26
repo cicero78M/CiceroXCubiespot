@@ -1008,17 +1008,12 @@ client.on('message', async (msg) => {
                                                     response[i]
                                                 ).then(
                                                     response => { logsSend(response)
-                                                }).catch( error => logsError (error)            
-                                                     );
+                                                }).catch( error => logsError (error));
                                             }           
                                         }
                                 }). catch (
                                     error =>{
-                                        console.error(error);
-                                        client.sendMessage(
-                                            '6281235114745@c.us', 
-                                            'Error on New Report Tiktok'
-                                        );
+                                       logsError(error)
                                     }
                                 )
                                 break;
