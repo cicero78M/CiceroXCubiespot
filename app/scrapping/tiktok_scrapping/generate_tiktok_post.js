@@ -2,7 +2,7 @@ import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, readdirSync, writeFileSync } from "fs";
-import { logsResponse } from '../../responselogs/logs_modif.js';
+import { logsSave } from '../../responselogs/logs_modif.js';
 
 
 export async function getTiktokPost(clientValue) {
@@ -10,7 +10,7 @@ export async function getTiktokPost(clientValue) {
     const clientName = decrypted(clientValue.CLIENT_ID);
     const secUid = decrypted(clientValue.SECUID);
         
-    logsResponse(`${clientName} Execute Tiktok Post Data`);
+    logsSave(`${clientName} Execute Tiktok Post Data`);
     client.sendMessage('6281235114745@c.us', "Execute Tiktok Post Data");
 
     //Date Time
@@ -34,7 +34,7 @@ export async function getTiktokPost(clientValue) {
                     for (let i = 0; i < items.length; i++) {
                         let itemDate = new Date(items[i].createTime * 1000);
                         if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-                            logsResponse(items[i].video.id);
+                            logsSave(items[i].video.id);
                             hasContent = true;
                             itemByDay.push(items[i]);
                             todayItems.push(items[i].video.id);
@@ -43,7 +43,7 @@ export async function getTiktokPost(clientValue) {
 
                     if (hasContent) {
 
-                        logsResponse(`${clientName} Official Account Has Post Data...`);
+                        logsSave(`${clientName} Official Account Has Post Data...`);
                         await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
                         
                         // let hasShortcode = false;

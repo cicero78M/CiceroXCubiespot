@@ -1,10 +1,10 @@
 import { client } from "../../../app.js";
-import { logsResponse } from "../../responselogs/logs_modif.js";
+import { logsSave} from "../../responselogs/logs_modif.js";
 import { tiktokCommentAPI } from "../../socialMediaAPI/tiktok_API.js";
 
 export async function getTiktokComments(items) {
 
-    logsResponse('Execute Generate Tiktok Comments');
+    logsSave('Execute Generate Tiktok Comments');
     client.sendMessage('6281235114745@c.us', "Execute Generate Tiktok Comments");
 
     let cursorNumber = 0;
@@ -24,7 +24,7 @@ export async function getTiktokComments(items) {
             await tiktokCommentAPI(items, cursorNumber).then ( async response =>{
 
                 const total = response.data.total+100;
-                logsResponse(total);
+                logsSave(total);
 
                 let commentItems = response.data.comments;
     
@@ -39,7 +39,7 @@ export async function getTiktokComments(items) {
     
                 if (response.data.has_more === 1){    
                     setTimeout(async() => {
-                        logsResponse('next data normal '+response.data.cursor);
+                        logsSave('next data normal '+response.data.cursor);
                         await forLoopGetComments(items, response.data.cursor);
 
                     }, 1100);
@@ -49,7 +49,7 @@ export async function getTiktokComments(items) {
                         if (switchPoint === 0){
                             switchPoint = 1;
                             setTimeout(async () => {
-                                logsResponse('next data switch point triggering '+response.data.cursor);
+                                logsSave('next data switch point triggering '+response.data.cursor);
                                 await forLoopGetComments(items, response.data.cursor);
 
                             }, 1100);
@@ -66,7 +66,7 @@ export async function getTiktokComments(items) {
                         if(total > 400){
                             if (dataUser != 0){
                                 setTimeout(async () => {
-                                    logsResponse('next data not equals zero '+response.data.cursor);
+                                    logsSave('next data not equals zero '+response.data.cursor);
                                     await forLoopGetComments(items, response.data.cursor);
 
                                 }, 1100);
@@ -81,7 +81,7 @@ export async function getTiktokComments(items) {
                             }
                         } else {
                             setTimeout(async () => {
-                                logsResponse('next data over 400 '+response.data.cursor);
+                                logsSave('next data over 400 '+response.data.cursor);
                                 await forLoopGetComments(items, response.data.cursor);
 
                             }, 1100); 
@@ -90,9 +90,9 @@ export async function getTiktokComments(items) {
                     }
                 }
             }). catch (error => {
-                logsResponse(error);
+                logsSave(error);
                 setTimeout(async () => {
-                    logsResponse('error'+cursorNumber);
+                    logsSave('error'+cursorNumber);
                     await forLoopGetComments(items, cursorNumber);
 
                 }, 2000); 

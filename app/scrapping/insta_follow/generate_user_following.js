@@ -1,9 +1,10 @@
+import { logsSave } from "../../responselogs/logs_modif.js";
 import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 
 export async function instaUserFollowing(username, pages, countData, totalData) {
     let stateFoll = false;
 
-    logsResponse("Execute insta user following");
+    logsSave("Execute insta user following");
 
     return new Promise(async(resolve, reject) => {
 

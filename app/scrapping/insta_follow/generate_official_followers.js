@@ -1,10 +1,10 @@
-import { logsResponse } from "../../responselogs/logs_modif.js";
+import { logsSave } from "../../responselogs/logs_modif.js";
 import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 import { postInstaFollowersOfficial } from "./post_insta_official_follower.js";
 
 export async function instaOffcialFollower(clientName, username, pages, arrayData, countData, totalData) {
 
-    logsResponse("Execute insta user following");
+    logsSave("Execute insta user following");
     return new Promise(
         async (resolve, reject) => {
 

@@ -3,7 +3,7 @@ import { decrypted } from '../../json_data_file/crypto.js';
 import { readdirSync, readFileSync } from 'fs';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
-import { logsResponse } from '../responselogs/logs_modif.js';
+import { logsSave } from '../responselogs/logs_modif.js';
   
 export async function tiktokContentBackup(clientValue) {
 
@@ -12,7 +12,7 @@ export async function tiktokContentBackup(clientValue) {
         
             try {
 
-                logsResponse("Execute Report Tiktok");
+                logsSave("Execute Report Tiktok");
                 client.sendMessage(
                     '6281235114745@c.us', 
                     "Execute Report Tiktok"

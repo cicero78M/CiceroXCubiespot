@@ -1,12 +1,12 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { client } from "../../../app.js";
 import { googleAuth } from "../../database/new_query/sheet_query.js";
-import { logsResponse } from "../../responselogs/logs_modif.js";
+import { logsSave } from "../../responselogs/logs_modif.js";
 
 export async function postInstaFollowersOfficial(clientName, array) {
 
     return new Promise(async (resolve, reject) => {
-        logsResponse("Post Data Username Official Followers" );
+        logsSave("Post Data Username Official Followers" );
         client.sendMessage('6281235114745@c.us', "Post Data Username Official Followers");
         
         try {
@@ -39,7 +39,7 @@ export async function postInstaFollowersOfficial(clientName, array) {
                         state: true
                     };
                     
-                    logsResponse (`Insta Official Follower Accounts Added`);
+                    logsSave (`Insta Official Follower Accounts Added`);
                     resolve(data);
                 }
             );
@@ -50,7 +50,7 @@ export async function postInstaFollowersOfficial(clientName, array) {
                 state: true,
                 code: 303
             };
-            logsResponse (data.data);
+            logsSave (data.data);
             reject (data);
         }
     });

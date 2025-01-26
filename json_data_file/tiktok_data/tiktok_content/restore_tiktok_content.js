@@ -2,11 +2,11 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { googleAuth } from "../../../app/database/new_query/sheet_query.js";
 import { encrypted } from "../../crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
-import { logsResponse } from "../../../app/responselogs/logs_modif.js";
+import { logsSave } from "../../../app/responselogs/logs_modif.js";
 
 export async function restoreTiktokContent(clientName) {
 
-    logsResponse("Execute");
+    logsSave("Execute");
 
     let tiktokOfficialDoc = new GoogleSpreadsheet(process.env.tiktokOfficialID, googleAuth); //Google Authentication for Tiktok Official DB    
     await tiktokOfficialDoc.loadInfo(); // loads document properties and worksheets
@@ -30,7 +30,7 @@ export async function restoreTiktokContent(clientName) {
         tiktokContent.SHARE_COUNT = encrypted(tiktokOfficialData[i].get("SHARE_COUNT"));
         tiktokContent.COLLECT_COUNT = encrypted(tiktokOfficialData[i].get("COLLECT_COUNT"));
 
-        logsResponse(tiktokContent);
+        logsSave(tiktokContent);
 
         try {
 
@@ -43,7 +43,7 @@ export async function restoreTiktokContent(clientName) {
             
         }
 
-        logsResponse("Done");
+        logsSave("Done");
     }
 }
 

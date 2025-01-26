@@ -1,7 +1,7 @@
 import { client } from "../../app.js";
 import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { decrypted } from "../../json_data_file/crypto.js";
-import { logsError, logsResponse, logsSend, sendResponseData } from "../responselogs/logs_modif.js";
+import { logsError, logsSave, logsSend } from "../responselogs/logs_modif.js";
 import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
 import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";
@@ -168,27 +168,27 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     }
 
                                                 ).catch(
-                                                    error => logsResponse(error)
+                                                    error => logsSave(error)
                                                 );
                                             }
                                         ).catch(
-                                            error => logsResponse(error)
+                                            error => logsSave(error)
                                         );
                                         break;
                                 }
                             }
                         ).catch(
-                            error => logsResponse(error)
+                            error => logsSave(error)
                         );   
                     }  
                 }
             }
         ). catch (
-            error => logsResponse(error)
+            error => logsSave(error)
         );  
 
     //If Something Error
     } catch (error) {
-        logsResponse(error)
+        logsSave(error)
     }
 }

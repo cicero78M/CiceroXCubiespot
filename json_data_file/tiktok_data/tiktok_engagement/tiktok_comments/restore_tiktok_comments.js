@@ -2,11 +2,11 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import { googleAuth } from "../../../../app/database/new_query/sheet_query.js";
 import { mkdirSync, writeFileSync } from "fs";
 import { decrypted } from "../../../crypto.js";
-import { logsResponse } from "../../../../app/responselogs/logs_modif.js";
+import { logsSave } from "../../../../app/responselogs/logs_modif.js";
 
 export async function restoreTiktokComments(clientName) {
 
-  logsResponse("Execute");
+  logsSave("Execute");
 
     let tiktokCommentsUsernameDoc = new GoogleSpreadsheet(process.env.tiktokCommentUsernameID, googleAuth); //Google Authentication for InstaOfficial DB    
     await tiktokCommentsUsernameDoc.loadInfo(); // loads document properties and worksheets
@@ -38,7 +38,7 @@ export async function restoreTiktokComments(clientName) {
       
       }  
 
-      logsResponse("Done");
+      logsSave("Done");
     
     }
 }

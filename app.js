@@ -60,7 +60,6 @@ import { instaContentBackup } from './app/backup/insta_content.js';
 import { tiktokContentBackup } from './app/backup/tiktok_content.js';
 import { instaLikesBackup } from './app/backup/insta_likes.js';
 import { tiktokCommentsBackup } from './app/backup/tiktok_comment.js';
-import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
 import { clientDataView } from './app/database/management/client_list.js';
 import { updateClientData } from './app/database/client/update_client.js';
 import { registerClientData } from './app/database/client/register_client.js';
@@ -139,13 +138,13 @@ client.on('ready', () => {
         logsSend('<<<System Alive>>>');
     });
 
-    // Scrapping Socmed every hours until 21
-    schedule('30 6-20 * * *',  () => {
-        logsSend('Execute Hourly Cron Job');
-        schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
-    });
+    // // Scrapping Socmed every hours until 21
+    // schedule('30 6-20 * * *',  () => {
+    //     logsSend('Execute Hourly Cron Job');
+    //     schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
+    // });
 
-    schedule('0 15,18,21 * * *',  () => {
+    schedule('30 15,18,21 * * *',  () => {
         logsSend('Execute Reporting Cron Job');
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });

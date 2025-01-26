@@ -2,7 +2,7 @@ import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { newListValueData } from '../database/new_query/data_list_query.js';
 import { readdirSync, readFileSync } from "fs";
-import { logsResponse } from '../responselogs/logs_modif.js';
+import { logsSave } from '../responselogs/logs_modif.js';
 
 export async function newReportInsta(clientValue) {
 
@@ -70,13 +70,13 @@ export async function newReportInsta(clientValue) {
           for (let i = 0; i < instaContentDir.length; i++) {
 
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-            // logsResponse(contentItems);
+            // logsSave(contentItems);
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
             let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
-            // logsResponse(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            // logsResponse(localDate);
+            // logsSave(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
+            // logsSave(localDate);
 
 
             if ( dateNow === localDate) {
@@ -115,7 +115,7 @@ export async function newReportInsta(clientValue) {
               || userRows[i].INSTA === null 
               || userRows[i].INSTA === ""){
 
-                logsResponse("Null Data Exist");
+                logsSave("Null Data Exist");
                 UserNotLikes.push(userRows[i].ID_KEY);
                 notLikesList.push(userRows[i]);
 

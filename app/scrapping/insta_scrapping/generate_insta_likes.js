@@ -2,7 +2,7 @@ import { instaLikesAPI } from '../../socialMediaAPI/insta_API.js';
 import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
-import { logsResponse } from '../../responselogs/logs_modif.js';
+import { logsSave } from '../../responselogs/logs_modif.js';
 
 export async function getInstaLikes(todayItems, clientValue ) {
 
@@ -15,7 +15,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
 
     let hasShortcode = false;
 
-    logsResponse(`${clientName} Generate Username Insta Likes`);
+    logsSave(`${clientName} Generate Username Insta Likes`);
     
     return new Promise(async (resolve, reject) => {
       
@@ -67,7 +67,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
                     writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
                   }    
 
-                  logsResponse(`${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+                  logsSave(`${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
                   
                   await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
         
@@ -108,7 +108,7 @@ export async function getInstaLikes(todayItems, clientValue ) {
                   writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
                 }    
 
-                logsResponse(`${clientName} Insert New Data ${todayItems[i]}`);
+                logsSave(`${clientName} Insert New Data ${todayItems[i]}`);
                 
                 await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
                 
