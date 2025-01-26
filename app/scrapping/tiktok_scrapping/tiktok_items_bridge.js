@@ -24,11 +24,11 @@ export async function tiktokItemsBridges(clientValue, items) {
             }
 
             await newReportTiktok(clientValue).then(
-                data => {
-                    resolve (data)
+                response => {
+                    resolve (response)
             }).catch(                
-                data => {
-                    reject (data)
+                error => {
+                    reject (error)
             });
         
         } catch (error) {
