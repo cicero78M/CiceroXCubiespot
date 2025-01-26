@@ -15,7 +15,8 @@ export async function schedullerAllSocmed(timeSwitch) {
         //Commit if schedule Working
         logsSend(`Generate All Socmed Data Starting...`);
         await clientData().then( 
-            async clientData =>{
+            async response =>{
+                let clientData = response.data;
                 for (let i = 0; i < clientData.length; i++){
             
                     //This Procces Tiktok Report
