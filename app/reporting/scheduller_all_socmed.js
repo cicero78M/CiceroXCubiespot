@@ -36,7 +36,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             clientData[i], 
                                             data.data
                                         ).then(
-                                            async data =>{
+                                            async response =>{
                                                 switch (timeSwitch){
                                                     case 'report':
                                     
@@ -45,7 +45,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                             decrypted(clientData[i].SUPERVISOR),
                                                             decrypted(clientData[i].OPERATOR),
                                                             decrypted(clientData[i].GROUP), 
-                                                            data, 
+                                                            response.data, 
                                                             'REPORT TIKTOK'
                                                         );                                            
                                     
@@ -54,7 +54,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     case 'routine':
                                                         sendResponse(
                                                             '6281235114745@c.us', 
-                                                            data, 
+                                                            response.data, 
                                                             'ERROR GET TIKTOK BRIDGES'
                                                         );                                                    
                                                         break;

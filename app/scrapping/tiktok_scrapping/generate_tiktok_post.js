@@ -1,8 +1,8 @@
 import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
-import { mkdirSync, readdirSync, writeFileSync } from "fs";
-import { logsSave } from '../../responselogs/logs_modif.js';
+import { mkdirSync, writeFileSync } from "fs";
+import { logsSave, logsSend } from '../../responselogs/logs_modif.js';
 
 
 export async function getTiktokPost(clientValue) {
@@ -10,8 +10,7 @@ export async function getTiktokPost(clientValue) {
     const clientName = decrypted(clientValue.CLIENT_ID);
     const secUid = decrypted(clientValue.SECUID);
         
-    logsSave(`${clientName} Execute Tiktok Post Data`);
-    client.sendMessage('6281235114745@c.us', "Execute Tiktok Post Data");
+    logsSend(`${clientName} Execute Tiktok Post Data`);
 
     //Date Time
     let d = new Date();

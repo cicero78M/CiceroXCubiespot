@@ -1008,8 +1008,8 @@ client.on('message', async (msg) => {
                                                 await newReportTiktok(
                                                     clientData[i]
                                                 ).then(
-                                                    response => { logsSend(response.data)
-                                                }).catch( error => logsError (error));
+                                                    response => console.log(response.data)
+                                                ).catch( error => logsError (error));
                                             }           
                                         }
                                 }). catch (
