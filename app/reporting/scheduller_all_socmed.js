@@ -51,11 +51,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                         break;
                                 
                                                     case 'routine':
-                                                        sendResponse(
-                                                            '6281235114745@c.us', 
-                                                            response.data, 
-                                                            'ERROR GET TIKTOK BRIDGES'
-                                                        );                                                    
+                                                        logsSend(response.data)                                         
                                                         break;
                                 
                                                     default:
@@ -83,11 +79,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 );                                            
                                                 break;
                                             case 'routine':
-                                                sendResponse(
-                                                    '6281235114745@c.us', 
-                                                    response, 
-                                                    ' ERROR GET TIKTOK BRIDGES'
-                                                );
+                                                logsSend(response.data);
                                                 break;
                                             default:
                                                 break;
@@ -110,12 +102,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                         logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
-            
-                        await client.sendMessage(
-                            '6281235114745@c.us', 
-                            `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`
-                        );
-                        
+                                    
                         await getInstaPost(
                             clientData[i]
                         ).then(
@@ -159,7 +146,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 break;
 
                                                             case 'routine':
-                                                                logsSend(response)
+                                                                logsSend(response.data)
                                                                 break;
                                                         }
 
