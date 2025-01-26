@@ -154,7 +154,8 @@ client.on('ready', () => {
 
         logsSend('Execute Cron Job Warning Likes Comments Insta & Tiktok');
         
-        clientData().then( async clientData =>{
+        clientData().then( async response =>{
+            let clientData = response.data;
 
             for (let i = 0; i < clientData.length; i++){
         
@@ -210,8 +211,9 @@ client.on('ready', () => {
         if(process.env.APP_CLIENT_TYPE === "RES"){
             await clientData().then(
                 async response =>{
-                    for (let i = 0; i < response.length; i++){   
-                        await instaContentBackup(response[i]).then(
+                    let clientData = response.data;
+                    for (let i = 0; i < clientData.length; i++){   
+                        await instaContentBackup(clientData[i]).then(
                             response => logsSend(response.data)
                         ).catch(
                             error => logsError(error)
@@ -235,15 +237,16 @@ client.on('ready', () => {
         if(process.env.APP_CLIENT_TYPE === "RES"){
             await clientData().then(
                 async response =>{
-                    for (let i = 0; i < response.length; i++){
+                    let clientData = response.data;
+                    for (let i = 0; i < clientData.length; i++){
             
-                        await instaLikesBackup(response[i]).then(
+                        await instaLikesBackup(clientData[i]).then(
                             response => logsSend(response.data)
                         ).catch(
                             error => logsError(error)
                         );
 
-                        await tiktokCommentsBackup(response[i]).then(
+                        await tiktokCommentsBackup(clientData[i]).then(
                             response => logsSend(response.data)
                         ).catch(
                             error => logsError(error)
@@ -721,11 +724,8 @@ client.on('message', async (msg) => {
                                         );
 
                                     } else {
-                                        logsSave('Bukan Link Profile Tiktok');
-                                        client.sendMessage(
-                                            msg.from, 
-                                            'Bukan Link Profile Tiktok'
-                                        );
+                                        logsSend('Bukan Link Profile Tiktok');
+                                     
                                     }
 
                                 } else if (updatedivisi.includes(splittedMsg[1].toLowerCase())) {

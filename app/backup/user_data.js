@@ -17,14 +17,16 @@ export async function userDataBackup() {
             clientData().then(
                 async response =>{ 
 
-                    for (let i = 0; i < response.length; i++){
+                    let clientData = response.data;
+
+                    for (let i = 0; i < clientData.length; i++){
 
                         let userData = []
 
-                        let data = readdirSync(`json_data_file/user_data/${decrypted(response[i].CLIENT_ID)}`);
+                        let data = readdirSync(`json_data_file/user_data/${decrypted(clientData[i].CLIENT_ID)}`);
         
                         for (let ii = 0; ii < data.length; ii++){
-                            userData.push(JSON.parse(readFileSync(`json_data_file/user_data/${decrypted(response[i].CLIENT_ID)}/${data[ii]}`)));
+                            userData.push(JSON.parse(readFileSync(`json_data_file/user_data/${decrypted(clientData[i].CLIENT_ID)}/${data[ii]}`)));
                         } 
                         
                         let sheetDoc = new GoogleSpreadsheet(
@@ -33,13 +35,13 @@ export async function userDataBackup() {
                         ); //Google Auth
                         await sheetDoc.loadInfo();
                         let newSheet = await sheetDoc.addSheet({ 
-                            title: `${decrypted(response[i].CLIENT_ID)}_${localDate}`, 
+                            title: `${decrypted(clientData[i].CLIENT_ID)}_${localDate}`, 
                             headerValues: ['ID_KEY','NAMA',	'TITLE','DIVISI','JABATAN','STATUS','WHATSAPP','INSTA','TIKTOK','EXCEPTION']
                         });
     
                         await newSheet.addRows(userData);
     
-                        logsSave(`${decrypted(response[i].CLIENT_ID)}_${localDate} Backed Up`);    
+                        logsSave(`${decrypted(clientData[i].CLIENT_ID)}_${localDate} Backed Up`);    
 
                     }       
                 }

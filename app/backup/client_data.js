@@ -24,7 +24,7 @@ export async function clientDataBackup() {
                         headerValues: ['CLIENT_ID','TYPE',	'STATUS','INSTAGRAM','TIKTOK','INSTA_STATE','TIKTOK_STATE','SUPERVISOR','OPERATOR','GROUP',	'SECUID']
                     });
 
-                    await newSheet.addRows(response);
+                    await newSheet.addRows(response.data);
                 }
             );
 
