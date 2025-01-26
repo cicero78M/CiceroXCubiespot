@@ -44,7 +44,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                             decrypted(clientData[i].SUPERVISOR),
                                                             decrypted(clientData[i].OPERATOR),
                                                             decrypted(clientData[i].GROUP), 
-                                                            response.data, 
+                                                            response, 
                                                             'REPORT TIKTOK'
                                                         );                                            
                                     
@@ -61,7 +61,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     default:
                                                         break;
                                                 }           
-                                                        
+
                                                 logsSave(`Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
@@ -78,14 +78,14 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     decrypted(clientData[i].SUPERVISOR),
                                                     decrypted(clientData[i].OPERATOR),
                                                     decrypted(clientData[i].GROUP), 
-                                                    data, 
+                                                    response, 
                                                     'REPORT TIKTOK'
                                                 );                                            
                                                 break;
                                             case 'routine':
                                                 sendResponse(
                                                     '6281235114745@c.us', 
-                                                    data, 
+                                                    response, 
                                                     ' ERROR GET TIKTOK BRIDGES'
                                                 );
                                                 break;
@@ -119,15 +119,15 @@ export async function schedullerAllSocmed(timeSwitch) {
                         await getInstaPost(
                             clientData[i]
                         ).then(
-                            async instaPostData =>{
-                                switch (instaPostData.code){
+                            async response =>{
+                                switch (response.code){
                                     case 201:
                                         sendClientResponse(
                                             decrypted(clientData[i].CLIENT_ID), 
                                             decrypted(clientData[i].SUPERVISOR),
                                             decrypted(clientData[i].OPERATOR),
                                             decrypted(clientData[i].GROUP), 
-                                            instaPostData, 
+                                            response, 
                                             'REPORT INSTA'
                                         );    
                                         break; 
@@ -137,9 +137,9 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             instaPostData.data, 
                                             clientData[i]
                                         ).then(
-                                            async instaLikesData => {                                              
+                                            async response => {                                              
                                                 
-                                                logsSave(instaLikesData.data); 
+                                                logsSave(response.data); 
 
                                                 await newReportInsta(
                                                     clientData[i]
@@ -153,13 +153,13 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                     decrypted(clientData[i].SUPERVISOR),
                                                                     decrypted(clientData[i].OPERATOR),
                                                                     decrypted(clientData[i].GROUP), 
-                                                                    response.data, 
+                                                                    response, 
                                                                     'REPORT INSTA'
                                                                 );            
                                                                 break;
 
                                                             case 'routine':
-                                                                logsSend(response.data)
+                                                                logsSend(response)
                                                                 break;
                                                         }
 
