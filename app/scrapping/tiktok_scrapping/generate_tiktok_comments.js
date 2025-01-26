@@ -1,5 +1,5 @@
 import { client } from "../../../app.js";
-import { logsResponse } from "../../responselogs/response_view.js";
+import { logsResponse } from "../../responselogs/logs_modif.js";
 import { tiktokCommentAPI } from "../../socialMediaAPI/tiktok_API.js";
 
 export async function getTiktokComments(items) {

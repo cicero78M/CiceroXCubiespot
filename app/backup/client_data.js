@@ -4,10 +4,11 @@ import { googleAuth } from "../database/new_query/sheet_query.js";
 
 export async function clientDataBackup() {    
     
-  //Date Time
-  let d = new Date();
-  let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-  
+    //Date Time
+    let d = new Date();
+    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+    let data;
+    
     return new Promise(async (resolve, reject) => {
         try {
             clientData().then(
@@ -24,14 +25,26 @@ export async function clientDataBackup() {
                     });
 
                     await newSheet.addRows(response);
-
                 }
             );
 
-            resolve ("Success");
-            
+            data = {
+                data: "Success Back Up Client Data",
+                state: true,
+                code: 200
+            };
+
+            resolve (data);        
+
         } catch (error) {
-            reject (error)            
+            data = {
+                data: error,
+                message: "Error Client Data Backup",
+                state: false,
+                code: 303
+            };
+            
+            reject (data);        
         }
     });
 }

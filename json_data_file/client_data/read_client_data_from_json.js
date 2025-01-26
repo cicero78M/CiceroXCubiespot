@@ -1,19 +1,29 @@
 import { readFileSync  } from "fs";
-import { logsResponse } from "../../app/responselogs/response_view.js";
 
 export async function clientData() {    
+
+    let data;
     return new Promise(async (resolve, reject) => {
         try {
             
-            logsResponse("Collecting Client Data");
-
-            let data = [];
-            data = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
+            let clientList = [];
+            clientList = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
+            data = {
+                data: clientList,
+                state: true,
+                code: 200
+              };
 
             resolve (data);
             
         } catch (error) {
-            reject (error)            
+            data = {
+                data: error,
+                message:"Client Data Error",
+                state: false,
+                code: 303
+            };
+            reject (data);         
         }
     });
 }

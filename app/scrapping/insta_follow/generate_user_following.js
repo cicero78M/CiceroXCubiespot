@@ -1,4 +1,4 @@
-import { logsResponse } from "../../responselogs/response_view.js";
+import { logsResponse } from "../../responselogs/logs_modif.js";
 import { instaFollowingAPI } from "../../socialMediaAPI/insta_API.js";
 
 export async function instaUserFollowing(username, pages, countData, totalData) {

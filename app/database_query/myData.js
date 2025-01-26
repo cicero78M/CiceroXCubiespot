@@ -6,54 +6,51 @@ export async function myData(clientName, idKey) {
   return new Promise(async (resolve, reject) => {
     try {
       //Data by Sheet Name
-  
+      let data;
       let isUserExist = false;
-      let response = [];
   
       await readUser(
         clientName
       ).then(
-        async userRows =>{
+        async response =>{ 
+          let userRows = response.data;
           //Check if idKey Exist
           for (let i = 0; i < userRows.length; i++) {
   
             if (parseInt(userRows[i].ID_KEY) === parseInt(idKey)) {
   
               isUserExist = true;
-              response = userRows[i];
+              let userRow = userRows[i];
   
-              let responseData = await myDataView(response);
-              
-              resolve (responseData);
-            
+              await myDataView(userRow).then(
+                response => resolve(response)
+              ).catch(
+                error =>reject (error)
+              )             
             }
           }
         }
-      )
+      ).catch(
+        error =>reject (error)
+      );
   
       if (!isUserExist) {
-        
-        let responseData = {
+        data = {
           data: "ID KEY HAVE NO RECORD",
           state: true,
           code: 201
         };
-  
-        reject (responseData);
+        reject (data);
       }
-  
+      
     } catch (error) {
-    
-      let responseData = {
+      data = {
         data: error,
+        message : "My Data Error",
         state: false,
         code: 303
       };
-  
-      console.log(error);
-      reject (responseData);
-    
+      reject (data);
     }
-  })
-
+  });
 }

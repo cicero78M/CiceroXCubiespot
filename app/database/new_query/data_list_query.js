@@ -3,7 +3,7 @@ import { readUser } from "../../../json_data_file/user_data/read_data_from_dir.j
 export async function newListValueData( clientName, keyValue) {
     return new Promise(
         async (
-            resolve
+            resolve, reject
         ) => {
 
             let listValue = [];
@@ -18,9 +18,25 @@ export async function newListValueData( clientName, keyValue) {
 
                         }
                         
-                        resolve (listValue);
-                    }                   
+                        data = {
+                            data: listValue,
+                            state: true,
+                            code: 200
+                        };      
+
+                        resolve (data);                    }                   
                 }
+            ).catch(
+                error =>{
+                    data = {
+                        data: error,
+                        message:"New List Value Data Error",
+                        state: false,
+                        code: 303
+                    };
+
+                    reject (data);   
+                } 
             )
         }
     );

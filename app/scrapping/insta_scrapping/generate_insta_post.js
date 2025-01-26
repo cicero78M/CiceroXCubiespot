@@ -2,7 +2,7 @@ import { client } from "../../../app.js";
 import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, readdirSync, writeFileSync } from "fs";
-import { logsResponse } from "../../responselogs/response_view.js";
+import { logsResponse } from "../../responselogs/logs_modif.js";
 
 export async function getInstaPost(clientValue) {
 

@@ -1,5 +1,5 @@
 import { decrypted } from "../../../json_data_file/crypto.js";
-import { logsResponse } from "../../responselogs/response_view.js";
+import { logsResponse } from "../../responselogs/logs_modif.js";
 
 export async function clientDataView(data) {    
     return new Promise(async (resolve, reject) => {

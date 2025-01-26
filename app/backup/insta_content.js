@@ -10,9 +10,7 @@ export async function instaContentBackup(clientValue) {
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
       
   const clientName = decrypted(clientValue.CLIENT_ID);
-
   let data;
-
   let shortcodeList = [];
 
   return new Promise(
@@ -38,13 +36,10 @@ export async function instaContentBackup(clientValue) {
 
             if ( dateNow === localDate) {
                 shortcodeList.push(contentItems);
-
             }
-
           }
 
           if (shortcodeList.length >= 1) {      
-            
             const sheetDoc = new GoogleSpreadsheet(
                 process.env.instaOfficialID, 
                 googleAuth
@@ -70,9 +65,7 @@ export async function instaContentBackup(clientValue) {
             };
 
             reject (data);
-          
-        }
-
+          }
         } else {
           data = {
             data: 'Your Client ID has Expired, Contacts Developers for more Informations',
@@ -81,10 +74,10 @@ export async function instaContentBackup(clientValue) {
           };
           reject (data);
         }
-        
       } catch (error) {
         data = {
           data: error,
+          message: "Insta Content Back Up Error",
           state: false,
           code: 303
         };

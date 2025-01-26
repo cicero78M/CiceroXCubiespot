@@ -1,7 +1,7 @@
 import { client } from "../../../app.js";
 import { decrypted } from "../../../json_data_file/crypto.js";
 import { newReportTiktok } from "../../reporting/tiktok_report.js";
-import { logsResponse } from "../../responselogs/response_view.js";
+import { logsResponse } from "../../responselogs/logs_modif.js";
 import { getTiktokComments } from "./generate_tiktok_comments.js";
 import { postTiktokUserComments } from "./post_username_comment_tiktok_data.js";
 

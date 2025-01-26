@@ -3,13 +3,14 @@ import { clientData } from "../../json_data_file/client_data/read_client_data_fr
 import { googleAuth } from "../database/new_query/sheet_query.js";
 import { decrypted } from "../../json_data_file/crypto.js";
 import { readdirSync, readFileSync } from "fs";
-import { logsResponse } from "../responselogs/response_view.js";
+import { logsResponse } from "../responselogs/logs_modif.js";
 
 export async function userDataBackup() {    
     
   //Date Time
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
+  let data;
   
     return new Promise(async (resolve, reject) => {
         try {
@@ -23,10 +24,7 @@ export async function userDataBackup() {
                         let data = readdirSync(`json_data_file/user_data/${decrypted(response[i].CLIENT_ID)}`);
         
                         for (let ii = 0; ii < data.length; ii++){
-                            
-                            
                             userData.push(JSON.parse(readFileSync(`json_data_file/user_data/${decrypted(response[i].CLIENT_ID)}/${data[ii]}`)));
-
                         } 
                         
                         let sheetDoc = new GoogleSpreadsheet(
@@ -47,10 +45,24 @@ export async function userDataBackup() {
                 }
             );
 
-            resolve ("Success");
-            
+
+            data = {
+                data: "Success Back Up User Data",
+                state: true,
+                code: 200
+            };
+
+            resolve (data);     
+
         } catch (error) {
-            reject (error)            
+            data = {
+                data: error,
+                message: "User Data Backup Error",
+                state: false,
+                code: 303
+            };
+            
+            reject (data);         
         }
     });
 }

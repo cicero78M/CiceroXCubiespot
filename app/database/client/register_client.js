@@ -1,42 +1,72 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { encrypted } from "../../../json_data_file/crypto.js";
-import { logsResponse } from "../../responselogs/response_view.js";
+
 export async function registerClientData(clientName, clientType) {
+    let data;
 
-    if(["COM", "RES"].includes(clientType)){
-
-        let clientData = new Object();
-                
-        clientData.CLIENT_ID = encrypted(clientName);
-        clientData.TYPE = encrypted(clientType);
-        clientData.STATUS = encrypted("TRUE");
-        clientData.INSTAGRAM = encrypted("");
-        clientData.TIKTOK = encrypted("");
-        clientData.INSTA_STATE = encrypted("FALSE");
-        clientData.TIKTOK_STATE = encrypted("FALSE");
-        clientData.SUPERVISOR = encrypted("");
-        clientData.OPERATOR = encrypted("");
-        clientData.GROUP = encrypted("");
-        clientData.SECUID = encrypted("");
-    
+    return new Promise((resolve, reject) => {
         try {
-            writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientData));
-        } catch (error) {
-            mkdirSync(`json_data_file/client_data/${clientName}`);
-            writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientData));
-        }
-    
-        clientData().then(
-            async clientRows =>{
-    
-                await clientRows.push(clientData);
-                writeFileSync(`json_data_file/client_data/client_data.json`, JSON.stringify(clientRows));
+
+            if(["COM", "RES"].includes(clientType)){
+
+                let clientData = new Object();
+                        
+                clientData.CLIENT_ID = encrypted(clientName);
+                clientData.TYPE = encrypted(clientType);
+                clientData.STATUS = encrypted("TRUE");
+                clientData.INSTAGRAM = encrypted("");
+                clientData.TIKTOK = encrypted("");
+                clientData.INSTA_STATE = encrypted("FALSE");
+                clientData.TIKTOK_STATE = encrypted("FALSE");
+                clientData.SUPERVISOR = encrypted("");
+                clientData.OPERATOR = encrypted("");
+                clientData.GROUP = encrypted("");
+                clientData.SECUID = encrypted("");
             
-            }
-        )
+                try {
+                    writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientData));
+                } catch (error) {
+                    mkdirSync(`json_data_file/client_data/${clientName}`);
+                    writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientData));
+                }
+            
+                clientData().then(
+                    async clientRows =>{
+            
+                        await clientRows.push(clientData);
+                        writeFileSync(`json_data_file/client_data/client_data.json`, JSON.stringify(clientRows));
+                    
+                    }
+                )
 
-    } else {
-        logsResponse("Client Type Only Receive \"COM\" & \"RES\"");
-    }
+                data = {
+                    data: `${clientName} Registred`,
+                    state: true,
+                    code: 200
+                };
+    
+                resolve (data);   
+        
+            } else {
+                data = {
+                    data: `Only Receive "RES" / "COM"`,
+                    state: true,
+                    code: 201
+                };
+    
+                reject (data);            }
+            
+        } catch (error) {
 
+            data = {
+                data: error,
+                message: 'Register Client Data Error',
+                state: false,
+                code: 303
+            };
+    
+            reject (data);
+            
+        }
+    });
 }

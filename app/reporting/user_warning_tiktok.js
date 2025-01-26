@@ -2,7 +2,7 @@ import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from "fs";
-import { logsResponse } from '../responselogs/response_view.js';
+import { logsResponse, logsSave, logsSend } from '../responselogs/logs_modif.js';
   
 export async function warningReportTiktok(clientValue) {
     
@@ -11,7 +11,7 @@ export async function warningReportTiktok(clientValue) {
             resolve, reject
         ) => {
             try {
-                logsResponse("Execute Warning Report Tiktok");
+                logsSend("Execute Warning Report Tiktok");
                 client.sendMessage(
                     '6281235114745@c.us', 
                     "Execute Warning Report Tiktok"
@@ -22,8 +22,8 @@ export async function warningReportTiktok(clientValue) {
                 let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
                 let userAll = 0;
-
                 let userRows;
+                let data;
 
                 let shortcodeListString = '';
 
@@ -75,11 +75,9 @@ export async function warningReportTiktok(clientValue) {
                                                         
                     if (shortcodeList.length >= 1) {   
 
-                        
                         for (let i = 0; i < shortcodeList.length; i++) {
 
                             let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
-                            
                             
                             for (let ii = 0; ii < commentItems.length; ii++) {
                               if (!userCommentData.includes(decrypted(commentItems[ii]))) {
@@ -94,7 +92,7 @@ export async function warningReportTiktok(clientValue) {
                             || userRows[i].TIKTOK === null 
                             || userRows[i].TIKTOK === ""){
                 
-                                logsResponse("Null Data Exist");
+                                logsSave("Null Data Exist");
                                 UserNotLikes.push(userRows[i].ID_KEY);
                                 notCommentList.push(userRows[i]);
                 
@@ -116,51 +114,48 @@ export async function warningReportTiktok(clientValue) {
                         for (let i = 0; i < notCommentList.length; i++){
                             if(notCommentList[i].WHATSAPP != ""){
     
-                                logsResponse(`Send Warning Tiktok messages to ${notCommentList[i].TITLE} ${notCommentList[i].NAMA} `);  
+                                logsSend(`Send Warning Tiktok messages to ${notCommentList[i].TITLE} ${notCommentList[i].NAMA} `);  
                                 await client.sendMessage(
                                     `${notCommentList[i].WHATSAPP}@c.us`,
                                     `Selamat Siang, Bpk/Ibu ${notCommentList[i].TITLE} ${notCommentList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
                                 );
                                 setTimeout(async () => {
-                                    logsResponse ("Wait ");
+                                    logsSave("Wait ");
                                 }, 4000);
                             }
                         }  
 
-                        let data = {
+                        data = {
                             data: "Send warning Done",
                             state: true,
                             code: 200
                           };
+                          
                           resolve (data);       
 
                     } else {
-                        let responseData = {
+                        data = {
                             data: 'Tidak ada Konten Data untuk di Olah',
                             state: true,
                             code: 201
                         };
-
-                        logsResponse(responseData.data);
-                        reject (responseData);
-                
+                        reject (data);                
                     }
                 } else {   
-                    let responseData = {
+                    data = {
                         data: 'Your Client ID has Expired, Contacts Developers for more Informations',
                         state: true,
                         code: 201
                     };
-                    logsResponse(responseData.data);               
-                    reject (responseData);
+                    reject (data);
                 }
             } catch (error) {
-                let responseData = {
+                data = {
                     data: error,
+                    message:"Error On User Warning Tiktok",
                     state: false,
                     code: 303
                 };
-                logsResponse(responseData.data);
                 reject (responseData);
             }
         }

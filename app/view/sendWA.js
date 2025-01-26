@@ -1,5 +1,5 @@
 import { client } from "../../app.js";
-import { logsResponse } from "../responselogs/response_view.js";
+import { logsResponse } from "../responselogs/logs_modif.js";
 //Response By User
 export async function sendResponse(from, responseData, errormessage) {
     

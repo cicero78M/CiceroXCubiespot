@@ -31,12 +31,20 @@ export async function readUser(clientName) {
         
             }    
 
-            resolve (client);
-
+            data = {
+                data: client,
+                state: true,
+                code: 200
+            };      
+            resolve (data);  
         } catch (error) {
-            
-            reject (error)            
-        
+            data = {
+                data: error,
+                message:"Read User Error",
+                state: false,
+                code: 303
+            };
+            reject (data);          
         }
     });
 }

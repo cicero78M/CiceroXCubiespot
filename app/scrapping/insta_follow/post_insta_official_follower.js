@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { client } from "../../../app.js";
 import { googleAuth } from "../../database/new_query/sheet_query.js";
-import { logsResponse } from "../../responselogs/response_view.js";
+import { logsResponse } from "../../responselogs/logs_modif.js";
 
 export async function postInstaFollowersOfficial(clientName, array) {
 

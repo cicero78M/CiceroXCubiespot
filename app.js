@@ -64,7 +64,7 @@ import { detikScrapping } from './app/socialMediaAPI/detik_scrapper.js';
 import { clientDataView } from './app/database/management/client_list.js';
 import { updateClientData } from './app/database/client/update_client.js';
 import { registerClientData } from './app/database/client/register_client.js';
-import { logsResponse, sendResponseData } from './app/responselogs/response_view.js';
+import { logsError, logsSave, logsSend, logsUserError, logsUserSend } from './app/responselogs/logs_modif.js';
 
 //.env
 const private_key = process.env;
@@ -73,7 +73,7 @@ const private_key = process.env;
 const port = private_key.EXPRESS_PORT;
 
 app.listen(port, () => {
-    logsResponse(`Cicero System Start listening on port >>> ${port}`)
+    logsSave(`Cicero System Start listening on port >>> ${port}`)
 });
 
 // WWEB JS Client Constructor
@@ -84,12 +84,12 @@ export const client = new Client({
 });
 
 // On WWEB Client Initializing
-logsResponse('Initializing...');
+logsSend('System Initializing...');
 client.initialize();
 
 // On WWeB Authenticate Checking
 client.on('authenthicated', (session)=>{
-    logsResponse(+JSON.stringify(session));
+    logsSave(JSON.stringify(session));
 });
 
 // On WWEB If Authenticate Failure
@@ -99,7 +99,7 @@ client.on('auth_failure', msg => {
 
 // On WWEB If Disconected
 client.on('disconnected', (reason) => {
-    logsResponse('Client was logged out', reason);
+    console.error('Client was logged out', reason);
 });
 
 // On Pairing with QR Code
@@ -110,14 +110,14 @@ client.on('qr', qr => {
 // On Reject Calls
 let rejectCalls = true;
 client.on('call', async (call) => {
-    logsResponse('Call received, rejecting. GOTO Line 261 to disable', call);
+    console.log('Call received, rejecting. GOTO Line 261 to disable', call);
     if (rejectCalls) await call.reject();
 });
 
 // On WWeb Ready
 client.on('ready', () => {
     //Banner
-    logsResponse(textSync("CICERO -X- CUBIESPOT", {
+    logsSave(textSync("CICERO -X- CUBIESPOT", {
         font: "Ghost",
         horizontalLayout: "fitted",
         verticalLayout: "default",
@@ -126,33 +126,35 @@ client.on('ready', () => {
     }));
 
     set("Cicero System Manajemen As A Services");
-    logsResponse('===============================');
-    logsResponse('===============================');
-    logsResponse('======System Fully Loaded!=====');
-    logsResponse('=========Enjoy the Ride========');
-    logsResponse('===We\'ll Take Care Everything==');
-    logsResponse('===============================');
-    logsResponse('===============================');
+    logsSave('===============================');
+    logsSave('===============================');
+    logsSave('======System Fully Loaded!=====');
+    logsSave('=========Enjoy the Ride========');
+    logsSave('===We\'ll Take Care Everything==');
+    logsSave('===============================');
+    logsSave('===============================');
 
     // Server Life State Warning
     schedule('*/10 * * * *',  () =>  {
-        sendResponseData('<<<System Alive>>>');
+        logsSend('<<<System Alive>>>');
     });
 
     // Scrapping Socmed every hours until 21
     schedule('30 6-20 * * *',  () => {
-        sendResponseData('Exec Cron Job');
+        logsSend('Execute Hourly Cron Job');
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
     schedule('0 15,18,21 * * *',  () => {
-        sendResponseData('Exec Cron Job');
+        logsSend('Execute Reporting Cron Job');
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
 
     //User Warning Likes Comments Insta & Tiktok
     schedule('15 12,16,19 * * *',  () => {
-        sendResponseData('User Warning Likes Comments Insta & Tiktok');
+
+        logsSend('Execute Cron Job Warning Likes Comments Insta & Tiktok');
+        
         clientData().then( async clientData =>{
 
             for (let i = 0; i < clientData.length; i++){
@@ -161,42 +163,24 @@ client.on('ready', () => {
                 if (decrypted(clientData[i].STATUS) === "TRUE" 
                 && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                 && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                    sendResponseData(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);                    
+                    logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);                    
                     await warningReportTiktok(clientData[i]).then(async response => {
-                        sendResponseData(response.data);
-                    }).catch( async error => {
-                        switch (error.code){
-                            case 201 : 
-                                sendResponseData(error.data);
-                                break;
-                            case 303 : 
-                                logsSend(error.data, "Warning Report Insta");
-                                break;
-                            default:
-                                break;
-                        }
-                    });
+                        logsSend(response.data);
+                    }).catch( 
+                        async error => logsError(error)
+                    );
                 }         
 
                 //This process Insta Report
                 if (decrypted(clientData[i].STATUS) === "TRUE" 
                 && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                 && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                    sendResponseData(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
+                    logsSave(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
                     await warningReportInsta(clientData[i]).then(async response => {                       
-                        sendResponseData(response.data);
-                    }).catch(async error => {
-                        switch (error.code){
-                            case 201 : 
-                                sendResponseData(error.data);
-                                break;
-                            case 303 : 
-                                logsSend(error.data, "Warning Report Insta");
-                                break;
-                            default:
-                                break;
-                        }
-                    });
+                        logsSend(response.data);
+                    }).catch( 
+                        async error => logsError(error)
+                    );
                 }  
             }
         });
@@ -204,18 +188,21 @@ client.on('ready', () => {
 
     //Backup Client & User data
     schedule('0 1 * * *',  async () => {
-        if(process.env.APP_CLIENT_TYPE === response[i].TYPE){
-            logsResponse('Exec Client & User Backup');
+        
+        if(process.env.APP_CLIENT_TYPE === "RES"){
+
+            logsSend('Exec Client & User Backup');
+            
             await clientDataBackup().then(
-                response => logsResponse(response)
-            ).catch (
-                error => logsResponse(error)
+                response => logsSave(response.data)
+            ).catch( 
+                async error => logsError(error)
             );
 
             await userDataBackup().then(
-                response => logsResponse(response)
-            ).catch (
-                error => logsResponse(error)
+                response => logsSave(response.data)
+            ).catch( 
+                async error => logsError(error)
             );
         }                
     });
@@ -223,56 +210,56 @@ client.on('ready', () => {
     //Backup Insta & Tiktok Content
     schedule('0 22 * * *',  async () => {
 
-        logsResponse('Backup Insta & Tiktok Content');
-        await clientData().then(
-            async response =>{
-                if(process.env.APP_CLIENT_TYPE === response[i].TYPE){
-                    for (let i = 0; i < response.length; i++){
+        logsSend('Backup Insta & Tiktok Content');
+        
+        if(process.env.APP_CLIENT_TYPE === "RES"){
+            await clientData().then(
+                async response =>{
+                    for (let i = 0; i < response.length; i++){   
                         await instaContentBackup(response[i]).then(
-                            response => logsResponse(response)
+                            response => logsSave(response)
                         ).catch(
-                            error => logsResponse(error)
+                            error => logsError(error)
                         );
 
                         await tiktokContentBackup(response[i]).then(
-                            response => logsResponse(response)
+                            response => logsSave(response)
                         ).catch(
-                            error => logsResponse(error)
+                            error => logsError(error)
                         );
-                    }
+                    }      
                 }
-            }
-        ).catch (
-            error => logsResponse(error)
-        );
-        
+            ).catch (
+                error => logsSave(error)
+            );
+        }
     });
 
-    //User Warning Likes Comments Insta & Tiktok
+    //Execute Backup Insta & Tiktok Like Comments
     schedule('0 23 * * *',  async () => {
+        logsSave("Execute Backup Insta & Tiktok Like Comments");
+        if(process.env.APP_CLIENT_TYPE === "RES"){
 
-        logsResponse("Execute Backup Insta & Tiktok Like Comments");
-        await clientData().then(
-            async response =>{
-                if(process.env.APP_CLIENT_TYPE === response[i].TYPE){
+            await clientData().then(
+                async response =>{
                     for (let i = 0; i < response.length; i++){
             
                         await instaLikesBackup(response[i]).then(
-                            response => logsResponse(response)
+                            response => logsSave(response.data)
                         ).catch(
-                            response => logsResponse(response)
+                            error => logsError(error)
                         );
 
                         await tiktokCommentsBackup(response[i]).then(
-                            response => logsResponse(response)
+                            response => logsSave(response.data)
                         ).catch(
-                            response => logsResponse(response)
+                            error => logsError(error)
                         );
             
                     }
                 }
-            }
-        );
+            );
+        }
     });
 });
 
@@ -285,14 +272,17 @@ client.on('message', async (msg) => {
             //If Msg is WA Story
             const chat = await msg.getChat();
             chat.sendSeen();
+
             if (contact.pushname !== undefined){
-                logsResponse(contact.pushname+" >>> "+msg.body);
+                
+                logsSave(contact.pushname+" >>> "+msg.body);
+                
                 let body = msg.body;
                 let url = body.match(/\bhttps?:\/\/\S+/gi);
                 if (url != null || url != undefined){
                     let splittedUrl = url[0].split('/');
                     if (splittedUrl.includes("www.instagram.com")){
-                        logsResponse('Response Sent');
+                        logsSave('Response Sent');
                         //client.sendMessage(msg.author, 'Terimakasih sudah berpartisipasi melakukan share konten :\n\n'+url[0]+'\n\nSelalu Semangat ya.');
                             
                         //   let rawLink;
@@ -310,7 +300,7 @@ client.on('message', async (msg) => {
                         if (response.code === 200){
                             client.sendMessage(msg.from, response.data);
                         } else {
-                            logsResponse(response.data);
+                            logsSave(response.data);
                         }
                     */ 
                     }
@@ -325,7 +315,7 @@ client.on('message', async (msg) => {
                 chatMsg.sendSeen(); //this send seen by bot whatsapp
                 chatMsg.sendStateTyping(); //this create bot typing state 
 
-                logsResponse(msg.from+' >>> '+splittedMsg[1].toLowerCase());
+                logsSave(msg.from+' >>> '+splittedMsg[1].toLowerCase());
                 
                 //Admin Order Data         
                 if (adminOrder.includes(splittedMsg[1].toLowerCase())){ 
@@ -334,7 +324,7 @@ client.on('message', async (msg) => {
                             case 'pushuserres': 
                                 {
                                     //Res Request
-                                    logsResponse('Push User Res Client Triggered');
+                                    logsSend('Push User Res Client Triggered');
         
                                     if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
         
@@ -343,25 +333,24 @@ client.on('message', async (msg) => {
         
                                         if (slicedData[slicedData.length-1].includes('edit')){
                                             sheetID = slicedData[slicedData.length-2];
-                                            logsResponse(sheetID);
+                                            logsSend(sheetID);
                                         } else {
                                             sheetID = slicedData[slicedData.length-1];
-                                            logsResponse(sheetID);
+                                            logsSend(sheetID);
                                         }
         
                                         await pushUserRes(splittedMsg[0], sheetID)
                                         .then(
                                             response =>
-                                            logsResponse(response)
+                                            logsSend(response)
                                         )
                                         .catch(
-                                            response =>
-                                            logsResponse(response)
+                                            error => logsError(error)
                                         );    
                                                                 
                                     }  else {
                                         
-                                        logsResponse('Bukan Spreadsheet Links');
+                                        logsSave('Bukan Spreadsheet Links');
                                         client.sendMessage(
                                             msg.from, 
                                             'Bukan Spreadsheet Links'
@@ -373,7 +362,7 @@ client.on('message', async (msg) => {
                                 {
         
                                     //Com Request
-                                    logsResponse('Push User Com Client Triggered');
+                                    logsSave('Push User Com Client Triggered');
         
                                     if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
         
@@ -382,33 +371,23 @@ client.on('message', async (msg) => {
         
                                         if (slicedData[slicedData.length-1].includes('edit')){
                                             sheetID = slicedData[slicedData.length-2];
-                                            logsResponse(sheetID);
+                                            logsSave(sheetID);
                                         } else {
                                             sheetID = slicedData[slicedData.length-1];
-                                            logsResponse(sheetID);
+                                            logsSave(sheetID);
                                         }
         
                                         await pushUserCom(splittedMsg[0], sheetID)
                                         .then(
-                                            response =>
-                                            logsResponse(response)
+                                            response => logsSave(response)
                                         )
-                                        .catch(
-                                            response =>
-                                            logsResponse(response)
+                                        .catch(                                        
+                                            error => logsError(error)
                                         );
-        
-        
-                                        // await sendMessage(msg.from, responseData, "PUSH USER RES CLIENT ERROR");
-                                                                
+                                                                    
                                     }  else {
                                         
-                                        logsResponse('Bukan Spreadsheet Links');
-                                        
-                                        client.sendMessage(
-                                            msg.from, 
-                                            'Bukan Spreadsheet Links'
-                                        );
+                                        logsSend('Bukan Spreadsheet Links');
         
                                     }
         
@@ -422,23 +401,18 @@ client.on('message', async (msg) => {
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''),
                                         "EXCEPTION"
-                                    ).then(async data => 
-                                        await sendMessage(msg.from, data, " EXCEPTION REQUEST ERROR")
-                                    ).catch(async error => 
-                                        await sendMessage(msg.from, error, " EXCEPTION REQUEST ERROR")
-                                    )
+                                    ).then(
+                                        response => logsSend(response.data)
+                                    ).catch(                                            
+                                        error => logsError(error)
+                                    );
         
                                 }
                                 break;
                             case 'secuid': 
                                 {
-                                    //Generate All Socmed
-                                    await client.sendMessage(
-                                        '6281235114745@c.us', 
-                                        'Generate Tiktok secUID Data Starting...'
-                                    );
-                                    
-                                    logsResponse(time+' Generate Tiktok secUID Data Starting');
+                                    //Generate All Socmed                                    
+                                    logsSend(time+' Generate Tiktok secUID Data Starting');
                     
                                     await clientData().then(
                                         async clientData =>{
@@ -446,16 +420,12 @@ client.on('message', async (msg) => {
                                             for (let i = 0; i < clientData.length; i++){
                                                 if (decrypted(clientData[i].STATUS) === "TRUE" 
                                                 && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                                && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {         
-                                            
-                                                    logsResponse(decrypted(clientData[i].CLIENT_ID)+' START TIKTOK SECUID DATA');
-                                                    let tiktokSecuid = await setSecuid(clientData[i]);
-                                                    
-                                                    sendResponse(
-                                                        msg.from, 
-                                                        tiktokSecuid, 
-                                                        `${decrypted(clientData[i].CLIENT_ID)} START TIKTOK SECUID DATA`
-                                                    );
+                                                && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE){
+                                                    await setSecuid(clientData[i]).then(
+                                                        response => logsSend(response.data)
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    )
                                                 } 
                                             }
                                     });
@@ -464,8 +434,11 @@ client.on('message', async (msg) => {
                                 break;
                             case 'savecontact': 
                                 {
-                                    let response = await saveContacts();
-                                    logsResponse(response);
+                                    await saveContacts().then(
+                                        response => logsSend(response.data)
+                                    ).catch(
+                                        error => logsError(error)
+                                    );
                                 }
                                 break;
                             case 'updateclientdata':
@@ -485,27 +458,21 @@ client.on('message', async (msg) => {
                                                             ''
                                                         ).split('/').pop();  
                                             
-                                                        updateClientData(splittedMsg[0].toUpperCase(), instaUsername, "insta");
-                                                    
+                                                        await updateClientData(splittedMsg[0].toUpperCase(), instaUsername, "insta").then(
+                                                            response => logsSend(response.data)
+                                                        ).catch(
+                                                            error => logsError(error)
+                                                        );
                     
                                                     } else {
             
-                                                        logsResponse('Bukan Link Profile Instagram');
-                                                        client.sendMessage(
-                                                            msg.from, 
-                                                            'Bukan Link Profile Instagram'
-                                                        );
+                                                        logsSend('Bukan Link Profile Instagram');
             
                                                     }
             
                                                 } else {
             
-                                                    logsResponse('Bukan Link Instagram');
-  
-                                                    client.sendMessage(
-                                                        msg.from, 
-                                                        'Bukan Link Instagram'
-                                                    );
+                                                    logsSend('Bukan Link Profile Instagram');
             
                                                 }
                                             }
@@ -514,7 +481,12 @@ client.on('message', async (msg) => {
                                         case 'instastate':
                                             {
                                                 if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
-                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "instastate");
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "instastate").then(
+                                                        response => logsSend(response.data)
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
+                
                                                 }
                                             }
                                             break;
@@ -525,20 +497,14 @@ client.on('message', async (msg) => {
                                                     const tiktokLink = splittedMsg[3].split('?')[0];
                                                     const tiktokUsername = tiktokLink.split('/').pop();  
     
-                                                    updateClientData(splittedMsg[0].toUpperCase(), tiktokUsername, "tiktok");
-    
-                                                    sendResponse(
-                                                        msg.from, 
-                                                        responseData, 
-                                                        "Error Update Tiktok"
+                                                    updateClientData(splittedMsg[0].toUpperCase(), tiktokUsername, "tiktok").then(
+                                                        response => logsSend(response.data)
+                                                    ).catch(
+                                                        error => logsError(error)
                                                     );
             
                                                 } else {
-                                                    logsResponse('Bukan Link Profile Tiktok');
-                                                    client.sendMessage(
-                                                        msg.from, 
-                                                        'Bukan Link Profile Tiktok'
-                                                    );
+                                                    logsSend('Bukan Link Profile Tiktok');
                                                 }
                                             }
                                            
@@ -546,22 +512,37 @@ client.on('message', async (msg) => {
                                         case 'tiktokstate':
                                             {
                                                 if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
-                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "tiktokstate");
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "tiktokstate").then(
+                                                        response => logsSend(response.data)
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
                                                 }
                                             }
                                             break;
                                         case 'super':
-                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3], "super");
-                                            
+                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3], "super").then(
+                                                response => logsSend(response.data)
+                                            ).catch(
+                                                error => logsError(error)
+                                            );                                          
                                             break;
                                         case 'opr':
-                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3], "opr");
-    
+                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3], "opr").then(
+                                                response => logsSend(response.data)
+                                            ).catch(
+                                                error => logsError(error)
+                                            );
+        
                                             break;
                                         case 'clientstate':
                                             {
                                                 if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
-                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "tiktokstate");
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "tiktokstate").then(
+                                                        response => logsSend(response.data)
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
                                                 }
                                             }
                             
@@ -573,44 +554,14 @@ client.on('message', async (msg) => {
                                 break;
                             case 'registerclient': 
                                 {
-                                    registerClientData(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase());
+                                    registerClientData(splittedMsg[0].toUpperCase(), splittedMsg[2].toUpperCase()).then(
+                                        response => logsSend(response.data)
+                                    ).catch(
+                                        error => logsError(error)
+                                    );
                                 }
                                 break;
                             default : 
-                                {
-                                    //Execute Send Warning
-                                    logsResponse("Execute Schedule");
-                                    clientData().then(
-                                        async clientData =>{
-                                        for (let i = 0; i < clientData.length; i++){
-                                            //This Procces Tiktok Report
-                                            if (decrypted(clientData[i].STATUS) === "TRUE" 
-                                            && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
-                                            && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNING DATA`);
-                                                await client.sendMessage(
-                                                    '6281235114745@c.us', 
-                                                    ` ${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK WARNINGDATA`
-                                                );
-                                                await warningReportTiktok(clientData[i]);
-                                            }         
-                        
-                                            //This process Insta Report
-                                            if (decrypted(clientData[i].STATUS) === "TRUE" 
-                                            && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                            && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                
-                                                logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`);
-                                                await client.sendMessage(
-                                                    '6281235114745@c.us', 
-                                                    `${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA WARNING DATA`
-                                                );
-                        
-                                                await warningReportInsta(clientData[i]);
-                                            }  
-                                        }
-                                    });
-                                }
                                 break;
                         }  
                     } else {
@@ -618,16 +569,16 @@ client.on('message', async (msg) => {
                     }
                 //Operator Order Data         
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
-                    logsResponse("Exec Rows");
+                    logsSave("Exec Rows");
                     await clientData().then(async clientData => {             
-                        logsResponse("Response OK");
+                        logsSave("Response OK");
                         for (let i = 0; i < clientData.length; i++){
                             if(decrypted(clientData[i].OPERATOR) === msg.from){
                                 if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     let responseData;
                                     switch (splittedMsg[1].toLowerCase()) {
                                         case "addnewuser"://Added New User Data Profile
-                                            logsResponse("Add User");
+                                            logsSave("Add User");
                                             //clientName#addnewuser#id_key/NRP#name#divisi/satfung#jabatan#pangkat/title
                                             responseData = await addNewUser(
                                                 splittedMsg[0].toUpperCase(), 
@@ -742,7 +693,7 @@ client.on('message', async (msg) => {
 
                                         } else {
 
-                                            logsResponse('Bukan Link Profile Instagram');
+                                            logsSave('Bukan Link Profile Instagram');
                                             client.sendMessage(
                                                 msg.from, 
                                                 'Bukan Link Profile Instagram'
@@ -752,7 +703,7 @@ client.on('message', async (msg) => {
 
                                     } else {
 
-                                        logsResponse('Bukan Link Instagram');
+                                        logsSave('Bukan Link Instagram');
                                         client.sendMessage(
                                             msg.from, 
                                             'Bukan Link Instagram'
@@ -783,7 +734,7 @@ client.on('message', async (msg) => {
                                         );
 
                                     } else {
-                                        logsResponse('Bukan Link Profile Tiktok');
+                                        logsSave('Bukan Link Profile Tiktok');
                                         client.sendMessage(
                                             msg.from, 
                                             'Bukan Link Profile Tiktok'
@@ -897,7 +848,7 @@ client.on('message', async (msg) => {
                                         case 'info'://Order Info Request
                                             responseData = await infoView(splittedMsg[0].toUpperCase());
                                             setTimeout(() => {
-                                                logsResponse("Collecting Client Data");
+                                                logsSave("Collecting Client Data");
                                             }, 1000);
                                             client.sendMessage(msg.from, responseData.data);
                                             break;
@@ -914,7 +865,7 @@ client.on('message', async (msg) => {
                                         case 'titlelist'://Title List Request
                                             responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
                                             setTimeout(() => {
-                                                logsResponse("Collecting User Data");
+                                                logsSave("Collecting User Data");
                                             }, 1000);
                                             client.sendMessage(msg.from, responseData.data); 
                                             break;
@@ -950,7 +901,7 @@ client.on('message', async (msg) => {
                                             );
                                         }
                                     ).catch(
-                                        response =>{logsResponse(response)}
+                                        response =>{logsSave(response)}
                                     );
 
 
@@ -992,7 +943,7 @@ client.on('message', async (msg) => {
                                 }
                                 break;
                             case 'alltiktok'://Generate & Report All Tiktok Data - Contents & Comments 
-                                logsResponse("Execute New All Tiktok")
+                                logsSave("Execute New All Tiktok")
                                 await clientData().then( 
                                     async response =>{
                                         for (let i = 0; i < response.length; i++){
@@ -1000,7 +951,7 @@ client.on('message', async (msg) => {
                                             && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
                                             && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                                 
-                                                logsResponse(decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
+                                                logsSave(decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
                                                     decrypted(response[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
@@ -1018,17 +969,17 @@ client.on('message', async (msg) => {
                                                                     msg.from, 
                                                                     data.data
                                                                 );
-                                                                logsResponse("Success Report Data");
+                                                                logsSave("Success Report Data");
                                                             }
                                                         ).catch(
-                                                            data => logsResponse(data)
+                                                            data => logsSave(data)
                                                         );
                                                     }
                                                 ).catch(
                                                     data => {
                                                         switch (data.code) {
                                                             case 303:
-                                                                logsResponse(data.data);
+                                                                logsSave(data.data);
                                                                 client.sendMessage(
                                                                     '6281235114745@c.us', 
                                                                     decrypted(response[i].CLIENT_ID)+' ERROR GET TIKTOK POST'
@@ -1056,14 +1007,14 @@ client.on('message', async (msg) => {
                                 )  
                                 break;
                             case 'reporttiktok': //Report Tiktok Data
-                                logsResponse("Execute New Report Tiktok ")
+                                logsSave("Execute New Report Tiktok ")
                                 await clientData().then( 
                                     async response =>{
                                         for (let i = 0; i < response.length; i++){
                                             if (decrypted(response[i].STATUS) === "TRUE" 
                                             && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
                                             && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsResponse(decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
+                                                logsSave(decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
                                                     decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA'
@@ -1079,7 +1030,7 @@ client.on('message', async (msg) => {
                                                     data => {
                                                         switch (data.code) {
                                                             case 303:
-                                                                logsResponse(data.data);
+                                                                logsSave(data.data);
                                                                 client.sendMessage(
                                                                     '6281235114745@c.us', 
                                                                     decrypted(response[i].CLIENT_ID)+' ERROR REPORT TIKTOK POST'
@@ -1106,7 +1057,7 @@ client.on('message', async (msg) => {
                                 )
                                 break;
                             case 'allinsta': //Generate & Report All Insta Data
-                                logsResponse("Execute New All Insta ")
+                                logsSave("Execute New All Insta ")
                                 await clientData().then( 
                                     async clientData =>{
                                         for (let i = 0; i < clientData.length; i++){
@@ -1115,7 +1066,7 @@ client.on('message', async (msg) => {
                                             && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                                             && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                             
-                                                logsResponse(decrypted(clientData[i].CLIENT_ID)+' START LOAD INSTA DATA');
+                                                logsSave(decrypted(clientData[i].CLIENT_ID)+' START LOAD INSTA DATA');
                                                 
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
@@ -1126,14 +1077,14 @@ client.on('message', async (msg) => {
                                                     clientData[i]
                                                 ).then(
                                                     async instaPostData =>{
-                                                        logsResponse(instaPostData);
+                                                        logsSave(instaPostData);
                                                         
                                                         await getInstaLikes(
                                                             instaPostData.data, 
                                                             clientData[i]
                                                         ).then(
                                                             async instaLikesData =>{
-                                                                logsResponse(instaLikesData.data);
+                                                                logsSave(instaLikesData.data);
                                                                 
                                                                 await client.sendMessage(
                                                                     msg.from, 
@@ -1144,7 +1095,7 @@ client.on('message', async (msg) => {
                                                                     clientData[i]
                                                                 ).then(
                                                                     async data => {
-                                                                        logsResponse("Report Success!!!");
+                                                                        logsSave("Report Success!!!");
                                                                         await client.sendMessage(
                                                                             msg.from, 
                                                                             data.data
@@ -1154,7 +1105,7 @@ client.on('message', async (msg) => {
                                                                         switch (data.code) {
     
                                                                             case 303:
-                                                                                logsResponse(data.data);
+                                                                                logsSave(data.data);
                                                                                 await client.sendMessage(
                                                                                     '6281235114745@c.us', 
                                                                                     decrypted(clientData[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
@@ -1175,7 +1126,7 @@ client.on('message', async (msg) => {
                                                                 switch (data.code) {
                                                                     
                                                                     case 303:
-                                                                        logsResponse(data.data);
+                                                                        logsSave(data.data);
                                                                         await client.sendMessage(
                                                                             '6281235114745@c.us', 
                                                                             decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA LIKES'
@@ -1183,7 +1134,7 @@ client.on('message', async (msg) => {
                                                                         break;
                                                                     
                                                                     default:
-                                                                        logsResponse(data);
+                                                                        logsSave(data);
                                                                         await client.sendMessage(
                                                                             '6281235114745@c.us', 
                                                                             decrypted(clientData[i].CLIENT_ID)+' '+data.data
@@ -1198,7 +1149,7 @@ client.on('message', async (msg) => {
                                                         switch (data.code) {
     
                                                             case 303:
-                                                                logsResponse(data.data);
+                                                                logsSave(data.data);
                                                                 await client.sendMessage(
                                                                     '6281235114745@c.us', 
                                                                     decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA POST'
@@ -1206,7 +1157,7 @@ client.on('message', async (msg) => {
                                                                 break;
     
                                                             default:
-                                                                logsResponse(data);
+                                                                logsSave(data);
                                                                 await client.sendMessage(
                                                                     '6281235114745@c.us', 
                                                                     decrypted(clientData[i].CLIENT_ID)+' '+data.data
@@ -1228,14 +1179,14 @@ client.on('message', async (msg) => {
                                 )  
                                 break;
                             case 'reportinsta'://Report Insta Data
-                                logsResponse("Execute New Report Insta ")
+                                logsSave("Execute New Report Insta ")
                                 await clientData().then( 
                                     async response =>{
                                         for (let i = 0; i < response.length; i++){
                                             if (decrypted(response[i].STATUS) === "TRUE" 
                                             && decrypted(response[i].INSTA_STATE) === "TRUE" 
                                             && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsResponse(decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA');
+                                                logsSave(decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA');
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
                                                     decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA'
@@ -1253,7 +1204,7 @@ client.on('message', async (msg) => {
                                                     async data => {
                                                         switch (data.code) {
                                                             case 303:
-                                                                logsResponse(data.data);
+                                                                logsSave(data.data);
                                                                 await client.sendMessage(
                                                                     '6281235114745@c.us', 
                                                                     decrypted(response[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
@@ -1292,7 +1243,7 @@ client.on('message', async (msg) => {
                                                     decrypted(clientData[i].INSTAGRAM)
                                                 ).then(
                                                     async response =>{
-                                                        logsResponse(response.data);
+                                                        logsSave(response.data);
                                                         client.sendMessage(
                                                             msg.from, 
                                                             `${decrypted(clientData[i].CLIENT_ID)} ${response.data}`
@@ -1314,7 +1265,7 @@ client.on('message', async (msg) => {
                                 
                                 break;
                             case 'officialfollowers'://Collect Insta Followers
-                                logsResponse("Execute Insta Followers");            
+                                logsSave("Execute Insta Followers");            
                                 let arrayData = [];
                                 let countData = 0;    
                                 await clientData().then(
@@ -1329,7 +1280,7 @@ client.on('message', async (msg) => {
                                                     decrypted(clientData[i].INSTAGRAM)
                                                 ). then (
                                                     async response =>{
-                                                        logsResponse(response);
+                                                        logsSave(response);
                                                         await instaOffcialFollower(
                                                             decrypted(clientData[i].CLIENT_ID), 
                                                             decrypted(clientData[i].INSTAGRAM), 
@@ -1339,7 +1290,7 @@ client.on('message', async (msg) => {
                                                             response.data
                                                         ).then(
                                                             async response => {
-                                                                logsResponse(response.data);
+                                                                logsSave(response.data);
                                                             }
                                                         ).catch(
                                                             error => {
@@ -1385,10 +1336,10 @@ client.on('message', async (msg) => {
                                         restoreUserData(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsResponse(response);
+                                                logsSave(response);
                                             }
                                         ).catch (
-                                            error => logsResponse(error)
+                                            error => logsSave(error)
                                         );
                                     }
                                 }
@@ -1401,10 +1352,10 @@ client.on('message', async (msg) => {
                                         restoreInstaContent(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsResponse(response);
+                                                logsSave(response);
                                             }
                                         ).catch (
-                                            error => logsResponse(error)
+                                            error => logsSave(error)
                                         );
                                     }
                                 }
@@ -1417,10 +1368,10 @@ client.on('message', async (msg) => {
                                         restoreInstaLikes(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsResponse(response);
+                                                logsSave(response);
                                             }
                                         ).catch (
-                                            error => logsResponse(error)
+                                            error => logsSave(error)
                                         );
                                     }
                                 }
@@ -1433,10 +1384,10 @@ client.on('message', async (msg) => {
                                         restoreTiktokContent(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsResponse(response);
+                                                logsSave(response);
                                             }
                                         ).catch (
-                                            error => logsResponse(error)
+                                            error => logsSave(error)
                                         );
                                     }
                                 }
@@ -1449,10 +1400,10 @@ client.on('message', async (msg) => {
                                         restoreTiktokComments(decrypted(response[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsResponse(response);
+                                                logsSave(response);
                                             }
                                         ).catch (
-                                            error => logsResponse(error)
+                                            error => logsSave(error)
                                         );
                                     }
                                 }
@@ -1467,14 +1418,14 @@ client.on('message', async (msg) => {
                     switch (splittedMsg[1].toLowerCase()){
                         case "backupclientdata"://Backup Encrypted Client Data
                             clientDataBackup().then(
-                                response => logsResponse(response)
+                                response => logsSave(response)
                             ).catch (
                                 error => console.error(error)
                             );
                             break;
                         case "backupuserdata"://Backup Encrypted User Data
                             userDataBackup().then(
-                                response => logsResponse(response)
+                                response => logsSave(response)
                             ).catch (
                                 error => console.error(error)
                             );
@@ -1484,7 +1435,7 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await instaContentBackup(response[i]).then(
-                                            response => logsResponse(response)
+                                            response => logsSave(response)
                                         );
                                     }
                                 }
@@ -1498,7 +1449,7 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await tiktokContentBackup(response[i]).then(
-                                            response => logsResponse(response)
+                                            response => logsSave(response)
                                         ).catch(
                                             error => console.error(error)
                                         );
@@ -1512,7 +1463,7 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await instaLikesBackup(response[i]).then(
-                                            response => logsResponse(response)
+                                            response => logsSave(response)
                                         ).catch(
                                             error => console.error(error)
                                         );
@@ -1525,7 +1476,7 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await tiktokCommentsBackup(response[i]).then(
-                                            response => logsResponse(response)
+                                            response => logsSave(response)
                                         ).catch(
                                             error => console.error(error)
                                         );
@@ -1579,7 +1530,7 @@ client.on('message', async (msg) => {
                             
                             for (let i = 0; i < clientData.length; i++){
                                 if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
-                                    logsResponse("Request Code Doesn't Exist");
+                                    logsSave("Request Code Doesn't Exist");
                                     let responseData = await infoView(
                                         splittedMsg[0].toUpperCase()
                                     );
@@ -1598,7 +1549,7 @@ client.on('message', async (msg) => {
             //if(splittedMsg[1].toLowerCase()......
             } else {
                 const contact = await msg.getContact();
-                logsResponse(contact.number+" >>> "+msg.body);
+                logsSave(contact.number+" >>> "+msg.body);
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) { //Catching the Error Request

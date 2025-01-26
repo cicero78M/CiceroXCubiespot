@@ -2,9 +2,11 @@
 import { clientData } from '../../../json_data_file/client_data/read_client_data_from_json.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import {writeFileSync } from "fs";
-import { logsResponse } from '../../responselogs/response_view.js';
+import { logsResponse } from '../../responselogs/logs_modif.js';
 
 export async function setSecuid(clientValue) {
+
+    let data;
 
     return new Promise(async (resolve, reject) => {
         try {
@@ -15,12 +17,12 @@ export async function setSecuid(clientValue) {
             let responseInfo = await tiktokUserInfoAPI(tiktokAccount.replaceAll('@', ''));
             const secUid = await responseInfo.data.userInfo.user.secUid;
             const encryptedSecuid = encrypted(secUid)
-    
-            logsResponse(secUid);
-    
+        
             let isClient = false;
             clientData().then(
-                clientRows =>{
+                response =>{
+
+                    let clientRows = response.data;
     
                     for (let i = 0; i < clientRows.length; i++) {
                         if (decrypted(clientRows[i].CLIENT_ID) === clientName) {
@@ -31,40 +33,40 @@ export async function setSecuid(clientValue) {
                             writeFileSync(`json_data_file/client_data/client_data.json`, JSON.stringify(clientRows));
                             writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientRows[i]));
     
-                            let response = {
+                            data = {
                                 data: 'Secuid State with Tiktok Account : ' + tiktokAccount + ' set SECUID to : ' + secUid,
                                 state: true,
                                 code: 200
                             };
                 
-                            logsResponse('Return Success');
-
-                            resolve (response);
+                            resolve (data);
                         }
                     }
     
                     if (!isClient) {
-                        let responseData = {
+                        data = {
                             data: 'No Data with Client_ID : ' + clientName,
                             state: true,
                             code: 201
                         };
-                        logsResponse('Return Success');
-                        resolve (responseData);
+
+                        reject (data);
                     }    
                 }
-            )
+            ).catch(
+                error => reject (error)
+            );
     
         } catch (error) {
     
-            let responseData = {
-                data: 'Data Error',
+            data = {
+                data: error,
+                message: "Set Secuid Error",
                 state: false,
                 code: 303
             };
     
-            logsResponse(error);
-            reject (responseData);
+            reject (data);
         } 
     });
 }

@@ -1,4 +1,4 @@
-import { logsResponse } from "../../responselogs/response_view.js";
+import { logsResponse } from "../../responselogs/logs_modif.js";
 import { instaFollowersAPI } from "../../socialMediaAPI/insta_API.js";
 import { postInstaFollowersOfficial } from "./post_insta_official_follower.js";
 

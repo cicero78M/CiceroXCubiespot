@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'fs';
 import { decrypted, encrypted } from '../../json_data_file/crypto.js';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
+import { logsSave } from '../responselogs/logs_modif.js';
 
 export async function tiktokCommentsBackup(clientValue) {
   //Date Time
@@ -48,30 +49,30 @@ export async function tiktokCommentsBackup(clientValue) {
             for (let i = 0; i < shortcodeList.length; i++) {
               try {
 
-              let commentItems = [];
-              let decryptedComments = [];
-              let reEncryptedComments = [];
+                let commentItems = [];
+                let decryptedComments = [];
+                let reEncryptedComments = [];
 
-              commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+                commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
 
-              commentItems.forEach(element => {
-                if(!decryptedComments.includes(decrypted(element))){
-                  decryptedComments.push(decrypted(element));
-                  reEncryptedComments.push(element);                
-                }
-              });
+                commentItems.forEach(element => {
+                  if(!decryptedComments.includes(decrypted(element))){
+                    decryptedComments.push(decrypted(element));
+                    reEncryptedComments.push(element);                
+                  }
+                });
 
-              reEncryptedComments.unshift(encrypted(shortcodeList[i]));
+                reEncryptedComments.unshift(encrypted(shortcodeList[i]));
 
-              setTimeout(async () => {
-                console.log(reEncryptedComments.length);
-              }, 2000);
+                setTimeout(async () => {
+                  logsSave(reEncryptedComments.length);
+                }, 2000);
 
                 await sheetName.addRow(reEncryptedComments);
              
               } catch (error) {
 
-                console.log("No Data");
+                logsSave("No Data");
                 
               }
             }
@@ -106,6 +107,7 @@ export async function tiktokCommentsBackup(clientValue) {
       } catch (error) {
         data = {
           data: error,
+          message: "Tiktok Content Backup Error",
           state: false,
           code: 303
         };

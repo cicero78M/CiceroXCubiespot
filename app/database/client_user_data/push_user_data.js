@@ -6,18 +6,20 @@ export async function pushUserRes(clientName, sheetID) {
         try {
             await newRowsData(sheetID, clientName)
             .then(
-                async data =>{
+                async response =>{
                     let client = [];
+
+                    let responseList = response.data; 
                     
-                    for (let i = 0; i < data.length; i++){
+                    for (let i = 0; i < data.data.length; i++){
         
                         let userData = new Object();
     
-                        userData.ID_KEY =  encrypted(data[i].get("NRP"));
-                        userData.NAMA =  encrypted(data[i].get("NAMA"));
-                        userData.TITLE =  encrypted(data[i].get("PANGKAT"));
-                        userData.DIVISI =  encrypted(data[i].get("SATFUNG"));
-                        userData.JABATAN =  encrypted(data[i].get("JABATAN"));
+                        userData.ID_KEY =  encrypted(responseList[i].get("NRP"));
+                        userData.NAMA =  encrypted(responseList[i].get("NAMA"));
+                        userData.TITLE =  encrypted(responseList[i].get("PANGKAT"));
+                        userData.DIVISI =  encrypted(responseList[i].get("SATFUNG"));
+                        userData.JABATAN =  encrypted(responseList[i].get("JABATAN"));
                         userData.STATUS =  encrypted("TRUE");
                         userData.WHATSAPP =  encrypted("");
                         userData.INSTA =  encrypted("");
@@ -28,11 +30,24 @@ export async function pushUserRes(clientName, sheetID) {
                     };
 
                     writeFileSync(`json_data_file/user_data/${clientName}.json`, JSON.stringify(client));
-                    resolve (`${clientName} JSON Data Successfully Added.`);
+
+                    let data = {
+                        data: `${clientName} JSON Data Successfully Added.`,
+                        state: true,
+                        code: 200
+                    };
+          
+                    resolve (data);
                 }
             )
         } catch (error) {
-            reject (error);
+            let data = {
+                data: error,
+                message:"Push User Data Error",
+                state: false,
+                code: 303
+            };
+            reject (data);        
         } 
     });
 }
@@ -42,18 +57,20 @@ export async function pushUserCom(clientName, sheetID) {
         try {
             await newRowsData(sheetID, clientName)
             .then(
-                async data =>{
+                async response =>{
                     let client = [];
+
+                    let responseLiset = response.data;
                     
-                    for (let i = 0; i < data.length; i++){
+                    for (let i = 0; i < responseLiset.length; i++){
         
                         let userData = new Object();
     
-                        userData.ID_KEY =  encrypted(data[i].get("ID_KEY"));
-                        userData.NAMA =  encrypted(data[i].get("NAMA"));
-                        userData.TITLE =  encrypted(data[i].get("TITLE"));
-                        userData.DIVISI =  encrypted(data[i].get("DIVISI"));
-                        userData.JABATAN =  encrypted(data[i].get("JABATAN"));
+                        userData.ID_KEY =  encrypted(responseLiset[i].get("ID_KEY"));
+                        userData.NAMA =  encrypted(responseLiset[i].get("NAMA"));
+                        userData.TITLE =  encrypted(responseLiset[i].get("TITLE"));
+                        userData.DIVISI =  encrypted(responseLiset[i].get("DIVISI"));
+                        userData.JABATAN =  encrypted(responseLiset[i].get("JABATAN"));
                         userData.STATUS =  encrypted("TRUE");
                         userData.WHATSAPP =  encrypted("");
                         userData.INSTA =  encrypted("");
@@ -64,11 +81,22 @@ export async function pushUserCom(clientName, sheetID) {
                     };
 
                     writeFileSync(`json_data_file/user_data/${clientName}.json`, JSON.stringify(client));
-                    resolve (`${clientName} JSON Data Successfully Added.`);
-                }
+                    let data = {
+                        data: `${clientName} JSON Data Successfully Added.`,
+                        state: true,
+                        code: 200
+                    };
+          
+                    resolve (data);                }
             )
         } catch (error) {
-            reject (error);
-        } 
+            let data = {
+                data: error,
+                message:"Push User Data Error",
+                state: false,
+                code: 303
+              };
+              reject (data);        
+            } 
     });
 }

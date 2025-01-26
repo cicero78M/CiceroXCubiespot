@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { logsResponse } from "../responselogs/response_view.js";
+import { logsResponse } from "../responselogs/logs_modif.js";
 
 export async function detikScrapping() {   
     try {

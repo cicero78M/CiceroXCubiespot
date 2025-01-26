@@ -1,7 +1,7 @@
 import { client } from "../../app.js";
 import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { decrypted } from "../../json_data_file/crypto.js";
-import { logsResponse, sendResponseData } from "../responselogs/response_view.js";
+import { logsError, logsResponse, logsSend, sendResponseData } from "../responselogs/logs_modif.js";
 import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
 import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";
@@ -13,7 +13,7 @@ export async function schedullerAllSocmed(timeSwitch) {
 
     try {
         //Commit if schedule Working
-        sendResponseData(`Generate All Socmed Data Starting...`);
+        logsSend(`Generate All Socmed Data Starting...`);
         await clientData().then( 
             async clientData =>{
                 for (let i = 0; i < clientData.length; i++){
@@ -64,7 +64,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 sendResponseData(`Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
-                                            error => logsResponse(error)
+                                            error => logsError(error)
                                         );
                                         
                                         break;
@@ -100,7 +100,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                             }
                     
                         ).catch(
-                            error => logsResponse(error)
+                            error => logsError(error)
                         );
                     }         
 
@@ -108,7 +108,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        logsResponse(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
+                        logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
             
                         await client.sendMessage(
                             '6281235114745@c.us', 

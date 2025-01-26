@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'fs';
 import { decrypted, encrypted } from '../../json_data_file/crypto.js';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
+import { logsResponse } from '../responselogs/logs_modif.js';
 
 export async function instaLikesBackup(clientValue) {
 
@@ -69,7 +70,7 @@ const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
               reEncryptedLikes.unshift(encrypted(shortcodeList[i]));
               
               setTimeout(async () => {
-                console.log(reEncryptedLikes.length);
+                logsResponse(reEncryptedLikes.length);
               }, 2000);
 
               await sheetName.addRow(reEncryptedLikes);
@@ -109,6 +110,7 @@ const sheetName = sheetDoc.sheetsByTitle[`${clientName}_BACKUP`];
       } catch (error) {
         data = {
           data: error,
+          message:"Insta Likes Backup Error",
           state: false,
           code: 303
         };

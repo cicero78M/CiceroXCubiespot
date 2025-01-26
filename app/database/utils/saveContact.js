@@ -13,65 +13,84 @@ const googleAuth = new JWT({
 
 export async function saveContacts() {
 
-    try {
+    return new Promise(async (resolve, reject) => {
 
-        let whatsappList = ['',];
-        let contactData = [];
-        let contactList = [];
-
-        await newRowsData(process.env.waContact, 'CONTACT').then(
-            contactRows =>{
-                for (let i = 0; i < contactRows.length; i++){                    
-                    if(!contactList.includes(contactRows[i].get('MOBILE PHONE'))){ 
-                        contactList.push(contactRows[i].get('MOBILE PHONE'));
+        try {
+            let data;
+    
+            let whatsappList = ['',];
+            let contactData = [];
+            let contactList = [];
+    
+            await newRowsData(process.env.waContact, 'CONTACT').then(
+                response =>{
+                    let contactRows = response.data;
+                    for (let i = 0; i < contactRows.length; i++){                    
+                        if(!contactList.includes(contactRows[i].get('MOBILE PHONE'))){ 
+                            contactList.push(contactRows[i].get('MOBILE PHONE'));
+                        }
                     }
                 }
-            }
-        )
-
-
-        await newRowsData(process.env.clientDataID, 'ClientData').then(
+            );
+    
+    
+            await newRowsData(process.env.clientDataID, 'ClientData').then(
+                
+                async response =>{
+    
+                    let clientRows = response.data
+                    if (clientRows.length >= 1){
+                        
+                        for (let i = 0; i < clientRows.length; i++){
+                            console.log(clientRows[i].get('CLIENT_ID'));
             
-            async clientRows =>{
-                if (clientRows.length >= 1){
-                    
-                    for (let i = 0; i < clientRows.length; i++){
-                        console.log(clientRows[i].get('CLIENT_ID'));
-        
-                        await newRowsData(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID')).then(
-                            async userRows => {
-
-                                for (let ii = 0; ii < userRows.length; ii++){
-                                    clientRows[i].get('OPERATOR')
-                                    if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') 
-                                        || Number(userRows[ii].get('WHATSAPP')) != NaN ){
-                                        if(!whatsappList.includes(userRows[ii].get('WHATSAPP') )){ 
-                                            whatsappList.push(userRows[ii].get('WHATSAPP'));
-                                            contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
+                            await newRowsData(ciceroKey.dbKey.userDataID, clientRows[i].get('CLIENT_ID')).then(
+                                async response => {
+                                    let userRows = response.data;
+                                    for (let ii = 0; ii < userRows.length; ii++){
+                                        clientRows[i].get('OPERATOR')
+                                        if(userRows[ii].get('WHATSAPP') != clientRows[i].get('OPERATOR') 
+                                            || Number(userRows[ii].get('WHATSAPP')) != NaN ){
+                                            if(!whatsappList.includes(userRows[ii].get('WHATSAPP') )){ 
+                                                whatsappList.push(userRows[ii].get('WHATSAPP'));
+                                                contactData.push({'FIRST NAME': userRows[ii].get('NAMA').toUpperCase(), 'LAST NAME' : '',EMAIL : '', 'MOBILE PHONE': userRows[ii].get('WHATSAPP'), COMPANY:  clientRows[i].get('CLIENT_ID')});
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        )                
-                    }
-
-                    const waContactDoc = new GoogleSpreadsheet(
-                        process.env.waContact, 
-                        googleAuth
-                    ); //Google Auth
-                    
-                    await waContactDoc.loadInfo(); 
-                    const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
-                    waSheet.addRows(contactData);
-            
-                    return 'SUCCESS!!!!';
-
-                }    
-            }
-        )
-
-
-    } catch (error) {
-        console.log(error);
-    }
+                            )                
+                        }
+    
+                        const waContactDoc = new GoogleSpreadsheet(
+                            process.env.waContact, 
+                            googleAuth
+                        ); //Google Auth
+                        
+                        await waContactDoc.loadInfo(); 
+                        const waSheet = waContactDoc.sheetsByTitle['CONTACT'];
+                        waSheet.addRows(contactData);
+                
+                        data = {
+                            data: "Success Save Contact Data",
+                            state: true,
+                            code: 200
+                        };      
+    
+                        resolve (data);  
+                    }    
+                }
+            );
+    
+    
+        } catch (error) {
+            data = {
+                data: error,
+                message:"Contact Save Error",
+                state: false,
+                code: 303
+            };
+            reject (data);  
+        }
+        
+    });
 }
