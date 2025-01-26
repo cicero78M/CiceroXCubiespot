@@ -344,13 +344,8 @@ client.on('message', async (msg) => {
                                             error => logsError(error)
                                         );    
                                                                 
-                                    }  else {
-                                        
-                                        logsSave('Bukan Spreadsheet Links');
-                                        client.sendMessage(
-                                            msg.from, 
-                                            'Bukan Spreadsheet Links'
-                                        );
+                                    }  else {                                       
+                                        logsSend('Bukan Spreadsheet Links');
                                     }
                                 }
                                     break;
@@ -367,10 +362,10 @@ client.on('message', async (msg) => {
         
                                         if (slicedData[slicedData.length-1].includes('edit')){
                                             sheetID = slicedData[slicedData.length-2];
-                                            logsSave(sheetID);
+                                            logsSend(sheetID);
                                         } else {
                                             sheetID = slicedData[slicedData.length-1];
-                                            logsSave(sheetID);
+                                            logsSend(sheetID);
                                         }
         
                                         await pushUserCom(splittedMsg[0], sheetID).then(
@@ -587,45 +582,41 @@ client.on('message', async (msg) => {
                                             break;
                                         case "deleteuser"://Delete Existing Data User
                                             //clientName#deleteuser#id_key/NRP#newdata
-                                            responseData = await editProfile(
+                                            await editProfile(
                                                 splittedMsg[0].toUpperCase(), 
                                                 splittedMsg[2].toLowerCase(), 
                                                 false, 
                                                 msg.from.replace('@c.us', ''),
                                                     "STATUS"
+                                                ).then(
+                                                    response => logsUserSend(msg.from, response.data)
+                                                ).catch(
+                                                    error => logsUserError(msg.from, error)
                                                 );
-    
-                                            sendResponse(
-                                                msg.from, 
-                                                responseData, 
-                                                "Error Delete User Data"
-                                            );
                                             break;
                                         case "instacheck"://Insta Username Checking Data User Not Updated
                                             //ClientName#instacheck
                                             responseData = await usernameAbsensi(
                                                 splittedMsg[0].toUpperCase(), 
                                                 'INSTA'
+                                            ).then(
+                                                response => logsUserSend(msg.from, response.data)
+                                            ).catch(
+                                                error => logsUserError(msg.from, error)
                                             );
-                                                                                    
-                                            sendResponse(
-                                                msg.from, 
-                                                responseData, 
-                                                "Error on Insta Check Data"
-                                            );
+                                              
                                             break;
                                         case "tiktokcheck"://Tiktok Checking Data User Not Updated
                                             //ClientName#tiktokcheck
-                                            responseData = await usernameAbsensi(
+                                            await usernameAbsensi(
                                                 splittedMsg[0].toUpperCase(), 
                                                 'TIKTOK'
+                                            ).then(
+                                                response => logsUserSend(msg.from, response.data)
+                                            ).catch(
+                                                error => logsUserError(msg.from, error)
                                             );
                                             
-                                            sendResponse(
-                                                msg.from, 
-                                                responseData, 
-                                                "Error on Tiktok Check Data"
-                                            );
                                             break;
                                         default:
                                             break;
@@ -664,43 +655,20 @@ client.on('message', async (msg) => {
                                                 instaUsername, 
                                                 contact.number, 
                                                 "INSTA"
-
                                             ).then(
-
                                                 response => {
-                                                    client.sendMessage(msg.from, response.data);
+                                                    logsUserSend(msg.from, response.data);
                                                 }
-
                                             ).catch(
-
-                                                response => {
-                                                    if (response.code === 201){
-                                                        client.sendMessage(msg.from, response.data);
-                                                    } else {
-                                                        client.sendMessage(msg.from, "Error");
-                                                    }
-                                                }
-
+                                                error => logsUserError(msg.from, error)
                                             );
 
                                         } else {
-
-                                            logsSave('Bukan Link Profile Instagram');
-                                            client.sendMessage(
-                                                msg.from, 
-                                                'Bukan Link Profile Instagram'
-                                            );
-
+                                            logsUserSend(msg.from, 'Bukan Link Profile Instagram');
                                         }
 
                                     } else {
-
-                                        logsSave('Bukan Link Instagram');
-                                        client.sendMessage(
-                                            msg.from, 
-                                            'Bukan Link Instagram'
-                                        );
-
+                                        logsUserSend(msg.from, 'Bukan Link Instagram');
                                     }
 
                                 } else if (updatetiktok.includes(splittedMsg[1].toLowerCase())) {
@@ -711,90 +679,89 @@ client.on('message', async (msg) => {
                                         const tiktokLink = splittedMsg[3].split('?')[0];
                                         const tiktokUsername = tiktokLink.split('/').pop();  
                                         
-                                        let responseData = await updateUsername(
+                                        await updateUsername(
                                             splittedMsg[0].toUpperCase(), 
                                             splittedMsg[2], 
                                             tiktokUsername, 
                                             contact.number, 
                                             "TIKTOK"
-                                        );
-                                        
-                                        sendResponse(
-                                            msg.from, 
-                                            responseData, 
-                                            "Error Update Tiktok"
+                                        ).then(
+                                            response => {
+                                                logsUserSend(msg.from, response.data);
+                                            }
+                                        ).catch(
+                                            error => logsUserError(msg.from, error)
                                         );
 
                                     } else {
-                                        logsSend('Bukan Link Profile Tiktok');
+                                        logsUserSend(msg.from, 'Bukan Link Profile Tiktok');
                                      
                                     }
 
                                 } else if (updatedivisi.includes(splittedMsg[1].toLowerCase())) {
                                     //update Divisi Name
                                     //clientName#editdivisi/satfung#id_key/NRP#newdata
-                                    let responseData = await editProfile(
+                                    await editProfile(
                                         splittedMsg[0].toUpperCase(),
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
                                         "DIVISI"
-                                    );
-
-                                    sendResponse(
-                                        msg.from, 
-                                        responseData, 
-                                        "Error Edit Satfung"
-                                    );
+                                    ).then(
+                                            response => {
+                                                logsUserSend(msg.from, response.data);
+                                            }
+                                        ).catch(
+                                            error => logsUserError(msg.from, error)
+                                        );
 
                                 } else if (editjabatan.includes(splittedMsg[1].toLowerCase())) {
                                     //Update Jabatan
                                     //clientName#editjabatan/jabatan#id_key/NRP#newdata
-                                    let responseData = await editProfile(
+                                    await editProfile(
                                         splittedMsg[0].toUpperCase(),
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
                                         "JABATAN"
-                                    );
-                                    
-                                    sendResponse(
-                                        msg.from, 
-                                        responseData, 
-                                        "Error Edit Jabatan"
-                                    );
+                                    ).then(
+                                            response => {
+                                                logsUserSend(msg.from, response.data);
+                                            }
+                                        ).catch(
+                                            error => logsUserError(msg.from, error)
+                                        );
 
                                 } else if (editnama.includes(splittedMsg[1].toLowerCase())) {
                                     //clientName#editnama/nama#id_key/NRP#newdata
-                                    let responseData = await editProfile(
+                                    await editProfile(
                                         splittedMsg[0].toUpperCase(),
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
                                         "NAMA"
-                                    );
-                                    
-                                    sendResponse(
-                                        msg.from, 
-                                        responseData, 
-                                        "Error Edit Nama"
-                                    );
-
+                                    ).then(
+                                            response => {
+                                                logsUserSend(msg.from, response.data);
+                                            }
+                                        ).catch(
+                                            error => logsUserError(msg.from, error)
+                                        );
                                 } else if (edittitle.includes(splittedMsg[1].toLowerCase())) {
                                     //clientName#editnama/nama#id_key/NRP#newdata
-                                    let responseData = await editProfile(
+                                    await editProfile(
                                         splittedMsg[0].toUpperCase(),
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
                                         "TITLE"
-                                    );
-                                    
-                                    sendResponse(
-                                        msg.from, 
-                                        responseData, 
-                                        "Error Edit Pangkat"
-                                    );
+                                    ).then(
+                                            response => {
+                                                logsUserSend(msg.from, response.data);
+                                            }
+                                        ).catch(
+                                            error => logsUserError(msg.from, error)
+                                        );
 
                                 } else if (splittedMsg[1].toLowerCase() === 'mydata') {
                                     await myData(
@@ -807,19 +774,20 @@ client.on('message', async (msg) => {
                                     )
 
                                 } else if (splittedMsg[1].toLowerCase() === 'whatsapp') {
-                                    let responseData = await editProfile(
+                                    await editProfile(
                                         splittedMsg[0].toUpperCase(),
                                         splittedMsg[2].toLowerCase(), 
                                         msg.from.replace('@c.us', ''), 
                                         msg.from.replace('@c.us', ''), 
                                         "WHATSAPPP"
-                                    );
+                                    ).then(
+                                            response => {
+                                                logsUserSend(msg.from, response.data);
+                                            }
+                                        ).catch(
+                                            error => logsUserError(msg.from, error)
+                                        );
                                     
-                                    sendResponse(
-                                        msg.from, 
-                                        responseData, 
-                                        "Error Edit Nama"
-                                    );
                                 } 
                             }
                         }
@@ -839,24 +807,27 @@ client.on('message', async (msg) => {
                                             setTimeout(() => {
                                                 logsSave("Collecting Client Data");
                                             }, 1000);
-                                            client.sendMessage(msg.from, responseData.data);
+                                            logsUserSend(responseData)
                                             break;
                                         case 'divisilist'://Divisi List Request                        
-                                            responseData = await propertiesView(
+                                            await propertiesView(
                                                 splittedMsg[0].toUpperCase(), 
                                                 "DIVISI"
+                                            ).then(
+                                                response => logsUserSend(response.data)
+                                            ).catch(
+                                                error => logsUserError(error)
                                             );
-                                            client.sendMessage(
-                                                msg.from, 
-                                                responseData.data
-                                            );  
                                             break;
                                         case 'titlelist'://Title List Request
-                                            responseData = await propertiesView(splittedMsg[0].toUpperCase(), "TITLE");
-                                            setTimeout(() => {
-                                                logsSave("Collecting User Data");
-                                            }, 1000);
-                                            client.sendMessage(msg.from, responseData.data); 
+                                            await propertiesView(
+                                                splittedMsg[0].toUpperCase(), 
+                                                "TITLE"
+                                            ).then(
+                                                response => logsUserSend(response.data)
+                                            ).catch(
+                                                error => logsUserError(error)
+                                            );
                                             break;
                                         default:
                                             break;
@@ -1280,7 +1251,7 @@ client.on('message', async (msg) => {
                                         restoreUserData(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsSend(response);
+                                                logsSend(response.data);
                                             }
                                         ).catch (
                                             error => logsError(error)
@@ -1299,10 +1270,10 @@ client.on('message', async (msg) => {
                                         restoreInstaContent(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsSave(response);
+                                                logsSend(response.data);
                                             }
                                         ).catch (
-                                            error => logsSave(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
@@ -1312,15 +1283,14 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     let clientData = response.data;
-
                                     for (let i = 0; i < clientData.length;i++){
                                         restoreInstaLikes(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsSave(response);
+                                                logsSend(response.data);
                                             }
                                         ).catch (
-                                            error => logsSave(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
@@ -1330,15 +1300,14 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     let clientData = response.data;
-
                                     for (let i = 0; i < clientData.length;i++){
                                         restoreTiktokContent(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsSave(response);
+                                                logsSend(response.data);
                                             }
                                         ).catch (
-                                            error => logsSave(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
@@ -1348,15 +1317,14 @@ client.on('message', async (msg) => {
                             clientData().then(
                                 async response =>{
                                     let clientData = response.data;
-
                                     for (let i = 0; i < clientData.length;i++){
                                         restoreTiktokComments(decrypted(clientData[i].CLIENT_ID))
                                         .then(
                                             response => {
-                                                logsSave(response);
+                                                logsSend(response.error);
                                             }
                                         ).catch (
-                                            error => logsSave(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
@@ -1371,14 +1339,14 @@ client.on('message', async (msg) => {
                     switch (splittedMsg[1].toLowerCase()){
                         case "backupclientdata"://Backup Encrypted Client Data
                             clientDataBackup().then(
-                                response => logsSave(response.data)
+                                response => logsSend(response.data)
                             ).catch (
-                                error => console.error(error)
+                                error => logsError(error)
                             );
                             break;
                         case "backupuserdata"://Backup Encrypted User Data
                             userDataBackup().then(
-                                response => logsSave(response.data)
+                                response => logsSend(response.data)
                             ).catch (
                                 error => logsError(error)
                             );
@@ -1388,7 +1356,7 @@ client.on('message', async (msg) => {
                                 async response =>{
                                     for (let i = 0; i < response.length; i++){
                                         await instaContentBackup(response[i]).then(
-                                            response => logsSend(response)
+                                            response => logsSend(response.data)
                                         );
                                     }
                                 }
@@ -1400,9 +1368,10 @@ client.on('message', async (msg) => {
                         case "backuptiktokcontent"://Backup Encrypted Tiktok Content Data
                             await clientData().then(
                                 async response =>{
+                                    let clientData = response.data;
                                     for (let i = 0; i < response.length; i++){
-                                        await tiktokContentBackup(response[i]).then(
-                                            response => logsSend(response)
+                                        await tiktokContentBackup(clientData[i]).then(
+                                            response => logsSend(response.data)
                                         ).catch(
                                             error => logsError(error)
                                         );
@@ -1414,11 +1383,12 @@ client.on('message', async (msg) => {
                         case "backupinstalikes"://Backup Encrypted Insta Likes Username Data
                             await clientData().then(
                                 async response =>{
-                                    for (let i = 0; i < response.length; i++){
-                                        await instaLikesBackup(response[i]).then(
-                                            response => logsSave(response)
+                                    let clientData = response.data;
+                                    for (let i = 0; i < clientData.length; i++){
+                                        await instaLikesBackup(clientData[i]).then(
+                                            response => logsSend(response.data)
                                         ).catch(
-                                            error => console.error(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
@@ -1427,16 +1397,17 @@ client.on('message', async (msg) => {
                         case "backuptiktokcomments"://Backup Encrypted Tiktok Comments Username Data
                             await clientData().then(
                                 async response =>{
-                                    for (let i = 0; i < response.length; i++){
-                                        await tiktokCommentsBackup(response[i]).then(
-                                            response => logsSave(response)
+                                    let clientData = response.data;
+                                    for (let i = 0; i < clientData.length; i++){
+                                        await tiktokCommentsBackup(clientData[i]).then(
+                                            response => logsSend(response.data)
                                         ).catch(
-                                            error => console.error(error)
+                                            error => logsError(error)
                                         );
                                     }
                                 }
                             ).catch (
-                                error => console.error(error)
+                                error => logsError(error)
                             );
 
                             break;     
@@ -1444,29 +1415,26 @@ client.on('message', async (msg) => {
                             break;
                     }
                 } else if( detikCom.includes(splittedMsg[1].toLowerCase())){
-                    detikScrapping();
                 } else if( dataManagement.includes(splittedMsg[1].toLowerCase())){
                     if (msg.from === '6281235114745@c.us') {
                         switch (splittedMsg[1].toLowerCase()) {
                             case "clientdataview":{
                                 await clientData().then(
                                     async response =>{
-                                        for (let i = 0; i < response.length; i++){
-                                            await clientDataView(response[i]).then(
+                                        let clientData = response.data;
+
+                                        for (let i = 0; i < clientData.length; i++){
+                                            await clientDataView(clientData[i]).then(
                                                 response => {
-                                                    sendResponse(
-                                                        msg.from, 
-                                                        response, 
-                                                        "Error Handling Client Data"
-                                                    );
+                                                    logsSend(response.data)
                                                 }
                                             ).catch(
-                                                error => console.error(error)
+                                                error => logsError(error)
                                             );
                                         }
                                     }
                                 ).catch (
-                                    error => console.error(error)
+                                    error => logsError(error)
                                 );
                             }
                                 
@@ -1479,8 +1447,10 @@ client.on('message', async (msg) => {
                 } else {//Key Order Data Not Exist         
 
                     await clientData().then(
-                        async clientData => {
+                        async response => {
                             
+                            let clientData = response.data;
+
                             for (let i = 0; i < clientData.length; i++){
                                 if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     logsSave("Request Code Doesn't Exist");
@@ -1496,7 +1466,7 @@ client.on('message', async (msg) => {
                             }
                         }
                     ).catch (
-                        error => console.error(error)
+                        error => logsError(error)
                     )
                 }
             //if(splittedMsg[1].toLowerCase()......
