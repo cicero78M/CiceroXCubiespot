@@ -22,7 +22,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        sendResponseData(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
+                        logsSave(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
                         await getTiktokPost(
                             clientData[i]
@@ -61,7 +61,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     default:
                                                         break;
                                                 }                   
-                                                sendResponseData(`Report TIKTOK SUCCESS!!!`);
+                                                logsSave(`Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
                                             error => logsError(error)
@@ -137,7 +137,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             clientData[i]
                                         ).then(
                                             async instaLikesData => {                                              
-                                                sendResponseData(instaLikesData.data); 
+                                                logsSave(instaLikesData.data); 
                                                 await newReportInsta(
                                                     clientData[i]
                                                 ).then(
@@ -164,7 +164,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 break;
                                                         }
 
-                                                        sendResponseData("Report Insta SUCCESS!!!");
+                                                        logsSave("Report Insta SUCCESS!!!");
                                                     }
 
                                                 ).catch(
