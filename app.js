@@ -999,6 +999,8 @@ client.on('message', async (msg) => {
                                     async response =>{
                                         let clientData = response.data;
                                         for (let i = 0; i < clientData.length; i++){
+                                            logsSave(clientData[i])
+
                                             if (decrypted(clientData[i].STATUS) === "TRUE" 
                                             && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                                             && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
