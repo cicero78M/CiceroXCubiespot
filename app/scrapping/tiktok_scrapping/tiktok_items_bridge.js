@@ -1,14 +1,13 @@
 import { client } from "../../../app.js";
 import { decrypted } from "../../../json_data_file/crypto.js";
 import { newReportTiktok } from "../../reporting/tiktok_report.js";
-import { logsSave } from "../../responselogs/logs_modif.js";
+import { logsSend } from "../../responselogs/logs_modif.js";
 import { getTiktokComments } from "./generate_tiktok_comments.js";
 import { postTiktokUserComments } from "./post_username_comment_tiktok_data.js";
 
 export async function tiktokItemsBridges(clientValue, items) {
 
-    logsSave("Execute Tiktok Bridging");
-    client.sendMessage('6281235114745@c.us', "Execute Tiktok Bridging");
+    logsSend("Execute Tiktok Bridging");
 
     return new Promise(async (resolve, reject) => {
         try {        

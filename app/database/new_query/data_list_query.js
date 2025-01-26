@@ -6,14 +6,10 @@ export async function newListValueData( clientName, keyValue) {
     let data;
     return new Promise(
         async (resolve, reject) => {
-
             let listValue = [];
-        
             await readUser(clientName).then(
                 response =>{
-
                     let userData = response.data;
-                    
                     for (let i = 0; i < userData.length; i++) {            
                         
                         if (!listValue.includes(userData[i][keyValue])){

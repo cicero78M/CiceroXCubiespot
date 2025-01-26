@@ -1,11 +1,9 @@
-import { client } from "../../../app.js";
-import { logsSave} from "../../responselogs/logs_modif.js";
+import { logsSave, logsSend} from "../../responselogs/logs_modif.js";
 import { tiktokCommentAPI } from "../../socialMediaAPI/tiktok_API.js";
 
 export async function getTiktokComments(items) {
 
-    logsSave('Execute Generate Tiktok Comments');
-    client.sendMessage('6281235114745@c.us', "Execute Generate Tiktok Comments");
+    logsSend('Execute Generate Tiktok Comments');
 
     let cursorNumber = 0;
     let switchPoint = 0;
@@ -24,8 +22,6 @@ export async function getTiktokComments(items) {
             await tiktokCommentAPI(items, cursorNumber).then ( async response =>{
 
                 const total = response.data.total+100;
-                logsSave(total);
-
                 let commentItems = response.data.comments;
     
                 for (let ii = 0; ii < commentItems.length; ii++) {
@@ -39,7 +35,7 @@ export async function getTiktokComments(items) {
     
                 if (response.data.has_more === 1){    
                     setTimeout(async() => {
-                        logsSave('next data normal '+response.data.cursor);
+                        logsSave('next data normal '+response.data.cursor +" >>> "+total);
                         await forLoopGetComments(items, response.data.cursor);
 
                     }, 1100);
@@ -66,7 +62,7 @@ export async function getTiktokComments(items) {
                         if(total > 400){
                             if (dataUser != 0){
                                 setTimeout(async () => {
-                                    logsSave('next data not equals zero '+response.data.cursor);
+                                    logsSave('next data not equals zero '+response.data.cursor+" >>> "+total);
                                     await forLoopGetComments(items, response.data.cursor);
 
                                 }, 1100);
@@ -81,7 +77,7 @@ export async function getTiktokComments(items) {
                             }
                         } else {
                             setTimeout(async () => {
-                                logsSave('next data over 400 '+response.data.cursor);
+                                logsSave('next data over 400 '+response.data.cursor+" >>>" +total);
                                 await forLoopGetComments(items, response.data.cursor);
 
                             }, 1100); 

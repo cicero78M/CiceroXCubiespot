@@ -37,8 +37,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                         ).then(
                                             async response =>{
                                                 switch (timeSwitch){
-                                                    case 'report':
-                                    
+                                                    case 'report':                       
                                                         await sendClientResponse(
                                                             decrypted(clientData[i].CLIENT_ID), 
                                                             decrypted(clientData[i].SUPERVISOR),
@@ -47,7 +46,6 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                             response, 
                                                             'REPORT TIKTOK'
                                                         );                                            
-                                    
                                                         break;
                                 
                                                     case 'routine':
@@ -120,8 +118,9 @@ export async function schedullerAllSocmed(timeSwitch) {
                                         break; 
 
                                     default:
+                                        logsSave(response.data)
                                         await getInstaLikes(
-                                            instaPostData.data, 
+                                            response.data, 
                                             clientData[i]
                                         ).then(
                                             async response => {                                              
