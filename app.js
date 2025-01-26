@@ -1005,7 +1005,7 @@ client.on('message', async (msg) => {
                                                 logsSave(decrypted(clientData[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
                             
                                                 await newReportTiktok(
-                                                    response[i]
+                                                    clientData[i]
                                                 ).then(
                                                     response => { logsSend(response)
                                                 }).catch( error => logsError (error));
