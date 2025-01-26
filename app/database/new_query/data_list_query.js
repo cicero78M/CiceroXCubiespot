@@ -9,12 +9,14 @@ export async function newListValueData( clientName, keyValue) {
             let listValue = [];
         
             await readUser(clientName).then(
-            data =>{
+                response =>{
+
+                    let userData = response.data
                     
-                    for (let i = 0; i < data.length; i++) {            
+                    for (let i = 0; i < userData.length; i++) {            
                         
-                        if (!listValue.includes(data[i][keyValue])){
-                            listValue.push(data[i][keyValue]); 
+                        if (!listValue.includes(userData[i][keyValue])){
+                            listValue.push(userData[i][keyValue]); 
 
                         }
                         
