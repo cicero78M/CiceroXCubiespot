@@ -1169,53 +1169,34 @@ client.on('message', async (msg) => {
                                 logsSave("Execute New Report Insta ")
                                 await clientData().then( 
                                     async response =>{
-                                        for (let i = 0; i < response.length; i++){
-                                            if (decrypted(response[i].STATUS) === "TRUE" 
-                                            && decrypted(response[i].INSTA_STATE) === "TRUE" 
-                                            && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsSave(decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA');
+                                        let clientData = response.data;
+                                        
+                                        for (let i = 0; i < clientData.length; i++){
+                                            if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                            && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
+                                            && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                logsSave(decrypted(clientData[i].CLIENT_ID)+' START REPORT INSTA DATA');
                                                 client.sendMessage(
                                                     '6281235114745@c.us', 
-                                                    decrypted(response[i].CLIENT_ID)+' START REPORT INSTA DATA'
+                                                    decrypted(clientData[i].CLIENT_ID)+' START REPORT INSTA DATA'
                                                 );
                                                 
                                                 await newReportInsta(
-                                                    response[i]
+                                                    clientData[i]
                                                 ).then(
-                                                    async data => {
+                                                    async response => {
                                                         await client.sendMessage(
                                                             msg.from, 
-                                                            data.data
+                                                            response.data
                                                         );
                                                 }).catch(                
-                                                    async data => {
-                                                        switch (data.code) {
-                                                            case 303:
-                                                                logsSave(data.data);
-                                                                await client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(response[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
-                                                                );
-                                                                break;
-    
-                                                            default:
-                                                                await client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(response[i].CLIENT_ID)+' '+data.data
-                                                                );
-                                                                break;
-                                                        }
+                                                    async error => { logsError(error)
+  
                                                 });
                                             }           
                                         }
                                 }). catch (
-                                    async error =>{
-                                        console.error(error);
-                                        await client.sendMessage(
-                                            '6281235114745@c.us', 
-                                            'Error on New Report Insta'
-                                        );
-                                    }
+                                    async error => { logsError(error)}
                                 )
                                 break
                             case 'instainfo'://Collect Insta Info
