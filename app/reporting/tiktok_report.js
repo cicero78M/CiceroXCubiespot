@@ -1,11 +1,12 @@
 import { newListValueData } from '../database/new_query/data_list_query.js';
-import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from 'fs';
 import { logsSave } from '../responselogs/logs_modif.js';
   
 export async function newReportTiktok(clientValue) {
+
+    logsSave(clientValue)
 
     return new Promise(
         async (resolve, reject) => {
