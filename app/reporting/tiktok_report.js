@@ -3,6 +3,7 @@ import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from 'fs';
+import { logsSave } from '../responselogs/logs_modif.js';
   
 export async function newReportTiktok(clientValue) {
 
@@ -10,12 +11,7 @@ export async function newReportTiktok(clientValue) {
         async (resolve, reject) => {
         
             try {
-
-                client.sendMessage(
-                    '6281235114745@c.us', 
-                    "Execute Report Tiktok"
-                );
-            
+                logsSave("Execute Report Tiktok")            
                 //Date Time
                 let d = new Date();
                 let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -50,14 +46,16 @@ export async function newReportTiktok(clientValue) {
                         clientName, 
                         'DIVISI'
                     ).then(
-                        response => divisiList = response
+                        response => divisiList = response.data
+                    ).catch(
+                        error => reject(error)
                     )
 
                     await readUser(
                         clientName
                     ).then( 
                         response => {    
-                            userRows = response;                           
+                            userRows = response.data;                           
                     
                             for (let i = 0; i < response.length; i++) {
                                 if (response[i].STATUS === 'TRUE' ){
@@ -65,21 +63,16 @@ export async function newReportTiktok(clientValue) {
                                 }
                             } 
                         }
-                    );
+                    ).catch( error => reject(error))
                     
                     let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
                         let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
-                        // logsResponse(contentItems);
 
                         let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                         let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-
-                        // logsResponse(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-                        // logsResponse(localDate);
-
 
                         if ( dateNow === localDate) {
 

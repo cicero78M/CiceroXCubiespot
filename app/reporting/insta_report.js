@@ -46,7 +46,6 @@ export async function newReportInsta(clientValue) {
           'DIVISI'
         ).then(
           async response =>{
-            logsSave(response.data)
             divisiList = await response.data;
           }
         ).catch(

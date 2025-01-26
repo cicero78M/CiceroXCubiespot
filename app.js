@@ -997,40 +997,19 @@ client.on('message', async (msg) => {
                                 logsSave("Execute New Report Tiktok ")
                                 await clientData().then( 
                                     async response =>{
-                                        for (let i = 0; i < response.length; i++){
-                                            if (decrypted(response[i].STATUS) === "TRUE" 
-                                            && decrypted(response[i].TIKTOK_STATE) === "TRUE" 
-                                            && decrypted(response[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsSave(decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
-                                                client.sendMessage(
-                                                    '6281235114745@c.us', 
-                                                    decrypted(response[i].CLIENT_ID)+' START REPORT TIKTOK DATA'
-                                                );
+                                        let clientData = response.data;
+                                        for (let i = 0; i < clientData.length; i++){
+                                            if (decrypted(clientData[i].STATUS) === "TRUE" 
+                                            && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
+                                            && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                logsSave(decrypted(clientData[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
+                            
                                                 await newReportTiktok(
                                                     response[i]
                                                 ).then(
-                                                    data => {
-                                                        client.sendMessage(
-                                                            msg.from, data.data
-                                                        );
-                                                }).catch(                
-                                                    data => {
-                                                        switch (data.code) {
-                                                            case 303:
-                                                                logsSave(data.data);
-                                                                client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(response[i].CLIENT_ID)+' ERROR REPORT TIKTOK POST'
-                                                                );
-                                                                break;
-                                                            default:
-                                                                client.sendMessage(
-                                                                    '6281235114745@c.us',
-                                                                    decrypted(response[i].CLIENT_ID)+' '+data.data
-                                                                );
-                                                                break;
-                                                        }
-                                                });
+                                                    response => { logsSend(response)
+                                                }).catch( error => logsError (error)            
+                                                     );
                                             }           
                                         }
                                 }). catch (
