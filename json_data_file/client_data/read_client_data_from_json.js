@@ -1,5 +1,5 @@
 import { readFileSync  } from "fs";
-import { logsSave } from "../../app/responselogs/logs_modif";
+import { logsSave } from "../../app/responselogs/logs_modif.js";
 
 export async function clientData() {    
 
