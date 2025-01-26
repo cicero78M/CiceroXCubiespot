@@ -72,7 +72,7 @@ const private_key = process.env;
 const port = private_key.EXPRESS_PORT;
 
 app.listen(port, () => {
-    logsSave(`Cicero System Start listening on port >>> ${port}`)
+    console.log(`Cicero System Start listening on port >>> ${port}`)
 });
 
 // WWEB JS Client Constructor
@@ -83,7 +83,7 @@ export const client = new Client({
 });
 
 // On WWEB Client Initializing
-logsSend('System Initializing...');
+console.log('System Initializing...');
 client.initialize();
 
 // On WWeB Authenticate Checking
