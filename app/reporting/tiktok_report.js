@@ -54,8 +54,10 @@ export async function newReportTiktok(clientValue) {
                         clientName
                     ).then( 
                         response => {    
+                            logsSave(response.data)
+
                             let userRows = response.data;                           
-                    
+
                             for (let i = 0; i < userRows.length; i++) {
                                 if (userRows[i].STATUS === 'TRUE' ){
                                     userAll++;
