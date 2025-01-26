@@ -109,7 +109,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                             async response =>{
                                 switch (response.code){
                                     case 201:
-                                        await bsendClientResponse(
+                                        await sendClientResponse(
                                             decrypted(clientData[i].CLIENT_ID), 
                                             decrypted(clientData[i].SUPERVISOR),
                                             decrypted(clientData[i].OPERATOR),
