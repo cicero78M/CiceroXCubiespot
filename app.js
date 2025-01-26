@@ -807,16 +807,16 @@ client.on('message', async (msg) => {
                                             setTimeout(() => {
                                                 logsSave("Collecting Client Data");
                                             }, 1000);
-                                            logsUserSend(responseData)
+                                            logsUserSend(msg.from, responseData.data)
                                             break;
                                         case 'divisilist'://Divisi List Request                        
                                             await propertiesView(
                                                 splittedMsg[0].toUpperCase(), 
                                                 "DIVISI"
                                             ).then(
-                                                response => logsUserSend(response.data)
+                                                logsUserSend(msg.from, responseData.data)
                                             ).catch(
-                                                error => logsUserError(error)
+                                                error => logsUserError(msg.from, error)
                                             );
                                             break;
                                         case 'titlelist'://Title List Request
@@ -824,9 +824,9 @@ client.on('message', async (msg) => {
                                                 splittedMsg[0].toUpperCase(), 
                                                 "TITLE"
                                             ).then(
-                                                response => logsUserSend(response.data)
+                                                logsUserSend(msg.from, responseData.data)
                                             ).catch(
-                                                error => logsUserError(error)
+                                                error => logsUserError(msg.from, error)
                                             );
                                             break;
                                         default:
