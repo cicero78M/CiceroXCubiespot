@@ -2,7 +2,6 @@
 import { clientData } from '../../../json_data_file/client_data/read_client_data_from_json.js';
 import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import {writeFileSync } from "fs";
-import { logsResponse } from '../../responselogs/logs_modif.js';
 
 export async function setSecuid(clientValue) {
 

@@ -3,7 +3,6 @@ import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { logsSave } from '../responselogs/logs_modif.js';
-import { error } from 'console';
 
 export async function warningReportInsta(clientValue) {
 

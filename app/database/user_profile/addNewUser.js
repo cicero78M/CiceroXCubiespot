@@ -3,8 +3,6 @@ import { newListValueData } from '../new_query/data_list_query.js';
 import { readUser } from '../../../json_data_file/user_data/read_data_from_dir.js';
 import { encrypted } from '../../../json_data_file/crypto.js';
 import { writeFileSync } from "fs";
-import { logsResponse } from '../../responselogs/logs_modif.js';
-
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
