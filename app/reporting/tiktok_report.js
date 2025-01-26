@@ -3,7 +3,6 @@ import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from 'fs';
-import { logsResponse } from '../responselogs/logs_modif.js';
   
 export async function newReportTiktok(clientValue) {
 
@@ -12,7 +11,6 @@ export async function newReportTiktok(clientValue) {
         
             try {
 
-                logsResponse("Execute Report Tiktok");
                 client.sendMessage(
                     '6281235114745@c.us', 
                     "Execute Report Tiktok"
@@ -113,7 +111,6 @@ export async function newReportTiktok(clientValue) {
                             || userRows[i].TIKTOK === null 
                             || userRows[i].TIKTOK === ""){
                 
-                                logsResponse("Null Data Exist");
                                 userNotComment.push(userRows[i].ID_KEY);
                                 notCommentList.push(userRows[i]);
                 
@@ -183,7 +180,6 @@ export async function newReportTiktok(clientValue) {
                                 code: 200
                             };
                         }
-                        logsResponse('Return Success');
                         resolve (responseData);
                     } else {
                         let responseData = {
@@ -191,7 +187,6 @@ export async function newReportTiktok(clientValue) {
                             state: true,
                             code: 201
                         };
-                        logsResponse(responseData.data);
                         reject (responseData);
                     }
                 } else {   
@@ -200,7 +195,6 @@ export async function newReportTiktok(clientValue) {
                         state: true,
                         code: 201
                     };
-                    logsResponse(responseData.data);               
                     reject (responseData);
                 }
             } catch (error) {
@@ -209,7 +203,6 @@ export async function newReportTiktok(clientValue) {
                     state: false,
                     code: 303
                 };
-                logsResponse(responseData.data);
                 reject (responseData);
             }
         }
