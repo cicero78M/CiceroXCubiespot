@@ -6,7 +6,7 @@ import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
 import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";
 import { tiktokItemsBridges } from "../scrapping/tiktok_scrapping/tiktok_items_bridge.js";
-import { sendClientResponse, sendResponse } from "../view/sendWA.js";
+import { sendClientResponse } from "../view/sendWA.js";
 import { newReportInsta } from "./insta_report.js";
 
 export async function schedullerAllSocmed(timeSwitch) {
@@ -39,7 +39,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 switch (timeSwitch){
                                                     case 'report':
                                     
-                                                        sendClientResponse(
+                                                        await sendClientResponse(
                                                             decrypted(clientData[i].CLIENT_ID), 
                                                             decrypted(clientData[i].SUPERVISOR),
                                                             decrypted(clientData[i].OPERATOR),
@@ -109,7 +109,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                             async response =>{
                                 switch (response.code){
                                     case 201:
-                                        sendClientResponse(
+                                        await bsendClientResponse(
                                             decrypted(clientData[i].CLIENT_ID), 
                                             decrypted(clientData[i].SUPERVISOR),
                                             decrypted(clientData[i].OPERATOR),
