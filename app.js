@@ -1169,6 +1169,7 @@ client.on('message', async (msg) => {
                                 logsSave("Execute New Report Insta ")
                                 await clientData().then( 
                                     async response =>{
+
                                         let clientData = response.data;
                                         
                                         for (let i = 0; i < clientData.length; i++){
@@ -1176,15 +1177,12 @@ client.on('message', async (msg) => {
                                             && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                                             && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                                 logsSave(decrypted(clientData[i].CLIENT_ID)+' START REPORT INSTA DATA');
-                                                client.sendMessage(
-                                                    '6281235114745@c.us', 
-                                                    decrypted(clientData[i].CLIENT_ID)+' START REPORT INSTA DATA'
-                                                );
-                                                
+                                                 
                                                 await newReportInsta(
                                                     clientData[i]
                                                 ).then(
                                                     async response => {
+                                                        logsSave(response)
                                                         await client.sendMessage(
                                                             msg.from, 
                                                             response.data
