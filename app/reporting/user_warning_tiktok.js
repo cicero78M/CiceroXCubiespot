@@ -1,8 +1,8 @@
-import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from "fs";
 import { logsSave, logsSend, logsUserSend } from '../responselogs/logs_modif.js';
+import { notifView } from '../view/notif_view.js';
   
 export async function warningReportTiktok(clientValue) {
     
@@ -67,7 +67,6 @@ export async function warningReportTiktok(clientValue) {
                             }
                         }
                     }
-
                                                         
                     if (shortcodeList.length >= 1) {   
 
@@ -89,7 +88,7 @@ export async function warningReportTiktok(clientValue) {
                             || userRows[i].TIKTOK === ""){
                 
                                 logsSave("Null Data Exist");
-                                UserNotLikes.push(userRows[i].ID_KEY);
+                                userNotComment.push(userRows[i].ID_KEY);
                                 notCommentList.push(userRows[i]);
                 
                             } else {
@@ -107,26 +106,11 @@ export async function warningReportTiktok(clientValue) {
                             }
                         }
 
-                        for (let i = 0; i < notCommentList.length; i++){
-                            if(notCommentList[i].WHATSAPP != ""){
-
-                                logsUserSend(`${notCommentList[i].WHATSAPP}@c.us`,
-                                    `Selamat Siang, Bpk/Ibu ${notCommentList[i].TITLE} ${notCommentList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
-                                );
-    
-                                setTimeout(async () => {
-                                    logsSave("Wait ");
-                                }, 6000);
-                            }
-                        }  
-
-                        data = {
-                            data: "Send warning Done",
-                            state: true,
-                            code: 200
-                          };
-                          
-                          resolve (data);       
+                        notifView(notCommentList, shortcodeListString).then(
+                        response => resolve(response)
+                        ).catch(
+                        error => reject (error)
+                        );    
 
                     } else {
                         data = {
@@ -134,6 +118,7 @@ export async function warningReportTiktok(clientValue) {
                             state: true,
                             code: 201
                         };
+                        
                         reject (data);                
                     }
                 } else {   
