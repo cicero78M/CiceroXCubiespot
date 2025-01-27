@@ -1,4 +1,4 @@
-import { logsUserSend } from "../responselogs/logs_modif.js";
+import { logsSave, logsUserSend } from "../responselogs/logs_modif.js";
 
 export async function notifView(userData, shhortcodeList) {
 
@@ -10,7 +10,7 @@ export async function notifView(userData, shhortcodeList) {
                 if(userData[i].WHATSAPP !== ""){
             
                     logsUserSend(
-                        
+
 `${userData[i].WHATSAPP}@c.us`,
 
 `Selamat Siang, Bpk/Ibu ${userData[i].TITLE} ${userData[i].NAMA}

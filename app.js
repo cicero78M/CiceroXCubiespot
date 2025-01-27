@@ -417,7 +417,8 @@ client.on('message', async (msg) => {
                                                     )
                                                 } 
                                             }
-                                    });
+                                        }
+                                    );
         
                                 }
                                 break;
@@ -495,8 +496,7 @@ client.on('message', async (msg) => {
                                                 } else {
                                                     logsSend('Bukan Link Profile Tiktok');
                                                 }
-                                            }
-                                           
+                                            }           
                                             break;
                                         case 'tiktokstate':
                                             {
@@ -522,7 +522,6 @@ client.on('message', async (msg) => {
                                             ).catch(
                                                 error => logsError(error)
                                             );
-        
                                             break;
                                         case 'clientstate':
                                             {
@@ -534,7 +533,6 @@ client.on('message', async (msg) => {
                                                     );
                                                 }
                                             }
-                            
                                             break;
                                         default:
                                             break;
@@ -730,6 +728,7 @@ client.on('message', async (msg) => {
                                         ).catch(
                                             error => logsUserError(msg.from, error)
                                         );
+
                                 } else if (editnama.includes(splittedMsg[1].toLowerCase())) {
                                     logsSave("Edit Nama");
                                     //clientName#editnama/nama#id_key/NRP#newdata
@@ -745,7 +744,8 @@ client.on('message', async (msg) => {
                                         }
                                     ).catch(
                                         error => logsUserError(msg.from, error)
-                                    );                              
+                                    );  
+
                                 } else if (edittitle.includes(splittedMsg[1].toLowerCase())) {
                                     logsSave("Edit Title");
                                     //clientName#editnama/nama#id_key/NRP#newdata
@@ -762,6 +762,7 @@ client.on('message', async (msg) => {
                                         ).catch(
                                             error => logsUserError(msg.from, error)
                                         );
+
                                 } else if (splittedMsg[1].toLowerCase() === 'mydata') {
                                     logsSave("My Data");
                                     await myData(
@@ -781,12 +782,12 @@ client.on('message', async (msg) => {
                                         msg.from.replace('@c.us', ''), 
                                         "WHATSAPPP"
                                     ).then(
-                                            response => {
-                                                logsUserSend(msg.from, response.data);
-                                            }
-                                        ).catch(
-                                            error => logsUserError(msg.from, error)
-                                        );
+                                        response => {
+                                            logsUserSend(msg.from, response.data);
+                                        }
+                                    ).catch(
+                                        error => logsUserError(msg.from, error)
+                                    );
                                     
                                 } 
                             }
