@@ -10,7 +10,7 @@ const { Client, LocalAuth } = wwebjs;
 import 'dotenv/config';
 
 //QR-Code
-import qrcode, { error } from 'qrcode-terminal';
+import qrcode from 'qrcode-terminal';
 
 //Figlet
 import figlet from 'figlet';
@@ -37,7 +37,7 @@ import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_li
 import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
 import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
 import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
-import { adminOrder, cubiesOrder, dataBackup, dataManagement, dataRestore, detikCom, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
+import { adminOrder, cubiesOrder, dataBackup, dataManagement, dataRestore, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
 import { addNewUser } from './app/database/user_profile/addNewUser.js';
 import { editProfile } from './app/database/user_profile/editUserProfile.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
@@ -1428,7 +1428,6 @@ client.on('message', async (msg) => {
                         default:
                             break;
                     }
-                } else if( detikCom.includes(splittedMsg[1].toLowerCase())){
                 } else if( dataManagement.includes(splittedMsg[1].toLowerCase())){
                     if (msg.from === '6281235114745@c.us') {
                         switch (splittedMsg[1].toLowerCase()) {
