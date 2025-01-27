@@ -35,7 +35,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         clientName
       ).then( 
         async response => {    
-          userRows = await response;                           
+          userRows = await response.data;                           
           for (let i = 0; i < userRows.length; i++) {
             if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
               logsSave("data exist")
