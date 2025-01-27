@@ -1,4 +1,4 @@
-import { logsUserSend } from "../responselogs/logs_modif";
+import { logsUserSend } from "../responselogs/logs_modif.js";
 
 export async function notifView(userData, shhortcodeList) {
 
