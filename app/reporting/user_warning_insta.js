@@ -1,12 +1,13 @@
 import { readdirSync, readFileSync } from 'fs';
-import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
-import { logsSave, logsUserSend } from '../responselogs/logs_modif.js';
 import { notifView } from '../view/notif_view.js';
+import { logsSend } from '../responselogs/logs_modif.js';
 
 export async function warningReportInsta(clientValue) {
 
+  logsSend("Execute Warning Report Insta");
+  
   //Date Time
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -116,8 +117,7 @@ export async function warningReportInsta(clientValue) {
                     }
                   }
                 } 
-              }
-     
+              }   
             }
 
             notifView(notLikesList, shortcodeListString).then(

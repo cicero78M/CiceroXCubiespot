@@ -1,7 +1,7 @@
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from "fs";
-import { logsSave, logsSend, logsUserSend } from '../responselogs/logs_modif.js';
+import { logsSave, logsSend } from '../responselogs/logs_modif.js';
 import { notifView } from '../view/notif_view.js';
   
 export async function warningReportTiktok(clientValue) {
