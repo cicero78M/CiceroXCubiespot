@@ -7,9 +7,7 @@ import { notifView } from '../view/notif_view.js';
 export async function warningReportTiktok(clientValue) {
     
     return new Promise(
-        async (
-            resolve, reject
-        ) => {
+        async (resolve, reject) => {
             try {
                 logsSend("Execute Warning Report Tiktok");
             

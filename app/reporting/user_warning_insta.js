@@ -26,11 +26,8 @@ export async function warningReportInsta(clientValue) {
   let shortcodeListString = '';
 
   return new Promise(
-    async (
-      resolve, reject
-    ) => {
+    async (resolve, reject) => {
       try {
-
         //Get User Data
         await readUser(
           clientName
@@ -57,14 +54,9 @@ export async function warningReportInsta(clientValue) {
           for (let i = 0; i < instaContentDir.length; i++) {
 
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-            // logsResponse(contentItems);
 
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
             let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-
-            // logsResponse(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            // logsResponse(localDate);
-
 
             if ( dateNow === localDate) {
 

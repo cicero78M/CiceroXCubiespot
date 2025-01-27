@@ -64,6 +64,7 @@ import { clientDataView } from './app/database/management/client_list.js';
 import { updateClientData } from './app/database/client/update_client.js';
 import { registerClientData } from './app/database/client/register_client.js';
 import { logsError, logsSave, logsSend, logsUserError, logsUserSend } from './app/responselogs/logs_modif.js';
+import { adminInfoView } from './app/view/admin_info_view.js';
 
 //.env
 const private_key = process.env;
@@ -548,6 +549,16 @@ client.on('message', async (msg) => {
                                     );
                                 }
                                 break;
+                            
+                            case 'admininfo':
+                                {
+                                    responseData = await adminInfoView();
+                                    
+                                    logsSend(responseData.data)
+                                }
+                                break;
+
+
                             default : 
                                 break;
                         }  

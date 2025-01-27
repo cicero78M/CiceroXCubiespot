@@ -6,7 +6,8 @@ export const adminOrder = [
     'savecontact',
     'secuid', 
     'updateclientdata',
-    'registerclient'
+    'registerclient',
+    'admininfo'
 ];
 
 export const operatorOrder = [
