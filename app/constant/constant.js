@@ -14,7 +14,8 @@ export const operatorOrder = [
     'addnewuser', 
     'deleteuser', 
     'instacheck', 
-    'tiktokcheck'
+    'tiktokcheck',
+    'oprinfo'
 ];
 
 export const userOrder =[

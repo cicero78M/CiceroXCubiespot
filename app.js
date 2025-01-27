@@ -65,6 +65,7 @@ import { updateClientData } from './app/database/client/update_client.js';
 import { registerClientData } from './app/database/client/register_client.js';
 import { logsError, logsSave, logsSend, logsUserError, logsUserSend } from './app/responselogs/logs_modif.js';
 import { adminInfoView } from './app/view/admin_info_view.js';
+import { oprInfoView } from './app/view/opr_info_view.js';
 
 //.env
 const private_key = process.env;
@@ -549,7 +550,6 @@ client.on('message', async (msg) => {
                                     );
                                 }
                                 break;
-                            
                             case 'admininfo':
                                 {
                                     let responseData = await adminInfoView();
@@ -557,8 +557,6 @@ client.on('message', async (msg) => {
                                     logsSend(responseData.data)
                                 }
                                 break;
-
-
                             default : 
                                 break;
                         }  
@@ -590,7 +588,7 @@ client.on('message', async (msg) => {
                                             );
                                             break;
                                         case "deleteuser"://Delete Existing Data User
-                                            //clientName#deleteuser#id_key/NRP#newdata
+                                            //clientName#deleteuser#id_key/NRP
                                             await editProfile(
                                                 splittedMsg[0].toUpperCase(), 
                                                 splittedMsg[2].toLowerCase(), 
@@ -626,6 +624,10 @@ client.on('message', async (msg) => {
                                                 error => logsUserError(msg.from, error)
                                             );
                                             
+                                            break;
+                                        case "oprinfo":
+                                            responseData = await oprInfoView(splittedMsg[0].toUpperCase());
+                                            logsUserSend(msg.from, responseData.data)
                                             break;
                                         default:
                                             break;
