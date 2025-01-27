@@ -1,4 +1,3 @@
-import { client } from "../../app.js";
 import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { decrypted } from "../../json_data_file/crypto.js";
 import { logsError, logsSave, logsSend } from "../responselogs/logs_modif.js";
@@ -23,6 +22,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (decrypted(clientData[i].STATUS) === "TRUE" 
                     && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+
                         logsSave(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
             
                         await getTiktokPost(
@@ -55,8 +55,6 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                     default:
                                                         break;
                                                 }           
-
-                                                logsSave(`Report TIKTOK SUCCESS!!!`);
                                             }
                                         ).catch(
                                             error => logsError(error)
@@ -148,8 +146,6 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                 logsSend(response.data)
                                                                 break;
                                                         }
-
-                                                        logsSave("Report Insta SUCCESS!!!");
                                                     }
 
                                                 ).catch(
@@ -171,7 +167,6 @@ export async function schedullerAllSocmed(timeSwitch) {
         ). catch (
             error => logsError(error)
         );  
-
     //If Something Error
     } catch (error) {
         logsError(error)

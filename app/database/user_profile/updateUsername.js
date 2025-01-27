@@ -89,47 +89,34 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                   break;
                 default:
                   if (!phoneList.includes(phone)) {
-
                     userData.WHATSAPP = encrypted(phone);
-
                     writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-                
                     await myData(clientName, idKey).then(
                       response => resolve (response)
-    
                     ).catch(
                       response => reject (response)
-    
-                    )
+                    );
                   } else {
-                    
                     let responseData = {
                       data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
                       state: true,
                       code: 201
                     };
-
                     reject (responseData);                  
                   }
                   break;
               }
-                
             } else {
-
               let responseData = {
                 data: 'Your Account Suspended',
                 state: true,
                 code: 201
               };
-
               reject (responseData);
-
             }
           }
         }
-  
         if (!idExist) {
-  
           let responseData = {
             data: 'User Data with delegated ID_KEY Doesn\'t Exist',
             state: true,
@@ -138,7 +125,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           reject (responseData);
         }
       } else {
-  
         let responseData = {
           data: 'Username Sudah Terdaftar',
           state: true,
@@ -146,9 +132,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         };
         reject (responseData);
       }
-  
-    } catch (error) {
-  
+    } catch (error) { 
       let responseData = {
         data: error,
         message: "Update Username Error",

@@ -2,7 +2,7 @@ import { readUser } from "../../../json_data_file/user_data/read_data_from_dir.j
 import { logsSave } from "../../responselogs/logs_modif.js";
 
 export async function newListValueData( clientName, keyValue) {
-    logsSave("Exec List Value")
+    logsSave("Exec "+ keyValue+" List Value")
     let data;
     return new Promise(
         async (resolve, reject) => {

@@ -1,7 +1,9 @@
 import { readdirSync, readFileSync } from "fs";
 import { decrypted } from "../crypto.js";
+import { logsSave } from "../../app/responselogs/logs_modif.js";
 
-export async function readUser(clientName) {    
+export async function readUser(clientName) {   
+    logsSave(`${clientName} User Data`); 
     return new Promise(async (resolve, reject) => {
         try {
             let data = [];
@@ -28,9 +30,7 @@ export async function readUser(clientName) {
                 userData.EXCEPTION = decrypted(fromJson.EXCEPTION);
 
                 client.push(userData);
-        
             }    
-
             data = {
                 data: client,
                 state: true,

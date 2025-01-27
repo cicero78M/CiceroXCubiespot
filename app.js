@@ -166,7 +166,7 @@ client.on('ready', () => {
                     await warningReportTiktok(clientData[i]).then(async response => {
                         logsSend(response.data);
                     }).catch( 
-                        async error => logsError(error)
+                        error => logsError(error)
                     );
                 }         
 
@@ -200,7 +200,7 @@ client.on('ready', () => {
             await userDataBackup().then(
                 response => logsSend(response.data)
             ).catch( 
-                async error => logsError(error)
+                error => logsError(error)
             );
         }                
     });
@@ -227,7 +227,7 @@ client.on('ready', () => {
                     }      
                 }
             ).catch (
-                error => logsSave(error)
+                error => logsError(error)
             );
         }
     });
@@ -320,7 +320,7 @@ client.on('message', async (msg) => {
                             case 'pushuserres': 
                                 {
                                     //Res Request
-                                    logsSend('Push User Res Client Triggered');
+                                    logsSave('Push User Res Client Triggered');
         
                                     if (splittedMsg[2].includes('https://docs.google.com/spreadsheets/d/')){
         
@@ -329,10 +329,10 @@ client.on('message', async (msg) => {
         
                                         if (slicedData[slicedData.length-1].includes('edit')){
                                             sheetID = slicedData[slicedData.length-2];
-                                            logsSend(sheetID);
+                                            logsSave(sheetID);
                                         } else {
                                             sheetID = slicedData[slicedData.length-1];
-                                            logsSend(sheetID);
+                                            logsSave(sheetID);
                                         }
         
                                         await pushUserRes(splittedMsg[0], sheetID)
@@ -634,6 +634,7 @@ client.on('message', async (msg) => {
                         for (let i = 0; i < clientData.length; i++){
                             if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                 if (updateinsta.includes(splittedMsg[1].toLowerCase())) {
+                                    logsSave("Update Instagram Username")
                                     //Update Insta Profile
                                     //CLientName#updateinsta/ig/#linkprofileinstagram
                                     if (splittedMsg[3].includes('instagram.com')){
@@ -642,14 +643,12 @@ client.on('message', async (msg) => {
                                         || !splittedMsg[3].includes('/video/') ){
                                             
                                             const instaLink = splittedMsg[3].split('?')[0];
-                                            
                                             const instaUsername = instaLink.replaceAll(
                                                 '/profilecard/',
                                                 ''
                                             ).split('/').pop();  
                                 
                                             await updateUsername(
-
                                                 splittedMsg[0].toUpperCase(), 
                                                 splittedMsg[2], 
                                                 instaUsername, 
@@ -662,16 +661,16 @@ client.on('message', async (msg) => {
                                             ).catch(
                                                 error => logsUserError(msg.from, error)
                                             );
-
                                         } else {
                                             logsUserSend(msg.from, 'Bukan Link Profile Instagram');
                                         }
-
                                     } else {
                                         logsUserSend(msg.from, 'Bukan Link Instagram');
                                     }
 
                                 } else if (updatetiktok.includes(splittedMsg[1].toLowerCase())) {
+                                    logsSave("Update Tiktok Username");
+
                                     //Update Tiktok profile
                                     //CLientName#updatetiktok/tiktok/#linkprofiletiktok
                                     if (splittedMsg[3].includes('tiktok.com')){
@@ -692,13 +691,12 @@ client.on('message', async (msg) => {
                                         ).catch(
                                             error => logsUserError(msg.from, error)
                                         );
-
                                     } else {
                                         logsUserSend(msg.from, 'Bukan Link Profile Tiktok');
-                                     
                                     }
 
                                 } else if (updatedivisi.includes(splittedMsg[1].toLowerCase())) {
+                                    logsSave("Edit Divisi");
                                     //update Divisi Name
                                     //clientName#editdivisi/satfung#id_key/NRP#newdata
                                     await editProfile(
@@ -716,6 +714,7 @@ client.on('message', async (msg) => {
                                         );
 
                                 } else if (editjabatan.includes(splittedMsg[1].toLowerCase())) {
+                                    logsSave("Edit Jabatan");
                                     //Update Jabatan
                                     //clientName#editjabatan/jabatan#id_key/NRP#newdata
                                     await editProfile(
@@ -731,8 +730,8 @@ client.on('message', async (msg) => {
                                         ).catch(
                                             error => logsUserError(msg.from, error)
                                         );
-
                                 } else if (editnama.includes(splittedMsg[1].toLowerCase())) {
+                                    logsSave("Edit Nama");
                                     //clientName#editnama/nama#id_key/NRP#newdata
                                     await editProfile(
                                         splittedMsg[0].toUpperCase(),
@@ -741,13 +740,14 @@ client.on('message', async (msg) => {
                                         msg.from.replace('@c.us', ''), 
                                         "NAMA"
                                     ).then(
-                                            response => {
-                                                logsUserSend(msg.from, response.data);
-                                            }
-                                        ).catch(
-                                            error => logsUserError(msg.from, error)
-                                        );
+                                        response => {
+                                            logsUserSend(msg.from, response.data);
+                                        }
+                                    ).catch(
+                                        error => logsUserError(msg.from, error)
+                                    );                              
                                 } else if (edittitle.includes(splittedMsg[1].toLowerCase())) {
+                                    logsSave("Edit Title");
                                     //clientName#editnama/nama#id_key/NRP#newdata
                                     await editProfile(
                                         splittedMsg[0].toUpperCase(),
@@ -762,8 +762,8 @@ client.on('message', async (msg) => {
                                         ).catch(
                                             error => logsUserError(msg.from, error)
                                         );
-
                                 } else if (splittedMsg[1].toLowerCase() === 'mydata') {
+                                    logsSave("My Data");
                                     await myData(
                                         splittedMsg[0].toUpperCase(), 
                                         splittedMsg[2]
@@ -772,8 +772,8 @@ client.on('message', async (msg) => {
                                     ).catch(
                                         error => logsUserError(msg.from, error)
                                     )
-
                                 } else if (splittedMsg[1].toLowerCase() === 'whatsapp') {
+                                    logsSave("Update Whatsapp");
                                     await editProfile(
                                         splittedMsg[0].toUpperCase(),
                                         splittedMsg[2].toLowerCase(), 
