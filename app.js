@@ -155,6 +155,7 @@ client.on('ready', () => {
         logsSend('Execute Cron Job Warning Likes Comments Insta & Tiktok');
         
         clientData().then( async response =>{
+            
             let clientData = response.data;
 
             for (let i = 0; i < clientData.length; i++){
@@ -251,7 +252,6 @@ client.on('ready', () => {
                         ).catch(
                             error => logsError(error)
                         );
-            
                     }
                 }
             );

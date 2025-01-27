@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'fs';
 import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
-import { logsSave } from '../responselogs/logs_modif.js';
+import { logsSave, logsUserSend } from '../responselogs/logs_modif.js';
 
 export async function warningReportInsta(clientValue) {
 
@@ -34,7 +34,7 @@ export async function warningReportInsta(clientValue) {
           clientName
         ).then( 
           async response => {    
-            userRows = await response;                           
+            userRows = await response.data;                           
             for (let i = 0; i < userRows.length; i++) {
               if (userRows[i].STATUS === 'TRUE' ){
                 userAll++;
@@ -121,15 +121,15 @@ export async function warningReportInsta(clientValue) {
 
             for (let i = 0; i < notLikesList.length; i++){
               if(notLikesList[i].WHATSAPP !== ""){
-                
-                await client.sendMessage(
-                    `${notLikesList[i].WHATSAPP}@c.us`,
-                    `Selamat Siang, Bpk/Ibu ${notLikesList[i].TITLE} ${notLikesList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari AKun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_
-                    `
+
+                logsUserSend(
+                  `${notLikesList[i].WHATSAPP}@c.us`,
+                  `Selamat Siang, Bpk/Ibu ${notLikesList[i].TITLE} ${notLikesList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari AKun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
                 );
+                
                 setTimeout(async () => {
                   logsSave("Waits");
-                }, 4000);
+                }, 6000);
               }
             }
 

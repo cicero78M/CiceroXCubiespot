@@ -2,7 +2,7 @@ import { client } from '../../app.js';
 import { decrypted } from '../../json_data_file/crypto.js';
 import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
 import { readdirSync, readFileSync } from "fs";
-import { logsSave, logsSend } from '../responselogs/logs_modif.js';
+import { logsSave, logsSend, logsUserSend } from '../responselogs/logs_modif.js';
   
 export async function warningReportTiktok(clientValue) {
     
@@ -12,10 +12,6 @@ export async function warningReportTiktok(clientValue) {
         ) => {
             try {
                 logsSend("Execute Warning Report Tiktok");
-                client.sendMessage(
-                    '6281235114745@c.us', 
-                    "Execute Warning Report Tiktok"
-                );
             
                 //Date Time
                 let d = new Date();
@@ -41,7 +37,7 @@ export async function warningReportTiktok(clientValue) {
                         clientName
                     ).then( 
                         response => {    
-                            userRows = response;                           
+                            userRows = response.data;                           
                     
                             for (let i = 0; i < response.length; i++) {
                                 if (response[i].STATUS === 'TRUE' ){
@@ -113,15 +109,14 @@ export async function warningReportTiktok(clientValue) {
 
                         for (let i = 0; i < notCommentList.length; i++){
                             if(notCommentList[i].WHATSAPP != ""){
-    
-                                logsSend(`Send Warning Tiktok messages to ${notCommentList[i].TITLE} ${notCommentList[i].NAMA} `);  
-                                await client.sendMessage(
-                                    `${notCommentList[i].WHATSAPP}@c.us`,
+
+                                logsUserSend(`${notCommentList[i].WHATSAPP}@c.us`,
                                     `Selamat Siang, Bpk/Ibu ${notCommentList[i].TITLE} ${notCommentList[i].NAMA}\n\nSistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :\n\n${shortcodeListString}\n\nSilahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.\n\n_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_\n\n_Cicero System_`
                                 );
+    
                                 setTimeout(async () => {
                                     logsSave("Wait ");
-                                }, 4000);
+                                }, 6000);
                             }
                         }  
 
