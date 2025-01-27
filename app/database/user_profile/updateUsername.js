@@ -3,6 +3,7 @@ import { myData } from "../../database_query/myData.js";
 import { readUser } from "../../../json_data_file/user_data/read_data_from_dir.js";
 import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from "../../../json_data_file/crypto.js";
+import { logsSave } from "../../responselogs/logs_modif.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type) {
 
@@ -37,7 +38,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           userRows = await response;                           
           for (let i = 0; i < userRows.length; i++) {
             if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
-              logsResponse("data exist")
+              logsSave("data exist")
               idExist = true;
               userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${userRows[i].ID_KEY}.json`));            
             }
@@ -108,7 +109,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                       code: 201
                     };
 
-                    logsResponse('Return Success');
                     reject (responseData);                  
                   }
                   break;
@@ -122,7 +122,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                 code: 201
               };
 
-              logsResponse('Return Success');
               reject (responseData);
 
             }
@@ -136,7 +135,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             state: true,
             code: 201
           };
-          logsResponse('Return ID_Key Doesnt Exist');
           reject (responseData);
         }
       } else {
@@ -146,7 +144,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           state: true,
           code: 201
         };
-        logsResponse('Return Username Exist');
         reject (responseData);
       }
   
@@ -154,11 +151,11 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
   
       let responseData = {
         data: error,
+        message: "Update Username Error",
         state: false,
         code: 303
       };
   
-      logsResponse(error);
       reject (responseData);
     }
   });
