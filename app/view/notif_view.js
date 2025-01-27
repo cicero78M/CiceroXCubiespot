@@ -1,6 +1,6 @@
 import { logsSave, logsUserSend } from "../responselogs/logs_modif.js";
 
-export async function notifView(userData, shhortcodeList) {
+export async function notifView(userData, shortcodeList) {
 
     return new Promise((resolve, reject) => {
 
@@ -13,11 +13,11 @@ export async function notifView(userData, shhortcodeList) {
 
 `${userData[i].WHATSAPP}@c.us`,
 
-`Selamat Siang, Bpk/Ibu ${userData[i].TITLE} ${userData[i].NAMA}
+`Pesan Notifikasi, Bpk/Ibu ${userData[i].TITLE} ${userData[i].NAMA}
 
 Sistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :
 
-${shhortcodeList}
+${shortcodeList}
 
 Silahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.
 
