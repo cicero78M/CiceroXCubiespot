@@ -552,8 +552,8 @@ client.on('message', async (msg) => {
                             
                             case 'admininfo':
                                 {
-                                    responseData = await adminInfoView();
-                                    
+                                    let responseData = await adminInfoView();
+
                                     logsSend(responseData.data)
                                 }
                                 break;
