@@ -37,6 +37,16 @@ export async function infoView(dataResponse) {
     _Contoh :_ 
     ${dataResponse}#WHATSAPP#87020990
     =================================
+
+    
+    *Merubah Data Pangkat :*
+    
+    ${dataResponse}#NAMA#NRP#NAMA
+    
+    _Contoh :_ 
+    ${dataResponse}#NAMA#87020990#RIZQA
+    =================================
+
     *Merubah Data Pangkat :*
     
     ${dataResponse}#PANGKAT#NRP#PANGKAT
