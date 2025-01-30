@@ -72,10 +72,10 @@ export async function usernameAbsensi(clientName, clientType) {
     } catch (error) {
       let responseData = {
         data: error,
+        message: "Absensi Fail No Data",
         state: false,
         code: 303
       };
-      console.log('Return Success');
       reject (responseData);
     }
   });

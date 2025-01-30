@@ -92,10 +92,10 @@ export async function tiktokContentBackup(clientValue) {
             } catch (error) {
                 let responseData = {
                     data: error,
+                    message: "Tiktok Backup Fail No Data",
                     state: false,
                     code: 303
                 };
-                console.log(responseData.data);
                 reject (responseData);
             }
         }
