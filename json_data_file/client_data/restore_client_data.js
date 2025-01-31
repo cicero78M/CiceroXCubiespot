@@ -4,10 +4,14 @@ import { decrypted } from "../crypto.js";
 
 
 export async function restoreClientData() {
+  
+    //Date Time
+    let d = new Date();
+    let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
     await newRowsData(
         process.env.clientDataID, 
-        'ClientData_Enc'
+        localDate
     ).then(async response => {
 
             let data = response.data;
