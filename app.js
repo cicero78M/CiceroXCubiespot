@@ -49,7 +49,7 @@ import { instaContentBackup } from './app/controller/backup/insta_content.js';
 import { tiktokContentBackup } from './app/controller/backup/tiktok_content.js';
 import { instaLikesBackup } from './app/controller/backup/insta_likes.js';
 import { tiktokCommentsBackup } from './app/controller/backup/tiktok_comment.js';
-import { clientDataView } from './app/controller/management/client_list.js';
+import { clientDataView } from './app/controller/data_management/client_list.js';
 import { updateClientData } from './app/controller/update_data/update_client.js';
 import { registerClientData } from './app/controller/new_data/register_client.js';
 import { logsError, logsSave, logsSend, logsUserError, logsUserSend } from './app/view/logs_whatsapp.js';
