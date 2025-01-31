@@ -99,9 +99,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                         logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
                                     
-                        await getInstaPost(
-                            clientData[i], "official"
-                        ).then(
+                        await getInstaPost(clientData[i], "official").then(
                             async response =>{
                                 switch (response.code){
                                     case 201:

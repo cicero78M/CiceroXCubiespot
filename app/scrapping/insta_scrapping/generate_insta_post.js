@@ -10,19 +10,20 @@ export async function getInstaPost(clientValue, type) {
   let d = new Date();
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
 
-  let execute = false;
+  let executeState = false;
 
   const clientName = decrypted(clientValue.CLIENT_ID);
   let instaAccount;
+
   if (type === "official"){
     instaAccount = decrypted(clientValue.INSTAGRAM);
-    if (clientValue.INSTA_STATE === 'TRUE'){
-      execute = true;
+    if (decrypted(clientValue.INSTA_STATE) === 'TRUE'){
+      executeState = true;
     }
   } else if(type === "secondary"){
     instaAccount = decrypted(clientValue.INSTA_2);
-    if (clientValue.INSTA_2_STATE === 'TRUE'){
-      execute = true;
+    if (decrypted(clientValue.INSTA_2_STATE) === 'TRUE'){
+      executeState = true;
     }
   }
 
@@ -42,7 +43,7 @@ export async function getInstaPost(clientValue, type) {
 
       if (decrypted(clientValue.STATUS) === 'TRUE') {
 
-        if(execute){
+        if(executeState === true){
 
           await instaPostAPI(instaAccount).then( async response =>{
         
@@ -120,7 +121,7 @@ export async function getInstaPost(clientValue, type) {
         } else {
 
           let data = {
-            data: clientName + 'Account State False',
+            data: clientName + ' Account State False',
             state: true,
             code: 201
           };
