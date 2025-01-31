@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { newRowsData } from "../../app/database/new_query/sheet_query.js";
-import { decrypted } from "../crypto.js";
+import { newRowsData } from "../../database/new_query/sheet_query.js";
+import { decrypted } from "../../encryption/crypto.js";
 
 
 export async function restoreClientData() {

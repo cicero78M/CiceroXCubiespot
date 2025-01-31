@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from "fs";
-import { decrypted } from "../crypto.js";
-import { logsSave } from "../../app/responselogs/logs_modif.js";
+import { decrypted } from "../../encryption/crypto.js";
+import { logsSave } from "../../responselogs/logs_modif.js";
 
 export async function readUser(clientName) {   
     logsSave(`${clientName} User Data`); 

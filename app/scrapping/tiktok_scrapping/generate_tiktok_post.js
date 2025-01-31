@@ -1,6 +1,6 @@
 import { tiktokPostAPI } from '../../socialMediaAPI/tiktok_API.js';
 import { client } from '../../../app.js';
-import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
+import { decrypted, encrypted } from '../../encryption/crypto.js';
 import { mkdirSync, writeFileSync } from "fs";
 import { logsSave, logsSend } from '../../responselogs/logs_modif.js';
 

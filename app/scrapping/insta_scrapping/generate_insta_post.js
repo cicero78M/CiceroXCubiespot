@@ -1,6 +1,6 @@
 import { client } from "../../../app.js";
 import { instaPostAPI } from "../../socialMediaAPI/insta_API.js";
-import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
+import { decrypted, encrypted } from '../../encryption/crypto.js';
 import { mkdirSync, writeFileSync } from "fs";
 import { logsSave } from "../../responselogs/logs_modif.js";
 
@@ -11,6 +11,7 @@ export async function getInstaPost(clientValue) {
   let localDate = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});   
 
   const clientName = decrypted(clientValue.CLIENT_ID);
+  
   const instaAccount = decrypted(clientValue.INSTAGRAM);
 
   let itemByDay = [];

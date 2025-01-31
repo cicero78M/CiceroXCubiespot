@@ -1,9 +1,9 @@
 import { newListValueData } from "../new_query/data_list_query.js";
 import { myData } from "../../database_query/myData.js";
-import { readUser } from "../../../json_data_file/user_data/read_data_from_dir.js";
 import { readFileSync, writeFileSync } from "fs";
-import { encrypted } from "../../../json_data_file/crypto.js";
+import { encrypted } from "../../encryption/crypto.js";
 import { logsSave } from "../../responselogs/logs_modif.js";
+import { readUser } from "../../restore/user_data/read_data_from_dir.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type) {
 

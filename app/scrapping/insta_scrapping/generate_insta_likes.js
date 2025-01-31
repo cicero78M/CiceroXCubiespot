@@ -1,6 +1,6 @@
 import { instaLikesAPI } from '../../socialMediaAPI/insta_API.js';
 import { client } from '../../../app.js';
-import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
+import { decrypted, encrypted } from '../../encryption/crypto.js';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { logsSave } from '../../responselogs/logs_modif.js';
 

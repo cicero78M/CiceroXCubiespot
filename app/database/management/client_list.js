@@ -1,4 +1,4 @@
-import { decrypted } from "../../../json_data_file/crypto.js";
+import { decrypted } from "../../encryption/crypto.js";
 import { logsSave } from "../../responselogs/logs_modif.js";
 
 export async function clientDataView(data) {    
@@ -23,7 +23,6 @@ export async function clientDataView(data) {
                 Supervisor : ${decrypted(data.SUPERVISOR)}
                 Operator : ${decrypted(data.OPERATOR)}
                 Group : ${decrypted(data.GROUP)}
-
                 `,
                 state: true,
                 code: 200

@@ -1,4 +1,4 @@
-import { encrypted } from "../../../json_data_file/crypto.js";
+import { encrypted } from "../../encryption/crypto.js";
 import { newRowsData } from "../new_query/sheet_query.js";
 
 export async function pushUserRes(clientName, sheetID) {

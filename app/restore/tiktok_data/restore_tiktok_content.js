@@ -1,8 +1,8 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { googleAuth } from "../../../app/database/new_query/sheet_query.js";
-import { encrypted } from "../../crypto.js";
+import { googleAuth } from "../../database/new_query/sheet_query.js";
+import { encrypted } from "../../encryption/crypto.js";
 import { mkdirSync, writeFileSync } from "fs";
-import { logsSave } from "../../../app/responselogs/logs_modif.js";
+import { logsSave } from "../../responselogs/logs_modif.js";
 
 export async function restoreTiktokContent(clientName) {
 

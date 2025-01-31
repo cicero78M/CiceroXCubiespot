@@ -1,9 +1,9 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
 import { googleAuth } from "../database/new_query/sheet_query.js";
-import { decrypted } from "../../json_data_file/crypto.js";
+import { decrypted } from "../encryption/crypto.js";
 import { readdirSync, readFileSync } from "fs";
 import { logsSave } from "../responselogs/logs_modif.js";
+import { clientData } from "../restore/client_data/read_client_data_from_json.js";
 
 export async function userDataBackup() {    
     

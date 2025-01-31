@@ -1,8 +1,8 @@
 import { readdirSync, readFileSync } from 'fs';
-import { decrypted } from '../../json_data_file/crypto.js';
-import { readUser } from '../../json_data_file/user_data/read_data_from_dir.js';
+import { decrypted } from '../encryption/crypto.js';
 import { notifView } from '../view/notif_view.js';
 import { logsSend } from '../responselogs/logs_modif.js';
+import { readUser } from '../restore/user_data/read_data_from_dir.js';
 
 export async function warningReportInsta(clientValue) {
 

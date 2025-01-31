@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { encrypted } from "../../../json_data_file/crypto.js";
+import { encrypted } from "../../encryption/crypto.js";
 
 export async function registerClientData(clientName, clientType) {
     let data;

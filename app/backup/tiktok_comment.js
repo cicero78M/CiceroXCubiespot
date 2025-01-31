@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync } from 'fs';
-import { decrypted, encrypted } from '../../json_data_file/crypto.js';
+import { decrypted, encrypted } from '../encryption/crypto.js';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { googleAuth } from '../database/new_query/sheet_query.js';
 import { logsSave } from '../responselogs/logs_modif.js';

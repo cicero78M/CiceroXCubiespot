@@ -1,8 +1,8 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { googleAuth } from "../../../app/database/new_query/sheet_query.js";
 import { mkdirSync, writeFileSync } from "fs";
-import { decrypted } from "../../crypto.js";
 import { logsSave } from "../../../app/responselogs/logs_modif.js";
+import { decrypted } from "../../encryption/crypto.js";
 
 export async function restoreInstaContent(clientName) {
 

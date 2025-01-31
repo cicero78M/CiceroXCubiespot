@@ -1,6 +1,6 @@
-import { clientData } from "../../json_data_file/client_data/read_client_data_from_json.js";
-import { decrypted } from "../../json_data_file/crypto.js";
+import { decrypted } from "../encryption/crypto.js";
 import { logsError, logsSave, logsSend } from "../responselogs/logs_modif.js";
+import { clientData } from "../restore/client_data/read_client_data_from_json.js";
 import { getInstaLikes } from "../scrapping/insta_scrapping/generate_insta_likes.js";
 import { getInstaPost } from "../scrapping/insta_scrapping/generate_insta_post.js";
 import { getTiktokPost } from "../scrapping/tiktok_scrapping/generate_tiktok_post.js";

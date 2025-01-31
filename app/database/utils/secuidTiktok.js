@@ -1,7 +1,7 @@
 //Google Spreadsheet
-import { clientData } from '../../../json_data_file/client_data/read_client_data_from_json.js';
-import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
+import { decrypted, encrypted } from '../../encryption/crypto.js';
 import {writeFileSync } from "fs";
+import { clientData } from '../../restore/client_data/read_client_data_from_json.js';
 
 export async function setSecuid(clientValue) {
 
