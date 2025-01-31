@@ -34,6 +34,8 @@ export async function restoreClientData() {
                 clientData.OPERATOR = data[i].get("OPERATOR");
                 clientData.GROUP = data[i].get("GROUP");
                 clientData.SECUID = data[i].get("SECUID");
+                clientData.INSTA_2 = data[i].get("INSTA_2");
+                clientData.INSTA_2_STATE = data[i].get("INSTA_2_STATE");
 
                 client.push(clientData);
 

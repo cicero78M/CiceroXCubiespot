@@ -15,7 +15,7 @@ export async function clientDataView(data) {
                 State : ${decrypted(data.STATUS)}
                 Insta : ${decrypted(data.INSTAGRAM)}
                 Insta State : ${decrypted(data.INSTA_STATE)}
-                Insta 2nd : ${decrypted(data.INSTA_STATE)}
+                Insta 2nd : ${decrypted(data.INSTA_2)}
                 Insta 2nd State : ${decrypted(data.INSTA_2_STATE)}
                 Tiktok : ${decrypted(data.TIKTOK)}
                 Tiktok State : ${decrypted(data.TIKTOK_STATE)}

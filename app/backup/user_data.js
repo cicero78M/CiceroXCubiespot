@@ -36,7 +36,7 @@ export async function userDataBackup() {
                         await sheetDoc.loadInfo();
                         let newSheet = await sheetDoc.addSheet({ 
                             title: `${decrypted(clientData[i].CLIENT_ID)}_${localDate}`, 
-                            headerValues: ['ID_KEY','NAMA',	'TITLE','DIVISI','JABATAN','STATUS','WHATSAPP','INSTA','TIKTOK','EXCEPTION']
+                            headerValues: ['ID_KEY','NAMA',	'TITLE','DIVISI','JABATAN','STATUS','WHATSAPP','INSTA','TIKTOK','EXCEPTION', 'INSTA_2', 'INSTA_2_STATE']
                         });
     
                         await newSheet.addRows(userData);
