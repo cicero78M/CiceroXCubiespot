@@ -152,7 +152,7 @@ client.on('ready', () => {
     });
 
     //User Warning Likes Comments Insta & Tiktok
-    schedule('21 12,16,19 * * *',  () => {
+    schedule('00 12,16,19 * * *',  () => {
 
         logsSend('Execute Cron Job Warning Likes Comments Insta & Tiktok');
         
