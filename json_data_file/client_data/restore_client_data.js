@@ -10,11 +10,11 @@ export async function restoreClientData() {
         'ClientData_Enc'
     ).then(async data => {
 
-      console.log(data);
+      console.log(data.data);
 
       let client = [];
 
-            for (let i = 0; i < data.length; i++){
+            for (let i = 0; i < data.datalength; i++){
 
               console.log(data[i].get("CLIENT_ID"));
 
