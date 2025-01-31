@@ -28,14 +28,10 @@ export async function restoreInstaContent(clientName) {
     instaContents.THUMBNAIL = officialInstaData[i].get("THUMBNAIL");
     
     try {
-
       writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${decrypted(officialInstaData[i].get("SHORTCODE"))}.json`, JSON.stringify(instaContents));
-
     } catch (error) {
-
       mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
       writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${decrypted(officialInstaData[i].get("SHORTCODE"))}.json`, JSON.stringify(instaContents));
-            
     }
   }
 }

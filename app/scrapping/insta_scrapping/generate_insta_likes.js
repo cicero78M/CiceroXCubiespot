@@ -4,7 +4,7 @@ import { decrypted, encrypted } from '../../encryption/crypto.js';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { logsSave } from '../../responselogs/logs_modif.js';
 
-export async function getInstaLikes(todayItems, clientValue ) {
+export async function getInstaLikes(todayItems, clientValue) {
 
     const clientName = decrypted(clientValue.CLIENT_ID);
 

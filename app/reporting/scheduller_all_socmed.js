@@ -100,7 +100,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                         logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
                                     
                         await getInstaPost(
-                            clientData[i]
+                            clientData[i], "official"
                         ).then(
                             async response =>{
                                 switch (response.code){
@@ -126,7 +126,77 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 logsSave(response.data); 
 
                                                 await newReportInsta(
-                                                    clientData[i]
+                                                    clientData[i], "official"
+                                                ).then(
+                                                    async response => {
+        
+                                                        switch (timeSwitch){
+                                                            case 'report':
+                                                                sendClientResponse(
+                                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                                    decrypted(clientData[i].SUPERVISOR),
+                                                                    decrypted(clientData[i].OPERATOR),
+                                                                    decrypted(clientData[i].GROUP), 
+                                                                    response, 
+                                                                    'REPORT INSTA'
+                                                                );            
+                                                                break;
+
+                                                            case 'routine':
+                                                                logsSend(response.data)
+                                                                break;
+                                                        }
+                                                    }
+
+                                                ).catch(
+                                                    error => logsError(error)
+                                                );
+                                            }
+                                        ).catch(
+                                            error => logsError(error)
+                                        );
+                                        break;
+                                }
+                            }
+                        ).catch(
+                            error => logsError(error)
+                        );   
+                    }  
+
+                    //This process Insta Report
+                    if (decrypted(clientData[i].STATUS) === "TRUE" 
+                    && decrypted(clientData[i].INSTA_2_STATE) === "TRUE" 
+                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                        logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
+                                    
+                        await getInstaPost(
+                            clientData[i], "secondary"
+                        ).then(
+                            async response =>{
+                                switch (response.code){
+                                    case 201:
+                                        await sendClientResponse(
+                                            decrypted(clientData[i].CLIENT_ID), 
+                                            decrypted(clientData[i].SUPERVISOR),
+                                            decrypted(clientData[i].OPERATOR),
+                                            decrypted(clientData[i].GROUP), 
+                                            response, 
+                                            'REPORT INSTA'
+                                        );    
+                                        break; 
+
+                                    default:
+                                        logsSave(response.data)
+                                        await getInstaLikes(
+                                            response.data, 
+                                            clientData[i]
+                                        ).then(
+                                            async response => {                                              
+                                                
+                                                logsSave(response.data); 
+
+                                                await newReportInsta(
+                                                    clientData[i], "secondary"
                                                 ).then(
                                                     async response => {
         
