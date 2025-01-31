@@ -536,6 +536,53 @@ client.on('message', async (msg) => {
                                                 }
                                             }
                                             break;
+
+                                        case 'insta2':
+                                            {
+                                                if (splittedMsg[3].includes('instagram.com')){
+                                                    if (!splittedMsg[3].includes('/p/') 
+                                                    || !splittedMsg[3].includes('/reels/') 
+                                                    || !splittedMsg[3].includes('/video/') ){
+                                                        
+                                                        const instaLink = splittedMsg[3].split('?')[0];
+                                                        
+                                                        const instaUsername = instaLink.replaceAll(
+                                                            '/profilecard/',
+                                                            ''
+                                                        ).split('/').pop();  
+                                            
+                                                        await updateClientData(splittedMsg[0].toUpperCase(), instaUsername, "insta2").then(
+                                                            response => logsSend(response.data)
+                                                        ).catch(
+                                                            error => logsError(error)
+                                                        );
+                    
+                                                    } else {
+            
+                                                        logsSend('Bukan Link Profile Instagram');
+            
+                                                    }
+            
+                                                } else {
+            
+                                                    logsSend('Bukan Link Profile Instagram');
+            
+                                                }
+                                            }
+                                            
+                                                break;
+
+                                        case 'insta2state':
+                                            {
+                                                if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "insta2state").then(
+                                                        response => logsSend(response.data)
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
+                                                }
+                                            }
+                                            break;
                                         default:
                                             break;
                                     }
