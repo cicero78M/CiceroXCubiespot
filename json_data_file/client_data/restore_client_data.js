@@ -16,6 +16,8 @@ export async function restoreClientData() {
 
             for (let i = 0; i < data.length; i++){
 
+              console.log(data[i].get("CLIENT_ID"));
+
                 let clientData = new Object();
                 
                 clientData.CLIENT_ID = data[i].get("CLIENT_ID");
