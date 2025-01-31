@@ -9,12 +9,12 @@ export async function restoreClientData() {
         process.env.clientDataID, 
         'ClientData_Enc'
     ).then(async data => {
-      let client = new Map();
+
+      console.log(data[i]);
+
+      let client = [];
 
             for (let i = 0; i < data.length; i++){
-
-              console.log(data[i]);
-
 
                 let clientData = new Object();
                 
@@ -40,6 +40,7 @@ export async function restoreClientData() {
                 } 
 
             };
+
             writeFileSync('json_data_file/client_data/client_data.json', JSON.stringify(client));
     });
 
