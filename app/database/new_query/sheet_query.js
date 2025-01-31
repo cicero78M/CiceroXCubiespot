@@ -33,6 +33,7 @@ export async function newRowsData(
                     let sheetTitle = dataDoc.sheetsByTitle[clientName];
                                         
                     await sheetTitle.getRows().then( response => {
+                        console.log(response);
                         let data = {
                             data: response,
                             state: true,
