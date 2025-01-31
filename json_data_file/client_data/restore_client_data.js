@@ -2,7 +2,6 @@ import { mkdirSync, writeFileSync } from "fs";
 import { newRowsData } from "../../app/database/new_query/sheet_query.js";
 import { decrypted } from "../crypto.js";
 
-let client = [];
 
 export async function restoreClientData() {
 
@@ -10,6 +9,8 @@ export async function restoreClientData() {
         process.env.clientDataID, 
         'ClientData_Enc'
     ).then(async data => {
+      let client = [];
+
             for (let i = 0; i < data.length; i++){
 
                 let clientData = new Object();
@@ -37,7 +38,9 @@ export async function restoreClientData() {
                 } 
 
             };
+            
+            writeFileSync('json_data_file/client_data/client_data.json', JSON.stringify(client));
+
     });
 
-    writeFileSync('json_data_file/client_data/client_data.json', JSON.stringify(client));
 }
