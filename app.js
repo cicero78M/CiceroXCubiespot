@@ -20,7 +20,7 @@ const { textSync } = figlet;
 import { set } from 'simple-banner';
 
 //Local Dependency
-import { myData } from './app/controller/my_data.js';
+import { myData } from './app/controller/read_data/read_my_data.js';
 import { infoView } from './app/view/info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/controller/reporting/username_absensi.js';
@@ -40,7 +40,7 @@ import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetikt
 import { warningReportInsta } from './app/controller/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/controller/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
-import { saveContacts } from './app/controller/save_contact.js';
+import { saveContacts } from './app/controller/backup/save_contact.js';
 import { pushUserCom, pushUserRes } from './app/controller/new_data/new_client_user_data.js';
 import { decrypted } from './app/module/crypto.js';
 import { clientDataBackup } from './app/controller/backup/client_data.js';

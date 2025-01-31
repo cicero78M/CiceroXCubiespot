@@ -1,5 +1,5 @@
-import { readUser } from './read_data/read_data_from_dir.js';
-import { myDataView } from '../view/my_data_view.js';
+import { readUser } from './read_data_from_dir.js';
+import { myDataView } from '../../view/my_data_view.js';
 
 export async function myData(clientName, idKey) {
 

@@ -1,4 +1,4 @@
-import { myData } from '../my_data.js';
+import { myData } from '../read_data/read_my_data.js';
 import { propertiesView } from '../../view/properties_view.js';
 import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from '../../module/crypto.js';

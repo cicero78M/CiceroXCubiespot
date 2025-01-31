@@ -1,5 +1,5 @@
 import { newListValueData } from "../../module/data_list_query.js";
-import { myData } from "../my_data.js";
+import { myData } from "../read_data/read_my_data.js";
 import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from "../../module/crypto.js";
 import { logsSave } from "../../view/logs_whatsapp.js";
