@@ -9,6 +9,7 @@ export async function restoreClientData() {
         process.env.clientDataID, 
         'ClientData_Enc'
     ).then(async data => {
+      console.log(data);
       let client = [];
 
             for (let i = 0; i < data.length; i++){
