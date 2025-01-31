@@ -1,10 +1,10 @@
 import { decrypted } from "../../module/crypto.js";
 import { logsError, logsSave, logsSend } from "../../view/logs_whatsapp.js";
 import { clientData } from "../read_data/read_client_data_from_json.js";
-import { getInstaLikes } from "../insta_scrapping/generate_insta_likes.js";
-import { getInstaPost } from "../insta_scrapping/generate_insta_post.js";
-import { getTiktokPost } from "../tiktok_scrapping/generate_tiktok_post.js";
-import { tiktokItemsBridges } from "../tiktok_scrapping/tiktok_items_bridge.js";
+import { getInstaLikes } from "../scrapping_insta/generate_insta_likes.js";
+import { getInstaPost } from "../scrapping_insta/generate_insta_post.js";
+import { getTiktokPost } from "../scrapping_tiktok/generate_tiktok_post.js";
+import { tiktokItemsBridges } from "../scrapping_tiktok/tiktok_items_bridge.js";
 import { sendClientResponse } from "../../view/send_whatsapp.js";
 import { newReportInsta } from "./insta_report.js";
 
