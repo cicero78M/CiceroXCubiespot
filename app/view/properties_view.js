@@ -1,4 +1,4 @@
-import { newListValueData } from '../database/new_query/data_list_query.js';
+import { newListValueData } from '../module/data_list_query.js';
 
 export async function propertiesView(clientName, type) {
   let data;

@@ -20,52 +20,48 @@ const { textSync } = figlet;
 import { set } from 'simple-banner';
 
 //Local Dependency
-import { myData } from './app/database_query/myData.js';
+import { myData } from './app/controller/my_data.js';
 import { infoView } from './app/view/info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
-import { usernameAbsensi } from './app/database_query/usernameAbsensi.js';
-import { updateUsername } from './app/database/user_profile/updateUsername.js';
-import { setSecuid } from './app/database/utils/secuidTiktok.js';
-import { sendResponse } from './app/view/sendWA.js';
-import { requestVoucer } from './app/scrapping/insta_follow/request_rewards.js';
-import { tiktokItemsBridges } from './app/scrapping/tiktok_scrapping/tiktok_items_bridge.js';
-import { getTiktokPost } from './app/scrapping/tiktok_scrapping/generate_tiktok_post.js';
-import { newReportTiktok } from './app/reporting/tiktok_report.js';
-import { newReportInsta } from './app/reporting/insta_report.js';
-import { getInstaPost } from './app/scrapping/insta_scrapping/generate_insta_post.js';
-import { getInstaLikes } from './app/scrapping/insta_scrapping/generate_insta_likes.js';
-import { instaClientInfo } from './app/scrapping/insta_follow/generate_insta_client_info.js';
-import { schedullerAllSocmed } from './app/reporting/scheduller_all_socmed.js';
-import { instaOffcialFollower } from './app/scrapping/insta_follow/generate_official_followers.js';
-import { adminOrder, cubiesOrder, dataBackup, dataManagement, dataRestore, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
-import { addNewUser } from './app/database/user_profile/addNewUser.js';
-import { editProfile } from './app/database/user_profile/editUserProfile.js';
+import { usernameAbsensi } from './app/controller/reporting/username_absensi.js';
+import { updateUsername } from './app/controller/update_data/update_socmed_username.js';
+import { setSecuid } from './app/module/secuidTiktok.js';
+import { tiktokItemsBridges } from './app/controller/tiktok_scrapping/tiktok_items_bridge.js';
+import { getTiktokPost } from './app/controller/tiktok_scrapping/generate_tiktok_post.js';
+import { newReportTiktok } from './app/controller/reporting/tiktok_report.js';
+import { newReportInsta } from './app/controller/reporting/insta_report.js';
+import { getInstaPost } from './app/controller/insta_scrapping/generate_insta_post.js';
+import { getInstaLikes } from './app/controller/insta_scrapping/generate_insta_likes.js';
+import { schedullerAllSocmed } from './app/controller/reporting/scheduller_all_socmed.js';
+import { adminOrder, dataBackup, dataManagement, dataRestore, generateSocmed, infoOrder, operatorOrder, userOrder } from './app/constant/constant.js';
+import { addNewUser } from './app/controller/new_data/added_new_user.js';
+import { editProfile } from './app/controller/update_data/edit_user_data.js';
 import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetiktok } from './app/constant/update_n_order.js';
-import { warningReportInsta } from './app/reporting/user_warning_insta.js';
-import { warningReportTiktok } from './app/reporting/user_warning_tiktok.js';
+import { warningReportInsta } from './app/controller/reporting/user_warning_insta.js';
+import { warningReportTiktok } from './app/controller/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
-import { saveContacts } from './app/database/utils/saveContact.js';
-import { pushUserCom, pushUserRes } from './app/database/client_user_data/push_user_data.js';
-import { decrypted } from './app/encryption/crypto.js';
-import { clientDataBackup } from './app/backup/client_data.js';
-import { userDataBackup } from './app/backup/user_data.js';
-import { instaContentBackup } from './app/backup/insta_content.js';
-import { tiktokContentBackup } from './app/backup/tiktok_content.js';
-import { instaLikesBackup } from './app/backup/insta_likes.js';
-import { tiktokCommentsBackup } from './app/backup/tiktok_comment.js';
-import { clientDataView } from './app/database/management/client_list.js';
-import { updateClientData } from './app/database/client/update_client.js';
-import { registerClientData } from './app/database/client/register_client.js';
-import { logsError, logsSave, logsSend, logsUserError, logsUserSend } from './app/responselogs/logs_modif.js';
+import { saveContacts } from './app/controller/save_contact.js';
+import { pushUserCom, pushUserRes } from './app/controller/new_data/new_client_user_data.js';
+import { decrypted } from './app/module/crypto.js';
+import { clientDataBackup } from './app/controller/backup/client_data.js';
+import { userDataBackup } from './app/controller/backup/user_data.js';
+import { instaContentBackup } from './app/controller/backup/insta_content.js';
+import { tiktokContentBackup } from './app/controller/backup/tiktok_content.js';
+import { instaLikesBackup } from './app/controller/backup/insta_likes.js';
+import { tiktokCommentsBackup } from './app/controller/backup/tiktok_comment.js';
+import { clientDataView } from './app/controller/management/client_list.js';
+import { updateClientData } from './app/controller/update_data/update_client.js';
+import { registerClientData } from './app/controller/new_data/register_client.js';
+import { logsError, logsSave, logsSend, logsUserError, logsUserSend } from './app/view/logs_whatsapp.js';
 import { adminInfoView } from './app/view/admin_info_view.js';
 import { oprInfoView } from './app/view/opr_info_view.js';
-import { clientData } from './app/restore/client_data/read_client_data_from_json.js';
-import { restoreClientData } from './app/restore/client_data/restore_client_data.js';
-import { restoreUserData } from './app/restore/user_data/restore_user_data.js';
-import { restoreInstaContent } from './app/restore/insta_data/restore_insta_content_data.js';
-import { restoreInstaLikes } from './app/restore/insta_data/transfer_insta_likes_data.js';
-import { restoreTiktokContent } from './app/restore/tiktok_data/restore_tiktok_content.js';
-import { restoreTiktokComments } from './app/restore/tiktok_data/restore_tiktok_comments.js';
+import { clientData } from './app/controller/read_data/read_client_data_from_json.js';
+import { restoreClientData } from './app/controller/restore/restore_client_data.js';
+import { restoreUserData } from './app/controller/restore/restore_user_data.js';
+import { restoreInstaContent } from './app/controller/restore/restore_insta_content_data.js';
+import { restoreInstaLikes } from './app/controller/restore/restore_insta_likes_data.js';
+import { restoreTiktokContent } from './app/controller/restore/restore_tiktok_content.js';
+import { restoreTiktokComments } from './app/controller/restore/restore_tiktok_comments.js';
 
 //.env
 const private_key = process.env;
@@ -898,62 +894,7 @@ client.on('message', async (msg) => {
                         }
                     );
                 //Wifi Corner For Company
-                } else if (cubiesOrder.includes(splittedMsg[0].toLowerCase())){  
-                    switch (splittedMsg[0].toLowerCase()) {
-                        case 'cubiehome'://Cubiehome WiFi Corner
-                            if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
-
-                                if (!splittedMsg[1].includes('/p/') 
-                                || !splittedMsg[1].includes('/reels/') 
-                                || !splittedMsg[1].includes('/video/') ){
-
-                                    const instaLink = splittedMsg[1].split('?')[0];
-                                    const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
-
-                                    await requestVoucer(
-                                        msg.from, 
-                                        instaUsername
-                                    ).then(
-                                        async responseData =>{                                                        
-                                            sendResponse(
-                                                msg.from, 
-                                                responseData, 
-                                                `Silahkan Tunggu Beberapa saat dan kirim ulang Request Akses WiFi Corner CubieHome`
-                                            );
-                                        }
-                                    ).catch(
-                                        response =>{logsSave(response)}
-                                    );
-
-
-                                } else {
-                                    client.sendMessage(
-                                        msg.from, 
-                                        `Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
-                                        
-                                        Terimakasih.`
-                                    );
-                                }
-
-                            } else{
-                                client.sendMessage(
-                                    msg.from,
-                                    `Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
-                                        
-                                    Terimakasih.`
-                                );
-                            }
-                            break;
-                        case 'likes':
-                            break;
-                        case 'comment':
-                            break;
-                        default:
-                            break;                    
-                    }
-
-                //Generaate Social Media Data    
-                } else if (generateSocmed.includes(splittedMsg[1].toLowerCase())){   
+               } else if (generateSocmed.includes(splittedMsg[1].toLowerCase())){   
                     if(msg.from === '6281235114745@c.us'){
                         switch (splittedMsg[1].toLowerCase()) {
                             case 'allsocmed'://Generate & Report All Socmed Data - Content, Likes, Comment

@@ -1,4 +1,4 @@
-import { logsSave, logsUserSend } from "../responselogs/logs_modif.js";
+import { logsSave, logsUserSend } from "./logs_whatsapp.js";
 
 export async function notifView(userData, shortcodeList) {
 
