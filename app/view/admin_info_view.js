@@ -2,7 +2,8 @@ export async function adminInfoView() {
 
     let data = {
     data : 
-`*Request Admin WABOT PEGIAT MEDSOS*
+
+    `*Request Admin WABOT PEGIAT MEDSOS*
 =================================
 =================================
 *Menampilkan Pesan ini* :
@@ -67,7 +68,13 @@ CICERO#EXCEPTION#NRP#BOOLEAN
 *Save Contact Whatsapp :*
 
 #SAVECONTACT
-=================================`,
+=================================
+*CLIENT DATA INFO :*
+
+#SAVECONTACT
+=================================
+`,
+
     state: true,
     code: 200
     }

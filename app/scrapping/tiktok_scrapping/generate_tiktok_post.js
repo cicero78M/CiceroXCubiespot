@@ -4,7 +4,6 @@ import { decrypted, encrypted } from '../../../json_data_file/crypto.js';
 import { mkdirSync, writeFileSync } from "fs";
 import { logsSave, logsSend } from '../../responselogs/logs_modif.js';
 
-
 export async function getTiktokPost(clientValue) {
 
     const clientName = decrypted(clientValue.CLIENT_ID);

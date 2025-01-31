@@ -22,6 +22,9 @@ export async function registerClientData(clientName, clientType) {
                 clientData.OPERATOR = encrypted("");
                 clientData.GROUP = encrypted("");
                 clientData.SECUID = encrypted("");
+                clientData.INSTA_2 = encrypted("");
+                clientData.INSTA_2_STATE = encrypted("FALSE");
+
             
                 try {
                     writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientData));

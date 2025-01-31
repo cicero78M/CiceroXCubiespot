@@ -21,6 +21,9 @@ export async function clientDataView(data) {
                 Supervisor : ${decrypted(data.SUPERVISOR)}
                 Operator : ${decrypted(data.OPERATOR)}
                 Group : ${decrypted(data.GROUP)}
+                Insta 2nd Account:${decrypted(data.INSTA_2)}
+                Insta 2ndState :${decrypted(data.INSTA_2_STATE)}
+                
                 `,
                 state: true,
                 code: 200
