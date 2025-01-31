@@ -8,14 +8,14 @@ export async function restoreClientData() {
     await newRowsData(
         process.env.clientDataID, 
         'ClientData_Enc'
-    ).then(async data => {
+    ).then(async response => {
 
-
+            let data = response.data;
       let client = [];
 
-            for (let i = 0; i < data.data.length; i++){
-
-              console.log(data[i].get("CLIENT_ID"));
+            for (let i = 0; i < data.length; i++){
+            
+                console.log(data[i])
 
                 let clientData = new Object();
                 
