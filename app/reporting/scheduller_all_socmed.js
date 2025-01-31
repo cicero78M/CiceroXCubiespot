@@ -101,6 +101,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                     
                         await getInstaPost(clientData[i], "official").then(
                             async response =>{
+                                let todayItems;
                                 switch (response.code){
                                     case 201:
                                         await sendClientResponse(
@@ -115,6 +116,7 @@ export async function schedullerAllSocmed(timeSwitch) {
 
                                     default:
                                         logsSave(response.data)
+                                        todayItems = response.data;
                                         await getInstaLikes(
                                             response.data, 
                                             clientData[i]
@@ -124,7 +126,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 logsSave(response.data); 
 
                                                 await newReportInsta(
-                                                    clientData[i], "official"
+                                                    clientData[i], todayItems, "official"
                                                 ).then(
                                                     async response => {
         
@@ -171,6 +173,8 @@ export async function schedullerAllSocmed(timeSwitch) {
                             clientData[i], "secondary"
                         ).then(
                             async response =>{
+                                let todayItems;
+
                                 switch (response.code){
                                     case 201:
                                         await sendClientResponse(
@@ -185,6 +189,7 @@ export async function schedullerAllSocmed(timeSwitch) {
 
                                     default:
                                         logsSave(response.data)
+                                        todayItems = response.data;
                                         await getInstaLikes(
                                             response.data, 
                                             clientData[i]
@@ -194,7 +199,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 logsSave(response.data); 
 
                                                 await newReportInsta(
-                                                    clientData[i], "secondary"
+                                                    clientData[i], todayItems, "secondary"
                                                 ).then(
                                                     async response => {
         

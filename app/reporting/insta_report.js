@@ -4,7 +4,7 @@ import { readdirSync, readFileSync } from "fs";
 import { logsSave } from '../responselogs/logs_modif.js';
 import { readUser } from '../restore/user_data/read_data_from_dir.js';
 
-export async function newReportInsta(clientValue) {
+export async function newReportInsta(clientValue, todayItems, type) {
 
   logsSave("Execute Report Insta")
 
@@ -74,16 +74,8 @@ export async function newReportInsta(clientValue) {
           for (let i = 0; i < instaContentDir.length; i++) {
 
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-            // logsSave(contentItems);
 
-            let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
-            let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-
-            // logsSave(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            // logsSave(localDate);
-
-
-            if ( dateNow === localDate) {
+            if(todayItems.includes(decrypted(contentItems.SHORTCODE))){
 
               if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
 
