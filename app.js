@@ -141,7 +141,7 @@ client.on('ready', () => {
     });
 
     // Scrapping Socmed every hours until 21
-    schedule('38 6-20 * * *',  () => {
+    schedule('42 6-20 * * *',  () => {
         logsSend('Execute Hourly Cron Job');
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
