@@ -10,7 +10,7 @@ export async function restoreClientData() {
         'ClientData_Enc'
     ).then(async data => {
 
-      console.log(data[i]);
+      console.log(data);
 
       let client = [];
 

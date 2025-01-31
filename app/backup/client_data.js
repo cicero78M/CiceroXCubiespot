@@ -21,7 +21,7 @@ export async function clientDataBackup() {
                     await sheetDoc.loadInfo();
                     const newSheet = await sheetDoc.addSheet({ 
                         title: localDate, 
-                        headerValues: ['CLIENT_ID','TYPE',	'STATUS','INSTAGRAM','TIKTOK','INSTA_STATE','TIKTOK_STATE','SUPERVISOR','OPERATOR','GROUP',	'SECUID', 'INSTA_2', 'INSTA_2_STATE']
+                        headerValues: ['CLIENT_ID','TYPE',	'STATUS','INSTAGRAM','TIKTOK','INSTA_STATE','TIKTOK_STATE','SUPERVISOR','OPERATOR','GROUP',	'SECUID']
                     });
 
                     await newSheet.addRows(response.data);
