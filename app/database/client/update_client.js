@@ -40,10 +40,10 @@ export async function updateClientData(clientName, newvalue, type) {
                                 clientRows[i].OPERATOR = encrypted(`${newvalue}@c.us`);
                                 break;
                             case "insta2":
-                                clientRows[i].INSTA_2 = encrypted(`${newvalue}@c.us`);
+                                clientRows[i].INSTA_2 = encrypted(newvalue);
                                 break;                                
                             case "insta2state":
-                                clientRows[i].INSTA_2_STATE = encrypted(`${newvalue}@c.us`);
+                                clientRows[i].INSTA_2_STATE = encrypted(newvalue);
                                 break; 
                             default:
                                 break;

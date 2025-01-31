@@ -71,7 +71,7 @@ CICERO#EXCEPTION#NRP#BOOLEAN
 =================================
 *CLIENT DATA INFO :*
 
-#SAVECONTACT
+#CLIENTDATAVIEW
 =================================
 `,
 
