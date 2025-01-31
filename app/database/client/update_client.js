@@ -54,7 +54,7 @@ export async function updateClientData(clientName, newvalue, type) {
                         writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientRows[i]));
 
                         data = {
-                            data: 'Client State with Client_ID : ' + sheetName + ' set status to : ' + state,
+                            data: 'Client State with Client_ID : ' + clientName + ' set status to : ' + newvalue,
                             state: true,
                             code: 200
                         };
