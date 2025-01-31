@@ -9,10 +9,12 @@ export async function restoreClientData() {
         process.env.clientDataID, 
         'ClientData_Enc'
     ).then(async data => {
-      console.log(data);
-      let client = [];
+      let client = new Map();
 
             for (let i = 0; i < data.length; i++){
+
+              console.log(data[i]);
+
 
                 let clientData = new Object();
                 
@@ -30,7 +32,6 @@ export async function restoreClientData() {
 
                 client.push(clientData);
 
-                
                 try {
                   writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
                 } catch (error) {
@@ -39,9 +40,8 @@ export async function restoreClientData() {
                 } 
 
             };
-            
+            console.log(client);
             writeFileSync('json_data_file/client_data/client_data.json', JSON.stringify(client));
-
     });
 
 }
