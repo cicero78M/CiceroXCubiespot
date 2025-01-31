@@ -40,7 +40,6 @@ export async function restoreClientData() {
                 } 
 
             };
-            console.log(client);
             writeFileSync('json_data_file/client_data/client_data.json', JSON.stringify(client));
     });
 
