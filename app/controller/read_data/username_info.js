@@ -1,42 +1,56 @@
-import { readdirSync, readFileSync } from "fs";
-import { decrypted } from "../../module/crypto.js";
-import { logsSave } from "../../view/logs_whatsapp.js";
+import { readUser } from './read_data_from_dir.js';
+import { myDataView } from '../../view/my_data_view.js';
 
-export async function usernameInfo(clientName, username) {   
+export async function usernameInfo(clientName, username, type) {
 
-    logsSave(`${clientName} User Data`); 
-        
-        try {
-    
-            let dataProfile = [];
-
-            dataProfile = readdirSync(`json_data_file/user_data/${clientName}`);
-        
-            for (let i = 0; i < dataProfile.length; i++){
-                
-                let fromJson = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${dataProfile[i]}`));
-
-                if(decrypted(fromJson.INSTA) === username){
-
-                    let userData = new Object();
-
-                    userData.ID_KEY = decrypted(fromJson.ID_KEY);
-                    userData.NAMA = decrypted(fromJson.NAMA);
-                    userData.TITLE = decrypted(fromJson.TITLE);
-                    userData.DIVISI = decrypted(fromJson.DIVISI);
-                    userData.JABATAN = decrypted(fromJson.JABATAN);
-                    userData.STATUS = decrypted(fromJson.STATUS);
-                    userData.WHATSAPP = decrypted(fromJson.WHATSAPP);
-                    userData.INSTA = decrypted(fromJson.INSTA);
-                    userData.TIKTOK = decrypted(fromJson.TIKTOK);
-                    userData.EXCEPTION = decrypted(fromJson.EXCEPTION);
-                           
-                    console.log(userData);
-                }
-            }    
- 
-        } catch (error) {
-            console.log(error);
+  return new Promise(async (resolve, reject) => {
+    try {
+      //Data by Sheet Name
+      let data;
+      let isUserExist = false;
+  
+      await readUser(
+        clientName
+      ).then(
+        async response =>{ 
+          let userRows = response.data;
+          //Check if idKey Exist
+          for (let i = 0; i < userRows.length; i++) {
+  
+            if (userRows[i][type] === username) {
+  
+              isUserExist = true;
+              let userRow = userRows[i];
+  
+              await myDataView(userRow).then(
+                response => resolve(response)
+              ).catch(
+                error =>reject (error)
+              )             
+            }
+          }
         }
-    
+      ).catch(
+        error =>reject (error)
+      );
+  
+      if (!isUserExist) {
+        data = {
+          data: "Username not found",
+          state: true,
+          code: 201
+        };
+        reject (data);
+      }
+      
+    } catch (error) {
+      data = {
+        data: error,
+        message : "My Data Error",
+        state: false,
+        code: 303
+      };
+      reject (data);
+    }
+  });
 }

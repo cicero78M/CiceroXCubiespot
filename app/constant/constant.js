@@ -8,7 +8,8 @@ export const adminOrder = [
     'updateclientdata',
     'registerclient',
     'admininfo',
-    'usernameinfo'
+    'instauname',
+    'tiktokuname'
 ];
 
 export const operatorOrder = [

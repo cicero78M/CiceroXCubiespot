@@ -601,9 +601,15 @@ client.on('message', async (msg) => {
                                     logsSend(responseData.data)
                                 }
                                 break;
-                            case 'usernameinfo':
+                            case 'instauname':
                                 {
-                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase());
+                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), "INSTA");
+
+                                }
+                                break;
+                            case 'tiktokuname':
+                                {
+                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), "TIKTOK");
 
                                 }
                                 break;
