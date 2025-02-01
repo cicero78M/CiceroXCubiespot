@@ -5,7 +5,7 @@ export async function usernameInfo(clientName, uname, type) {
   return new Promise(async (resolve, reject) => {
     try {
 
-      let userRows = [];
+      let userRows = new Array();
       let userData = new Object();
   
   
@@ -13,9 +13,10 @@ export async function usernameInfo(clientName, uname, type) {
         clientName
       ).then( 
         async response => {    
-          userRows = await response.data;                           
+          userRows = await response.data; 
+          console.log(userRows)                          
           for (let i = 0; i < userRows.length; i++) {
-            if (userRows[i][type] === uname){
+            if (userRows[i].INSTA === uname){
                 userData = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`));
 
                 data = {
