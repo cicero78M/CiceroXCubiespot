@@ -36,7 +36,6 @@ export async function readUser(clientName) {
                 state: true,
                 code: 200
             };    
-            console.log(JSON.parse(client))  
             resolve (data);  
         } catch (error) {
             let data = {
