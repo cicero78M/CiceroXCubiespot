@@ -603,7 +603,7 @@ client.on('message', async (msg) => {
                                 break;
                             case 'usernameinfo':
                                 {
-                                    usernameInfo(splittedMsg[0].toUpperCase(), usernameInfo(splittedMsg[2].toLowerCase()));
+                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase());
 
                                 }
                                 break;
