@@ -9,9 +9,7 @@ export async function usernameInfo(clientName, uname) {
         clientName
       ).then( 
         async response => {    
-          let userRows = JSON.parse(response.data); 
-
-          console.log(userRows)
+          let userRows = response.data; 
 
           let data = {
             data: userRows,
