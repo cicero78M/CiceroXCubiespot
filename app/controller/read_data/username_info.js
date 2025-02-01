@@ -4,15 +4,12 @@ import { readUser } from '../read_data/read_data_from_dir.js';
 export async function usernameInfo(clientName, uname) {
   return new Promise(async (resolve, reject) => {
     try {
-
-      let userRows = new Array();
-  
   
       await readUser(
         clientName
       ).then( 
         async response => {    
-          userRows = await response.data; 
+          let userRows = await response.data; 
 
           console.log(userRows)
 
