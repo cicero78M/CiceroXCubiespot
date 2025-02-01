@@ -3,7 +3,8 @@ export async function adminInfoView() {
     let data = {
     data : 
 
-    `*Request Admin WABOT PEGIAT MEDSOS*
+`
+*Request Admin WABOT PEGIAT MEDSOS*
 =================================
 =================================
 *Menampilkan Pesan ini* :

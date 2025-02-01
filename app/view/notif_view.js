@@ -1,4 +1,4 @@
-import { logsSave, logsUserSend } from "./logs_whatsapp.js";
+import { logsUserSend } from "./logs_whatsapp.js";
 
 export async function notifView(userData, shortcodeList) {
 
@@ -8,29 +8,28 @@ export async function notifView(userData, shortcodeList) {
 
             for (let i = 0; i < userData.length; i++){
                 if(userData[i].WHATSAPP !== ""){
-            
+                              
+                  setTimeout(() => {
                     logsUserSend(
 
-`${userData[i].WHATSAPP}@c.us`,
-
-`Pesan Notifikasi, Bpk/Ibu ${userData[i].TITLE} ${userData[i].NAMA}
-
-Sistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :
-
-${shortcodeList}
-
-Silahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.
-
-_Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_
-
-_Cicero System_`
+                        `${userData[i].WHATSAPP}@c.us`,
+                        
+                        `Pesan Notifikasi, Bpk/Ibu ${userData[i].TITLE} ${userData[i].NAMA}
+                        
+                        Sistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :
+                        
+                        ${shortcodeList}
+                        
+                        Silahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimakasih.
+                        
+                        _Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_
+                        
+                        _Cicero System_`
                     );
-                  
-                  setTimeout(async () => {
-                    logsSave("Next Data");
                   }, 10000);
                 }
             }
+            
             let data ={
                 data :"Send Notif Done",
                 state: true,

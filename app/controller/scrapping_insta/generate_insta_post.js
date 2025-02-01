@@ -67,29 +67,30 @@ export async function getInstaPost(clientValue, type) {
     
               logsSave(`${clientName} Official Account Has Post Data...`);
               await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
-              
-                for (let i = 0; i < itemByDay.length; i++) {
-  
-                  let dataObject = new Object();
-  
-                  dataObject.TIMESTAMP = encrypted((itemByDay[i].taken_at).toString());
-                  dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
-                  dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
-                  dataObject.ID = encrypted(itemByDay[i].id);
-                  dataObject.TYPE = encrypted(itemByDay[i].media_name);
-                  dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
-                  dataObject.COMMENT_COUNT = encrypted((itemByDay[i].comment_count ? (itemByDay[i].comment_count).toString() : null));
-                  dataObject.LIKE_COUNT = encrypted((itemByDay[i].like_count ? (itemByDay[i].like_count).toString() : null));
-                  dataObject.PLAY_COUNT = encrypted((itemByDay[i].play_count ? (itemByDay[i].play_count).toString() : null));
-  
-                  try {
-                    writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
-                  } catch (error) {
-                    mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-                    writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
-                  }
-                  logsSave("Insta Content Updated");
+            
+              for (let i = 0; i < itemByDay.length; i++) {
+
+                let dataObject = new Object();
+
+                dataObject.TIMESTAMP = encrypted((itemByDay[i].taken_at).toString());
+                dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
+                dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
+                dataObject.ID = encrypted(itemByDay[i].id);
+                dataObject.TYPE = encrypted(itemByDay[i].media_name);
+                dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
+                dataObject.COMMENT_COUNT = encrypted((itemByDay[i].comment_count ? (itemByDay[i].comment_count).toString() : null));
+                dataObject.LIKE_COUNT = encrypted((itemByDay[i].like_count ? (itemByDay[i].like_count).toString() : null));
+                dataObject.PLAY_COUNT = encrypted((itemByDay[i].play_count ? (itemByDay[i].play_count).toString() : null));
+
+                try {
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
+                } catch (error) {
+                  mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
                 }
+                logsSave("Insta Content Updated");
+              }
+
               let data = {
                 data: todayItems,
                 state: true,
@@ -109,13 +110,18 @@ export async function getInstaPost(clientValue, type) {
               resolve (data);
             
             }
+
           }).catch(error =>{
+          
             let data = {
               data: error,
+              message: "generate Insta Post Error",
               state: false,
               code: 303
             };
+
             reject (data);
+          
           });
 
         } else {
@@ -141,6 +147,7 @@ export async function getInstaPost(clientValue, type) {
     } catch (error) {
       let data = {
         data: error,
+        message: "generate Insta Post Error",
         state: false,
         code: 303
       };
