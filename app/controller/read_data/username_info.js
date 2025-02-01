@@ -13,11 +13,16 @@ export async function usernameInfo(clientName, uname) {
       ).then( 
         async response => {    
           userRows = await response.data; 
-          for (let i = 0; i < userRows.length; i++) {
-            if (userRows[i].INSTA === uname){
-                console.log(userRows[i]);
-            }
-          } 
+
+          console.log(userRows)
+
+          let data = {
+            data: userRows,
+            state: true,
+            code: 200
+        };      
+        resolve (data);  
+
         }
       ).catch(
         error => reject (error)
