@@ -1,5 +1,5 @@
 //Route
-import express, { response } from 'express';
+import express from 'express';
 const app = express();
 
 //WWebjs
@@ -63,6 +63,8 @@ import { restoreInstaLikes } from './app/controller/data_restore/restore_insta_l
 import { restoreTiktokContent } from './app/controller/data_restore/restore_tiktok_content.js';
 import { restoreTiktokComments } from './app/controller/data_restore/restore_tiktok_comments.js';
 import { usernameInfo } from './app/controller/read_data/username_info.js';
+import { mkdirSync, writeFileSync } from "fs";
+
 
 //.env
 const private_key = process.env;
@@ -262,6 +264,7 @@ client.on('message', async (msg) => {
     try {
 
         const contact = await msg.getContact(); // This Catch Contact Sender. 
+
         
         if (msg.isStatus){ // This Catch Wa Story from Users
             //If Msg is WA Story
@@ -302,13 +305,28 @@ client.on('message', async (msg) => {
                 }            
             }
         } else { // This Catch Request Messages
+
+            const chatMsg = await msg.getChat(); //this catch message data
+            chatMsg.sendSeen(); //this send seen by bot whatsapp
+            chatMsg.sendStateTyping(); //this create bot typing state 
+            
+            if (!contact.isMyContact){
+                //Save Contact Here
+                let newContact = new Object();
+                newContact.contact = msg.from;
+                newContact.pushname = msg.pushname ? msg.pushname : msg.contact;
+
+                try {
+                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+                } catch (error) {
+                    mkdirSync(`json_data_file/contact_data`);
+                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+                } 
+            }
+
             //Splitted Msg
             const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
             if (splittedMsg.length > 1){ //System response if message is user by lenght of splitted messages
-
-                let chatMsg = await msg.getChat(); //this catch message data
-                chatMsg.sendSeen(); //this send seen by bot whatsapp
-                chatMsg.sendStateTyping(); //this create bot typing state 
 
                 logsSave(msg.from+' >>> '+splittedMsg[1].toLowerCase());
                 
