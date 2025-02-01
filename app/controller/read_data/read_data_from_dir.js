@@ -10,7 +10,7 @@ export async function readUser(clientName) {
 
             dataProfile = readdirSync(`json_data_file/user_data/${clientName}`);
 
-            let client = [];
+            let client = new Array();
         
             for (let i = 0; i < dataProfile.length; i++){
                 
@@ -36,7 +36,7 @@ export async function readUser(clientName) {
                 state: true,
                 code: 200
             };    
-            console.log(client)  
+            console.log(JSON.parse(client))  
             resolve (data);  
         } catch (error) {
             let data = {

@@ -8,7 +8,8 @@ export async function usernameInfo(clientName, uname) {
       await readUser(
         clientName
       ).then( 
-        async response => {    
+        async response => { 
+               
           let userRows = response.data; 
 
           let data = {
@@ -16,6 +17,7 @@ export async function usernameInfo(clientName, uname) {
             state: true,
             code: 200
         };      
+
         resolve (data);  
 
         }
