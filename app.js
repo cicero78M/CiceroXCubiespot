@@ -600,7 +600,7 @@ client.on('message', async (msg) => {
                                     logsSend(responseData.data)
                                 }
                                 break;
-                            case 'username':
+                            case 'usernameinfo':
                                 {
                                     let responseData = await usernameInfo(splittedMsg[0].toUpperCase(), usernameInfo(splittedMsg[2].toLowerCase()), "INSTA");
 

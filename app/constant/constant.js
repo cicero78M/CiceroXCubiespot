@@ -7,7 +7,8 @@ export const adminOrder = [
     'secuid', 
     'updateclientdata',
     'registerclient',
-    'admininfo'
+    'admininfo',
+    'usernameinfo'
 ];
 
 export const operatorOrder = [
