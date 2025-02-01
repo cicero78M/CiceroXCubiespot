@@ -35,7 +35,8 @@ export async function readUser(clientName) {
                 data: client,
                 state: true,
                 code: 200
-            };      
+            };    
+            console.log(client)  
             resolve (data);  
         } catch (error) {
             let data = {
