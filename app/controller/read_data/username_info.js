@@ -1,12 +1,7 @@
-import { myData } from '../read_data/read_my_data.js';
-import { propertiesView } from '../../view/properties_view.js';
-import { readFileSync, writeFileSync } from "fs";
-import { encrypted } from '../../module/crypto.js';
-import { newListValueData } from '../../module/data_list_query.js';
 import { readUser } from '../read_data/read_data_from_dir.js';
 
 //This Function for edit user data profile
-export async function editProfile(clientName, uname, type) {
+export async function usernameInfo(clientName, uname, type) {
   return new Promise(async (resolve, reject) => {
     try {
 

@@ -62,6 +62,7 @@ import { restoreInstaContent } from './app/controller/data_restore/restore_insta
 import { restoreInstaLikes } from './app/controller/data_restore/restore_insta_likes_data.js';
 import { restoreTiktokContent } from './app/controller/data_restore/restore_tiktok_content.js';
 import { restoreTiktokComments } from './app/controller/data_restore/restore_tiktok_comments.js';
+import { usernameInfo } from './app/controller/read_data/username_info.js';
 
 //.env
 const private_key = process.env;
