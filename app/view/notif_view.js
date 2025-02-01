@@ -2,7 +2,7 @@ import { logsSave, logsUserSend } from "./logs_whatsapp.js";
 
 export async function notifView(userData, shortcodeList) {
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
         try {
 
@@ -28,7 +28,7 @@ _Cicero System_`
                   
                   setTimeout(async () => {
                     logsSave("Next Data");
-                  }, 6000);
+                  }, 10000);
                 }
             }
             let data ={

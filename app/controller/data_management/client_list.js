@@ -11,15 +11,15 @@ export async function clientDataView(data) {
                 data: 
                 `Client : ${decrypted(data.CLIENT_ID)}
 
-                Type : ${decrypted(data.TYPE)}
+                Account Type : ${decrypted(data.TYPE)}
                 State : ${decrypted(data.STATUS)}
-                Insta : ${decrypted(data.INSTAGRAM)}
-                Insta State : ${decrypted(data.INSTA_STATE)}
-                Insta 2nd : ${decrypted(data.INSTA_2)}
-                Insta 2nd State : ${decrypted(data.INSTA_2_STATE)}
-                Tiktok : ${decrypted(data.TIKTOK)}
-                Tiktok State : ${decrypted(data.TIKTOK_STATE)}
-                Secuid : ${decrypted(data.SECUID)}
+                Insta Primary: ${decrypted(data.INSTAGRAM)}
+                Insta Primary State : ${decrypted(data.INSTA_STATE)}
+                Insta Secondary : ${decrypted(data.INSTA_2)}
+                Insta Secondary State : ${decrypted(data.INSTA_2_STATE)}
+                Tiktok Primary : ${decrypted(data.TIKTOK)}
+                Tiktok Primary State : ${decrypted(data.TIKTOK_STATE)}
+                tiktok Secuid : ${decrypted(data.SECUID)}
                 Supervisor : ${decrypted(data.SUPERVISOR)}
                 Operator : ${decrypted(data.OPERATOR)}
                 Group : ${decrypted(data.GROUP)}

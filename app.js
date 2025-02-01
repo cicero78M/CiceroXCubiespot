@@ -21,7 +21,7 @@ import { set } from 'simple-banner';
 
 //Local Dependency
 import { myData } from './app/controller/read_data/read_my_data.js';
-import { infoView } from './app/view/info_view.js';
+import { infoView } from './app/view/user_info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/controller/reporting/username_absensi.js';
 import { updateUsername } from './app/controller/data_updated/update_socmed_username.js';
