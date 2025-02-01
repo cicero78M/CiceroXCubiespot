@@ -31,6 +31,7 @@ export async function usernameInfo(clientName, username, type) {
                 }
 
             } else {
+                
                 if (userRows[i].TIKTOK === username) {
   
                     isUserExist = true;

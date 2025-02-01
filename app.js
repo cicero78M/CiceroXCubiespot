@@ -603,13 +603,21 @@ client.on('message', async (msg) => {
                                 break;
                             case 'instauname':
                                 {
-                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), "INSTA");
+                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), "INSTA").then(
+                                        response => logsSend(response.data)
+                                    ).catch(
+                                        error => logsError(error)
+                                    );
 
                                 }
                                 break;
                             case 'tiktokuname':
                                 {
-                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), "TIKTOK");
+                                    usernameInfo(splittedMsg[0].toUpperCase(), splittedMsg[2].toLowerCase(), "TIKTOK").then(
+                                        response => logsSend(response.data)
+                                    ).catch(
+                                        error => logsError(error)
+                                    );
 
                                 }
                                 break;
