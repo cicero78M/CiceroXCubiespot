@@ -17,7 +17,13 @@ export async function usernameInfo(clientName, uname, type) {
           for (let i = 0; i < userRows.length; i++) {
             if (userRows[i][type] === uname){
                 userData = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`));
-                console.log(userData)    
+
+                data = {
+                    data: userData,
+                    state: true,
+                    code: 200
+                  };
+                  resolve (data);
             }
           } 
         }
