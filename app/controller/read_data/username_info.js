@@ -3,9 +3,13 @@ import { decrypted } from "../../module/crypto.js";
 import { logsSave } from "../../view/logs_whatsapp.js";
 
 export async function usernameInfo(clientName, username) {   
+
     logsSave(`${clientName} User Data`); 
+    
     return new Promise(async (resolve, reject) => {
+    
         try {
+    
             let dataProfile = [];
 
             dataProfile = readdirSync(`json_data_file/user_data/${clientName}`);
@@ -29,22 +33,26 @@ export async function usernameInfo(clientName, username) {
                     userData.TIKTOK = decrypted(fromJson.TIKTOK);
                     userData.EXCEPTION = decrypted(fromJson.EXCEPTION);
 
+                            
+                    let data = {
+                        data: userData,
+                        state: true,
+                        code: 200
+                    };    
+                    resolve (data); 
+
                 }
             }    
-            
-            let data = {
-                data: userData,
-                state: true,
-                code: 200
-            };    
-            resolve (data);  
+ 
         } catch (error) {
+    
             let data = {
                 data: error,
                 message:"Read User Error",
                 state: false,
                 code: 303
             };
+            
             reject (data);          
         }
     });
