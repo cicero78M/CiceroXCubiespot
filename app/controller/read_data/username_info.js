@@ -16,17 +16,33 @@ export async function usernameInfo(clientName, username, type) {
           let userRows = response.data;
           //Check if idKey Exist
           for (let i = 0; i < userRows.length; i++) {
+            if(type === "INSTA"){
+
+                if (userRows[i].INSTA === username) {
   
-            if (userRows[i][type] === username) {
+                    isUserExist = true;
+                    let userRow = userRows[i];
+        
+                    await myDataView(userRow).then(
+                      response => resolve(response)
+                    ).catch(
+                      error =>reject (error)
+                    )             
+                }
+
+            } else {
+                if (userRows[i].TIKTOK === username) {
   
-              isUserExist = true;
-              let userRow = userRows[i];
-  
-              await myDataView(userRow).then(
-                response => resolve(response)
-              ).catch(
-                error =>reject (error)
-              )             
+                    isUserExist = true;
+                    let userRow = userRows[i];
+        
+                    await myDataView(userRow).then(
+                      response => resolve(response)
+                    ).catch(
+                      error =>reject (error)
+                    )             
+                }
+
             }
           }
         }
