@@ -26,7 +26,7 @@ export async function usernameInfo(clientName, uname, type) {
       );
 
     } catch (error) {
-      data = {
+      let data = {
         data: error,
         message:"Edit Profile Error",
         state: false,
