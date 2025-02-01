@@ -101,7 +101,7 @@ export async function getInstaPost(clientValue, type) {
             } else {
               
               let data = {
-                data: 'Official Account Has No Insta Content for Today',
+                data: `${clientName} ${type} Account Has No Insta Content for Today`,
                 state: true,
                 code: 201
               };
