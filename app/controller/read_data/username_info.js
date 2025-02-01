@@ -36,13 +36,6 @@ export async function usernameInfo(clientName, username) {
 
                 }
             }    
-
-            let data = {
-                data: "No Data",
-                state: true,
-                code: 200
-            };    
-            resolve (data); 
  
         } catch (error) {
             console.log(error);
