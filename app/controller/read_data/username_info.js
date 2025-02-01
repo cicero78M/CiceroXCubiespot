@@ -43,6 +43,13 @@ export async function usernameInfo(clientName, username) {
 
                 }
             }    
+
+            let data = {
+                data: "No Data",
+                state: true,
+                code: 200
+            };    
+            resolve (data); 
  
         } catch (error) {
     
@@ -52,7 +59,7 @@ export async function usernameInfo(clientName, username) {
                 state: false,
                 code: 303
             };
-            
+
             reject (data);          
         }
     });
