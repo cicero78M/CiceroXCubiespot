@@ -30,10 +30,8 @@ export async function usernameInfo(clientName, username) {
                     userData.INSTA = decrypted(fromJson.INSTA);
                     userData.TIKTOK = decrypted(fromJson.TIKTOK);
                     userData.EXCEPTION = decrypted(fromJson.EXCEPTION);
-
-                            
+                           
                     console.log(userData);
-
                 }
             }    
  
