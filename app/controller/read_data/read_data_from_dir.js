@@ -6,15 +6,15 @@ export async function readUser(clientName) {
     logsSave(`${clientName} User Data`); 
     return new Promise(async (resolve, reject) => {
         try {
-            let data = [];
+            let dataProfile = [];
 
-            data = readdirSync(`json_data_file/user_data/${clientName}`);
+            dataProfile = readdirSync(`json_data_file/user_data/${clientName}`);
                         
             let client = [];
         
-            for (let i = 0; i < data.length; i++){
+            for (let i = 0; i < dataProfile.length; i++){
                 
-                let fromJson = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${data[i]}`));
+                let fromJson = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${dataProfile[i]}`));
                 
                 let userData = new Object();
 
@@ -31,14 +31,14 @@ export async function readUser(clientName) {
 
                 client.push(userData);
             }    
-            data = {
+            let data = {
                 data: client,
                 state: true,
                 code: 200
             };      
             resolve (data);  
         } catch (error) {
-            data = {
+            let data = {
                 data: error,
                 message:"Read User Error",
                 state: false,
