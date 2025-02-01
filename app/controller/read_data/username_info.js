@@ -5,9 +5,7 @@ import { logsSave } from "../../view/logs_whatsapp.js";
 export async function usernameInfo(clientName, username) {   
 
     logsSave(`${clientName} User Data`); 
-    
-    return new Promise(async (resolve, reject) => {
-    
+        
         try {
     
             let dataProfile = [];
@@ -34,12 +32,7 @@ export async function usernameInfo(clientName, username) {
                     userData.EXCEPTION = decrypted(fromJson.EXCEPTION);
 
                             
-                    let data = {
-                        data: userData,
-                        state: true,
-                        code: 200
-                    };    
-                    resolve (data); 
+                    console.log(userData);
 
                 }
             }    
@@ -52,15 +45,7 @@ export async function usernameInfo(clientName, username) {
             resolve (data); 
  
         } catch (error) {
-    
-            let data = {
-                data: error,
-                message:"Read User Error",
-                state: false,
-                code: 303
-            };
-
-            reject (data);          
+            console.log(error);
         }
-    });
+    
 }
