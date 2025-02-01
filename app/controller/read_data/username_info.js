@@ -9,7 +9,7 @@ export async function usernameInfo(clientName, uname) {
         clientName
       ).then( 
         async response => {    
-          let userRows = await response.data; 
+          let userRows = JSON.parse(response.data); 
 
           console.log(userRows)
 
