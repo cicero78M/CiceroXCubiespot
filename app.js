@@ -1546,13 +1546,25 @@ client.on('message', async (msg) => {
                 const chatMsg = await msg.getChat(); //this catch message data
                 chatMsg.sendSeen(); //this send seen by bot whatsapp
                 chatMsg.sendStateTyping(); //this create bot typing state 
-               
-                logsUserSend(msg.from, 
+
+                if (chatMsg.isGroup){
+
+                    logsSave("Group Messages");
+
+                } else if (msg.isGif){
+                    logsSave("Sticker Recieved");
+                   
+                } else {
+                        
+                    logsUserSend(msg.from, 
 `Maaf, Saya adalah Bot Engine untuk transaksi data Cicero Management System,
 
 Saya hanya merespons sesuai format pesan yang sudah ditentukan, 
 
 Silahkan hubungi Operator yang ditunjuk untuk pertanyaan maupun tutorial.`);
+
+                }
+               
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) { //Catching the Error Request
