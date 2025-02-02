@@ -458,13 +458,22 @@ client.on('message', async (msg) => {
                                                     || !splittedMsg[3].includes('/reels/') 
                                                     || !splittedMsg[3].includes('/video/') ){
                                                         
-                                                        const instaLink = splittedMsg[3].split('?')[0];
-                                                        
-                                                        const instaUsername = instaLink.replaceAll(
-                                                            '/profilecard/',
-                                                            ''
-                                                        ).split('/').pop();  
-                                            
+                                                        let instaLink;
+                                                        let instaUsername;
+                                                        if (splittedMsg[3].includes('/profilecard/')){
+                                                            instaLink = splittedMsg[3].split('?')[0];
+                                                            instaUsername = instaLink.replaceAll(
+                                                                '/profilecard/',
+                                                                ''
+                                                            ).split('/').pop();  
+                                                        } else {
+                                                            instaLink = splittedMsg[3].replaceAll(
+                                                                '/?',
+                                                                '?'
+                                                            ).split('?')[0];
+                                                            instaUsername = instaLink.split('/').pop();  
+                                                        }
+                                                                                                    
                                                         await updateClientData(splittedMsg[0].toUpperCase(), instaUsername, "insta").then(
                                                             response => logsSend(response.data)
                                                         ).catch(
@@ -559,12 +568,21 @@ client.on('message', async (msg) => {
                                                     || !splittedMsg[3].includes('/reels/') 
                                                     || !splittedMsg[3].includes('/video/') ){
                                                         
-                                                        const instaLink = splittedMsg[3].split('?')[0];
-                                                        
-                                                        const instaUsername = instaLink.replaceAll(
-                                                            '/profilecard/',
-                                                            ''
-                                                        ).split('/').pop();  
+                                                        let instaLink;
+                                                        let instaUsername;
+                                                        if (splittedMsg[3].includes('/profilecard/')){
+                                                            instaLink = splittedMsg[3].split('?')[0];
+                                                            instaUsername = instaLink.replaceAll(
+                                                                '/profilecard/',
+                                                                ''
+                                                            ).split('/').pop();  
+                                                        } else {
+                                                            instaLink = splittedMsg[3].replaceAll(
+                                                                '/?',
+                                                                '?'
+                                                            ).split('?')[0];
+                                                            instaUsername = instaLink.split('/').pop();  
+                                                        } 
                                             
                                                         await updateClientData(splittedMsg[0].toUpperCase(), instaUsername, "insta2").then(
                                                             response => logsSend(response.data)
@@ -735,11 +753,21 @@ client.on('message', async (msg) => {
                                         || !splittedMsg[3].includes('/reels/') 
                                         || !splittedMsg[3].includes('/video/') ){
                                             
-                                            const instaLink = splittedMsg[3].split('?')[0];
-                                            const instaUsername = instaLink.replaceAll(
-                                                '/profilecard/',
-                                                ''
-                                            ).split('/').pop();  
+                                            let instaLink;
+                                            let instaUsername;
+                                            if (splittedMsg[3].includes('/profilecard/')){
+                                                instaLink = splittedMsg[3].split('?')[0];
+                                                instaUsername = instaLink.replaceAll(
+                                                    '/profilecard/',
+                                                    ''
+                                                ).split('/').pop();  
+                                            } else {
+                                                instaLink = splittedMsg[3].replaceAll(
+                                                    '/?',
+                                                    '?'
+                                                ).split('?')[0];
+                                                instaUsername = instaLink.split('/').pop();  
+                                            }  
                                 
                                             await updateUsername(
                                                 splittedMsg[0].toUpperCase(), 
@@ -1511,8 +1539,17 @@ client.on('message', async (msg) => {
                 }
             //if(splittedMsg[1].toLowerCase()......
             } else {
-                const contact = await msg.getContact();
-                logsSave(contact.number+" >>> "+msg.body);
+                
+                const chatMsg = await msg.getChat(); //this catch message data
+                chatMsg.sendSeen(); //this send seen by bot whatsapp
+                chatMsg.sendStateTyping(); //this create bot typing state 
+               
+                logsUserSend(msg.from, 
+`Maaf, Saya adalah Bot Engine untuk transaksi data Cicero Management System,
+
+Saya hanya merespons sesuai format pesan yang sudah ditentukan, 
+
+Silahkan hubungi Operator yang ditunjuk untuk pertanyaan maupun tutorial.`);
             } // if(splittedMsg.length....
         } //if(msg.status....
     } catch (error) { //Catching the Error Request
