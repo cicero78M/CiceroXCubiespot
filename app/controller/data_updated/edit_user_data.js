@@ -130,27 +130,21 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                   );
                   
                 }
-              case "6281235114745":
-                {
-    
-                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-  
-                  await myData(clientName, idKey).then(
-
-                    response => resolve(response)
-                    
-                  ).catch(
-
-                    error => reject(error)
-
-                  );
-                }             
                 
               default:
                 {
                   if  (!phoneList.includes(phone)) {
-                    if (userData.WHATSAPP === ""){
-                      logsSave("phone is null");
+                      
+                    logsSave("phone is null");
+                    if (phone === "6281235114745"){
+                      writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+          
+                      await myData(clientName, idKey).then(
+                        response => resolve(response)
+                      ).catch(
+                        error => reject(error)
+                      );
+                    } else {
                       userData.WHATSAPP = encrypted(phone);
   
                       writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
@@ -160,22 +154,30 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       ).catch(
                         error => reject(error)
                       );
+                    }
+
+                  } else {   
+
+                    if (phone === "6281235114745"){
+  
+                      writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+          
+                      await myData(clientName, idKey).then(
+                        response => resolve(response)
+                      ).catch(
+                        error => reject(error)
+                      );
                     } else {
+
                       data = {
-                        data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                        data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
                         state: true,
                         code: 201
                       };
                       reject (data);
 
-                    }
-                  } else {             
-                    data = {
-                      data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
-                      state: true,
-                      code: 201
-                    };
-                    reject (data);
+                    }       
+
                   }
                 }
             }
