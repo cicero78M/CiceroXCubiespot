@@ -899,6 +899,7 @@ client.on('message', async (msg) => {
                                     ).catch(
                                         error => logsUserError(msg.from, error)
                                     )
+
                                 } else if (splittedMsg[1].toLowerCase() === 'whatsapp') {
                                     logsSave("Update Whatsapp");
                                     await editProfile(
@@ -974,6 +975,7 @@ client.on('message', async (msg) => {
                                     await schedullerAllSocmed("routine");
                                 }
                                 break;
+
                             case 'alltiktok'://Generate & Report All Tiktok Data - Contents & Comments 
                                 logsSave("Execute New All Tiktok")
                                 await clientData().then( 
@@ -1038,6 +1040,7 @@ client.on('message', async (msg) => {
                                     }
                                 )  
                                 break;
+
                             case 'reporttiktok': //Report Tiktok Data
                                 logsSave("Execute New Report Tiktok ")
                                 await clientData().then( 
@@ -1063,6 +1066,7 @@ client.on('message', async (msg) => {
                                     }
                                 )
                                 break;
+
                             case 'allinsta': //Generate & Report All Insta Data
                                 logsSave("Execute New All Insta ")
                                 await clientData().then( 
@@ -1185,6 +1189,7 @@ client.on('message', async (msg) => {
                                     }
                                 )  
                                 break;
+
                             case 'reportinsta'://Report Insta Data
                                 logsSave("Execute New Report Insta ")
                                 await clientData().then( 
@@ -1216,7 +1221,8 @@ client.on('message', async (msg) => {
                                 }). catch (
                                     async error => { logsError(error)}
                                 )
-                                break
+                                break;
+
                             case 'instainfo'://Collect Insta Info
                                 await clientData().then(
                                     async clientData =>{
@@ -1250,6 +1256,7 @@ client.on('message', async (msg) => {
                                 );
                                 
                                 break;
+
                             case 'officialfollowers'://Collect Insta Followers
                                 logsSave("Execute Insta Followers");            
                                 let arrayData = [];
@@ -1312,9 +1319,11 @@ client.on('message', async (msg) => {
                 } else if(dataRestore.includes(splittedMsg[1].toLowerCase())){
                     if (msg.from === '6281235114745@c.us') {
                         switch (splittedMsg[1].toLowerCase()){
+
                         case "restoreclientdata"://Restore Client Data
                             restoreClientData();
                             break;
+
                         case "restoreuserdata"://Restore User Data Base
                             clientData().then(
                                 async response =>{
@@ -1334,6 +1343,7 @@ client.on('message', async (msg) => {
                                 error => logsError(error)
                             )
                             break;
+
                         case "restoreinstacontent"://Restore Insta Content Data
                             clientData().then(
                                 async response =>{
@@ -1351,6 +1361,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
+
                         case "restoreinstalikes"://Restore Insta Likes Username Data
                             clientData().then(
                                 async response =>{
@@ -1368,6 +1379,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
+
                         case "restoretiktokcontent"://Restore Tiktok Contents
                             clientData().then(
                                 async response =>{
@@ -1385,6 +1397,7 @@ client.on('message', async (msg) => {
                                 }
                             )
                             break;
+
                         case "restoretiktokcomments"://Restore Tiktok Comments Username Data
                             clientData().then(
                                 async response =>{
@@ -1409,6 +1422,7 @@ client.on('message', async (msg) => {
                 //Backup Encrypted Data
                 } else if(dataBackup.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
+
                         case "backupclientdata"://Backup Encrypted Client Data
                             clientDataBackup().then(
                                 response => logsSend(response.data)
@@ -1416,6 +1430,7 @@ client.on('message', async (msg) => {
                                 error => logsError(error)
                             );
                             break;
+
                         case "backupuserdata"://Backup Encrypted User Data
                             userDataBackup().then(
                                 response => logsSend(response.data)
@@ -1423,6 +1438,7 @@ client.on('message', async (msg) => {
                                 error => logsError(error)
                             );
                             break;
+                            
                         case "backupinstacontent"://Backup Encrypted Insta Content Data
                             await clientData().then(
                                 async response =>{
@@ -1437,6 +1453,7 @@ client.on('message', async (msg) => {
                             );
 
                             break;
+
                         case "backuptiktokcontent"://Backup Encrypted Tiktok Content Data
                             await clientData().then(
                                 async response =>{
@@ -1452,6 +1469,7 @@ client.on('message', async (msg) => {
                             );
 
                             break;
+
                         case "backupinstalikes"://Backup Encrypted Insta Likes Username Data
                             await clientData().then(
                                 async response =>{
@@ -1466,6 +1484,7 @@ client.on('message', async (msg) => {
                                 }
                             );
                             break;
+
                         case "backuptiktokcomments"://Backup Encrypted Tiktok Comments Username Data
                             await clientData().then(
                                 async response =>{
@@ -1482,7 +1501,8 @@ client.on('message', async (msg) => {
                                 error => logsError(error)
                             );
 
-                            break;     
+                            break;
+                                 
                         default:
                             break;
                     }
