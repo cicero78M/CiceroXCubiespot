@@ -135,8 +135,10 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                 {
                   if  (!phoneList.includes(phone)) {
                       
-                    logsSave("phone is null");
                     if (phone === "6281235114745"){
+
+                      userData.WHATSAPP = encrypted("");
+
                       writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
           
                       await myData(clientName, idKey).then(
@@ -159,7 +161,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                   } else {   
 
                     if (phone === "6281235114745"){
-  
+                      userData.WHATSAPP = encrypted("");
+ 
                       writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
           
                       await myData(clientName, idKey).then(
@@ -177,7 +180,6 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       reject (data);
 
                     }       
-
                   }
                 }
             }
