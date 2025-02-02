@@ -65,15 +65,18 @@ import { restoreTiktokComments } from './app/controller/data_restore/restore_tik
 import { usernameInfo } from './app/controller/read_data/username_info.js';
 import { mkdirSync, writeFileSync } from "fs";
 
-
 //.env
 const private_key = process.env;
 
 // Routing Port 
 const port = private_key.EXPRESS_PORT;
 
+app.get('/', function (req, res) {
+    res.send('Hello World')
+  });
+
 app.listen(port, () => {
-    console.log(`Cicero System Start listening on port >>> ${port}`)
+    logsSave(`Cicero System Start listening on port >>> ${port}`)
 });
 
 // WWEB JS Client Constructor
@@ -84,7 +87,7 @@ export const client = new Client({
 });
 
 // On WWEB Client Initializing
-console.log('System Initializing...');
+logsSave('System Initializing...');
 client.initialize();
 
 // On WWeB Authenticate Checking
@@ -110,7 +113,7 @@ client.on('qr', qr => {
 // On Reject Calls
 let rejectCalls = true;
 client.on('call', async (call) => {
-    console.log('Call received, rejecting. GOTO Line 261 to disable', call);
+    logsSave('Call received, rejecting. GOTO Line 261 to disable', call);
     if (rejectCalls) await call.reject();
 });
 
