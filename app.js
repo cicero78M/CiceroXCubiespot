@@ -1552,8 +1552,10 @@ client.on('message', async (msg) => {
                     logsSave("Group Messages");
 
                 } else if (msg.isGif){
+                    logsSave("Gif Recieved");
+
+                } else if(msg.type === 'sticker'){
                     logsSave("Sticker Recieved");
-                   
                 } else {
                         
                     logsUserSend(msg.from, 
