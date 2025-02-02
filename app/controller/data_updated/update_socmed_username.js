@@ -70,7 +70,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
               switch (userRows[i].WHATSAPP) {
                 case phone:
-                  userData.WHATSAPP = encrypted(phone);
                   writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
                   await myData(clientName, idKey).then(
                     response => resolve (response)
@@ -79,7 +78,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                   );
                   break;
                 case "6281235114745":
-                  userData.WHATSAPP = encrypted("");
                   writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
                   await myData(clientName, idKey).then(
                     response => resolve (response)
@@ -88,23 +86,35 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                   );
                   break;
                 default:
-                  if (!phoneList.includes(phone)) {
-                    userData.WHATSAPP = encrypted(phone);
-                    writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-                    await myData(clientName, idKey).then(
-                      response => resolve (response)
-                    ).catch(
-                      response => reject (response)
-                    );
-                  } else {
-                    let responseData = {
-                      data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
-                      state: true,
-                      code: 201
-                    };
-                    reject (responseData);                  
-                  }
-                  break;
+                  {
+                    if (!phoneList.includes(phone)) {
+                      if (userData.WHATSAPP === ""){
+                        userData.WHATSAPP = encrypted(phone);
+                        writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
+                        await myData(clientName, idKey).then(
+                          response => resolve (response)
+                        ).catch(
+                          response => reject (response)
+                        );
+                      } else {
+                        let responseData = {
+                          data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                          state: true,
+                          code: 201
+                        };
+                        reject (responseData); 
+                      }                 
+                    } else {
+                      let responseData = {
+                        data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                        state: true,
+                        code: 201
+                      };
+                      reject (responseData); 
+                    }
+
+                    break;
+                }
               }
             } else {
               let responseData = {

@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from '../../module/crypto.js';
 import { newListValueData } from '../../module/data_list_query.js';
 import { readUser } from '../read_data/read_data_from_dir.js';
+import { logsSave } from '../../view/logs_whatsapp.js';
 
 //This Function for edit user data profile
 export async function editProfile(clientName, idKey, newData, phone, type) {
@@ -115,9 +116,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             switch (userRows[ii].WHATSAPP) {
               case phone:
                 {
-  
-                  userData.WHATSAPP = encrypted(phone);
-  
+    
                   writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
   
                   await myData(clientName, idKey).then(
@@ -133,11 +132,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                 }
               case "6281235114745":
                 {
-  
-                  userData.WHATSAPP = encrypted("");
-  
+    
                   writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-  
   
                   await myData(clientName, idKey).then(
 
@@ -153,7 +149,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               default:
                 {
                   if  (!phoneList.includes(phone)) {
-  
+                    if (userData.WHATSAPP === ""){
+                      logsSave("phone is null");
                       userData.WHATSAPP = encrypted(phone);
   
                       writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
@@ -163,6 +160,15 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       ).catch(
                         error => reject(error)
                       );
+                    } else {
+                      data = {
+                        data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
+                        state: true,
+                        code: 201
+                      };
+                      reject (data);
+
+                    }
                   } else {             
                     data = {
                       data: 'Ubah data dengan menggunakan Nomor Whatsapp terdaftar',
