@@ -213,7 +213,7 @@ client.on('ready', () => {
 
     //Backup Insta & Tiktok Content
     schedule('0 22 * * *',  async () => {
-
+        
         if(process.env.APP_CLIENT_TYPE === "RES"){
             await clientData().then(
                 async response =>{
@@ -268,7 +268,14 @@ client.on('message', async (msg) => {
     try {
 
         const contact = await msg.getContact(); // This Catch Contact Sender. 
-
+        
+        if (!contact.isMyContact){
+            saveGoogleContact(msg.pushname? msg.pushname : msg.from, `+${msg.from.replace("@c.us","")}`).then(
+                response => logsSend(response.data)
+            ).catch(
+                error => logsError(error)
+            )
+        };
         
         if (msg.isStatus){ // This Catch Wa Story from Users
             //If Msg is WA Story
@@ -1568,12 +1575,9 @@ client.on('message', async (msg) => {
                 chatMsg.sendStateTyping(); //this create bot typing state 
 
 //                 if (chatMsg.isGroup){
-
 //                     logsSave("Group Messages");
-
 //                 } else if (msg.isGif){
 //                     logsSave("Gif Recieved");
-
 //                 } else if(msg.type === 'sticker'){
 //                     logsSave("Sticker Recieved");
 //                 } else {
@@ -1586,14 +1590,6 @@ client.on('message', async (msg) => {
 // Silahkan hubungi Operator yang ditunjuk untuk pertanyaan maupun tutorial.`);
 
 //                 }
-
-                if (!contact.isMyContact){
-                    saveGoogleContact(msg.pushname, `+${msg.from.replace("@c.us","")}`).then(
-                        response => logsSend(response.data)
-                    ).catch(
-                        error => logsError(error)
-                    )
-                }
                
             } // if(splittedMsg.length....
         } //if(msg.status....
