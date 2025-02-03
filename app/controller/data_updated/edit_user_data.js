@@ -70,7 +70,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
           
         // if(!isContact){        
         //   saveGoogleContact(userRows[ii].NAMA, clientName, phone);
-        }
+        // }
         if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
   
           userData.ID_KEY = encrypted(userRows[ii].ID_KEY);
