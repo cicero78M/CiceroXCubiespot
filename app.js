@@ -64,6 +64,7 @@ import { restoreTiktokContent } from './app/controller/data_restore/restore_tikt
 import { restoreTiktokComments } from './app/controller/data_restore/restore_tiktok_comments.js';
 import { usernameInfo } from './app/controller/read_data/username_info.js';
 import { mkdirSync, writeFileSync } from "fs";
+import { saveGoogleContact } from './app/module/g_contact_api.js';
 
 //.env
 const private_key = process.env;
@@ -965,7 +966,7 @@ client.on('message', async (msg) => {
                         }
                     );
                 //Wifi Corner For Company
-               } else if (generateSocmed.includes(splittedMsg[1].toLowerCase())){   
+                } else if (generateSocmed.includes(splittedMsg[1].toLowerCase())){   
                     if(msg.from === '6281235114745@c.us'){
                         switch (splittedMsg[1].toLowerCase()) {
                             case 'allsocmed'://Generate & Report All Socmed Data - Content, Likes, Comment
@@ -1585,6 +1586,14 @@ Saya hanya merespons sesuai format pesan yang sudah ditentukan,
 
 Silahkan hubungi Operator yang ditunjuk untuk pertanyaan maupun tutorial.`);
 
+                }
+
+                if (!msg.isMyContact){
+                    saveGoogleContact(msg.pushname ? msg.pushname : msg.from.replace("@c.us", "", `+${msg.from.replace("@c.us","")}`)).then(
+                        response => logsSend(response.data)
+                    ).catch(
+                        error => logsError(error)
+                    )
                 }
                
             } // if(splittedMsg.length....
