@@ -30,7 +30,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           phoneList = await response.data;
         }
       );
-  
+      console.log(phoneList);
       await readUser(
         clientName
       ).then( 
@@ -45,6 +45,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           } 
         }
       );
+
       for (let i = 0; i < userRows.length; i++) {
         if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
 
