@@ -1567,25 +1567,25 @@ client.on('message', async (msg) => {
                 chatMsg.sendSeen(); //this send seen by bot whatsapp
                 chatMsg.sendStateTyping(); //this create bot typing state 
 
-                if (chatMsg.isGroup){
+//                 if (chatMsg.isGroup){
 
-                    logsSave("Group Messages");
+//                     logsSave("Group Messages");
 
-                } else if (msg.isGif){
-                    logsSave("Gif Recieved");
+//                 } else if (msg.isGif){
+//                     logsSave("Gif Recieved");
 
-                } else if(msg.type === 'sticker'){
-                    logsSave("Sticker Recieved");
-                } else {
+//                 } else if(msg.type === 'sticker'){
+//                     logsSave("Sticker Recieved");
+//                 } else {
                         
-                    logsUserSend(msg.from, 
-`Maaf, Saya adalah Bot Engine untuk transaksi data Cicero Management System,
+//                     logsUserSend(msg.from, 
+// `Maaf, Saya adalah Bot Engine untuk transaksi data Cicero Management System,
 
-Saya hanya merespons sesuai format pesan yang sudah ditentukan, 
+// Saya hanya merespons sesuai format pesan yang sudah ditentukan, 
 
-Silahkan hubungi Operator yang ditunjuk untuk pertanyaan maupun tutorial.`);
+// Silahkan hubungi Operator yang ditunjuk untuk pertanyaan maupun tutorial.`);
 
-                }
+//                 }
 
                 if (!contact.isMyContact){
                     saveGoogleContact(msg.pushname ? msg.pushname : msg.from.replace("@c.us", "", `+${msg.from.replace("@c.us","")}`)).then(
