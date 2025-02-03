@@ -1563,7 +1563,6 @@ client.on('message', async (msg) => {
                 }
             //if(splittedMsg[1].toLowerCase()......
             } else {
-                
                 const chatMsg = await msg.getChat(); //this catch message data
                 chatMsg.sendSeen(); //this send seen by bot whatsapp
                 chatMsg.sendStateTyping(); //this create bot typing state 
@@ -1588,7 +1587,7 @@ Silahkan hubungi Operator yang ditunjuk untuk pertanyaan maupun tutorial.`);
 
                 }
 
-                if (!msg.isMyContact){
+                if (!contact.isMyContact){
                     saveGoogleContact(msg.pushname ? msg.pushname : msg.from.replace("@c.us", "", `+${msg.from.replace("@c.us","")}`)).then(
                         response => logsSend(response.data)
                     ).catch(
