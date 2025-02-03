@@ -18,6 +18,8 @@ const { textSync } = figlet;
 
 //Banner
 import { set } from 'simple-banner';
+//Files
+import { mkdirSync, writeFileSync } from "fs";
 
 //Local Dependency
 import { myData } from './app/controller/read_data/read_my_data.js';
@@ -63,7 +65,6 @@ import { restoreInstaLikes } from './app/controller/data_restore/restore_insta_l
 import { restoreTiktokContent } from './app/controller/data_restore/restore_tiktok_content.js';
 import { restoreTiktokComments } from './app/controller/data_restore/restore_tiktok_comments.js';
 import { usernameInfo } from './app/controller/read_data/username_info.js';
-import { mkdirSync, writeFileSync } from "fs";
 import { saveGoogleContact } from './app/module/g_contact_api.js';
 
 //.env

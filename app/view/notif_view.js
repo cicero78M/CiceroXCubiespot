@@ -26,7 +26,7 @@ _Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama 
 
 _Cicero System_`
                     );
-                  }, 10000);
+                  }, 30*1000);
                 }
             }
             
