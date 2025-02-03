@@ -17,8 +17,6 @@ export function saveGoogleContact(name, groups, phone) {
     
         try {
 
-            google.options({googleAuth});
-
             const people = google.people('v1');
             const contact = {
                 names: [{ givenName: name }],
@@ -27,7 +25,7 @@ export function saveGoogleContact(name, groups, phone) {
             }
 
             const response = people.people.createContact({
-                requestBody: contact
+                requestBody: contact, googleAuth
             });
        
             let data = {
