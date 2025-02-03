@@ -4,10 +4,11 @@ import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from '../../module/crypto.js';
 import { newListValueData } from '../../module/data_list_query.js';
 import { readUser } from '../read_data/read_data_from_dir.js';
-import { logsSave } from '../../view/logs_whatsapp.js';
+import { saveGoogleContact } from '../../module/g_contact_api.js';
+
 
 //This Function for edit user data profile
-export async function editProfile(clientName, idKey, newData, phone, type) {
+export async function editProfile(clientName, idKey, newData, phone, type, isContact) {
   return new Promise(async (resolve, reject) => {
     try {
       let data;
@@ -16,6 +17,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       let dataList = [];
       let phoneList = [];
       let userData = new Object();
+
+      
   
       await newListValueData(
         clientName, 
@@ -60,8 +63,14 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       ).catch(
         error => reject (error)
       );
+
   
       for (let ii = 0; ii < userRows.length; ii++) {
+
+          
+        if(!isContact){        
+          saveGoogleContact(userRows[ii].NAMA, clientName, phone);
+        }
         if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
   
           userData.ID_KEY = encrypted(userRows[ii].ID_KEY);
@@ -193,6 +202,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
           }
         }
       }
+  
       if (!isDataExist) {
         data = {
           data: 'User Data with delegated ID_KEY Doesn\'t Exist',
@@ -201,6 +211,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
         };
         reject (data);
       }
+
+
     } catch (error) {
       data = {
         data: error,

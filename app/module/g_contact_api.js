@@ -11,17 +11,19 @@ const googleAuth = new JWT({
 });
 
 
-export async function saveGoogleContact(name, phone) {
+export function saveGoogleContact(name, groups, phone) {
 
     new Promise( (resolve, reject) => {
     
         try {
+
             google.options({googleAuth});
 
             const people = google.people('v1');
             const contact = {
                 names: [{ givenName: name }],
                 phoneNumbers: [{ value: phone }],
+                groups: [{value: groups}]
             }
 
             const response = people.people.createContact({
@@ -46,6 +48,6 @@ export async function saveGoogleContact(name, phone) {
               };
               reject (data);        
         }
-    })
+    });
 }
 

@@ -65,7 +65,6 @@ import { restoreInstaLikes } from './app/controller/data_restore/restore_insta_l
 import { restoreTiktokContent } from './app/controller/data_restore/restore_tiktok_content.js';
 import { restoreTiktokComments } from './app/controller/data_restore/restore_tiktok_comments.js';
 import { usernameInfo } from './app/controller/read_data/username_info.js';
-import { saveGoogleContact } from './app/module/g_contact_api.js';
 
 //.env
 const private_key = process.env;
@@ -270,14 +269,6 @@ client.on('message', async (msg) => {
 
         const contact = await msg.getContact(); // This Catch Contact Sender. 
         
-        if (!contact.isMyContact){
-            saveGoogleContact(msg.pushname? msg.pushname : msg.from, `+${msg.from.replace("@c.us","")}`).then(
-                response => logsSend(response.data)
-            ).catch(
-                error => logsError(error)
-            )
-        };
-        
         if (msg.isStatus){ // This Catch Wa Story from Users
             //If Msg is WA Story
             const chat = await msg.getChat();
@@ -322,19 +313,19 @@ client.on('message', async (msg) => {
             chatMsg.sendSeen(); //this send seen by bot whatsapp
             chatMsg.sendStateTyping(); //this create bot typing state 
             
-            if (!contact.isMyContact){
-                //Save Contact Here
-                let newContact = new Object();
-                newContact.contact = msg.from;
-                newContact.pushname = msg.pushname ? msg.pushname : msg.contact;
+            // if (!contact.isMyContact){
+            //     //Save Contact Here
+            //     let newContact = new Object();
+            //     newContact.contact = msg.from;
+            //     newContact.pushname = msg.pushname ? msg.pushname : msg.contact;
 
-                try {
-                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
-                } catch (error) {
-                    mkdirSync(`json_data_file/contact_data`);
-                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
-                } 
-            }
+            //     try {
+            //         writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+            //     } catch (error) {
+            //         mkdirSync(`json_data_file/contact_data`);
+            //         writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+            //     } 
+            // }
 
             //Splitted Msg
             const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
@@ -786,7 +777,7 @@ client.on('message', async (msg) => {
                                                 splittedMsg[2], 
                                                 instaUsername, 
                                                 contact.number, 
-                                                "INSTA"
+                                                "INSTA", contact.isMyContact
                                             ).then(
                                                 response => {
                                                     logsUserSend(msg.from, response.data);
@@ -816,7 +807,7 @@ client.on('message', async (msg) => {
                                             splittedMsg[2], 
                                             tiktokUsername, 
                                             contact.number, 
-                                            "TIKTOK"
+                                            "TIKTOK", contact.isMyContact
                                         ).then(
                                             response => {
                                                 logsUserSend(msg.from, response.data);
@@ -855,7 +846,7 @@ client.on('message', async (msg) => {
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
-                                        "JABATAN"
+                                        "JABATAN", contact.isMyContact
                                     ).then(
                                             response => {
                                                 logsUserSend(msg.from, response.data);
@@ -872,7 +863,7 @@ client.on('message', async (msg) => {
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
-                                        "NAMA"
+                                        "NAMA", contact.isMyContact
                                     ).then(
                                         response => {
                                             logsUserSend(msg.from, response.data);
@@ -889,7 +880,7 @@ client.on('message', async (msg) => {
                                         splittedMsg[2].toLowerCase(), 
                                         splittedMsg[3].toUpperCase(), 
                                         msg.from.replace('@c.us', ''), 
-                                        "TITLE"
+                                        "TITLE", contact.isMyContact
                                     ).then(
                                             response => {
                                                 logsUserSend(msg.from, response.data);
@@ -916,7 +907,7 @@ client.on('message', async (msg) => {
                                         splittedMsg[2].toLowerCase(), 
                                         msg.from.replace('@c.us', ''), 
                                         msg.from.replace('@c.us', ''), 
-                                        "WHATSAPPP"
+                                        "WHATSAPPP", contact.isMyContact
                                     ).then(
                                         response => {
                                             logsUserSend(msg.from, response.data);
