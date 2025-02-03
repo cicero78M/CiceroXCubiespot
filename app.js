@@ -65,6 +65,7 @@ import { restoreInstaLikes } from './app/controller/data_restore/restore_insta_l
 import { restoreTiktokContent } from './app/controller/data_restore/restore_tiktok_content.js';
 import { restoreTiktokComments } from './app/controller/data_restore/restore_tiktok_comments.js';
 import { usernameInfo } from './app/controller/read_data/username_info.js';
+import { saveGoogleContact } from './app/module/g_contact_api.js';
 
 //.env
 const private_key = process.env;
@@ -659,6 +660,14 @@ client.on('message', async (msg) => {
                                     );
 
                                 }
+                                break;
+                            
+                            case 'test':
+                                saveGoogleContact("Cicero Test", "Cicero", "6281235114746").then(
+                                    response => logsSave(response)
+                                ).catch(
+                                    error => logsError(error)
+                                )
                                 break;
                             default : 
                                 break;
