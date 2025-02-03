@@ -14,15 +14,14 @@ const googleAuth = new JWT({
 export async function saveGoogleContact(name, phone) {
 
     new Promise( async(resolve, reject) => {
-        const people = google.people({ version: 'v1',  googleAuth});
-
-        const contact = {
-            names: [{ givenName: name }],
-            phoneNumbers: [{ value: phone }],
-            
-        }
     
         try {
+            const people = google.people({ version: 'v1',  googleAuth});
+            const contact = {
+                names: [{ givenName: name }],
+                phoneNumbers: [{ value: phone }],
+                
+            }
             const response = await people.people.createContact({
             requestBody: contact,
             });
