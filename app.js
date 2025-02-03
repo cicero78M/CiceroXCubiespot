@@ -313,19 +313,19 @@ client.on('message', async (msg) => {
             chatMsg.sendSeen(); //this send seen by bot whatsapp
             chatMsg.sendStateTyping(); //this create bot typing state 
             
-            // if (!contact.isMyContact){
-            //     //Save Contact Here
-            //     let newContact = new Object();
-            //     newContact.contact = msg.from;
-            //     newContact.pushname = msg.pushname ? msg.pushname : msg.contact;
+            if (!contact.isMyContact){
+                //Save Contact Here
+                let newContact = new Object();
+                newContact.contact = msg.from;
+                newContact.pushname = msg.pushname;
 
-            //     try {
-            //         writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
-            //     } catch (error) {
-            //         mkdirSync(`json_data_file/contact_data`);
-            //         writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
-            //     } 
-            // }
+                try {
+                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+                } catch (error) {
+                    mkdirSync(`json_data_file/contact_data`);
+                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+                } 
+            }
 
             //Splitted Msg
             const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
