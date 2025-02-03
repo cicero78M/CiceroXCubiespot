@@ -26,7 +26,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
       await newListValueData(
         clientName, 
-        "WHASTAPP"
+        "WHATSAPP"
       ).then(
         async response =>{
           phoneList = await response.data;
@@ -36,7 +36,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           reject (error);   
         } 
       );
-      
+
       console.log(phoneList);
 
       await readUser(

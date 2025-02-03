@@ -32,7 +32,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
   
       await newListValueData(
         clientName, 
-        "WHASTAPP"
+        "WHATSAPP"
       ).then(
         async response =>{
           phoneList = await response.data;
