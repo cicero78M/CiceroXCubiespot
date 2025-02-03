@@ -56,9 +56,9 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
 
           if (userRows[i].STATUS === "TRUE") {
 
-            if(!isContact){        
-              saveGoogleContact(userRows[i].NAMA, clientName, phone);
-            }
+            // if(!isContact){        
+            //   saveGoogleContact(userRows[i].NAMA, clientName, phone);
+            // }
             
             userData.ID_KEY = encrypted(userRows[i].ID_KEY);
             userData.NAMA = encrypted(userRows[i].NAMA);

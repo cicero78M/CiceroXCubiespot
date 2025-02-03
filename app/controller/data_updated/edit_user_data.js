@@ -68,8 +68,8 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
       for (let ii = 0; ii < userRows.length; ii++) {
 
           
-        if(!isContact){        
-          saveGoogleContact(userRows[ii].NAMA, clientName, phone);
+        // if(!isContact){        
+        //   saveGoogleContact(userRows[ii].NAMA, clientName, phone);
         }
         if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
   
