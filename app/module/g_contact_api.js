@@ -1,6 +1,5 @@
 //Google Spreadsheet
 import { JWT } from 'google-auth-library';
-
 import { google } from 'googleapis';
 
 const googleAuth = new JWT({
@@ -45,8 +44,5 @@ export async function saveGoogleContact(name, phone) {
               reject (data);        
         }
     })
-
-
-    
 }
 
