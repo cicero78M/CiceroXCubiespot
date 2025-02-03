@@ -33,7 +33,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         }
       );
       console.log(phoneList);
-      
+
       await readUser(
         clientName
       ).then( 
@@ -61,13 +61,58 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             userData.JABATAN = encrypted(userRows[i].JABATAN);
             userData.STATUS = encrypted(userRows[i].STATUS);
             userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
-              
-            if (type === "INSTA") {                  
-              userData.TIKTOK = encrypted(userRows[i].TIKTOK);
-              userData.INSTA = encrypted(username);
-            } else if (type === "TIKTOK") {
-              userData.INSTA = encrypted(userRows[i].INSTA);
-              userData.TIKTOK = encrypted(username);
+
+            if (!usernameList.includes(username)){
+                  if (type === "INSTA") {                  
+                  userData.TIKTOK = encrypted(userRows[i].INSTA);
+                  userData.INSTA = encrypted(username);
+                
+              } else if (type === "TIKTOK") {
+                  userData.TIKTOK = encrypted(userRows[i].INSTA);
+                  userData.INSTA = encrypted(username);
+                
+              }
+
+            } else {
+
+              if (type === "INSTA") {                  
+                if(username === userRows[i].INSTA){
+
+                  let responseData = {
+                    data: 'Username yang anda masukan sama dengan data yang sudah tersimpan',
+                    state: true,
+                    code: 201
+                  };
+                  reject (responseData);
+                  break;
+                } else {
+                  let responseData = {
+                    data: 'Username sudah di gunakan oleh akun lainnya',
+                    state: true,
+                    code: 201
+                  };
+                  reject (responseData);
+                  break;
+                }
+              } else if (type === "TIKTOK") {
+                if(username === userRows[i].TIKTOK){
+                  let responseData = {
+                    data: 'Username yang anda masukan sama dengan data yang sudah tersimpan',
+                    state: true,
+                    code: 201
+                  };
+                  reject (responseData);
+                  break;
+                } else {
+                  let responseData = {
+                    data: 'Username sudah di gunakan oleh akun lainnya',
+                    state: true,
+                    code: 201
+                  };
+                  reject (responseData);
+                  break;
+                }
+              }
             }
 
             switch (userRows[i].WHATSAPP) {
@@ -102,7 +147,6 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                       );
                     }                 
                   } else {
-
                     if (phone === "6281235114745") {
                       userData.WHATSAPP = encrypted("");
                       writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
@@ -142,6 +186,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         };
         reject (responseData);
       }
+
 
     } catch (error) { 
       let responseData = {
