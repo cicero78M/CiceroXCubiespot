@@ -19,6 +19,7 @@ export async function saveGoogleContact(name, phone) {
         const contact = {
             names: [{ givenName: name }],
             phoneNumbers: [{ value: phone }],
+            
         }
     
         try {
