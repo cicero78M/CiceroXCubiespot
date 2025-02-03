@@ -1588,7 +1588,7 @@ client.on('message', async (msg) => {
 //                 }
 
                 if (!contact.isMyContact){
-                    saveGoogleContact(msg.pushname ? msg.pushname : msg.from.replace("@c.us", "", `+${msg.from.replace("@c.us","")}`)).then(
+                    saveGoogleContact(msg.pushname, `+${msg.from.replace("@c.us","")}`).then(
                         response => logsSend(response.data)
                     ).catch(
                         error => logsError(error)
