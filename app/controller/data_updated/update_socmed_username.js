@@ -5,7 +5,7 @@ import { encrypted } from "../../module/crypto.js";
 import { logsSave } from "../../view/logs_whatsapp.js";
 import { readUser } from "../read_data/read_data_from_dir.js";
 
-export async function updateUsername(clientName, idKey, username, phone, type) {
+export async function updateUsername(clientName, idKey, username, phone, type, isContact) {
 
   let idExist = false;
   let usernameList = new Array();
@@ -54,6 +54,10 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
 
           if (userRows[i].STATUS === "TRUE") {
+
+            if(!isContact){        
+              saveGoogleContact(userRows[i].NAMA, clientName, phone);
+            }
             
             userData.ID_KEY = encrypted(userRows[i].ID_KEY);
             userData.NAMA = encrypted(userRows[i].NAMA);
