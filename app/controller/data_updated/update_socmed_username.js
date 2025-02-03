@@ -15,15 +15,13 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
 
   return new Promise(async (resolve, reject) => {
     try {
-    
+      //Get Username List
       await newListValueData(clientName, type).then(
         async response => {
           usernameList = await response.data;
         }
       );
-
-      console.log(usernameList)
-
+      //Get Whatsapp  List
       await newListValueData(
         clientName, 
         "WHATSAPP"
@@ -36,9 +34,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
           reject (error);   
         } 
       );
-
-      console.log(phoneList);
-
+      //Get User Data
       await readUser(
         clientName
       ).then( 
