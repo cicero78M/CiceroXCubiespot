@@ -313,7 +313,7 @@ client.on('message', async (msg) => {
             chatMsg.sendSeen(); //this send seen by bot whatsapp
             chatMsg.sendStateTyping(); //this create bot typing state 
             
-            if (!contact.isMyContact){
+            if (!contact.isMyContact && !contact.isGroup){
                 //Save Contact Here
                 let newContact = new Object();
                 newContact.contact = msg.from;
