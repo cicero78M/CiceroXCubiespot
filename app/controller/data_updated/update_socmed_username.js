@@ -8,9 +8,9 @@ import { readUser } from "../read_data/read_data_from_dir.js";
 export async function updateUsername(clientName, idKey, username, phone, type) {
 
   let idExist = false;
-  let usernameList = [];
-  let userRows = [];
-  let phoneList = [];
+  let usernameList = new Array();
+  let userRows = new Array();
+  let phoneList = new Array();
   let userData = new Object();
 
   return new Promise(async (resolve, reject) => {
@@ -33,6 +33,7 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         }
       );
       console.log(phoneList);
+      
       await readUser(
         clientName
       ).then( 
