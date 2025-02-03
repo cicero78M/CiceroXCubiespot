@@ -22,6 +22,8 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         }
       );
 
+      console.log(usernameList)
+
       await newListValueData(
         clientName, 
         "WHASTAPP"
