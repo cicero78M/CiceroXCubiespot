@@ -37,7 +37,7 @@ export async function saveGoogleContact(name, phone) {
 
         } catch (error) {
 
-            data = {
+            let data = {
                 data: error,
                 message:"Save Google Contact Error",
                 state: false,
