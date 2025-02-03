@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from "../../module/crypto.js";
 import { logsSave } from "../../view/logs_whatsapp.js";
 import { readUser } from "../read_data/read_data_from_dir.js";
+import { saveGoogleContact } from "../../module/g_contact_api.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type, isContact) {
 
