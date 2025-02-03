@@ -10,19 +10,22 @@ const googleAuth = new JWT({
   scopes: ['https://www.googleapis.com/auth/contacts'],
 });
 
+
 export async function saveGoogleContact(name, phone) {
 
-    new Promise( async(resolve, reject) => {
+    new Promise( (resolve, reject) => {
     
         try {
-            const people = google.people({ version: 'v1',  googleAuth});
+            google.options({googleAuth});
+
+            const people = google.people('v1');
             const contact = {
                 names: [{ givenName: name }],
                 phoneNumbers: [{ value: phone }],
-                
             }
-            const response = await people.people.createContact({
-            requestBody: contact,
+
+            const response = people.people.createContact({
+                requestBody: contact
             });
        
             let data = {
