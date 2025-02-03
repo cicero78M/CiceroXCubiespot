@@ -31,7 +31,12 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
         async response =>{
           phoneList = await response.data;
         }
+      ).catch(
+        error =>{
+          reject (error);   
+        } 
       );
+      
       console.log(phoneList);
 
       await readUser(
@@ -63,28 +68,23 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
             userData.EXCEPTION = encrypted(userRows[i].EXCEPTION);
 
             if (!usernameList.includes(username)){
-                  if (type === "INSTA") {                  
-                  userData.TIKTOK = encrypted(userRows[i].INSTA);
-                  userData.INSTA = encrypted(username);
-                
+              if (type === "INSTA") {                  
+                userData.TIKTOK = encrypted(userRows[i].INSTA);
+                userData.INSTA = encrypted(username);
               } else if (type === "TIKTOK") {
-                  userData.TIKTOK = encrypted(userRows[i].INSTA);
-                  userData.INSTA = encrypted(username);
-                
+                userData.TIKTOK = encrypted(userRows[i].INSTA);
+                userData.INSTA = encrypted(username);
               }
-
             } else {
-
               if (type === "INSTA") {                  
                 if(username === userRows[i].INSTA){
+                  
+                  await myData(clientName, idKey).then(
+                    response => resolve (response)
+                  ).catch(
+                    response => reject (response)
+                  );
 
-                  let responseData = {
-                    data: 'Username yang anda masukan sama dengan data yang sudah tersimpan',
-                    state: true,
-                    code: 201
-                  };
-                  reject (responseData);
-                  break;
                 } else {
                   let responseData = {
                     data: 'Username sudah di gunakan oleh akun lainnya',
@@ -96,13 +96,13 @@ export async function updateUsername(clientName, idKey, username, phone, type) {
                 }
               } else if (type === "TIKTOK") {
                 if(username === userRows[i].TIKTOK){
-                  let responseData = {
-                    data: 'Username yang anda masukan sama dengan data yang sudah tersimpan',
-                    state: true,
-                    code: 201
-                  };
-                  reject (responseData);
-                  break;
+                  
+                  await myData(clientName, idKey).then(
+                    response => resolve (response)
+                  ).catch(
+                    response => reject (response)
+                  );
+
                 } else {
                   let responseData = {
                     data: 'Username sudah di gunakan oleh akun lainnya',

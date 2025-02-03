@@ -15,7 +15,6 @@ export async function newListValueData( clientName, keyValue) {
                         
                         if (!listValue.includes(userData[i][keyValue])){
                             listValue.push(userData[i][keyValue]); 
-
                         }
                         
                         data = {
