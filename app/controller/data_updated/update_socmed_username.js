@@ -70,10 +70,11 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
 
             if (!usernameList.includes(username)){
               if (type === "INSTA") {                  
-                userData.TIKTOK = encrypted(userRows[i].INSTA);
-                userData.INSTA = encrypted(username);
+                userData.INSTA = encrypted(userRows[i].INSTA);
+                userData.TIK\
+                 = encrypted(username);
               } else if (type === "TIKTOK") {
-                userData.TIKTOK = encrypted(userRows[i].INSTA);
+                userData.TIKTOK = encrypted(userRows[i].TIKTOK);
                 userData.INSTA = encrypted(username);
               }
             } else {
