@@ -30,10 +30,6 @@ export async function instaContentBackup(clientValue) {
             let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
             let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
 
-            // console.log(itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}));
-            // console.log(localDate);
-
-
             if ( dateNow === localDate) {
                 shortcodeList.push(contentItems);
             }
