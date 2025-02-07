@@ -22,8 +22,6 @@ export async function restoreClientData() {
 
           console.log(process.env.APP_CLIENT_TYPE)
 
-          console.log(data[i])
-
           try {
 
             let clientData = new Object();
@@ -49,19 +47,12 @@ export async function restoreClientData() {
             } catch (error) {
 
               console.log("Fail")
-              // mkdirSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}`);
               writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
             } 
             
           } catch (error) {
             console.log(error);
           }
-
-
-          // if(decrypted(data[i].get("TYPE") === process.env.APP_CLIENT_TYPE)){
-
-
-          // }
         };
     });
 }
