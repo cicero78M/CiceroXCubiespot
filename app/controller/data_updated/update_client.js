@@ -50,7 +50,6 @@ export async function updateClientData(clientName, newvalue, type) {
                                 break;
                         }
 
-                        writeFileSync(`json_data_file/client_data/client_data.json`, JSON.stringify(clientRows));
                         writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientRows[i]));
 
                         data = {
