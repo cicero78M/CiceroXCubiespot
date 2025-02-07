@@ -8,7 +8,6 @@ export async function pushUserRes(clientName, sheetID) {
             await newRowsData(sheetID, clientName)
             .then(
                 async response =>{
-                    let client = [];
 
                     let responseList = response.data; 
                     

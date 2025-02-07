@@ -16,8 +16,19 @@ export async function myData(clientName, idKey) {
           let userRows = response.data;
           //Check if idKey Exist
           for (let i = 0; i < userRows.length; i++) {
-  
-            if (parseInt(userRows[i].ID_KEY) === parseInt(idKey)) {
+            
+            let sourceKey;
+            let targetKey;
+            
+            if(process.env.APP_CLIENT_TYPE === "RES"){
+              sourceKey = parseInt(userRows[i].ID_KEY);
+              targetKey = parseInt(idKey);
+            } else {
+              sourceKey = userRows[i].ID_KEY;
+              targetKey = idKey;
+            }
+    
+            if (sourceKey === targetKey) {
   
               isUserExist = true;
               let userRow = userRows[i];
