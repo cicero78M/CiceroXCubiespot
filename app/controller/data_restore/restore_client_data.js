@@ -23,9 +23,10 @@ export async function restoreClientData() {
 
           console.log(process.env.APP_CLIENT_TYPE)
 
-          if(decrypted(data[i].get("TYPE") === process.env.APP_CLIENT_TYPE)){
+          console.log(data[i])
 
-            console.log(data[i])
+
+          if(decrypted(data[i].get("TYPE") === process.env.APP_CLIENT_TYPE)){
 
             try {
 
