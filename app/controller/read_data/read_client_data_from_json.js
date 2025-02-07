@@ -1,4 +1,4 @@
-import { readFileSync  } from "fs";
+import { readdirSync, readFileSync  } from "fs";
 import { logsSave } from "../../view/logs_whatsapp.js";
 
 export async function clientData() {    
@@ -12,7 +12,13 @@ export async function clientData() {
             
             let clientList = [];
 
-            clientList = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
+            clientDir = JSON.parse(readdirSync('json_data_file/client_data'));
+
+            console.log(clientDir);
+
+
+
+            // clientList = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
             
             data = {
                 data: clientList,
