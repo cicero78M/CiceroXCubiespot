@@ -45,6 +45,8 @@ export async function restoreClientData() {
   
               try {
                 writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
+
+                console.leg("Success")
               } catch (error) {
                 mkdirSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}`);
                 writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
@@ -54,9 +56,6 @@ export async function restoreClientData() {
 
               console.log(error);
             }
-
-
-
           }
         };
     });
