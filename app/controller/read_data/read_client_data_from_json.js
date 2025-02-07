@@ -10,7 +10,7 @@ export async function clientData() {
     return new Promise(async (resolve, reject) => {
         try {
             
-            let clientList = [];
+            // let clientList = [];
 
             clientDir = JSON.parse(readdirSync('json_data_file/client_data'));
 

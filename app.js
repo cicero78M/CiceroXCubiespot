@@ -1519,23 +1519,26 @@ client.on('message', async (msg) => {
                     if (msg.from === '6281235114745@c.us') {
                         switch (splittedMsg[1].toLowerCase()) {
                             case "clientdataview":{
-                                await clientData().then(
-                                    async response =>{
-                                        let clientData = response.data;
+                                await clientData()
+                                
+                                // .then(
+                                //     async response =>{
+                                        
+                                //         let clientData = response.data;
 
-                                        for (let i = 0; i < clientData.length; i++){
-                                            await clientDataView(clientData[i]).then(
-                                                response => {
-                                                    logsSend(response.data)
-                                                }
-                                            ).catch(
-                                                error => logsError(error)
-                                            );
-                                        }
-                                    }
-                                ).catch (
-                                    error => logsError(error)
-                                );
+                                //         for (let i = 0; i < clientData.length; i++){
+                                //             await clientDataView(clientData[i]).then(
+                                //                 response => {
+                                //                     logsSend(response.data)
+                                //                 }
+                                //             ).catch(
+                                //                 error => logsError(error)
+                                //             );
+                                //         }
+                                //     }
+                                // ).catch (
+                                //     error => logsError(error)
+                                // );
                             }
                                 
                                 break;
