@@ -45,17 +45,15 @@ export async function restoreClientData() {
             try {
               writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
 
-              console.leg("Success")
+              console.log("Success")
             } catch (error) {
 
-              console.leg("Fail")
-
-              mkdirSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}`);
+              console.log("Fail")
+              // mkdirSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}`);
               writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
             } 
             
           } catch (error) {
-
             console.log(error);
           }
 
