@@ -1520,7 +1520,6 @@ client.on('message', async (msg) => {
                         switch (splittedMsg[1].toLowerCase()) {
                             case "clientdataview":{
                                 await clientData()
-                                
                                 .then(
                                     async response =>{
                                         

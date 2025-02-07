@@ -16,6 +16,8 @@ export async function clientData() {
 
             clientDir.forEach(element => {
 
+                console.log(element);
+
                 clientList.push(JSON.parse(readFileSync(`json_data_file/client_data/${element}`)));
                 
             });

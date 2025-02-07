@@ -7,7 +7,7 @@ export async function clientDataView(data) {
             
             logsSave("Collecting Client Data");
 
-            console.log();
+            console.log(data);
 
             if (decrypted(data.TYPE) === process.env.APP_CLIENT_TYPE){
 
