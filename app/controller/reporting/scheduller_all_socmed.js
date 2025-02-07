@@ -57,7 +57,35 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                 }           
                                             }
                                         ).catch(
-                                            error => logsError(error)
+                                            error => {
+                                                newReportTiktok(clientData[i]).then(
+                                                    async response =>{
+                                                        switch (timeSwitch){
+                                                            case 'report':                       
+                                                                await sendClientResponse(
+                                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                                    decrypted(clientData[i].SUPERVISOR),
+                                                                    decrypted(clientData[i].OPERATOR),
+                                                                    decrypted(clientData[i].GROUP), 
+                                                                    response, 
+                                                                    'REPORT TIKTOK'
+                                                                );                                            
+                                                                break;
+                                        
+                                                            case 'routine':
+                                                                logsSend(response.data)                                         
+                                                                break;
+                                        
+                                                            default:
+                                                                break;
+                                                        }           
+                                                    
+                                                }).catch(                
+                                                    error => {
+                                                        reject (error)
+                                                });                            
+                                            }
+
                                         );
                                         
                                         break;
@@ -89,7 +117,34 @@ export async function schedullerAllSocmed(timeSwitch) {
                             }
                     
                         ).catch(
-                            error => logsError(error)
+                            error => {
+                                newReportTiktok(clientData[i]).then(
+                                    async response =>{
+                                        switch (timeSwitch){
+                                            case 'report':                       
+                                                await sendClientResponse(
+                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                    decrypted(clientData[i].SUPERVISOR),
+                                                    decrypted(clientData[i].OPERATOR),
+                                                    decrypted(clientData[i].GROUP), 
+                                                    response, 
+                                                    'REPORT TIKTOK'
+                                                );                                            
+                                                break;
+                        
+                                            case 'routine':
+                                                logsSend(response.data)                                         
+                                                break;
+                        
+                                            default:
+                                                break;
+                                        }           
+                                    
+                                }).catch(                
+                                    error => {
+                                        reject (error)
+                                });                            
+                            }
                         );
                     }         
 
