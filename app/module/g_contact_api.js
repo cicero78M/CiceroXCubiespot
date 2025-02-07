@@ -1,6 +1,6 @@
 //Google Spreadsheet
 import { google } from 'googleapis';
-import { googleAuth } from './sheet_query';
+import { googleAuth } from './sheet_query.js';
 
 export function saveGoogleContact(name, groups, phone) {
 
