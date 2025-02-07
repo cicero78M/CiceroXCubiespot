@@ -1521,24 +1521,24 @@ client.on('message', async (msg) => {
                             case "clientdataview":{
                                 await clientData()
                                 
-                                // .then(
-                                //     async response =>{
+                                .then(
+                                    async response =>{
                                         
-                                //         let clientData = response.data;
+                                        let clientData = response.data;
 
-                                //         for (let i = 0; i < clientData.length; i++){
-                                //             await clientDataView(clientData[i]).then(
-                                //                 response => {
-                                //                     logsSend(response.data)
-                                //                 }
-                                //             ).catch(
-                                //                 error => logsError(error)
-                                //             );
-                                //         }
-                                //     }
-                                // ).catch (
-                                //     error => logsError(error)
-                                // );
+                                        for (let i = 0; i < clientData.length; i++){
+                                            await clientDataView(clientData[i]).then(
+                                                response => {
+                                                    logsSend(response.data)
+                                                }
+                                            ).catch(
+                                                error => logsError(error)
+                                            );
+                                        }
+                                    }
+                                ).catch (
+                                    error => logsError(error)
+                                );
                             }
                                 
                                 break;
