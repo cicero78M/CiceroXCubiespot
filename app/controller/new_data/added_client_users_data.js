@@ -1,4 +1,4 @@
-import { writeFileSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 import { encrypted } from "../../module/crypto.js";
 import { newRowsData } from "../../module/sheet_query.js";
 
@@ -26,11 +26,16 @@ export async function pushUserRes(clientName, sheetID) {
                         userData.INSTA =  encrypted("");
                         userData.TIKTOK =  encrypted("");
                         userData.EXCEPTION =  encrypted("FALSE");
-                        client.push(userData);
+
+                        try {
+                            writeFileSync(`json_data_file/user_data/${clientName}/${ID_KEY}.json`, JSON.stringify(userData));
+                        } catch (error) {
+                            mkdirSync(`json_data_file/user_data/${clientName}`)
+                            writeFileSync(`json_data_file/user_data/${clientName}/${ID_KEY}.json`, JSON.stringify(userData));
+                        }
+
     
                     };
-
-                    writeFileSync(`json_data_file/user_data/${clientName}.json`, JSON.stringify(client));
 
                     let data = {
                         data: `${clientName} JSON Data Successfully Added.`,
@@ -77,11 +82,17 @@ export async function pushUserCom(clientName, sheetID) {
                         userData.INSTA =  encrypted("");
                         userData.TIKTOK =  encrypted("");
                         userData.EXCEPTION =  encrypted("FALSE");
-                        client.push(userData);
+
+                        try {
+                            writeFileSync(`json_data_file/user_data/${clientName}/${ID_KEY}.json`, JSON.stringify(userData));
+
+                        } catch (error) {
+                            mkdirSync(`json_data_file/user_data/${clientName}`)
+                            writeFileSync(`json_data_file/user_data/${clientName}/${ID_KEY}.json`, JSON.stringify(userData));
+                        }
     
                     };
 
-                    writeFileSync(`json_data_file/user_data/${clientName}.json`, JSON.stringify(client));
                     let data = {
                         data: `${clientName} JSON Data Successfully Added.`,
                         state: true,
