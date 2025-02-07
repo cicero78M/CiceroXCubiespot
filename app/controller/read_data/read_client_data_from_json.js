@@ -10,23 +10,28 @@ export async function clientData() {
     return new Promise(async (resolve, reject) => {
         try {
             
-            // let clientList = [];
+            let clientList = [];
 
             clientDir = readdirSync('json_data_file/client_data');
 
-            console.log(clientDir);
+            clientDir.forEach(element => {
+
+                clientList.push(JSON.parse(readFileSync(`json_data_file/client_data/${element}`)));
+                
+            });
+
 
 
 
             // clientList = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
             
-            // data = {
-            //     data: clientList,
-            //     state: true,
-            //     code: 200
-            //   };
+            data = {
+                data: clientList,
+                state: true,
+                code: 200
+              };
 
-            // resolve (data);
+            resolve (data);
             
         } catch (error) {
             data = {
