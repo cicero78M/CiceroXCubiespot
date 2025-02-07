@@ -20,13 +20,13 @@ export async function clientData() {
 
             // clientList = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
             
-            data = {
-                data: clientList,
-                state: true,
-                code: 200
-              };
+            // data = {
+            //     data: clientList,
+            //     state: true,
+            //     code: 200
+            //   };
 
-            resolve (data);
+            // resolve (data);
             
         } catch (error) {
             data = {
