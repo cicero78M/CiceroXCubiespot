@@ -14,6 +14,8 @@ export async function myDataView(params) {
                 accountState = 'DELETED';
             }
 
+
+            
             data = {
                 data : `*Profile Anda*\n\nUser : ` +params.TITLE+` `+params.NAMA + `\nID Key : ` + params.ID_KEY + `\nDivisi / Jabatan : `
                     + params.DIVISI + ` / ` + params.JABATAN + `\nInsta : ` + params.INSTA + `\nTikTok : ` + params.TIKTOK

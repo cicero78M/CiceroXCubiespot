@@ -13,10 +13,10 @@ export async function usernameAbsensi(clientName, clientType) {
       let userRows = [];
 
       await readUser(clientName).then(
-        data =>{
-              userRows = data;
-              for (let i = 0; i < data.length; i++) {            
-                if (data[i].STATUS === 'TRUE'){
+        response =>{
+              userRows = response.data;
+              for (let i = 0; i < userRows.length; i++) {            
+                if (userRows[i].STATUS === 'TRUE'){
                   userActive++;
                 }
               }
@@ -27,8 +27,10 @@ export async function usernameAbsensi(clientName, clientType) {
       let userCounter = 0;
 
       await newListValueData(clientName, 'DIVISI').then(
-        divisiList => {
+        response => {
 
+          let divisiList = response.data;
+          
           for (let i = 0; i < divisiList.length; i++) {
         
             let divisiCounter = 0;
