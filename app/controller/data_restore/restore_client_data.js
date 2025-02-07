@@ -19,9 +19,10 @@ export async function restoreClientData() {
 
         for (let i = 0; i < data.length; i++){
 
+          console.log(decrypted(data[i].get("TYPE")))
+
           if(decrypted(data[i].get("TYPE") === process.env.APP_CLIENT_TYPE)){
 
-                    
             console.log(data[i])
 
             let clientData = new Object();
