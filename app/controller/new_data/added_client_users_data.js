@@ -28,10 +28,10 @@ export async function pushUserRes(clientName, sheetID) {
                         userData.EXCEPTION =  encrypted("FALSE");
 
                         try {
-                            writeFileSync(`json_data_file/user_data/${clientName}/${userData.ID_KEY}.json`, JSON.stringify(userData));
+                            writeFileSync(`json_data_file/user_data/${clientName}/${responseList[i].get("NRP")}.json`, JSON.stringify(userData));
                         } catch (error) {
                             mkdirSync(`json_data_file/user_data/${clientName}`)
-                            writeFileSync(`json_data_file/user_data/${clientName}/${userData.ID_KEY}.json`, JSON.stringify(userData));
+                            writeFileSync(`json_data_file/user_data/${clientName}/${responseList[i].get("NRP")}.json`, JSON.stringify(userData));
                         }
 
     
@@ -83,11 +83,10 @@ export async function pushUserCom(clientName, sheetID) {
                         userData.EXCEPTION =  encrypted("FALSE");
 
                         try {
-                            writeFileSync(`json_data_file/user_data/${clientName}/${userData.ID_KEY}.json`, JSON.stringify(userData));
-
+                            writeFileSync(`json_data_file/user_data/${clientName}/${responseLiset[i].get("ID_KEY")}.json`, JSON.stringify(userData));
                         } catch (error) {
                             mkdirSync(`json_data_file/user_data/${clientName}`)
-                            writeFileSync(`json_data_file/user_data/${clientName}/${userData.ID_KEY}.json`, JSON.stringify(userData));
+                            writeFileSync(`json_data_file/user_data/${clientName}/${responseLiset[i].get("ID_KEY")}.json`, JSON.stringify(userData));
                         }
     
                     };
