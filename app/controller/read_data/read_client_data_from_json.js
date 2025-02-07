@@ -12,7 +12,7 @@ export async function clientData() {
             
             // let clientList = [];
 
-            clientDir = JSON.parse(readdirSync('json_data_file/client_data'));
+            clientDir = readdirSync('json_data_file/client_data');
 
             console.log(clientDir);
 
