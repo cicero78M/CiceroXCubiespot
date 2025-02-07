@@ -660,8 +660,7 @@ client.on('message', async (msg) => {
                                     );
 
                                 }
-                                break;
-                            
+                                break;                            
                             case 'test':
                                 saveGoogleContact("Cicero Test", "Cicero", "6281235114746").then(
                                     response => logsSave(response)

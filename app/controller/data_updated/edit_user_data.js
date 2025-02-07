@@ -4,11 +4,10 @@ import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from '../../module/crypto.js';
 import { newListValueData } from '../../module/data_list_query.js';
 import { readUser } from '../read_data/read_data_from_dir.js';
-import { saveGoogleContact } from '../../module/g_contact_api.js';
 
 
 //This Function for edit user data profile
-export async function editProfile(clientName, idKey, newData, phone, type, isContact) {
+export async function editProfile(clientName, idKey, newData, phone, type) {
   return new Promise(async (resolve, reject) => {
     try {
       let data;
@@ -52,10 +51,22 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
         async response => {    
           userRows = await response.data;                           
           for (let i = 0; i < userRows.length; i++) {
-            if (parseInt(userRows[i].ID_KEY) === idKey ){
+
+            let sourceKey;
+            let targetKey;
+            
+            if(process.env.APP_CLIENT_TYPE === "RES"){
+              sourceKey = parseInt(userRows[i].ID_KEY);
+              targetKey = parseInt(idKey);
+            } else {
+              sourceKey = userRows[i].ID_KEY;
+              targetKey = idKey;
+            }
+
+            if (sourceKey === targetKey ){
               
               idExist = true;  
-              userData = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`));
+              userData = JSON.parse( readFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`));
             
             }
           } 
@@ -67,11 +78,18 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
   
       for (let ii = 0; ii < userRows.length; ii++) {
 
-          
-        // if(!isContact){        
-        //   saveGoogleContact(userRows[ii].NAMA, clientName, phone);
-        // }
-        if (parseInt(userRows[ii].ID_KEY) === parseInt(idKey)) {
+        let sourceKey;
+        let targetKey;
+        
+        if(process.env.APP_CLIENT_TYPE === "RES"){
+          sourceKey = parseInt(userRows[i].ID_KEY);
+          targetKey = parseInt(idKey);
+        } else {
+          sourceKey = userRows[i].ID_KEY;
+          targetKey = idKey;
+        }
+
+        if (sourceKey === targetKey) {
   
           userData.ID_KEY = encrypted(userRows[ii].ID_KEY);
           userData.NAMA = encrypted(userRows[ii].NAMA);
@@ -102,7 +120,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
           } else if (type === 'NAMA') {
             userData.NAMA = encrypted(newData);
           } else if (type === 'ID_KEY') {
-            userData.ID_KEY = encrypted(newData);
+            userData.ID_KEY = encrypted(targetKey);
           } else if (type === 'TITLE') {
   
             if (dataList.includes(newData)) {
@@ -126,9 +144,9 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
               case phone:
                 {
     
-                  writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                  writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
   
-                  await myData(clientName, idKey).then(
+                  await myData(clientName, targetKey).then(
 
                     response => resolve(response)
 
@@ -212,7 +230,6 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
         reject (data);
       }
 
-
     } catch (error) {
       data = {
         data: error,
@@ -223,5 +240,4 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
       reject (data); 
     }    
   });
-
 }

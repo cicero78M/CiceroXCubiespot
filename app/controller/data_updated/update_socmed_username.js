@@ -52,14 +52,22 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
       );
 
       for (let i = 0; i < userRows.length; i++) {
-        if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
+
+        let sourceKey;
+        let targetKey;
+        
+        if(process.env.APP_CLIENT_TYPE === "RES"){
+          sourceKey = parseInt(userRows[i].ID_KEY);
+          targetKey = parseInt(idKey);
+        } else {
+          sourceKey = userRows[i].ID_KEY;
+          targetKey = idKey;
+        }
+
+        if (sourceKey === targetKey ){
 
           if (userRows[i].STATUS === "TRUE") {
 
-            // if(!isContact){        
-            //   saveGoogleContact(userRows[i].NAMA, clientName, phone);
-            // }
-            
             userData.ID_KEY = encrypted(userRows[i].ID_KEY);
             userData.NAMA = encrypted(userRows[i].NAMA);
             userData.TITLE = encrypted(userRows[i].TITLE);
@@ -80,7 +88,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
               if (type === "INSTA") {                  
                 if(username === userRows[i].INSTA){
                   
-                  await myData(clientName, idKey).then(
+                  await myData(clientName, targetKey).then(
                     response => resolve (response)
                   ).catch(
                     response => reject (response)
@@ -98,7 +106,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
               } else if (type === "TIKTOK") {
                 if(username === userRows[i].TIKTOK){
                   
-                  await myData(clientName, idKey).then(
+                  await myData(clientName, targetKey).then(
                     response => resolve (response)
                   ).catch(
                     response => reject (response)
@@ -118,8 +126,8 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
 
             switch (userRows[i].WHATSAPP) {
               case phone:
-                writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-                await myData(clientName, idKey).then(
+                writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                await myData(clientName, targetKey).then(
                   response => resolve (response)
                 ).catch(
                   response => reject (response)
@@ -132,16 +140,16 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                     if (phone === "6281235114745") {
                       userData.WHATSAPP = encrypted("");
 
-                      writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-                      await myData(clientName, idKey).then(
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                      await myData(clientName, targetKey).then(
                         response => resolve (response)
                       ).catch(
                         response => reject (response)
                       );
                     } else {
                       userData.WHATSAPP = encrypted(phone);
-                      writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-                      await myData(clientName, idKey).then(
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                      await myData(clientName, targetKey).then(
                         response => resolve (response)
                       ).catch(
                         response => reject (response)
@@ -150,8 +158,8 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                   } else {
                     if (phone === "6281235114745") {
                       userData.WHATSAPP = encrypted("");
-                      writeFileSync(`json_data_file/user_data/${clientName}/${idKey}.json`, JSON.stringify(userData));
-                      await myData(clientName, idKey).then(
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                      await myData(clientName, targetKey).then(
                         response => resolve (response)
                       ).catch(
                         response => reject (response)
