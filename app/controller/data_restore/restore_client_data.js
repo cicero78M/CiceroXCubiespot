@@ -21,6 +21,8 @@ export async function restoreClientData() {
 
           console.log(decrypted(data[i].get("TYPE")))
 
+          console.log(process.env.APP_CLIENT_TYPE)
+
           if(decrypted(data[i].get("TYPE") === process.env.APP_CLIENT_TYPE)){
 
             console.log(data[i])
@@ -48,6 +50,9 @@ export async function restoreClientData() {
 
                 console.leg("Success")
               } catch (error) {
+
+                console.leg("Fail")
+
                 mkdirSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}`);
                 writeFileSync(`json_data_file/client_data/${decrypted(data[i].get("CLIENT_ID"))}.json`, JSON.stringify(clientData));
               } 
