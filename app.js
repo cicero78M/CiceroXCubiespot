@@ -1096,7 +1096,8 @@ client.on('message', async (msg) => {
                                                 await getInstaPost(
                                                     clientData[i]
                                                 ).then(
-                                                    async instaPostData =>{
+                                                    async response =>{
+                                                        let instaPostData = response.data;
                                                         logsSave(instaPostData);
                                                         
                                                         await getInstaLikes(
