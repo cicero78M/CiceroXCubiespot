@@ -178,12 +178,24 @@ export async function schedullerAllSocmed(timeSwitch) {
     
                                                                 await newReportInsta(
                                                                     clientData[i], instaPostData, "official"                                                                ).then(
-                                                                    async data => {
-                                                                        logsSave("Report Success!!!");
-                                                                        await client.sendMessage(
-                                                                            msg.from, 
-                                                                            data.data
-                                                                        );
+                                                                    async response => {
+       
+                                                                        switch (timeSwitch){
+                                                                            case 'report':
+                                                                                sendClientResponse(
+                                                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                                                    decrypted(clientData[i].SUPERVISOR),
+                                                                                    decrypted(clientData[i].OPERATOR),
+                                                                                    decrypted(clientData[i].GROUP), 
+                                                                                    response, 
+                                                                                    'REPORT INSTA'
+                                                                                );            
+                                                                                break;
+                
+                                                                            case 'routine':
+                                                                                logsSend(response.data)
+                                                                                break;
+                                                                        }
                                                                 }).catch(                
                                                                     async data => {
                                                                         switch (data.code) {
