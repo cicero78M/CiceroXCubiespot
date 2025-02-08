@@ -1079,7 +1079,7 @@ client.on('message', async (msg) => {
                                 logsSave("Execute New All Insta ")
                                 await clientData().then( 
                                     async response =>{
-                                        let clientData = response.data
+                                        let clientData = response.data;
                                         for (let i = 0; i < clientData.length; i++){
     
                                             if (decrypted(clientData[i].STATUS) === "TRUE" 
@@ -1094,10 +1094,12 @@ client.on('message', async (msg) => {
                                                 );
     
                                                 await getInstaPost(
-                                                    clientData[i]
+                                                    clientData[i], "official"
                                                 ).then(
                                                     async response =>{
+                                                        
                                                         let instaPostData = response.data;
+                                                        
                                                         logsSave(instaPostData);
                                                         
                                                         await getInstaLikes(
