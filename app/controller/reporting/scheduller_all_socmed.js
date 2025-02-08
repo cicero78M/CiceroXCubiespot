@@ -156,6 +156,8 @@ export async function schedullerAllSocmed(timeSwitch) {
                                     
                         await getInstaPost(clientData[i], "official").then(
                             async response =>{
+
+                                console.log("This Official")
                                 let todayItems;
 
                                 switch (response.code){

@@ -6,6 +6,8 @@ import { logsSave } from '../../view/logs_whatsapp.js';
 
 export async function getInstaLikes(todayItems, clientValue) {
 
+  console.log("This Insta Likes");
+
   console.log(todayItems)
 
     const clientName = decrypted(clientValue.CLIENT_ID);
