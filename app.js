@@ -1124,81 +1124,21 @@ client.on('message', async (msg) => {
                                                                             data.data
                                                                         );
                                                                 }).catch(                
-                                                                    async data => {
-                                                                        switch (data.code) {
-    
-                                                                            case 303:
-                                                                                logsSave(data.data);
-                                                                                await client.sendMessage(
-                                                                                    '6281235114745@c.us', 
-                                                                                    decrypted(clientData[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
-                                                                                );
-                                                                                break;
-    
-                                                                            default:
-                                                                                await client.sendMessage(
-                                                                                    '6281235114745@c.us', 
-                                                                                    decrypted(clientData[i].CLIENT_ID)+' '+data.data
-                                                                                );
-                                                                                break;
-                                                                        }
-                                                                });
+                                                                    error => logsError(error)
+                                                                );
                                                             }
                                                         ).catch(
-                                                            async data => {
-                                                                switch (data.code) {
-                                                                    
-                                                                    case 303:
-                                                                        logsSave(data.data);
-                                                                        await client.sendMessage(
-                                                                            '6281235114745@c.us', 
-                                                                            decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA LIKES'
-                                                                        );
-                                                                        break;
-                                                                    
-                                                                    default:
-                                                                        logsSave(data);
-                                                                        await client.sendMessage(
-                                                                            '6281235114745@c.us', 
-                                                                            decrypted(clientData[i].CLIENT_ID)+' '+data.data
-                                                                        );
-                                                                        break;
-                                                                }
-                                                            }
+                                                            error => logsError(error)
                                                         ); 
                                                     }
                                                 ).catch(
-                                                    async data => {
-                                                        switch (data.code) {
-    
-                                                            case 303:
-                                                                logsSave(data.data);
-                                                                await client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA POST'
-                                                                );
-                                                                break;
-    
-                                                            default:
-                                                                logsSave(data);
-                                                                await client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(clientData[i].CLIENT_ID)+' '+data.data
-                                                                );
-                                                                break;
-                                                        }
-                                                    }
+                                                    error => logsError(error)
+
                                                 );   
                                             }           
                                         }
                                 }). catch (
-                                    async error =>{
-                                        console.error(error);
-                                        await client.sendMessage(
-                                            '6281235114745@c.us', 
-                                            'Error on All New Insta'
-                                        );
-                                    }
+                                    error => logsError(error)
                                 )  
                                 break;
 
