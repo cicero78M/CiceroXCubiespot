@@ -157,7 +157,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                         await getInstaPost(clientData[i], "official").then(
                             async response =>{
                                 let todayItems;
-                                
+
                                 switch (response.code){
                                     case 201:
                                         await sendClientResponse(
@@ -175,7 +175,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                         todayItems = response.data;
 
                                         await getInstaLikes(
-                                            response.data, 
+                                            todayItems, 
                                             clientData[i]
                                         ).then(
                                             async response => {                                              

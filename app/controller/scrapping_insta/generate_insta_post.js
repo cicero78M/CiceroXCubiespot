@@ -108,7 +108,7 @@ export async function getInstaPost(clientValue, type) {
                 code: 201
               };
               
-              resolve (data);
+              reject (data);
             
             }
 
