@@ -1103,11 +1103,11 @@ client.on('message', async (msg) => {
                                                         logsSave(instaPostData);
                                                         
                                                         await getInstaLikes(
-                                                            instaPostData.data, 
+                                                            instaPostData, 
                                                             clientData[i]
                                                         ).then(
                                                             async instaLikesData =>{
-                                                                
+
                                                                 logsSave(instaLikesData.data);
                                                                 
                                                                 await client.sendMessage(
