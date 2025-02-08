@@ -76,6 +76,7 @@ export async function getInstaLikes(todayItems, clientValue) {
                 }
               ).catch(
                 async error =>{
+                  console.log(error)
                   let data = {
                     data: error,
                     state: false,
@@ -117,6 +118,7 @@ export async function getInstaLikes(todayItems, clientValue) {
               }
             ).catch(
               async error =>{
+                console.log(error);
                 let data = {
                   data: error,
                   state: false,
