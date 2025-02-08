@@ -1116,8 +1116,7 @@ client.on('message', async (msg) => {
                                                                 );
     
                                                                 await newReportInsta(
-                                                                    clientData[i]
-                                                                ).then(
+                                                                    clientData[i], instaPostData, "official"                                                                ).then(
                                                                     async data => {
                                                                         logsSave("Report Success!!!");
                                                                         await client.sendMessage(
