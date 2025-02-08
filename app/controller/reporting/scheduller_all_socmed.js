@@ -7,6 +7,7 @@ import { getTiktokPost } from "../scrapping_tiktok/generate_tiktok_post.js";
 import { tiktokItemsBridges } from "../scrapping_tiktok/tiktok_items_bridge.js";
 import { sendClientResponse } from "../../view/send_whatsapp.js";
 import { newReportInsta } from "./insta_report.js";
+import { client } from "../../../app.js";
 
 export async function schedullerAllSocmed(timeSwitch) {
 
@@ -197,70 +198,17 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                                                 break;
                                                                         }
                                                                 }).catch(                
-                                                                    async data => {
-                                                                        switch (data.code) {
-    
-                                                                            case 303:
-                                                                                logsSave(data.data);
-                                                                                await client.sendMessage(
-                                                                                    '6281235114745@c.us', 
-                                                                                    decrypted(clientData[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
-                                                                                );
-                                                                                break;
-    
-                                                                            default:
-                                                                                await client.sendMessage(
-                                                                                    '6281235114745@c.us', 
-                                                                                    decrypted(clientData[i].CLIENT_ID)+' '+data.data
-                                                                                );
-                                                                                break;
-                                                                        }
-                                                                });
+                                                                    error => logsError(error)
+                                                                );
                                                             }
                                                         ).catch(
-                                                            async data => {
-                                                                switch (data.code) {
-                                                                    
-                                                                    case 303:
-                                                                        logsSave(data.data);
-                                                                        await client.sendMessage(
-                                                                            '6281235114745@c.us', 
-                                                                            decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA LIKES'
-                                                                        );
-                                                                        break;
-                                                                    
-                                                                    default:
-                                                                        logsSave(data);
-                                                                        await client.sendMessage(
-                                                                            '6281235114745@c.us', 
-                                                                            decrypted(clientData[i].CLIENT_ID)+' '+data.data
-                                                                        );
-                                                                        break;
-                                                                }
-                                                            }
+                                                            error => logsError(error)
+
                                                         ); 
                                                     }
                                                 ).catch(
-                                                    async data => {
-                                                        switch (data.code) {
-    
-                                                            case 303:
-                                                                logsSave(data.data);
-                                                                await client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA POST'
-                                                                );
-                                                                break;
-    
-                                                            default:
-                                                                logsSave(data);
-                                                                await client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(clientData[i].CLIENT_ID)+' '+data.data
-                                                                );
-                                                                break;
-                                                        }
-                                                    }
+                                                    error => logsError(error)
+
                                                 )
                     }  
 
