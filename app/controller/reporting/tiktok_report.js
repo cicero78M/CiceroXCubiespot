@@ -29,17 +29,19 @@ export async function newReportTiktok(clientValue) {
                 let userByDivisi = '';
                 let dataTiktok = '';
 
-                let userRows = [];
-                let divisiList = [];
-                let shortcodeList = [];
-                let userCommentData = [];
-                let notCommentList = [];
-                let userNotComment = [];
+                let userRows = new Array();
+                let divisiList = new Array();
+                let shortcodeList = new Array();
+                let userCommentData = new Array();
+                let notCommentList = new Array();
+                let userNotComment = new Array();
 
                 const clientName = decrypted(clientValue.CLIENT_ID);
                 const tiktokAccount = decrypted(clientValue.TIKTOK);
 
                 if (decrypted(clientValue.STATUS) === 'TRUE') {
+
+                    console.log("This Value State OK")
                     
                     await newListValueData(
                         clientName, 
@@ -47,13 +49,18 @@ export async function newReportTiktok(clientValue) {
                     ).then(
                         response => {divisiList = response.data;}
                     ).catch(
-                        error => reject(error)
+                        error => {
+                            console.log(error);
+
+                            reject(error);
+                        }
                     )
 
                     await readUser(
                         clientName
                     ).then( 
                         response => {    
+
                             userRows = response.data;                           
 
                             for (let i = 0; i < userRows.length; i++) {
@@ -62,12 +69,16 @@ export async function newReportTiktok(clientValue) {
                                 }
                             } 
                         }
-                    ).catch( error => reject(error))
+                    ).catch( error => {
+                        console.log(error);
+                        reject(error);
+                    })
                     
                     let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
                     for (let i = 0; i < tiktokContentDir.length; i++) {
 
+                        console.log("This Tiktok Content OK")
                         let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
 
                         let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
@@ -87,6 +98,8 @@ export async function newReportTiktok(clientValue) {
                     if (shortcodeList.length >= 1) {   
 
                         for (let i = 0; i < shortcodeList.length; i++) {
+
+                            console.log("This getting tiktok shortcode OK");
 
                             let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
                                         
@@ -121,7 +134,6 @@ export async function newReportTiktok(clientValue) {
                             }
                         }
 
-
                         for (let iii = 0; iii < divisiList.length; iii++) {
 
                             divisiCounter = 0;
@@ -130,12 +142,12 @@ export async function newReportTiktok(clientValue) {
                             for (let iv = 0; iv < notCommentList.length; iv++) {
                                 if (divisiList[iii] === notCommentList[iv].DIVISI) {
 
-                                    if (decrypted(clientValue.TYPE) === "RES") {
+                                    if (process.env.APP_CLIENT_TYPE === "RES") {
                                         userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].TITLE + ' ' + notCommentList[iv].NAMA 
                                             + ' - ' + notCommentList[iv].TIKTOK);
                                         divisiCounter++;
                                         userCounter++;
-                                    } else if (decrypted(clientValue.TYPE)  === "COM") {
+                                    } else if (process.env.APP_CLIENT_TYPE  === "COM") {
                                         name = notCommentList[iv].get('NAMA');
                                         nameUpper = name.toUpperCase();
                                         userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].TIKTOK);
@@ -152,7 +164,7 @@ export async function newReportTiktok(clientValue) {
 
                         tiktokSudah = userAll - notCommentList.length;
                         
-                        if (decrypted(clientValue.TYPE)  === "RES") {
+                        if (process.env.APP_CLIENT_TYPE  === "RES") {
                             responseData = {
                                 data: "Mohon Ijin Komandan,\n\nMelaporkan Rekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok *POLRES " 
                                     + clientName + "* dengan Link konten sbb :\n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
@@ -161,7 +173,7 @@ export async function newReportTiktok(clientValue) {
                                 state: true,
                                 code: 200
                             };
-                        } else if (decrypted(clientValue.TYPE)  === "COM") {
+                        } else if (process.env.APP_CLIENT_TYPE  === "COM") {
                             responseData = {
                                 data: "*" + clientName + "*\n\nRekap Pelaksanaan Komentar dan Likes Pada " + shortcodeList.length + " Konten dari akun Resmi Tik Tok " 
                                     + clientName+ " dengan Link konten sbb : \n" + shortcodeListString + "\n\nWaktu Rekap : " + localDate + "\nJam : " 
@@ -190,6 +202,8 @@ export async function newReportTiktok(clientValue) {
                     reject (responseData);
                 }
             } catch (error) {
+
+                console.log(error)
                 let responseData = {
                     data: error,
                     state: false,

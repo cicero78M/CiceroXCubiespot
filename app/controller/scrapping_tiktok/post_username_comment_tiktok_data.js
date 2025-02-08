@@ -33,12 +33,10 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                         }
                     }
 
-
                     for (let ii = 0; ii < userdata.length; ii++) {
                         encryptedData.push(encrypted(userdata[ii]));
                     }
 
-                        
                     try {
     
                         writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`, JSON.stringify(encryptedData));
@@ -49,15 +47,10 @@ export async function postTiktokUserComments(clientName, items, userdata) {
                         writeFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${items}.json`, JSON.stringify(encryptedData));
                 
                     }   
-
-
                 }
             }
 
-
-
             if(!hasShortcode){
-
 
                 for (let i = 0; i < userdata.length; i++){
                     encryptedData.push(encrypted(userdata[i]));
