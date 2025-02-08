@@ -148,7 +148,7 @@ export async function newReportTiktok(clientValue) {
                                         divisiCounter++;
                                         userCounter++;
                                     } else if (process.env.APP_CLIENT_TYPE  === "COM") {
-                                        name = notCommentList[iv].get('NAMA');
+                                        name = notCommentList[iv].NAMA;
                                         nameUpper = name.toUpperCase();
                                         userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].TIKTOK);
                                         divisiCounter++;
