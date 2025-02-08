@@ -154,71 +154,102 @@ export async function schedullerAllSocmed(timeSwitch) {
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                         logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
                                     
-                        await getInstaPost(
-                            clientData[i], "official"
-                        ).then(
-                            async response =>{
-                                let todayItems;
-
-                                switch (response.code){
-                                    case 201:
-                                        await sendClientResponse(
-                                            decrypted(clientData[i].CLIENT_ID), 
-                                            decrypted(clientData[i].SUPERVISOR),
-                                            decrypted(clientData[i].OPERATOR),
-                                            decrypted(clientData[i].GROUP), 
-                                            response, 
-                                            'REPORT INSTA'
-                                        );    
-                                        break; 
-
-                                    default:
-                                        logsSave(response.data)
-                                        todayItems = response.data;
-                                        await getInstaLikes(
-                                            response.data, 
-                                            clientData[i]
-                                        ).then(
-                                            async response => {                                              
-                                                
-                                                logsSave(response.data); 
-
-                                                await newReportInsta(
-                                                    clientData[i], todayItems, "official"
+                                                await getInstaPost(
+                                                    clientData[i], "official"
                                                 ).then(
-                                                    async response => {
-        
-                                                        switch (timeSwitch){
-                                                            case 'report':
-                                                                sendClientResponse(
-                                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                                    decrypted(clientData[i].SUPERVISOR),
-                                                                    decrypted(clientData[i].OPERATOR),
-                                                                    decrypted(clientData[i].GROUP), 
-                                                                    response, 
-                                                                    'REPORT INSTA'
-                                                                );            
-                                                                break;
+                                                    async response =>{
+                                                        
+                                                        let instaPostData = response.data;
+                                                        
+                                                        logsSave(instaPostData);
+                                                        
+                                                        await getInstaLikes(
+                                                            instaPostData, 
+                                                            clientData[i]
+                                                        ).then(
+                                                            async instaLikesData =>{
 
-                                                            case 'routine':
-                                                                logsSend(response.data)
+                                                                logsSave(instaLikesData.data);
+                                                                
+                                                                await client.sendMessage(
+                                                                    msg.from, 
+                                                                    instaLikesData.data
+                                                                );
+    
+                                                                await newReportInsta(
+                                                                    clientData[i], instaPostData, "official"                                                                ).then(
+                                                                    async data => {
+                                                                        logsSave("Report Success!!!");
+                                                                        await client.sendMessage(
+                                                                            msg.from, 
+                                                                            data.data
+                                                                        );
+                                                                }).catch(                
+                                                                    async data => {
+                                                                        switch (data.code) {
+    
+                                                                            case 303:
+                                                                                logsSave(data.data);
+                                                                                await client.sendMessage(
+                                                                                    '6281235114745@c.us', 
+                                                                                    decrypted(clientData[i].CLIENT_ID)+' ERROR REPORT INSTA POST'
+                                                                                );
+                                                                                break;
+    
+                                                                            default:
+                                                                                await client.sendMessage(
+                                                                                    '6281235114745@c.us', 
+                                                                                    decrypted(clientData[i].CLIENT_ID)+' '+data.data
+                                                                                );
+                                                                                break;
+                                                                        }
+                                                                });
+                                                            }
+                                                        ).catch(
+                                                            async data => {
+                                                                switch (data.code) {
+                                                                    
+                                                                    case 303:
+                                                                        logsSave(data.data);
+                                                                        await client.sendMessage(
+                                                                            '6281235114745@c.us', 
+                                                                            decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA LIKES'
+                                                                        );
+                                                                        break;
+                                                                    
+                                                                    default:
+                                                                        logsSave(data);
+                                                                        await client.sendMessage(
+                                                                            '6281235114745@c.us', 
+                                                                            decrypted(clientData[i].CLIENT_ID)+' '+data.data
+                                                                        );
+                                                                        break;
+                                                                }
+                                                            }
+                                                        ); 
+                                                    }
+                                                ).catch(
+                                                    async data => {
+                                                        switch (data.code) {
+    
+                                                            case 303:
+                                                                logsSave(data.data);
+                                                                await client.sendMessage(
+                                                                    '6281235114745@c.us', 
+                                                                    decrypted(clientData[i].CLIENT_ID)+' ERROR GET INSTA POST'
+                                                                );
+                                                                break;
+    
+                                                            default:
+                                                                logsSave(data);
+                                                                await client.sendMessage(
+                                                                    '6281235114745@c.us', 
+                                                                    decrypted(clientData[i].CLIENT_ID)+' '+data.data
+                                                                );
                                                                 break;
                                                         }
                                                     }
-
-                                                ).catch(
-                                                    error => logsError(error)
-                                                );
-                                            }
-                                        ).catch(
-                                            error => logsError(error)
-                                        );
-                                        break;
-                                }
-                            }
-                        ).catch(
-                            error => logsError(error)
-                        );
+                                                )
                     }  
 
                     //This process Insta Report
