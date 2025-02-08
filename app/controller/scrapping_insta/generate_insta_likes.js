@@ -140,6 +140,7 @@ export async function getInstaLikes(todayItems, clientValue) {
         resolve(data);
         
       } catch (error) {
+        console.log(error)
         let data = {
           data: error,
           state: false,
