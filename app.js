@@ -1214,10 +1214,11 @@ client.on('message', async (msg) => {
                                             && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
                                             && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                                 logsSave(decrypted(clientData[i].CLIENT_ID)+' START REPORT INSTA DATA');
+                                                
                                                  
                                                 await newReportInsta(
-                                                    clientData[i]
-                                                ).then(
+                                                    clientData[i], instaPostData, "official"                                                               
+                                                    ).then(
                                                     async response => {
                                                         logsSave(response)
                                                         await client.sendMessage(

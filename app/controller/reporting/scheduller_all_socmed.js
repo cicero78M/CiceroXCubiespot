@@ -154,10 +154,10 @@ export async function schedullerAllSocmed(timeSwitch) {
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                         logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
                                     
-                        await getInstaPost(clientData[i], "official").then(
+                        await getInstaPost(
+                            clientData[i], "official"
+                        ).then(
                             async response =>{
-
-                                console.log("This Official")
                                 let todayItems;
 
                                 switch (response.code){
@@ -175,9 +175,8 @@ export async function schedullerAllSocmed(timeSwitch) {
                                     default:
                                         logsSave(response.data)
                                         todayItems = response.data;
-
                                         await getInstaLikes(
-                                            todayItems, 
+                                            response.data, 
                                             clientData[i]
                                         ).then(
                                             async response => {                                              
@@ -219,7 +218,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                             }
                         ).catch(
                             error => logsError(error)
-                        );   
+                        );
                     }  
 
                     //This process Insta Report
