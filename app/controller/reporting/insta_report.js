@@ -225,6 +225,7 @@ export async function newReportInsta(clientValue, todayItems, type) {
           reject (data);
         }
       } catch (error) {
+        console.log(error)
         data = {
           data: error,
           state: false,
