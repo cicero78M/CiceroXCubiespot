@@ -150,7 +150,7 @@ client.on('ready', () => {
         schedullerAllSocmed("routine"); //Scheduler Function, routine catch generated data every hours
     });
 
-    schedule('18 15,18,21 * * *',  () => {
+    schedule('00 15,18,21 * * *',  () => {
         logsSend('Execute Reporting Cron Job');
         schedullerAllSocmed("report"); //Scheduller Function, report catch and send generated data to Administrator and Operator
     });
