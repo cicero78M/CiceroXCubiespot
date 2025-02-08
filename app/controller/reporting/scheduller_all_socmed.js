@@ -7,7 +7,6 @@ import { getTiktokPost } from "../scrapping_tiktok/generate_tiktok_post.js";
 import { tiktokItemsBridges } from "../scrapping_tiktok/tiktok_items_bridge.js";
 import { sendClientResponse } from "../../view/send_whatsapp.js";
 import { newReportInsta } from "./insta_report.js";
-import { client } from "../../../app.js";
 
 export async function schedullerAllSocmed(timeSwitch) {
 
@@ -155,61 +154,68 @@ export async function schedullerAllSocmed(timeSwitch) {
                     && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                         logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
                                     
-                                                await getInstaPost(
-                                                    clientData[i], "official"
+                        await getInstaPost(clientData[i], "official").then(
+                            async response =>{
+                                let todayItems;
+                                switch (response.code){
+                                    case 201:
+                                        await sendClientResponse(
+                                            decrypted(clientData[i].CLIENT_ID), 
+                                            decrypted(clientData[i].SUPERVISOR),
+                                            decrypted(clientData[i].OPERATOR),
+                                            decrypted(clientData[i].GROUP), 
+                                            response, 
+                                            'REPORT INSTA'
+                                        );    
+                                        break; 
+
+                                    default:
+                                        logsSave(response.data)
+                                        todayItems = response.data;
+                                        await getInstaLikes(
+                                            response.data, 
+                                            clientData[i]
+                                        ).then(
+                                            async response => {                                              
+                                                
+                                                logsSave(response.data); 
+
+                                                await newReportInsta(
+                                                    clientData[i], todayItems, "official"
                                                 ).then(
-                                                    async response =>{
-                                                        
-                                                        let instaPostData = response.data;
-                                                        
-                                                        logsSave(instaPostData);
-                                                        
-                                                        await getInstaLikes(
-                                                            instaPostData, 
-                                                            clientData[i]
-                                                        ).then(
-                                                            async instaLikesData =>{
+                                                    async response => {
+        
+                                                        switch (timeSwitch){
+                                                            case 'report':
+                                                                sendClientResponse(
+                                                                    decrypted(clientData[i].CLIENT_ID), 
+                                                                    decrypted(clientData[i].SUPERVISOR),
+                                                                    decrypted(clientData[i].OPERATOR),
+                                                                    decrypted(clientData[i].GROUP), 
+                                                                    response, 
+                                                                    'REPORT INSTA'
+                                                                );            
+                                                                break;
 
-                                                                logsSave(instaLikesData.data);
-                                                                
-                                                                await client.sendMessage(
-                                                                    msg.from, 
-                                                                    instaLikesData.data
-                                                                );
-    
-                                                                await newReportInsta(
-                                                                    clientData[i], instaPostData, "official"                                                                ).then(
-                                                                    async response => {
-       
-                                                                        switch (timeSwitch){
-                                                                            case 'report':
-                                                                                sendClientResponse(
-                                                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                                                    decrypted(clientData[i].SUPERVISOR),
-                                                                                    decrypted(clientData[i].OPERATOR),
-                                                                                    decrypted(clientData[i].GROUP), 
-                                                                                    response, 
-                                                                                    'REPORT INSTA'
-                                                                                );            
-                                                                                break;
-                
-                                                                            case 'routine':
-                                                                                logsSend(response.data)
-                                                                                break;
-                                                                        }
-                                                                }).catch(                
-                                                                    error => logsError(error)
-                                                                );
-                                                            }
-                                                        ).catch(
-                                                            error => logsError(error)
-
-                                                        ); 
+                                                            case 'routine':
+                                                                logsSend(response.data)
+                                                                break;
+                                                        }
                                                     }
+
                                                 ).catch(
                                                     error => logsError(error)
-
-                                                )
+                                                );
+                                            }
+                                        ).catch(
+                                            error => logsError(error)
+                                        );
+                                        break;
+                                }
+                            }
+                        ).catch(
+                            error => logsError(error)
+                        );   
                     }  
 
                     //This process Insta Report
