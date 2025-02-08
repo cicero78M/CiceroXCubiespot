@@ -1078,7 +1078,8 @@ client.on('message', async (msg) => {
                             case 'allinsta': //Generate & Report All Insta Data
                                 logsSave("Execute New All Insta ")
                                 await clientData().then( 
-                                    async clientData =>{
+                                    async response =>{
+                                        let clientData = response.data
                                         for (let i = 0; i < clientData.length; i++){
     
                                             if (decrypted(clientData[i].STATUS) === "TRUE" 

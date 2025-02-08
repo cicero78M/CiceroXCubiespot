@@ -88,6 +88,7 @@ export async function getInstaPost(clientValue, type) {
                   mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
                   writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
                 }
+  
                 logsSave("Insta Content Updated");
               }
 
