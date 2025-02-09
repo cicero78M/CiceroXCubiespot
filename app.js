@@ -547,7 +547,7 @@ client.on('message', async (msg) => {
                                             );                                          
                                             break;
                                         case 'opr':
-                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[2], "opr").then(
+                                            updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3], "opr").then(
                                                 response => logsSend(response.data)
                                             ).catch(
                                                 error => logsError(error)
