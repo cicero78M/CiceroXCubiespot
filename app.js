@@ -23,7 +23,7 @@ import { mkdirSync, writeFileSync } from "fs";
 
 //Local Dependency
 import { myData } from './app/controller/read_data/read_my_data.js';
-import { infoView } from './app/view/user_info_view.js';
+import { infoComView, infoResView, infoView } from './app/view/user_info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/controller/reporting/username_absensi.js';
 import { updateUsername } from './app/controller/data_updated/update_socmed_username.js';
@@ -939,11 +939,19 @@ client.on('message', async (msg) => {
                                     let responseData;
                                     switch (splittedMsg[1].toLowerCase()) {
                                         case 'info'://Order Info Request
-                                            responseData = await infoView(splittedMsg[0].toUpperCase());
-                                            setTimeout(() => {
-                                                logsSave("Collecting Client Data");
-                                            }, 1000);
-                                            logsUserSend(msg.from, responseData.data)
+
+                                        {
+                                            if (process.env.APP_CLIENT_TYPE === "RES"){
+                                                responseData = await infoResView(splittedMsg[0].toUpperCase());
+                                                logsUserSend(msg.from, responseData.data)
+                                            } else {
+                                                responseData = await infoComView(splittedMsg[0].toUpperCase());
+                                                logsUserSend(msg.from, responseData.data)
+                                            }
+                                        }
+
+
+                                        
                                             break;
                                         case 'divisilist'://Divisi List Request                        
                                             await propertiesView(
@@ -1500,14 +1508,13 @@ client.on('message', async (msg) => {
                             for (let i = 0; i < clientData.length; i++){
                                 if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     logsSave("Request Code Doesn't Exist");
-                                    let responseData = await infoView(
-                                        splittedMsg[0].toUpperCase()
-                                    );
-                                    //Wait A Second
-                                    client.sendMessage(
-                                        msg.from, 
-                                        responseData.data
-                                    );
+                                    if (process.env.APP_CLIENT_TYPE === "RES"){
+                                        let responseData = await infoResView(splittedMsg[0].toUpperCase());
+                                        logsUserSend(msg.from, responseData.data)
+                                    } else {
+                                        let responseData = await infoComView(splittedMsg[0].toUpperCase());
+                                        logsUserSend(msg.from, responseData.data)
+                                    }
                                 }
                             }
                         }
