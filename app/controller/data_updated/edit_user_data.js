@@ -61,7 +61,6 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             } else {
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey.toUpperCase();
-              console.log(targetKey);
             }
 
             if (sourceKey === targetKey ){
