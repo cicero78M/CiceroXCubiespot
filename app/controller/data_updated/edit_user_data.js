@@ -61,6 +61,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             } else {
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey.toUpperCase();
+              console.log(targetKey);
             }
 
             if (sourceKey === targetKey ){
@@ -199,7 +200,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       );
                     } else {
 
-                      let data = {
+                      data = {
                         data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
                         state: true,
                         code: 201
@@ -211,7 +212,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                 }
             }
           } else {
-            let data = {
+            data = {
               data: 'Your Account Suspended',
               state: true,
               code: 201
@@ -222,7 +223,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       }
   
       if (!isDataExist) {
-        let data = {
+        data = {
           data: 'User Data with delegated ID_KEY Doesn\'t Exist',
           state: true,
           code: 201
@@ -231,6 +232,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       }
 
     } catch (error) {
+      console.log(error);
       let data = {
         data: error,
         message:"Edit Profile Error",
