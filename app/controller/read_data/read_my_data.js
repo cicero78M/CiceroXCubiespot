@@ -25,7 +25,8 @@ export async function myData(clientName, idKey) {
               targetKey = parseInt(idKey);
             } else {
               sourceKey = userRows[i].ID_KEY;
-              targetKey = idKey;
+              targetKey = idKey.toUpperCase();
+              console.log(targetKey);
             }
     
             if (sourceKey === targetKey) {

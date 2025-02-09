@@ -61,7 +61,8 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
           targetKey = parseInt(idKey);
         } else {
           sourceKey = userRows[i].ID_KEY;
-          targetKey = idKey;
+          targetKey = idKey.toUpperCase();
+          console.log(targetKey);
         }
 
         if (sourceKey === targetKey ){
