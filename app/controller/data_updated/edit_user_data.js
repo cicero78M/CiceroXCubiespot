@@ -60,7 +60,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
               targetKey = parseInt(idKey);
             } else {
               sourceKey = userRows[i].ID_KEY;
-              targetKey = idKey;
+              targetKey = idKey.toUpperCase();
             }
 
             if (sourceKey === targetKey ){
