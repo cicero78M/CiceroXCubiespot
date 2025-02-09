@@ -199,7 +199,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       );
                     } else {
 
-                      data = {
+                      let data = {
                         data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
                         state: true,
                         code: 201
@@ -211,7 +211,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                 }
             }
           } else {
-            data = {
+            let data = {
               data: 'Your Account Suspended',
               state: true,
               code: 201
@@ -222,7 +222,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       }
   
       if (!isDataExist) {
-        data = {
+        let data = {
           data: 'User Data with delegated ID_KEY Doesn\'t Exist',
           state: true,
           code: 201
@@ -231,7 +231,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
       }
 
     } catch (error) {
-      data = {
+      let data = {
         data: error,
         message:"Edit Profile Error",
         state: false,
