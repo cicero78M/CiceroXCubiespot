@@ -3,6 +3,7 @@ import { newListValueData } from '../../module/data_list_query.js';
 import { encrypted } from '../../module/crypto.js';
 import { writeFileSync } from "fs";
 import { readUser } from '../read_data/read_data_from_dir.js';
+import { logsError } from '../../view/logs_whatsapp.js';
 
 export async function addNewUser(clientName, idKey, name, divisi, jabatan, title){
 
@@ -96,7 +97,7 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
       }
     } catch (error) {
 
-      logsResponse(error);
+      logsError(error);
       let responseData = {
         data: error,
         state: false,
