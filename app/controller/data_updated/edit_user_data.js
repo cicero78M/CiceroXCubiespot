@@ -83,16 +83,16 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
         let targetKey;
         
         if(process.env.APP_CLIENT_TYPE === "RES"){
-          sourceKey = parseInt(userRows[i].ID_KEY);
+          sourceKey = parseInt(userRows[ii].ID_KEY);
           targetKey = parseInt(idKey);
         } else {
-          sourceKey = userRows[i].ID_KEY;
-          targetKey = idKey;
+          sourceKey = userRows[ii].ID_KEY;
+          targetKey = idKey.toUpperCase();;
         }
 
         if (sourceKey === targetKey) {
   
-          userData.ID_KEY = encrypted(userRows[ii].ID_KEY);
+          userData.ID_KEY = encrypted(userRows[ii].ID_KEY.toUpperCase());
           userData.NAMA = encrypted(userRows[ii].NAMA);
           userData.TITLE = encrypted(userRows[ii].TITLE);
           userData.DIVISI = encrypted(userRows[ii].DIVISI);
