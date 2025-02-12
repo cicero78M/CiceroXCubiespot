@@ -446,17 +446,46 @@ client.on('message', async (msg) => {
                             case 'savecontact': 
                                 {
                                     
-
                                     await readUser(splittedMsg[0].toUpperCase()).then(
                                         async response =>{
 
+                                            let i = 0;
+
                                             let userRows = await response.data;
+
+                                            setInterval(() => {
+                                                
+                                                if (i < userRows.lenght){
+
+                                                    if (userRows[i].STATUS === 'TRUE'){
+
+                                                        if (userRows[i].WHATSAPP !== ""){
+    
+                                                            
+                                                            authorize().then(
+                                                                async auth =>
+    
+                                                                    {
+                                                                        console.log(await saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth))
+    
+                                                                    }
+                                                            ).catch(console.error); 
+    
+                                                        }
+                                                    } 
+                                                    
+                                                    i++
+
+                                                } else {
+                                                    clearInterval()
+                                                }
+                                            }, 12000);
+
+                                            
 
                                             userRows.forEach(element => {
 
-                                                setTimeout(() => {
-                                                    console.log(element.NAMA)
-                                                }, 12000);
+                                                
                                                     
                                                 if (element.STATUS === 'TRUE'){
 
