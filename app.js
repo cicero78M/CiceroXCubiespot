@@ -453,26 +453,23 @@ client.on('message', async (msg) => {
                                             let userRows = response.data;
                                             userRows.forEach(element => {
                                                     
-                                                    if (element.STATUS === 'TRUE'){
+                                                if (element.STATUS === 'TRUE'){
 
-                                                        if (element.WHATSAPP !== ""){
+                                                    if (element.WHATSAPP !== ""){
 
-                                                            function loop() {
+                                                        setTimeout(() => {
+                                                            
+                                                            authorize().then(
+                                                                async auth =>
+        
+                                                                await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth)
+                                                            
+                                                            ).catch(console.error); 
+                                                        }, 4*1000);
 
-                                                                authorize().then(
-                                                                    async auth =>
-            
-                                                                    await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth)
-                                                                
-                                                                ).catch(console.error); 
-                                                                
-                                                            }
-
-                                                            setTimeout(loop(), 4*1000);
-
-                                                        }
-                                                    }                                                    
-                                            
+                                                    }
+                                                }                                                    
+                                           
                                               });
 
 
