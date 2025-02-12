@@ -460,20 +460,12 @@ client.on('message', async (msg) => {
                                                             authorize().then(
                                                                 async auth =>
         
-                                                                saveGoogleContact(userRows[i].NAMA, userRows[i].WHATSAPP, auth)
+                                                                saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth)
                                                             
                                                             ).catch(console.error); 
                                                             
-                                                        }, 6*1000);
-
-
-
+                                                        }, 30*1000);
                                                     }
-
- 
-
-
-
                                                 }
                                               }
                                             }
