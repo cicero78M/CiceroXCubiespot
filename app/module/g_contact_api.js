@@ -82,7 +82,7 @@ export async function saveGoogleContact(name, phone, auth) {
         requestBody: contact, 
     });
 
-    console.log(response)
+    return response;
 
   } catch (error) {
 

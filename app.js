@@ -462,7 +462,7 @@ client.on('message', async (msg) => {
                                                             authorize().then(
                                                                 async auth =>
         
-                                                                await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth)
+                                                                console.log(await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth))
                                                             
                                                             ).catch(console.error); 
                                                         }, 4*1000);
