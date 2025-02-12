@@ -474,45 +474,14 @@ client.on('message', async (msg) => {
                                                         }
                                                     } 
                                                     
-                                                    i++
+                                                    i++;
 
                                                 } else {
                                                     clearInterval()
                                                 }
                                             }, 12000);
 
-                                            
-
-                                            userRows.forEach(element => {
-
-                                                
-                                                    
-                                                if (element.STATUS === 'TRUE'){
-
-                                                    if (element.WHATSAPP !== ""){
-
-                                                        
-                                                        authorize().then(
-                                                            async auth =>
-
-                                                                {
-                                                                    console.log(await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth))
-
-                                                                }
-                                                        ).catch(console.error); 
-
-                                                    }
-                                                }  
-                                                
-                                            
-                                           
-                                              });
-
-
-
-
-
-                                              
+                                                                                      
                                             }
                                       )
 
