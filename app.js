@@ -449,7 +449,7 @@ client.on('message', async (msg) => {
 
                                     await readUser(splittedMsg[0].toUpperCase()).then(
                                         response =>{
-                                              userRows = response.data;
+                                              let userRows = response.data;
                                               for (let i = 0; i < userRows.length; i++) {            
                                                 if (userRows[i].STATUS === 'TRUE'){
 
