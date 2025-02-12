@@ -468,15 +468,11 @@ client.on('message', async (msg) => {
                                                                 
                                                             }
 
-                                                            setTimeout(loop(), 30*1000);
+                                                            setTimeout(loop(), 4*1000);
 
-                                                            
-                                                            
                                                         }
                                                     }                                                    
-                                                
-
-
+                                            
                                               });
 
 
