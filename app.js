@@ -453,6 +453,10 @@ client.on('message', async (msg) => {
                                             let userRows = await response.data;
 
                                             userRows.forEach(element => {
+
+                                                setTimeout(() => {
+                                                    console.log(element.NAMA)
+                                                }, 12000);
                                                     
                                                 if (element.STATUS === 'TRUE'){
 
@@ -463,17 +467,15 @@ client.on('message', async (msg) => {
                                                             async auth =>
 
                                                                 {
-                                                                    setTimeout(async () => {
-                                                                        console.log(await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth))
-                                                                    }, 12000);
+                                                                    console.log(await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth))
 
                                                                 }
-    
-                                                        
                                                         ).catch(console.error); 
 
                                                     }
-                                                }                                                    
+                                                }  
+                                                
+                                            
                                            
                                               });
 
