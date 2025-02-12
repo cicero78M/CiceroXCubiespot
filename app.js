@@ -23,7 +23,7 @@ import { mkdirSync, writeFileSync } from "fs";
 
 //Local Dependency
 import { myData } from './app/controller/read_data/read_my_data.js';
-import { infoComView, infoResView, infoView } from './app/view/user_info_view.js';
+import { infoComView, infoResView } from './app/view/user_info_view.js';
 import { propertiesView } from './app/view/properties_view.js';
 import { usernameAbsensi } from './app/controller/reporting/username_absensi.js';
 import { updateUsername } from './app/controller/data_updated/update_socmed_username.js';
@@ -42,7 +42,6 @@ import { editjabatan, editnama, edittitle, updatedivisi, updateinsta, updatetikt
 import { warningReportInsta } from './app/controller/reporting/user_warning_insta.js';
 import { warningReportTiktok } from './app/controller/reporting/user_warning_tiktok.js';
 import { schedule } from 'node-cron';
-import { saveContacts } from './app/controller/data_backup/save_contact.js';
 import { pushUserCom, pushUserRes } from './app/controller/new_data/added_client_users_data.js';
 import { decrypted } from './app/module/crypto.js';
 import { clientDataBackup } from './app/controller/data_backup/client_data.js';
