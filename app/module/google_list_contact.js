@@ -5,7 +5,7 @@ import { google } from "googleapis";
 import { readFile, writeFile } from "fs/promises";
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/contacts'];
+const SCOPES = ['https://www.googleapis.com/auth/contacts.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -34,7 +34,7 @@ async function loadSavedCredentialsIfExist() {
  * @return {Promise<void>}
  */
 async function saveCredentials(client) {
-  const content = await readFile(CREDENTIALS_PATH);
+  const content = await fs.readFile(CREDENTIALS_PATH);
   const keys = JSON.parse(content);
   const key = keys.installed || keys.web;
   const payload = JSON.stringify({
@@ -51,59 +51,48 @@ async function saveCredentials(client) {
  *
  */
 export async function authorize() {
-
   let client = await loadSavedCredentialsIfExist();
   if (client) {
     return client;
   }
-
   client = await authenticate({
     scopes: SCOPES,
     keyfilePath: CREDENTIALS_PATH,
   });
-
   if (client.credentials) {
     await saveCredentials(client);
   }
   return client;
 }
 
-export function saveGoogleContact(name, groups, phone, auth) {
+/**
+ * Print the display name if available for 10 connections.
+ *
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+**/
 
-    new Promise( (resolve, reject) => {
-    
-        try {
+export async function listConnectionNames(auth) {
+  const service = google.people({version: 'v1', auth});
+  const res = await service.people.connections.list({
+    resourceName: 'people/me',
+    pageSize: 2000,
+    personFields: 'names,emailAddresses',
+  });
 
-            const people = google.people('v1', auth);
-
-            const contact = {
-                names: [{ givenName: name }],
-                phoneNumbers: [{ value: phone }],
-                groups: [{value: groups}]
-            }
-
-            const response = people.people.createContact({
-                requestBody: contact, 
-            });
-       
-            let data = {
-                data: 'Contact created: '+response.data,
-                state: true,
-                code: 200
-            };
+  const connections = res.data.connections;
   
-            resolve (data);   
-
-        } catch (error) {
-
-            let data = {
-                data: error,
-                message:"Save Google Contact Error",
-                state: false,
-                code: 303
-              };
-
-            reject (data);        
-        }
-    });
+  if (!connections || connections.length === 0) {
+    console.log('No connections found.');
+    return;
+  }
+  
+  console.log('Connections:');
+  
+  connections.forEach((person) => {
+    if (person.names && person.names.length > 0) {
+      console.log(person.names[0].displayName);
+    } else {
+      console.log('No display name found for connection.');
+    }
+  });
 }

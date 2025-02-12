@@ -66,6 +66,7 @@ import { restoreTiktokComments } from './app/controller/data_restore/restore_tik
 import { usernameInfo } from './app/controller/read_data/username_info.js';
 import { authorize, saveGoogleContact } from './app/module/g_contact_api.js';
 import { readUser } from './app/controller/read_data/read_data_from_dir.js';
+import { listConnectionNames } from './app/module/google_list_contact.js';
 
 //.env
 const private_key = process.env;
@@ -445,31 +446,20 @@ client.on('message', async (msg) => {
                                 break;
                             case 'savecontact': 
                                 {
+                                    authorize().then(listConnectionNames).catch(console.error);  
 
-                                    await readUser(
-                                        splittedMsg[0].toUpperCase()
-                                    ).then( 
-                                        async response => {    
-                                        userRows = await response.data;                           
-                                        for (let i = 0; i < userRows.length; i++) {
-                                            if (userRows[i].STATUS === 'TRUE' ){
+                                    // await readUser(
+                                    //     splittedMsg[0].toUpperCase()
+                                    // ).then( 
+                                    //     async response => {    
+                                        //     userRows = await response.data;                           
+                                        //     for (let i = 0; i < userRows.length; i++) {
+                                        //         if (userRows[i].STATUS === 'TRUE' ){
 
-                                                authorize().then(
-                                                    auth => {
-                                                        saveGoogleContact(
-                                                            userRows[i].NAMA, splittedMsg[0].toUpperCase(), `+${userRows[i].WHATSAPP}`, auth
-                                                        ).then(
-                                                            response => console.log(response.data) 
-                                                        ).catch(
-                                                            error => console.log(error)
-                                                        )
-                                                        
-                                                    }
-                                                )   
-                                            }
-                                        } 
-                                        }
-                                    ).catch( error => reject (error));                          
+                                        //         }
+                                        //     } 
+                                    //     }
+                                    // ).catch( error => reject (error));                          
                                 }
                                 break;
                             case 'updateclientdata':
