@@ -136,7 +136,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
        
               default:
                 {
-                  if (!phoneList.includes(phone)) {
+                  if (phoneList.includes(phone)) {
                     if (phone === "6281235114745") {
                       userData.WHATSAPP = encrypted("");
 
@@ -147,13 +147,13 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                         response => reject (response)
                       );
                     } else {
-                      userData.WHATSAPP = encrypted(phone);
-                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
-                      await myData(clientName, targetKey).then(
-                        response => resolve (response)
-                      ).catch(
-                        response => reject (response)
-                      );
+
+                      let responseData = {
+                        data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain, hubungi admin untuk perubahan',
+                        state: true,
+                        code: 201
+                      };
+                      reject (responseData); 
                     }                 
                   } else {
                     if (phone === "6281235114745") {
@@ -165,12 +165,14 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                         response => reject (response)
                       );
                     } else {
-                      let responseData = {
-                        data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain, hubungi admin untuk perubahan',
-                        state: true,
-                        code: 201
-                      };
-                      reject (responseData); 
+
+                      userData.WHATSAPP = encrypted(phone);
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                      await myData(clientName, targetKey).then(
+                        response => resolve (response)
+                      ).catch(
+                        response => reject (response)
+                      );
                     }
                   }
 

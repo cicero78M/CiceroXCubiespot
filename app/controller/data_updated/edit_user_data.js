@@ -161,7 +161,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                 
               default:
                 {
-                  if  (!phoneList.includes(phone)) {
+                  if  (phoneList.includes(phone)) {
                       
                     if (phone === "6281235114745"){
 
@@ -175,15 +175,14 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                         error => reject(error)
                       );
                     } else {
-                      userData.WHATSAPP = encrypted(phone);
-  
-                      writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
-          
-                      await myData(clientName, idKey).then(
-                        response => resolve(response)
-                      ).catch(
-                        error => reject(error)
-                      );
+
+                      data = {
+                        data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
+                        state: true,
+                        code: 201
+                      };
+                      reject (data);
+
                     }
 
                   } else {   
@@ -200,12 +199,14 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       );
                     } else {
 
-                      data = {
-                        data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
-                        state: true,
-                        code: 201
-                      };
-                      reject (data);
+                      userData.WHATSAPP = encrypted(phone);
+  
+                      writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));          
+                      await myData(clientName, idKey).then(
+                        response => resolve(response)
+                      ).catch(
+                        error => reject(error)
+                      );
 
                     }       
                   }
