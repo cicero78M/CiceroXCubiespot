@@ -474,11 +474,9 @@ client.on('message', async (msg) => {
                                                         }
                                                     } 
 
-                                                    setTimeout(loop, 6000);  
+                                                    setTimeout(loop, 3000);  
                                                 }
                                             })();
-
-
                                                                                       
                                             }
                                       )

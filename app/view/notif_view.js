@@ -6,14 +6,18 @@ export async function notifView(userData, shortcodeList) {
 
         try {
 
-            for (let i = 0; i < userData.length; i++){
-                if(userData[i].WHATSAPP !== ""){
-                              
-                  setTimeout(() => {
-                    logsUserSend(
+            let i = 0;
 
-                        `${userData[i].WHATSAPP}@c.us`,
-                        
+            (function loop() {
+                console.log(userData[i].NAMA)
+                if (++i < userData.length) {
+
+                    if(userData[i].WHATSAPP !== ""){
+
+                        logsUserSend(
+      
+                            `${userData[i].WHATSAPP}@c.us`,
+                            
 `Pesan Notifikasi, Bpk/Ibu ${userData[i].TITLE} ${userData[i].NAMA}
 
 Sistem kami membaca bahwa Anda belum melaksanakan Likes dan Komentar pada Konten dari Akun Official  berikut :
@@ -25,9 +29,16 @@ Silahkan segera melaksanakan Likes dan Komentar Pada Kesempatan Pertama, Terimak
 _Anda Menerima Pesan Otomatis ini karena nomor ini terdaftar sesuai dengan Nama User Tercantum, silahkan Save No WA Bot Pegiat Medsos ini_
 
 _Cicero System_`
-                    );
-                  }, 30*1000);
+                        );
+                              
+                      }
+
+                    setTimeout(loop, 3000);  
                 }
+            })();
+
+            for (let i = 0; i < userData.length; i++){
+                
             }
             
             let data ={
