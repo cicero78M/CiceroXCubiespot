@@ -474,7 +474,7 @@ client.on('message', async (msg) => {
                                                         }
                                                     } 
 
-                                                    setTimeout(loop(), 1200);  
+                                                    setTimeout(loop, 1200);  
                                                 }
                                             })();
                                                                                       
