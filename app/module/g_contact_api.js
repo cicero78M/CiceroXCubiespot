@@ -68,21 +68,21 @@ export async function authorize() {
   return client;
 }
 
-export function saveGoogleContact(name, phone, auth) {
+export async function saveGoogleContact(name, phone, auth) {
 
   try {
 
     const service = google.people({version: 'v1', auth});
-      const contact = {
-          names: [{ givenName: name }],
-          phoneNumbers: [{ value: phone }],
-      }
+    const contact = {
+        names: [{ givenName: name }],
+        phoneNumbers: [{ value: phone }],
+    }
 
-      const response = service.people.createContact({
-          requestBody: contact, 
-      });
+    const response = await service.people.createContact({
+        requestBody: contact, 
+    });
 
-      console.log(response)
+    console.log(response)
 
   } catch (error) {
 
