@@ -4,7 +4,6 @@ import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from "../../module/crypto.js";
 import { logsSave } from "../../view/logs_whatsapp.js";
 import { readUser } from "../read_data/read_data_from_dir.js";
-import { saveGoogleContact } from "../../module/g_contact_api.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type, isContact) {
 
@@ -126,12 +125,29 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
 
             switch (userRows[i].WHATSAPP) {
               case phone:
+
+              if (phone === "6281235114745") {
+
+                userData.WHATSAPP = encrypted("");
+
                 writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
                 await myData(clientName, targetKey).then(
                   response => resolve (response)
                 ).catch(
                   response => reject (response)
                 );
+
+              } else {
+
+                writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                await myData(clientName, targetKey).then(
+                  response => resolve (response)
+                ).catch(
+                  response => reject (response)
+                );
+
+              }
+
                 break;
        
               default:

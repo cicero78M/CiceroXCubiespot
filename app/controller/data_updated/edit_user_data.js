@@ -144,21 +144,37 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
             switch (userRows[ii].WHATSAPP) {
               case phone:
                 {
-    
-                  writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+
+                  if (phone === "6281235114745"){
+
+                    userData.WHATSAPP = encrypted("");
+
+                    writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+        
+                    await myData(clientName, idKey).then(
+                      response => resolve(response)
+                    ).catch(
+                      error => reject(error)
+                    );
+
+                  } else {
+
+                    writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
   
-                  await myData(clientName, targetKey).then(
+                    await myData(clientName, targetKey).then(
+  
+                      response => resolve(response)
+  
+                    ).catch(
+  
+                      error => reject(error)
+  
+                    );
 
-                    response => resolve(response)
-
-                  ).catch(
-
-                    error => reject(error)
-
-                  );
+                  }
                   
                 }
-                
+                break;
               default:
                 {
                   if  (phoneList.includes(phone)) {
@@ -211,6 +227,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                     }       
                   }
                 }
+                break;
             }
           } else {
             data = {

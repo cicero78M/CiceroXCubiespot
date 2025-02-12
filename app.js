@@ -454,7 +454,7 @@ client.on('message', async (msg) => {
                                             let userRows = await response.data;
 
                                             (function loop() {
-                                                console.log(userRows[i].NAMA)
+                                                console.log(userRows[i].NAMA);
                                                 if (++i < userRows.length) {
 
                                                     if (userRows[i].STATUS === 'TRUE'){
@@ -466,7 +466,7 @@ client.on('message', async (msg) => {
                                                                 async auth =>
     
                                                                     {
-                                                                        console.log(await saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth))
+                                                                        console.log(await saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth));
     
                                                                     }
                                                             ).catch(console.error); 
@@ -474,7 +474,7 @@ client.on('message', async (msg) => {
                                                         }
                                                     } 
 
-                                                    setTimeout(loop, 3000);  
+                                                    setTimeout(loop(), 1200);  
                                                 }
                                             })();
                                                                                       
@@ -827,8 +827,9 @@ client.on('message', async (msg) => {
                                                 splittedMsg[0].toUpperCase(), 
                                                 splittedMsg[2], 
                                                 instaUsername, 
-                                                contact.number, 
-                                                "INSTA", contact.isMyContact
+                                                msg.from.replace('@c.us', ''), 
+                                                "INSTA", 
+                                                contact.isMyContact
                                             ).then(
                                                 response => {
                                                     logsUserSend(msg.from, response.data);
@@ -857,7 +858,7 @@ client.on('message', async (msg) => {
                                             splittedMsg[0].toUpperCase(), 
                                             splittedMsg[2], 
                                             tiktokUsername, 
-                                            contact.number, 
+                                            msg.from.replace('@c.us', ''), 
                                             "TIKTOK", contact.isMyContact
                                         ).then(
                                             response => {

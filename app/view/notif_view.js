@@ -36,10 +36,6 @@ _Cicero System_`
                     setTimeout(loop, 3000);  
                 }
             })();
-
-            for (let i = 0; i < userData.length; i++){
-                
-            }
             
             let data ={
                 data :"Send Notif Done",
