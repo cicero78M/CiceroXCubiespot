@@ -453,12 +453,24 @@ client.on('message', async (msg) => {
                                               for (let i = 0; i < userRows.length; i++) {            
                                                 if (userRows[i].STATUS === 'TRUE'){
 
-                                                    authorize().then(
-                                                        auth =>
+                                                    if (userRows[i].WHATSAPP !== ""){
 
-                                                        saveGoogleContact(userRows[i].NAMA, userRows[i].WHATSAPP, auth)
-                                                    
-                                                    ).catch(console.error);  
+                                                        setTimeout(() => {
+
+                                                            authorize().then(
+                                                                async auth =>
+        
+                                                                saveGoogleContact(userRows[i].NAMA, userRows[i].WHATSAPP, auth)
+                                                            
+                                                            ).catch(console.error); 
+                                                            
+                                                        }, 6*1000);
+
+
+
+                                                    }
+
+ 
 
 
 
