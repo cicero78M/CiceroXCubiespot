@@ -458,13 +458,13 @@ client.on('message', async (msg) => {
                                                         authorize().then(
                                                             async auth =>
     
-                                                            saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth)
+                                                            await saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth)
                                                         
                                                         ).catch(console.error); 
 
                                                         setTimeout(() => {
 
-                                                            Console.log(`Added ${userRows[i].NAMA}`);
+                                                            console.log(`Added ${userRows[i].NAMA}`);
 
                                                             
                                                         }, 30*1000);
