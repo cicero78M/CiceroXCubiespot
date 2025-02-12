@@ -448,24 +448,23 @@ client.on('message', async (msg) => {
                                     
 
                                     await readUser(splittedMsg[0].toUpperCase()).then(
-                                        response =>{
+                                        async response =>{
 
-                                            let userRows = response.data;
+                                            let userRows = await response.data;
+
                                             userRows.forEach(element => {
                                                     
                                                 if (element.STATUS === 'TRUE'){
 
                                                     if (element.WHATSAPP !== ""){
 
-                                                        setTimeout(() => {
-                                                            
-                                                            authorize().then(
-                                                                async auth =>
-        
-                                                                console.log(await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth))
-                                                            
-                                                            ).catch(console.error); 
-                                                        }, 4*1000);
+                                                        
+                                                        authorize().then(
+                                                            async auth =>
+    
+                                                            console.log(await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth))
+                                                        
+                                                        ).catch(console.error); 
 
                                                     }
                                                 }                                                    

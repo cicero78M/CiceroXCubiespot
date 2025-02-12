@@ -82,6 +82,10 @@ export async function saveGoogleContact(name, phone, auth) {
         requestBody: contact, 
     });
 
+    setTimeout(() => {
+           console.log("Await")                                                 
+    }, 4*1000);
+
     return response;
 
   } catch (error) {
