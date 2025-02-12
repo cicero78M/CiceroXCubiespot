@@ -65,7 +65,8 @@ import { restoreInstaLikes } from './app/controller/data_restore/restore_insta_l
 import { restoreTiktokContent } from './app/controller/data_restore/restore_tiktok_content.js';
 import { restoreTiktokComments } from './app/controller/data_restore/restore_tiktok_comments.js';
 import { usernameInfo } from './app/controller/read_data/username_info.js';
-import { saveGoogleContact } from './app/module/g_contact_api.js';
+import { authorize, saveGoogleContact } from './app/module/g_contact_api.js';
+import { readUser } from './app/controller/read_data/read_data_from_dir.js';
 
 //.env
 const private_key = process.env;
@@ -445,11 +446,31 @@ client.on('message', async (msg) => {
                                 break;
                             case 'savecontact': 
                                 {
-                                    await saveContacts().then(
-                                        response => logsSend(response.data)
-                                    ).catch(
-                                        error => logsError(error)
-                                    );
+
+                                    await readUser(
+                                        splittedMsg[0].toUpperCase()
+                                    ).then( 
+                                        async response => {    
+                                        userRows = await response.data;                           
+                                        for (let i = 0; i < userRows.length; i++) {
+                                            if (userRows[i].STATUS === 'TRUE' ){
+
+                                                authorize().then(
+                                                    auth => {
+                                                        saveGoogleContact(
+                                                            userRows[i].NAMA, splittedMsg[0].toUpperCase(), `+${userRows[i].WHATSAPP}`, auth
+                                                        ).then(
+                                                            response => console.log(response.data) 
+                                                        ).catch(
+                                                            error => console.log(error)
+                                                        )
+                                                        
+                                                    }
+                                                )   
+                                            }
+                                        } 
+                                        }
+                                    ).catch( error => reject (error));                          
                                 }
                                 break;
                             case 'updateclientdata':
@@ -1277,7 +1298,7 @@ client.on('message', async (msg) => {
                         }
                     }
                 //Restore Encrypted Data
-                } else if(dataRestore.includes(splittedMsg[1].toLowerCase())){
+                } else if (dataRestore.includes(splittedMsg[1].toLowerCase())){
                     if (msg.from === '6281235114745@c.us') {
                         switch (splittedMsg[1].toLowerCase()){
 
@@ -1381,7 +1402,7 @@ client.on('message', async (msg) => {
                         }
                     }   
                 //Backup Encrypted Data
-                } else if(dataBackup.includes(splittedMsg[1].toLowerCase())){
+                } else if (dataBackup.includes(splittedMsg[1].toLowerCase())){
                     switch (splittedMsg[1].toLowerCase()){
 
                         case "backupclientdata"://Backup Encrypted Client Data
@@ -1467,7 +1488,7 @@ client.on('message', async (msg) => {
                         default:
                             break;
                     }
-                } else if( dataManagement.includes(splittedMsg[1].toLowerCase())){
+                } else if ( dataManagement.includes(splittedMsg[1].toLowerCase())){
                     if (msg.from === '6281235114745@c.us') {
                         switch (splittedMsg[1].toLowerCase()) {
                             case "clientdataview":{

@@ -63,7 +63,7 @@ export async function newReportInsta(clientValue, todayItems, type) {
               }
             } 
           }
-        ).catch( error => reject (error))
+        ).catch( error => reject (error));
 
         // If Client_ID exist. then get Insta content
 
