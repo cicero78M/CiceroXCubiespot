@@ -456,11 +456,7 @@ client.on('message', async (msg) => {
                                                     authorize().then(
                                                         auth =>
 
-                                                        saveGoogleContact(userRows[i].NAMA, userRows[i].WHATSAPP, auth).then(
-                                                            response => console.log(response)
-                                                        ).catch(
-                                                            error => console.log(error)
-                                                        )
+                                                        saveGoogleContact(userRows[i].NAMA, userRows[i].WHATSAPP, auth)
                                                     
                                                     ).catch(console.error);  
 

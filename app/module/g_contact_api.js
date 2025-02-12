@@ -70,38 +70,22 @@ export async function authorize() {
 
 export function saveGoogleContact(name, phone, auth) {
 
-    new Promise( (resolve, reject) => {
-    
-        try {
+  try {
 
-          const service = google.people({version: 'v1', auth});
-            const contact = {
-                names: [{ givenName: name }],
-                phoneNumbers: [{ value: phone }],
-            }
+    const service = google.people({version: 'v1', auth});
+      const contact = {
+          names: [{ givenName: name }],
+          phoneNumbers: [{ value: phone }],
+      }
 
-            const response = service.people.createContact({
-                requestBody: contact, 
-            });
-       
-            let data = {
-                data: 'Contact created: '+response.data,
-                state: true,
-                code: 200
-            };
-  
-            resolve (data);   
+      const response = service.people.createContact({
+          requestBody: contact, 
+      });
 
-        } catch (error) {
+      console.log(response)
 
-            let data = {
-                data: error,
-                message:"Save Google Contact Error",
-                state: false,
-                code: 303
-              };
+  } catch (error) {
 
-            reject (data);        
-        }
-    });
+    console.log(error)      
+  }
 }
