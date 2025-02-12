@@ -453,9 +453,9 @@ client.on('message', async (msg) => {
 
                                             let userRows = await response.data;
 
-                                            setInterval(() => {
-                                                
-                                                if (i < userRows.lenght){
+                                            (function loop() {
+                                                console.log(userRows[i].NAMA)
+                                                if (++i < userRows.length) {
 
                                                     if (userRows[i].STATUS === 'TRUE'){
 
@@ -473,13 +473,11 @@ client.on('message', async (msg) => {
     
                                                         }
                                                     } 
-                                                    
-                                                    i++;
 
-                                                } else {
-                                                    clearInterval()
+                                                    setTimeout(loop, 6000);  
                                                 }
-                                            }, 12000);
+                                            })();
+
 
                                                                                       
                                             }
