@@ -465,7 +465,7 @@ client.on('message', async (msg) => {
                                                                 {
                                                                     setTimeout(async () => {
                                                                         console.log(await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth))
-                                                                    }, 6000);
+                                                                    }, 12000);
 
                                                                 }
     
