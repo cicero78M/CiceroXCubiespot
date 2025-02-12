@@ -452,25 +452,30 @@ client.on('message', async (msg) => {
 
                                             let userRows = response.data;
                                             userRows.forEach(element => {
-
-                                                function loop() {
-
                                                     
                                                     if (element.STATUS === 'TRUE'){
 
                                                         if (element.WHATSAPP !== ""){
+
+                                                            function loop() {
+
+                                                                authorize().then(
+                                                                    async auth =>
+            
+                                                                    await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth)
+                                                                
+                                                                ).catch(console.error); 
+                                                                
+                                                            }
+
+                                                            setTimeout(loop(), 30*1000);
+
                                                             
-                                                            authorize().then(
-                                                                async auth =>
-        
-                                                                await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth)
                                                             
-                                                            ).catch(console.error); 
                                                         }
                                                     }                                                    
-                                                }
+                                                
 
-                                                setTimeout(loop(), 30*1000);
 
                                               });
 
