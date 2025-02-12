@@ -449,28 +449,36 @@ client.on('message', async (msg) => {
 
                                     await readUser(splittedMsg[0].toUpperCase()).then(
                                         response =>{
-                                              let userRows = response.data;
-                                              for (let i = 0; i < userRows.length; i++) {            
-                                                if (userRows[i].STATUS === 'TRUE'){
 
-                                                    if (userRows[i].WHATSAPP !== ""){
-                                                        
-                                                        authorize().then(
-                                                            async auth =>
-    
-                                                            await saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth)
-                                                        
-                                                        ).catch(console.error); 
+                                            let userRows = response.data;
+                                            userRows.forEach(element => {
 
-                                                        setTimeout(() => {
+                                                function loop() {
 
-                                                            console.log(`Added ${userRows[i].NAMA}`);
+                                                    
+                                                    if (element.STATUS === 'TRUE'){
 
+                                                        if (element.WHATSAPP !== ""){
                                                             
-                                                        }, 30*1000);
-                                                    }
+                                                            authorize().then(
+                                                                async auth =>
+        
+                                                                await saveGoogleContact(element.NAMA, `+${element.WHATSAPP}`, auth)
+                                                            
+                                                            ).catch(console.error); 
+                                                        }
+                                                    }                                                    
                                                 }
-                                              }
+
+                                                setTimeout(loop(), 30*1000);
+
+                                              });
+
+
+
+
+
+                                              
                                             }
                                       )
 
