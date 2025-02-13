@@ -45,7 +45,9 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
         async response => {    
           userRows = await response.data;                           
           for (let i = 0; i < userRows.length; i++) {
-
+            let sourceKey;
+            let targetKey;
+            
             if(process.env.APP_CLIENT_TYPE === "RES"){
               sourceKey = parseInt(userRows[i].ID_KEY);
               targetKey = parseInt(idKey);
