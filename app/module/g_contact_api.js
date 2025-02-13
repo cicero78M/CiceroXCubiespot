@@ -75,6 +75,30 @@ export async function authorize() {
   return client;
 }
 
+export async function searchbyNumbers(phone, auth) {
+  
+  try {
+    const service = google.people({version: 'v1', auth});
+
+    const contact = {
+      resourceName: 'people/me',
+      phoneNumbers: [{ value: phone }],
+    }
+
+    const response = await service.people.searchContacts({
+      requestBody: contact, 
+    });
+    console.log(response.data)
+    return response;
+
+
+
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function saveGoogleContact(name, phone, auth) {
 
   try {
@@ -89,7 +113,7 @@ export async function saveGoogleContact(name, phone, auth) {
         requestBody: contact, 
     });
 
-    return response;
+    return response.data;
 
   } catch (error) {
 
