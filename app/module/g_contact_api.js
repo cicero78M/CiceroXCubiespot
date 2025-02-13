@@ -5,7 +5,10 @@ import { google } from "googleapis";
 import { readFile, writeFile } from "fs/promises";
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/contacts'];
+const SCOPES = [
+  'https://www.googleapis.com/auth/contacts',
+  'https://www.googleapis.com/auth/contacts.readonly'
+];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.

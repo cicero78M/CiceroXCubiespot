@@ -8,6 +8,8 @@ import { authorize, saveGoogleContact } from "../../module/g_contact_api.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type, isContact) {
 
+  console.log(phone)
+
   let idExist = false;
   let usernameList = new Array();
   let userRows = new Array();
