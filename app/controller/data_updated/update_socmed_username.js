@@ -45,7 +45,15 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
         async response => {    
           userRows = await response.data;                           
           for (let i = 0; i < userRows.length; i++) {
-            if (parseInt(userRows[i].ID_KEY) === parseInt(idKey) ){
+
+            if(process.env.APP_CLIENT_TYPE === "RES"){
+              sourceKey = parseInt(userRows[i].ID_KEY);
+              targetKey = parseInt(idKey);
+            } else {
+              sourceKey = userRows[i].ID_KEY;
+              targetKey = idKey.toUpperCase();
+            }
+            if (sourceKey === targetKey ){
               logsSave("data exist")
               idExist = true;
               userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${userRows[i].ID_KEY}.json`));            
