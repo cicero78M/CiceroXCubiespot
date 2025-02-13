@@ -149,7 +149,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
 
                     userData.WHATSAPP = encrypted("");
 
-                    writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                    writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
         
                     await myData(clientName, idKey).then(
                       response => resolve(response)
@@ -183,7 +183,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
 
                       userData.WHATSAPP = encrypted("");
 
-                      writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
           
                       await myData(clientName, idKey).then(
                         response => resolve(response)
@@ -206,7 +206,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                     if (phone === "6281235114745"){
                       userData.WHATSAPP = encrypted("");
  
-                      writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
           
                       await myData(clientName, idKey).then(
                         response => resolve(response)
@@ -217,7 +217,7 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
 
                       userData.WHATSAPP = encrypted(phone);
   
-                      writeFileSync(`json_data_file/user_data/${clientName}/${parseInt(idKey)}.json`, JSON.stringify(userData));          
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));          
                       await myData(clientName, idKey).then(
                         response => resolve(response)
                       ).catch(
