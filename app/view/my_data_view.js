@@ -19,7 +19,7 @@ export async function myDataView(params) {
             data = {
                 data : `*Profile Anda*\n\nUser : ` +params.TITLE+` `+params.NAMA + `\nID Key : ` + params.ID_KEY + `\nDivisi / Jabatan : `
                     + params.DIVISI + ` / ` + params.JABATAN + `\nInsta : ` + params.INSTA + `\nTikTok : ` + params.TIKTOK
-                    + `\nAccount Status : ` + accountState,
+                    + `\nAccount Status : ` + accountState + `\nwHATSAPP : ` + params.WHATSAPP,
                 state: true,
                 code: 200
             }
