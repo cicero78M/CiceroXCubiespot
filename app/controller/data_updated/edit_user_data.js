@@ -207,13 +207,16 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                       );
                     } else {
 
-                      data = {
-                        data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
-                        state: true,
-                        code: 201
-                      };
-                      reject (data);
+                      if (phone !== userRows[i].WHATSAPP ){
 
+                        data = {
+                          data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
+                          state: true,
+                          code: 201
+                        };
+                        reject (data);
+
+                      }
                     }
 
                   } else {   

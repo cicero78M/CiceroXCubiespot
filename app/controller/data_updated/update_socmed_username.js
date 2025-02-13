@@ -45,6 +45,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
         async response => {    
           userRows = await response.data;                           
           for (let i = 0; i < userRows.length; i++) {
+
             let sourceKey;
             let targetKey;
             
@@ -55,6 +56,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey.toUpperCase();
             }
+
             if (sourceKey === targetKey ){
               logsSave("data exist")
               idExist = true;
@@ -148,35 +150,43 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
             }
 
             switch (userRows[i].WHATSAPP) {
+
               case phone:
+                {
+                  console.log(
+                    'Case ==== phone '
+                  );
 
-              if (phone === "6281235114745") {
+                  if (phone === "6281235114745") {
 
-                userData.WHATSAPP = encrypted("");
+                    userData.WHATSAPP = encrypted("");
+    
+                    writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                    await myData(clientName, targetKey).then(
+                      response => resolve (response)
+                    ).catch(
+                      response => reject (response)
+                    );
+    
+                  } else {
+    
+                    writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                    await myData(clientName, targetKey).then(
+                      response => resolve (response)
+                    ).catch(
+                      response => reject (response)
+                    );
+    
+                  }
 
-                writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
-                await myData(clientName, targetKey).then(
-                  response => resolve (response)
-                ).catch(
-                  response => reject (response)
-                );
 
-              } else {
-
-                writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
-                await myData(clientName, targetKey).then(
-                  response => resolve (response)
-                ).catch(
-                  response => reject (response)
-                );
-
-              }
-
+                }
                 break;
        
               default:
                 {
                   if (phoneList.includes(phone)) {
+
                     if (phone === "6281235114745") {
                       userData.WHATSAPP = encrypted("");
 
@@ -188,14 +198,21 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                       );
                     } else {
 
-                      let responseData = {
-                        data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain, hubungi admin untuk perubahan',
-                        state: true,
-                        code: 201
-                      };
-                      reject (responseData); 
+                      if (phone !== userRows[i].WHATSAPP ){
+
+                          
+                        let responseData = {
+                          data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain, hubungi admin untuk perubahan',
+                          state: true,
+                          code: 201
+                        };
+                        reject (responseData); 
+
+                      }
+
                     }                 
                   } else {
+                    
                     if (phone === "6281235114745") {
                       userData.WHATSAPP = encrypted("");
                       writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));

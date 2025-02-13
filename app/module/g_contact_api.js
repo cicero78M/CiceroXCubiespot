@@ -3,15 +3,19 @@ import process from "process";
 import { authenticate } from "@google-cloud/local-auth";
 import { google } from "googleapis";
 import { readFile, writeFile } from "fs/promises";
+import { createReadStream } from "fs";
 
 // If modifying these scopes, delete token.json.
 const SCOPES = [
   'https://www.googleapis.com/auth/contacts',
-  'https://www.googleapis.com/auth/contacts.readonly'
-];
+  'https://www.googleapis.com/auth/contacts.readonly',
+  'https://www.googleapis.com/auth/drive',
+  'https://www.googleapis.com/auth/drive.readonly'];
+
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
+
 const TOKEN_PATH = path.join(process.cwd(), 'token.json');
 const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json');
 
@@ -86,6 +90,38 @@ export async function saveGoogleContact(name, phone, auth) {
     });
 
     return response;
+
+  } catch (error) {
+
+    console.log(error)      
+  }
+}
+
+export async function driveUploadFile(auth, name, fields, source) {
+
+  try {
+
+    const service = google.drive({version: 'v3', auth});
+
+    const requestBody = {
+      name: name,
+      fields: fields,
+    };
+    const media = {
+      mimeType: 'application/json',
+      body: createReadStream(source),
+    };
+    try {
+      const file = await service.files.create({
+        requestBody,
+        media: media,
+      });
+      console.log('File Id:', file.data.id);
+      return file.data.id;
+    } catch (err) {
+      // TODO(developer) - Handle error
+      throw err;
+    }
 
   } catch (error) {
 
