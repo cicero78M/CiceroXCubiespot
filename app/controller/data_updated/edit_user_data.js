@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from '../../module/crypto.js';
 import { newListValueData } from '../../module/data_list_query.js';
 import { readUser } from '../read_data/read_data_from_dir.js';
+import { authorize, saveGoogleContact } from '../../module/g_contact_api.js';
 
 
 //This Function for edit user data profile
@@ -79,6 +80,8 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
   
       for (let ii = 0; ii < userRows.length; ii++) {
 
+
+
         let sourceKey;
         let targetKey;
         
@@ -141,6 +144,18 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
           } 
   
           if (userRows[ii].STATUS === "TRUE") { 
+        
+            if (!isContact){
+              authorize().then(
+                  async auth =>
+      
+                      {
+                          console.log(await saveGoogleContact(userRows[ii].NAMA, `+${phone}`, auth));
+      
+                      }
+              ).catch(console.error); 
+            }
+
             switch (userRows[ii].WHATSAPP) {
               case phone:
                 {

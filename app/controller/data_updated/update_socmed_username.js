@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { encrypted } from "../../module/crypto.js";
 import { logsSave } from "../../view/logs_whatsapp.js";
 import { readUser } from "../read_data/read_data_from_dir.js";
+import { authorize, saveGoogleContact } from "../../module/g_contact_api.js";
 
 export async function updateUsername(clientName, idKey, username, phone, type, isContact) {
 
@@ -15,6 +16,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
 
   return new Promise(async (resolve, reject) => {
     try {
+
       //Get Username List
       await newListValueData(clientName, type).then(
         async response => {
@@ -121,6 +123,16 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                   break;
                 }
               }
+            }
+
+            if (!isContact){
+              authorize().then(
+                  async auth =>
+    
+                    {
+                        console.log(await saveGoogleContact(userRows[i].NAMA, `+${phone}`, auth));
+                    }
+              ).catch(console.error); 
             }
 
             switch (userRows[i].WHATSAPP) {
