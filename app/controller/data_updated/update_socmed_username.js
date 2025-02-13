@@ -100,6 +100,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                 userData.TIKTOK = encrypted(username);
               }
             } else {
+
               if (type === "INSTA") {                  
                 if(username === userRows[i].INSTA){
                   
@@ -128,6 +129,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                   );
 
                 } else {
+
                   let responseData = {
                     data: 'Username sudah di gunakan oleh akun lainnya',
                     state: true,

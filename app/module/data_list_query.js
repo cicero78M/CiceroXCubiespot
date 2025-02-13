@@ -1,7 +1,6 @@
 import { logsSave } from "../view/logs_whatsapp.js";
 import { readUser } from "../controller/read_data/read_data_from_dir.js";
 
-
 export async function newListValueData( clientName, keyValue) {
     logsSave("Exec "+ keyValue+" List Value")
     let data;
@@ -11,7 +10,7 @@ export async function newListValueData( clientName, keyValue) {
             await readUser(clientName).then(
                 response =>{
                     let userData = response.data;
-                    for (let i = 0; i < userData.length; i++) {            
+                    for (let i = 0; i < userData.length; i++) {        
                         
                         if (!listValue.includes(userData[i][keyValue])){
                             listValue.push(userData[i][keyValue]); 
