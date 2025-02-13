@@ -238,6 +238,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
 
 
     } catch (error) { 
+      console.log(error)
       let responseData = {
         data: error,
         message: "Update Username Error",
