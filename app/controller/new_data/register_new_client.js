@@ -35,7 +35,9 @@ export async function registerClientData(clientName, clientType) {
                 }
             
                 clientData().then(
-                    async clientRows =>{
+                    async response =>{
+
+                        let clientRows = response.data;
             
                         await clientRows.push(dataSet);
                         writeFileSync(`json_data_file/client_data/client_data.json`, JSON.stringify(clientRows));
