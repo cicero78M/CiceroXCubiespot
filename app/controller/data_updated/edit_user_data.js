@@ -104,11 +104,16 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
           isDataExist = true;
   
           if (type === 'DIVISI') {
+
+            console.log("Div Executed")
             if (dataList.includes(newData)) {
               userData.DIVISI = encrypted(newData);
             } else {
               propertiesView(clientName, "DIVISI").then(
-                response => resolve(response.data)                 
+                response => {
+                  resolve(response.data);    
+                  console.log("Notg Contains Divisi");
+                }             
               ).catch(
                 error=>reject(error)
               )
