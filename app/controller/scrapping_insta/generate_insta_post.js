@@ -66,7 +66,6 @@ export async function getInstaPost(clientValue, type) {
             if (hasContent) {
     
               logsSave(`${clientName} Official Account Has Post Data...`);
-              await client.sendMessage('6281235114745@c.us', `${clientName} Official Account Has Post Data...`);
             
               for (let i = 0; i < itemByDay.length; i++) {
 
@@ -145,6 +144,7 @@ export async function getInstaPost(clientValue, type) {
         reject (data);
       }
     } catch (error) {
+      console.log(error)
       let data = {
         data: error,
         message: "generate Insta Post Error",

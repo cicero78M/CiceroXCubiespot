@@ -9,12 +9,11 @@ export async function getInstaUserInfo(clientValue) {
   //Date Time
 
   const clientName = decrypted(clientValue.CLIENT_ID);
-  let instaAccount;
 
+  let instaAccount;
   instaAccount = decrypted(clientValue.INSTAGRAM);
   
-  logsSave(`${clientName} ${type } Collecting Insta Post Starting...`);
-  await client.sendMessage('6281235114745@c.us', `${clientName} ${type } Collecting Insta Post Starting...`);
+  logsSave(`${clientName} ${type } Collecting Insta User Info Starting...`);
 
   return new Promise(async (resolve, reject) => {
 
@@ -41,7 +40,7 @@ export async function getInstaUserInfo(clientValue) {
               resolve (data);
 
           }).catch(error =>{
-          
+            console.log(error);
             let data = {
               data: error,
               message: "generate Insta Post Error",
@@ -54,6 +53,7 @@ export async function getInstaUserInfo(clientValue) {
           });
 
     } catch (error) {
+      console.log(error);
       let data = {
         data: error,
         message: "generate Insta User Info Error",
