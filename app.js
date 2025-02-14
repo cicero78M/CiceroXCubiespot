@@ -884,6 +884,7 @@ client.on('message', async (msg) => {
                                     ).then(
                                             response => {
                                                 logsUserSend(msg.from, response.data);
+                                                console.log(response.data);
                                             }
                                         ).catch(
                                             error => logsUserError(msg.from, error)

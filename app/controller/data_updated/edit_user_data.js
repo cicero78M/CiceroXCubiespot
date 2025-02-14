@@ -112,7 +112,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
               propertiesView(clientName, "DIVISI").then(
                 response => {
                   resolve(response);    
-                  console.log("Not Contains Divisi");
+                  console.log(response.data);
                 }             
               ).catch(
                 error=>reject(error)

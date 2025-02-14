@@ -32,9 +32,6 @@ export async function propertiesView(clientName, type) {
        state: true,
        code: 200
      }  
-
-     console.log(data.data);
-
      resolve (data);
 
     } catch (error) {
