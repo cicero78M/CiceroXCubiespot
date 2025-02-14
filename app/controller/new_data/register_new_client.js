@@ -1,7 +1,8 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { encrypted } from "../../module/crypto.js";
+import { clientData } from "../read_data/read_client_data_from_json.js";
 
-export async function registerClientData(clientName, clientType) {
+export async function registerdataSet(clientName, clientType) {
     let data;
 
     return new Promise((resolve, reject) => {
@@ -9,34 +10,34 @@ export async function registerClientData(clientName, clientType) {
 
             if(["COM", "RES"].includes(clientType)){
 
-                let clientData = new Object();
+                let dataSet = new Object();
                         
-                clientData.CLIENT_ID = encrypted(clientName);
-                clientData.TYPE = encrypted(clientType);
-                clientData.STATUS = encrypted("FALSE");
-                clientData.INSTAGRAM = encrypted("");
-                clientData.TIKTOK = encrypted("");
-                clientData.INSTA_STATE = encrypted("FALSE");
-                clientData.TIKTOK_STATE = encrypted("FALSE");
-                clientData.SUPERVISOR = encrypted("");
-                clientData.OPERATOR = encrypted("");
-                clientData.GROUP = encrypted("");
-                clientData.SECUID = encrypted("");
-                clientData.INSTA_2 = encrypted("");
-                clientData.INSTA_2_STATE = encrypted("FALSE");
+                dataSet.CLIENT_ID = encrypted(clientName);
+                dataSet.TYPE = encrypted(clientType);
+                dataSet.STATUS = encrypted("FALSE");
+                dataSet.INSTAGRAM = encrypted("");
+                dataSet.TIKTOK = encrypted("");
+                dataSet.INSTA_STATE = encrypted("FALSE");
+                dataSet.TIKTOK_STATE = encrypted("FALSE");
+                dataSet.SUPERVISOR = encrypted("");
+                dataSet.OPERATOR = encrypted("");
+                dataSet.GROUP = encrypted("");
+                dataSet.SECUID = encrypted("");
+                dataSet.INSTA_2 = encrypted("");
+                dataSet.INSTA_2_STATE = encrypted("FALSE");
 
             
                 try {
-                    writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientData));
+                    writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(dataSet));
                 } catch (error) {
                     mkdirSync(`json_data_file/client_data/${clientName}`);
-                    writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(clientData));
+                    writeFileSync(`json_data_file/client_data/${clientName}.json`, JSON.stringify(dataSet));
                 }
             
                 clientData().then(
                     async clientRows =>{
             
-                        await clientRows.push(clientData);
+                        await clientRows.push(dataSet);
                         writeFileSync(`json_data_file/client_data/client_data.json`, JSON.stringify(clientRows));
                     
                     }
