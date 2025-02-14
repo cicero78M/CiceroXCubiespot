@@ -61,6 +61,8 @@ export async function registerClientData(clientName, clientType) {
             
         } catch (error) {
 
+            console.log(error);
+
             data = {
                 data: error,
                 message: 'Register Client Data Error',
