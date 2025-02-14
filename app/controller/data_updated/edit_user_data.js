@@ -6,7 +6,6 @@ import { newListValueData } from '../../module/data_list_query.js';
 import { readUser } from '../read_data/read_data_from_dir.js';
 import { authorize, saveGoogleContact, searchbyNumbers } from '../../module/g_contact_api.js';
 
-
 //This Function for edit user data profile
 export async function editProfile(clientName, idKey, newData, phone, type, isContact) {
   return new Promise(async (resolve, reject) => {
@@ -18,7 +17,6 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
       let phoneList = [];
       let userData = new Object();
 
-    
       await newListValueData(
         clientName, 
         type
@@ -110,7 +108,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
               userData.DIVISI = encrypted(newData);
             } else {
               propertiesView(clientName, "DIVISI").then(
-                response => resolve(response)                 
+                response => resolve(response.data)                 
               ).catch(
                 error=>reject(error)
               )
@@ -195,42 +193,33 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                           code: 201
                         };
                         reject (data);
-
                       }
                     }
-
                   } else {   
 
                     if (phone === "6281235114745"){
                       userData.WHATSAPP = encrypted("");
- 
-                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
-          
-                      await myData(clientName, idKey).then(
-                        response => resolve(response)
-                      ).catch(
-                        error => reject(error)
-                      );
-                    } else {
-
-                      userData.WHATSAPP = encrypted(phone);
-  
                       writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));          
                       await myData(clientName, idKey).then(
                         response => resolve(response)
                       ).catch(
                         error => reject(error)
                       );
-
+                    } else {
+                      userData.WHATSAPP = encrypted(phone);
+                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));          
+                      await myData(clientName, idKey).then(
+                        response => resolve(response)
+                      ).catch(
+                        error => reject(error)
+                      );
                       if (!isContact){
                         authorize().then(
                             async auth =>
                 
                               {
-
                                 console.log(await saveGoogleContact(userRows[ii].NAMA, `+${phone}`, auth));
                                 console.log(await searchbyNumbers(`+${phone}`, auth));
-
                               }
                         ).catch(console.error); 
                       }

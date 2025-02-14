@@ -126,7 +126,6 @@ export async function driveUploadFile(auth, name, fields, source) {
   try {
 
     const service = google.drive({version: 'v3', auth});
-
     const requestBody = {
       name: name,
       fields: fields,
