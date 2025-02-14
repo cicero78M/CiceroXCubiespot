@@ -113,13 +113,16 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
 
               testData = true;
             } else {
+
               propertiesView(clientName, "DIVISI").then(
                 response => {
+                  console.log(response.data);
                   resolve (response);
                 }             
               ).catch(
                 error=>reject(error)
               )
+
             }
   
           } else if (type === 'JABATAN') {

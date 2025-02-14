@@ -883,7 +883,6 @@ client.on('message', async (msg) => {
                                         "DIVISI"
                                     ).then(
                                         response => {
-                                            console.log(response);
                                             logsUserSend(msg.from, response.data);
                                         }
                                     ).catch(
