@@ -66,6 +66,7 @@ import { restoreTiktokComments } from './app/controller/data_restore/restore_tik
 import { usernameInfo } from './app/controller/read_data/username_info.js';
 import { authorize, saveGoogleContact } from './app/module/g_contact_api.js';
 import { readUser } from './app/controller/read_data/read_data_from_dir.js';
+import { getInstaUserInfo } from './app/controller/scrapping_insta/generate_insta_user_info.js';
 
 //.env
 const private_key = process.env;
@@ -710,6 +711,30 @@ client.on('message', async (msg) => {
                                 ).catch(
                                     error => logsError(error)
                                 )
+                                break;
+                            
+                            case 'userinfo':
+                                {
+                                    await clientData()
+                                    .then(
+                                        async response =>{
+                                            
+                                            let clientData = response.data;
+    
+                                            for (let i = 0; i < clientData.length; i++){
+                                                await getInstaUserInfo(clientData[i]).then(
+                                                    response => {
+                                                        logsSend(response.data)
+                                                    }
+                                                ).catch(
+                                                    error => logsError(error)
+                                                );
+                                            }
+                                        }
+                                    ).catch (
+                                        error => logsError(error)
+                                    );
+                                }
                                 break;
                             default : 
                                 break;

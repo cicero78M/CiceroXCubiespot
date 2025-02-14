@@ -10,6 +10,7 @@ export const adminOrder = [
     'admininfo',
     'instauname',
     'tiktokuname',
+    'userinfo',
     "test"
 ];
 
