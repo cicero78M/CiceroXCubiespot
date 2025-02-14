@@ -17,10 +17,10 @@ export async function updateClientData(clientName, newvalue, type) {
                 let clientRows = response.data;
 
                 for (let i = 0; i < clientRows.length; i++) {
-                    if (decrypted(clientRows[i].CLIENT_ID) === clientName) {
 
+                    if (clientRows[i].CLIENT_ID === encrypted(clientName)) {
+        
                         isClient = true;
-
                         switch (type) {
                             case "insta":
                                 clientRows[i].INSTAGRAM = encrypted(newvalue);
