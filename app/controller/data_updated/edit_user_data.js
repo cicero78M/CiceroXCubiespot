@@ -111,8 +111,8 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
             } else {
               propertiesView(clientName, "DIVISI").then(
                 response => {
-                  resolve(response.data);    
-                  console.log("Notg Contains Divisi");
+                  resolve(response);    
+                  console.log("Not Contains Divisi");
                 }             
               ).catch(
                 error=>reject(error)
