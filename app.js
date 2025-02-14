@@ -719,6 +719,9 @@ client.on('message', async (msg) => {
                                         async response =>{
                                             
                                             let clientData = response.data;
+
+                                            console.log(clientData);
+
     
                                             for (let i = 0; i < clientData.length; i++){
                                                 await getInstaUserInfo(clientData[i]).then(
