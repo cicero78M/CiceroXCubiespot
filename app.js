@@ -212,58 +212,58 @@ client.on('ready', () => {
         }                
     });
 
-    //Backup Insta & Tiktok Content
-    schedule('0 22 * * *',  async () => {
+    // //Backup Insta & Tiktok Content
+    // schedule('0 22 * * *',  async () => {
         
-        if(process.env.APP_CLIENT_TYPE === "RES"){
-            await clientData().then(
-                async response =>{
-                    let clientData = response.data;
-                    for (let i = 0; i < clientData.length; i++){   
-                        await instaContentBackup(clientData[i]).then(
-                            response => logsSend(response.data)
-                        ).catch(
-                            error => logsError(error)
-                        );
+    //     if(process.env.APP_CLIENT_TYPE === "RES"){
+    //         await clientData().then(
+    //             async response =>{
+    //                 let clientData = response.data;
+    //                 for (let i = 0; i < clientData.length; i++){   
+    //                     await instaContentBackup(clientData[i]).then(
+    //                         response => logsSend(response.data)
+    //                     ).catch(
+    //                         error => logsError(error)
+    //                     );
 
-                        await tiktokContentBackup(response[i]).then(
-                            response => logsSend(response.data)
-                        ).catch(
-                            error => logsError(error)
-                        );
-                    }      
-                }
-            ).catch (
-                error => logsError(error)
-            );
-        }
-    });
+    //                     await tiktokContentBackup(response[i]).then(
+    //                         response => logsSend(response.data)
+    //                     ).catch(
+    //                         error => logsError(error)
+    //                     );
+    //                 }      
+    //             }
+    //         ).catch (
+    //             error => logsError(error)
+    //         );
+    //     }
+    // });
 
-    //Execute Backup Insta & Tiktok Like Comments
-    schedule('0 23 * * *',  async () => {
-        if(process.env.APP_CLIENT_TYPE === "RES"){
-            await clientData().then(
-                async response =>{
-                    let clientData = response.data;
-                    for (let i = 0; i < clientData.length; i++){
+//     //Execute Backup Insta & Tiktok Like Comments
+//     schedule('0 23 * * *',  async () => {
+//         if(process.env.APP_CLIENT_TYPE === "RES"){
+//             await clientData().then(
+//                 async response =>{
+//                     let clientData = response.data;
+//                     for (let i = 0; i < clientData.length; i++){
             
-                        await instaLikesBackup(clientData[i]).then(
-                            response => logsSend(response.data)
-                        ).catch(
-                            error => logsError(error)
-                        );
+//                         await instaLikesBackup(clientData[i]).then(
+//                             response => logsSend(response.data)
+//                         ).catch(
+//                             error => logsError(error)
+//                         );
 
-                        await tiktokCommentsBackup(clientData[i]).then(
-                            response => logsSend(response.data)
-                        ).catch(
-                            error => logsError(error)
-                        );
-                    }
-                }
-            );
-        }
-    });
-});
+//                         await tiktokCommentsBackup(clientData[i]).then(
+//                             response => logsSend(response.data)
+//                         ).catch(
+//                             error => logsError(error)
+//                         );
+//                     }
+//                 }
+//             );
+//         }
+//     });
+// });
 
 client.on('message', async (msg) => {
     try {
