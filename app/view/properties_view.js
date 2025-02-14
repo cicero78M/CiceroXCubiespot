@@ -1,6 +1,7 @@
 import { newListValueData } from '../module/data_list_query.js';
 
 export async function propertiesView(clientName, type) {
+
   let data;
   let dataList = [];
   let dataString = '';
@@ -25,11 +26,15 @@ export async function propertiesView(clientName, type) {
        }
      )
 
+
       data = {
        data : `*`+type+` List*\n\n`+dataString,
        state: true,
        code: 200
      }  
+
+     console.log(data.data);
+
      resolve (data);
 
     } catch (error) {
@@ -39,6 +44,7 @@ export async function propertiesView(clientName, type) {
       state: false,
       code: 303
     }  
+    console.log(error)
     reject (data);
    }
   });
