@@ -13,7 +13,7 @@ export async function registerClientData(clientName, clientType) {
                         
                 clientData.CLIENT_ID = encrypted(clientName);
                 clientData.TYPE = encrypted(clientType);
-                clientData.STATUS = encrypted("TRUE");
+                clientData.STATUS = encrypted("FALSE");
                 clientData.INSTAGRAM = encrypted("");
                 clientData.TIKTOK = encrypted("");
                 clientData.INSTA_STATE = encrypted("FALSE");
