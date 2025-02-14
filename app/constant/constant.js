@@ -5,7 +5,7 @@ export const adminOrder = [
     'exception', 
     'savecontact',
     'secuid', 
-    'updateclientdata',
+    'clientdata',
     'registerclient',
     'admininfo',
     'instauname',

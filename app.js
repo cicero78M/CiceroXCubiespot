@@ -495,7 +495,7 @@ client.on('message', async (msg) => {
                                     // ).catch( error => reject (error));                          
                                 }
                                 break;
-                            case 'updateclientdata':
+                            case 'clientdata':
                                 {
                                     switch (splittedMsg[2].toLowerCase()) {
                                         case 'insta':
