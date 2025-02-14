@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from "fs";
 import { encrypted } from "../../module/crypto.js";
 import { clientData } from "../read_data/read_client_data_from_json.js";
 
-export async function registerdataSet(clientName, clientType) {
+export async function registerClientData(clientName, clientType) {
     let data;
 
     return new Promise((resolve, reject) => {
