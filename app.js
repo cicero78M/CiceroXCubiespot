@@ -712,7 +712,6 @@ client.on('message', async (msg) => {
                                     error => logsError(error)
                                 )
                                 break;
-                            
                             case 'userinfo':
                                 {
                                     await clientData()

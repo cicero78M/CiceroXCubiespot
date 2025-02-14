@@ -6,13 +6,13 @@ import { logsSave } from "../../view/logs_whatsapp.js";
 export async function getInstaUserInfo(clientValue) {
   //Date Time
 
-
+  console.log("Get Insta User Info")
   const clientName = decrypted(clientValue.CLIENT_ID);
 
   let instaAccount;
   instaAccount = decrypted(clientValue.INSTAGRAM);
   
-  logsSave(`${clientName} ${type } Collecting Insta User Info Starting...`);
+  logsSave(`${clientName} Collecting Insta User Info Starting...`);
 
   return new Promise(async (resolve, reject) => {
 
