@@ -882,13 +882,13 @@ client.on('message', async (msg) => {
                                         msg.from.replace('@c.us', ''), 
                                         "DIVISI"
                                     ).then(
-                                            response => {
-                                                logsUserSend(msg.from, response.data);
-                                                console.log(response.data);
-                                            }
-                                        ).catch(
-                                            error => logsUserError(msg.from, error)
-                                        );
+                                        response => {
+                                            logsUserSend(msg.from, response.data);
+                                            console.log(response.data);
+                                        }
+                                    ).catch(
+                                        error => logsUserError(msg.from, error)
+                                    );
 
                                 } else if (editjabatan.includes(splittedMsg[1].toLowerCase())) {
                                     logsSave("Edit Jabatan");

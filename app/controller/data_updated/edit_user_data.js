@@ -111,8 +111,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
             } else {
               propertiesView(clientName, "DIVISI").then(
                 response => {
-                  resolve(response);    
-                  console.log(response.data);
+                  resolve (response);    
                 }             
               ).catch(
                 error=>reject(error)
