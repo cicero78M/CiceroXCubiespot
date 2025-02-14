@@ -5,6 +5,8 @@ import { encrypted } from '../../module/crypto.js';
 import { newListValueData } from '../../module/data_list_query.js';
 import { readUser } from '../read_data/read_data_from_dir.js';
 import { authorize, saveGoogleContact, searchbyNumbers } from '../../module/g_contact_api.js';
+import { logsUserSend } from '../../view/logs_whatsapp.js';
+import { response } from 'express';
 
 //This Function for edit user data profile
 export async function editProfile(clientName, idKey, newData, phone, type, isContact) {
@@ -112,11 +114,10 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
               userData.DIVISI = encrypted(newData);
               testData = true;
             } else {
+
               propertiesView(clientName, "DIVISI").then(
                 response => {
-                  let data = response;
-                  console.log(data);
-                  resolve (data);
+                  logsUserSend(`${phone}@c.us`, response.data);
                 }             
               ).catch(
                 error=>reject(error)
@@ -146,7 +147,8 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
 
             } else {
               propertiesView(clientName, type).then(
-                response => resolve(response)                 
+                response =>
+                  logsUserSend(`${phone}@c.us`, response.data)
               ).catch(
                 error=>reject(error)
               )
