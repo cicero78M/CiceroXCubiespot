@@ -18,7 +18,7 @@ export async function updateClientData(clientName, newvalue, type) {
 
                 for (let i = 0; i < clientRows.length; i++) {
 
-                    if (clientRows[i].CLIENT_ID === clientName) {
+                    if (decrypted(clientRows[i].CLIENT_ID) === clientName) {
         
                         isClient = true;
                         switch (type) {
