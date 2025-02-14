@@ -1,12 +1,11 @@
-import { client } from "../../../app.js";
 import { instaInfoAPI } from "../../module/insta_API.js";
 import { decrypted } from '../../module/crypto.js';
 import { mkdirSync, writeFileSync } from "fs";
 import { logsSave } from "../../view/logs_whatsapp.js";
 
 export async function getInstaUserInfo(clientValue) {
-
   //Date Time
+
 
   const clientName = decrypted(clientValue.CLIENT_ID);
 
@@ -21,7 +20,9 @@ export async function getInstaUserInfo(clientValue) {
 
         await instaInfoAPI(instaAccount).then( async response =>{
 
-            let objectData = response;
+            console.log(response.data)
+
+            let objectData = response.data;
 
             try {
                 writeFileSync(`json_data_file/user_info/insta/${clientName}.json`, JSON.stringify(objectData));

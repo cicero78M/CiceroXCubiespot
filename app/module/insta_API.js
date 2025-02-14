@@ -208,6 +208,7 @@ export async function instaPostInfoAPI(key) {
     });
 }
 export async function instaInfoAPI(key) {
+    console.log("Insta Info API")
     //Insta Post API
     let options = {
         method: 'GET',
