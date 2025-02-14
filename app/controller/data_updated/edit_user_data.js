@@ -18,8 +18,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
       let phoneList = [];
       let userData = new Object();
 
-      
-  
+    
       await newListValueData(
         clientName, 
         type
@@ -79,8 +78,6 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
 
   
       for (let ii = 0; ii < userRows.length; ii++) {
-
-
 
         let sourceKey;
         let targetKey;
@@ -166,17 +163,11 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                     writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
   
                     await myData(clientName, targetKey).then(
-  
                       response => resolve(response)
-  
                     ).catch(
-  
                       error => reject(error)
-  
                     );
-
                   }
-                  
                 }
                 break;
               default:
@@ -196,7 +187,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                       );
                     } else {
 
-                      if (phone !== userRows[i].WHATSAPP ){
+                      if (phone !== userRows[ii].WHATSAPP ){
 
                         data = {
                           data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
@@ -243,7 +234,6 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                               }
                         ).catch(console.error); 
                       }
-
                     }       
                   }
                 }
