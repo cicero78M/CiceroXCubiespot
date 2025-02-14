@@ -8,7 +8,7 @@ import { authorize, saveGoogleContact, searchbyNumbers } from '../../module/g_co
 
 
 //This Function for edit user data profile
-export async function editProfile(clientName, idKey, newData, phone, type) {
+export async function editProfile(clientName, idKey, newData, phone, type, isContact) {
   return new Promise(async (resolve, reject) => {
     try {
       let data;
@@ -235,12 +235,12 @@ export async function editProfile(clientName, idKey, newData, phone, type) {
                         authorize().then(
                             async auth =>
                 
-                                {
+                              {
 
-                                    console.log(await saveGoogleContact(userRows[ii].NAMA, `+${phone}`, auth));
-                                    console.log(await searchbyNumbers(`+${phone}`, auth));
+                                console.log(await saveGoogleContact(userRows[ii].NAMA, `+${phone}`, auth));
+                                console.log(await searchbyNumbers(`+${phone}`, auth));
 
-                                }
+                              }
                         ).catch(console.error); 
                       }
 
