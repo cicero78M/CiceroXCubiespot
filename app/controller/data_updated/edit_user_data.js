@@ -110,14 +110,13 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
             console.log("Div Executed")
             if (dataList.includes(newData)) {
               userData.DIVISI = encrypted(newData);
-
               testData = true;
             } else {
-
               propertiesView(clientName, "DIVISI").then(
                 response => {
-                  console.log(response.data);
-                  resolve (response);
+                  let data = response;
+                  console.log(data);
+                  resolve (data);
                 }             
               ).catch(
                 error=>reject(error)
