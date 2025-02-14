@@ -27,7 +27,7 @@ export async function getInstaUserInfo(clientValue) {
             try {
                 writeFileSync(`json_data_file/user_info/insta/${clientName}.json`, JSON.stringify(objectData));
               } catch (error) {
-                mkdirSync(`json_data_file/user_info/insta/`);
+                mkdirSync(`json_data_file/user_info/insta`);
                 writeFileSync(`json_data_file/user_info/insta/${clientName}.json`, JSON.stringify(objectData));
               }
 
