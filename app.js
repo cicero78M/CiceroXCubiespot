@@ -74,8 +74,25 @@ const private_key = process.env;
 // Routing Port 
 const port = private_key.EXPRESS_PORT;
 
-app.get('/json_data_file/user_info/insta', function (req, res) {
-    res.send('Hello World')
+app.get('/', function (req, res) {
+
+    let responseData;
+
+    clientData().then( 
+        async response => {  
+            let clientData = response.data;  
+            for (let i = 0; i < clientData.length; i++){
+
+
+
+                if(decrypted(clientData[i].CLIENT_ID) === "BOJONEGORO"){
+
+                    responseData = await infoResView("BOJONEGORO");
+                }
+            }
+        }
+    );
+    res.send(responseData.data)
   });
 
 app.listen(port, () => {
