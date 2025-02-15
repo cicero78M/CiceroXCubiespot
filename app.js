@@ -76,8 +76,6 @@ const private_key = process.env;
 const port = private_key.EXPRESS_PORT;
 
 app.get('/', function (req, res) {
-//    res.render("login");
-
     
     readUser("BOJONEGORO").then(
         response =>{
