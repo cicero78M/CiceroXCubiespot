@@ -6,6 +6,28 @@
   </head>
   <body>
     <h1>Bojonegoro Data Tables</h1>
+    <table>
+      <tr>
+        <th>ID_KEY</th><th>Name</th>
+      </tr>
     
+      <% 
+      
+      let data = [{"id": "kjhkjh", "name": "KHTFKYHTFDKHY"},{"id": "iuyi", "name": "SDFHSDFGSA"}]
+      
+      
+      for (var i = 0; i < data.length; i++) { 
+        
+        %>
+        <tr>
+          <td><%= data[i].id %></td>
+          <td><%= data[i].name %></td>
+        </tr>    
+        <%
+
+       } 
+      
+      %>
+    </table>
   </body>
 </html>
