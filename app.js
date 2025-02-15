@@ -76,8 +76,15 @@ const private_key = process.env;
 const port = private_key.EXPRESS_PORT;
 
 app.get('/', function (req, res) {
+    let userRows = new Array();
+    
+    readUser("BOJONEGORO").then(
+        response =>{
+            userRows = response.data;
+        }
+      )
 
-    res.render("index");
+    res.render("index", {data: userRows});
 
 });
 
