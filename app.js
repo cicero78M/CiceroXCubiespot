@@ -75,15 +75,15 @@ const private_key = process.env;
 // Routing Port 
 const port = private_key.EXPRESS_PORT;
 
-app.get('/', function (req, res) {
+// app.get('/', function (req, res) {
     
-    readUser("BOJONEGORO").then(
-        response =>{
-            console.log(response.data);
-            res.render("index", {data: response.data});
-        }
-    )
-});
+//     readUser("BOJONEGORO").then(
+//         response =>{
+//             console.log(response.data);
+//             res.render("index", {data: response.data});
+//         }
+//     )
+// });
 
 app.listen(port, () => {
     logsSave(`Cicero System Start listening on port >>> ${port}`)
