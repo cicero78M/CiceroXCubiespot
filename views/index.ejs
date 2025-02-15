@@ -8,6 +8,7 @@
     <h1>Bojonegoro Data Tables</h1>
     <table>
       <tr>
+        <th>NO</th>
         <th>ID_KEY</th>
         <th>NAMA</th>
         <th>PANGKAT</th>
@@ -21,10 +22,11 @@
 
       <% 
 
-        
         for (var i = 0; i < data.length; i++) { 
           %>
             <tr>
+              <td><%= i+1 %></td>
+
               <td><%= data[i].ID_KEY %></td>
               <td><%= data[i].NAMA %></td>
               <td><%= data[i].TITLE %></td>
