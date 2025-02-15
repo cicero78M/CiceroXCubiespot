@@ -23,26 +23,31 @@ export async function userDataBackup() {
 
                         let userData = []
 
-                        let data = readdirSync(`json_data_file/user_data/${decrypted(clientData[i].CLIENT_ID)}`);
-        
-                        for (let ii = 0; ii < data.length; ii++){
-                            userData.push(JSON.parse(readFileSync(`json_data_file/user_data/${decrypted(clientData[i].CLIENT_ID)}/${data[ii]}`)));
-                        } 
-                        
-                        let sheetDoc = new GoogleSpreadsheet(
-                            process.env.userDataID, 
-                            googleAuth
-                        ); //Google Auth
-                        await sheetDoc.loadInfo();
-                        let newSheet = await sheetDoc.addSheet({ 
-                            title: `${decrypted(clientData[i].CLIENT_ID)}_${localDate}`, 
-                            headerValues: ['ID_KEY','NAMA',	'TITLE','DIVISI','JABATAN','STATUS','WHATSAPP','INSTA','TIKTOK','EXCEPTION', 'INSTA_2', 'INSTA_2_STATE']
-                        });
-    
-                        await newSheet.addRows(userData);
-    
-                        logsSave(`${decrypted(clientData[i].CLIENT_ID)}_${localDate} Backed Up`);    
 
+                        if (decrypted(clientData[i].STATUS) === "TRUE" ){
+
+                            let data = readdirSync(`json_data_file/user_data/${decrypted(clientData[i].CLIENT_ID)}`);
+
+                                
+                            for (let ii = 0; ii < data.length; ii++){
+                                userData.push(JSON.parse(readFileSync(`json_data_file/user_data/${decrypted(clientData[i].CLIENT_ID)}/${data[ii]}`)));
+                            } 
+                            
+                            let sheetDoc = new GoogleSpreadsheet(
+                                process.env.userDataID, 
+                                googleAuth
+                            ); //Google Auth
+                            await sheetDoc.loadInfo();
+                            let newSheet = await sheetDoc.addSheet({ 
+                                title: `${decrypted(clientData[i].CLIENT_ID)}_${localDate}`, 
+                                headerValues: ['ID_KEY','NAMA',	'TITLE','DIVISI','JABATAN','STATUS','WHATSAPP','INSTA','TIKTOK','EXCEPTION', 'INSTA_2', 'INSTA_2_STATE']
+                            });
+        
+                            await newSheet.addRows(userData);
+        
+                            logsSave(`${decrypted(clientData[i].CLIENT_ID)}_${localDate} Backed Up`);    
+
+                        }
                     }       
                 }
             );
