@@ -87,11 +87,12 @@ app.get('/', function (req, res) {
 
                 if(decrypted(clientData[i].CLIENT_ID) === "BOJONEGORO"){
 
-                    responseData = await infoResView("BOJONEGORO");
+                    responseData = await infoResView("BOJONEGORO").data;
                 }
             }
         }
     );
+
     res.send(responseData)
   });
 
