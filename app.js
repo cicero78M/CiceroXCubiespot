@@ -720,6 +720,32 @@ client.on('message', async (msg) => {
                                             
                                             let clientData = response.data;
 
+                                            for (let i = 0; i < clientData.length; i++){
+                                                if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
+
+                                                    await getInstaUserInfo(clientData[i]).then(
+                                                        response => {
+                                                            logsSend(response.data)
+                                                        }
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    ).catch (
+                                        error => logsError(error)
+                                    );
+                                }
+                                break;
+                            case 'alluserinfo':
+                                {
+                                    await clientData()
+                                    .then(
+                                        async response =>{
+                                            
+                                            let clientData = response.data;
+
                                             console.log(clientData);
 
     
