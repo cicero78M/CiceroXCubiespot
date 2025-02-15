@@ -92,7 +92,7 @@ app.get('/', function (req, res) {
             }
         }
     );
-    res.send(responseData.data)
+    res.send(responseData)
   });
 
 app.listen(port, () => {
