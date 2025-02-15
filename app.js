@@ -84,6 +84,8 @@ app.get('/', function (req, res) {
         }
       )
 
+    console.log(userRows);
+
     res.render("index", {data: userRows});
 
 });
