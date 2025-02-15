@@ -81,18 +81,17 @@ app.get('/', function (req, res) {
     clientData().then( 
         async response => {  
             let clientData = response.data;  
+
             for (let i = 0; i < clientData.length; i++){
 
-
-
                 if(decrypted(clientData[i].CLIENT_ID) === "BOJONEGORO"){
-
                     responseData = await infoResView("BOJONEGORO").data;
                 }
             }
         }
     );
 
+    console.log(responseData)
     res.send(responseData)
   });
 
