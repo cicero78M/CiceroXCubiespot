@@ -76,23 +76,16 @@ const port = private_key.EXPRESS_PORT;
 
 app.get('/', function (req, res) {
 
-    let responseData;
+    let data;
 
     clientData().then( 
         async response => {  
-            let clientData = response.data;  
-
-            for (let i = 0; i < clientData.length; i++){
-
-                if(decrypted(clientData[i].CLIENT_ID) === "BOJONEGORO"){
-                    responseData = await infoResView("BOJONEGORO");
-                }
-            }
+            data = response.data;  
         }
     );
 
-    console.log(responseData)
-    res.send(responseData)
+    console.log(data)
+    res.send(data)
   });
 
 app.listen(port, () => {
