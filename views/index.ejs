@@ -8,25 +8,25 @@
     <h1>Bojonegoro Data Tables</h1>
     <table>
       <tr>
-        <th>ID_KEY</th><th>Name</th>
+        <th>ID_KEY</th><th>NAMA</th><th>PANGKAT</th><th>JABATAN</th><th>SATFUNG</th><th>STATUS</th><th>WHATSAPP</th><th>INSTAGRAM</th><th>TIKTOK</th>
       </tr>
 
       <% 
-
-      
-      
-      let data = data;
-      
-      for (var i = 0; i < data.length; i++) { 
-        
-        %>
-        <tr>
-          <td><%= data[i].ID_KEY %></td>
-          <td><%= data[i].NAMA %></td>
-        </tr>    
-        <%
-
-       } 
+        for (var i = 0; i < data.length; i++) { 
+          %>
+            <tr>
+              <td><%= data[i].ID_KEY %></td>
+              <td><%= data[i].NAMA %></td>
+              <td><%= data[i].TITLE %></td>
+              <td><%= data[i].JABATAN %></td>
+              <td><%= data[i].DIVISI %></td>
+              <td><%= data[i].STATUS %></td>
+              <td><%= data[i].WHATSAPP %></td>
+              <td><%= data[i].INSTA %></td>
+              <td><%= data[i].TIKTOK %></td>
+            </tr>    
+          <%
+        } 
       
       %>
     </table>
