@@ -1,6 +1,6 @@
 //Route
 import express from 'express';
-const app = express();
+export const app = express();
 
 //WWebjs
 import wwebjs from 'whatsapp-web.js';
@@ -19,7 +19,6 @@ const { textSync } = figlet;
 //Banner
 import { set } from 'simple-banner';
 //Files
-import { mkdirSync, writeFileSync } from "fs";
 
 //Local Dependency
 import { myData } from './app/controller/read_data/read_my_data.js';
@@ -76,17 +75,17 @@ const port = private_key.EXPRESS_PORT;
 
 app.get('/', function (req, res) {
 
-    let data;
+    myData(
+        "BOJONEGORO", 
+        "80010151"
+    ).then( 
+        response => res.send(response.data)
+    ).catch(
+        error => console.log(error)
+    )
 
-    clientData().then( 
-        async response => {  
-            data = response.data;  
-        }
-    );
 
-    console.log(data)
-    res.send(data)
-  });
+});
 
 app.listen(port, () => {
     logsSave(`Cicero System Start listening on port >>> ${port}`)
@@ -325,19 +324,19 @@ client.on('message', async (msg) => {
             chatMsg.sendSeen(); //this send seen by bot whatsapp
             chatMsg.sendStateTyping(); //this create bot typing state 
             
-            if (!contact.isMyContact && !contact.isGroup){
-                //Save Contact Here
-                let newContact = new Object();
-                newContact.contact = msg.from;
-                newContact.pushname = msg.pushname;
+            // if (!contact.isMyContact && !contact.isGroup){
+            //     //Save Contact Here
+            //     let newContact = new Object();
+            //     newContact.contact = msg.from;
+            //     newContact.pushname = msg.pushname;
 
-                try {
-                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
-                } catch (error) {
-                    mkdirSync(`json_data_file/contact_data`);
-                    writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
-                } 
-            }
+            //     try {
+            //         writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+            //     } catch (error) {
+            //         mkdirSync(`json_data_file/contact_data`);
+            //         writeFileSync(`json_data_file/contact_data/${msg.from}.json`, JSON.stringify(newContact));
+            //     } 
+            // }
 
             //Splitted Msg
             const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
