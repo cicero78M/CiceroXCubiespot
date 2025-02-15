@@ -2,6 +2,8 @@
 import express from 'express';
 export const app = express();
 
+app.set("view engine", "ejs")
+
 //WWebjs
 import wwebjs from 'whatsapp-web.js';
 const { Client, LocalAuth } = wwebjs;
@@ -75,15 +77,7 @@ const port = private_key.EXPRESS_PORT;
 
 app.get('/', function (req, res) {
 
-    myData(
-        "BOJONEGORO", 
-        "80010151"
-    ).then( 
-        response => res.send(response.data)
-    ).catch(
-        error => console.log(error)
-    )
-
+    res.render("index");
 
 });
 
