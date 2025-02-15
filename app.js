@@ -748,16 +748,23 @@ client.on('message', async (msg) => {
 
                                             console.log(clientData);
 
-    
-                                            for (let i = 0; i < clientData.length; i++){
-                                                await getInstaUserInfo(clientData[i]).then(
-                                                    response => {
-                                                        logsSend(response.data)
-                                                    }
-                                                ).catch(
-                                                    error => logsError(error)
-                                                );
-                                            }
+                                            let i = 0;
+
+                                            (function loop() {
+                                                if (++i < userData.length) {
+
+                                                    getInstaUserInfo(clientData[i]).then(
+                                                        response => {
+                                                            logsSend(response.data)
+                                                        }
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
+
+
+                                                    setTimeout(loop, 4000);  
+                                                }
+                                            })();
                                         }
                                     ).catch (
                                         error => logsError(error)
