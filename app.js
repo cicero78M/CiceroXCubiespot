@@ -85,7 +85,7 @@ app.get('/', function (req, res) {
             for (let i = 0; i < clientData.length; i++){
 
                 if(decrypted(clientData[i].CLIENT_ID) === "BOJONEGORO"){
-                    responseData = await infoResView("BOJONEGORO").data;
+                    responseData = await infoResView("BOJONEGORO");
                 }
             }
         }
