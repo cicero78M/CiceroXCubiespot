@@ -79,7 +79,6 @@ app.get('/', function (req, res) {
     
     readUser("BOJONEGORO").then(
         response =>{
-            console.log(response.data);
             res.render("index", {data: response.data});
         }
     )
