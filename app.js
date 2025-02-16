@@ -75,6 +75,11 @@ const private_key = process.env;
 // Routing Port 
 const port = private_key.EXPRESS_PORT;
 
+app.listen(port, () => {
+    logsSave(`Cicero System Start listening on port >>> ${port}`)
+});
+
+
 app.get('/', function (req, res) {
     
     readUser("BOJONEGORO").then(
@@ -84,9 +89,6 @@ app.get('/', function (req, res) {
     )
 });
 
-app.listen(port, () => {
-    logsSave(`Cicero System Start listening on port >>> ${port}`)
-});
 
 // WWEB JS Client Constructor
 export const client = new Client({
