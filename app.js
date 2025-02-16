@@ -84,7 +84,7 @@ app.get('/', function (req, res) {
     
     readUser("BOJONEGORO").then(
         response =>{
-            res.render("index", {data: response.data});
+            res.render("index", {data: response.data, ID_CLIENT: "BOJONEGORO" });
         }
     )
 });
