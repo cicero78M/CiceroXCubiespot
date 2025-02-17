@@ -12,7 +12,7 @@ const { Client, LocalAuth } = wwebjs;
 import 'dotenv/config';
 
 //QR-Code
-import qrcode from 'qrcode-terminal';
+import qrcode, { error } from 'qrcode-terminal';
 
 //Figlet
 import figlet from 'figlet';
@@ -420,21 +420,37 @@ client.on('message', async (msg) => {
                                     logsSend(time+' Generate Tiktok secUID Data Starting');
                     
                                     await clientData().then(
-                                        async clientData =>{
+                                        async response =>{
                                             //Itterate Client
-                                            for (let i = 0; i < clientData.length; i++){
-                                                if (decrypted(clientData[i].STATUS) === "TRUE" 
-                                                && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                                                && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE){
-                                                    await setSecuid(clientData[i]).then(
-                                                        response => logsSend(response.data)
-                                                    ).catch(
-                                                        error => logsError(error)
-                                                    )
-                                                } 
-                                            }
+
+                                            let clientRows = response.data; 
+
+                                            let i = 0;
+
+                                            (function loop() {
+
+                                                if (++i < clientRows.length) {
+
+                                                    if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                    && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                                                    && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE){
+                                                        setSecuid(clientRows[i]).then(
+                                                            response => logsSend(response.data)
+                                                        ).catch(
+                                                            error => logsError(error)
+                                                        )
+                                                    } 
+                            
+                                                    setTimeout(loop, 3000);  
+                                                } else {
+                                                    console.log("Generate Secuid Data Done");
+                                                }
+                                            })();
+                                
                                         }
-                                    );
+                                    ).catch(
+                                        error => console.log(error)
+                                    )
         
                                 }
                                 break;
@@ -473,21 +489,8 @@ client.on('message', async (msg) => {
                                                 }
                                             })();
                                                                                       
-                                            }
-                                      )
-
-                                    // await readUser(
-                                    //     splittedMsg[0].toUpperCase()
-                                    // ).then( 
-                                    //     async response => {    
-                                        //     userRows = await response.data;                           
-                                        //     for (let i = 0; i < userRows.length; i++) {
-                                        //         if (userRows[i].STATUS === 'TRUE' ){
-
-                                        //         }
-                                        //     } 
-                                    //     }
-                                    // ).catch( error => reject (error));                          
+                                        }
+                                    )                    
                                 }
                                 break;
                             case 'clientdata':
@@ -712,20 +715,29 @@ client.on('message', async (msg) => {
                                     .then(
                                         async response =>{
                                             
-                                            let clientData = response.data;
+                                            let i = 0;
+                                            let clientRows = response.data;
 
-                                            for (let i = 0; i < clientData.length; i++){
-                                                if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
+                                            (function loop() {
 
-                                                    await getInstaUserInfo(clientData[i]).then(
-                                                        response => {
-                                                            logsSend(response.data)
-                                                        }
-                                                    ).catch(
-                                                        error => logsError(error)
-                                                    );
+                                                if (++i < clientRows.length) {
+
+                                                    if(decrypted(clientRows[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
+
+                                                        getInstaUserInfo(clientRows[i]).then(
+                                                            response => {
+                                                                logsSend(response.data)
+                                                            }
+                                                        ).catch(
+                                                            error => logsError(error)
+                                                        );
+                                                    }
+                            
+                                                    setTimeout(loop, 3000);  
+                                                } else {
+                                                    console.log("Generate Secuid Data Done");
                                                 }
-                                            }
+                                            })();
                                         }
                                     ).catch (
                                         error => logsError(error)
@@ -739,8 +751,6 @@ client.on('message', async (msg) => {
                                         async response =>{
                                             
                                             let clientData = response.data;
-
-                                            console.log(clientData);
 
                                             let i = 0;
 
@@ -1048,6 +1058,7 @@ client.on('message', async (msg) => {
                                                 }
                                             }
                                             break;
+                                        
                                         case 'divisilist'://Divisi List Request        
                                                         
                                             await propertiesView(

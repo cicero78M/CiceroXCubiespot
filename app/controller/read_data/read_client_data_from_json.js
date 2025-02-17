@@ -21,7 +21,7 @@ export async function clientData() {
             });
 
             // clientList = JSON.parse(readFileSync('json_data_file/client_data/client_data.json'));
-            
+        
             data = {
                 data: clientList,
                 state: true,
