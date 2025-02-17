@@ -16,282 +16,293 @@ export async function schedullerAllSocmed(timeSwitch) {
         logsSend(`Generate All Socmed Data Starting...`);
         await clientData().then( 
             async response =>{
-                let clientData = response.data;
-                for (let i = 0; i < clientData.length; i++){
-            
-                    //This Procces Tiktok Report
-                    if (decrypted(clientData[i].STATUS) === "TRUE" 
-                    && decrypted(clientData[i].TIKTOK_STATE) === "TRUE" 
-                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                let clientRows = response.data;
 
-                        logsSave(`${decrypted(clientData[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
-            
-                        await getTiktokPost(
-                            clientData[i]
-                        ).then(
-                            async response => {
-                                switch (response.code){
-                                    case 200: 
-                                        await tiktokItemsBridges(
-                                            clientData[i], 
-                                            response.data
-                                        ).then(
-                                            async response =>{
-                                                switch (timeSwitch){
-                                                    case 'report':                       
-                                                        await sendClientResponse(
-                                                            decrypted(clientData[i].CLIENT_ID), 
-                                                            decrypted(clientData[i].SUPERVISOR),
-                                                            decrypted(clientData[i].OPERATOR),
-                                                            decrypted(clientData[i].GROUP), 
-                                                            response, 
-                                                            'REPORT TIKTOK'
-                                                        );                                            
-                                                        break;
-                                
-                                                    case 'routine':
-                                                        logsSend(response.data)                                         
-                                                        break;
-                                
-                                                    default:
-                                                        break;
-                                                }           
+                let i = 0;
+
+                (async function loop() {
+
+                    if (++i < clientRows.length) {
+
+                        //This Procces Tiktok Report
+                        if (decrypted(clientRows.STATUS) === "TRUE" 
+                        && decrypted(clientRows.TIKTOK_STATE) === "TRUE" 
+                        && decrypted(clientRows.TYPE) === process.env.APP_CLIENT_TYPE) {
+
+                            logsSave(`${decrypted(clientRows.CLIENT_ID)} START LOAD TIKTOK DATA`);
+                
+                            await getTiktokPost(
+                                clientRows
+                            ).then(
+                                async response => {
+                                    switch (response.code){
+                                        case 200: 
+                                            await tiktokItemsBridges(
+                                                clientRows, 
+                                                response.data
+                                            ).then(
+                                                async response =>{
+                                                    switch (timeSwitch){
+                                                        case 'report':                       
+                                                            await sendClientResponse(
+                                                                decrypted(clientRows.CLIENT_ID), 
+                                                                decrypted(clientRows.SUPERVISOR),
+                                                                decrypted(clientRows.OPERATOR),
+                                                                decrypted(clientRows.GROUP), 
+                                                                response, 
+                                                                'REPORT TIKTOK'
+                                                            );                                            
+                                                            break;
+                                    
+                                                        case 'routine':
+                                                            logsSend(response.data)                                         
+                                                            break;
+                                    
+                                                        default:
+                                                            break;
+                                                    }           
+                                                }
+                                            ).catch(
+                                                error => {
+                                                    console.log(error);
+                                                    newReportTiktok(clientRows).then(
+                                                        async response =>{
+                                                            switch (timeSwitch){
+                                                                case 'report':                       
+                                                                    await sendClientResponse(
+                                                                        decrypted(clientRows.CLIENT_ID), 
+                                                                        decrypted(clientRows.SUPERVISOR),
+                                                                        decrypted(clientRows.OPERATOR),
+                                                                        decrypted(clientRows.GROUP), 
+                                                                        response, 
+                                                                        'REPORT TIKTOK'
+                                                                    );                                            
+                                                                    break;
+                                            
+                                                                case 'routine':
+                                                                    logsSend(response.data)                                         
+                                                                    break;
+                                            
+                                                                default:
+                                                                    break;
+                                                            }           
+                                                        
+                                                    }).catch(                
+                                                        error => {
+                                                            reject (error)
+                                                    });                            
+                                                }
+                                            );
+                                            
+                                            break;
+                                    
+                                        case 201:   
+                                            switch (timeSwitch){
+                                                case 'report':
+                                                sendClientResponse(
+                                                        decrypted(clientRows.CLIENT_ID), 
+                                                        decrypted(clientRows.SUPERVISOR),
+                                                        decrypted(clientRows.OPERATOR),
+                                                        decrypted(clientRows.GROUP), 
+                                                        response, 
+                                                        'REPORT TIKTOK'
+                                                    );                                            
+                                                    break;
+                                                case 'routine':
+                                                    logsSend(response.data);
+                                                    break;
+                                                default:
+                                                    break;
                                             }
-                                        ).catch(
-                                            error => {
-                                                console.log(error);
-                                                newReportTiktok(clientData[i]).then(
-                                                    async response =>{
-                                                        switch (timeSwitch){
-                                                            case 'report':                       
-                                                                await sendClientResponse(
-                                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                                    decrypted(clientData[i].SUPERVISOR),
-                                                                    decrypted(clientData[i].OPERATOR),
-                                                                    decrypted(clientData[i].GROUP), 
-                                                                    response, 
-                                                                    'REPORT TIKTOK'
-                                                                );                                            
-                                                                break;
+                                    
+                                        default:
+
+                                            break;
+                                    }
+                                }
+                        
+                            ).catch(
+                                error => {
+                                    console.log(error)
+                                    newReportTiktok(clientRows).then(
+                                        async response =>{
+                                            switch (timeSwitch){
+                                                case 'report':                       
+                                                    await sendClientResponse(
+                                                        decrypted(clientRows.CLIENT_ID), 
+                                                        decrypted(clientRows.SUPERVISOR),
+                                                        decrypted(clientRows.OPERATOR),
+                                                        decrypted(clientRows.GROUP), 
+                                                        response, 
+                                                        'REPORT TIKTOK'
+                                                    );                                            
+                                                    break;
+                            
+                                                case 'routine':
+                                                    logsSend(response.data)                                         
+                                                    break;
+                            
+                                                default:
+                                                    break;
+                                            }           
                                         
-                                                            case 'routine':
-                                                                logsSend(response.data)                                         
-                                                                break;
+                                    }).catch(                
+                                        error => {
+                                            reject (error)
+                                    });                            
+                                }
+                            );
+                        }         
+
+                        //This process Insta Report
+                        if (decrypted(clientRows.STATUS) === "TRUE" 
+                        && decrypted(clientRows.INSTA_STATE) === "TRUE" 
+                        && decrypted(clientRows.TYPE) === process.env.APP_CLIENT_TYPE) {
+                            logsSend(`${decrypted(clientRows.CLIENT_ID)} START LOAD INSTA DATA`);
                                         
-                                                            default:
-                                                                break;
-                                                        }           
+                            await getInstaPost(clientRows, "official").then(
+                                async response =>{
+                                    let todayItems;
+                                    switch (response.code){
+                                        case 201:
+                                            await sendClientResponse(
+                                                decrypted(clientRows.CLIENT_ID), 
+                                                decrypted(clientRows.SUPERVISOR),
+                                                decrypted(clientRows.OPERATOR),
+                                                decrypted(clientRows.GROUP), 
+                                                response, 
+                                                'REPORT INSTA'
+                                            );    
+                                            break; 
+
+                                        default:
+                                            logsSave(response.data)
+                                            todayItems = response.data;
+                                            await getInstaLikes(
+                                                response.data, 
+                                                clientRows
+                                            ).then(
+                                                async response => {                                              
                                                     
-                                                }).catch(                
-                                                    error => {
-                                                        reject (error)
-                                                });                            
-                                            }
-                                        );
+                                                    logsSave(response.data); 
+
+                                                    await newReportInsta(
+                                                        clientRows, todayItems, "official"
+                                                    ).then(
+                                                        async response => {
+            
+                                                            switch (timeSwitch){
+                                                                case 'report':
+                                                                    sendClientResponse(
+                                                                        decrypted(clientRows.CLIENT_ID), 
+                                                                        decrypted(clientRows.SUPERVISOR),
+                                                                        decrypted(clientRows.OPERATOR),
+                                                                        decrypted(clientRows.GROUP), 
+                                                                        response, 
+                                                                        'REPORT INSTA'
+                                                                    );            
+                                                                    break;
+
+                                                                case 'routine':
+                                                                    logsSend(response.data)
+                                                                    break;
+                                                            }
+                                                        }
+
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
+                                                }
+                                            ).catch(
+                                                error => logsError(error)
+                                            );
+                                            break;
+                                    }
+                                }
+                            ).catch(
+                                error => logsError(error)
+                            );   
+                        }  
+
+                        //This process Insta Report
+                        if (decrypted(clientRows.STATUS) === "TRUE" 
+                        && decrypted(clientRows.INSTA_2_STATE) === "TRUE" 
+                        && decrypted(clientRows.TYPE) === process.env.APP_CLIENT_TYPE) {
+                            logsSend(`${decrypted(clientRows.CLIENT_ID)} START LOAD INSTA DATA`);
                                         
-                                        break;
-                                
-                                    case 201:   
-                                        switch (timeSwitch){
-                                            case 'report':
-                                               sendClientResponse(
-                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                    decrypted(clientData[i].SUPERVISOR),
-                                                    decrypted(clientData[i].OPERATOR),
-                                                    decrypted(clientData[i].GROUP), 
-                                                    response, 
-                                                    'REPORT TIKTOK'
-                                                );                                            
-                                                break;
-                                            case 'routine':
-                                                logsSend(response.data);
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                
-                                    default:
+                            await getInstaPost(
+                                clientRows, "secondary"
+                            ).then(
+                                async response =>{
+                                    let todayItems;
 
-                                        break;
-                                }
-                            }
-                    
-                        ).catch(
-                            error => {
-                                console.log(error)
-                                newReportTiktok(clientData[i]).then(
-                                    async response =>{
-                                        switch (timeSwitch){
-                                            case 'report':                       
-                                                await sendClientResponse(
-                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                    decrypted(clientData[i].SUPERVISOR),
-                                                    decrypted(clientData[i].OPERATOR),
-                                                    decrypted(clientData[i].GROUP), 
-                                                    response, 
-                                                    'REPORT TIKTOK'
-                                                );                                            
-                                                break;
-                        
-                                            case 'routine':
-                                                logsSend(response.data)                                         
-                                                break;
-                        
-                                            default:
-                                                break;
-                                        }           
-                                    
-                                }).catch(                
-                                    error => {
-                                        reject (error)
-                                });                            
-                            }
-                        );
-                    }         
+                                    switch (response.code){
+                                        case 201:
+                                            await sendClientResponse(
+                                                decrypted(clientRows.CLIENT_ID), 
+                                                decrypted(clientRows.SUPERVISOR),
+                                                decrypted(clientRows.OPERATOR),
+                                                decrypted(clientRows.GROUP), 
+                                                response, 
+                                                'REPORT INSTA'
+                                            );    
+                                            break; 
 
-                    //This process Insta Report
-                    if (decrypted(clientData[i].STATUS) === "TRUE" 
-                    && decrypted(clientData[i].INSTA_STATE) === "TRUE" 
-                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
-                                    
-                        await getInstaPost(clientData[i], "official").then(
-                            async response =>{
-                                let todayItems;
-                                switch (response.code){
-                                    case 201:
-                                        await sendClientResponse(
-                                            decrypted(clientData[i].CLIENT_ID), 
-                                            decrypted(clientData[i].SUPERVISOR),
-                                            decrypted(clientData[i].OPERATOR),
-                                            decrypted(clientData[i].GROUP), 
-                                            response, 
-                                            'REPORT INSTA'
-                                        );    
-                                        break; 
+                                        default:
+                                            logsSave(response.data)
+                                            todayItems = response.data;
+                                            await getInstaLikes(
+                                                response.data, 
+                                                clientRows
+                                            ).then(
+                                                async response => {                                              
+                                                    
+                                                    logsSave(response.data); 
 
-                                    default:
-                                        logsSave(response.data)
-                                        todayItems = response.data;
-                                        await getInstaLikes(
-                                            response.data, 
-                                            clientData[i]
-                                        ).then(
-                                            async response => {                                              
-                                                
-                                                logsSave(response.data); 
+                                                    await newReportInsta(
+                                                        clientRows, todayItems, "secondary"
+                                                    ).then(
+                                                        async response => {
+            
+                                                            switch (timeSwitch){
+                                                                case 'report':
+                                                                    sendClientResponse(
+                                                                        decrypted(clientRows.CLIENT_ID), 
+                                                                        decrypted(clientRows.SUPERVISOR),
+                                                                        decrypted(clientRows.OPERATOR),
+                                                                        decrypted(clientRows.GROUP), 
+                                                                        response, 
+                                                                        'REPORT INSTA'
+                                                                    );            
+                                                                    break;
 
-                                                await newReportInsta(
-                                                    clientData[i], todayItems, "official"
-                                                ).then(
-                                                    async response => {
-        
-                                                        switch (timeSwitch){
-                                                            case 'report':
-                                                                sendClientResponse(
-                                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                                    decrypted(clientData[i].SUPERVISOR),
-                                                                    decrypted(clientData[i].OPERATOR),
-                                                                    decrypted(clientData[i].GROUP), 
-                                                                    response, 
-                                                                    'REPORT INSTA'
-                                                                );            
-                                                                break;
-
-                                                            case 'routine':
-                                                                logsSend(response.data)
-                                                                break;
+                                                                case 'routine':
+                                                                    logsSend(response.data)
+                                                                    break;
+                                                            }
                                                         }
-                                                    }
 
-                                                ).catch(
-                                                    error => logsError(error)
-                                                );
-                                            }
-                                        ).catch(
-                                            error => logsError(error)
-                                        );
-                                        break;
+                                                    ).catch(
+                                                        error => logsError(error)
+                                                    );
+                                                }
+                                            ).catch(
+                                                error => logsError(error)
+                                            );
+                                            break;
+                                    }
                                 }
-                            }
-                        ).catch(
-                            error => logsError(error)
-                        );   
-                    }  
+                            ).catch(
+                                error => logsError(error)
+                            );   
+                        } 
 
-                    //This process Insta Report
-                    if (decrypted(clientData[i].STATUS) === "TRUE" 
-                    && decrypted(clientData[i].INSTA_2_STATE) === "TRUE" 
-                    && decrypted(clientData[i].TYPE) === process.env.APP_CLIENT_TYPE) {
-                        logsSend(`${decrypted(clientData[i].CLIENT_ID)} START LOAD INSTA DATA`);
-                                    
-                        await getInstaPost(
-                            clientData[i], "secondary"
-                        ).then(
-                            async response =>{
-                                let todayItems;
+                        setTimeout(loop, 3000);  
+                    } else {
+                        console.log("Generate All Socmed Done");
+                    }
+                })();
 
-                                switch (response.code){
-                                    case 201:
-                                        await sendClientResponse(
-                                            decrypted(clientData[i].CLIENT_ID), 
-                                            decrypted(clientData[i].SUPERVISOR),
-                                            decrypted(clientData[i].OPERATOR),
-                                            decrypted(clientData[i].GROUP), 
-                                            response, 
-                                            'REPORT INSTA'
-                                        );    
-                                        break; 
-
-                                    default:
-                                        logsSave(response.data)
-                                        todayItems = response.data;
-                                        await getInstaLikes(
-                                            response.data, 
-                                            clientData[i]
-                                        ).then(
-                                            async response => {                                              
-                                                
-                                                logsSave(response.data); 
-
-                                                await newReportInsta(
-                                                    clientData[i], todayItems, "secondary"
-                                                ).then(
-                                                    async response => {
-        
-                                                        switch (timeSwitch){
-                                                            case 'report':
-                                                                sendClientResponse(
-                                                                    decrypted(clientData[i].CLIENT_ID), 
-                                                                    decrypted(clientData[i].SUPERVISOR),
-                                                                    decrypted(clientData[i].OPERATOR),
-                                                                    decrypted(clientData[i].GROUP), 
-                                                                    response, 
-                                                                    'REPORT INSTA'
-                                                                );            
-                                                                break;
-
-                                                            case 'routine':
-                                                                logsSend(response.data)
-                                                                break;
-                                                        }
-                                                    }
-
-                                                ).catch(
-                                                    error => logsError(error)
-                                                );
-                                            }
-                                        ).catch(
-                                            error => logsError(error)
-                                        );
-                                        break;
-                                }
-                            }
-                        ).catch(
-                            error => logsError(error)
-                        );   
-                    }  
-                }
             }
         ). catch (
             error => logsError(error)

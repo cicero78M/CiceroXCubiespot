@@ -12,7 +12,7 @@ const { Client, LocalAuth } = wwebjs;
 import 'dotenv/config';
 
 //QR-Code
-import qrcode, { error } from 'qrcode-terminal';
+import qrcode from 'qrcode-terminal';
 
 //Figlet
 import figlet from 'figlet';
@@ -71,9 +71,7 @@ import { getInstaUserInfo } from './app/controller/scrapping_insta/generate_inst
 
 //.env
 const private_key = process.env;
-
-// Routing Port 
-const port = private_key.EXPRESS_PORT;
+const port = private_key.EXPRESS_PORT || 3000;
 
 app.listen(port, () => {
     logsSave(`Cicero System Start listening on port >>> ${port}`)
@@ -750,12 +748,12 @@ client.on('message', async (msg) => {
                                     .then(
                                         async response =>{
                                             
-                                            let clientData = response.data;
+                                            let clientRows = response.data;
 
                                             let i = 0;
 
                                             (function loop() {
-                                                if (++i < userData.length) {
+                                                if (++i < clientRows.length) {
 
                                                     getInstaUserInfo(element).then(
                                                         response => {
@@ -766,7 +764,7 @@ client.on('message', async (msg) => {
                                                     );
 
 
-                                                    setTimeout(loop, 4000);  
+                                                    setTimeout(loop, 3000);  
                                                 }
                                             })();
                                         }
