@@ -3,22 +3,22 @@ import { decrypted } from "../../module/crypto.js";
 import { logsSave } from "../../view/logs_whatsapp.js";
 
 export async function readUser(clientName) {   
+    
     logsSave(`${clientName} User Data`); 
+    
     return new Promise(async (resolve, reject) => {
         try {
-            let dataProfile = [];
-
-            dataProfile = readdirSync(`json_data_file/user_data/${clientName}`);
-
             let client = new Array();
-        
-            for (let i = 0; i < dataProfile.length; i++){
+
+            let dataProfile = readdirSync(`json_data_file/user_data/${clientName}`);
+
+            dataProfile.forEach(element => {
                 
-                let fromJson = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${dataProfile[i]}`));
+                let fromJson = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${element}`));
                 
                 let userData = new Object();
 
-                if(decrypted(fromJson.STATUS) === "TRUE"){
+                if (decrypted(fromJson.STATUS) === "TRUE"){
 
                     userData.ID_KEY = decrypted(fromJson.ID_KEY);
                     userData.NAMA = decrypted(fromJson.NAMA);
@@ -32,13 +32,12 @@ export async function readUser(clientName) {
                     userData.EXCEPTION = decrypted(fromJson.EXCEPTION);
 
                     client.push(userData);
-
                 }
-
-            }    
+            });
             
             let data = {
                 data: client,
+                message:"Success Load Data User",
                 state: true,
                 code: 200
             };    

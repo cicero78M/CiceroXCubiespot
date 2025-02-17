@@ -4,19 +4,23 @@ import { readUser } from "../controller/read_data/read_data_from_dir.js";
 export async function newListValueData( clientName, keyValue) {
     logsSave("Exec "+ keyValue+" List Value")
     let data;
+    let listValue = [];
+
     return new Promise(
         async (resolve, reject) => {
-            let listValue = [];
             await readUser(clientName).then(
-                response =>{
-                    let userData = response.data;
-                    
-                    for (let i = 0; i < userData.length; i++) {        
-                        
-                        if (!listValue.includes(userData[i][keyValue])){
-                            listValue.push(userData[i][keyValue]); 
-                        }                
-                    }    
+                async response =>{
+
+                    let userData = await response.data;
+
+                    userData.forEach(element => {
+                        if (element[keyValue] !== ""){
+                            if (!listValue.includes(element[keyValue])){
+                                listValue.push(element[keyValue]); 
+                            }   
+                        }
+     
+                    });
 
                     data = {
                         data: listValue,
