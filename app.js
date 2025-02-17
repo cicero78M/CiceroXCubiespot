@@ -82,7 +82,7 @@ app.listen(port, () => {
 
 app.get('/', function (req, res) {
     
-    readUser("PONOROGO").then(
+    readUser("BOJONEGORO").then(
         response =>{
             res.render("index", {data: response.data, ID_CLIENT: "BOJONEGORO" });
         }

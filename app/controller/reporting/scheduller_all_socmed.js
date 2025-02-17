@@ -58,6 +58,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             }
                                         ).catch(
                                             error => {
+                                                console.log(error);
                                                 newReportTiktok(clientData[i]).then(
                                                     async response =>{
                                                         switch (timeSwitch){
@@ -85,7 +86,6 @@ export async function schedullerAllSocmed(timeSwitch) {
                                                         reject (error)
                                                 });                            
                                             }
-
                                         );
                                         
                                         break;
@@ -108,16 +108,16 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             default:
                                                 break;
                                         }
-
-                                        break;
                                 
                                     default:
+
                                         break;
                                 }
                             }
                     
                         ).catch(
                             error => {
+                                console.log(error)
                                 newReportTiktok(clientData[i]).then(
                                     async response =>{
                                         switch (timeSwitch){
