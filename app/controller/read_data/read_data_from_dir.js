@@ -36,12 +36,15 @@ export async function readUser(clientName) {
                 }
 
             }    
+            
             let data = {
                 data: client,
                 state: true,
                 code: 200
             };    
+            
             resolve (data);  
+
         } catch (error) {
             let data = {
                 data: error,

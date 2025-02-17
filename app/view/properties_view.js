@@ -11,22 +11,19 @@ export async function propertiesView(clientName, type) {
      await newListValueData(
        clientName,
        type
-     ).then(
-       response => {
-        let userRows = response.data;
-         //Collect Divisi List String
-         for (let i = 0; i < userRows.length; i++) {
-           if (!dataList.includes(userRows[i])) {
-             dataList.push(userRows[i]);
-             if(userRows[i] !== undefined){
-               dataString = dataString+"\n"+userRows[i];
-             }
-           }
-         }
-       }
+     ).then(response => {
+          let userRows = response.data;
+          //Collect Divisi List String
+          for (let i = 0; i < userRows.length; i++) {
+            if (!dataList.includes(userRows[i])) {
+              dataList.push(userRows[i]);
+              if(userRows[i] !== undefined){
+                dataString = dataString+"\n"+userRows[i];
+              }
+            }
+          }
+        }
      )
-
-
       data = {
        data : `*`+type+` List*\n\n`+dataString,
        state: true,

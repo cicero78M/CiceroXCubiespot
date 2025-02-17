@@ -10,20 +10,21 @@ export async function newListValueData( clientName, keyValue) {
             await readUser(clientName).then(
                 response =>{
                     let userData = response.data;
+                    
                     for (let i = 0; i < userData.length; i++) {        
                         
                         if (!listValue.includes(userData[i][keyValue])){
                             listValue.push(userData[i][keyValue]); 
-                        }
-                        
-                        data = {
-                            data: listValue,
-                            state: true,
-                            code: 200
-                        };      
+                        }                
+                    }    
 
-                        resolve (data);                    
-                    }                   
+                    data = {
+                        data: listValue,
+                        state: true,
+                        code: 200
+                    };      
+
+                    resolve (data);
                 }
             ).catch(
                 error =>{

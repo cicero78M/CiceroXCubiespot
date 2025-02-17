@@ -11,6 +11,7 @@ import { logsUserSend } from '../../view/logs_whatsapp.js';
 export async function editProfile(clientName, idKey, newData, phone, type, isContact) {
   return new Promise(async (resolve, reject) => {
     try {
+
       let data;
       let isDataExist = false;
       let userRows = [];
@@ -109,9 +110,12 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
           if (type === 'DIVISI') {
 
             console.log("Div Executed")
+
             if (dataList.includes(newData)) {
+
               userData.DIVISI = encrypted(newData);
               testData = true;
+
             } else {
 
               propertiesView(clientName, "DIVISI").then(
@@ -161,6 +165,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
           } 
   
           if (testData){
+            
             if (userRows[ii].STATUS === "TRUE") { 
 
               switch (userRows[ii].WHATSAPP) {
