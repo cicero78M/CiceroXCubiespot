@@ -7,6 +7,7 @@ import { getTiktokPost } from "../scrapping_tiktok/generate_tiktok_post.js";
 import { tiktokItemsBridges } from "../scrapping_tiktok/tiktok_items_bridge.js";
 import { sendClientResponse } from "../../view/send_whatsapp.js";
 import { newReportInsta } from "./insta_report.js";
+import { newReportTiktok } from "./tiktok_report.js";
 
 export async function schedullerAllSocmed(timeSwitch) {
 

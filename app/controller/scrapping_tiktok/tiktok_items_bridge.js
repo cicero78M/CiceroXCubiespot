@@ -11,18 +11,17 @@ export async function tiktokItemsBridges(clientValue, items) {
 
     return new Promise(async (resolve, reject) => {
         try {        
-            items.forEach(async element => {
-
-                await getTiktokComments(element)
+            for (let i = 0; i < items.length; i++) {
+                
+                await getTiktokComments(items[i])
                 .then (async response =>{
-                    await postTiktokUserComments(decrypted(clientValue.CLIENT_ID), element, response.data)
+                    await postTiktokUserComments(decrypted(clientValue.CLIENT_ID), items[i], response.data)
                     .then(async data => {
                         await client.sendMessage('6281235114745@c.us', data.data);
                     }).catch(error => reject (error));               
                 }).catch(error => reject (error));
-                
-            });
-            
+            }
+
             await newReportTiktok(clientValue).then(
                 response => {
                     resolve (response)

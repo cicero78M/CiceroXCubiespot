@@ -51,6 +51,7 @@ export async function newReportTiktok(clientValue) {
                     ).catch(
                         error => {
                             console.log(error);
+
                             reject(error);
                         }
                     )
@@ -59,12 +60,14 @@ export async function newReportTiktok(clientValue) {
                         clientName
                     ).then( 
                         response => {    
-                            userRows = response.data;
-                            userRows.forEach(element => {
-                                if (element.STATUS === 'TRUE' ){
+
+                            userRows = response.data;                           
+
+                            for (let i = 0; i < userRows.length; i++) {
+                                if (userRows[i].STATUS === 'TRUE' ){
                                     userAll++;
                                 }
-                            });
+                            } 
                         }
                     ).catch( error => {
                         console.log(error);
@@ -73,10 +76,10 @@ export async function newReportTiktok(clientValue) {
                     
                     let tiktokContentDir = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
 
-                    tiktokContentDir.forEach(tiktokcontentelement => {
+                    for (let i = 0; i < tiktokContentDir.length; i++) {
 
                         console.log("This Tiktok Content OK")
-                        let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokcontentelement}`));
+                        let contentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${tiktokContentDir[i]}`));
 
                         let itemDate = new Date(Number(decrypted(contentItems.TIMESTAMP)) * 1000);
                         let dateNow = itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
@@ -90,79 +93,74 @@ export async function newReportTiktok(clientValue) {
 
                             }
                         }
-                        
-                    });
+                    }
         
                     if (shortcodeList.length >= 1) {   
 
-                        shortcodeList.forEach(elementshortcode => {
+                        for (let i = 0; i < shortcodeList.length; i++) {
 
                             console.log("This getting tiktok shortcode OK");
 
-                            let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${elementshortcode}.json`));
-                                  
-                            commentItems.forEach(elementitems => {
-                                if (!userCommentData.includes(decrypted(elementitems))) {
-                                    userCommentData.push(decrypted(elementitems));
-                                  }  
-                            });
-                            
-                        });
+                            let commentItems = JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_engagement/tiktok_comments/${clientName}/${shortcodeList[i]}.json`));
+                                        
+                            for (let ii = 0; ii < commentItems.length; ii++) {
+                              if (!userCommentData.includes(decrypted(commentItems[ii]))) {
+                                userCommentData.push(decrypted(commentItems[ii]));
+                              }
+                            }
+                        }
+                        
+                        for (let i = 0; i < userRows.length; i++) {     
 
-                        userRows.forEach(userelement => {
-
-                            if (userelement.TIKTOK === undefined
-                                || userelement.TIKTOK === null 
-                                || userelement.TIKTOK === ""){
-                    
-                                    userNotComment.push(userelement.ID_KEY);
-                                    notCommentList.push(userelement);
-                    
-                                } else {
-                                
-                                    if (!userCommentData.includes((userelement.TIKTOK).replace('@',''))) {
-                                        if (!userNotComment.includes(userelement.ID_KEY)) {
-                                            if (userelement.STATUS === 'TRUE' ){
-                                                if (userelement.EXCEPTION === "FALSE"){
-                                                    
-                                                    userNotComment.push(userelement.ID_KEY);
-                                                    notCommentList.push(userelement);
-                                                }                
-                                            }
+                            if (userRows[i].TIKTOK === undefined
+                            || userRows[i].TIKTOK === null 
+                            || userRows[i].TIKTOK === ""){
+                
+                                userNotComment.push(userRows[i].ID_KEY);
+                                notCommentList.push(userRows[i]);
+                
+                            } else {
+                                if (!userCommentData.includes((userRows[i].TIKTOK).replace('@',''))) {
+                                    if (!userNotComment.includes(userRows[i].ID_KEY)) {
+                                        if (userRows[i].STATUS === 'TRUE' ){
+                                            if (userRows[i].EXCEPTION === "FALSE"){
+                                                
+                                                userNotComment.push(userRows[i].ID_KEY);
+                                                notCommentList.push(userRows[i]);
+                                            }                
                                         }
-                                    } 
-                                }
-                            
-                        });
+                                    }
+                                } 
+                            }
+                        }
 
-                        divisiList.forEach(divelement => {
+                        for (let iii = 0; iii < divisiList.length; iii++) {
 
                             divisiCounter = 0;
                             userByDivisi = '';
-
-                            notCommentList.forEach(notcommentelement => {
-                                if (divelement === notcommentelement.DIVISI) {
+                            
+                            for (let iv = 0; iv < notCommentList.length; iv++) {
+                                if (divisiList[iii] === notCommentList[iv].DIVISI) {
 
                                     if (process.env.APP_CLIENT_TYPE === "RES") {
-                                        userByDivisi = userByDivisi.concat('\n' + notcommentelement.TITLE + ' ' + notcommentelement.NAMA 
-                                            + ' - ' + notcommentelement.TIKTOK);
+                                        userByDivisi = userByDivisi.concat('\n' + notCommentList[iv].TITLE + ' ' + notCommentList[iv].NAMA 
+                                            + ' - ' + notCommentList[iv].TIKTOK);
                                         divisiCounter++;
                                         userCounter++;
                                     } else if (process.env.APP_CLIENT_TYPE  === "COM") {
-                                        name = notcommentelement.NAMA;
+                                        name = notCommentList[iv].NAMA;
                                         nameUpper = name.toUpperCase();
-                                        userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notcommentelement.TIKTOK);
+                                        userByDivisi = userByDivisi.concat('\n' + nameUpper + ' - ' + notCommentList[iv].TIKTOK);
                                         divisiCounter++;
                                         userCounter++;
                                     }
                                 }
-                            });
-                            
-                            if (divisiCounter != 0) {
-                                dataTiktok = dataTiktok.concat('\n\n*' + divelement + '* : ' + divisiCounter + ' User\n' + userByDivisi);
                             }
-                            
-                        });
+
+                            if (divisiCounter != 0) {
+                                dataTiktok = dataTiktok.concat('\n\n*' + divisiList[iii] + '* : ' + divisiCounter + ' User\n' + userByDivisi);
+                            }
+                        }
 
                         tiktokSudah = userAll - notCommentList.length;
                         

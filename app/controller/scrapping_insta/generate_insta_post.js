@@ -49,52 +49,47 @@ export async function getInstaPost(clientValue, type) {
         
 
             postItems = await response.data.data.items;
-
-            postItems.forEach(postelement => {
-
-              let itemDate = new Date(postelement.taken_at * 1000);
+            
+            for (let i = 0; i < postItems.length; i++) {
+    
+              let itemDate = new Date(postItems[i].taken_at * 1000);
             
               if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
             
                 hasContent = true;
-                itemByDay.push(postelement);
-                todayItems.push(postelement.code);
+                itemByDay.push(postItems[i]);
+                todayItems.push(postItems[i].code);
             
               }
-              
-            });
-            
-
+            }
     
             if (hasContent) {
     
               logsSave(`${clientName} Official Account Has Post Data...`);
+            
+              for (let i = 0; i < itemByDay.length; i++) {
 
-              itemByDay.forEach(itemselement => {
-                
                 let dataObject = new Object();
 
-                dataObject.TIMESTAMP = encrypted((itemselement.taken_at).toString());
-                dataObject.USER_ACCOUNT = encrypted(itemselement.user.username);
-                dataObject.SHORTCODE = encrypted(itemselement.code); 
-                dataObject.ID = encrypted(itemselement.id);
-                dataObject.TYPE = encrypted(itemselement.media_name);
-                dataObject.CAPTION = encrypted(itemselement.caption.text);
-                dataObject.COMMENT_COUNT = encrypted((itemselement.comment_count ? (itemselement.comment_count).toString() : null));
-                dataObject.LIKE_COUNT = encrypted((itemselement.like_count ? (itemselement.like_count).toString() : null));
-                dataObject.PLAY_COUNT = encrypted((itemselement.play_count ? (itemselement.play_count).toString() : null));
+                dataObject.TIMESTAMP = encrypted((itemByDay[i].taken_at).toString());
+                dataObject.USER_ACCOUNT = encrypted(itemByDay[i].user.username);
+                dataObject.SHORTCODE = encrypted(itemByDay[i].code); 
+                dataObject.ID = encrypted(itemByDay[i].id);
+                dataObject.TYPE = encrypted(itemByDay[i].media_name);
+                dataObject.CAPTION = encrypted(itemByDay[i].caption.text);
+                dataObject.COMMENT_COUNT = encrypted((itemByDay[i].comment_count ? (itemByDay[i].comment_count).toString() : null));
+                dataObject.LIKE_COUNT = encrypted((itemByDay[i].like_count ? (itemByDay[i].like_count).toString() : null));
+                dataObject.PLAY_COUNT = encrypted((itemByDay[i].play_count ? (itemByDay[i].play_count).toString() : null));
 
                 try {
-                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemselement.code}.json`, JSON.stringify(dataObject));
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
                 } catch (error) {
                   mkdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
-                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemselement.code}.json`, JSON.stringify(dataObject));
+                  writeFileSync(`json_data_file/insta_data/insta_content/${clientName}/${itemByDay[i].code}.json`, JSON.stringify(dataObject));
                 }
   
                 logsSave("Insta Content Updated");
-                
-              });
-            
+              }
 
               let data = {
                 data: todayItems,
