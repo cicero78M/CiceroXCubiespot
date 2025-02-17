@@ -1038,20 +1038,18 @@ client.on('message', async (msg) => {
                                     switch (splittedMsg[1].toLowerCase()) {
                                         case 'info'://Order Info Request
 
-                                        {
-                                            if (process.env.APP_CLIENT_TYPE === "RES"){
-                                                responseData = await infoResView(splittedMsg[0].toUpperCase());
-                                                logsUserSend(msg.from, responseData.data)
-                                            } else {
-                                                responseData = await infoComView(splittedMsg[0].toUpperCase());
-                                                logsUserSend(msg.from, responseData.data)
+                                            {
+                                                if (process.env.APP_CLIENT_TYPE === "RES"){
+                                                    responseData = await infoResView(splittedMsg[0].toUpperCase());
+                                                    logsUserSend(msg.from, responseData.data)
+                                                } else {
+                                                    responseData = await infoComView(splittedMsg[0].toUpperCase());
+                                                    logsUserSend(msg.from, responseData.data)
+                                                }
                                             }
-                                        }
-
-
-                                        
                                             break;
-                                        case 'divisilist'://Divisi List Request                        
+                                        case 'divisilist'://Divisi List Request        
+                                                        
                                             await propertiesView(
                                                 splittedMsg[0].toUpperCase(), 
                                                 "DIVISI"

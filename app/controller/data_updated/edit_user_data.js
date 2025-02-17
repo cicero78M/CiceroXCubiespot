@@ -70,161 +70,167 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                 userData.EXCEPTION = encrypted(element.EXCEPTION);
             
                 if (type === 'DIVISI') {
-                    console.log("Div Executed")
-                    if (dataList.includes(newData)) {
-                        userData.DIVISI = encrypted(newData);
-                        testData = true;
-                    } else {
-                        propertiesView(clientName, "DIVISI").then(
-                            response => {
-                                logsUserSend(`${phone}@c.us`, response.data);
-                            }             
-                        ).catch(
-                            error=>reject(error)
-                        )
-                    }
+                  console.log("Div Executed")
+                  if (dataList.includes(newData)) {
+                    userData.DIVISI = encrypted(newData);
+                    testData = true;
+                  } else {
+                      propertiesView(clientName, "DIVISI").then(
+                        response => {
+                          logsUserSend(`${phone}@c.us`, response.data);
+                        }             
+                      ).catch(
+                        error=>reject(error)
+                      )
+                  }
     
                 } else if (type === 'JABATAN') {
                     
-                    testData = true;
-                    userData.JABATAN = encrypted(newData);
+                  testData = true;
+                  userData.JABATAN = encrypted(newData);
                 
                 } else if (type === 'NAMA') {
-                
-                    testData = true;
-                    userData.NAMA = encrypted(newData);
+              
+                  testData = true;
+                  userData.NAMA = encrypted(newData);
                 
                 } else if (type === 'ID_KEY') {
-        
-                    testData = true;
-                    userData.ID_KEY = encrypted(targetKey);
+      
+                  testData = true;
+                  userData.ID_KEY = encrypted(targetKey);
+                
                 } else if (type === 'TITLE') {
         
-                    if (dataList.includes(newData)) {
-                        userData.TITLE = encrypted(newData);
-                        testData = true;
-                    } else {
-                        propertiesView(clientName, type).then(
-                            response =>
-                                logsUserSend(`${phone}@c.us`, response.data)
-                        ).catch(
-                            error=>reject(error)
-                        )
-                    }
+                  if (dataList.includes(newData)) {
+                    userData.TITLE = encrypted(newData);
+                    testData = true;
+                  } else {
+                    propertiesView(clientName, type).then(
+                        response =>
+                            logsUserSend(`${phone}@c.us`, response.data)
+                    ).catch(
+                        error=>reject(error)
+                    )
+                  }
         
                 } else if (type === 'STATUS') {
-                    testData = true;
-                    userData.STATUS = encrypted(newData);
+                
+                  testData = true;
+                  userData.STATUS = encrypted(newData);
         
                 } else if (type === 'EXCEPTION') {
-                    testData = true;
-                    userData.EXCEPTION = encrypted(newData);
+                  
+                  testData = true;
+                  userData.EXCEPTION = encrypted(newData);
         
                 } 
     
                 if (testData){            
-                    if (element.STATUS === "TRUE") { 
-                        switch (element.WHATSAPP) {
-                            case phone:
-                                {
-                
-                                    if (phone === "6281235114745"){
-                
-                                        userData.WHATSAPP = encrypted("");
+                  if (element.STATUS === "TRUE") { 
+                    switch (element.WHATSAPP) {
+                        case phone:
+                          {
+          
+                            if (phone === "6281235114745"){
         
-                                        writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
-                            
-                                        myData(clientName, idKey).then(
-                                            response => resolve(response)
-                                        ).catch(
-                                            error => reject(error)
-                                        );
+                                userData.WHATSAPP = encrypted("");
+
+                                writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                    
+                                myData(clientName, idKey).then(
+                                    response => resolve(response)
+                                ).catch(
+                                    error => reject(error)
+                                );
+        
+                            } else {
+        
+                                writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
                 
-                                    } else {
+                                myData(clientName, targetKey).then(
+                                    response => resolve(response)
+                                ).catch(
+                                    error => reject(error)
+                                );
+                            }
+                          }
+                          break;
+                        default:
+                            {
+                              if  (phoneList.includes(phone)) {
+                                  
+                                if (phone === "6281235114745"){
+            
+                                  userData.WHATSAPP = encrypted("");
+          
+                                  writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                      
+                                  myData(clientName, idKey).then(
+                                    response => resolve(response)
+                                  ).catch(
+                                    error => reject(error)
+                                  );
+                                
+                                } else {
+            
+                                    if (phone !== element.WHATSAPP ){
                 
-                                        writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
-                        
-                                        myData(clientName, targetKey).then(
-                                            response => resolve(response)
-                                        ).catch(
-                                            error => reject(error)
-                                        );
+                                        data = {
+                                            data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
+                                            state: true,
+                                            code: 201
+                                        };
+                                        reject (data);
                                     }
                                 }
-                                break;
-                            default:
-                                {
-                                  if  (phoneList.includes(phone)) {
-                                      
-                                      if (phone === "6281235114745"){
-                  
-                                          userData.WHATSAPP = encrypted("");
-                  
-                                          writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
-                              
-                                          myData(clientName, idKey).then(
-                                              response => resolve(response)
-                                          ).catch(
-                                              error => reject(error)
-                                          );
-                                      } else {
-                  
-                                          if (phone !== element.WHATSAPP ){
-                      
-                                              data = {
-                                                  data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
-                                                  state: true,
-                                                  code: 201
-                                              };
-                                              reject (data);
-                                          }
-                                      }
 
-                                  } else {   
-                  
-                                    if (phone === "6281235114745"){
-                                        userData.WHATSAPP = encrypted("");
-                                        writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));          
-                                        myData(clientName, idKey).then(
-                                            response => resolve(response)
-                                        ).catch(
-                                            error => reject(error)
-                                        );
-                                    } else {
-
-                                      userData.WHATSAPP = encrypted(phone);
-
-                                      writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));          
-                                      
-                                      myData(clientName, idKey).then(
-                                          response => resolve(response)
-                                      ).catch(
-                                          error => reject(error)
-                                      );
-
-                                      if (!isContact){
-                                        authorize().then(
-                                            async auth =>
+                              } else {   
+              
+                                if (phone === "6281235114745"){
+                                  
+                                  userData.WHATSAPP = encrypted("");
+                                  writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));          
+                                  myData(clientName, idKey).then(
+                                    response => resolve(response)
+                                  ).catch(
+                                    error => reject(error)
+                                  );
                                 
-                                              {
-                                                console.log(await saveGoogleContact(element.NAMA, `+${phone}`, auth));
-                                                console.log(await searchbyNumbers(`+${phone}`, auth));
-                                              }
-                                        ).catch(console.error); 
-                                      }
-                                    }       
+                                } else {
+
+                                  userData.WHATSAPP = encrypted(phone);
+
+                                  writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));          
+                                  
+                                  myData(clientName, idKey).then(
+                                      response => resolve(response)
+                                  ).catch(
+                                      error => reject(error)
+                                  );
+
+                                  if (!isContact){
+                                    authorize().then(
+                                      async auth =>
+                          
+                                        {
+                                          console.log(await saveGoogleContact(element.NAMA, `+${phone}`, auth));
+                                          console.log(await searchbyNumbers(`+${phone}`, auth));
+                                        }
+                                    ).catch(console.error); 
                                   }
-                                }
-                                break;
-                        }
-                    } else {
-                        data = {
-                            data: 'Your Account Suspended',
-                            state: true,
-                            code: 201
-                        };
-                        reject (data);          
+                                }       
+                              }
+                            }
+                            break;
                     }
+                  } else {
+                    data = {
+                      data: 'Your Account Suspended',
+                      state: true,
+                      code: 201
+                    };
+                    reject (data);          
+                  }
                 }
             }
         });
