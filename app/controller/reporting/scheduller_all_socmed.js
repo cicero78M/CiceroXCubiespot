@@ -18,11 +18,7 @@ export async function schedullerAllSocmed(timeSwitch) {
             async response =>{
                 let clientRows = response.data;
 
-                let i = 0;
-
-                (async function loop() {
-
-                    if (++i < clientRows.length) {
+                for (let i = 0; i < clientRows.length; i++){
 
                         //This Procces Tiktok Report
                         if (decrypted(clientRows[i].STATUS) === "TRUE" 
@@ -296,12 +292,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                 error => logsError(error)
                             );   
                         } 
-
-                        setTimeout(loop, 3000);  
-                    } else {
-                        console.log("Generate All Socmed Done");
-                    }
-                })();
+                }
             }
         ). catch (
             error => logsError(error)
