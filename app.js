@@ -78,32 +78,37 @@ app.listen(port, () => {
 });
 
 
-app.get('/user', function (req, res) {
-    
-    readUser("BOJONEGORO").then(
-        response =>{
-            res.render("index", {data: response.data, ID_CLIENT: "BOJONEGORO" });
-        }
-    )
+app.get('/login', function (req, res) {
+
+    res.render("login")
+
 });
 
-app.get('/instalikes', function (req, res) {
-    
+app.get('/bojonegoro', function (req, res) {
     readUser("BOJONEGORO").then(
-        response =>{
-            res.render("index", {data: response.data, ID_CLIENT: "BOJONEGORO" });
-        }
-    )
+        response =>     res.render("index", { data: response.data, ID_CLIENT: "BOJONEGORO"})
+    );
 });
 
-app.get('/tiktokcomments', function (req, res) {
-    
-    readUser("BOJONEGORO").then(
-        response =>{
-            res.render("index", {data: response.data, ID_CLIENT: "BOJONEGORO" });
-        }
-    )
+app.get('/ponorogo', function (req, res) {
+    readUser("PONOROGO").then(
+        response =>     res.render("index", { data: response.data, ID_CLIENT: "PONOROGO"})
+    );
 });
+
+app.get('/cubiespot', function (req, res) {
+    readUser("CUBIESPOT").then(
+        response =>     res.render("index", { data: response.data, ID_CLIENT: "CUBIESPOT"})
+    );
+});
+
+app.get('/bpn2sby', function (req, res) {
+    readUser("BPN2SBY").then(
+        response =>     res.render("index", { data: response.data, ID_CLIENT: "BPN2SBY"})
+    );
+});
+
+
 
 // WWEB JS Client Constructor
 export const client = new Client({

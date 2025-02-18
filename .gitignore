@@ -144,4 +144,6 @@ dbKey.json
 client_data.json
 
 # User Data
-user_data/*.json
+json_data_file
+client_data/*.json
+user_info/insta/*.json
