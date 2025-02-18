@@ -19,6 +19,8 @@ export async function schedullerAllSocmed(timeSwitch) {
 
                 let clientRows = response.data;
 
+                console.log(clientRows.length());
+
                 let i = 0;
 
                 (async function loop() {
