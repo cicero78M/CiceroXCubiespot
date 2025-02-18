@@ -188,8 +188,7 @@ client.on('ready', () => {
             
             let clientData = response.data;
 
-            for (let i = 0; i < clientData.length; i++){
-        
+            clientData.forEach(async element => {
                 //This Procces Tiktok Report
                 if (decrypted(element.STATUS) === "TRUE" 
                 && decrypted(element.TIKTOK_STATE) === "TRUE" 
@@ -211,7 +210,7 @@ client.on('ready', () => {
                         error => logsError(error)
                     );
                 }  
-            }
+            });
         }).catch(
             error => logsError(error)
         );
@@ -446,10 +445,10 @@ client.on('message', async (msg) => {
 
                                                 if (++i < clientRows.length) {
 
-                                                    if (decrypted(clientRows[i].STATUS) === "TRUE" 
-                                                    && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
-                                                    && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE){
-                                                        setSecuid(clientRows[i]).then(
+                                                    if (decrypted(element.STATUS) === "TRUE" 
+                                                    && decrypted(element.INSTA_STATE) === "TRUE" 
+                                                    && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE){
+                                                        setSecuid(element).then(
                                                             response => logsSend(response.data)
                                                         ).catch(
                                                             error => logsError(error)
@@ -736,9 +735,9 @@ client.on('message', async (msg) => {
 
                                                 if (++i < clientRows.length) {
 
-                                                    if(decrypted(clientRows[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
+                                                    if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
 
-                                                        getInstaUserInfo(clientRows[i]).then(
+                                                        getInstaUserInfo(element).then(
                                                             response => {
                                                                 logsSend(response.data)
                                                             }
@@ -798,8 +797,10 @@ client.on('message', async (msg) => {
                 //Operator Order Data         //On Progress
                 } else if (operatorOrder.includes(splittedMsg[1].toLowerCase())){
                     await clientData().then(async response => {    
-                        let clientData = response.data;         
-                        for (let i = 0; i < clientData.length; i++){
+                        let clientRows = response.data;         
+
+
+                        for (let i = 0; i < clientRows.length; i++){
                             if(decrypted(element.OPERATOR) === msg.from || '6281235114745@c.us'){
                                 if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     let responseData;
@@ -873,20 +874,22 @@ client.on('message', async (msg) => {
                 //User Order Data         
                 } else if (userOrder.includes(splittedMsg[1].toLowerCase())){   
                     await clientData().then(async response => {    
-                        let clientData = response.data;
-                        for (let i = 0; i < clientData.length; i++){
-                            if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
+                        let clientRows = response.data;
+
+                        clientRows.forEach(async element => {
+                            if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                 if (updateinsta.includes(splittedMsg[1].toLowerCase())) {
                                     logsSave("Update Instagram Username")
                                     //Update Insta Profile
                                     //CLientName#updateinsta/ig/#linkprofileinstagram
                                     if (splittedMsg[3].includes('instagram.com')){
                                         if (!splittedMsg[3].includes('/p/') 
-                                        || !splittedMsg[3].includes('/reels/') 
-                                        || !splittedMsg[3].includes('/video/') ){
+                                         || !splittedMsg[3].includes('/reels/') 
+                                          || !splittedMsg[3].includes('/video/') ){
                                             
                                             let instaLink;
                                             let instaUsername;
+    
                                             if (splittedMsg[3].includes('/profilecard/')){
                                                 instaLink = splittedMsg[3].split('?')[0];
                                                 instaUsername = instaLink.replaceAll(
@@ -923,8 +926,8 @@ client.on('message', async (msg) => {
                                     }
 
                                 } else if (updatetiktok.includes(splittedMsg[1].toLowerCase())) {
+                                    
                                     logsSave("Update Tiktok Username");
-
                                     //Update Tiktok profile
                                     //CLientName#updatetiktok/tiktok/#linkprofiletiktok
                                     if (splittedMsg[3].includes('tiktok.com')){
@@ -1048,7 +1051,7 @@ client.on('message', async (msg) => {
                                     
                                 } 
                             }
-                        }
+                        });
                     });
 
                 //Divisi & Title List Data
@@ -1099,10 +1102,8 @@ client.on('message', async (msg) => {
                                         default:
                                             break;
                                     }
-                                }
-                                
+                                } 
                             });
-
                         }
                     );
                 //Wifi Corner For Company
@@ -1318,6 +1319,7 @@ client.on('message', async (msg) => {
                                     async response =>{
 
                                         let clientRows = response.data;
+
                                         clientRows.forEach(async element => {
 
                                             if (decrypted(element.STATUS) === "TRUE" 

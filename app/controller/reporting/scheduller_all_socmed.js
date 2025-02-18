@@ -302,7 +302,6 @@ export async function schedullerAllSocmed(timeSwitch) {
                         console.log("Generate All Socmed Done");
                     }
                 })();
-
             }
         ). catch (
             error => logsError(error)
