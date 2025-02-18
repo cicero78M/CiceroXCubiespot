@@ -17,9 +17,9 @@ export async function schedullerAllSocmed(timeSwitch) {
         await clientData().then( 
             async response =>{
 
-                let clientRows = response.data;
+                let clientRows = await response.data;
 
-                console.log(clientRows.length());
+                console.log(clientRows)
 
                 let i = 0;
 
@@ -301,9 +301,8 @@ export async function schedullerAllSocmed(timeSwitch) {
                         // } 
 
                         setTimeout(loop, 1000);  
-                    } else {
-                        console.log("Generate All Socmed Done");
                     }
+
                 })();
             }
         ). catch (
