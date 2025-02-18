@@ -191,31 +191,43 @@ client.on('ready', () => {
         
         clientData().then( async response =>{
             
-            let clientData = response.data;
+            let clientRows = response.data;
 
-            clientData.forEach(async element => {
-                //This Procces Tiktok Report
-                if (decrypted(element.STATUS) === "TRUE" 
-                && decrypted(element.TIKTOK_STATE) === "TRUE" 
-                && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                    await warningReportTiktok(element).then(async response => {
-                        logsSend(response.data);
-                    }).catch( 
-                        error => logsError(error)
-                    );
-                }         
+                let i = 0;
 
-                //This process Insta Report
-                if (decrypted(element.STATUS) === "TRUE" 
-                && decrypted(element.INSTA_STATE) === "TRUE" 
-                && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                    await warningReportInsta(element).then(                            
-                        response => logsSend(response.data)
-                    ).catch( 
-                        error => logsError(error)
-                    );
-                }  
-            });
+                (async function loop() {
+
+                    if (++i < clientRows.length) {
+
+                        //This Procces Tiktok Report
+                        if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                        && decrypted(clientRows[i].TIKTOK_STATE) === "TRUE" 
+                        && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                            await warningReportTiktok(clientRows[i]).then(async response => {
+                                logsSend(response.data);
+                            }).catch( 
+                                error => logsError(error)
+                            );
+                        }         
+
+                        //This process Insta Report
+                        if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                        && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                        && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                            await warningReportInsta(clientRows[i]).then(                            
+                                response => logsSend(response.data)
+                            ).catch( 
+                                error => logsError(error)
+                            );
+                        }  
+    
+
+                        setTimeout(loop, 1000);  
+                    } else {
+                        console.log("Send All Notif Done");
+                    }
+                })();
+
         }).catch(
             error => logsError(error)
         );
@@ -239,58 +251,6 @@ client.on('ready', () => {
             );
         }                
     });
-
-    // //Backup Insta & Tiktok Content
-    // schedule('0 22 * * *',  async () => {
-        
-    //     if(process.env.APP_CLIENT_TYPE === "RES"){
-    //         await clientData().then(
-    //             async response =>{
-    //                 let clientData = response.data;
-    //                 for (let i = 0; i < clientData.length; i++){   
-    //                     await instaContentBackup(element).then(
-    //                         response => logsSend(response.data)
-    //                     ).catch(
-    //                         error => logsError(error)
-    //                     );
-
-    //                     await tiktokContentBackup(element).then(
-    //                         response => logsSend(response.data)
-    //                     ).catch(
-    //                         error => logsError(error)
-    //                     );
-    //                 }      
-    //             }
-    //         ).catch (
-    //             error => logsError(error)
-    //         );
-    //     }
-    // });
-
-//     //Execute Backup Insta & Tiktok Like Comments
-//     schedule('0 23 * * *',  async () => {
-//         if(process.env.APP_CLIENT_TYPE === "RES"){
-//             await clientData().then(
-//                 async response =>{
-//                     let clientData = response.data;
-//                     for (let i = 0; i < clientData.length; i++){
-            
-//                         await instaLikesBackup(element).then(
-//                             response => logsSend(response.data)
-//                         ).catch(
-//                             error => logsError(error)
-//                         );
-
-//                         await tiktokCommentsBackup(element).then(
-//                             response => logsSend(response.data)
-//                         ).catch(
-//                             error => logsError(error)
-//                         );
-//                     }
-//                 }
-//             );
-//         }
-//     });
 });
 
 client.on('message', async (msg) => {
@@ -447,13 +407,11 @@ client.on('message', async (msg) => {
                                             let i = 0;
 
                                             (function loop() {
-
                                                 if (++i < clientRows.length) {
-
-                                                    if (decrypted(element.STATUS) === "TRUE" 
-                                                    && decrypted(element.INSTA_STATE) === "TRUE" 
-                                                    && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE){
-                                                        setSecuid(element).then(
+                                                    if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                    && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                                                    && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE){
+                                                        setSecuid(clientRows[i]).then(
                                                             response => logsSend(response.data)
                                                         ).catch(
                                                             error => logsError(error)
@@ -475,7 +433,6 @@ client.on('message', async (msg) => {
                                 break;
                             case 'savecontact': 
                                 {
-                                    
                                     await readUser(splittedMsg[0].toUpperCase()).then(
                                         async response =>{
 
@@ -486,24 +443,17 @@ client.on('message', async (msg) => {
                                             (function loop() {
                                                 console.log(userRows[i].NAMA);
                                                 if (++i < userRows.length) {
-
                                                     if (userRows[i].STATUS === 'TRUE'){
-
                                                         if (userRows[i].WHATSAPP !== ""){
-    
-                                                            
                                                             authorize().then(
                                                                 async auth =>
-    
                                                                     {
                                                                         console.log(await saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth));
     
                                                                     }
                                                             ).catch(console.error); 
-    
                                                         }
                                                     } 
-
                                                     setTimeout(loop, 1200);  
                                                 }
                                             })();               
@@ -544,15 +494,11 @@ client.on('message', async (msg) => {
                                                         );
                     
                                                     } else {
-            
                                                         logsSend('Bukan Link Profile Instagram');
-            
                                                     }
             
                                                 } else {
-            
                                                     logsSend('Bukan Link Profile Instagram');
-            
                                                 }
                                             }
                                             
@@ -654,18 +600,12 @@ client.on('message', async (msg) => {
                                                         );
                     
                                                     } else {
-            
                                                         logsSend('Bukan Link Profile Instagram');
-            
                                                     }
-            
                                                 } else {
-            
                                                     logsSend('Bukan Link Profile Instagram');
-            
                                                 }
                                             }
-                                            
                                                 break;
 
                                         case 'insta2state':
@@ -733,16 +673,16 @@ client.on('message', async (msg) => {
                                     .then(
                                         async response =>{
                                             
-                                            let i = 0;
                                             let clientRows = response.data;
+                                            let i = 0;
 
                                             (function loop() {
 
                                                 if (++i < clientRows.length) {
 
-                                                    if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
+                                                    if(decrypted(clientRows[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
 
-                                                        getInstaUserInfo(element).then(
+                                                        getInstaUserInfo(clientRows[i]).then(
                                                             response => {
                                                                 logsSend(response.data)
                                                             }
@@ -753,7 +693,7 @@ client.on('message', async (msg) => {
                             
                                                     setTimeout(loop, 3000);  
                                                 } else {
-                                                    console.log("Generate Secuid Data Done");
+                                                    console.log("Generate User Info Data Done");
                                                 }
                                             })();
                                         }
@@ -775,15 +715,13 @@ client.on('message', async (msg) => {
                                             (function loop() {
                                                 if (++i < clientRows.length) {
 
-                                                    getInstaUserInfo(element).then(
+                                                    getInstaUserInfo(clientRows[i]).then(
                                                         response => {
                                                             logsSend(response.data)
                                                         }
                                                     ).catch(
                                                         error => logsError(error)
                                                     );
-
-
                                                     setTimeout(loop, 3000);  
                                                 }
                                             })();
@@ -804,10 +742,9 @@ client.on('message', async (msg) => {
                     await clientData().then(async response => {    
                         let clientRows = response.data;         
 
-
                         for (let i = 0; i < clientRows.length; i++){
-                            if(decrypted(element.OPERATOR) === msg.from || '6281235114745@c.us'){
-                                if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
+                            if(decrypted(clientRows[i].OPERATOR) === msg.from || '6281235114745@c.us'){
+                                if(decrypted(clientRows[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     let responseData;
                                     switch (splittedMsg[1].toLowerCase()) {
                                         case "addnewuser"://Added New User Data Profile
@@ -880,7 +817,6 @@ client.on('message', async (msg) => {
                 } else if (userOrder.includes(splittedMsg[1].toLowerCase())){   
                     await clientData().then(async response => {    
                         let clientRows = response.data;
-
                         clientRows.forEach(async element => {
                             if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                 if (updateinsta.includes(splittedMsg[1].toLowerCase())) {
@@ -1064,9 +1000,7 @@ client.on('message', async (msg) => {
                     await clientData().then( 
                         async response => {  
                             let clientRows = response.data;  
-
                             clientRows.forEach(async element => {
-
                                 if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     let responseData;
                                     switch (splittedMsg[1].toLowerCase()) {
@@ -1131,57 +1065,64 @@ client.on('message', async (msg) => {
 
                                         let clientRows = response.data;
 
-                                        clientRows.forEach(async element => {
-                                            if (decrypted(element.STATUS) === "TRUE" 
-                                            && decrypted(element.TIKTOK_STATE) === "TRUE" 
-                                            && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                
-                                                logsSave(decrypted(element.CLIENT_ID)+' START LOAD TIKTOK DATA');
-                                                client.sendMessage(
-                                                    '6281235114745@c.us', 
-                                                    decrypted(element.CLIENT_ID)+' START LOAD TIKTOK DATA');
-                                                
-                                                await getTiktokPost(
-                                                    element
-                                                ).then(
-                                                    data => {
-                                                        tiktokItemsBridges(
-                                                            element, 
-                                                            data.data
-                                                        ).then(
-                                                            data =>{
-                                                                client.sendMessage(
-                                                                    msg.from, 
-                                                                    data.data
-                                                                );
-                                                                logsSave("Success Report Data");
-                                                            }
-                                                        ).catch(
-                                                            data => logsSave(data)
-                                                        );
-                                                    }
-                                                ).catch(
-                                                    data => {
-                                                        switch (data.code) {
-                                                            case 303:
-                                                                logsSave(data.data);
-                                                                client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(element.CLIENT_ID)+' ERROR GET TIKTOK POST'
-                                                                );
-                                                                break;
-                                                            default:
-                                                                client.sendMessage(
-                                                                    '6281235114745@c.us', 
-                                                                    decrypted(element.CLIENT_ID)+' '+data.data
-                                                                );
-                                                                break;
+                                        let i = 0;
+
+                                        (function loop() {
+                                            if (++i < clientRows.length) {
+                                                if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                && decrypted(clientRows[i].TIKTOK_STATE) === "TRUE" 
+                                                && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                    
+                                                    logsSave(decrypted(clientRows[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
+                                                    client.sendMessage(
+                                                        '6281235114745@c.us', 
+                                                        decrypted(clientRows[i].CLIENT_ID)+' START LOAD TIKTOK DATA');
+                                                    
+                                                    getTiktokPost(
+                                                        clientRows[i]
+                                                    ).then(
+                                                        data => {
+                                                            tiktokItemsBridges(
+                                                                clientRows[i], 
+                                                                data.data
+                                                            ).then(
+                                                                data =>{
+                                                                    client.sendMessage(
+                                                                        msg.from, 
+                                                                        data.data
+                                                                    );
+                                                                    logsSave("Success Report Data");
+                                                                }
+                                                            ).catch(
+                                                                data => logsSave(data)
+                                                            );
                                                         }
-                                                    }
-                                                );   
-                                            }  
-                                            
+                                                    ).catch(
+                                                        data => {
+                                                            switch (data.code) {
+                                                                case 303:
+                                                                    logsSave(data.data);
+                                                                    client.sendMessage(
+                                                                        '6281235114745@c.us', 
+                                                                        decrypted(clientRows[i].CLIENT_ID)+' ERROR GET TIKTOK POST'
+                                                                    );
+                                                                    break;
+                                                                default:
+                                                                    client.sendMessage(
+                                                                        '6281235114745@c.us', 
+                                                                        decrypted(clientRows[i].CLIENT_ID)+' '+data.data
+                                                                    );
+                                                                    break;
+                                                            }
+                                                        }
+                                                    );   
+                                                }  
+
+                                                setTimeout(loop, 3000);  
+
+                                            }
                                         });
+
                                 }). catch (
                                     error =>{
                                         console.error(error);
@@ -1197,23 +1138,26 @@ client.on('message', async (msg) => {
                                 logsSave("Execute New Report Tiktok ")
                                 await clientData().then( 
                                     async response =>{
-
                                         let clientRows = await response.data;
-
-                                        clientRows.forEach(async element => {
-                                            
-                                            if (decrypted(element.STATUS) === "TRUE" 
-                                            && decrypted(element.TIKTOK_STATE) === "TRUE" 
-                                            && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsSave(decrypted(element.CLIENT_ID)+' START REPORT TIKTOK DATA');
-                            
-                                                await newReportTiktok(
-                                                    element
-                                                ).then(
-                                                    response => logsSend(response.data)
-                                                ).catch( error => logsError (error));
-                                            }  
-                                        });
+                                        let i = 0;
+                                        (async function loop() {                        
+                                            if (++i < clientRows.length) {
+                                                if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                && decrypted(clientRows[i].TIKTOK_STATE) === "TRUE" 
+                                                && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                    logsSave(decrypted(clientRows[i].CLIENT_ID)+' START REPORT TIKTOK DATA');
+                                
+                                                    await newReportTiktok(
+                                                        clientRows[i]
+                                                    ).then(
+                                                        response => logsSend(response.data)
+                                                    ).catch( error => logsError (error));
+                                                }  
+                                                setTimeout(loop, 3000);  
+                                            } else {
+                                                console.log("Generate Tiktok Done");
+                                            }
+                                        })();
                                 }). catch (
                                     error => logsError(error)
                                 )
@@ -1224,64 +1168,67 @@ client.on('message', async (msg) => {
                                 clientData().then( 
                                     async response =>{
                                         let clientRows = await response.data;
+                                        let i = 0;
+                                        (async function loop() {
+                                            if (++i < clientRows.length) {
+                                                if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                                                && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                    logsSave(decrypted(clientRows[i].CLIENT_ID)+' START LOAD INSTA DATA');
+                                                    client.sendMessage(
+                                                        '6281235114745@c.us', 
+                                                        decrypted(clientRows[i].CLIENT_ID)+' START LOAD INSTA DATA'
+                                                    );
 
-                                        clientRows.forEach(async element => {
-     
-                                            if (decrypted(element.STATUS) === "TRUE" 
-                                            && decrypted(element.INSTA_STATE) === "TRUE" 
-                                            && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                                            
-                                                logsSave(decrypted(element.CLIENT_ID)+' START LOAD INSTA DATA');
-                                                
-                                                client.sendMessage(
-                                                    '6281235114745@c.us', 
-                                                    decrypted(element.CLIENT_ID)+' START LOAD INSTA DATA'
-                                                );
-    
-                                                await getInstaPost(
-                                                    element, "official"
-                                                ).then(
-                                                    async response =>{
-                                                        
-                                                        let instaPostData = response.data;
-                                                        
-                                                        logsSave(instaPostData);
-                                                        
-                                                        await getInstaLikes(
-                                                            instaPostData, 
-                                                            element
-                                                        ).then(
-                                                            async instaLikesData =>{
+                                                    await getInstaPost(
+                                                        clientRows[i], "official"
+                                                    ).then(
+                                                        async response =>{
+                                                            
+                                                            let instaPostData = response.data;
+                                                            
+                                                            logsSave(instaPostData);
+                                                            
+                                                            await getInstaLikes(
+                                                                instaPostData, 
+                                                                clientRows[i]
+                                                            ).then(
+                                                                async instaLikesData =>{
 
-                                                                logsSave(instaLikesData.data);
-                                                                
-                                                                await client.sendMessage(
-                                                                    msg.from, 
-                                                                    instaLikesData.data
-                                                                );
-    
-                                                                await newReportInsta(element, instaPostData, "official").then(
-                                                                    async data => {
-                                                                        logsSave("Report Success!!!");
-                                                                        await client.sendMessage(
-                                                                            msg.from, 
-                                                                            data.data
-                                                                        );
-                                                                }).catch(                
-                                                                    error => logsError(error)
-                                                                );
-                                                            }
-                                                        ).catch(
-                                                            error => logsError(error)
-                                                        ); 
-                                                    }
-                                                ).catch(
-                                                    error => logsError(error)
+                                                                    logsSave(instaLikesData.data);
+                                                                    
+                                                                    await client.sendMessage(
+                                                                        msg.from, 
+                                                                        instaLikesData.data
+                                                                    );
 
-                                                );   
-                                            }    
-                                            
-                                        });
+                                                                    await newReportInsta(clientRows[i], instaPostData, "official").then(
+                                                                        async data => {
+                                                                            logsSave("Report Success!!!");
+                                                                            await client.sendMessage(
+                                                                                msg.from, 
+                                                                                data.data
+                                                                            );
+                                                                    }).catch(                
+                                                                        error => logsError(error)
+                                                                    );
+                                                                }
+                                                            ).catch(
+                                                                error => logsError(error)
+                                                            ); 
+                                                        }
+                                                    ).catch(
+                                                        error => logsError(error)
+
+                                                    );   
+                                                } 
+
+                                                setTimeout(loop, 3000);  
+                                            } else {
+                                                console.log("Generate All Socmed Done");
+                                            }
+                                        })();
+
                                 }). catch (
                                     error => logsError(error)
                                 )  
@@ -1294,27 +1241,36 @@ client.on('message', async (msg) => {
 
                                         let clientRows = response.data;
 
-                                        clientRows.forEach(async element => {
+                                        let i = 0;
+                                        
+                                        (async function loop() {
 
-                                            if (decrypted(element.STATUS) === "TRUE" 
-                                            && decrypted(element.INSTA_STATE) === "TRUE" 
-                                            && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                logsSave(decrypted(element.CLIENT_ID)+' START REPORT INSTA DATA');
-                                                await newReportInsta(
-                                                    element, instaPostData, "official"                                                               
-                                                    ).then(
-                                                    async response => {
-                                                        logsSave(response.data)
-                                                        await client.sendMessage(
-                                                            msg.from, 
-                                                            response.data
-                                                        );
-                                                }).catch(                
-                                                    async error => { logsError(error)  
-                                                });
-                                            }  
-                                            
-                                        });
+                                            if (++i < clientRows.length) {
+
+                                                if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                                                && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                    logsSave(decrypted(clientRows[i].CLIENT_ID)+' START REPORT INSTA DATA');
+                                                    await newReportInsta(
+                                                        clientRows[i], instaPostData, "official"                                                               
+                                                        ).then(
+                                                        async response => {
+                                                            logsSave(response.data)
+                                                            await client.sendMessage(
+                                                                msg.from, 
+                                                                response.data
+                                                            );
+                                                    }).catch(                
+                                                        async error => { logsError(error)  
+                                                    });
+                                                }  
+                                                
+
+                                                setTimeout(loop, 3000);  
+                                            } else {
+                                                console.log("Generate All Socmed Done");
+                                            }
+                                        })();
                                     
                                 }). catch (
                                     async error => {logsError(error);}
@@ -1327,33 +1283,43 @@ client.on('message', async (msg) => {
 
                                         let clientRows = response.data;
 
-                                        clientRows.forEach(async element => {
+                                        let i = 0;
+                                        
+                                        (async function loop() {
 
-                                            if (decrypted(element.STATUS) === "TRUE" 
-                                            && decrypted(element.INSTA_STATE) === "TRUE" 
-                                            && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                await instaClientInfo(
-                                                    decrypted(element.CLIENT_ID), 
-                                                    decrypted(element.INSTAGRAM)
-                                                ).then(
-                                                    async response =>{
-                                                        logsSave(response.data);
-                                                        client.sendMessage(
-                                                            msg.from, 
-                                                            `${decrypted(element.CLIENT_ID)} ${response.data}`
-                                                        );
-                                                    }
-                                                ).catch(
-                                                    async error =>{
-                                                        console.error(error);
-                                                        client.sendMessage(
-                                                            msg.from, 
-                                                            `${decrypted(element.CLIENT_ID)} Collect Insta Info Error`
-                                                        );
-                                                    }
-                                                );
+                                            if (++i < clientRows.length) {
+
+                                                if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                                                && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                    await instaClientInfo(
+                                                        decrypted(clientRows[i].CLIENT_ID), 
+                                                        decrypted(clientRows[i].INSTAGRAM)
+                                                    ).then(
+                                                        async response =>{
+                                                            logsSave(response.data);
+                                                            client.sendMessage(
+                                                                msg.from, 
+                                                                `${decrypted(clientRows[i].CLIENT_ID)} ${response.data}`
+                                                            );
+                                                        }
+                                                    ).catch(
+                                                        async error =>{
+                                                            console.error(error);
+                                                            client.sendMessage(
+                                                                msg.from, 
+                                                                `${decrypted(clientRows[i].CLIENT_ID)} Collect Insta Info Error`
+                                                            );
+                                                        }
+                                                    );
+                                                }
+
+                                                setTimeout(loop, 3000);  
+                                            } else {
+                                                console.log("Generate All Socmed Done");
                                             }
-                                        });
+                                        })();
+
                                     }
                                 );
                                 
@@ -1366,52 +1332,62 @@ client.on('message', async (msg) => {
                                 await clientData().then(
                                     async response =>{
                                         let clientRows = response.data;
-                                        clientRows.forEach(async element => {
-                                            let pages = "";
-                                            if (decrypted(element.STATUS) === "TRUE" 
-                                            && decrypted(element.INSTA_STATE) === "TRUE" 
-                                            && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
-                                                await instaClientInfo(
-                                                    decrypted(element.CLIENT_ID), 
-                                                    decrypted(element.INSTAGRAM)
-                                                ). then (
-                                                    async response =>{
-                                                        logsSave(response);
-                                                        await instaOffcialFollower(
-                                                            decrypted(element.CLIENT_ID), 
-                                                            decrypted(element.INSTAGRAM), 
-                                                            pages, 
-                                                            arrayData, 
-                                                            countData, 
-                                                            response.data
-                                                        ).then(
-                                                            async response => {
-                                                                logsSave(response.data);
-                                                            }
-                                                        ).catch(
-                                                            error => {
-                                                                // console.error(error);
-                                                                console.error(error);
-                                                                client.sendMessage(
-                                                                    msg.from, 
-                                                                    "Insta User Following Checker Error"
-                                                                );
-                                                            }
-                                                        );
-                                                    }
-                                                ).catch(
-                                                    error => {
-                                                        // console.error(error);
-                                                        console.error(error);
-                                                        client.sendMessage(
-                                                            msg.from, 
-                                                            "Insta Client Info Error"
-                                                        );
-                                                    }
-                                                );
-                                            }
-                                        });
 
+                                        let i = 0;
+                                        
+                                        (async function loop() {
+
+                                            if (++i < clientRows.length) {
+
+                                                let pages = "";
+                                                if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                                                && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                                                && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                                                    await instaClientInfo(
+                                                        decrypted(clientRows[i].CLIENT_ID), 
+                                                        decrypted(clientRows[i].INSTAGRAM)
+                                                    ). then (
+                                                        async response =>{
+                                                            logsSave(response);
+                                                            await instaOffcialFollower(
+                                                                decrypted(clientRows[i].CLIENT_ID), 
+                                                                decrypted(clientRows[i].INSTAGRAM), 
+                                                                pages, 
+                                                                arrayData, 
+                                                                countData, 
+                                                                response.data
+                                                            ).then(
+                                                                async response => {
+                                                                    logsSave(response.data);
+                                                                }
+                                                            ).catch(
+                                                                error => {
+                                                                    // console.error(error);
+                                                                    console.error(error);
+                                                                    client.sendMessage(
+                                                                        msg.from, 
+                                                                        "Insta User Following Checker Error"
+                                                                    );
+                                                                }
+                                                            );
+                                                        }
+                                                    ).catch(
+                                                        error => {
+                                                            // console.error(error);
+                                                            console.error(error);
+                                                            client.sendMessage(
+                                                                msg.from, 
+                                                                "Insta Client Info Error"
+                                                            );
+                                                        }
+                                                    );
+                                                }
+
+                                                setTimeout(loop, 3000);  
+                                            } else {
+                                                console.log("Generate All Socmed Done");
+                                            }
+                                        })();
                                     }
                                 );
                                     break;    
