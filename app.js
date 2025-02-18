@@ -841,7 +841,7 @@ client.on('message', async (msg) => {
                                             break;
                                         case "instacheck"://Insta Username Checking Data User Not Updated
                                             //ClientName#instacheck
-                                            responseData = await usernameAbsensi(
+                                            usernameAbsensi(
                                                 splittedMsg[0].toUpperCase(), 
                                                 'INSTA'
                                             ).then(
@@ -853,7 +853,7 @@ client.on('message', async (msg) => {
                                             break;
                                         case "tiktokcheck"://Tiktok Checking Data User Not Updated
                                             //ClientName#tiktokcheck
-                                            await usernameAbsensi(
+                                            usernameAbsensi(
                                                 splittedMsg[0].toUpperCase(), 
                                                 'TIKTOK'
                                             ).then(
@@ -1124,7 +1124,8 @@ client.on('message', async (msg) => {
                                 break;
 
                             case 'alltiktok'://Generate & Report All Tiktok Data - Contents & Comments 
-                                logsSave("Execute New All Tiktok")
+                                logsSave("Execute New All Tiktok");
+
                                 await clientData().then( 
                                     async response =>{
 
@@ -1196,7 +1197,8 @@ client.on('message', async (msg) => {
                                 logsSave("Execute New Report Tiktok ")
                                 await clientData().then( 
                                     async response =>{
-                                        let clientRows = response.data;
+
+                                        let clientRows = await response.data;
 
                                         clientRows.forEach(async element => {
                                             
@@ -1219,9 +1221,9 @@ client.on('message', async (msg) => {
 
                             case 'allinsta': //Generate & Report All Insta Data
                                 logsSave("Execute New All Insta ")
-                                await clientData().then( 
+                                clientData().then( 
                                     async response =>{
-                                        let clientRows = response.data;
+                                        let clientRows = await response.data;
 
                                         clientRows.forEach(async element => {
      
