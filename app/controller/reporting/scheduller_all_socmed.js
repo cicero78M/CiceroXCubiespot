@@ -22,7 +22,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                 console.log(clientRows)
 
             
-                for (let i = 0; i < clientRows.length, i++) {
+                for (let i = 0; i < clientRows.length, i++;) {
 
                     // //This Procces Tiktok Report
                     // if (decrypted(clientRows[i].STATUS) === "TRUE" 
