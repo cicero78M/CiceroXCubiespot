@@ -25,30 +25,30 @@ export async function schedullerAllSocmed(timeSwitch) {
                     if (++i < clientRows.length) {
 
                         //This Procces Tiktok Report
-                        if (decrypted(clientRows.STATUS) === "TRUE" 
-                        && decrypted(clientRows.TIKTOK_STATE) === "TRUE" 
-                        && decrypted(clientRows.TYPE) === process.env.APP_CLIENT_TYPE) {
+                        if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                        && decrypted(clientRows[i].TIKTOK_STATE) === "TRUE" 
+                        && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
 
-                            logsSave(`${decrypted(clientRows.CLIENT_ID)} START LOAD TIKTOK DATA`);
+                            logsSave(`${decrypted(clientRows[i].CLIENT_ID)} START LOAD TIKTOK DATA`);
                 
                             await getTiktokPost(
-                                clientRows
+                                clientRows[i]
                             ).then(
                                 async response => {
                                     switch (response.code){
                                         case 200: 
                                             await tiktokItemsBridges(
-                                                clientRows, 
+                                                clientRows[i], 
                                                 response.data
                                             ).then(
                                                 async response =>{
                                                     switch (timeSwitch){
                                                         case 'report':                       
                                                             await sendClientResponse(
-                                                                decrypted(clientRows.CLIENT_ID), 
-                                                                decrypted(clientRows.SUPERVISOR),
-                                                                decrypted(clientRows.OPERATOR),
-                                                                decrypted(clientRows.GROUP), 
+                                                                decrypted(clientRows[i].CLIENT_ID), 
+                                                                decrypted(clientRows[i].SUPERVISOR),
+                                                                decrypted(clientRows[i].OPERATOR),
+                                                                decrypted(clientRows[i].GROUP), 
                                                                 response, 
                                                                 'REPORT TIKTOK'
                                                             );                                            
@@ -65,15 +65,15 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             ).catch(
                                                 error => {
                                                     console.log(error);
-                                                    newReportTiktok(clientRows).then(
+                                                    newReportTiktok(clientRows[i]).then(
                                                         async response =>{
                                                             switch (timeSwitch){
                                                                 case 'report':                       
                                                                     await sendClientResponse(
-                                                                        decrypted(clientRows.CLIENT_ID), 
-                                                                        decrypted(clientRows.SUPERVISOR),
-                                                                        decrypted(clientRows.OPERATOR),
-                                                                        decrypted(clientRows.GROUP), 
+                                                                        decrypted(clientRows[i].CLIENT_ID), 
+                                                                        decrypted(clientRows[i].SUPERVISOR),
+                                                                        decrypted(clientRows[i].OPERATOR),
+                                                                        decrypted(clientRows[i].GROUP), 
                                                                         response, 
                                                                         'REPORT TIKTOK'
                                                                     );                                            
@@ -100,10 +100,10 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             switch (timeSwitch){
                                                 case 'report':
                                                 sendClientResponse(
-                                                        decrypted(clientRows.CLIENT_ID), 
-                                                        decrypted(clientRows.SUPERVISOR),
-                                                        decrypted(clientRows.OPERATOR),
-                                                        decrypted(clientRows.GROUP), 
+                                                        decrypted(clientRows[i].CLIENT_ID), 
+                                                        decrypted(clientRows[i].SUPERVISOR),
+                                                        decrypted(clientRows[i].OPERATOR),
+                                                        decrypted(clientRows[i].GROUP), 
                                                         response, 
                                                         'REPORT TIKTOK'
                                                     );                                            
@@ -124,15 +124,15 @@ export async function schedullerAllSocmed(timeSwitch) {
                             ).catch(
                                 error => {
                                     console.log(error)
-                                    newReportTiktok(clientRows).then(
+                                    newReportTiktok(clientRows[i]).then(
                                         async response =>{
                                             switch (timeSwitch){
                                                 case 'report':                       
                                                     await sendClientResponse(
-                                                        decrypted(clientRows.CLIENT_ID), 
-                                                        decrypted(clientRows.SUPERVISOR),
-                                                        decrypted(clientRows.OPERATOR),
-                                                        decrypted(clientRows.GROUP), 
+                                                        decrypted(clientRows[i].CLIENT_ID), 
+                                                        decrypted(clientRows[i].SUPERVISOR),
+                                                        decrypted(clientRows[i].OPERATOR),
+                                                        decrypted(clientRows[i].GROUP), 
                                                         response, 
                                                         'REPORT TIKTOK'
                                                     );                                            
@@ -155,21 +155,21 @@ export async function schedullerAllSocmed(timeSwitch) {
                         }         
 
                         //This process Insta Report
-                        if (decrypted(clientRows.STATUS) === "TRUE" 
-                        && decrypted(clientRows.INSTA_STATE) === "TRUE" 
-                        && decrypted(clientRows.TYPE) === process.env.APP_CLIENT_TYPE) {
-                            logsSend(`${decrypted(clientRows.CLIENT_ID)} START LOAD INSTA DATA`);
+                        if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                        && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
+                        && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                            logsSend(`${decrypted(clientRows[i].CLIENT_ID)} START LOAD INSTA DATA`);
                                         
-                            await getInstaPost(clientRows, "official").then(
+                            await getInstaPost(clientRows[i], "official").then(
                                 async response =>{
                                     let todayItems;
                                     switch (response.code){
                                         case 201:
                                             await sendClientResponse(
-                                                decrypted(clientRows.CLIENT_ID), 
-                                                decrypted(clientRows.SUPERVISOR),
-                                                decrypted(clientRows.OPERATOR),
-                                                decrypted(clientRows.GROUP), 
+                                                decrypted(clientRows[i].CLIENT_ID), 
+                                                decrypted(clientRows[i].SUPERVISOR),
+                                                decrypted(clientRows[i].OPERATOR),
+                                                decrypted(clientRows[i].GROUP), 
                                                 response, 
                                                 'REPORT INSTA'
                                             );    
@@ -180,24 +180,24 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             todayItems = response.data;
                                             await getInstaLikes(
                                                 response.data, 
-                                                clientRows
+                                                clientRows[i]
                                             ).then(
                                                 async response => {                                              
                                                     
                                                     logsSave(response.data); 
 
                                                     await newReportInsta(
-                                                        clientRows, todayItems, "official"
+                                                        clientRows[i], todayItems, "official"
                                                     ).then(
                                                         async response => {
             
                                                             switch (timeSwitch){
                                                                 case 'report':
                                                                     sendClientResponse(
-                                                                        decrypted(clientRows.CLIENT_ID), 
-                                                                        decrypted(clientRows.SUPERVISOR),
-                                                                        decrypted(clientRows.OPERATOR),
-                                                                        decrypted(clientRows.GROUP), 
+                                                                        decrypted(clientRows[i].CLIENT_ID), 
+                                                                        decrypted(clientRows[i].SUPERVISOR),
+                                                                        decrypted(clientRows[i].OPERATOR),
+                                                                        decrypted(clientRows[i].GROUP), 
                                                                         response, 
                                                                         'REPORT INSTA'
                                                                     );            
@@ -225,13 +225,13 @@ export async function schedullerAllSocmed(timeSwitch) {
                         }  
 
                         //This process Insta Report
-                        if (decrypted(clientRows.STATUS) === "TRUE" 
-                        && decrypted(clientRows.INSTA_2_STATE) === "TRUE" 
-                        && decrypted(clientRows.TYPE) === process.env.APP_CLIENT_TYPE) {
-                            logsSend(`${decrypted(clientRows.CLIENT_ID)} START LOAD INSTA DATA`);
+                        if (decrypted(clientRows[i].STATUS) === "TRUE" 
+                        && decrypted(clientRows[i].INSTA_2_STATE) === "TRUE" 
+                        && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
+                            logsSend(`${decrypted(clientRows[i].CLIENT_ID)} START LOAD INSTA DATA`);
                                         
                             await getInstaPost(
-                                clientRows, "secondary"
+                                clientRows[i], "secondary"
                             ).then(
                                 async response =>{
                                     let todayItems;
@@ -239,10 +239,10 @@ export async function schedullerAllSocmed(timeSwitch) {
                                     switch (response.code){
                                         case 201:
                                             await sendClientResponse(
-                                                decrypted(clientRows.CLIENT_ID), 
-                                                decrypted(clientRows.SUPERVISOR),
-                                                decrypted(clientRows.OPERATOR),
-                                                decrypted(clientRows.GROUP), 
+                                                decrypted(clientRows[i].CLIENT_ID), 
+                                                decrypted(clientRows[i].SUPERVISOR),
+                                                decrypted(clientRows[i].OPERATOR),
+                                                decrypted(clientRows[i].GROUP), 
                                                 response, 
                                                 'REPORT INSTA'
                                             );    
@@ -253,24 +253,24 @@ export async function schedullerAllSocmed(timeSwitch) {
                                             todayItems = response.data;
                                             await getInstaLikes(
                                                 response.data, 
-                                                clientRows
+                                                clientRows[i]
                                             ).then(
                                                 async response => {                                              
                                                     
                                                     logsSave(response.data); 
 
                                                     await newReportInsta(
-                                                        clientRows, todayItems, "secondary"
+                                                        clientRows[i], todayItems, "secondary"
                                                     ).then(
                                                         async response => {
             
                                                             switch (timeSwitch){
                                                                 case 'report':
                                                                     sendClientResponse(
-                                                                        decrypted(clientRows.CLIENT_ID), 
-                                                                        decrypted(clientRows.SUPERVISOR),
-                                                                        decrypted(clientRows.OPERATOR),
-                                                                        decrypted(clientRows.GROUP), 
+                                                                        decrypted(clientRows[i].CLIENT_ID), 
+                                                                        decrypted(clientRows[i].SUPERVISOR),
+                                                                        decrypted(clientRows[i].OPERATOR),
+                                                                        decrypted(clientRows[i].GROUP), 
                                                                         response, 
                                                                         'REPORT INSTA'
                                                                     );            

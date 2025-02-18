@@ -78,7 +78,7 @@ app.listen(port, () => {
 });
 
 
-app.get('/', function (req, res) {
+app.get('/user', function (req, res) {
     
     readUser("BOJONEGORO").then(
         response =>{
@@ -87,6 +87,23 @@ app.get('/', function (req, res) {
     )
 });
 
+app.get('/instalikes', function (req, res) {
+    
+    readUser("BOJONEGORO").then(
+        response =>{
+            res.render("index", {data: response.data, ID_CLIENT: "BOJONEGORO" });
+        }
+    )
+});
+
+app.get('/tiktokcomments', function (req, res) {
+    
+    readUser("BOJONEGORO").then(
+        response =>{
+            res.render("index", {data: response.data, ID_CLIENT: "BOJONEGORO" });
+        }
+    )
+});
 
 // WWEB JS Client Constructor
 export const client = new Client({
@@ -485,8 +502,7 @@ client.on('message', async (msg) => {
 
                                                     setTimeout(loop, 1200);  
                                                 }
-                                            })();
-                                                                                      
+                                            })();               
                                         }
                                     )                    
                                 }
@@ -1190,11 +1206,8 @@ client.on('message', async (msg) => {
                                                 ).catch( error => logsError (error));
                                             }  
                                         });
-
                                 }). catch (
-                                    error =>{
-                                       logsError(error)
-                                    }
+                                    error => logsError(error)
                                 )
                                 break;
 
@@ -1205,8 +1218,7 @@ client.on('message', async (msg) => {
                                         let clientRows = response.data;
 
                                         clientRows.forEach(async element => {
-
-                                                
+     
                                             if (decrypted(element.STATUS) === "TRUE" 
                                             && decrypted(element.INSTA_STATE) === "TRUE" 
                                             && decrypted(element.TYPE) === process.env.APP_CLIENT_TYPE) {
@@ -1240,8 +1252,7 @@ client.on('message', async (msg) => {
                                                                     instaLikesData.data
                                                                 );
     
-                                                                await newReportInsta(
-                                                                    element, instaPostData, "official"                                                                ).then(
+                                                                await newReportInsta(element, instaPostData, "official").then(
                                                                     async data => {
                                                                         logsSave("Report Success!!!");
                                                                         await client.sendMessage(
@@ -1291,16 +1302,15 @@ client.on('message', async (msg) => {
                                                             response.data
                                                         );
                                                 }).catch(                
-                                                    async error => { logsError(error)
-  
+                                                    async error => { logsError(error)  
                                                 });
                                             }  
                                             
                                         });
                                     
                                 }). catch (
-                                    async error => { logsError(error)}
-                                )
+                                    async error => {logsError(error);}
+                                );
                                 break;
 
                             case 'instainfo'://Collect Insta Info
@@ -1334,7 +1344,6 @@ client.on('message', async (msg) => {
                                                     }
                                                 );
                                             }
-                                            
                                         });
                                     }
                                 );
@@ -1656,7 +1665,6 @@ client.on('message', async (msg) => {
                 const chatMsg = await msg.getChat(); //this catch message data
                 chatMsg.sendSeen(); //this send seen by bot whatsapp
                 chatMsg.sendStateTyping(); //this create bot typing state 
-
 //                 if (chatMsg.isGroup){
 //                     logsSave("Group Messages");
 //                 } else if (msg.isGif){
