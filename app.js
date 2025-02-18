@@ -875,7 +875,7 @@ client.on('message', async (msg) => {
                     await clientData().then(async response => {    
                         let clientData = response.data;
                         for (let i = 0; i < clientData.length; i++){
-                            if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
+                            if(decrypted(clientData[i].CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                 if (updateinsta.includes(splittedMsg[1].toLowerCase())) {
                                     logsSave("Update Instagram Username")
                                     //Update Insta Profile
