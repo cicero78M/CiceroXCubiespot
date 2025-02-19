@@ -68,7 +68,7 @@ import { usernameInfo } from './app/controller/read_data/username_info.js';
 import { authorize, saveGoogleContact } from './app/module/g_contact_api.js';
 import { readUser } from './app/controller/read_data/read_data_from_dir.js';
 import { getInstaUserInfo } from './app/controller/scrapping_insta/generate_insta_user_info.js';
-import { instaVisData } from './test.js';
+import { instaVisData } from './app/controller/reporting/insta_vis_likes_data.js';
 
 //.env
 const private_key = process.env;
