@@ -68,6 +68,7 @@ import { usernameInfo } from './app/controller/read_data/username_info.js';
 import { authorize, saveGoogleContact } from './app/module/g_contact_api.js';
 import { readUser } from './app/controller/read_data/read_data_from_dir.js';
 import { getInstaUserInfo } from './app/controller/scrapping_insta/generate_insta_user_info.js';
+import { instaVisData } from './test.js';
 
 //.env
 const private_key = process.env;
@@ -1614,6 +1615,31 @@ client.on('message', async (msg) => {
                             }
                                 
                                 break;
+
+                            case "instavis":{
+                                await clientData()
+                                .then(
+                                    async response =>{
+                                        
+                                        let clientRows = response.data;
+
+                                        clientRows.forEach(async element => {
+                                            await instaVisData(element).then(
+                                                response => {
+                                                    logsSend(response.data)
+                                                }
+                                            ).catch(
+                                                error => logsError(error)
+                                            );
+                                        });
+                                    }
+                                ).catch (
+                                    error => logsError(error)
+                                );
+                            }
+                                
+                                break;
+                                
                         
                             default:
                                 break;

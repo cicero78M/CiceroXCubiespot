@@ -92,5 +92,6 @@ export const detikCom =[
 ];
 
 export const dataManagement =[
-    "clientdataview"
+    "clientdataview",
+    "instavis"
 ];

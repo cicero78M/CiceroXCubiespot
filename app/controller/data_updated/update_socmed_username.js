@@ -144,7 +144,6 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
             if (!isContact){
               authorize().then(
                   async auth =>
-    
                     {
                         console.log(await saveGoogleContact(userRows[i].NAMA, `+${phone}`, auth));
                     }
