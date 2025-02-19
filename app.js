@@ -1622,15 +1622,20 @@ client.on('message', async (msg) => {
                                     async response =>{
                                         
                                         let clientRows = response.data;
+                                        
 
                                         clientRows.forEach(async element => {
-                                            await instaVisData(element).then(
-                                                response => {
-                                                    logsSend(response.data)
-                                                }
-                                            ).catch(
-                                                error => logsError(error)
-                                            );
+                                            
+                                            if(decrypted(element.STATUS) ==="TRUE"){
+                                                await instaVisData(element).then(
+                                                    response => {
+                                                        logsSend(response.data)
+                                                    }
+                                                ).catch(
+                                                    error => logsError(error)
+                                                );                                                
+                                            }
+
                                         });
                                     }
                                 ).catch (
@@ -1653,6 +1658,7 @@ client.on('message', async (msg) => {
                             let clientRows = response.data;
                             
                             clientRows.forEach(async element => {
+
 
                                 if(decrypted(element.CLIENT_ID) === splittedMsg[0].toUpperCase()){
                                     logsSave("Request Code Doesn't Exist");
