@@ -119,7 +119,7 @@ export async function instaVisData(clientValue) {
               }
             }
 
-            writeFileSync(`"json_data_file/insta_data/insta_vis/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${contentItems.SHORTCODE}.json`, JSON.stringify(dataLikes));
+            writeFileSync(`json_data_file/insta_data/insta_vis/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${decrypted(contentItems.SHORTCODE)}.json`, JSON.stringify(dataLikes));
 
           }
 
