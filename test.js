@@ -9,6 +9,7 @@ export async function instaVisData(clientValue) {
   const clientName = decrypted(clientValue.CLIENT_ID);
   logsSave(clientName);
   let data;
+  let userRows= new Array();
 
   return new Promise(
     async (resolve, reject) => {
@@ -37,14 +38,12 @@ export async function instaVisData(clientValue) {
           let userNotLikes;
           let dataLikes = new Array();
 
-
           let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 
           for (let i = 0; i < instaContentDir.length; i++) {
 
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
             let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`));
-
 
             let date = new Date((decrypted(contentItems.taken_at) * 1000));
 
