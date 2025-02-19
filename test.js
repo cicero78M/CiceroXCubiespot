@@ -45,6 +45,8 @@ export async function instaVisData(clientValue) {
             let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
             let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`));
 
+            console.log(contentItems);
+
             let date = new Date((decrypted(contentItems.taken_at) * 1000));
 
             if (!existsSync("json_data_file/insta_data")){
