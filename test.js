@@ -35,7 +35,7 @@ export async function instaVisData(clientValue) {
         if (decrypted(clientValue.STATUS)) {   
 
           let userLikesData = new Array();
-          let userNotLikes;
+          let userNotLikes = new Array();
           let dataLikes = new Array();
 
           let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
@@ -47,7 +47,7 @@ export async function instaVisData(clientValue) {
 
             console.log(contentItems);
 
-            let date = new Date((decrypted(contentItems.TIMESTAMPS) * 1000));
+            let date = new Date((decrypted(contentItems.TIMESTAMP) * 1000));
 
             if (!existsSync("json_data_file/insta_data")){
                 mkdirSync("json_data_file/insta_data");
@@ -88,7 +88,7 @@ export async function instaVisData(clientValue) {
 
                 userRows[i].LIKES = "FALSE";
                 userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                userRows[i].TIMESTAMPS = contentItems.TIMESTAMPS;
+                userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
                 dataLikes.push(userRows[i]);
 
 
@@ -100,12 +100,12 @@ export async function instaVisData(clientValue) {
                         userNotLikes.push(userRows[i].ID_KEY);
                         userRows[i].LIKES = "FALSE";
                         userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                        userRows[i].TIMESTAMPS = contentItems.TIMESTAMPS;
+                        userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
                         dataLikes.push(userRows[i]);
                       } else {
                         userRows[i].LIKES = "TRUE";
                         userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                        userRows[i].TIMESTAMPS = contentItems.TIMESTAMPS;
+                        userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
                         dataLikes.push(userRows[i]);
                       }                
                     }
@@ -113,7 +113,7 @@ export async function instaVisData(clientValue) {
                 } else {
                   userRows[i].LIKES = "TRUE";
                   userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                  userRows[i].TIMESTAMPS = contentItems.TIMESTAMPS;
+                  userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
                   dataLikes.push(userRows[i]);
                 }
               }
