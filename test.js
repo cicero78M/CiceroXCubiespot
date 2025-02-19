@@ -56,17 +56,21 @@ export async function instaVisData(clientValue) {
             if (!existsSync("json_data_file/insta_data/insta_vis/")){
                 mkdirSync("json_data_file/insta_data/insta_vis");
             }
+
+            if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName)){
+              mkdirSync("json_data_file/insta_data/insta_vis/"+clientName);
+          }
             
-            if (!existsSync("json_data_file/insta_data/insta_vis/"+date.getFullYear())){
-                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear());
+            if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear())){
+                mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear());
             }
             
-            if (!existsSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth())){
-                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth());
+            if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth())){
+                mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth());
             }
 
-            if (!existsSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate())){
-                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate());
+            if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate())){
+                mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate());
             }
 
             for (let ii = 0; ii < likesItems.length; ii++) {
@@ -119,7 +123,7 @@ export async function instaVisData(clientValue) {
               }
             }
 
-            writeFileSync(`json_data_file/insta_data/insta_vis/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${decrypted(contentItems.SHORTCODE)}.json`, JSON.stringify(dataLikes));
+            writeFileSync(`json_data_file/insta_data/insta_vis/${clientName}/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${decrypted(contentItems.SHORTCODE)}.json`, JSON.stringify(dataLikes));
 
           }
 
