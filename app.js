@@ -1623,7 +1623,6 @@ client.on('message', async (msg) => {
                                         
                                         let clientRows = response.data;
                                         
-
                                         clientRows.forEach(async element => {
                                             
                                             if(decrypted(element.STATUS) ==="TRUE"){

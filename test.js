@@ -38,21 +38,14 @@ export async function instaVisData(clientValue) {
           let userNotLikes = new Array();
           let dataLikes = new Array();
 
-          if (!existsSync(`json_data_file/insta_data/insta_content/${clientName}`)){
-
             let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 
             for (let i = 0; i < instaContentDir.length; i++) {
-              if (!existsSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`)){
-    
-                let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-    
-                if (!existsSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`)){
-    
+
+                  let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
+
                   let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`));
-    
-                  console.log(contentItems);
-      
+          
                   let date = new Date((decrypted(contentItems.TIMESTAMP) * 1000));
       
                   if (!existsSync("json_data_file/insta_data")){
@@ -128,19 +121,11 @@ export async function instaVisData(clientValue) {
                       }
                     }
                   }
-      
+
+                  console.log(decrypted(contentItems.SHORTCODE));
                   writeFileSync(`json_data_file/insta_data/insta_vis/${clientName}/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${decrypted(contentItems.SHORTCODE)}.json`, JSON.stringify(dataLikes));
-      
-                }
-    
-              }
-              
-            }
-          
+
           }
-
-
-
           data = {
             data: 'Record Done',
             state: true,
