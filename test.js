@@ -43,87 +43,91 @@ export async function instaVisData(clientValue) {
             for (let i = 0; i < instaContentDir.length; i++) {
 
                   let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
-
-                  let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`));
+                  
+                  if (existsSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`)){
+                    let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaContentDir[i]}`));
           
-                  let date = new Date((decrypted(contentItems.TIMESTAMP) * 1000));
-      
-                  if (!existsSync("json_data_file/insta_data")){
-                      mkdirSync("json_data_file/insta_data");
-                  }
-      
-                  if (!existsSync("json_data_file/insta_data/insta_vis/")){
-                      mkdirSync("json_data_file/insta_data/insta_vis");
-                  }
-      
-                  if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName)){
-                    mkdirSync("json_data_file/insta_data/insta_vis/"+clientName);
-                  }
-                  
-                  if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear())){
-                      mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear());
-                  }
-                  
-                  if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth())){
-                      mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth());
-                  }
-      
-                  if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate())){
-                      mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate());
-                  }
-      
-                  for (let ii = 0; ii < likesItems.length; ii++) {
-                    if (decrypted(likesItems[ii]) !== ""){
-                      if (!userLikesData.includes(decrypted(likesItems[ii]))) {
-                        userLikesData.push(decrypted(likesItems[ii]));
+                    let date = new Date((decrypted(contentItems.TIMESTAMP) * 1000));
+        
+                    if (!existsSync("json_data_file/insta_data")){
+                        mkdirSync("json_data_file/insta_data");
+                    }
+        
+                    if (!existsSync("json_data_file/insta_data/insta_vis/")){
+                        mkdirSync("json_data_file/insta_data/insta_vis");
+                    }
+        
+                    if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName)){
+                      mkdirSync("json_data_file/insta_data/insta_vis/"+clientName);
+                    }
+                    
+                    if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear())){
+                        mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear());
+                    }
+                    
+                    if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth())){
+                        mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth());
+                    }
+        
+                    if (!existsSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate())){
+                        mkdirSync("json_data_file/insta_data/insta_vis/"+clientName+"/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate());
+                    }
+        
+                    for (let ii = 0; ii < likesItems.length; ii++) {
+                      if (decrypted(likesItems[ii]) !== ""){
+                        if (!userLikesData.includes(decrypted(likesItems[ii]))) {
+                          userLikesData.push(decrypted(likesItems[ii]));
+                        }
                       }
                     }
-                  }
-      
-                  for (let i = 0; i < userRows.length; i++) {     
-      
-                    if (userRows[i].INSTA === undefined
-                    || userRows[i].INSTA === null 
-                    || userRows[i].INSTA === ""){
-      
-                      logsSave("Null Data Exist");
-                      userNotLikes.push(userRows[i].ID_KEY);
-      
-                      userRows[i].LIKES = "FALSE";
-                      userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
-                      userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
-                      dataLikes.push(userRows[i]);
-      
-      
-                    } else {
-                      if (!userLikesData.includes(userRows[i].INSTA)) {
-                        if (!userNotLikes.includes(userRows[i].ID_KEY)) {
-                          if (userRows[i].STATUS === 'TRUE' ){
-                            if (userRows[i].EXCEPTION === "FALSE"){
-                              userNotLikes.push(userRows[i].ID_KEY);
-                              userRows[i].LIKES = "FALSE";
-                              userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
-                              userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
-                              dataLikes.push(userRows[i]);
-                            } else {
-                              userRows[i].LIKES = "TRUE";
-                              userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
-                              userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
-                              dataLikes.push(userRows[i]);
-                            }                
-                          }
-                        }
-                      } else {
-                        userRows[i].LIKES = "TRUE";
+        
+                    for (let i = 0; i < userRows.length; i++) {     
+        
+                      if (userRows[i].INSTA === undefined
+                      || userRows[i].INSTA === null 
+                      || userRows[i].INSTA === ""){
+        
+                        logsSave("Null Data Exist");
+                        userNotLikes.push(userRows[i].ID_KEY);
+        
+                        userRows[i].LIKES = "FALSE";
                         userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
                         userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
                         dataLikes.push(userRows[i]);
+        
+        
+                      } else {
+                        if (!userLikesData.includes(userRows[i].INSTA)) {
+                          if (!userNotLikes.includes(userRows[i].ID_KEY)) {
+                            if (userRows[i].STATUS === 'TRUE' ){
+                              if (userRows[i].EXCEPTION === "FALSE"){
+                                userNotLikes.push(userRows[i].ID_KEY);
+                                userRows[i].LIKES = "FALSE";
+                                userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
+                                userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
+                                dataLikes.push(userRows[i]);
+                              } else {
+                                userRows[i].LIKES = "TRUE";
+                                userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
+                                userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
+                                dataLikes.push(userRows[i]);
+                              }                
+                            }
+                          }
+                        } else {
+                          userRows[i].LIKES = "TRUE";
+                          userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
+                          userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
+                          dataLikes.push(userRows[i]);
+                        }
                       }
                     }
-                  }
+  
+                    console.log(decrypted(contentItems.SHORTCODE));
+                    writeFileSync(`json_data_file/insta_data/insta_vis/${clientName}/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${decrypted(contentItems.SHORTCODE)}.json`, JSON.stringify(dataLikes));
+  
 
-                  console.log(decrypted(contentItems.SHORTCODE));
-                  writeFileSync(`json_data_file/insta_data/insta_vis/${clientName}/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${decrypted(contentItems.SHORTCODE)}.json`, JSON.stringify(dataLikes));
+                  }
 
           }
           data = {
