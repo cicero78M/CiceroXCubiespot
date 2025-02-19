@@ -49,23 +49,23 @@ export async function instaVisData(clientValue) {
             let date = new Date((decrypted(contentItems.taken_at) * 1000));
 
             if (!existsSync("json_data_file/insta_data")){
-                mkdirSync("json_data_file/insta_data", { recursive: true });
+                mkdirSync("json_data_file/insta_data");
             }
 
             if (!existsSync("json_data_file/insta_data/insta_vis/")){
-                mkdirSync("json_data_file/insta_data/insta_vis/", { recursive: true });
+                mkdirSync("json_data_file/insta_data/insta_vis");
             }
             
             if (!existsSync("json_data_file/insta_data/insta_vis/"+date.getFullYear())){
-                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear(), { recursive: true });
+                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear());
             }
             
             if (!existsSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth())){
-                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth(), { recursive: true });
+                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth());
             }
 
             if (!existsSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate())){
-                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate(), { recursive: true });
+                mkdirSync("json_data_file/insta_data/insta_vis/"+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate());
             }
 
             for (let ii = 0; ii < likesItems.length; ii++) {
