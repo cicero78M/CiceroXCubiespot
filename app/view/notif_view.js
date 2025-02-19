@@ -14,7 +14,7 @@ export async function notifView(userData, shortcodeList) {
 
                     if(userData[i].WHATSAPP !== ""){
 
-                        if (process.env.APP_CLIENT_TYPE === RES){
+                        if (process.env.APP_CLIENT_TYPE === "RES"){
 
                             logsUserSend(
       
