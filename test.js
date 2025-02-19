@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { readUser } from './app/controller/read_data/read_data_from_dir.js';
 import { decrypted } from './app/module/crypto.js';
 import { logsSave } from './app/view/logs_whatsapp.js';
