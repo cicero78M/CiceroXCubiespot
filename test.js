@@ -87,8 +87,8 @@ export async function instaVisData(clientValue) {
                 userNotLikes.push(userRows[i].ID_KEY);
 
                 userRows[i].LIKES = "FALSE";
-                userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
+                userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
+                userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
                 dataLikes.push(userRows[i]);
 
 
@@ -99,21 +99,21 @@ export async function instaVisData(clientValue) {
                       if (userRows[i].EXCEPTION === "FALSE"){
                         userNotLikes.push(userRows[i].ID_KEY);
                         userRows[i].LIKES = "FALSE";
-                        userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                        userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
+                        userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
+                        userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
                         dataLikes.push(userRows[i]);
                       } else {
                         userRows[i].LIKES = "TRUE";
-                        userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                        userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
+                        userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
+                        userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
                         dataLikes.push(userRows[i]);
                       }                
                     }
                   }
                 } else {
                   userRows[i].LIKES = "TRUE";
-                  userRows[i].SHORTCODE = contentItems.SHORTCODE;
-                  userRows[i].TIMESTAMP = contentItems.TIMESTAMP;
+                  userRows[i].SHORTCODE = decrypted(contentItems.SHORTCODE);
+                  userRows[i].TIMESTAMP = decrypted(contentItems.TIMESTAMP);
                   dataLikes.push(userRows[i]);
                 }
               }
