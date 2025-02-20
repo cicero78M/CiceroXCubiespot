@@ -32,16 +32,16 @@ export async function sendClientResponse(clientID, supervisor, operator, group, 
 
             case 200 :
                 await client.sendMessage(supervisor, responseData.data);           
-                setTimeout('', 5000);
+                setTimeout(console.log("Wait Five Second"), 5000);
                 await client.sendMessage(operator, responseData.data);
-                setTimeout('', 5000);
+                setTimeout(console.log("Wait Five Second"), 5000);
                 await client.sendMessage(group, responseData.data);
                 break;
             case 201:
                 await client.sendMessage(supervisor, responseData.data);
-                setTimeout('', 5000);
+                setTimeout(console.log("Wait Five Second"), 5000);
                 await client.sendMessage(operator, responseData.data);
-                setTimeout('', 5000);
+                setTimeout(console.log("Wait Five Second"), 5000);
                 await client.sendMessage(group, responseData.data);
                 break;
             case 303 :
