@@ -41,7 +41,7 @@ export async function instaVisData(clientValue) {
           let userLikesData = new Array();
           let userNotLikes = new Array();
           let dataLikes = new Array();
-
+          
             let instaContentDir = readdirSync(`json_data_file/insta_data/insta_content/${clientName}`);
 
             for (let i = 0; i < instaContentDir.length; i++) {
@@ -135,11 +135,18 @@ export async function instaVisData(clientValue) {
                       console.log(decrypted(contentItems.SHORTCODE));
                       writeFileSync(`json_data_file/insta_data/insta_vis/${clientName}/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${decrypted(contentItems.SHORTCODE)}.json`, JSON.stringify(dataLikes));
 
-
                     } 
                   }
 
           }
+
+          instaContentDir;
+          likesItems;
+          userLikesData;
+          userNotLikes;
+          dataLikes;
+          userRows;
+
           data = {
             data: 'Record Done',
             state: true,

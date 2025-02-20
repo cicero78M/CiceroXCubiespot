@@ -14,8 +14,8 @@ export async function getInstaLikes(todayItems, clientValue) {
 
     let newData = 0;
     let updateData = 0;
-    let newDataUsers = [];
-    let encryptedData = []                
+    let newDataUsers = new Array();
+    let encryptedData = new Array();                
 
     let hasShortcode = false;
 
@@ -86,7 +86,7 @@ export async function getInstaLikes(todayItems, clientValue) {
                     state: false,
                     code: 303
                   };
-                  reject (data);
+                  reject (data);  
                 }
               );
             }

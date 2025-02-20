@@ -109,12 +109,12 @@ app.get('/bpn2sby', function (req, res) {
     );
 });
 
-
-
 // WWEB JS Client Constructor
 export const client = new Client({
     puppeteer: {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true
+
     },
     authStrategy: new LocalAuth({
         clientId: private_key.APP_SESSION_NAME,
