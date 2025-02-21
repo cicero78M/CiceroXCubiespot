@@ -76,7 +76,7 @@ export function logsUserError(from, params) {
 
             console.log(time+ " >> "+process.env.APP_SESSION_NAME+" >> "+params.data);
             client.sendMessage(from, params.data);
-            setTimeout(console.log("Wait Five Second"), 5000);
+           
 
             client.sendMessage('6281235114745@c.us', params.data);
            
@@ -86,8 +86,7 @@ export function logsUserError(from, params) {
                 
             console.log(time+ " >> "+process.env.APP_SESSION_NAME+" >> "+params.data);
             client.sendMessage(from, params.message);
-            setTimeout(console.log("Wait Five Second"), 5000);
-            client.sendMessage('6281235114745@c.us', params.message);
+             client.sendMessage('6281235114745@c.us', params.message);
 
             break;
     
