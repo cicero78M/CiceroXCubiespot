@@ -31,17 +31,25 @@ export async function sendClientResponse(clientID, supervisor, operator, group, 
         switch (responseData.code){
 
             case 200 :
-                await client.sendMessage(supervisor, responseData.data);           
-                setTimeout(console.log("Wait Five Second"), 5000);
+                await client.sendMessage(supervisor, responseData.data);
+                setTimeout(() => {
+                    console.log("Wait Five Seconds")
+                }, 5000);           
                 await client.sendMessage(operator, responseData.data);
-                setTimeout(console.log("Wait Five Second"), 5000);
+                setTimeout(() => {
+                    console.log("Wait Five Seconds")
+                }, 5000);  
                 await client.sendMessage(group, responseData.data);
                 break;
             case 201:
                 await client.sendMessage(supervisor, responseData.data);
-                setTimeout(console.log("Wait Five Second"), 5000);
+                setTimeout(() => {
+                    console.log("Wait Five Seconds")
+                }, 5000);  
                 await client.sendMessage(operator, responseData.data);
-                setTimeout(console.log("Wait Five Second"), 5000);
+                setTimeout(() => {
+                    console.log("Wait Five Seconds")
+                }, 5000);  
                 await client.sendMessage(group, responseData.data);
                 break;
             case 303 :
