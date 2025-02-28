@@ -60,6 +60,7 @@ async function saveCredentials(client) {
 export async function authorize() {
 
   let client = await loadSavedCredentialsIfExist();
+  
   if (client) {
     return client;
   }
@@ -72,6 +73,7 @@ export async function authorize() {
   if (client.credentials) {
     await saveCredentials(client);
   }
+  
   return client;
 }
 
@@ -85,15 +87,12 @@ export async function searchbyNumbers(phone, auth) {
       phoneNumbers: [{ value: phone }],
     }
 
-    const response = await service.people.searchContacts({
+    const response = service.people.searchContacts({
       requestBody: contact, 
     });
     console.log(response.data)
     return response;
-
-
-
-    
+  
   } catch (error) {
     console.log(error)
   }
@@ -147,7 +146,6 @@ export async function driveUploadFile(auth, name, fields, source) {
     }
 
   } catch (error) {
-
     console.log(error)      
   }
 }

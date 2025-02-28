@@ -51,7 +51,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
             
             if(process.env.APP_CLIENT_TYPE === "RES"){
               sourceKey = parseInt(userRows[i].ID_KEY);
-              targetKey = parseInt(idKey);
+              targetKey = idKey;
             } else {
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey.toUpperCase();
@@ -73,7 +73,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
         
         if(process.env.APP_CLIENT_TYPE === "RES"){
           sourceKey = parseInt(userRows[i].ID_KEY);
-          targetKey = parseInt(idKey);
+          targetKey = idKey;
         } else {
           sourceKey = userRows[i].ID_KEY;
           targetKey = idKey.toUpperCase();

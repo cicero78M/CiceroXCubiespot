@@ -174,7 +174,6 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                                 } else {
             
                                     if (phone !== element.WHATSAPP ){
-                
                                         data = {
                                             data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain',
                                             state: true,
@@ -218,6 +217,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                                         }
                                     ).catch(console.error); 
                                   }
+                                  
                                 }       
                               }
                             }

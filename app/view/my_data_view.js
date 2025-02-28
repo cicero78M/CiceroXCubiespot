@@ -1,4 +1,4 @@
-export async function myDataView(params) {
+export async function myDataView(params, clientName) {
 
     return new Promise((resolve, reject) => {
 
@@ -14,8 +14,6 @@ export async function myDataView(params) {
                 accountState = 'DELETED';
             }
 
-
-            
             data = {
                 data : `*Profile Anda*\n\nUser : ` +params.TITLE+` `+params.NAMA + `\nID Key : ` + params.ID_KEY + `\nDivisi / Jabatan : `
                     + params.DIVISI + ` / ` + params.JABATAN + `\nInsta : ` + params.INSTA + `\nTikTok : ` + params.TIKTOK
@@ -27,7 +25,6 @@ export async function myDataView(params) {
             resolve (data);
             
         } catch (error) {
-
             data = {
                 data: error,
                 message : "My Data View Error",
@@ -35,10 +32,8 @@ export async function myDataView(params) {
                 code: 303
             };
           
-            reject (data);
-            
+            reject (data);            
         } 
     });
-
 
 }
