@@ -14,15 +14,16 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
 
       let data;
       let isDataExist = false;
-      let userRows = [];
-      let dataList = [];
-      let phoneList = [];
+      let userRows = new Array();
+      let dataList = new Array();
+      let phoneList = new Array();
       let userData = new Object();
 
       //Data List by Type
       await newListValueData(clientName, type).then(
         async response =>{
           dataList = await response.data;
+          console.log(dataList);
         }
       ).catch(
         error =>reject (error)
@@ -72,17 +73,21 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                 if (type === 'DIVISI') {
 
                   console.log("Div Executed")
-                  
+
                   if (dataList.includes(newData)) {
-                    userData.DIVISI = encrypted(newData);
                     testData = true;
+                    userData.DIVISI = encrypted(newData);
                   } else {
                       propertiesView(clientName, "DIVISI").then(
                         response => {
                           logsUserSend(`${phone}@c.us`, response.data);
                         }             
                       ).catch(
-                        error=>reject(error)
+
+                        error=>{
+                          console.log(error);
+                          reject(error);
+                        }
                       )
                   }
     
