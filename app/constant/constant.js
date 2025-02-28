@@ -32,6 +32,7 @@ export const userOrder =[
     'nama', 
     'editdivisi', 
     'editsatfung',  
+    'satfung',
     'editjabatan', 
     'editpangkat', 
     'pangkat', 

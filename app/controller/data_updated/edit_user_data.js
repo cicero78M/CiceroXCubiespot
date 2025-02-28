@@ -70,7 +70,9 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                 userData.EXCEPTION = encrypted(element.EXCEPTION);
             
                 if (type === 'DIVISI') {
+
                   console.log("Div Executed")
+                  
                   if (dataList.includes(newData)) {
                     userData.DIVISI = encrypted(newData);
                     testData = true;
