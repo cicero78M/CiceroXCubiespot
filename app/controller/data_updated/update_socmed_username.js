@@ -51,16 +51,19 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
             
             if(process.env.APP_CLIENT_TYPE === "RES"){
               sourceKey = parseInt(userRows[i].ID_KEY);
-              targetKey = idKey;
+              targetKey = parseInt(idKey);
             } else {
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey.toUpperCase();
             }
 
+            console.log(sourceKey);
+            console.log(targetKey);
+
             if (sourceKey === targetKey ){
               logsSave("data exist")
               idExist = true;
-              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${userRows[i].ID_KEY}.json`));            
+              userData = JSON.parse(readFileSync(`json_data_file/user_data/${clientName}/${sourceKey}.json`));            
             }
           } 
         }
@@ -73,7 +76,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
         
         if(process.env.APP_CLIENT_TYPE === "RES"){
           sourceKey = parseInt(userRows[i].ID_KEY);
-          targetKey = idKey;
+          targetKey = parseInt(idKey);
         } else {
           sourceKey = userRows[i].ID_KEY;
           targetKey = idKey.toUpperCase();
@@ -162,7 +165,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
 
                     userData.WHATSAPP = encrypted("");
     
-                    writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                    writeFileSync(`json_data_file/user_data/${clientName}/${sourceKey}.json`, JSON.stringify(userData));
                     await myData(clientName, targetKey).then(
                       response => resolve (response)
                     ).catch(
@@ -171,7 +174,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
     
                   } else {
     
-                    writeFileSync(`json_data_file/user_data/${clientName}/${targetKey}.json`, JSON.stringify(userData));
+                    writeFileSync(`json_data_file/user_data/${clientName}/${sourceKey}.json`, JSON.stringify(userData));
                     await myData(clientName, targetKey).then(
                       response => resolve (response)
                     ).catch(
