@@ -33,62 +33,69 @@ export async function getInstaLikes(todayItems, clientValue) {
             
             if (todayItems[i] === (instaLikesDir[ii]).replace(".json", "")) {
 
-              hasShortcode = true;
 
               newDataUsers =[];
-        
-              let instaLikes = await JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesDir[ii]}`));
+              let instaLikes = new Array();
 
-              for (let iii = 0; iii < instaLikes.length; iii++) {
-                if (decrypted(instaLikes[iii]) != undefined || decrypted(instaLikes[iii]) != null || decrypted(instaLikes[iii]) != "") {
-                  if (!newDataUsers.includes(decrypted(instaLikes[iii]))) {
-                    newDataUsers.push(decrypted(instaLikes[iii]));
-                  }
-                }
-              }
-          
-              await instaLikesAPI(todayItems[i]).then(
-                async response =>{
-                  const likesItems = await response.data.data.items;
-                  for (let iii = 0; iii < likesItems.length; iii++) {
-                    if (likesItems[iii].username !== undefined || likesItems[iii].username !== null || likesItems[iii].username !== "") {
-                      if (!newDataUsers.includes(likesItems[iii].username)) {
-                        newDataUsers.push(likesItems[iii].username);
-                      }
+              try {
+
+                instaLikes = await JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${instaLikesDir[ii]}`));
+                hasShortcode = true;
+
+                for (let iii = 0; iii < instaLikes.length; iii++) {
+                  if (decrypted(instaLikes[iii]) != undefined || decrypted(instaLikes[iii]) != null || decrypted(instaLikes[iii]) != "") {
+                    if (!newDataUsers.includes(decrypted(instaLikes[iii]))) {
+                      newDataUsers.push(decrypted(instaLikes[iii]));
                     }
                   }
-                  
-                  encryptedData = [];
-                  
-                  for (let iii = 0; iii < newDataUsers.length; iii++) {
-                    encryptedData.push(encrypted(newDataUsers[iii]));
+                }
+            
+                await instaLikesAPI(todayItems[i]).then(
+                  async response =>{
+                    const likesItems = await response.data.data.items;
+                    for (let iii = 0; iii < likesItems.length; iii++) {
+                      if (likesItems[iii].username !== undefined || likesItems[iii].username !== null || likesItems[iii].username !== "") {
+                        if (!newDataUsers.includes(likesItems[iii].username)) {
+                          newDataUsers.push(likesItems[iii].username);
+                        }
+                      }
+                    }
+                    
+                    encryptedData = [];
+                    
+                    for (let iii = 0; iii < newDataUsers.length; iii++) {
+                      encryptedData.push(encrypted(newDataUsers[iii]));
+                    }
+  
+                    try {
+                      writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                    } catch (error) {
+                      mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+                      writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                    }    
+  
+                    logsSave(`${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+                    
+                    await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
+          
+                    updateData++;
+  
                   }
+                ).catch(
+                  async error =>{
+                    console.log(error)
+                    let data = {
+                      data: error,
+                      state: false,
+                      code: 303
+                    };
+                    reject (data);  
+                  }
+                );
 
-                  try {
-                    writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
-                  } catch (error) {
-                    mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
-                    writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
-                  }    
-
-                  logsSave(`${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
-                  
-                  await client.sendMessage('6281235114745@c.us', `${clientName} Update Data https://www.instagram.com/p/${todayItems[i]}`);
-        
-                  updateData++;
-
-                }
-              ).catch(
-                async error =>{
-                  console.log(error)
-                  let data = {
-                    data: error,
-                    state: false,
-                    code: 303
-                  };
-                  reject (data);  
-                }
-              );
+              } catch (error) {
+                console.log(error);
+              }
             }
           }
 
