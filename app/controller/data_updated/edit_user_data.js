@@ -23,7 +23,6 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
       await newListValueData(clientName, type).then(
         async response =>{
           dataList = await response.data;
-          console.log(dataList);
         }
       ).catch(
         error =>reject (error)
@@ -48,11 +47,11 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
             let testData = false;
             
             if(process.env.APP_CLIENT_TYPE === "RES"){
-            sourceKey = element.ID_KEY;
-            targetKey = idKey;
+              sourceKey = element.ID_KEY;
+              targetKey = idKey;
             } else {
-            sourceKey = element.ID_KEY;
-            targetKey = idKey.toUpperCase();;
+              sourceKey = element.ID_KEY;
+              targetKey = idKey.toUpperCase();;
             }
     
             if (sourceKey === targetKey) {
@@ -85,7 +84,6 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                       ).catch(
 
                         error=>{
-                          console.log(error);
                           reject(error);
                         }
                       )
