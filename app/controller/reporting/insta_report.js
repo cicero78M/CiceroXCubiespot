@@ -101,12 +101,17 @@ export async function newReportInsta(clientValue, todayItems, type) {
           if (shortcodeList.length >= 1) {              
             //Collect Likes Data
             for (let i = 0; i < shortcodeList.length; i++) {
-              let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
-              for (let ii = 0; ii < likesItems.length; ii++) {
-                if (!userLikesData.includes(decrypted(likesItems[ii]))) {
-                  userLikesData.push(decrypted(likesItems[ii]));
-                }
+              try {
+                let likesItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${shortcodeList[i]}.json`));
+                for (let ii = 0; ii < likesItems.length; ii++) {
+                  if (!userLikesData.includes(decrypted(likesItems[ii]))) {
+                    userLikesData.push(decrypted(likesItems[ii]));
+                  }
+                }                
+              } catch (error) {
+                console.log(error);
               }
+
             } 
 
             for (let i = 0; i < userRows.length; i++) {     
