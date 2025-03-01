@@ -438,11 +438,12 @@ client.on('message', async (msg) => {
                                 {
                                     await readUser(splittedMsg[0].toUpperCase()).then(
                                         async response =>{
+                                            console.log(response);
+
 
                                             let i = 0;
 
                                             let userRows = await response.data;
-                                            console.log(userRows);
 
 
                                             (function loop() {
