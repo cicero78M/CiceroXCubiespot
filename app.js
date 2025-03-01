@@ -439,13 +439,10 @@ client.on('message', async (msg) => {
                                 {
                                     await readUser(splittedMsg[0].toUpperCase()).then(
                                         async response =>{
-                                            console.log(response);
-
 
                                             let i = 0;
 
                                             let userRows = await response.data;
-
 
                                             (function loop() {
 
@@ -457,7 +454,7 @@ client.on('message', async (msg) => {
                                                             authorize().then(
                                                                 async auth =>
                                                                     {
-                                                                        console.log(await saveContacts(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth));
+                                                                        console.log(await saveGoogleContact(userRows[i].NAMA, `+${userRows[i].WHATSAPP}`, auth));
     
                                                                     }
                                                             ).catch(console.error); 
@@ -1014,7 +1011,6 @@ client.on('message', async (msg) => {
                                     let responseData;
                                     switch (splittedMsg[1].toLowerCase()) {
                                         case 'info'://Order Info Request
-
                                             {
                                                 if (process.env.APP_CLIENT_TYPE === "RES"){
                                                     responseData = await infoResView(splittedMsg[0].toUpperCase());
@@ -1024,8 +1020,7 @@ client.on('message', async (msg) => {
                                                     logsUserSend(msg.from, responseData.data)
                                                 }
                                             }
-                                            break;
-                                        
+                                            break;      
                                         case 'divisilist'://Divisi List Request        
                                                         
                                             await propertiesView(
