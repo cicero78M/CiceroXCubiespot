@@ -73,21 +73,29 @@ export async function newReportInsta(clientValue, todayItems, type) {
 
           for (let i = 0; i < instaContentDir.length; i++) {
 
-            let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
+            try {
 
-            if(todayItems.includes(decrypted(contentItems.SHORTCODE))){
+              let contentItems = JSON.parse(readFileSync(`json_data_file/insta_data/insta_content/${clientName}/${instaContentDir[i]}`));
 
-              if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
-
-                shortcodeList.push(decrypted(contentItems.SHORTCODE));
-                
-                if (decrypted(contentItems.TYPE) === 'reel') {
-                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
-                } else {
-                  shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
+              if(todayItems.includes(decrypted(contentItems.SHORTCODE))){
+  
+                if (!shortcodeList.includes(decrypted(contentItems.SHORTCODE))) {
+  
+                  shortcodeList.push(decrypted(contentItems.SHORTCODE));
+                  
+                  if (decrypted(contentItems.TYPE) === 'reel') {
+                    shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/reel/' + decrypted(contentItems.SHORTCODE));
+                  } else {
+                    shortcodeListString = shortcodeListString.concat('\nhttps://instagram.com/p/' + decrypted(contentItems.SHORTCODE));
+                  }
                 }
               }
+              
+            } catch (error) {
+              console.log(error);
             }
+
+  
           }
 
           if (shortcodeList.length >= 1) {              
