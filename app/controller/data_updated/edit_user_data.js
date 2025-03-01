@@ -160,6 +160,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
                             }
                           }
                           break;
+                          
                         default:
                             {
                               if  (phoneList.includes(phone)) {

@@ -442,9 +442,13 @@ client.on('message', async (msg) => {
                                             let i = 0;
 
                                             let userRows = await response.data;
+                                            console.log(userRows);
+
 
                                             (function loop() {
+
                                                 console.log(userRows[i].NAMA);
+
                                                 if (++i < userRows.length) {
                                                     if (userRows[i].STATUS === 'TRUE'){
                                                         if (userRows[i].WHATSAPP !== ""){
