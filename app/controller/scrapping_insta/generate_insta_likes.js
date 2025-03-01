@@ -33,7 +33,6 @@ export async function getInstaLikes(todayItems, clientValue) {
             
             if (todayItems[i] === (instaLikesDir[ii]).replace(".json", "")) {
 
-
               newDataUsers =[];
               let instaLikes = new Array();
 
@@ -94,8 +93,43 @@ export async function getInstaLikes(todayItems, clientValue) {
                 );
 
               } catch (error) {
-                console.log(error);
-              }
+                await instaLikesAPI(todayItems[i]).then(
+                  async response =>{
+                    let likesItems = await response.data.data.items;
+                    
+                    encryptedData = [];
+                    for (let iii = 0; iii < likesItems.length; iii++) {
+                      if ('username' in likesItems[iii]) {
+                        encryptedData.push(encrypted(likesItems[iii].username));
+                      }
+                    }
+                    
+                    try {
+                      writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                    } catch (error) {
+                      mkdirSync(`json_data_file/insta_data/insta_likes/${clientName}`);
+                      writeFileSync(`json_data_file/insta_data/insta_likes/${clientName}/${todayItems[i]}.json`, JSON.stringify(encryptedData));
+                    }    
+    
+                    logsSave(`${clientName} Insert New Data ${todayItems[i]}`);
+                    
+                    await client.sendMessage('6281235114745@c.us', `${clientName} Insert New Data https://www.instagram.com/p/${todayItems[i]}`);
+                    
+                    newData++;
+    
+                  }
+                ).catch(
+                  async error =>{
+                    console.log(error);
+                    let data = {
+                      data: error,
+                      state: false,
+                      code: 303
+                    };
+                    reject (data);
+                  
+                  }
+                );              }
             }
           }
 
