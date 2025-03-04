@@ -8,7 +8,6 @@ export async function myData(clientName, idKey) {
       //Data by Sheet Name
       let data;
       let isUserExist = false;
-      console.log (idKey.length());
   
       await readUser(
         clientName
