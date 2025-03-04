@@ -62,7 +62,7 @@ export async function myData(clientName, idKey) {
       }
       
     } catch (error) {
-      data = {
+      let data = {
         data: error,
         message : "My Data Error",
         state: false,
