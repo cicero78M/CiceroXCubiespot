@@ -21,9 +21,7 @@ export async function myData(clientName, idKey) {
             let targetKey;
             
             if(process.env.APP_CLIENT_TYPE === "RES"){
-
-              console.log(userRows[i].ID_KEY.length());
-
+              
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey;
               // if (idKey.length() > 8){
