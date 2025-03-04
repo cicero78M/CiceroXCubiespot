@@ -98,6 +98,7 @@ export async function getInstaLikes(todayItems, clientValue) {
                     let likesItems = await response.data.data.items;
                     
                     encryptedData = [];
+                    
                     for (let iii = 0; iii < likesItems.length; iii++) {
                       if ('username' in likesItems[iii]) {
                         encryptedData.push(encrypted(likesItems[iii].username));

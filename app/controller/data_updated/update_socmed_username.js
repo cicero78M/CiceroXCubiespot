@@ -57,9 +57,6 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
               targetKey = idKey.toUpperCase();
             }
 
-            console.log(sourceKey);
-            console.log(targetKey);
-
             if (sourceKey === targetKey ){
               logsSave("data exist")
               idExist = true;
@@ -164,7 +161,6 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                   if (phone === "6281235114745") {
 
                     userData.WHATSAPP = encrypted("");
-    
                     writeFileSync(`json_data_file/user_data/${clientName}/${sourceKey}.json`, JSON.stringify(userData));
                     await myData(clientName, targetKey).then(
                       response => resolve (response)
@@ -180,10 +176,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                     ).catch(
                       response => reject (response)
                     );
-    
                   }
-
-
                 }
                 break;
        
