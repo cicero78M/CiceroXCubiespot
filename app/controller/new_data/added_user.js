@@ -36,11 +36,13 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         'DIVISI'
       ).then(
         async response =>{
-          divisiList = await response.data;
+          divisiList =  response.data;
         }
       ).catch(
         error => reject(error)
       )
+      
+      console.log(divisiList)
 
       if (divisiList.includes(divisi)) {
 
