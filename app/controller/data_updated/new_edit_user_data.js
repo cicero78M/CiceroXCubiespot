@@ -50,17 +50,11 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
 
                 let testData = false;
                 
-                
                 if(process.env.APP_CLIENT_TYPE === "RES"){
 
                     sourceKey = element.ID_KEY;
                     targetKey = idKey;
-                    // if (idKey.length() > 8){
 
-                    // } else {
-                    //   sourceKey = parseInt(element.ID_KEY);
-                    //   targetKey = parseInt(idKey);
-                    // }
                 } else {
                     sourceKey = element.ID_KEY;
                     targetKey = idKey.toUpperCase();;

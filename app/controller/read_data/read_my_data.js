@@ -8,6 +8,7 @@ export async function myData(clientName, idKey) {
       //Data by Sheet Name
       let data;
       let isUserExist = false;
+      console.log (idKey.length());
   
       await readUser(
         clientName
@@ -20,7 +21,6 @@ export async function myData(clientName, idKey) {
             let sourceKey;
             let targetKey;
             
-
             if(process.env.APP_CLIENT_TYPE === "RES"){
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey;
