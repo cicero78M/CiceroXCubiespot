@@ -29,14 +29,14 @@ export async function addNewUser(clientName, idKey, name, divisi, jabatan, title
         error => reject(error)
       )
 
-      let divisiList = [];
+      let divisiList = new Array();
 
       await newListValueData(
         clientName, 
         'DIVISI'
       ).then(
         async response =>{
-          divisiList = await response;
+          divisiList = await response.data;
         }
       ).catch(
         error => reject(error)
