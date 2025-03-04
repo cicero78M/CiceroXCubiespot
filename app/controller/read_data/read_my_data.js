@@ -3,6 +3,8 @@ import { myDataView } from '../../view/my_data_view.js';
 
 export async function myData(clientName, idKey) {
 
+  console.log(idKey.length);
+
   return new Promise(async (resolve, reject) => {
     try {
       //Data by Sheet Name
@@ -24,12 +26,6 @@ export async function myData(clientName, idKey) {
               
               sourceKey = userRows[i].ID_KEY;
               targetKey = idKey;
-              // if (idKey.length() > 8){
-
-              // } else {
-              //   sourceKey = parseInt(userRows[i].ID_KEY);
-              //   targetKey = parseInt(idKey);
-              // }
 
             } else {
               sourceKey = userRows[i].ID_KEY;
