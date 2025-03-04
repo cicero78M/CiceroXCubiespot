@@ -19,6 +19,7 @@ export async function myData(clientName, idKey) {
             
             let sourceKey;
             let targetKey;
+            
             console.log(idKey.length())
 
             if(process.env.APP_CLIENT_TYPE === "RES"){

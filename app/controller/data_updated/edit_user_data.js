@@ -45,6 +45,7 @@ export async function editProfile(clientName, idKey, newData, phone, type, isCon
             let sourceKey;
             let targetKey;
             let testData = false;
+            
             console.log(idKey.length())
 
             if(process.env.APP_CLIENT_TYPE === "RES"){
