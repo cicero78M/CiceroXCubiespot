@@ -238,24 +238,24 @@ client.on('ready', () => {
         );
     });
 
-    //Backup Client & User data
-    schedule('0 1 * * *',  async () => {
+    // //Backup Client & User data
+    // schedule('0 1 * * *',  async () => {
         
-        if(process.env.APP_CLIENT_TYPE === "RES"){
+    //     if(process.env.APP_CLIENT_TYPE === "RES"){
             
-            await clientDataBackup().then(
-                response => logsSend(response.data)
-            ).catch( 
-                error => logsError(error)
-            );
+    //         await clientDataBackup().then(
+    //             response => logsSend(response.data)
+    //         ).catch( 
+    //             error => logsError(error)
+    //         );
 
-            await userDataBackup().then(
-                response => logsSend(response.data)
-            ).catch( 
-                error => logsError(error)
-            );
-        }                
-    });
+    //         await userDataBackup().then(
+    //             response => logsSend(response.data)
+    //         ).catch( 
+    //             error => logsError(error)
+    //         );
+    //     }                
+    // });
 });
 
 client.on('message', async (msg) => {
