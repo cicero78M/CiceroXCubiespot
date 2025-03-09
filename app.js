@@ -1254,18 +1254,32 @@ client.on('message', async (msg) => {
                                                    && decrypted(clientRows[i].INSTA_STATE) === "TRUE" 
                                                         && decrypted(clientRows[i].TYPE) === process.env.APP_CLIENT_TYPE) {
                                                             logsSave(decrypted(clientRows[i].CLIENT_ID)+' START REPORT INSTA DATA');
-                                                            await newReportInsta(
-                                                                clientRows[i], instaPostData, "official"                                                               
-                                                                ).then(
-                                                                async response => {
-                                                                    logsSave(response.data)
-                                                                    await client.sendMessage(
-                                                                        msg.from, 
-                                                                        response.data
+
+                                                            await getInstaPost(
+                                                                clientRows[i], "official"
+                                                            ).then(
+                                                                async response =>{
+                                                                    
+                                                                    let instaPostData = response.data;
+                                                                    
+                                                                    logsSave(instaPostData);
+                                                                                                          
+                                                                    await newReportInsta(clientRows[i], instaPostData, "official").then(
+                                                                        async data => {
+                                                                            logsSave("Report Success!!!");
+                                                                            await client.sendMessage(
+                                                                                msg.from, 
+                                                                                data.data
+                                                                            );
+                                                                    }).catch(                
+                                                                        error => logsError(error)
                                                                     );
-                                                            }).catch(                
-                                                                async error => { logsError(error)  
-                                                            });
+
+                                                                }
+                                                            ).catch(
+                                                                error => logsError(error)
+        
+                                                            );   
                                                         }  
                                                 setTimeout(loop, 3000);  
                                             } else {
