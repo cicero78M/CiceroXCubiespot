@@ -122,7 +122,7 @@ export async function getInstaLikes(todayItems, clientValue) {
                 ).catch(
                   async error =>{
 
-                    console.log(error)
+                    // console.log(error)
                     console.log(todayItems[i]+" API Error")
                   
                   }
@@ -161,13 +161,9 @@ export async function getInstaLikes(todayItems, clientValue) {
               }
             ).catch(
               async error =>{
-                console.log(error);
-                let data = {
-                  data: error,
-                  state: false,
-                  code: 303
-                };
-                reject (data);
+                // console.log(error);
+                console.log(todayItems[i]+" API Error")
+
               
               }
             );
@@ -184,7 +180,7 @@ export async function getInstaLikes(todayItems, clientValue) {
         
       } catch (error) {
         console.log(error)
-        console.log("Error on Try Top Tier")
+        console.log("Error on Try Execute Top Tier")
 
         let data = {
           data: error,
