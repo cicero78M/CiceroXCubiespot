@@ -78,10 +78,10 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
         
         if(process.env.APP_CLIENT_TYPE === "RES"){
               if (idKey.length > 8){
-                sourceKey = element.ID_KEY;
+                sourceKey = userRows[i].ID_KEY;
                 targetKey = idKey;
               } else {
-                sourceKey = parseInt(element.ID_KEY);
+                sourceKey = parseInt(userRows[i].ID_KEY);
                 targetKey = parseInt(idKey);
               }
         } else {
