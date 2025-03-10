@@ -566,7 +566,7 @@ client.on('message', async (msg) => {
                                         case 'clientstate':
                                             {
                                                 if (["TRUE", "FALSE"].includes(splittedMsg[3].toUpperCase())){
-                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "tiktokstate").then(
+                                                    updateClientData(splittedMsg[0].toUpperCase(), splittedMsg[3].toUpperCase(), "clientstate").then(
                                                         response => logsSend(response.data)
                                                     ).catch(
                                                         error => logsError(error)
