@@ -22,9 +22,6 @@ export async function updateClientData(clientName, newvalue, type) {
         
                         isClient = true;
                         switch (type) {
-                            case "clientstate":
-                                clientRows[i].STATUS = encrypted(newvalue);
-                                break;
                             case "insta":
                                 clientRows[i].INSTAGRAM = encrypted(newvalue);
                                 break;
