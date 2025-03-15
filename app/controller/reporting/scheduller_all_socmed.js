@@ -144,7 +144,7 @@ export async function schedullerAllSocmed(timeSwitch) {
                                         
                                     }).catch(                
                                         error => {
-                                            reject (error)
+                                            console.log(error)
                                     });                            
                                 }
                             );
