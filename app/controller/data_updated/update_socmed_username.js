@@ -155,7 +155,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
               authorize().then(
                   async auth =>
                     {
-                        console.log(await saveGoogleContact(userRows[i].NAMA, `+${phone}`, auth));
+                      console.log(await saveGoogleContact(userRows[i].NAMA, `+${phone}`, auth));
                     }
               ).catch(console.error); 
             }
@@ -206,8 +206,7 @@ export async function updateUsername(clientName, idKey, username, phone, type, i
                     } else {
 
                       if (phone !== userRows[i].WHATSAPP ){
-
-                          
+  
                         let responseData = {
                           data: 'Nomor Whatsapp anda sudah terdaftar dengan akun lain, hubungi admin untuk perubahan',
                           state: true,
