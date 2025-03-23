@@ -51,7 +51,6 @@ export async function tiktokPostAPI(key, cursors) {
   return new Promise(async (resolve, reject) => {
     try {
       let response = await request(options);
-      console.log(response);
       let data = {
         data: response.data.data,
         code: 200,
