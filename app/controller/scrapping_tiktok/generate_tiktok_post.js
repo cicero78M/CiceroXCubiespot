@@ -28,17 +28,39 @@ export async function getTiktokPost(clientValue) {
         
             if (decrypted(clientValue.STATUS) === 'TRUE') {
                 await tiktokPostAPI(secUid, cursor).then( async response =>{
-                    console.log(response);
-                    items =  await response.data.itemList;
-                    for (let i = 0; i < items.length; i++) {
-                        let itemDate = new Date(items[i].createTime * 1000);
-                        if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-                            logsSave(items[i].video.id);
-                            hasContent = true;
-                            itemByDay.push(items[i]);
-                            todayItems.push(items[i].video.id);
+                    
+                    try {
+                        items =  await response.data.itemList;
+                        for (let i = 0; i < items.length; i++) {
+                            let itemDate = new Date(items[i].createTime * 1000);
+                            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+                                logsSave(items[i].video.id);
+                                hasContent = true;
+                                itemByDay.push(items[i]);
+                                todayItems.push(items[i].video.id);
+                            }
                         }
+
+                    } catch (error) {
+                        let shortcodeData = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+                        
+                        for (let ix = 0; ix < shortcodeData.length; ix++){
+
+                            console.log(shortcodeData);
+
+                        }
+
+                    //     let data = {
+                    //         data:todayItems,
+                    //         state: true,
+                    //         code: 200
+                    //     }
+                        
+                    // resolve (data);
+                        
                     }
+
+
 
                     if (hasContent) {
 
