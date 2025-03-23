@@ -1,7 +1,7 @@
 import { tiktokPostAPI } from '../../module/tiktok_API.js';
 import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../module/crypto.js';
-import { mkdirSync, readdirSync, writeFileSync } from "fs";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { logsSave, logsSend } from '../../view/logs_whatsapp.js';
 
 export async function getTiktokPost(clientValue) {
