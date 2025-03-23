@@ -23,7 +23,8 @@ export async function getTiktokPost(clientValue) {
             let items = [];
             let itemByDay = [];
             let todayItems = [];
-            
+
+            let existingShortcode = false;
             let hasContent = false;
         
             if (decrypted(clientValue.STATUS) === 'TRUE') {
@@ -43,27 +44,16 @@ export async function getTiktokPost(clientValue) {
 
                     } catch (error) {
                         let shortcodeData = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
-                        
                         for (let ix = 0; ix < shortcodeData.length; ix++){
-
 
                             let tiktokcontents = await JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${shortcodeData[ix]}`));
                             let itemDate = new Date(decrypted(tiktokcontents.TIMESTAMP) * 1000);
 
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
-                                logsSave(tiktokcontents);
+                                todayItems.push(shortcodeData[ix].replaceAll('.json', ''));
+                                existingShortcode = true;
                             }
-
                         }
-
-                    //     let data = {
-                    //         data:todayItems,
-                    //         state: true,
-                    //         code: 200
-                    //     }
-                        
-                    // resolve (data);
-                        
                     }
 
 
@@ -121,12 +111,27 @@ export async function getTiktokPost(clientValue) {
                         resolve (data);
             
                     } else {
-                        let data = {
+
+                        if (existingShortcode){
+
+                            let data = {
+                                data:todayItems,
+                                state: true,
+                                code: 200
+                            }
+                            
+                        resolve (data);
+            
+
+                        } else {
+                            let data = {
                                 data: 'Tiktok Official Account Has No Content',
                                 state: true,
                                 code: 201
-                        };
-                        resolve (data);
+                            };
+                            resolve (data);
+                        }
+
                     }
 
                 }).catch(error => {
