@@ -1,7 +1,7 @@
 import { tiktokPostAPI } from '../../module/tiktok_API.js';
 import { client } from '../../../app.js';
 import { decrypted, encrypted } from '../../module/crypto.js';
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, readdirSync, writeFileSync } from "fs";
 import { logsSave, logsSend } from '../../view/logs_whatsapp.js';
 
 export async function getTiktokPost(clientValue) {
@@ -48,8 +48,11 @@ export async function getTiktokPost(clientValue) {
 
 
                             let tiktokcontents = await JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${shortcodeData[ix]}`));
+                            let itemDate = new Date(decrypted(tiktokcontents.TIMESTAMP) * 1000);
 
-                            console.log(tiktokcontents);
+                            if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
+                                logsSave(tiktokcontents);
+                            }
 
                         }
 
