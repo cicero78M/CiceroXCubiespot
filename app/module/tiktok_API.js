@@ -52,7 +52,7 @@ export async function tiktokPostAPI(key, cursors) {
     try {
       let response = await request(options);
       let data = {
-        data: response.data.data,
+        data: response.data,
         code: 200,
         state: true
       };
