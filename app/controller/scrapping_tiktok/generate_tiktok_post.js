@@ -46,7 +46,10 @@ export async function getTiktokPost(clientValue) {
                         
                         for (let ix = 0; ix < shortcodeData.length; ix++){
 
-                            console.log(shortcodeData);
+
+                            let tiktokcontents = await JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${shortcodeData[ix]}`));
+
+                            console.log(tiktokcontents);
 
                         }
 
