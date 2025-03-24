@@ -32,6 +32,7 @@ export async function getTiktokPost(clientValue) {
                     
                     try {
                         items =  await response.data.itemList;
+                        console.log(items);
                         for (let i = 0; i < items.length; i++) {
                             let itemDate = new Date(items[i].createTime * 1000);
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
@@ -43,7 +44,9 @@ export async function getTiktokPost(clientValue) {
                         }
 
                     } catch (error) {
+                     
                         let shortcodeData = readdirSync(`json_data_file/tiktok_data/tiktok_content/${clientName}`);
+                     
                         for (let ix = 0; ix < shortcodeData.length; ix++){
 
                             let tiktokcontents = await JSON.parse(readFileSync(`json_data_file/tiktok_data/tiktok_content/${clientName}/${shortcodeData[ix]}`));
@@ -55,8 +58,6 @@ export async function getTiktokPost(clientValue) {
                             }
                         }
                     }
-
-
 
                     if (hasContent) {
 
@@ -120,11 +121,11 @@ export async function getTiktokPost(clientValue) {
                                 code: 200
                             }
                             
-                        resolve (data);
+                            resolve (data);
             
 
                         } else {
-                            let data = {
+                            let data = {    
                                 data: 'Tiktok Official Account Has No Content',
                                 state: true,
                                 code: 201
