@@ -34,7 +34,7 @@ export async function getTiktokPost(clientValue) {
 
                     
                     try {
-                        items =  await response.data.itemList;
+                        items =  await response.data.data.itemList;
                         for (let i = 0; i < items.length; i++) {
                             let itemDate = new Date(items[i].createTime * 1000);
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
