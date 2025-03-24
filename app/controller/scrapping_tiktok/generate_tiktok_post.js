@@ -29,10 +29,12 @@ export async function getTiktokPost(clientValue) {
         
             if (decrypted(clientValue.STATUS) === 'TRUE') {
                 await tiktokPostAPI(secUid, cursor).then( async response =>{
+
+                    console.log(response);
+
                     
                     try {
                         items =  await response.data.itemList;
-                        console.log(items);
                         for (let i = 0; i < items.length; i++) {
                             let itemDate = new Date(items[i].createTime * 1000);
                             if (itemDate.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"}) === localDate) {
