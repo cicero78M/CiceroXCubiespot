@@ -60,7 +60,7 @@ Cicero Collaboration is a social media management system designed for organizati
    ```bash
    npm start
    ```
-6. Open your browser at `http://localhost:3000/{CLIENT_ID}` (e.g., `/pojonegoro`).
+6. Open your browser at `http://localhost:3000/{CLIENT_ID}` (e.g., `/bojonegoro`).
 
 ## Configuration
 
