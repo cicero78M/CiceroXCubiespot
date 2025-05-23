@@ -1,73 +1,225 @@
 # CiceroXCubiespot
 
-Cicero Colaboration
+Cicero Collaboration is a social media management system designed for organizations to supervise member participation across official social media accounts. It supports data processing and reporting for Instagram, TikTok, and WhatsApp Stories, automates routine tasks through cron jobs, and provides both admin and user-facing commands via a simple interface.
 
-What's Cicero?
+## Table of Contents
 
-Cicero is a social media management system that handles members of groups, organizations and companies for their participations on Social Media Engagements of Official Accounts. It's main function is to supervise the participations of members by providing regular reports based on the results of data proccessing generated from social media accounts data engagements. An easy way to maintain the whole organizations.
+* [Features](#features)
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Project Structure](#project-structure)
+* [Core Components](#core-components)
 
-Admin Request Order:
+  * [app.js](#appjs)
+  * [Controllers](#controllers)
+  * [Routes](#routes)
+  * [Views](#views)
+  * [Cron Jobs](#cron-jobs)
+  * [Utilities](#utilities)
+  * [Scripts](#scripts)
+* [Usage](#usage)
 
-- Add New Client : ClientName#addclient#type['COM','RES']#InstaLink#tiktokLink || OK (COM : COMPANY, RES : RESORT)
-- Change Status Client : ClientName#clientstate#boolean || OK
-- Transfer Data by Organizations : ClientName#newclientorg#LinkSourceSheet || OK 
-- Source File Format NRP(Number)/NAMA(String)/PANGKAT(String)/SATFUNG(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
+  * [Admin Commands](#admin-commands)
+  * [User Commands](#user-commands)
+* [Contributing](#contributing)
+* [License](#license)
 
-- Transfer Data by Company : ClientName#newclientcom#LinkSourceSheet || OK
-- Source File Format ID_KEY(Number)/NAMA(String)/TITLE(String) - Optional/DIVISI(String)/JABATAN(String)/STATUS(Boolean)/WHATSAPP(Number)/INSTA(String)/TIKTOK(String)
+## Features
 
-- Adding New User to Database : ClientName#addnew#ID_Key#UserName#UserDivision#UserJabatan#UserTitle(Optional) || OK
-- Rename : ClientName#editname#ID_Key#new_user_profile_name || OK
-- Change Division : ClientName#editdivisi#ID_Key#new_divisi || OK
-- Change Jabatan : ClientName#editjabatan#ID_Key#new_jabatan || OK
+* **Client Management**: Add, remove, and modify clients' data and statuses.
+* **User Profiles**: Store member details (ID, name, division, jabatan, social links).
+* **Automated Data Collection**: Reload Instagram likes, TikTok comments, and WhatsApp story data via cron.
+* **Reporting**: Generate engagement reports on demand for each client.
+* **Command Interface**: Simple hash-delimited commands to perform admin and user operations.
+* **Web Dashboard**: EJS-based dashboard showing member data and quick command input.
 
-Report Update User Social Media Profile:
+## Prerequisites
 
-- Report Insta Update : ClientName#instacheck || OK
-- Report Tiktok Update : ClientName#tiktokcheck || OK
+* Node.js v16+ and npm
+* (Optional) SQLite or PostgreSQL if migrating from JSON to a relational database
+* (Optional) MongoDB if using the NoSQL configuration
 
-User Order :
+## Installation
 
-- Request Checking My Data : ClientName#mydata || OK
-- Request Update Insta Username : ClientName#updateinsta#InstagramProfileLink || OK
-- Request Update Tiktok Username : ClientName#updatetiktok#TiktokProfileLink || OK
+1. Clone the repository:
 
-Reloads Enggagement Data:
+   ```bash
+   git clone https://github.com/cicero78M/CiceroXCubiespot.git
+   cd CiceroXCubiespot
+   ```
+2. Install dependencies:
 
-- Reload Insta likes : ClientName#reloadInstaLikes || OK
-- Reload Tiktok Comments : ClientName#reloadtiktokComments || OK
-- Reload Whatsapp Story : Automate by the system every time the members update their whatsapp story.
-  
-Report Engagement Data :
+   ```bash
+   npm install
+   ```
+3. Create a `.env` in the project root (see [Configuration](#configuration)).
+4. (If using SQLite) Initialize the database or run migrations.
+5. Start the app:
 
-- Report Insta Likes: ClientName#reportInstaLikes || OK
-- Report Tiktok likes : ClientName#reporttiktokcomments || OK
-- Report Whatsapp Story : ClientName#reportwastory
+   ```bash
+   npm start
+   ```
+6. Open your browser at `http://localhost:3000/{CLIENT_ID}` (e.g., `/pojonegoro`).
 
-Automate / Cron Job:
+## Configuration
 
-- Report Update Data
-- Reload Insta Likes
-- Reload Tiktok Comment
-- Report InstaLikes
-- Report Tiktok Comments
-- Schedulers
-  
-Client Activations Mechanism :
+Copy `.env.example` to `.env` and set the following values:
 
-- Client Preparing User Data
-- Admin Push User Data to Server
-- Admin Add Client Properties by Order
-- User Update Data by ID_Key
-- System Handle Bussiness Life Cycles
+```ini
+PORT=3000
+DB_DIALECT=sqlite
+DB_STORAGE=./data/database.sqlite   # or your Postgres URL in production
+# Or for MongoDB:
+# MONGO_URI=mongodb://localhost:27017/cicero
+APP_CLIENT_TYPE=COM
+APP_SESSION_NAME=cicero_session
+```
 
->> WEB-APP DASHBOARD
+Cron schedules are defined in `app/config/cron.js`.
 
-- Data Base Manajemen System.
+## Project Structure
 
+```
+CiceroXCubiespot/
+├── .env.example       # Template for environment variables
+├── .gitignore
+├── README.md          # This documentation
+├── app.js             # Entry point: server, routes, cron, WhatsApp integration
+├── package.json       # Dependencies and scripts
+├── app/               # Core application modules
+│   ├── controller/    # Business logic (adminController.js, userController.js, dataController.js, reportController.js)
+│   ├── routes/        # Express routers (client.js)
+│   ├── views/         # EJS templates (index.ejs, error.ejs)
+│   ├── config/        # Configuration files (cron.js)
+│   └── util/          # Utilities (CryptoUtil.js, logger.js)
+├── data/              # JSON data storage per client (if not using DB)
+└── scripts/           # Helper scripts (e.g., migrateUsers.js)
+```
 
+## Core Components
 
-code response
+### app.js
 
-200 - Success
-303 - Error on Function
+* **Express Setup**: Initializes Express, sets EJS as the view engine, and serves routes.
+* **WhatsApp Integration**: Uses `whatsapp-web.js` to listen for incoming messages; parses commands and dispatches to controllers.
+* **Cron Scheduling**: Imports schedules from `app/config/cron.js` and registers tasks for:
+
+  * Reloading engagement data (Instagram, TikTok, WhatsApp)
+  * Generating periodic reports
+* **Error Handling**: Centralized handler logs errors and renders a friendly error page.
+
+### Controllers
+
+Distributed in `app/controller/`, each module encapsulates related business logic:
+
+* **adminController.js**
+
+  * `addClient(name, type, instaLink, tiktokLink)`
+  * `changeClientStatus(name, status)`
+  * `transferByOrg(name, sheetUrl)`
+  * `transferByCom(name, sheetUrl)`
+  * `addNewUser(name, userObj)`
+  * `editUserField(name, userId, field, newValue)`
+
+* **userController.js**
+
+  * `getMyData(name, userId)`
+  * `updateInsta(name, instaLink)`
+  * `updateTiktok(name, tiktokLink)`
+
+* **dataController.js**
+
+  * `reloadInstaLikes()`
+  * `reloadTiktokComments()`
+  * `reloadWhatsappStory()`
+
+* **reportController.js**
+
+  * `reportInstaLikes(name)`
+  * `reportTiktokComments(name)`
+  * `reportWhatsappStory(name)`
+
+### Routes
+
+In `app/routes/client.js`:
+
+```js
+router.get('/:clientId', async (req, res, next) => {
+  // Fetches client data and renders index.ejs
+});
+```
+
+This dynamic route replaces multiple static routes, loading any client present in storage.
+
+### Views
+
+Stored in `app/views/`:
+
+* **index.ejs**: Displays a table of members for the selected client and a command input form.
+* **error.ejs**: Renders generic errors with a helpful message.
+
+### Cron Jobs
+
+Defined in `app/config/cron.js`:
+
+```js
+export default {
+  reloadSchedule: '*/10 * * * *',
+  reportSchedule: '0 12,16,19 * * *',
+  // …other schedules
+};
+```
+
+Imported in `app.js` to schedule tasks via `node-cron`.
+
+### Utilities
+
+* **CryptoUtil.js**: Provides simple encrypt/decrypt helpers for command verification.
+* **logger.js**: Wraps a structured logger (`pino`/`winston`) to replace `console.log`.
+
+### Scripts
+
+* **migrateUsers.js**: Migrates JSON-based user data into the configured database (SQLite/Postgres/MongoDB).
+
+## Usage
+
+### Admin Commands
+
+Commands sent via WhatsApp message or the dashboard form:
+
+```
+ClientName#addclient#type['COM','RES']#instaLink#tiktokLink
+ClientName#clientstate#boolean
+ClientName#newclientorg#sheetUrl
+ClientName#newclientcom#sheetUrl
+ClientName#addnew#ID_Key#UserName#Division#Jabatan#Title(Optional)
+ClientName#editname#ID_Key#newName
+ClientName#editdivisi#ID_Key#newDivision
+ClientName#editjabatan#ID_Key#newJabatan
+```
+
+### User Commands
+
+```
+ClientName#mydata
+ClientName#updateinsta#InstagramProfileLink
+ClientName#updatetiktok#TiktokProfileLink
+```
+
+### Reload & Report (Automated)
+
+* `reloadInstaLikes`, `reloadTiktokComments`, `reloadWhatsappStory` run on defined schedules.
+* Reports (`reportInstaLikes`, `reportTiktokComments`, `reportWhatsappStory`) run automatically and can be triggered manually via commands.
+
+## Contributing
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/xyz`)
+3. Commit your changes (`git commit -m 'Add xyz feature'`)
+4. Push to the branch (`git push origin feature/xyz`)
+5. Open a Pull Request
+
+## License
+
+MIT © Cicero Collaboration
